@@ -22,8 +22,8 @@ func (c *CreateTxCmdPlugin) Init(sys lp.CmdPluginSystem) error {
 	return nil
 }
 
-func (c *CreateTxCmdPlugin) GetCmds() []*cobra.Command {
-	cmd := &cobra.Command{
+func (c *CreateTxCmdPlugin) GetCmds() []*lp.Command {
+	cmd := &lp.Command{
 		Use:   "create-tx <value>",
 		Short: "Create & commit a dummy tx to the DAppChain",
 		Args:  cobra.ExactArgs(1),
@@ -35,7 +35,7 @@ func (c *CreateTxCmdPlugin) GetCmds() []*cobra.Command {
 	return []*cobra.Command{cmd}
 }
 
-func (c *CreateTxCmdPlugin) runCmd(cmd *cobra.Command, args []string) error {
+func (c *CreateTxCmdPlugin) runCmd(cmd *lp.Command, args []string) error {
 	nodeUri, err := cmd.Flags().GetString(nodeUriFlag)
 	if err != nil {
 		return err
