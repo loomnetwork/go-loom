@@ -13,7 +13,7 @@ type Ed25519Signer struct {
 	privateKey ed25519.PrivateKey
 }
 
-func NewEd25519Signer(privateKey ed25519.PrivateKey) *Ed25519Signer {
+func NewEd25519Signer(privateKey []byte) *Ed25519Signer {
 	return &Ed25519Signer{privateKey}
 }
 
