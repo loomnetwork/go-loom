@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message DummyTx {
+    string val = 1;
+    string key = 2;
+}
