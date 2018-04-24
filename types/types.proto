@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/any.proto";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 // Blockchain Types from tendermint
@@ -79,17 +78,6 @@ message Message {
 message ContractMeta {
     string name = 1;
     string version = 2;
-}
-
-// TODO: combine these two into one?
-message ContractMethodCall {
-	string method = 1;
-	google.protobuf.Any data = 2;
-}
-
-message ContractMethodCallJSON {
-	string method = 1;
-	bytes data = 2; // JSON
 }
 
 // Wrapped types for GRPC
