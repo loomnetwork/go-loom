@@ -8,9 +8,10 @@ import (
 )
 
 type (
-	Request  = types.Request
-	Response = types.Response
-	Meta     = types.ContractMeta
+	Request     = types.Request
+	Response    = types.Response
+	Meta        = types.ContractMeta
+	BlockHeader = types.BlockHeader
 )
 
 var (
@@ -18,8 +19,13 @@ var (
 	EncodingType_PROTOBUF3 = types.EncodingType_PROTOBUF3
 )
 
+type Message struct {
+	Sender loom.Address
+}
+
 type StaticAPI interface {
 	StaticCall(addr loom.Address, input []byte) ([]byte, error)
+	Emit(event []byte)
 }
 
 type VolatileAPI interface {
@@ -35,9 +41,9 @@ type StaticContext interface {
 	StaticAPI
 	Get(key []byte) []byte
 	Has(key []byte) bool
-	Block() types.BlockHeader
+	Block() BlockHeader
 	Now() time.Time
-	Message() types.Message
+	Message() Message
 	ContractAddress() loom.Address
 }
 
@@ -46,7 +52,6 @@ type Context interface {
 	VolatileAPI
 	Set(key, value []byte)
 	Delete(key []byte)
-	Emit(event []byte)
 }
 
 type Contract interface {

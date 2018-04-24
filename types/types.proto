@@ -95,7 +95,6 @@ message ContractMethodCallJSON {
 // Wrapped types for GRPC
 
 message Context {
-
 }
 
 message MetaRequest {
@@ -104,15 +103,9 @@ message MetaRequest {
 message ContractCallRequest {
     BlockHeader block = 1;
     Message message = 2;
-    uint32 api_server = 3;
-    Request request = 4;
-}
-
-message ContractStaticCallRequest {
-    BlockHeader block = 1;
-    Message message = 2;
-    uint32 static_api_server = 3;
-    Request request = 4;
+    Address contract_address = 3;
+    uint32 api_server = 4;
+    Request request = 5;
 }
 
 message InitResponse {
@@ -123,7 +116,7 @@ service Contract {
     rpc Meta(MetaRequest) returns (ContractMeta);
     rpc Init(ContractCallRequest) returns (InitResponse);
     rpc Call(ContractCallRequest) returns (Response);
-    rpc StaticCall(ContractStaticCallRequest) returns (Response);
+    rpc StaticCall(ContractCallRequest) returns (Response);
 }
 
 message GetRequest {
@@ -156,7 +149,6 @@ message EmitRequest {
 }
 
 message EmitResponse {
-
 }
 
 message SetRequest {
@@ -165,7 +157,6 @@ message SetRequest {
 }
 
 message SetResponse {
-
 }
 
 message DeleteRequest {
@@ -173,14 +164,6 @@ message DeleteRequest {
 }
 
 message DeleteResponse {
-
-}
-
-service StaticAPIService {
-    rpc Get(GetRequest) returns (GetResponse);
-    rpc Has(HasRequest) returns (HasResponse);
-    rpc StaticCall(CallRequest) returns (CallResponse);
-    rpc Emit(EmitRequest) returns (EmitResponse);
 }
 
 service API {

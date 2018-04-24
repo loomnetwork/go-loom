@@ -29,28 +29,47 @@ func (c *GRPCAPIClient) Get(key []byte) []byte {
 }
 
 func (c *GRPCAPIClient) Has(key []byte) bool {
-	return false
+	resp, _ := c.client.Has(context.TODO(), &types.HasRequest{Key: key})
+	return resp.Value
 }
 
 func (c *GRPCAPIClient) Set(key, value []byte) {
-
+	c.client.Set(context.TODO(), &types.SetRequest{Key: key})
 }
 
 func (c *GRPCAPIClient) Delete(key []byte) {
-
+	c.client.Delete(context.TODO(), &types.DeleteRequest{Key: key})
 }
 
 func (c *GRPCAPIClient) StaticCall(addr loom.Address, input []byte) ([]byte, error) {
-	return nil, nil
+	resp, err := c.client.StaticCall(context.TODO(), &types.CallRequest{
+		Address: addr.MarshalPB(),
+		Input:   input,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Output, nil
 }
 
 func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
-	return nil, nil
+	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
+		Address: addr.MarshalPB(),
+		Input:   input,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Output, nil
 }
 
 type GRPCContext struct {
 	*GRPCAPIClient
-	block *types.BlockHeader
+	message      *types.Message
+	block        *types.BlockHeader
+	contractAddr *types.Address
 }
 
 var _ Context = &GRPCContext{}
@@ -64,14 +83,27 @@ func (c *GRPCContext) Now() time.Time {
 }
 
 func (c *GRPCContext) ContractAddress() loom.Address {
-	return loom.Address{}
+	return loom.UnmarshalAddressPB(c.contractAddr)
 }
 
-func (c *GRPCContext) Message() types.Message {
-	return types.Message{}
+func (c *GRPCContext) Message() Message {
+	return Message{
+		Sender: loom.UnmarshalAddressPB(c.message.Sender),
+	}
 }
 
 func (c *GRPCContext) Emit(data []byte) {
+}
+
+func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRPCContext {
+	return &GRPCContext{
+		GRPCAPIClient: &GRPCAPIClient{
+			client: types.NewAPIClient(conn),
+		},
+		message:      req.Message,
+		block:        req.Block,
+		contractAddr: req.ContractAddress,
+	}
 }
 
 type GRPCContractServer struct {
@@ -82,7 +114,8 @@ type GRPCContractServer struct {
 var _ types.ContractServer = &GRPCContractServer{}
 
 func (s *GRPCContractServer) Meta(ctx context.Context, req *types.MetaRequest) (*types.ContractMeta, error) {
-	return nil, nil
+	meta, err := s.Impl.Meta()
+	return &meta, err
 }
 
 func (s *GRPCContractServer) Init(ctx context.Context, req *types.ContractCallRequest) (*types.InitResponse, error) {
@@ -92,22 +125,27 @@ func (s *GRPCContractServer) Init(ctx context.Context, req *types.ContractCallRe
 	}
 	defer conn.Close()
 
-	pctx := &GRPCContext{
-		GRPCAPIClient: &GRPCAPIClient{
-			client: types.NewAPIClient(conn),
-		},
-		block: req.Block,
-	}
-
-	return &types.InitResponse{}, s.Impl.Init(pctx, req.Request)
+	return &types.InitResponse{}, s.Impl.Init(MakeGRPCContext(conn, req), req.Request)
 }
 
 func (s *GRPCContractServer) Call(ctx context.Context, req *types.ContractCallRequest) (*types.Response, error) {
-	return nil, nil
+	conn, err := s.broker.Dial(req.ApiServer)
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+
+	return s.Impl.Call(MakeGRPCContext(conn, req), req.Request)
 }
 
-func (s *GRPCContractServer) StaticCall(ctx context.Context, req *types.ContractStaticCallRequest) (*types.Response, error) {
-	return nil, nil
+func (s *GRPCContractServer) StaticCall(ctx context.Context, req *types.ContractCallRequest) (*types.Response, error) {
+	conn, err := s.broker.Dial(req.ApiServer)
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+
+	return s.Impl.StaticCall(MakeGRPCContext(conn, req), req.Request)
 }
 
 type ExternalPlugin struct {
