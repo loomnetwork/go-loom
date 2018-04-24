@@ -1,11 +1,11 @@
+// go build -buildmode=plugin -o contracts/helloworld.so.1.0.0 github.com/loomnetwork/loom-plugin/plugin/examples/helloworld
 package main
 
 import (
 	"encoding/json"
 	"errors"
 
-	lp "github.com/loomnetwork/loom-plugin"
-	"github.com/loomnetwork/loom-plugin/types"
+	"github.com/loomnetwork/loom-plugin/plugin"
 )
 
 type rpcRequest struct {
@@ -18,26 +18,26 @@ type rpcResponse struct {
 type HelloWorld struct {
 }
 
-func (c *HelloWorld) Meta() (types.ContractMeta, error) {
-	return types.ContractMeta{
+func (c *HelloWorld) Meta() (plugin.Meta, error) {
+	return plugin.Meta{
 		Name:    "helloworld",
 		Version: "1.0.0",
 	}, nil
 }
 
-func (c *HelloWorld) Init(ctx lp.Context, req *types.Request) error {
+func (c *HelloWorld) Init(ctx plugin.Context, req *plugin.Request) error {
 	println("init contract")
 	ctx.Set([]byte("foo"), []byte("bar"))
 	return nil
 }
 
-func (c *HelloWorld) Call(ctx lp.Context, req *types.Request) (*types.Response, error) {
-	return &types.Response{}, nil
+func (c *HelloWorld) Call(ctx plugin.Context, req *plugin.Request) (*plugin.Response, error) {
+	return &plugin.Response{}, nil
 }
 
-func (c *HelloWorld) StaticCall(ctx lp.StaticContext, req *types.Request) (*types.Response, error) {
+func (c *HelloWorld) StaticCall(ctx plugin.StaticContext, req *plugin.Request) (*plugin.Response, error) {
 	rr := &rpcRequest{}
-	if req.ContentType == types.EncodingType_JSON {
+	if req.ContentType == plugin.EncodingType_JSON {
 		if err := json.Unmarshal(req.Body, rr); err != nil {
 			return nil, err
 		}
@@ -48,13 +48,13 @@ func (c *HelloWorld) StaticCall(ctx lp.StaticContext, req *types.Request) (*type
 	if "hello" == rr.Body {
 		var body []byte
 		var err error
-		if req.Accept == types.EncodingType_JSON {
+		if req.Accept == plugin.EncodingType_JSON {
 			body, err = json.Marshal(&rpcResponse{Body: "world"})
 			if err != nil {
 				return nil, err
 			}
-			return &types.Response{
-				ContentType: types.EncodingType_JSON,
+			return &plugin.Response{
+				ContentType: plugin.EncodingType_JSON,
 				Body:        body,
 			}, nil
 		}
@@ -64,4 +64,8 @@ func (c *HelloWorld) StaticCall(ctx lp.StaticContext, req *types.Request) (*type
 	return nil, errors.New("invalid query")
 }
 
-var Contract lp.Contract = &HelloWorld{}
+var Contract plugin.Contract = &HelloWorld{}
+
+func main() {
+	plugin.Serve(Contract)
+}

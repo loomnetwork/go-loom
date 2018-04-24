@@ -1,18 +1,19 @@
-package loomplugin
+package plugin
 
 import (
 	"context"
 	"errors"
 	"time"
 
-	plugin "github.com/hashicorp/go-plugin"
+	extplugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 
+	loom "github.com/loomnetwork/loom-plugin"
 	"github.com/loomnetwork/loom-plugin/types"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
-var Handshake = plugin.HandshakeConfig{
+var Handshake = extplugin.HandshakeConfig{
 	ProtocolVersion:  1,
 	MagicCookieKey:   "LOOM_CONTRACT",
 	MagicCookieValue: "loomrocks",
@@ -39,11 +40,11 @@ func (c *GRPCAPIClient) Delete(key []byte) {
 
 }
 
-func (c *GRPCAPIClient) StaticCall(addr Address, input []byte) ([]byte, error) {
+func (c *GRPCAPIClient) StaticCall(addr loom.Address, input []byte) ([]byte, error) {
 	return nil, nil
 }
 
-func (c *GRPCAPIClient) Call(addr Address, input []byte) ([]byte, error) {
+func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
 	return nil, nil
 }
 
@@ -62,8 +63,8 @@ func (c *GRPCContext) Now() time.Time {
 	return time.Unix(c.block.Time, 0)
 }
 
-func (c *GRPCContext) ContractAddress() Address {
-	return Address{}
+func (c *GRPCContext) ContractAddress() loom.Address {
+	return loom.Address{}
 }
 
 func (c *GRPCContext) Message() types.Message {
@@ -74,7 +75,7 @@ func (c *GRPCContext) Emit(data []byte) {
 }
 
 type GRPCContractServer struct {
-	broker *plugin.GRPCBroker
+	broker *extplugin.GRPCBroker
 	Impl   Contract
 }
 
@@ -110,15 +111,15 @@ func (s *GRPCContractServer) StaticCall(ctx context.Context, req *types.Contract
 }
 
 type ExternalPlugin struct {
-	plugin.NetRPCUnsupportedPlugin
+	extplugin.NetRPCUnsupportedPlugin
 	// Concrete implementation, written in Go. This is only used for plugins
 	// that are written in Go.
 	Impl Contract
 }
 
-var _ plugin.GRPCPlugin = &ExternalPlugin{}
+var _ extplugin.GRPCPlugin = &ExternalPlugin{}
 
-func (p *ExternalPlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
+func (p *ExternalPlugin) GRPCServer(broker *extplugin.GRPCBroker, s *grpc.Server) error {
 	types.RegisterContractServer(s, &GRPCContractServer{
 		broker: broker,
 		Impl:   p.Impl,
@@ -126,6 +127,18 @@ func (p *ExternalPlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) e
 	return nil
 }
 
-func (p *ExternalPlugin) GRPCClient(ctx context.Context, broker *plugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
+func (p *ExternalPlugin) GRPCClient(ctx context.Context, broker *extplugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
 	return nil, errors.New("not implemented on plugin side")
+}
+
+func Serve(contract Contract) {
+	extplugin.Serve(&extplugin.ServeConfig{
+		HandshakeConfig: Handshake,
+		Plugins: map[string]extplugin.Plugin{
+			"contract": &ExternalPlugin{Impl: contract},
+		},
+
+		// A non-nil value here enables gRPC serving for this plugin...
+		GRPCServer: extplugin.DefaultGRPCServer,
+	})
 }
