@@ -31,3 +31,9 @@ go build -buildmode=plugin -o out/cmds/create-tx.so examples/cmd-plugins/create-
    ```shell
    dep ensure
    ```
+
+### Generating protobufs
+```shell
+go build github.com/gogo/protobuf/protoc-gen-gogo
+protoc --plugin=./protoc-gen-gogo -Ivendor -I$GOPATH/src --gogo_out=plugins=grpc:$GOPATH/src github.com/loomnetwork/loom-plugin/types/types.proto
+```
