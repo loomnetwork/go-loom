@@ -8,7 +8,7 @@ all: proto
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
 
-types/types.pb.go: types/types.proto protoc-gen-gogo
+%.pb.go: %.proto protoc-gen-gogo
 	$(PROTOC) --gogo_out=\
 plugins=grpc,Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types:$(GOPATH)/src \
 $(PKG)/$<
