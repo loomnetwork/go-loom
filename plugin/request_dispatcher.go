@@ -13,11 +13,6 @@ import (
 	lt "github.com/loomnetwork/loom-plugin/types"
 )
 
-type (
-	ContractMethodCall     = lt.ContractMethodCall
-	ContractMethodCallJSON = lt.ContractMethodCallJSON
-)
-
 var (
 	errUnknownEncodingType = errors.New("unknown encoding type")
 )

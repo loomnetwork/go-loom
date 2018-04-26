@@ -81,15 +81,9 @@ message ContractMeta {
     string version = 2;
 }
 
-// TODO: combine these two into one?
 message ContractMethodCall {
 	string method = 1;
 	google.protobuf.Any data = 2;
-}
-
-message ContractMethodCallJSON {
-	string method = 1;
-	bytes data = 2; // JSON
 }
 
 // Wrapped types for GRPC
