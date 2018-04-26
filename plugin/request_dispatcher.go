@@ -92,16 +92,19 @@ func (s *RequestDispatcher) Init(contract Contract) error {
 	return s.callbacks.Register(contract, meta.Name)
 }
 
-func (s *RequestDispatcher) StaticCall(ctx StaticContext, req *Request) (*Response, error) {
-	var result []reflect.Value
-
+func unmarshalBody(req *Request, pb proto.Message) error {
 	body := bytes.NewBuffer(req.Body)
 	unmarshaler, err := unmarshalerFactory(req.ContentType)
 	if err != nil {
-		return nil, err
+		return err
 	}
+
+	return unmarshaler.Unmarshal(body, pb)
+}
+
+func (s *RequestDispatcher) StaticCall(ctx StaticContext, req *Request) (*Response, error) {
 	var query lt.ContractMethodCall
-	err = unmarshaler.Unmarshal(body, &query)
+	err := unmarshalBody(req, &query)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +116,7 @@ func (s *RequestDispatcher) StaticCall(ctx StaticContext, req *Request) (*Respon
 	if err := types.UnmarshalAny(query.Data, queryParams.Interface().(proto.Message)); err != nil {
 		return nil, err
 	}
-	result = methodSpec.method.Func.Call([]reflect.Value{
+	result := methodSpec.method.Func.Call([]reflect.Value{
 		serviceSpec.rcvr,
 		reflect.ValueOf(ctx),
 		queryParams,
@@ -146,9 +149,9 @@ func (s *RequestDispatcher) StaticCall(ctx StaticContext, req *Request) (*Respon
 }
 
 func (s *RequestDispatcher) Call(ctx Context, req *Request) (*Response, error) {
-	// TODO: handle req.ContentType/Accept == JSON
 	var tx lt.ContractMethodCall
-	if err := proto.Unmarshal(req.Body, &tx); err != nil {
+	err := unmarshalBody(req, &tx)
+	if err != nil {
 		return nil, err
 	}
 
