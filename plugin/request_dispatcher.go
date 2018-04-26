@@ -1,10 +1,13 @@
 package plugin
 
 import (
-	"encoding/json"
+	"bytes"
 	"errors"
+	"io"
+	"io/ioutil"
 	"reflect"
 
+	"github.com/gogo/protobuf/jsonpb"
 	proto "github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/types"
 	lt "github.com/loomnetwork/loom-plugin/types"
@@ -15,11 +18,69 @@ type (
 	ContractMethodCallJSON = lt.ContractMethodCallJSON
 )
 
+var (
+	errUnknownEncodingType = errors.New("unknown encoding type")
+)
+
 // RequestDispatcher dispatches Request(s) to contract methods.
 // The dispatcher takes care of unmarshalling requests and marshalling responses from/to protobufs
 // or JSON - based on the content type specified in the Request.ContentType/Accept fields.
 type RequestDispatcher struct {
 	callbacks *serviceMap
+}
+
+type PBMarshaler interface {
+	Marshal(w io.Writer, pb proto.Message) error
+}
+
+type PBUnmarshaler interface {
+	Unmarshal(r io.Reader, pb proto.Message) error
+}
+
+type BinaryPBMarshaler struct {
+}
+
+func (m *BinaryPBMarshaler) Marshal(w io.Writer, pb proto.Message) error {
+	b, err := proto.Marshal(pb)
+	if err != nil {
+		return err
+	}
+	_, err = w.Write(b)
+	return err
+}
+
+type BinaryPBUnmarshaler struct {
+}
+
+func (m *BinaryPBUnmarshaler) Unmarshal(r io.Reader, pb proto.Message) error {
+	b, err := ioutil.ReadAll(r)
+	if err != nil {
+		return err
+	}
+
+	return proto.Unmarshal(b, pb)
+}
+
+func marshalerFactory(encoding EncodingType) (PBMarshaler, error) {
+	switch encoding {
+	case EncodingType_JSON:
+		return &jsonpb.Marshaler{}, nil
+	case EncodingType_PROTOBUF3:
+		return &BinaryPBMarshaler{}, nil
+	}
+
+	return nil, errUnknownEncodingType
+}
+
+func unmarshalerFactory(encoding EncodingType) (PBUnmarshaler, error) {
+	switch encoding {
+	case EncodingType_JSON:
+		return &jsonpb.Unmarshaler{}, nil
+	case EncodingType_PROTOBUF3:
+		return &BinaryPBUnmarshaler{}, nil
+	}
+
+	return nil, errUnknownEncodingType
 }
 
 func (s *RequestDispatcher) Init(contract Contract) error {
@@ -33,48 +94,32 @@ func (s *RequestDispatcher) Init(contract Contract) error {
 
 func (s *RequestDispatcher) StaticCall(ctx StaticContext, req *Request) (*Response, error) {
 	var result []reflect.Value
-	if req.ContentType == EncodingType_JSON {
-		var query lt.ContractMethodCallJSON
-		if err := json.Unmarshal(req.Body, &query); err != nil {
-			return nil, err
-		}
-		serviceSpec, methodSpec, err := s.callbacks.Get(query.Method, true)
-		if err != nil {
-			return nil, err
-		}
-		queryParams := reflect.New(methodSpec.argsType)
-		if err := json.Unmarshal(query.Data, queryParams.Interface()); err != nil {
-			return nil, err
-		}
-		result = methodSpec.method.Func.Call([]reflect.Value{
-			serviceSpec.rcvr,
-			reflect.ValueOf(ctx),
-			queryParams,
-		})
-	} else if req.ContentType == EncodingType_PROTOBUF3 {
-		var query lt.ContractMethodCall
-		if err := proto.Unmarshal(req.Body, &query); err != nil {
-			return nil, err
-		}
-		serviceSpec, methodSpec, err := s.callbacks.Get(query.Method, true)
-		if err != nil {
-			return nil, err
-		}
-		queryParams := reflect.New(methodSpec.argsType)
-		if err := types.UnmarshalAny(query.Data, queryParams.Interface().(proto.Message)); err != nil {
-			return nil, err
-		}
-		result = methodSpec.method.Func.Call([]reflect.Value{
-			serviceSpec.rcvr,
-			reflect.ValueOf(ctx),
-			queryParams,
-		})
-	} else {
-		return nil, errors.New("unsupported content type")
+
+	body := bytes.NewBuffer(req.Body)
+	unmarshaler, err := unmarshalerFactory(req.ContentType)
+	if err != nil {
+		return nil, err
 	}
+	var query lt.ContractMethodCall
+	err = unmarshaler.Unmarshal(body, &query)
+	if err != nil {
+		return nil, err
+	}
+	serviceSpec, methodSpec, err := s.callbacks.Get(query.Method, true)
+	if err != nil {
+		return nil, err
+	}
+	queryParams := reflect.New(methodSpec.argsType)
+	if err := types.UnmarshalAny(query.Data, queryParams.Interface().(proto.Message)); err != nil {
+		return nil, err
+	}
+	result = methodSpec.method.Func.Call([]reflect.Value{
+		serviceSpec.rcvr,
+		reflect.ValueOf(ctx),
+		queryParams,
+	})
 
 	// If the method returned an error, extract & return it
-	var err error
 	errInter := result[1].Interface()
 	if errInter != nil {
 		err = errInter.(error)
@@ -83,15 +128,21 @@ func (s *RequestDispatcher) StaticCall(ctx StaticContext, req *Request) (*Respon
 		return nil, err
 	}
 
-	resp := &Response{ContentType: req.Accept}
-	if req.Accept == EncodingType_JSON {
-		resp.Body, err = json.Marshal(result[0].Interface())
-	} else if req.Accept == EncodingType_PROTOBUF3 {
-		resp.Body, err = proto.Marshal(result[0].Interface().(proto.Message))
-	} else {
-		return nil, errors.New("unsupported accept type")
+	marshaler, err := marshalerFactory(req.Accept)
+	if err != nil {
+		return nil, err
 	}
-	return resp, err
+
+	var respBody bytes.Buffer
+	err = marshaler.Marshal(&respBody, result[0].Interface().(proto.Message))
+	if err != nil {
+		return nil, err
+	}
+
+	return &Response{
+		ContentType: req.Accept,
+		Body:        respBody.Bytes(),
+	}, nil
 }
 
 func (s *RequestDispatcher) Call(ctx Context, req *Request) (*Response, error) {

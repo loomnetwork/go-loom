@@ -8,10 +8,11 @@ import (
 )
 
 type (
-	Request     = types.Request
-	Response    = types.Response
-	Meta        = types.ContractMeta
-	BlockHeader = types.BlockHeader
+	Request      = types.Request
+	Response     = types.Response
+	Meta         = types.ContractMeta
+	BlockHeader  = types.BlockHeader
+	EncodingType = types.EncodingType
 )
 
 var (
