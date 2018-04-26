@@ -25,16 +25,12 @@ go build -buildmode=plugin -o out/cmds/create-tx.so examples/cmd-plugins/create-
 ## Development
 
 1. `go get` or clone the repo into your desired `GOPATH`.
-2. Ensure you have `https://github.com/golang/dep` installed, and then run the
-   following command to fetch the dependencies:
-
+2. Install deps
    ```shell
-   dep ensure
+   make deps
    ```
 
 ### Generating protobufs
 ```shell
-go build github.com/gogo/protobuf/protoc-gen-gogo
-protoc --plugin=./protoc-gen-gogo -Ivendor -I$GOPATH/src --gogo_out=\
-plugins=grpc,Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types:$GOPATH/src github.com/loomnetwork/loom-plugin/types/types.proto
+make proto
 ```
