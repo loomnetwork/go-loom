@@ -1,9 +1,24 @@
 PKG = github.com/loomnetwork/loom-plugin
 PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local/include
 
-.PHONY: all clean test deps proto
+.PHONY: all clean test deps proto example-plugins example-plugins-external example-cmds
 
-all: proto
+all: example-plugins example-plugins-external example-cmds
+
+example-cmds: create-tx
+
+create-tx: examples/types/types.pb.go
+	go build $(PKG)/examples/cmd-plugins/$@
+
+example-plugins: helloworld.so.1.0.0
+
+example-plugins-external: helloworld.1.0.0
+
+helloworld.1.0.0: proto
+	go build -o contracts/$@ $(PKG)/plugin/examples/helloworld
+
+helloworld.so.1.0.0: proto
+	go build -buildmode=plugin -o contracts/$@ $(PKG)/plugin/examples/helloworld
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
@@ -29,5 +44,10 @@ deps:
 
 clean:
 	go clean
-	rm -f ./protoc-gen-gogo
-	rm -f types/types.pb.go
+	rm -f \
+		protoc-gen-gogo \
+		types/types.pb.go \
+		examples/types/types.pb.go \
+		contracts/helloworld.1.0.0 \
+		contracts/helloworld.so.1.0.0 \
+		create-tx
