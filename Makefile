@@ -15,10 +15,10 @@ example-plugins: helloworld.so.1.0.0
 example-plugins-external: helloworld.1.0.0
 
 helloworld.1.0.0: proto
-	go build -o contracts/$@ $(PKG)/plugin/examples/helloworld
+	go build -o contracts/$@ $(PKG)/examples/plugins/helloworld
 
 helloworld.so.1.0.0: proto
-	go build -buildmode=plugin -o contracts/$@ $(PKG)/plugin/examples/helloworld
+	go build -buildmode=plugin -o contracts/$@ $(PKG)/examples/plugins/helloworld
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo

@@ -1,11 +1,12 @@
-package plugin
+package main
 
 import (
 	"github.com/gogo/protobuf/proto"
-	lp "github.com/loomnetwork/go-loom"
-	pb "github.com/loomnetwork/go-loom/examples/types"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ed25519"
+
+	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/examples/types"
 )
 
 const (
@@ -14,16 +15,16 @@ const (
 
 // CreateTxCmdPlugin is a sample admin CLI cmd plugin that creates a new dummy tx & commits it to the DAppChain.
 type CreateTxCmdPlugin struct {
-	cmdPluginSystem lp.CmdPluginSystem
+	cmdPluginSystem loom.CmdPluginSystem
 }
 
-func (c *CreateTxCmdPlugin) Init(sys lp.CmdPluginSystem) error {
+func (c *CreateTxCmdPlugin) Init(sys loom.CmdPluginSystem) error {
 	c.cmdPluginSystem = sys
 	return nil
 }
 
-func (c *CreateTxCmdPlugin) GetCmds() []*lp.Command {
-	cmd := &lp.Command{
+func (c *CreateTxCmdPlugin) GetCmds() []*loom.Command {
+	cmd := &loom.Command{
 		Use:   "create-tx <value>",
 		Short: "Create & commit a dummy tx to the DAppChain",
 		Args:  cobra.ExactArgs(1),
@@ -35,7 +36,7 @@ func (c *CreateTxCmdPlugin) GetCmds() []*lp.Command {
 	return []*cobra.Command{cmd}
 }
 
-func (c *CreateTxCmdPlugin) runCmd(cmd *lp.Command, args []string) error {
+func (c *CreateTxCmdPlugin) runCmd(cmd *loom.Command, args []string) error {
 	nodeUri, err := cmd.Flags().GetString(nodeUriFlag)
 	if err != nil {
 		return err
@@ -45,7 +46,7 @@ func (c *CreateTxCmdPlugin) runCmd(cmd *lp.Command, args []string) error {
 		return err
 	}
 	dummyValue := args[0]
-	dummyTx := pb.DummyTx{
+	dummyTx := types.DummyTx{
 		Key: "hello",
 		Val: dummyValue,
 	}
@@ -54,7 +55,13 @@ func (c *CreateTxCmdPlugin) runCmd(cmd *lp.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	signer := lp.NewEd25519Signer(privKey)
+	signer := loom.NewEd25519Signer(privKey)
 	client.CommitTx(signer, txBytes)
 	return nil
 }
+
+// Create an instance of the plugin that will be loaded by the plugin manager.
+var CmdPlugin CreateTxCmdPlugin
+
+// go-code-check throws up errors if this is missing...
+func main() {}

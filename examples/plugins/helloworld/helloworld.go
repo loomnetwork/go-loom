@@ -1,4 +1,3 @@
-// go build -buildmode=plugin -o contracts/helloworld.so.1.0.0 github.com/loomnetwork/go-loom/plugin/examples/helloworld
 package main
 
 import (
