@@ -1,7 +1,7 @@
 PKG = github.com/loomnetwork/loom-plugin
 PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local/include
 
-.PHONY: all clean test deps proto example-plugins example-plugins-external example-cmds
+.PHONY: all clean test lint deps proto example-plugins example-plugins-external example-cmds
 
 all: example-plugins example-plugins-external example-cmds
 
@@ -32,6 +32,9 @@ proto: types/types.pb.go
 
 test: proto
 	go test $(PKG)/...
+
+lint:
+	golint ./...
 
 deps:
 	go get \
