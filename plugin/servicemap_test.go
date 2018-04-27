@@ -15,7 +15,7 @@ type FakeResponse struct{}
 
 type fakeContract struct{}
 
-type FakeContext interface{}
+type FakeServiceMapContext interface{}
 
 // These methods SHOULD NOT be auto-registered:
 func (c *fakeContract) IgnoredMethod1()                        {}
@@ -37,12 +37,12 @@ func (c *fakeContract) IgnoredMethod7(ctx Context, tx *FakeTx) (*fakeResponse, e
 }
 
 // This method is ignored because the first argument in not a plugin context
-func (c *fakeContract) IgnoredMethod8(ctx FakeContext, tx *FakeTx) error {
+func (c *fakeContract) IgnoredMethod8(ctx FakeServiceMapContext, tx *FakeTx) error {
 	return nil
 }
 
 // Ditto
-func (c *fakeContract) IgnoredMethod9(ctx FakeContext, tx *FakeTx) (*FakeResponse, error) {
+func (c *fakeContract) IgnoredMethod9(ctx FakeServiceMapContext, tx *FakeTx) (*FakeResponse, error) {
 	return nil, nil
 }
 

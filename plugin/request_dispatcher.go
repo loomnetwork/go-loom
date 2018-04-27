@@ -9,7 +9,6 @@ import (
 
 	"github.com/gogo/protobuf/jsonpb"
 	proto "github.com/gogo/protobuf/proto"
-	"github.com/gogo/protobuf/types"
 	lt "github.com/loomnetwork/loom-plugin/types"
 )
 
@@ -108,7 +107,12 @@ func (s *RequestDispatcher) StaticCall(ctx StaticContext, req *Request) (*Respon
 		return nil, err
 	}
 	queryParams := reflect.New(methodSpec.argsType)
-	if err := types.UnmarshalAny(query.Data, queryParams.Interface().(proto.Message)); err != nil {
+	unmarshaler, err := unmarshalerFactory(req.ContentType)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := unmarshaler.Unmarshal(bytes.NewBuffer(query.Args), queryParams.Interface().(proto.Message)); err != nil {
 		return nil, err
 	}
 	result := methodSpec.method.Func.Call([]reflect.Value{
@@ -156,8 +160,12 @@ func (s *RequestDispatcher) Call(ctx Context, req *Request) (*Response, error) {
 	}
 
 	txData := reflect.New(methodSpec.argsType)
+	unmarshaler, err := unmarshalerFactory(req.ContentType)
+	if err != nil {
+		return nil, err
+	}
 
-	if err := types.UnmarshalAny(tx.Data, txData.Interface().(proto.Message)); err != nil {
+	if err := unmarshaler.Unmarshal(bytes.NewBuffer(tx.Args), txData.Interface().(proto.Message)); err != nil {
 		return nil, err
 	}
 
@@ -178,5 +186,7 @@ func (s *RequestDispatcher) Call(ctx Context, req *Request) (*Response, error) {
 	if errResult != nil {
 		return nil, errResult
 	}
-	return &Response{}, nil
+	return &Response{
+		ContentType: req.Accept,
+	}, nil
 }

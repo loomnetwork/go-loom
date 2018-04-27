@@ -25,10 +25,10 @@ protoc-gen-gogo:
 
 %.pb.go: %.proto protoc-gen-gogo
 	$(PROTOC) --gogo_out=\
-plugins=grpc,Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types:$(GOPATH)/src \
+plugins=grpc:$(GOPATH)/src \
 $(PKG)/$<
 
-proto: types/types.pb.go
+proto: types/types.pb.go testdata/test.pb.go
 
 test: proto
 	go test $(PKG)/...

@@ -1,0 +1,19 @@
+syntax = "proto3";
+package testdata;
+
+// Messages used in tests
+
+message CallArgs {
+    string key = 1;
+    int32 value = 2;
+}
+
+message StaticCallArgs {
+    int32 index = 1;
+    string name = 2;
+}
+
+message StaticCallResult {
+    int32 code = 1;
+    string result = 2;
+}
