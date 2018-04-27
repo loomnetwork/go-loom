@@ -3,8 +3,8 @@ package plugin
 import (
 	"time"
 
-	loom "github.com/loomnetwork/loom-plugin"
-	"github.com/loomnetwork/loom-plugin/types"
+	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/types"
 )
 
 type FakeContext struct {

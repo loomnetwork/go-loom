@@ -1,4 +1,4 @@
-# loom-plugin
+# go-loom
 Go package for building plugins for the Loom SDK
 
 ## Requirements
@@ -9,7 +9,7 @@ Go package for building plugins for the Loom SDK
 ## Installation
 
 ```bash
-go get github.com/loomnetwork/loom-plugin
+go get github.com/loomnetwork/go-loom
 # dependencies
 go get github.com/spf13/cobra golang.org/x/crypto github.com/gogo/protobuf
 ```

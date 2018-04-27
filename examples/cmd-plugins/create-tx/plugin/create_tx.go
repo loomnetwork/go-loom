@@ -2,8 +2,8 @@ package plugin
 
 import (
 	"github.com/gogo/protobuf/proto"
-	lp "github.com/loomnetwork/loom-plugin"
-	pb "github.com/loomnetwork/loom-plugin/examples/types"
+	lp "github.com/loomnetwork/go-loom"
+	pb "github.com/loomnetwork/go-loom/examples/types"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ed25519"
 )

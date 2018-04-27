@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/loomnetwork/loom-plugin/examples/cmd-plugins/create-tx/plugin"
+	"github.com/loomnetwork/go-loom/examples/cmd-plugins/create-tx/plugin"
 )
 
 // Create an instance of the plugin that will be loaded by the plugin manager.

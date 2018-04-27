@@ -9,8 +9,8 @@ import (
 	"golang.org/x/crypto/ripemd160"
 	"golang.org/x/crypto/sha3"
 
-	"github.com/loomnetwork/loom-plugin/types"
-	"github.com/loomnetwork/loom-plugin/util"
+	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/util"
 )
 
 type LocalAddress []byte

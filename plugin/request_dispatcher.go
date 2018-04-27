@@ -9,7 +9,7 @@ import (
 
 	"github.com/gogo/protobuf/jsonpb"
 	proto "github.com/gogo/protobuf/proto"
-	lt "github.com/loomnetwork/loom-plugin/types"
+	lt "github.com/loomnetwork/go-loom/types"
 )
 
 var (

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/loomnetwork/loom-plugin/testdata"
-	"github.com/loomnetwork/loom-plugin/types"
+	"github.com/loomnetwork/go-loom/testdata"
+	"github.com/loomnetwork/go-loom/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

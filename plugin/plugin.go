@@ -8,8 +8,8 @@ import (
 	extplugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 
-	loom "github.com/loomnetwork/loom-plugin"
-	"github.com/loomnetwork/loom-plugin/types"
+	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/types"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
