@@ -28,7 +28,7 @@ protoc-gen-gogo:
 plugins=grpc:$(GOPATH)/src \
 $(PKG)/$<
 
-proto: types/types.pb.go testdata/test.pb.go
+proto: types/types.pb.go testdata/test.pb.go examples/types/types.pb.go
 
 test: proto
 	go test $(PKG)/...
