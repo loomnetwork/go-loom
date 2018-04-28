@@ -50,6 +50,7 @@ clean:
 	rm -f \
 		protoc-gen-gogo \
 		types/types.pb.go \
+		testdata/test.pb.go \
 		examples/types/types.pb.go \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
