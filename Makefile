@@ -51,7 +51,8 @@ deps:
 		github.com/gogo/protobuf/jsonpb \
 		github.com/gogo/protobuf/proto \
 		google.golang.org/grpc \
-		github.com/spf13/cobra
+		github.com/spf13/cobra \
+		github.com/hashicorp/go-plugin
 
 clean:
 	go clean
