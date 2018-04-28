@@ -1,10 +1,12 @@
 # go-loom
-Go package for building plugins for the Loom SDK
+Go package for building Go Smart Contracts  for the Loom SDK
+
+This package is also used for building Clients to DAppChains in the Loom SDK. 
 
 ## Requirements
 
 - Go 1.9+
-- Mac or Linux (Windows is not supported)
+- Mac or Linux (Windows support coming in June)
 
 ## Installation
 
