@@ -17,7 +17,7 @@ example-cmds: create-tx
 create-tx: examples/types/types.pb.go
 	go build $(PKG)/examples/cmd-plugins/$@
 
-example-plugins: contracts/helloworld.so.1.0.0
+example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
 example-plugins-external: contracts/helloworld.1.0.0
 
@@ -27,13 +27,16 @@ contracts/helloworld.1.0.0: proto
 contracts/helloworld.so.1.0.0: proto
 	go build -buildmode=plugin -o $@ $(PKG)/examples/plugins/helloworld
 
+contracts/lottery.so.1.0.0: examples/plugins/lottery/lottery.pb.go
+	go build -o $@ $(PKG)/examples/plugins/lottery
+
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
 
 %.pb.go: %.proto protoc-gen-gogo
 	$(PROTOC) --gogo_out=plugins=grpc:$(GOPATH)/src $(PKG)/$<
 
-proto: types/types.pb.go testdata/test.pb.go builtin/plugins/coin/coin.pb.go examples/types/types.pb.go
+proto: types/types.pb.go testdata/test.pb.go builtin/plugins/coin/coin.pb.go examples/types/types.pb.go examples/plugins/lottery/lottery.pb.go
 
 test: proto
 	go test $(PKG)/...
@@ -58,6 +61,7 @@ clean:
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
 		builtin/plugins/coin/coin.pb.go \
+		builtin/plugins/lottery/lottery.pb.go \
 		contracts/coin.so.1.0.0 \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \

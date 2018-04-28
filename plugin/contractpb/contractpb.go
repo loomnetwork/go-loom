@@ -82,3 +82,24 @@ func MakePluginContract(c Contract) plugin.Contract {
 
 	return r
 }
+
+func Call(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.Message) error {
+	input, err := proto.Marshal(inpb)
+	if err != nil {
+		return err
+	}
+
+	output, err := ctx.Call(addr, input)
+	if err != nil {
+		return err
+	}
+
+	if outpb != nil {
+		err = proto.Unmarshal(output, outpb)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
