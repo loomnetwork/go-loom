@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+message BigUInt {
+    bytes value = 1;
+}
+
+message Economy {
+    BigUInt total_supply = 1;
+}
+
+message Account {
+    Address owner = 1;
+    BigUInt balance = 2;
+}
+
+message InitRequest {
+    repeated Account accounts = 1;
+}
+
+// ERC20 messages
+// See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
+
+// read only
+message TotalSupplyRequest {
+
+}
+
+message TotalSupplyResponse {
+    BigUInt total_supply = 1;
+}
+
+message BalanceOfRequest {
+    Address owner = 1;
+}
+
+message BalanceOfResponse {
+    BigUInt balance = 1;
+}
+
+message AllowanceRequest {
+    Address owner = 1;
+    Address spender = 2;
+}
+
+message AllowanceResponse {
+    BigUInt remaining = 1;
+}
+
+// volatile
+message ApproveRequest {
+    Address spender = 1;
+    BigUInt amount = 2;
+}
+
+message ApproveResponse {
+
+}
+
+message TransferRequest {
+    Address to = 1;
+    BigUInt amount = 2;
+}
+
+message TransferResponse {
+
+}
+
+message TransferFromRequest {
+    Address from = 1;
+    Address to = 2;
+    BigUInt amount = 3;
+}
+
+message TransferFromResponse {
+
+}

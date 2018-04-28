@@ -1,7 +1,14 @@
 PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local/include
 
-.PHONY: all clean test lint deps proto example-plugins example-plugins-external example-cmds
+.PHONY: all clean test lint deps proto builtin examples example-plugins example-plugins-external example-cmds
+
+all: examples builtin
+
+builtin: contracts/coin.so.1.0.0
+
+contracts/coin.so.1.0.0: builtin/plugins/coin/coin.pb.go
+	go build -o $@ $(PKG)/builtin/plugins/coin
 
 examples: example-plugins example-plugins-external example-cmds
 
@@ -10,25 +17,23 @@ example-cmds: create-tx
 create-tx: examples/types/types.pb.go
 	go build $(PKG)/examples/cmd-plugins/$@
 
-example-plugins: helloworld.so.1.0.0
+example-plugins: contracts/helloworld.so.1.0.0
 
-example-plugins-external: helloworld.1.0.0
+example-plugins-external: contracts/helloworld.1.0.0
 
-helloworld.1.0.0: proto
-	go build -o contracts/$@ $(PKG)/examples/plugins/helloworld
+contracts/helloworld.1.0.0: proto
+	go build -o $@ $(PKG)/examples/plugins/helloworld
 
-helloworld.so.1.0.0: proto
-	go build -buildmode=plugin -o contracts/$@ $(PKG)/examples/plugins/helloworld
+contracts/helloworld.so.1.0.0: proto
+	go build -buildmode=plugin -o $@ $(PKG)/examples/plugins/helloworld
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
 
 %.pb.go: %.proto protoc-gen-gogo
-	$(PROTOC) --gogo_out=\
-plugins=grpc:$(GOPATH)/src \
-$(PKG)/$<
+	$(PROTOC) --gogo_out=plugins=grpc:$(GOPATH)/src $(PKG)/$<
 
-proto: types/types.pb.go testdata/test.pb.go examples/types/types.pb.go
+proto: types/types.pb.go testdata/test.pb.go builtin/plugins/coin/coin.pb.go examples/types/types.pb.go
 
 test: proto
 	go test $(PKG)/...
@@ -52,6 +57,8 @@ clean:
 		types/types.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
+		builtin/plugins/coin/coin.pb.go \
+		contracts/coin.so.1.0.0 \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
 		create-tx
