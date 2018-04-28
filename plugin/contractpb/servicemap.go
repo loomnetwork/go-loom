@@ -153,7 +153,6 @@ func (m *serviceMap) Register(rcvr interface{}, name string) error {
 		}
 		methodSig, err := detMethodSig(method)
 		if err != nil {
-			println(method.Name, err.Error())
 			continue
 		}
 		srvMethod := &serviceMethod{
