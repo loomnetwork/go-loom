@@ -28,6 +28,11 @@ var (
 	typeOfPBMessage     = reflect.TypeOf((*proto.Message)(nil)).Elem()
 )
 
+var (
+	ErrServiceNotFound = errors.New("service not found")
+	ErrMethodNotFound  = errors.New("method not found")
+)
+
 // ----------------------------------------------------------------------------
 // service
 // ----------------------------------------------------------------------------
@@ -191,13 +196,11 @@ func (m *serviceMap) Get(method string) (*service, *serviceMethod, error) {
 	service := m.services[parts[0]]
 	m.mutex.Unlock()
 	if service == nil {
-		err := fmt.Errorf("can't find service %q", method)
-		return nil, nil, err
+		return nil, nil, ErrServiceNotFound
 	}
 	serviceMethod := service.methods[parts[1]]
 	if serviceMethod == nil {
-		err := fmt.Errorf("can't find method %q", method)
-		return nil, nil, err
+		return nil, nil, ErrMethodNotFound
 	}
 	return service, serviceMethod, nil
 }

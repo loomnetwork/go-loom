@@ -3,7 +3,6 @@ package contractpb
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"reflect"
 
 	"github.com/gogo/protobuf/proto"
@@ -38,6 +37,9 @@ func NewRequestDispatcher(contract Contract) (*RequestDispatcher, error) {
 
 func (s *RequestDispatcher) Init(ctx plugin.Context, req *plugin.Request) error {
 	_, err := s.doCall(methodSigInit, &wrappedPluginContext{Context: ctx}, req)
+	if err != ErrMethodNotFound {
+		err = nil
+	}
 	return err
 }
 
@@ -72,7 +74,6 @@ func (s *RequestDispatcher) doCall(sig methodSig, ctx interface{}, req *plugin.R
 	}
 
 	if methodSpec.methodSig != sig {
-		fmt.Printf("%v %v\n", sig, methodSpec.methodSig)
 		return nil, errors.New("method call does not match method signature type")
 	}
 
