@@ -78,19 +78,20 @@ func detMethodSig(method reflect.Method) (methodSig, error) {
 		return methodSigUnknown, errors.New("method does not have correct number of args")
 	}
 
-	switch mtype.NumOut() {
-	case 1:
+	n := mtype.NumOut()
+	switch {
+	case n == 1:
 		firstRet := mtype.Out(0)
 		if !firstRet.Implements(typeOfPBMessage) && !firstRet.Implements(typeOfError) {
 			return methodSigUnknown, errors.New("return value must be proto.Message or error")
 		}
-	case 2:
+	case n == 2:
 		firstRet := mtype.Out(0)
 		secondRet := mtype.Out(1)
 		if !firstRet.Implements(typeOfPBMessage) || !secondRet.Implements(typeOfError) {
 			return methodSigUnknown, errors.New("return value must be proto.Message, error")
 		}
-	default:
+	case n > 2:
 		return methodSigInit, errors.New("methods must have at most 2 return values")
 	}
 
