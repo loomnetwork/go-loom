@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/common"
 	"github.com/loomnetwork/go-loom/plugin"
 	contract "github.com/loomnetwork/go-loom/plugin/contractpb"
 	"github.com/loomnetwork/go-loom/util"
@@ -77,9 +76,9 @@ func (c *Coin) Transfer(ctx contract.Context, req *TransferRequest) error {
 		return err
 	}
 
-	amount := req.Amount.Value.Int
-	fromBalance := fromAccount.Balance.Value.Int
-	toBalance := toAccount.Balance.Value.Int
+	amount := req.Amount.Value
+	fromBalance := fromAccount.Balance.Value
+	toBalance := toAccount.Balance.Value
 
 	if fromBalance.Cmp(&amount) < 0 {
 		return errors.New("sender balance is too low")
@@ -88,8 +87,8 @@ func (c *Coin) Transfer(ctx contract.Context, req *TransferRequest) error {
 	fromBalance.Sub(&fromBalance, &amount)
 	toBalance.Add(&toBalance, &amount)
 
-	fromAccount.Balance.Value = common.NewBigUint(fromBalance)
-	toAccount.Balance.Value = common.NewBigUint(toBalance)
+	fromAccount.Balance.Value = fromBalance
+	toAccount.Balance.Value = toBalance
 	saveAccount(ctx, fromAccount)
 	saveAccount(ctx, toAccount)
 	return nil
