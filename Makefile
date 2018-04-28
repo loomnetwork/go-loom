@@ -52,7 +52,8 @@ deps:
 		github.com/gogo/protobuf/proto \
 		google.golang.org/grpc \
 		github.com/spf13/cobra \
-		github.com/hashicorp/go-plugin
+		github.com/hashicorp/go-plugin \
+		github.com/stretchr/testify/assert
 
 clean:
 	go clean
