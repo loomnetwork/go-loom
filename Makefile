@@ -3,7 +3,7 @@ PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local
 
 .PHONY: all clean test lint deps proto example-plugins example-plugins-external example-cmds
 
-all: example-plugins example-plugins-external example-cmds
+examples: example-plugins example-plugins-external example-cmds
 
 example-cmds: create-tx
 

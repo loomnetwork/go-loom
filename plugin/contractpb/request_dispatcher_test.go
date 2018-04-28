@@ -1,14 +1,16 @@
-package plugin
+package contractpb
 
 import (
 	"bytes"
 	"fmt"
 	"testing"
 
-	"github.com/loomnetwork/go-loom/testdata"
-	"github.com/loomnetwork/go-loom/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/loomnetwork/go-loom/plugin"
+	"github.com/loomnetwork/go-loom/testdata"
+	"github.com/loomnetwork/go-loom/types"
 )
 
 var callArgs = testdata.CallArgs{
@@ -21,28 +23,27 @@ var staticCallArgs = testdata.StaticCallArgs{
 	Name:  "john",
 }
 
-type fakeRequestDispatcherContract struct {
-	RequestDispatcher
+type MockContract struct {
 	t *testing.T
 }
 
-func (c *fakeRequestDispatcherContract) Meta() (Meta, error) {
-	return Meta{
+func (c *MockContract) Meta() (plugin.Meta, error) {
+	return plugin.Meta{
 		Name:    "fakecontract",
 		Version: "0.0.1",
 	}, nil
 }
 
-func (c *fakeRequestDispatcherContract) Init(ctx Context, req *Request) error {
+func (c *MockContract) Init(ctx Context, req *plugin.Request) error {
 	return nil
 }
 
-func (c *fakeRequestDispatcherContract) HandleTx(ctx Context, args *testdata.CallArgs) error {
+func (c *MockContract) HandleTx(ctx Context, args *testdata.CallArgs) error {
 	require.Equal(c.t, &callArgs, args)
 	return nil
 }
 
-func (c *fakeRequestDispatcherContract) HandleQuery(ctx Context, args *testdata.StaticCallArgs) (*testdata.StaticCallResult, error) {
+func (c *MockContract) HandleQuery(ctx StaticContext, args *testdata.StaticCallArgs) (*testdata.StaticCallResult, error) {
 	require.Equal(c.t, &staticCallArgs, args)
 	return &testdata.StaticCallResult{
 		Code:   123,
@@ -50,18 +51,20 @@ func (c *fakeRequestDispatcherContract) HandleQuery(ctx Context, args *testdata.
 	}, nil
 }
 
-func newFakeRequestDispatcherContract(t *testing.T) *fakeRequestDispatcherContract {
-	c := &fakeRequestDispatcherContract{t: t}
-	c.RequestDispatcher.Init(c)
-	return c
+func newFakeRequestDispatcherContract(t *testing.T) *RequestDispatcher {
+	r, err := NewRequestDispatcher(&MockContract{t: t})
+	if err != nil {
+		panic(err)
+	}
+	return r
 }
 
 func TestEmbeddedRequestDispatcherDoesNotRegisterOwnMethods(t *testing.T) {
-	c := newFakeRequestDispatcherContract(t)
 	var err error
-	_, _, err = c.RequestDispatcher.callbacks.Get("fakecontract.Call", false)
+	c := newFakeRequestDispatcherContract(t)
+	_, _, err = c.callbacks.Get("fakecontract.Call")
 	require.NotNil(t, err)
-	_, _, err = c.RequestDispatcher.callbacks.Get("fakecontract.StaticCall", true)
+	_, _, err = c.callbacks.Get("fakecontract.StaticCall")
 	require.NotNil(t, err)
 }
 
@@ -70,7 +73,7 @@ func TestRequestDispatcherCallMethod(t *testing.T) {
 	meta, err := c.Meta()
 	require.Nil(t, err)
 
-	encodings := []EncodingType{EncodingType_JSON, EncodingType_PROTOBUF3}
+	encodings := []plugin.EncodingType{plugin.EncodingType_JSON, plugin.EncodingType_PROTOBUF3}
 
 	for _, encoding := range encodings {
 		marshaler, err := marshalerFactory(encoding)
@@ -87,13 +90,13 @@ func TestRequestDispatcherCallMethod(t *testing.T) {
 		var msgBuffer bytes.Buffer
 		require.Nil(t, marshaler.Marshal(&msgBuffer, msg))
 
-		req := &Request{
+		req := &plugin.Request{
 			ContentType: encoding,
 			Accept:      encoding,
 			Body:        msgBuffer.Bytes(),
 		}
 
-		resp, err := c.Call(CreateFakeContext(), req)
+		resp, err := c.Call(plugin.CreateFakeContext(), req)
 		require.Nil(t, err)
 		require.Equal(t, req.Accept, resp.ContentType)
 	}
@@ -104,7 +107,7 @@ func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 	meta, err := c.Meta()
 	require.Nil(t, err)
 
-	encodings := []EncodingType{EncodingType_JSON, EncodingType_PROTOBUF3}
+	encodings := []plugin.EncodingType{plugin.EncodingType_JSON, plugin.EncodingType_PROTOBUF3}
 
 	for _, encoding := range encodings {
 		marshaler, err := marshalerFactory(encoding)
@@ -121,13 +124,13 @@ func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 		var msgBuffer bytes.Buffer
 		require.Nil(t, marshaler.Marshal(&msgBuffer, msg))
 
-		req := &Request{
+		req := &plugin.Request{
 			ContentType: encoding,
 			Accept:      encoding,
 			Body:        msgBuffer.Bytes(),
 		}
 
-		resp, err := c.StaticCall(CreateFakeContext(), req)
+		resp, err := c.StaticCall(plugin.CreateFakeContext(), req)
 		require.Nil(t, err)
 		require.Equal(t, req.Accept, resp.ContentType)
 

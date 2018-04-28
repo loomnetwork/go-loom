@@ -46,9 +46,9 @@ func (c *CreateTxCmdPlugin) runCmd(cmd *loom.Command, args []string) error {
 		return err
 	}
 	dummyValue := args[0]
-	dummyTx := types.DummyTx{
-		Key: "hello",
-		Val: dummyValue,
+	dummyTx := types.Dummy{
+		Key:   "hello",
+		Value: dummyValue,
 	}
 	txBytes, err := proto.Marshal(&dummyTx)
 	_, privKey, err := ed25519.GenerateKey(nil)

@@ -1,10 +1,9 @@
 package main
 
 import (
-	"encoding/json"
-	"errors"
-
+	"github.com/loomnetwork/go-loom/examples/types"
 	"github.com/loomnetwork/go-loom/plugin"
+	contract "github.com/loomnetwork/go-loom/plugin/contractpb"
 )
 
 type rpcRequest struct {
@@ -24,46 +23,22 @@ func (c *HelloWorld) Meta() (plugin.Meta, error) {
 	}, nil
 }
 
-func (c *HelloWorld) Init(ctx plugin.Context, req *plugin.Request) error {
-	println("init contract")
-	ctx.Set([]byte("foo"), []byte("bar"))
-	return nil
-}
-
-func (c *HelloWorld) Call(ctx plugin.Context, req *plugin.Request) (*plugin.Response, error) {
-	return &plugin.Response{}, nil
-}
-
-func (c *HelloWorld) StaticCall(ctx plugin.StaticContext, req *plugin.Request) (*plugin.Response, error) {
-	rr := &rpcRequest{}
-	if req.ContentType == plugin.EncodingType_JSON {
-		if err := json.Unmarshal(req.Body, rr); err != nil {
-			return nil, err
-		}
-	} else {
-		// content type could also be protobuf
-		return nil, errors.New("unsupported content type")
+func (c *HelloWorld) Init(ctx contract.Context, req *types.HelloRequest) {
+	data := &types.Dummy{
+		Key:   "foo",
+		Value: "bar",
 	}
-	if "hello" == rr.Body {
-		var body []byte
-		var err error
-		if req.Accept == plugin.EncodingType_JSON {
-			body, err = json.Marshal(&rpcResponse{Body: "world"})
-			if err != nil {
-				return nil, err
-			}
-			return &plugin.Response{
-				ContentType: plugin.EncodingType_JSON,
-				Body:        body,
-			}, nil
-		}
-		// accepted content type could also be protobuf
-		return nil, errors.New("unsupported content type")
-	}
-	return nil, errors.New("invalid query")
+
+	ctx.Set([]byte("mydata"), data)
 }
 
-var Contract plugin.Contract = &HelloWorld{}
+func (c *HelloWorld) Hello(ctx contract.StaticContext, req *types.HelloRequest) (*types.HelloResponse, error) {
+	return &types.HelloResponse{
+		Out: "Hello World!",
+	}, nil
+}
+
+var Contract plugin.Contract = contract.MakePluginContract(&HelloWorld{})
 
 func main() {
 	plugin.Serve(Contract)
