@@ -6,13 +6,6 @@ import (
 	contract "github.com/loomnetwork/go-loom/plugin/contractpb"
 )
 
-type rpcRequest struct {
-	Body string `json:"body"`
-}
-type rpcResponse struct {
-	Body string `json:"body"`
-}
-
 type HelloWorld struct {
 }
 
