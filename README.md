@@ -3,6 +3,8 @@ Go package for building Go Smart Contracts  for the Loom SDK
 
 This package is also used for building Clients to DAppChains in the Loom SDK. 
 
+The code that runs the actual DAppChain(sidechain) is in a different repoistory.
+
 ## Requirements
 
 - Go 1.9+
