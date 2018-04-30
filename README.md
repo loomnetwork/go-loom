@@ -25,6 +25,7 @@ make
 ```
 
 To run the blockchain with the Samples
+
 *Note Loom binary is only available to beta testers right now*
 
 ```shell
