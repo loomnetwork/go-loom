@@ -1,0 +1,12 @@
+{
+    "contracts": [
+        {
+            "vm": "plugin",
+            "format": "plugin",
+            "location": "helloworld:1.0.0",
+            "init": {
+
+            }
+        }
+    ]
+}
