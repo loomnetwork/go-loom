@@ -38,3 +38,8 @@ go build -buildmode=plugin -o out/cmds/create-tx.so examples/cmd-plugins/create-
 ```shell
 make proto
 ```
+
+### running tests
+```shell
+make test
+```
