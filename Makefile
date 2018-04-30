@@ -1,14 +1,9 @@
 PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local/include
 
-.PHONY: all clean test lint deps proto builtin examples example-plugins example-plugins-external example-cmds
+.PHONY: all clean test lint deps proto examples example-plugins example-plugins-external example-cmds
 
-all: examples builtin
-
-builtin: contracts/coin.so.1.0.0
-
-contracts/coin.so.1.0.0: builtin/plugins/coin/coin.pb.go
-	go build -o $@ $(PKG)/builtin/plugins/coin
+all: examples
 
 examples: example-plugins example-plugins-external example-cmds
 
@@ -36,7 +31,7 @@ protoc-gen-gogo:
 %.pb.go: %.proto protoc-gen-gogo
 	$(PROTOC) --gogo_out=plugins=grpc:$(GOPATH)/src $(PKG)/$<
 
-proto: types/types.pb.go testdata/test.pb.go builtin/plugins/coin/coin.pb.go examples/types/types.pb.go examples/plugins/lottery/lottery.pb.go
+proto: types/types.pb.go builtin/types/coin/coin.pb.go testdata/test.pb.go examples/types/types.pb.go examples/plugins/lottery/lottery.pb.go
 
 test: proto
 	go test $(PKG)/...
@@ -59,11 +54,10 @@ clean:
 	rm -f \
 		protoc-gen-gogo \
 		types/types.pb.go \
+		builtin/types/coin/coin.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
-		builtin/plugins/coin/coin.pb.go \
 		builtin/plugins/lottery/lottery.pb.go \
-		contracts/coin.so.1.0.0 \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
 		create-tx

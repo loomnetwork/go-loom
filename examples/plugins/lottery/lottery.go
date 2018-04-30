@@ -4,10 +4,20 @@ import (
 	"math/big"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/builtin/plugins/coin"
+	"github.com/loomnetwork/go-loom/builtin/types/coin"
 	"github.com/loomnetwork/go-loom/plugin"
 	contract "github.com/loomnetwork/go-loom/plugin/contractpb"
 )
+
+func UnmarshalBigUIntPB(b *coin.BigUInt) *big.Int {
+	return new(big.Int).SetBytes(b.Value)
+}
+
+func MarshalBigIntPB(b *big.Int) *coin.BigUInt {
+	return &coin.BigUInt{
+		Value: b.Bytes(),
+	}
+}
 
 type Lottery struct {
 }
@@ -17,7 +27,7 @@ var coinContractKey = []byte("coincontract")
 func transfer(ctx contract.Context, coinAddr loom.Address, to loom.Address, amount *big.Int) error {
 	req := &coin.TransferRequest{
 		To:     to.MarshalPB(),
-		Amount: coin.MarshalBigIntPB(amount),
+		Amount: MarshalBigIntPB(amount),
 	}
 
 	return contract.Call(ctx, coinAddr, req, nil)
