@@ -23,7 +23,7 @@ go get github.com/spf13/cobra golang.org/x/crypto github.com/gogo/protobuf
 The example plugins can be built with:
 
 ```shell
-go build -buildmode=plugin -o out/cmds/create-tx.so examples/cmd-plugins/create-tx/main.go
+go build -buildmode=plugin -o out/cmds/create-tx.so examples/cmd-plugins/create-tx/create_tx.go
 ```
 
 ## Development
@@ -37,4 +37,9 @@ go build -buildmode=plugin -o out/cmds/create-tx.so examples/cmd-plugins/create-
 ### Generating protobufs
 ```shell
 make proto
+```
+
+### running tests
+```shell
+make test
 ```

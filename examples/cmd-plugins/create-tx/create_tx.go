@@ -11,6 +11,8 @@ import (
 
 const (
 	nodeUriFlag = "node"
+	rpcPort     = 46657
+	queryPort   = 9999
 )
 
 // CreateTxCmdPlugin is a sample admin CLI cmd plugin that creates a new dummy tx & commits it to the DAppChain.
@@ -41,7 +43,7 @@ func (c *CreateTxCmdPlugin) runCmd(cmd *loom.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	client, err := c.cmdPluginSystem.GetClient(nodeUri)
+	client, err := c.cmdPluginSystem.GetClient(nodeUri, rpcPort, queryPort)
 	if err != nil {
 		return err
 	}

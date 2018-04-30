@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
-// Blockchain Types from tendermint
+// Blockchain Types 
 
 message BlockHeader {
     string chain_id = 1 [(gogoproto.customname)="ChainID"];
