@@ -3,6 +3,7 @@ package common
 import (
 	"bytes"
 	"encoding/hex"
+	"fmt"
 
 	"golang.org/x/crypto/ripemd160"
 	"golang.org/x/crypto/sha3"
@@ -10,10 +11,22 @@ import (
 
 type LocalAddress []byte
 
+// Unmarshal unmarshals protobuf data
+func (a LocalAddress) Unmarshal(b []byte) error {
+	a = b
+	return nil
+}
+
+// Marshal converts to a byte buffer for protobufs
+func (a LocalAddress) Marshal() ([]byte, error) {
+	return []byte(a.String()), nil
+}
+
 // From ethereum with finalized sha3
 // Note: only works with addresses up to 256 bit
 func (a LocalAddress) Hex() string {
 	unchecksummed := hex.EncodeToString(a)
+	fmt.Printf("unchecksummed-%s\n", unchecksummed)
 	sha := sha3.New256()
 	sha.Write([]byte(unchecksummed))
 	hash := sha.Sum(nil)
