@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message SignedTx {
+    bytes inner = 1;
+    bytes signature = 2;
+    bytes public_key = 3;
+}
+
+message NonceTx {
+    bytes inner = 1;
+    uint64 sequence = 2;
+}

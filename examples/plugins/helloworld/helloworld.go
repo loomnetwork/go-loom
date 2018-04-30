@@ -31,6 +31,18 @@ func (c *HelloWorld) Hello(ctx contract.StaticContext, req *types.HelloRequest) 
 	}, nil
 }
 
+func (c *HelloWorld) SetMsg(ctx contract.Context, req *types.Dummy) error {
+	return ctx.Set([]byte(req.Key), req)
+}
+
+func (c *HelloWorld) GetMsg(ctx contract.StaticContext, req *types.Dummy) (*types.Dummy, error) {
+	var result types.Dummy
+	if err := ctx.Get([]byte(req.Key), &result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
 var Contract plugin.Contract = contract.MakePluginContract(&HelloWorld{})
 
 func main() {
