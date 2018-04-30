@@ -4,7 +4,7 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 message BigUInt {
-    bytes value = 1 [(gogoproto.customtype) = "github.com/loomnetwork/go-loom/common.BigUint", (gogoproto.nullable) = false];
+     ProtoType Field = 1 [(gogoproto.customtype) = "github.com/loomnetwork/go-loom/common.BigUint", (gogoproto.nullable) = false];
 }
 
 message Economy {

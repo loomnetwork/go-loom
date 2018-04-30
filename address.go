@@ -19,7 +19,7 @@ func (a Address) String() string {
 }
 
 func (a Address) Bytes() []byte {
-	return util.PrefixKey([]byte(a.ChainID), a.Local.Bytes())
+	return util.PrefixKey([]byte(a.ChainID), []byte(a.Local))
 }
 
 func (a Address) Compare(other Address) int {
@@ -31,7 +31,7 @@ func (a Address) Compare(other Address) int {
 }
 
 func (a Address) IsEmpty() bool {
-	return a.ChainID == "" && len(a.Local.Bytes()) == 0
+	return a.ChainID == "" && len([]byte(a.Local)) == 0
 }
 
 func (a Address) MarshalPB() *types.Address {
