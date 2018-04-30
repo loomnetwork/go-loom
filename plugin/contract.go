@@ -26,6 +26,7 @@ type Message struct {
 
 type StaticAPI interface {
 	StaticCall(addr loom.Address, input []byte) ([]byte, error)
+	Resolve(name string) (loom.Address, error)
 	Emit(event []byte)
 }
 

@@ -137,6 +137,14 @@ message CallResponse {
     bytes output = 1;
 }
 
+message ResolveRequest {
+    string name = 1;
+}
+
+message ResolveResponse {
+    Address address = 1;
+}
+
 message EmitRequest {
     bytes data = 1;
 }
@@ -163,6 +171,7 @@ service API {
     rpc Get(GetRequest) returns (GetResponse);
     rpc Has(HasRequest) returns (HasResponse);
     rpc StaticCall(CallRequest) returns (CallResponse);
+    rpc Resolve(ResolveRequest) returns (ResolveResponse);
     rpc Emit(EmitRequest) returns (EmitResponse);
 
     rpc Set(SetRequest) returns (SetResponse);

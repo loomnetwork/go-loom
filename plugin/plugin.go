@@ -65,6 +65,17 @@ func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
 	return resp.Output, nil
 }
 
+func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
+	resp, err := c.client.Resolve(context.TODO(), &types.ResolveRequest{
+		Name: name,
+	})
+	if err != nil {
+		return loom.Address{}, err
+	}
+
+	return loom.UnmarshalAddressPB(resp.Address), nil
+}
+
 type GRPCContext struct {
 	*GRPCAPIClient
 	message      *types.Message

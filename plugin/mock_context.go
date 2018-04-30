@@ -25,6 +25,10 @@ func (c FakeContext) StaticCall(addr loom.Address, input []byte) ([]byte, error)
 	return nil, nil
 }
 
+func (c FakeContext) Resolve(name string) (loom.Address, error) {
+	return loom.Address{}, nil
+}
+
 func (c FakeContext) Message() Message {
 	return Message{
 		Sender: loom.Address{},
