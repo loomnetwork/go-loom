@@ -33,6 +33,14 @@ func (c *GRPCAPIClient) Has(key []byte) bool {
 	return resp.Value
 }
 
+func (c *GRPCAPIClient) ValidatorPower(pubKey []byte) int64 {
+	resp, _ := c.client.ValidatorPower(context.TODO(), &types.ValidatorPowerRequest{
+		PubKey: pubKey,
+	})
+
+	return resp.Power
+}
+
 func (c *GRPCAPIClient) Set(key, value []byte) {
 	c.client.Set(context.TODO(), &types.SetRequest{Key: key})
 }
@@ -53,6 +61,17 @@ func (c *GRPCAPIClient) StaticCall(addr loom.Address, input []byte) ([]byte, err
 	return resp.Output, nil
 }
 
+func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
+	resp, err := c.client.Resolve(context.TODO(), &types.ResolveRequest{
+		Name: name,
+	})
+	if err != nil {
+		return loom.Address{}, err
+	}
+
+	return loom.UnmarshalAddressPB(resp.Address), nil
+}
+
 func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
 	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
 		Address: addr.MarshalPB(),
@@ -65,15 +84,11 @@ func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
 	return resp.Output, nil
 }
 
-func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
-	resp, err := c.client.Resolve(context.TODO(), &types.ResolveRequest{
-		Name: name,
+func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
+	c.client.SetValidatorPower(context.TODO(), &types.SetValidatorPowerRequest{
+		PubKey: pubKey,
+		Power:  power,
 	})
-	if err != nil {
-		return loom.Address{}, err
-	}
-
-	return loom.UnmarshalAddressPB(resp.Address), nil
 }
 
 type GRPCContext struct {

@@ -2,10 +2,6 @@ syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
-message BigUInt {
-    bytes value = 1;
-}
-
 message Economy {
     BigUInt total_supply = 1;
 }

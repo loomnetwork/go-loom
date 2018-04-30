@@ -9,12 +9,12 @@ import (
 	contract "github.com/loomnetwork/go-loom/plugin/contractpb"
 )
 
-func UnmarshalBigUIntPB(b *coin.BigUInt) *big.Int {
+func UnmarshalBigUIntPB(b *loom.BigUInt) *big.Int {
 	return new(big.Int).SetBytes(b.Value)
 }
 
-func MarshalBigIntPB(b *big.Int) *coin.BigUInt {
-	return &coin.BigUInt{
+func MarshalBigIntPB(b *big.Int) *loom.BigUInt {
+	return &loom.BigUInt{
 		Value: b.Bytes(),
 	}
 }

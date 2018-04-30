@@ -29,6 +29,10 @@ func (c FakeContext) Resolve(name string) (loom.Address, error) {
 	return loom.Address{}, nil
 }
 
+func (c FakeContext) ValidatorPower(pubKey []byte) int64 {
+	return 0
+}
+
 func (c FakeContext) Message() Message {
 	return Message{
 		Sender: loom.Address{},
@@ -65,4 +69,7 @@ func (c FakeContext) Set(key []byte, value []byte) {
 }
 
 func (c FakeContext) Delete(key []byte) {
+}
+
+func (c FakeContext) SetValidatorPower(pubKey []byte, power int64) {
 }

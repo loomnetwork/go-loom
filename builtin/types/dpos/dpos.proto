@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+message UpVote {
+    bytes witness_pub_key = 1;
+    BigUInt amount = 2;
+}
+
+message DownVote {
+    bytes witness_pub_key = 1;
+    BigUInt amount = 2;
+}
+
+message ProxyVote {
+    Address delegate = 1;
+    BigUInt amount = 2;
+}
+
+message UnproxyVote {
+    Address delegate = 1;
+    BigUInt amount = 2;
+}
