@@ -10,7 +10,7 @@ examples: example-plugins example-plugins-external example-cmds
 example-cmds: create-tx
 
 create-tx: examples/types/types.pb.go
-	go build $(PKG)/examples/cmd-plugins/$@
+	go build -buildmode=plugin -o out/cmds/create-tx.so  $(PKG)/examples/cmd-plugins/$@
 
 example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
@@ -61,4 +61,5 @@ clean:
 		builtin/plugins/lottery/lottery.pb.go \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
+		out/cmds/create-tx.so \
 		create-tx

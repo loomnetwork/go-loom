@@ -14,16 +14,14 @@ The code that runs the actual DAppChain(sidechain) is in a different repoistory.
 
 ```bash
 go get github.com/loomnetwork/go-loom
-# dependencies
-go get github.com/spf13/cobra golang.org/x/crypto github.com/gogo/protobuf
 ```
 
 ## Examples
 
-The example plugins can be built with:
-
+The example smart contracts can be built with:
 ```shell
-go build -buildmode=plugin -o out/cmds/create-tx.so examples/cmd-plugins/create-tx/create_tx.go
+make deps
+make
 ```
 
 To run the blockchain with the Samples
