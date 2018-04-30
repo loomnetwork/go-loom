@@ -1,7 +1,6 @@
 package common
 
 import (
-	"fmt"
 	"math/big"
 )
 
@@ -12,7 +11,6 @@ type BigUint struct {
 
 // Unmarshal unmarshals protobuf data
 func (b *BigUint) Unmarshal(by []byte) error {
-	fmt.Printf("unmarshal bytes-%v\n", by)
 	b.Int = big.NewInt(0).SetBytes(by)
 	return nil
 }

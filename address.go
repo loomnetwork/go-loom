@@ -19,7 +19,7 @@ func (a Address) String() string {
 }
 
 func (a Address) Bytes() []byte {
-	return util.PrefixKey([]byte(a.ChainID), a.Local)
+	return util.PrefixKey([]byte(a.ChainID), a.Local.Bytes())
 }
 
 func (a Address) Compare(other Address) int {
@@ -31,13 +31,13 @@ func (a Address) Compare(other Address) int {
 }
 
 func (a Address) IsEmpty() bool {
-	return a.ChainID == "" && len(a.Local) == 0
+	return a.ChainID == "" && len(a.Local.Bytes()) == 0
 }
 
 func (a Address) MarshalPB() *types.Address {
 	return &types.Address{
 		ChainId: a.ChainID,
-		Local:   []byte(a.Local),
+		Local:   a.Local,
 	}
 }
 
@@ -51,6 +51,6 @@ func UnmarshalAddressPB(pb *types.Address) Address {
 func RootAddress(chainID string) Address {
 	return Address{
 		ChainID: chainID,
-		Local:   make([]byte, 20, 20),
+		Local:   common.LocalAddressFromBytes(make([]byte, 20, 20)),
 	}
 }
