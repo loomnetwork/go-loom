@@ -1,4 +1,4 @@
-package loomplugin
+package loom
 
 import (
 	"bytes"

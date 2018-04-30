@@ -1,6 +1,8 @@
-package loomplugin
+package loom
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/spf13/cobra"
+)
 
 // Command is an alias for cobra.Command that must be used in cmd plugins in order to avoid type
 // collisions with the Loom SDK.

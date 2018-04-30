@@ -1,6 +1,8 @@
-package loomplugin
+package loom
 
-import "golang.org/x/crypto/ed25519"
+import (
+	"golang.org/x/crypto/ed25519"
+)
 
 // Signer interface is used to sign transactions.
 type Signer interface {
