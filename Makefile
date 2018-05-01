@@ -33,6 +33,8 @@ protoc-gen-gogo:
 
 proto: \
 	types/types.pb.go \
+	auth/auth.pb.go \
+	vm/vm.pb.go \
 	builtin/types/coin/coin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
 	testdata/test.pb.go \
@@ -61,6 +63,8 @@ clean:
 	rm -f \
 		protoc-gen-gogo \
 		types/types.pb.go \
+		auth/auth.pb.go \
+		vm/vm.pb.go \
 		builtin/types/coin/coin.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
