@@ -1,0 +1,128 @@
+package client
+
+import (
+	"encoding/hex"
+	"errors"
+	"strconv"
+
+	"github.com/gogo/protobuf/proto"
+	"github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/auth"
+)
+
+type TxHandlerResult struct {
+	Code  int32  `json:"code"`
+	Error string `json:"log"`
+	Data  []byte `json:"data"`
+}
+
+type BroadcastTxCommitResult struct {
+	CheckTx   TxHandlerResult `json:"check_tx"`
+	DeliverTx TxHandlerResult `json:"deliver_tx"`
+	Hash      string          `json:"hash"`
+	Height    int64           `json:"height"`
+}
+
+// Implements the DAppChainClient interface
+type DAppChainRPCClient struct {
+	chainID       string
+	writeURI      string
+	readURI       string
+	txClient      *JSONRPCClient
+	queryClient   *JSONRPCClient
+	nextRequestID uint64
+}
+
+// NewDAppChainRPCClient creates a new dumb client that can be used to commit txs and query contract
+// state via RPC.
+// URI parameters should be specified as "tcp://<host>:<port>", writeURI the host that txs will be
+// submitted to (port 46657 by default), readURI is the host that will be queried for current app
+// state (47000 by default).
+func NewDAppChainRPCClient(chainID, writeURI, readURI string) *DAppChainRPCClient {
+	return &DAppChainRPCClient{
+		chainID:       chainID,
+		writeURI:      writeURI,
+		readURI:       readURI,
+		txClient:      NewJSONRPCClient(writeURI),
+		queryClient:   NewJSONRPCClient(readURI),
+		nextRequestID: 1,
+	}
+}
+
+func (c *DAppChainRPCClient) getNextRequestID() string {
+	id := strconv.FormatUint(c.nextRequestID, 10)
+	c.nextRequestID++
+	return id
+}
+
+func (c *DAppChainRPCClient) GetChainID() string {
+	return c.chainID
+}
+
+func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
+	params := map[string]interface{}{
+		"key": hex.EncodeToString(signer.PublicKey()),
+	}
+	var r uint64
+	err := c.queryClient.Call("nonce", params, c.getNextRequestID(), &r)
+	return r, err
+}
+
+func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
+	// TODO: signing & noncing should be handled by middleware
+	nonce, err := c.GetNonce(signer)
+	if err != nil {
+		return nil, err
+	}
+	txBytes, err := proto.Marshal(tx)
+	if err != nil {
+		return nil, err
+	}
+	nonceTxBytes, err := proto.Marshal(&auth.NonceTx{
+		Inner:    txBytes,
+		Sequence: nonce + 1,
+	})
+	if err != nil {
+		return nil, err
+	}
+	signedTxBytes, err := proto.Marshal(auth.SignTx(signer, nonceTxBytes))
+	if err != nil {
+		return nil, err
+	}
+	params := map[string]interface{}{
+		"tx": signedTxBytes,
+	}
+	var r BroadcastTxCommitResult
+	if err = c.txClient.Call("broadcast_tx_commit", params, c.getNextRequestID(), &r); err != nil {
+		return nil, err
+	}
+	if r.CheckTx.Code != 0 {
+		if len(r.CheckTx.Error) != 0 {
+			return nil, errors.New(r.CheckTx.Error)
+		}
+		return nil, errors.New("CheckTx failed")
+	}
+	if r.DeliverTx.Code != 0 {
+		if len(r.DeliverTx.Error) != 0 {
+			return nil, errors.New(r.DeliverTx.Error)
+		}
+		return nil, errors.New("DeliverTx failed")
+	}
+	return r.DeliverTx.Data, nil
+}
+
+func (c *DAppChainRPCClient) Query(contractAddr loom.LocalAddress, query proto.Message) ([]byte, error) {
+	queryBytes, err := proto.Marshal(query)
+	if err != nil {
+		return nil, err
+	}
+	params := map[string]interface{}{
+		"contract": contractAddr.String(),
+		"query":    queryBytes,
+	}
+	var r []byte
+	if err = c.queryClient.Call("query", params, c.getNextRequestID(), &r); err != nil {
+		return nil, err
+	}
+	return r, nil
+}

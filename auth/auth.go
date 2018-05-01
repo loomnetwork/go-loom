@@ -1,8 +1,6 @@
-package loom
+package auth
 
-import (
-	"golang.org/x/crypto/ed25519"
-)
+import "golang.org/x/crypto/ed25519"
 
 // Signer interface is used to sign transactions.
 type Signer interface {
@@ -25,4 +23,13 @@ func (s *Ed25519Signer) Sign(msg []byte) []byte {
 
 func (s *Ed25519Signer) PublicKey() []byte {
 	return []byte(s.privateKey.Public().(ed25519.PublicKey))
+}
+
+// SignTx generates a signed tx containing the given bytes.
+func SignTx(signer Signer, txBytes []byte) *SignedTx {
+	return &SignedTx{
+		Inner:     txBytes,
+		Signature: signer.Sign(txBytes),
+		PublicKey: signer.PublicKey(),
+	}
 }

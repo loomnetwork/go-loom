@@ -3,14 +3,14 @@ package loom
 import (
 	"bytes"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"strings"
 
-	"golang.org/x/crypto/ripemd160"
-	"golang.org/x/crypto/sha3"
-
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
+	"golang.org/x/crypto/ripemd160"
+	"golang.org/x/crypto/sha3"
 )
 
 type LocalAddress []byte
@@ -44,6 +44,20 @@ func (a LocalAddress) String() string {
 
 func (a LocalAddress) Compare(other LocalAddress) int {
 	return bytes.Compare([]byte(a), []byte(other))
+}
+
+func LocalAddressFromHexString(hexAddr string) (LocalAddress, error) {
+	if !strings.HasPrefix(hexAddr, "0x") {
+		return nil, errors.New("hexAddr string has no 0x prefix")
+	}
+	bytes, err := hex.DecodeString(hexAddr[2:])
+	if err != nil {
+		return nil, err
+	}
+	if len(bytes) != 20 {
+		return nil, fmt.Errorf("invalid local address %v", bytes)
+	}
+	return LocalAddress(bytes), nil
 }
 
 func LocalAddressFromPublicKey(pubKey []byte) LocalAddress {
