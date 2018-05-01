@@ -8,6 +8,8 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
+	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/vm"
 )
 
 type TxHandlerResult struct {
@@ -125,4 +127,63 @@ func (c *DAppChainRPCClient) Query(contractAddr loom.LocalAddress, query proto.M
 		return nil, err
 	}
 	return r, nil
+}
+
+func (c *DAppChainRPCClient) CommitDeployTx(
+	from loom.Address,
+	signer auth.Signer,
+	vmType vm.VMType,
+	code []byte,
+) ([]byte, error) {
+	deployTxBytes, err := proto.Marshal(&vm.DeployTx{
+		VmType: vmType,
+		Code:   code,
+	})
+	if err != nil {
+		return nil, err
+	}
+	msgBytes, err := proto.Marshal(&vm.MessageTx{
+		From: from.MarshalPB(),
+		To:   loom.Address{}.MarshalPB(), // not used
+		Data: deployTxBytes,
+	})
+	if err != nil {
+		return nil, err
+	}
+	tx := &types.Transaction{
+		Id:   1,
+		Data: msgBytes,
+	}
+	return c.CommitTx(signer, tx)
+}
+
+func (c *DAppChainRPCClient) CommitCallTx(
+	caller loom.Address,
+	contract loom.Address,
+	signer auth.Signer,
+	vmType vm.VMType,
+	input []byte,
+) ([]byte, error) {
+	callTxBytes, err := proto.Marshal(&vm.CallTx{
+		VmType: vm.VMType(vmType),
+		Input:  input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	msgTx := &vm.MessageTx{
+		From: caller.MarshalPB(),
+		To:   contract.MarshalPB(),
+		Data: callTxBytes,
+	}
+	msgBytes, err := proto.Marshal(msgTx)
+	if err != nil {
+		return nil, err
+	}
+	// tx ids associated with handlers in loadApp()
+	tx := &types.Transaction{
+		Id:   2,
+		Data: msgBytes,
+	}
+	return c.CommitTx(signer, tx)
 }
