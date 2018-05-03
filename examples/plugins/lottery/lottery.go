@@ -24,12 +24,16 @@ type Lottery struct {
 
 var coinContractKey = []byte("coincontract")
 
-func transfer(ctx contract.Context, coinAddr loom.Address, to loom.Address, amount *big.Int) error {
+func transfer(ctx contract.Context, to loom.Address, amount *big.Int) error {
 	req := &coin.TransferRequest{
 		To:     to.MarshalPB(),
 		Amount: MarshalBigIntPB(amount),
 	}
 
+	coinAddr, err := ctx.Resolve("coin")
+	if err != nil {
+		return err
+	}
 	return contract.Call(ctx, coinAddr, req, nil)
 }
 
@@ -41,9 +45,8 @@ func (c *Lottery) Meta() (plugin.Meta, error) {
 }
 
 func (c *Lottery) Init(ctx contract.Context, req *LotteryInit) {
-	coinAddr := loom.UnmarshalAddressPB(req.CoinContract)
 	winnerAddr := loom.UnmarshalAddressPB(req.Winner)
-	transfer(ctx, coinAddr, winnerAddr, big.NewInt(1000))
+	transfer(ctx, winnerAddr, big.NewInt(1000))
 }
 
 var Contract plugin.Contract = contract.MakePluginContract(&Lottery{})

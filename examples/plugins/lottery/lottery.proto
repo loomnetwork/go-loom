@@ -3,6 +3,5 @@ syntax = "proto3";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
 message LotteryInit {
-    Address coin_contract = 1;
     Address winner = 2;
 }
