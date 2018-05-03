@@ -1,33 +1,22 @@
 package lottery
 
 import (
-	"math/big"
-
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/builtin/types/coin"
 	"github.com/loomnetwork/go-loom/plugin"
 	contract "github.com/loomnetwork/go-loom/plugin/contractpb"
+	"github.com/loomnetwork/go-loom/types"
 )
-
-func UnmarshalBigUIntPB(b *loom.BigUInt) *big.Int {
-	return new(big.Int).SetBytes(b.Value)
-}
-
-func MarshalBigIntPB(b *big.Int) *loom.BigUInt {
-	return &loom.BigUInt{
-		Value: b.Bytes(),
-	}
-}
 
 type Lottery struct {
 }
 
 var coinContractKey = []byte("coincontract")
 
-func transfer(ctx contract.Context, to loom.Address, amount *big.Int) error {
+func transfer(ctx contract.Context, to loom.Address, amount *loom.BigUInt) error {
 	req := &coin.TransferRequest{
 		To:     to.MarshalPB(),
-		Amount: MarshalBigIntPB(amount),
+		Amount: &types.BigUInt{*amount},
 	}
 
 	coinAddr, err := ctx.Resolve("coin")
@@ -46,7 +35,7 @@ func (c *Lottery) Meta() (plugin.Meta, error) {
 
 func (c *Lottery) Init(ctx contract.Context, req *LotteryInit) {
 	winnerAddr := loom.UnmarshalAddressPB(req.Winner)
-	transfer(ctx, winnerAddr, big.NewInt(1000))
+	transfer(ctx, winnerAddr, loom.NewBigUIntFromInt(1000))
 }
 
 var Contract plugin.Contract = contract.MakePluginContract(&Lottery{})

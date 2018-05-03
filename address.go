@@ -1,50 +1,19 @@
 package loom
 
 import (
-	"bytes"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"strings"
 
+	"golang.org/x/crypto/ripemd160"
+
+	"github.com/loomnetwork/go-loom/common"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
-	"golang.org/x/crypto/ripemd160"
-	"golang.org/x/crypto/sha3"
 )
 
-type LocalAddress []byte
-
-// From ethereum with finalized sha3
-// Note: only works with addresses up to 256 bit
-func (a LocalAddress) Hex() string {
-	unchecksummed := hex.EncodeToString(a)
-	sha := sha3.New256()
-	sha.Write([]byte(unchecksummed))
-	hash := sha.Sum(nil)
-
-	result := []byte(unchecksummed)
-	for i := 0; i < len(result); i++ {
-		hashByte := hash[i/2]
-		if i%2 == 0 {
-			hashByte = hashByte >> 4
-		} else {
-			hashByte &= 0xf
-		}
-		if result[i] > '9' && hashByte > 7 {
-			result[i] -= 32
-		}
-	}
-	return string(result)
-}
-
-func (a LocalAddress) String() string {
-	return "0x" + a.Hex()
-}
-
-func (a LocalAddress) Compare(other LocalAddress) int {
-	return bytes.Compare([]byte(a), []byte(other))
-}
+type LocalAddress = common.LocalAddress
 
 func LocalAddressFromHexString(hexAddr string) (LocalAddress, error) {
 	if !strings.HasPrefix(hexAddr, "0x") {
@@ -94,14 +63,14 @@ func (a Address) IsEmpty() bool {
 func (a Address) MarshalPB() *types.Address {
 	return &types.Address{
 		ChainId: a.ChainID,
-		Local:   []byte(a.Local),
+		Local:   a.Local,
 	}
 }
 
 func UnmarshalAddressPB(pb *types.Address) Address {
 	return Address{
 		ChainID: pb.ChainId,
-		Local:   LocalAddress(pb.Local),
+		Local:   pb.Local,
 	}
 }
 

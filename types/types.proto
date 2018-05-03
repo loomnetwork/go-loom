@@ -39,12 +39,12 @@ message Evidence {
 // Generic Loom data structures
 
 message BigUInt {
-    bytes value = 1;
+    bytes Value = 1 [(gogoproto.customtype) = "github.com/loomnetwork/go-loom/common.BigUInt", (gogoproto.nullable) = false];
 }
 
 message Address {
     string chain_id = 1;
-    bytes local = 2;
+    bytes local = 2 [(gogoproto.customtype) = "github.com/loomnetwork/go-loom/common.LocalAddress", (gogoproto.nullable) = false];
 }
 
 message Transaction {
