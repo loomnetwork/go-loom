@@ -42,7 +42,7 @@ func (c *GRPCAPIClient) ValidatorPower(pubKey []byte) int64 {
 }
 
 func (c *GRPCAPIClient) Set(key, value []byte) {
-	c.client.Set(context.TODO(), &types.SetRequest{Key: key})
+	c.client.Set(context.TODO(), &types.SetRequest{Key: key, Value: value})
 }
 
 func (c *GRPCAPIClient) Delete(key []byte) {
