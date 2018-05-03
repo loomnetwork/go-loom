@@ -27,3 +27,9 @@ message DeployResponse {
     Address contract = 1;
     bytes output = 2;
 }
+
+message Event {
+    Address contract = 1;
+    repeated bytes topics = 2;
+    bytes data = 3;
+}
