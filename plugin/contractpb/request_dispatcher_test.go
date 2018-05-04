@@ -8,20 +8,25 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin"
 	"github.com/loomnetwork/go-loom/testdata"
 	"github.com/loomnetwork/go-loom/types"
 )
 
-var callArgs = testdata.CallArgs{
-	Key:   "test",
-	Value: 12345,
-}
+var (
+	callArgs = testdata.CallArgs{
+		Key:   "test",
+		Value: 12345,
+	}
 
-var staticCallArgs = testdata.StaticCallArgs{
-	Index: 5,
-	Name:  "john",
-}
+	staticCallArgs = testdata.StaticCallArgs{
+		Index: 5,
+		Name:  "john",
+	}
+
+	addr1 = loom.MustParseAddress("chain:b16a379ec18d4093666f8f38b11a3071c920207d")
+)
 
 type MockContract struct {
 	t *testing.T
@@ -96,7 +101,7 @@ func TestRequestDispatcherCallMethod(t *testing.T) {
 			Body:        msgBuffer.Bytes(),
 		}
 
-		resp, err := c.Call(plugin.CreateFakeContext(), req)
+		resp, err := c.Call(plugin.CreateFakeContext(addr1, addr1), req)
 		require.Nil(t, err)
 		require.Equal(t, req.Accept, resp.ContentType)
 	}
@@ -130,7 +135,7 @@ func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 			Body:        msgBuffer.Bytes(),
 		}
 
-		resp, err := c.StaticCall(plugin.CreateFakeContext(), req)
+		resp, err := c.StaticCall(plugin.CreateFakeContext(addr1, addr1), req)
 		require.Nil(t, err)
 		require.Equal(t, req.Accept, resp.ContentType)
 

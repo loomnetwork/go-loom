@@ -13,8 +13,12 @@ type FakeContext struct {
 	data    map[string][]byte
 }
 
-func CreateFakeContext() Context {
-	return &FakeContext{data: make(map[string][]byte)}
+func CreateFakeContext(caller, address loom.Address) Context {
+	return &FakeContext{
+		caller:  caller,
+		address: address,
+		data:    make(map[string][]byte),
+	}
 }
 
 func (c FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
@@ -35,7 +39,7 @@ func (c FakeContext) ValidatorPower(pubKey []byte) int64 {
 
 func (c FakeContext) Message() Message {
 	return Message{
-		Sender: loom.Address{},
+		Sender: c.caller,
 	}
 }
 

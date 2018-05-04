@@ -103,3 +103,7 @@ func Call(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.Messag
 
 	return nil
 }
+
+func WrapPluginContext(ctx plugin.Context) Context {
+	return &wrappedPluginContext{ctx}
+}

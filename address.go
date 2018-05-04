@@ -13,6 +13,10 @@ import (
 	"github.com/loomnetwork/go-loom/util"
 )
 
+var (
+	ErrInvalidAddress = errors.New("invalid address")
+)
+
 type LocalAddress = common.LocalAddress
 
 func LocalAddressFromHexString(hexAddr string) (LocalAddress, error) {
@@ -79,4 +83,27 @@ func RootAddress(chainID string) Address {
 		ChainID: chainID,
 		Local:   make([]byte, 20, 20),
 	}
+}
+
+// ParseAddress parses an address generated from String()
+func ParseAddress(s string) (Address, error) {
+	parts := strings.SplitN(s, ":", 2)
+	if len(parts) != 2 {
+		return Address{}, ErrInvalidAddress
+	}
+
+	local, err := hex.DecodeString(parts[1])
+	if err != nil {
+		return Address{}, ErrInvalidAddress
+	}
+
+	return Address{ChainID: parts[0], Local: local}, nil
+}
+
+func MustParseAddress(s string) Address {
+	addr, err := ParseAddress(s)
+	if err != nil {
+		panic(err)
+	}
+	return addr
 }
