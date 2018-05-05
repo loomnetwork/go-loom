@@ -11,6 +11,12 @@ message Account {
     BigUInt balance = 2;
 }
 
+message Allowance {
+    Address owner = 1;
+    Address spender = 2;
+    BigUInt amount = 3;
+}
+
 message InitRequest {
     repeated Account accounts = 1;
 }
@@ -41,7 +47,7 @@ message AllowanceRequest {
 }
 
 message AllowanceResponse {
-    BigUInt remaining = 1;
+    BigUInt amount = 1;
 }
 
 // volatile
