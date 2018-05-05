@@ -5,11 +5,19 @@ import (
 	"syscall"
 )
 
-func PrefixKey(prefix, key []byte) []byte {
-	buf := make([]byte, 0, len(prefix)+len(key)+1)
-	buf = append(buf, prefix...)
-	buf = append(buf, 0)
-	buf = append(buf, key...)
+func PrefixKey(keys ...[]byte) []byte {
+	size := len(keys) - 1
+	for _, key := range keys {
+		size += len(key)
+	}
+	buf := make([]byte, 0, size)
+
+	for i, key := range keys {
+		if i > 0 {
+			buf = append(buf, 0)
+		}
+		buf = append(buf, key...)
+	}
 	return buf
 }
 
