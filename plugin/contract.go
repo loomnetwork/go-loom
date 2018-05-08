@@ -4,15 +4,15 @@ import (
 	"time"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/plugin/types"
 )
 
 type (
-	Request      = types.Request
-	Response     = types.Response
-	Meta         = types.ContractMeta
-	BlockHeader  = types.BlockHeader
-	EncodingType = types.EncodingType
+	Request            = types.Request
+	Response           = types.Response
+	Meta               = types.ContractMeta
+	EncodingType       = types.EncodingType
+	ContractMethodCall = types.ContractMethodCall
 )
 
 var (
@@ -47,7 +47,7 @@ type StaticContext interface {
 	StaticAPI
 	Get(key []byte) []byte
 	Has(key []byte) bool
-	Block() BlockHeader
+	Block() loom.BlockHeader
 	Now() time.Time
 	Message() Message
 	ContractAddress() loom.Address

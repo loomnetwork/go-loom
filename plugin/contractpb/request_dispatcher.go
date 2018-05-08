@@ -7,7 +7,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom/plugin"
-	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/plugin/types"
 )
 
 // RequestDispatcher dispatches Request(s) to contract methods.

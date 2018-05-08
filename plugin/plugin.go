@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/plugin/types"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
@@ -94,13 +94,13 @@ func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
 type GRPCContext struct {
 	*GRPCAPIClient
 	message      *types.Message
-	block        *types.BlockHeader
-	contractAddr *types.Address
+	block        *loom.BlockHeader
+	contractAddr loom.Address
 }
 
 var _ Context = &GRPCContext{}
 
-func (c *GRPCContext) Block() types.BlockHeader {
+func (c *GRPCContext) Block() loom.BlockHeader {
 	return *c.block
 }
 
@@ -109,7 +109,7 @@ func (c *GRPCContext) Now() time.Time {
 }
 
 func (c *GRPCContext) ContractAddress() loom.Address {
-	return loom.UnmarshalAddressPB(c.contractAddr)
+	return c.contractAddr
 }
 
 func (c *GRPCContext) Message() Message {
@@ -128,7 +128,7 @@ func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRP
 		},
 		message:      req.Message,
 		block:        req.Block,
-		contractAddr: req.ContractAddress,
+		contractAddr: loom.UnmarshalAddressPB(req.ContractAddress),
 	}
 }
 

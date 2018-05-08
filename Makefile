@@ -35,6 +35,7 @@ proto: \
 	types/types.pb.go \
 	auth/auth.pb.go \
 	vm/vm.pb.go \
+	plugin/types/types.pb.go \
 	builtin/types/coin/coin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
 	testdata/test.pb.go \
@@ -72,4 +73,3 @@ clean:
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
 		out/cmds/cli \
-
