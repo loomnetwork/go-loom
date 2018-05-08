@@ -77,7 +77,7 @@ func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType) 
 	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
 		Address: addr.MarshalPB(),
 		Input:   input,
-		VmType:  vm.VMType_PLUGIN,
+		VmType:  vmType,
 	})
 	if err != nil {
 		return nil, err
