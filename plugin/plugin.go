@@ -10,6 +10,7 @@ import (
 
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
+	"github.com/loomnetwork/go-loom/vm"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
@@ -72,16 +73,25 @@ func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
 	return loom.UnmarshalAddressPB(resp.Address), nil
 }
 
-func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
+func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType) ([]byte, error) {
 	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
 		Address: addr.MarshalPB(),
 		Input:   input,
+		VmType:  vm.VMType_PLUGIN,
 	})
 	if err != nil {
 		return nil, err
 	}
 
 	return resp.Output, nil
+}
+
+func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
+	return c.call(addr, input, vm.VMType_PLUGIN)
+}
+
+func (c *GRPCAPIClient) CallEVM(addr loom.Address, input []byte) ([]byte, error) {
+	return c.call(addr, input, vm.VMType_EVM)
 }
 
 func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {

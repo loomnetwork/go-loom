@@ -13,6 +13,7 @@ type (
 	Meta               = types.ContractMeta
 	EncodingType       = types.EncodingType
 	ContractMethodCall = types.ContractMethodCall
+	Code               = types.PluginCode
 )
 
 var (
@@ -33,6 +34,7 @@ type StaticAPI interface {
 
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
+	CallEVM(addr loom.Address, input []byte) ([]byte, error)
 
 	// Privileged API
 	SetValidatorPower(pubKey []byte, power int64)

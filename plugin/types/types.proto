@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/loomnetwork/go-loom/vm/vm.proto";
 
 // Contract specific data structures
 
@@ -36,7 +37,7 @@ message ContractMeta {
 
 message ContractMethodCall {
 	string method = 1;
-	bytes args = 2;
+    bytes args = 2;
 }
 
 // Wrapped types for GRPC
@@ -93,6 +94,7 @@ message ValidatorPowerResponse {
 message CallRequest {
     Address address = 1;
     bytes input = 2;
+    VMType vm_type = 3;
 }
 
 message CallResponse {
