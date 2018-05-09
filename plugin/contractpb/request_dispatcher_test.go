@@ -11,7 +11,6 @@ import (
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin"
 	"github.com/loomnetwork/go-loom/testdata"
-	"github.com/loomnetwork/go-loom/types"
 )
 
 var (
@@ -87,7 +86,7 @@ func TestRequestDispatcherCallMethod(t *testing.T) {
 		var argsBuffer bytes.Buffer
 		require.Nil(t, marshaler.Marshal(&argsBuffer, &callArgs))
 
-		msg := &types.ContractMethodCall{
+		msg := &plugin.ContractMethodCall{
 			Method: fmt.Sprintf("%s.HandleTx", meta.Name),
 			Args:   argsBuffer.Bytes(),
 		}
@@ -121,7 +120,7 @@ func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 		var argsBuffer bytes.Buffer
 		require.Nil(t, marshaler.Marshal(&argsBuffer, &staticCallArgs))
 
-		msg := &types.ContractMethodCall{
+		msg := &plugin.ContractMethodCall{
 			Method: fmt.Sprintf("%s.HandleQuery", meta.Name),
 			Args:   argsBuffer.Bytes(),
 		}

@@ -19,7 +19,7 @@ type StaticContext interface {
 	plugin.StaticAPI
 	Get(key []byte, pb proto.Message) error
 	Has(key []byte) bool
-	Block() plugin.BlockHeader
+	Block() loom.BlockHeader
 	Now() time.Time
 	Message() plugin.Message
 	ContractAddress() loom.Address

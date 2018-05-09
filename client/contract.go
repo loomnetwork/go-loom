@@ -8,6 +8,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
+	"github.com/loomnetwork/go-loom/plugin"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
 )
@@ -44,16 +45,16 @@ func (c *Contract) Call(method string, args proto.Message, signer auth.Signer, r
 	if err != nil {
 		return nil, err
 	}
-	methodCallBytes, err := proto.Marshal(&types.ContractMethodCall{
+	methodCallBytes, err := proto.Marshal(&plugin.ContractMethodCall{
 		Method: fmt.Sprintf("%s.%s", c.Name, method),
 		Args:   argsBytes,
 	})
 	if err != nil {
 		return nil, err
 	}
-	requestBytes, err := proto.Marshal(&types.Request{
-		ContentType: types.EncodingType_PROTOBUF3,
-		Accept:      types.EncodingType_PROTOBUF3,
+	requestBytes, err := proto.Marshal(&plugin.Request{
+		ContentType: plugin.EncodingType_PROTOBUF3,
+		Accept:      plugin.EncodingType_PROTOBUF3,
 		Body:        methodCallBytes,
 	})
 	if err != nil {
@@ -101,7 +102,7 @@ func (c *Contract) StaticCall(method string, args proto.Message, result interfac
 	if err != nil {
 		return nil, err
 	}
-	methodCall := &types.ContractMethodCall{
+	methodCall := &plugin.ContractMethodCall{
 		Method: fmt.Sprintf("%s.%s", c.Name, method),
 		Args:   argsBytes,
 	}

@@ -35,6 +35,10 @@ func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 	return nil, nil
 }
 
+func (c *FakeContext) CallEVM(addr loom.Address, input []byte) ([]byte, error) {
+	return nil, nil
+}
+
 func (c *FakeContext) StaticCall(addr loom.Address, input []byte) ([]byte, error) {
 	return nil, nil
 }

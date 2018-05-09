@@ -1,0 +1,154 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/loomnetwork/go-loom/vm/vm.proto";
+
+// Contract specific data structures
+
+enum EncodingType {
+    JSON = 0;
+    PROTOBUF3 = 1;
+}
+
+message PluginCode {
+    string name = 1;
+    bytes input = 2;
+}
+
+message Request {
+    EncodingType content_type = 1;
+    EncodingType accept = 2;
+    bytes body = 3;
+}
+
+message Response {
+    EncodingType content_type = 1;
+    bytes body = 2;
+}
+
+message Message {
+    Address sender = 1;
+}
+
+message ContractMeta {
+    string name = 1;
+    string version = 2;
+}
+
+message ContractMethodCall {
+	string method = 1;
+    bytes args = 2;
+}
+
+// Wrapped types for GRPC
+
+message Context {
+}
+
+message MetaRequest {
+}
+
+message ContractCallRequest {
+    BlockHeader block = 1;
+    Message message = 2;
+    Address contract_address = 3;
+    uint32 api_server = 4;
+    Request request = 5;
+}
+
+message InitResponse {
+
+}
+
+service Contract {
+    rpc Meta(MetaRequest) returns (ContractMeta);
+    rpc Init(ContractCallRequest) returns (InitResponse);
+    rpc Call(ContractCallRequest) returns (Response);
+    rpc StaticCall(ContractCallRequest) returns (Response);
+}
+
+message GetRequest {
+    bytes key = 1;
+}
+
+message GetResponse {
+    bytes value = 1;
+}
+
+message HasRequest {
+    bytes key = 1;
+}
+
+message HasResponse {
+    bool value = 1;
+}
+
+message ValidatorPowerRequest {
+    bytes pub_key = 1;
+}
+
+message ValidatorPowerResponse {
+    int64 power = 2;
+}
+
+message CallRequest {
+    Address address = 1;
+    bytes input = 2;
+    VMType vm_type = 3;
+}
+
+message CallResponse {
+    bytes output = 1;
+}
+
+message SetValidatorPowerRequest {
+    bytes pub_key = 1;
+    int64 power = 2;
+}
+
+message SetValidatorPowerResponse {
+}
+
+message ResolveRequest {
+    string name = 1;
+}
+
+message ResolveResponse {
+    Address address = 1;
+}
+
+message EmitRequest {
+    bytes data = 1;
+}
+
+message EmitResponse {
+}
+
+message SetRequest {
+    bytes key = 1;
+    bytes value = 2;
+}
+
+message SetResponse {
+}
+
+message DeleteRequest {
+    bytes key = 1;
+}
+
+message DeleteResponse {
+}
+
+service API {
+    rpc Get(GetRequest) returns (GetResponse);
+    rpc Has(HasRequest) returns (HasResponse);
+    rpc ValidatorPower(ValidatorPowerRequest) returns (ValidatorPowerResponse);
+    rpc StaticCall(CallRequest) returns (CallResponse);
+    rpc Resolve(ResolveRequest) returns (ResolveResponse);
+    rpc Emit(EmitRequest) returns (EmitResponse);
+
+    rpc Set(SetRequest) returns (SetResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+    rpc Call(CallRequest) returns (CallResponse);
+    rpc SetValidatorPower(SetValidatorPowerRequest) returns (SetValidatorPowerResponse);
+}

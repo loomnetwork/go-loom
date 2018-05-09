@@ -4,15 +4,16 @@ import (
 	"time"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/plugin/types"
 )
 
 type (
-	Request      = types.Request
-	Response     = types.Response
-	Meta         = types.ContractMeta
-	BlockHeader  = types.BlockHeader
-	EncodingType = types.EncodingType
+	Request            = types.Request
+	Response           = types.Response
+	Meta               = types.ContractMeta
+	EncodingType       = types.EncodingType
+	ContractMethodCall = types.ContractMethodCall
+	Code               = types.PluginCode
 )
 
 var (
@@ -33,6 +34,7 @@ type StaticAPI interface {
 
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
+	CallEVM(addr loom.Address, input []byte) ([]byte, error)
 
 	// Privileged API
 	SetValidatorPower(pubKey []byte, power int64)
@@ -47,7 +49,7 @@ type StaticContext interface {
 	StaticAPI
 	Get(key []byte) []byte
 	Has(key []byte) bool
-	Block() BlockHeader
+	Block() loom.BlockHeader
 	Now() time.Time
 	Message() Message
 	ContractAddress() loom.Address

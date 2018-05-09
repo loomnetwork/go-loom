@@ -10,7 +10,8 @@ import (
 	"google.golang.org/grpc"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/plugin/types"
+	"github.com/loomnetwork/go-loom/vm"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
@@ -73,16 +74,25 @@ func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
 	return loom.UnmarshalAddressPB(resp.Address), nil
 }
 
-func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
+func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType) ([]byte, error) {
 	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
 		Address: addr.MarshalPB(),
 		Input:   input,
+		VmType:  vmType,
 	})
 	if err != nil {
 		return nil, err
 	}
 
 	return resp.Output, nil
+}
+
+func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
+	return c.call(addr, input, vm.VMType_PLUGIN)
+}
+
+func (c *GRPCAPIClient) CallEVM(addr loom.Address, input []byte) ([]byte, error) {
+	return c.call(addr, input, vm.VMType_EVM)
 }
 
 func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
@@ -95,13 +105,13 @@ func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
 type GRPCContext struct {
 	*GRPCAPIClient
 	message      *types.Message
-	block        *types.BlockHeader
-	contractAddr *types.Address
+	block        *loom.BlockHeader
+	contractAddr loom.Address
 }
 
 var _ Context = &GRPCContext{}
 
-func (c *GRPCContext) Block() types.BlockHeader {
+func (c *GRPCContext) Block() loom.BlockHeader {
 	return *c.block
 }
 
@@ -110,7 +120,7 @@ func (c *GRPCContext) Now() time.Time {
 }
 
 func (c *GRPCContext) ContractAddress() loom.Address {
-	return loom.UnmarshalAddressPB(c.contractAddr)
+	return c.contractAddr
 }
 
 func (c *GRPCContext) Message() Message {
@@ -165,7 +175,7 @@ func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRP
 		},
 		message:      req.Message,
 		block:        req.Block,
-		contractAddr: req.ContractAddress,
+		contractAddr: loom.UnmarshalAddressPB(req.ContractAddress),
 	}
 }
 
