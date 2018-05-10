@@ -6,7 +6,6 @@ import (
 	"github.com/loomnetwork/go-loom/examples/plugins/wrapstore/types"
 	"github.com/loomnetwork/go-loom/plugin"
 	"github.com/loomnetwork/go-loom/plugin/contractpb"
-	"io/ioutil"
 	"math/big"
 	"strconv"
 	"strings"
@@ -39,7 +38,6 @@ func (c *WrapStore) SetValue(ctx contractpb.Context, value *types.WrapValue) err
 	if err != nil {
 		return err
 	}
-	ioutil.WriteFile("setinput.txt", input, 0644)
 	evmOut := []byte{}
 	err = contractpb.CallEVM(ctx, ssAddr, input, &evmOut)
 	return err
