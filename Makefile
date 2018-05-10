@@ -5,12 +5,10 @@ PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local
 
 all: examples
 
-examples: example-plugins example-plugins-external example-cmds
+examples: example-plugins example-plugins-external example-cli
 
-example-cmds: cli
-
-cli: examples/types/types.pb.go
-	go build -o out/cmds/cli  $(PKG)/examples/$@
+example-cli: examples/types/types.pb.go
+	go build -o $@ $(PKG)/examples/cli
 
 example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
