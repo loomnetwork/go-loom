@@ -91,3 +91,21 @@ func (c *FakeContext) Delete(key []byte) {
 
 func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
 }
+
+func (c *FakeContext) HasPermission(token []byte, roles []string) (bool, []string) {
+	addr := c.Message().Sender
+	return c.HasPermissionFor(addr, token, roles)
+}
+
+// HasPermissionFor checks whether the given `addr` has any of the permission given in `roles` on `token`
+func (c *FakeContext) HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string) {
+	return false, nil
+}
+
+// GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
+func (c *FakeContext) GrantPermissionTo(addr loom.Address, token []byte, role string) {
+}
+
+// GrantPermission sets a given `role` permission on `token` for the sender of the tx
+func (c *FakeContext) GrantPermission(token []byte, roles []string) {
+}

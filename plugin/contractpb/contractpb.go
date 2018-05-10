@@ -2,6 +2,8 @@ package contractpb
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"time"
 
 	proto "github.com/gogo/protobuf/proto"
@@ -29,6 +31,10 @@ type Context interface {
 	StaticContext
 	Set(key []byte, pb proto.Message) error
 	Delete(key []byte)
+	HasPermission(token []byte, roles []string) (bool, []string)
+	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
+	GrantPermissionTo(addr loom.Address, token []byte, role string)
+	GrantPermission(token []byte, roles []string)
 }
 
 type Contract interface {
@@ -72,6 +78,44 @@ func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
 	}
 	c.Context.Set(key, enc)
 	return nil
+}
+
+// HasPermission checks whether the sender of the tx has any of the permission given in `roles` on `token`
+func (c *wrappedPluginContext) HasPermission(token []byte, roles []string) (bool, []string) {
+	addr := c.Message().Sender
+	return c.HasPermissionFor(addr, token, roles)
+}
+
+// HasPermissionFor checks whether the given `addr` has any of the permission given in `roles` on `token`
+func (c *wrappedPluginContext) HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string) {
+	found := false
+	foundRoles := []string{}
+	for _, role := range roles {
+		v := c.Context.Get(c.rolePermKey(addr, token, role))
+		log.Printf("permission value %s:%s for %v on token %s\n", role, v, addr, token)
+		if v != nil && string(v) == "true" {
+			found = true
+			foundRoles = append(foundRoles, role)
+		}
+	}
+	return found, foundRoles
+}
+
+// GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
+func (c *wrappedPluginContext) GrantPermissionTo(addr loom.Address, token []byte, role string) {
+	c.Context.Set(c.rolePermKey(addr, token, role), []byte("true"))
+}
+
+func (c *wrappedPluginContext) rolePermKey(addr loom.Address, token []byte, role string) []byte {
+	return []byte(fmt.Sprintf("%stoken:%s:role:%s", loom.PermPrefix(addr), token, []byte(role)))
+}
+
+// GrantPermission sets a given `role` permission on `token` for the sender of the tx
+func (c *wrappedPluginContext) GrantPermission(token []byte, roles []string) {
+	for _, r := range roles {
+		log.Printf("Setting permission %s on %s for %v\b", r, token, c.Message().Sender)
+		c.GrantPermissionTo(c.Message().Sender, token, r)
+	}
 }
 
 func MakePluginContract(c Contract) plugin.Contract {
