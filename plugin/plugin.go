@@ -9,7 +9,7 @@ import (
 	extplugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 
-	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/vm"
 )
