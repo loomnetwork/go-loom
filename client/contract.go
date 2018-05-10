@@ -9,6 +9,7 @@ import (
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	"github.com/loomnetwork/go-loom/plugin"
+	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
 )
@@ -87,7 +88,12 @@ func (c *Contract) Call(method string, args proto.Message, signer auth.Signer, r
 		return nil, err
 	}
 	if result != nil && len(resultBytes) > 0 {
-		if err := proto.Unmarshal(resultBytes, result.(proto.Message)); err != nil {
+		response := &ptypes.Response{}
+		err = proto.Unmarshal(resultBytes, response)
+		if err != nil {
+			return nil, nil
+		}
+		if err := proto.Unmarshal(response.Body, result.(proto.Message)); err != nil {
 			return result, err
 		}
 	}
