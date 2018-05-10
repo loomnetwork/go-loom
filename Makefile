@@ -40,6 +40,7 @@ proto: \
 	builtin/types/dpos/dpos.pb.go \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
+	examples/plugins/wrapstore/types/types.pb.go \
 	examples/plugins/lottery/lottery.pb.go
 
 test: proto
