@@ -33,7 +33,7 @@ func main() {
 
 	getCmd := &cobra.Command{
 		Use:   "get",
-		Short: "get the value in the store",
+		Short: "get the value from the store",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			result, err := GetValueCmd(flags.ChainId, flags.WriteUri, flags.ReadUri, flags.ContractHexAddr)
 			if err == nil {
