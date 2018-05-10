@@ -3,13 +3,12 @@ package plugin
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	extplugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 
-	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/vm"
 )
@@ -130,42 +129,6 @@ func (c *GRPCContext) Message() Message {
 }
 
 func (c *GRPCContext) Emit(data []byte) {
-}
-
-// HasPermission checks whether the sender of the tx has any of the permission given in `roles` on `token`
-func (c *GRPCContext) HasPermission(token []byte, roles []string) (bool, []string) {
-	addr := c.Message().Sender
-	return c.HasPermissionFor(addr, token, roles)
-}
-
-// HasPermissionFor checks whether the given `addr` has any of the permission given in `roles` on `token`
-func (c *GRPCContext) HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string) {
-	found := false
-	foundRoles := []string{}
-	for _, role := range roles {
-		v := c.Get(c.rolePermKey(addr, token, role))
-		if v != nil && string(v) == role {
-			found = true
-			foundRoles = append(foundRoles, role)
-		}
-	}
-	return found, foundRoles
-}
-
-// GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
-func (c *GRPCContext) GrantPermissionTo(addr loom.Address, token []byte, role string) {
-	c.Set(c.rolePermKey(addr, token, role), []byte("true"))
-}
-
-func (c *GRPCContext) rolePermKey(addr loom.Address, token []byte, role string) []byte {
-	return []byte(fmt.Sprintf("%stoken:%s:role:%s", loom.PermPrefix(addr), token, []byte(role)))
-}
-
-// GrantPermission sets a given `role` permission on `token` for the sender of the tx
-func (c *GRPCContext) GrantPermission(token []byte, roles []string) {
-	for _, r := range roles {
-		c.GrantPermissionTo(c.Message().Sender, token, r)
-	}
 }
 
 func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRPCContext {
