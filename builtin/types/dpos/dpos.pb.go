@@ -8,10 +8,23 @@ It is generated from these files:
 	github.com/loomnetwork/go-loom/builtin/types/dpos/dpos.proto
 
 It has these top-level messages:
-	UpVote
-	DownVote
-	ProxyVote
-	UnproxyVote
+	Params
+	State
+	Voter
+	Candidate
+	Vote
+	InitRequest
+	RegisterCandidateRequest
+	RegisterCandidateResponse
+	UnregisterCandidateRequest
+	UnregisterCandidateResponse
+	VoteRequest
+	VoteResponse
+	ProxyVoteRequest
+	ProxyVoteResponse
+	UnproxyVoteRequest
+	UnproxyVoteResponse
+	Elect
 */
 package dpos
 
@@ -31,107 +44,344 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-type UpVote struct {
-	WitnessPubKey []byte         `protobuf:"bytes,1,opt,name=witness_pub_key,json=witnessPubKey,proto3" json:"witness_pub_key,omitempty"`
-	Amount        *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
+type Params struct {
+	ValidatorCount      uint64         `protobuf:"varint,1,opt,name=validator_count,json=validatorCount,proto3" json:"validator_count,omitempty"`
+	VoteAllocation      uint64         `protobuf:"varint,2,opt,name=vote_allocation,json=voteAllocation,proto3" json:"vote_allocation,omitempty"`
+	TermLength          uint64         `protobuf:"varint,3,opt,name=term_length,json=termLength,proto3" json:"term_length,omitempty"`
+	MinPowerFraction    uint64         `protobuf:"varint,4,opt,name=min_power_fraction,json=minPowerFraction,proto3" json:"min_power_fraction,omitempty"`
+	CoinContractAddress *types.Address `protobuf:"bytes,5,opt,name=coin_contract_address,json=coinContractAddress" json:"coin_contract_address,omitempty"`
 }
 
-func (m *UpVote) Reset()                    { *m = UpVote{} }
-func (m *UpVote) String() string            { return proto.CompactTextString(m) }
-func (*UpVote) ProtoMessage()               {}
-func (*UpVote) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{0} }
+func (m *Params) Reset()                    { *m = Params{} }
+func (m *Params) String() string            { return proto.CompactTextString(m) }
+func (*Params) ProtoMessage()               {}
+func (*Params) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{0} }
 
-func (m *UpVote) GetWitnessPubKey() []byte {
+func (m *Params) GetValidatorCount() uint64 {
 	if m != nil {
-		return m.WitnessPubKey
+		return m.ValidatorCount
+	}
+	return 0
+}
+
+func (m *Params) GetVoteAllocation() uint64 {
+	if m != nil {
+		return m.VoteAllocation
+	}
+	return 0
+}
+
+func (m *Params) GetTermLength() uint64 {
+	if m != nil {
+		return m.TermLength
+	}
+	return 0
+}
+
+func (m *Params) GetMinPowerFraction() uint64 {
+	if m != nil {
+		return m.MinPowerFraction
+	}
+	return 0
+}
+
+func (m *Params) GetCoinContractAddress() *types.Address {
+	if m != nil {
+		return m.CoinContractAddress
 	}
 	return nil
 }
 
-func (m *UpVote) GetAmount() *types.BigUInt {
+type State struct {
+	Params       *Params            `protobuf:"bytes,1,opt,name=params" json:"params,omitempty"`
+	LastElection uint64             `protobuf:"varint,2,opt,name=last_election,json=lastElection,proto3" json:"last_election,omitempty"`
+	Validators   []*types.Validator `protobuf:"bytes,3,rep,name=validators" json:"validators,omitempty"`
+}
+
+func (m *State) Reset()                    { *m = State{} }
+func (m *State) String() string            { return proto.CompactTextString(m) }
+func (*State) ProtoMessage()               {}
+func (*State) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{1} }
+
+func (m *State) GetParams() *Params {
+	if m != nil {
+		return m.Params
+	}
+	return nil
+}
+
+func (m *State) GetLastElection() uint64 {
+	if m != nil {
+		return m.LastElection
+	}
+	return 0
+}
+
+func (m *State) GetValidators() []*types.Validator {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
+type Voter struct {
+	Address            *types.Address   `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	Balance            uint64           `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	ProxyAddress       *types.Address   `protobuf:"bytes,3,opt,name=proxy_address,json=proxyAddress" json:"proxy_address,omitempty"`
+	PrincipalAddresses []*types.Address `protobuf:"bytes,4,rep,name=principal_addresses,json=principalAddresses" json:"principal_addresses,omitempty"`
+}
+
+func (m *Voter) Reset()                    { *m = Voter{} }
+func (m *Voter) String() string            { return proto.CompactTextString(m) }
+func (*Voter) ProtoMessage()               {}
+func (*Voter) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{2} }
+
+func (m *Voter) GetAddress() *types.Address {
+	if m != nil {
+		return m.Address
+	}
+	return nil
+}
+
+func (m *Voter) GetBalance() uint64 {
+	if m != nil {
+		return m.Balance
+	}
+	return 0
+}
+
+func (m *Voter) GetProxyAddress() *types.Address {
+	if m != nil {
+		return m.ProxyAddress
+	}
+	return nil
+}
+
+func (m *Voter) GetPrincipalAddresses() []*types.Address {
+	if m != nil {
+		return m.PrincipalAddresses
+	}
+	return nil
+}
+
+type Candidate struct {
+	Address *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	PubKey  []byte         `protobuf:"bytes,2,opt,name=pub_key,json=pubKey,proto3" json:"pub_key,omitempty"`
+}
+
+func (m *Candidate) Reset()                    { *m = Candidate{} }
+func (m *Candidate) String() string            { return proto.CompactTextString(m) }
+func (*Candidate) ProtoMessage()               {}
+func (*Candidate) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{3} }
+
+func (m *Candidate) GetAddress() *types.Address {
+	if m != nil {
+		return m.Address
+	}
+	return nil
+}
+
+func (m *Candidate) GetPubKey() []byte {
+	if m != nil {
+		return m.PubKey
+	}
+	return nil
+}
+
+type Vote struct {
+	VoterAddress     *types.Address `protobuf:"bytes,1,opt,name=voter_address,json=voterAddress" json:"voter_address,omitempty"`
+	CandidateAddress *types.Address `protobuf:"bytes,2,opt,name=candidate_address,json=candidateAddress" json:"candidate_address,omitempty"`
+	Size_            uint64         `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
+}
+
+func (m *Vote) Reset()                    { *m = Vote{} }
+func (m *Vote) String() string            { return proto.CompactTextString(m) }
+func (*Vote) ProtoMessage()               {}
+func (*Vote) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{4} }
+
+func (m *Vote) GetVoterAddress() *types.Address {
+	if m != nil {
+		return m.VoterAddress
+	}
+	return nil
+}
+
+func (m *Vote) GetCandidateAddress() *types.Address {
+	if m != nil {
+		return m.CandidateAddress
+	}
+	return nil
+}
+
+func (m *Vote) GetSize_() uint64 {
+	if m != nil {
+		return m.Size_
+	}
+	return 0
+}
+
+type InitRequest struct {
+	Params     *Params            `protobuf:"bytes,1,opt,name=params" json:"params,omitempty"`
+	Validators []*types.Validator `protobuf:"bytes,2,rep,name=validators" json:"validators,omitempty"`
+}
+
+func (m *InitRequest) Reset()                    { *m = InitRequest{} }
+func (m *InitRequest) String() string            { return proto.CompactTextString(m) }
+func (*InitRequest) ProtoMessage()               {}
+func (*InitRequest) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{5} }
+
+func (m *InitRequest) GetParams() *Params {
+	if m != nil {
+		return m.Params
+	}
+	return nil
+}
+
+func (m *InitRequest) GetValidators() []*types.Validator {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
+type RegisterCandidateRequest struct {
+	PubKey []byte `protobuf:"bytes,1,opt,name=pub_key,json=pubKey,proto3" json:"pub_key,omitempty"`
+}
+
+func (m *RegisterCandidateRequest) Reset()                    { *m = RegisterCandidateRequest{} }
+func (m *RegisterCandidateRequest) String() string            { return proto.CompactTextString(m) }
+func (*RegisterCandidateRequest) ProtoMessage()               {}
+func (*RegisterCandidateRequest) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{6} }
+
+func (m *RegisterCandidateRequest) GetPubKey() []byte {
+	if m != nil {
+		return m.PubKey
+	}
+	return nil
+}
+
+type RegisterCandidateResponse struct {
+}
+
+func (m *RegisterCandidateResponse) Reset()                    { *m = RegisterCandidateResponse{} }
+func (m *RegisterCandidateResponse) String() string            { return proto.CompactTextString(m) }
+func (*RegisterCandidateResponse) ProtoMessage()               {}
+func (*RegisterCandidateResponse) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{7} }
+
+type UnregisterCandidateRequest struct {
+}
+
+func (m *UnregisterCandidateRequest) Reset()                    { *m = UnregisterCandidateRequest{} }
+func (m *UnregisterCandidateRequest) String() string            { return proto.CompactTextString(m) }
+func (*UnregisterCandidateRequest) ProtoMessage()               {}
+func (*UnregisterCandidateRequest) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{8} }
+
+type UnregisterCandidateResponse struct {
+}
+
+func (m *UnregisterCandidateResponse) Reset()                    { *m = UnregisterCandidateResponse{} }
+func (m *UnregisterCandidateResponse) String() string            { return proto.CompactTextString(m) }
+func (*UnregisterCandidateResponse) ProtoMessage()               {}
+func (*UnregisterCandidateResponse) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{9} }
+
+type VoteRequest struct {
+	CandidateAddress *types.Address `protobuf:"bytes,1,opt,name=candidate_address,json=candidateAddress" json:"candidate_address,omitempty"`
+	Amount           int64          `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
+}
+
+func (m *VoteRequest) Reset()                    { *m = VoteRequest{} }
+func (m *VoteRequest) String() string            { return proto.CompactTextString(m) }
+func (*VoteRequest) ProtoMessage()               {}
+func (*VoteRequest) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{10} }
+
+func (m *VoteRequest) GetCandidateAddress() *types.Address {
+	if m != nil {
+		return m.CandidateAddress
+	}
+	return nil
+}
+
+func (m *VoteRequest) GetAmount() int64 {
 	if m != nil {
 		return m.Amount
 	}
-	return nil
+	return 0
 }
 
-type DownVote struct {
-	WitnessPubKey []byte         `protobuf:"bytes,1,opt,name=witness_pub_key,json=witnessPubKey,proto3" json:"witness_pub_key,omitempty"`
-	Amount        *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
+type VoteResponse struct {
 }
 
-func (m *DownVote) Reset()                    { *m = DownVote{} }
-func (m *DownVote) String() string            { return proto.CompactTextString(m) }
-func (*DownVote) ProtoMessage()               {}
-func (*DownVote) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{1} }
+func (m *VoteResponse) Reset()                    { *m = VoteResponse{} }
+func (m *VoteResponse) String() string            { return proto.CompactTextString(m) }
+func (*VoteResponse) ProtoMessage()               {}
+func (*VoteResponse) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{11} }
 
-func (m *DownVote) GetWitnessPubKey() []byte {
+type ProxyVoteRequest struct {
+	ProxyAddress *types.Address `protobuf:"bytes,1,opt,name=proxy_address,json=proxyAddress" json:"proxy_address,omitempty"`
+}
+
+func (m *ProxyVoteRequest) Reset()                    { *m = ProxyVoteRequest{} }
+func (m *ProxyVoteRequest) String() string            { return proto.CompactTextString(m) }
+func (*ProxyVoteRequest) ProtoMessage()               {}
+func (*ProxyVoteRequest) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{12} }
+
+func (m *ProxyVoteRequest) GetProxyAddress() *types.Address {
 	if m != nil {
-		return m.WitnessPubKey
+		return m.ProxyAddress
 	}
 	return nil
 }
 
-func (m *DownVote) GetAmount() *types.BigUInt {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
+type ProxyVoteResponse struct {
 }
 
-type ProxyVote struct {
-	Delegate *types.Address `protobuf:"bytes,1,opt,name=delegate" json:"delegate,omitempty"`
-	Amount   *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
+func (m *ProxyVoteResponse) Reset()                    { *m = ProxyVoteResponse{} }
+func (m *ProxyVoteResponse) String() string            { return proto.CompactTextString(m) }
+func (*ProxyVoteResponse) ProtoMessage()               {}
+func (*ProxyVoteResponse) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{13} }
+
+type UnproxyVoteRequest struct {
 }
 
-func (m *ProxyVote) Reset()                    { *m = ProxyVote{} }
-func (m *ProxyVote) String() string            { return proto.CompactTextString(m) }
-func (*ProxyVote) ProtoMessage()               {}
-func (*ProxyVote) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{2} }
+func (m *UnproxyVoteRequest) Reset()                    { *m = UnproxyVoteRequest{} }
+func (m *UnproxyVoteRequest) String() string            { return proto.CompactTextString(m) }
+func (*UnproxyVoteRequest) ProtoMessage()               {}
+func (*UnproxyVoteRequest) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{14} }
 
-func (m *ProxyVote) GetDelegate() *types.Address {
-	if m != nil {
-		return m.Delegate
-	}
-	return nil
+type UnproxyVoteResponse struct {
 }
 
-func (m *ProxyVote) GetAmount() *types.BigUInt {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
+func (m *UnproxyVoteResponse) Reset()                    { *m = UnproxyVoteResponse{} }
+func (m *UnproxyVoteResponse) String() string            { return proto.CompactTextString(m) }
+func (*UnproxyVoteResponse) ProtoMessage()               {}
+func (*UnproxyVoteResponse) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{15} }
+
+type Elect struct {
 }
 
-type UnproxyVote struct {
-	Delegate *types.Address `protobuf:"bytes,1,opt,name=delegate" json:"delegate,omitempty"`
-	Amount   *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
-}
-
-func (m *UnproxyVote) Reset()                    { *m = UnproxyVote{} }
-func (m *UnproxyVote) String() string            { return proto.CompactTextString(m) }
-func (*UnproxyVote) ProtoMessage()               {}
-func (*UnproxyVote) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{3} }
-
-func (m *UnproxyVote) GetDelegate() *types.Address {
-	if m != nil {
-		return m.Delegate
-	}
-	return nil
-}
-
-func (m *UnproxyVote) GetAmount() *types.BigUInt {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
-}
+func (m *Elect) Reset()                    { *m = Elect{} }
+func (m *Elect) String() string            { return proto.CompactTextString(m) }
+func (*Elect) ProtoMessage()               {}
+func (*Elect) Descriptor() ([]byte, []int) { return fileDescriptorDpos, []int{16} }
 
 func init() {
-	proto.RegisterType((*UpVote)(nil), "UpVote")
-	proto.RegisterType((*DownVote)(nil), "DownVote")
-	proto.RegisterType((*ProxyVote)(nil), "ProxyVote")
-	proto.RegisterType((*UnproxyVote)(nil), "UnproxyVote")
+	proto.RegisterType((*Params)(nil), "Params")
+	proto.RegisterType((*State)(nil), "State")
+	proto.RegisterType((*Voter)(nil), "Voter")
+	proto.RegisterType((*Candidate)(nil), "Candidate")
+	proto.RegisterType((*Vote)(nil), "Vote")
+	proto.RegisterType((*InitRequest)(nil), "InitRequest")
+	proto.RegisterType((*RegisterCandidateRequest)(nil), "RegisterCandidateRequest")
+	proto.RegisterType((*RegisterCandidateResponse)(nil), "RegisterCandidateResponse")
+	proto.RegisterType((*UnregisterCandidateRequest)(nil), "UnregisterCandidateRequest")
+	proto.RegisterType((*UnregisterCandidateResponse)(nil), "UnregisterCandidateResponse")
+	proto.RegisterType((*VoteRequest)(nil), "VoteRequest")
+	proto.RegisterType((*VoteResponse)(nil), "VoteResponse")
+	proto.RegisterType((*ProxyVoteRequest)(nil), "ProxyVoteRequest")
+	proto.RegisterType((*ProxyVoteResponse)(nil), "ProxyVoteResponse")
+	proto.RegisterType((*UnproxyVoteRequest)(nil), "UnproxyVoteRequest")
+	proto.RegisterType((*UnproxyVoteResponse)(nil), "UnproxyVoteResponse")
+	proto.RegisterType((*Elect)(nil), "Elect")
 }
 
 func init() {
@@ -139,19 +389,43 @@ func init() {
 }
 
 var fileDescriptorDpos = []byte{
-	// 224 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x90, 0xb1, 0x4b, 0x03, 0x31,
-	0x14, 0xc6, 0x39, 0x87, 0xe3, 0x7c, 0x55, 0x84, 0x4e, 0xc5, 0xe9, 0x28, 0x22, 0x5d, 0xbc, 0x88,
-	0xae, 0x2e, 0x8a, 0x8b, 0xb8, 0x94, 0xd3, 0x73, 0x2d, 0x8d, 0x79, 0xc4, 0xd0, 0xbb, 0xbc, 0x90,
-	0xbc, 0x70, 0xe6, 0xbf, 0x97, 0xe6, 0x8a, 0xab, 0x0e, 0x5d, 0x3e, 0x78, 0xdf, 0xe3, 0xf7, 0x1b,
-	0x3e, 0x78, 0xd0, 0x86, 0xbf, 0xa2, 0x6c, 0x3e, 0x69, 0x10, 0x3d, 0xd1, 0x60, 0x91, 0x47, 0xf2,
-	0x3b, 0xa1, 0xe9, 0x66, 0x7f, 0x0a, 0x19, 0x4d, 0xcf, 0xc6, 0x0a, 0x4e, 0x0e, 0x83, 0x50, 0x8e,
-	0xa6, 0x68, 0x9c, 0x27, 0xa6, 0xcb, 0xdb, 0x3f, 0xe8, 0x89, 0xca, 0x39, 0x11, 0xcb, 0x16, 0xca,
-	0xce, 0x7d, 0x10, 0xe3, 0xfc, 0x1a, 0x2e, 0x46, 0xc3, 0x16, 0x43, 0xd8, 0xb8, 0x28, 0x37, 0x3b,
-	0x4c, 0x8b, 0xa2, 0x2e, 0x56, 0x67, 0xed, 0xf9, 0xa1, 0x5e, 0x47, 0xf9, 0x8a, 0x69, 0x5e, 0x43,
-	0xb9, 0x1d, 0x28, 0x5a, 0x5e, 0x9c, 0xd4, 0xc5, 0x6a, 0x76, 0x57, 0x35, 0x4f, 0x46, 0x77, 0x2f,
-	0x96, 0xdb, 0x43, 0xbf, 0x7c, 0x87, 0xea, 0x99, 0x46, 0x7b, 0x64, 0xeb, 0x1b, 0x9c, 0xae, 0x3d,
-	0x7d, 0xa7, 0xac, 0xbd, 0x82, 0x4a, 0x61, 0x8f, 0x7a, 0xcb, 0x98, 0x7d, 0x7b, 0xe0, 0x51, 0x29,
-	0x8f, 0x21, 0xb4, 0xbf, 0x9f, 0x7f, 0x48, 0x3b, 0x98, 0x75, 0xd6, 0x1d, 0x5b, 0x2b, 0xcb, 0x3c,
-	0xee, 0xfd, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xfb, 0xa0, 0x69, 0x18, 0xce, 0x01, 0x00, 0x00,
+	// 600 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0x5f, 0x6f, 0xd3, 0x3e,
+	0x14, 0x55, 0xd6, 0x7f, 0xbf, 0xdf, 0x4d, 0x37, 0x36, 0x97, 0x41, 0xd8, 0x40, 0x9b, 0xcc, 0x03,
+	0x13, 0x62, 0x2d, 0xda, 0xc4, 0x03, 0xd2, 0x5e, 0xaa, 0x09, 0x04, 0x82, 0x87, 0x29, 0x68, 0x7b,
+	0x40, 0x48, 0x91, 0x93, 0x9a, 0xce, 0x5a, 0x62, 0x1b, 0xdb, 0x61, 0x94, 0x27, 0xbe, 0x11, 0x1f,
+	0x8b, 0xaf, 0x81, 0xec, 0x38, 0xa1, 0x2b, 0xdb, 0xca, 0x4b, 0xd4, 0x7b, 0xee, 0x39, 0xd7, 0xf7,
+	0x1e, 0xdf, 0x1a, 0x8e, 0xa6, 0xcc, 0x9c, 0x97, 0xe9, 0x30, 0x13, 0xc5, 0x28, 0x17, 0xa2, 0xe0,
+	0xd4, 0x5c, 0x0a, 0x75, 0x31, 0x9a, 0x8a, 0x7d, 0x1b, 0x8e, 0xd2, 0x92, 0xe5, 0x86, 0xf1, 0x91,
+	0x99, 0x49, 0xaa, 0x47, 0x13, 0x29, 0xaa, 0xcf, 0x50, 0x2a, 0x61, 0xc4, 0xd6, 0xf3, 0x25, 0xea,
+	0x4a, 0xe5, 0xbe, 0x95, 0x02, 0xff, 0x0a, 0xa0, 0x7b, 0x42, 0x14, 0x29, 0x34, 0x7a, 0x02, 0x77,
+	0xbe, 0x92, 0x9c, 0x4d, 0x88, 0x11, 0x2a, 0xc9, 0x44, 0xc9, 0x4d, 0x14, 0xec, 0x06, 0x7b, 0xed,
+	0x78, 0xad, 0x81, 0x8f, 0x2d, 0xea, 0x88, 0xc2, 0xd0, 0x84, 0xe4, 0xb9, 0xc8, 0x88, 0x61, 0x82,
+	0x47, 0x2b, 0x9e, 0x28, 0x0c, 0x1d, 0x37, 0x28, 0xda, 0x81, 0xd0, 0x50, 0x55, 0x24, 0x39, 0xe5,
+	0x53, 0x73, 0x1e, 0xb5, 0x1c, 0x09, 0x2c, 0xf4, 0xde, 0x21, 0xe8, 0x19, 0xa0, 0x82, 0xf1, 0x44,
+	0x8a, 0x4b, 0xaa, 0x92, 0xcf, 0x8a, 0x64, 0xae, 0x58, 0xdb, 0xf1, 0xd6, 0x0b, 0xc6, 0x4f, 0x6c,
+	0xe2, 0xb5, 0xc7, 0xd1, 0x11, 0x6c, 0x66, 0x82, 0xf1, 0x24, 0x13, 0xdc, 0x58, 0x2c, 0x21, 0x93,
+	0x89, 0xa2, 0x5a, 0x47, 0x9d, 0xdd, 0x60, 0x2f, 0x3c, 0xf8, 0x6f, 0x38, 0xae, 0xe2, 0x78, 0x60,
+	0x69, 0xc7, 0x9e, 0xe5, 0x41, 0x3c, 0x83, 0xce, 0x07, 0x43, 0x0c, 0x45, 0x3b, 0xd0, 0x95, 0x6e,
+	0x62, 0x37, 0x5e, 0x78, 0xd0, 0x1b, 0x56, 0x06, 0xc4, 0x1e, 0x46, 0x8f, 0x61, 0x35, 0x27, 0xda,
+	0x24, 0x34, 0xa7, 0xd9, 0xdc, 0x74, 0x7d, 0x0b, 0xbe, 0xf2, 0x18, 0x7a, 0x0a, 0xd0, 0xd8, 0xa2,
+	0xa3, 0xd6, 0x6e, 0x6b, 0x2f, 0x3c, 0x80, 0xe1, 0x59, 0x0d, 0xc5, 0x73, 0x59, 0xfc, 0x33, 0x80,
+	0xce, 0x99, 0x30, 0x54, 0x21, 0x0c, 0xbd, 0xba, 0xe9, 0x60, 0xa1, 0xe9, 0x3a, 0x81, 0x22, 0xe8,
+	0xa5, 0x24, 0x27, 0x3c, 0xa3, 0xfe, 0xe0, 0x3a, 0x44, 0xfb, 0xb0, 0x2a, 0x95, 0xf8, 0x36, 0x6b,
+	0x06, 0x6f, 0x2d, 0xd4, 0xe8, 0xbb, 0xb4, 0x8f, 0xd0, 0x4b, 0x18, 0x48, 0xc5, 0x78, 0xc6, 0x24,
+	0xc9, 0x6b, 0x09, 0xd5, 0x51, 0xdb, 0xf5, 0xfa, 0x47, 0x84, 0x1a, 0xd2, 0xb8, 0xe6, 0xe0, 0x37,
+	0xf0, 0xff, 0x31, 0xe1, 0x13, 0x3b, 0x00, 0xfd, 0xa7, 0xa6, 0xef, 0x43, 0x4f, 0x96, 0x69, 0x72,
+	0x41, 0x67, 0xae, 0xe9, 0x7e, 0xdc, 0x95, 0x65, 0xfa, 0x8e, 0xce, 0xf0, 0x8f, 0x00, 0xda, 0x76,
+	0x76, 0xdb, 0xbc, 0x5d, 0x0f, 0x95, 0xdc, 0x54, 0xab, 0xef, 0xd2, 0x75, 0xf3, 0x2f, 0x60, 0x23,
+	0xab, 0x3b, 0x68, 0x24, 0x2b, 0x0b, 0x92, 0xf5, 0x86, 0x52, 0xcb, 0x10, 0xb4, 0x35, 0xfb, 0x4e,
+	0xfd, 0xae, 0xb9, 0xdf, 0xf8, 0x23, 0x84, 0x6f, 0x39, 0x33, 0x31, 0xfd, 0x52, 0x52, 0x6d, 0x96,
+	0xdf, 0xff, 0xd5, 0xab, 0x5d, 0xb9, 0xf5, 0x6a, 0x0f, 0x21, 0x8a, 0xe9, 0x94, 0x69, 0x43, 0x55,
+	0x63, 0x58, 0x7d, 0xd0, 0x9c, 0x27, 0xc1, 0x15, 0x4f, 0xb6, 0xe1, 0xc1, 0x35, 0x22, 0x2d, 0x05,
+	0xd7, 0x14, 0x3f, 0x84, 0xad, 0x53, 0xae, 0x6e, 0xa8, 0x89, 0x1f, 0xc1, 0xf6, 0xb5, 0x59, 0x2f,
+	0xfe, 0x04, 0xa1, 0x35, 0xbb, 0xee, 0xe0, 0x5a, 0x13, 0x83, 0xa5, 0x26, 0xde, 0x83, 0x2e, 0x29,
+	0xdc, 0x03, 0x60, 0x0d, 0x6f, 0xc5, 0x3e, 0xc2, 0x6b, 0xd0, 0xaf, 0xaa, 0xfb, 0xd3, 0xc6, 0xb0,
+	0x7e, 0x62, 0x17, 0x6e, 0xfe, 0xc8, 0xbf, 0x76, 0x34, 0xb8, 0x6d, 0x47, 0xf1, 0x00, 0x36, 0xe6,
+	0x4a, 0xf8, 0xba, 0x77, 0x01, 0x9d, 0x72, 0xb9, 0x50, 0x19, 0x6f, 0xc2, 0xe0, 0x0a, 0xea, 0xc9,
+	0x3d, 0xe8, 0xb8, 0x3f, 0x65, 0xda, 0x75, 0x2f, 0xda, 0xe1, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0xee, 0x87, 0x91, 0xb1, 0x43, 0x05, 0x00, 0x00,
 }

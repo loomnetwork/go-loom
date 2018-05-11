@@ -3,7 +3,6 @@ package contractpb
 import (
 	"errors"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/gogo/protobuf/proto"
@@ -92,7 +91,6 @@ func (c *wrappedPluginContext) HasPermissionFor(addr loom.Address, token []byte,
 	foundRoles := []string{}
 	for _, role := range roles {
 		v := c.Context.Get(c.rolePermKey(addr, token, role))
-		log.Printf("permission value %s:%s for %v on token %s\n", role, v, addr, token)
 		if v != nil && string(v) == "true" {
 			found = true
 			foundRoles = append(foundRoles, role)
@@ -113,7 +111,6 @@ func (c *wrappedPluginContext) rolePermKey(addr loom.Address, token []byte, role
 // GrantPermission sets a given `role` permission on `token` for the sender of the tx
 func (c *wrappedPluginContext) GrantPermission(token []byte, roles []string) {
 	for _, r := range roles {
-		log.Printf("Setting permission %s on %s for %v\b", r, token, c.Message().Sender)
 		c.GrantPermissionTo(c.Message().Sender, token, r)
 	}
 }

@@ -3,14 +3,20 @@ package plugin
 import (
 	"context"
 	"errors"
+	"fmt"
+	"net"
+	"net/http"
+	"os"
 	"time"
 
+	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
-	"google.golang.org/grpc"
-
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/vm"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"google.golang.org/grpc"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
@@ -18,6 +24,16 @@ var Handshake = extplugin.HandshakeConfig{
 	ProtocolVersion:  1,
 	MagicCookieKey:   "LOOM_CONTRACT",
 	MagicCookieValue: "loomrocks",
+}
+
+// Create some standard server metrics.
+var (
+	grpcMetrics = grpc_prometheus.NewServerMetrics()
+	reg         = prometheus.NewRegistry()
+)
+
+func init() {
+	reg.MustRegister(grpcMetrics)
 }
 
 type GRPCAPIClient struct {
@@ -206,6 +222,36 @@ func (p *ExternalPlugin) GRPCClient(ctx context.Context, broker *extplugin.GRPCB
 }
 
 func Serve(contract Contract) {
+	meta, err := contract.Meta()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "contract meta error %v", err)
+		os.Exit(1)
+	}
+
+	// default hostport for metrics
+	var hostport = "127.0.0.1:9092"
+	if meta.MetricAddr != "" {
+		hostport = meta.MetricAddr
+	}
+
+	host, port, err := net.SplitHostPort(hostport)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "invalid metric address: %s", err)
+		os.Exit(1)
+	}
+	// Serve promtheus http server
+	httpServer := &http.Server{
+		Handler: promhttp.HandlerFor(reg, promhttp.HandlerOpts{}),
+		Addr:    net.JoinHostPort(host, port),
+	}
+	go func() {
+		if err := httpServer.ListenAndServe(); err != nil {
+			fmt.Fprintf(os.Stderr, "unable to start http server: %v", err)
+			os.Exit(1)
+		}
+	}()
+
+	// Serve the plugin
 	extplugin.Serve(&extplugin.ServeConfig{
 		HandshakeConfig: Handshake,
 		Plugins: map[string]extplugin.Plugin{
@@ -213,6 +259,17 @@ func Serve(contract Contract) {
 		},
 
 		// A non-nil value here enables gRPC serving for this plugin...
-		GRPCServer: extplugin.DefaultGRPCServer,
+		GRPCServer: func(opts []grpc.ServerOption) *grpc.Server {
+			// add prometheus plugin
+			promOpts := []grpc.ServerOption{
+				grpc.StreamInterceptor(grpcMetrics.StreamServerInterceptor()),
+				grpc.UnaryInterceptor(grpcMetrics.UnaryServerInterceptor()),
+			}
+			opts = append(opts, promOpts...)
+			s := grpc.NewServer(opts...)
+			// initialize metrics
+			grpcMetrics.InitializeMetrics(s)
+			return s
+		},
 	})
 }
