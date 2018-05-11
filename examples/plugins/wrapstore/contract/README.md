@@ -17,26 +17,43 @@ contract SimpleStore {
   uint value;
 }
 ```
+## Prerequisite
+This example requires the 
+[go-ethereum package](https://github.com/ethereum/go-ethereum),
+if you do not already have it installed you can use.
+```bash
+go get -d github.com/ethereum/go-ethereum
+```
 
 ## Install
-After building wrapstore, copy `wrapstore.1.0.0` and `SimpleStore.json` to the loom contracts directory.
-After initialising the DAppChain `./loom init`, add the `genesis.json` file from here to your loomchain directory. 
-Ammend the location entry in the `genesis.json` to match your system.
-Now run the chain with `./loom run`
+Amend the location entry in the `genesis.json` for SimpleStore to match the 
+path of your go-loom directory.
+
+`ed genesis.json`
+
+Build the wrapstore library.
+Assuming loom is in your path initialise the DAppChain `./loom init`. 
+copy the `example.genesis.json` to `genesis.json` and then 
+run the chain with `./loom run`
 
 ```bash
-go build -o wrapstore.1.0.0  wrapstore.go
-export LOOMCHAIN_DIR=\My\Loomchain\Directory
-$LOOMCHAIN_DIR/loom init
-cp wrapstore.1.0.0 SimpleStore.json genesis.json $LOOMCHAIN_DIR
-$LOOMCHAIN_DIR/loom run
+go build -tags "evm" -o contracts/wrapstore.1.0.0  wrapstore.go
+loom init
+cp example.genesis.json genesis.json
+loom run
 ```
 
 ## Testing
-
-You can now run the wrapstore/cli.go tool to acess the contract.
+The cli can be bult with
 ```bash
-./simplestore set 3455
+cd ../cli
+go build simplestore.go
+```
+
+You can now run the wrapstore/cli.go tool to access the solidty contract. 
+You might need to use -r and -w to the DAppChain's URL.
+```bash
+./simplestore set -v 3455
 ./simplestore get
 ```
 

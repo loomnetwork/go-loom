@@ -4,7 +4,7 @@
       "vm": "EVM",
       "format": "truffle",
       "name": "SimpleStore",
-      "location": "/media/piers/b3b1c33c-6136-4c24-9066-b6f6eecfdaf7/home/piers/go/src/github.com/loomnetwork/go-loom/examples/plugins/wrapstore/contract/contracts/SimpleStore.json"
+      "location": "/path/to/go-loom/examples/wrapstore/contract/contracts/SimpleStore.json"
     },
     {
       "vm": "plugin",

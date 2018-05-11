@@ -23,6 +23,13 @@ The example smart contracts can be built with:
 make deps
 make
 ```
+If you want the ethereum examples, use
+```shell
+make evm
+```
+instead of `make`. However you need the 
+[go-ethereum package](https://github.com/ethereum/go-ethereum).
+ 
 
 To run the blockchain with the Samples
 

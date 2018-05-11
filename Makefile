@@ -1,9 +1,10 @@
 PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local/include
-
 .PHONY: all clean test lint deps proto examples example-plugins example-plugins-external example-cmds
 
 all: examples
+
+evm: all example-evm-plugins
 
 examples: example-plugins example-plugins-external example-cmds
 
@@ -16,14 +17,19 @@ example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
 example-plugins-external: contracts/helloworld.1.0.0
 
+example-evm-plugins: contracts/wrapstore.1.0.0
+
 contracts/helloworld.1.0.0: proto
 	go build -o $@ $(PKG)/examples/plugins/helloworld
 
 contracts/helloworld.so.1.0.0: proto
-	go build -buildmode=plugin -o $@ $(PKG)/examples/plugins/helloworld
+	go build -o $@ $(PKG)/examples/plugins/helloworld
 
 contracts/lottery.so.1.0.0: examples/plugins/lottery/lottery.pb.go
 	go build -o $@ $(PKG)/examples/plugins/lottery
+
+contracts/wrapstore.1.0.0: proto
+	go build -tags "evm" -o $@ $(PKG)/examples/plugins/wrapstore/contract
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
@@ -70,6 +76,7 @@ clean:
 		builtin/types/coin/coin.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
+		examples/plugins/wrapstore/types/types.pb.go \
 		builtin/plugins/lottery/lottery.pb.go \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
