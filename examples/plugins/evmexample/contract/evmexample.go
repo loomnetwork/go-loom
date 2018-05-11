@@ -5,7 +5,7 @@ package main
 import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/loomnetwork/go-loom/examples/plugins/wrapstore/types"
+	"github.com/loomnetwork/go-loom/examples/plugins/evmexample/types"
 	"github.com/loomnetwork/go-loom/plugin"
 	"github.com/loomnetwork/go-loom/plugin/contractpb"
 	"math/big"
@@ -17,17 +17,17 @@ var (
 	SimpleStoreABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 )
 
-type WrapStore struct {
+type EvmExample struct {
 }
 
-func (c *WrapStore) Meta() (plugin.Meta, error) {
+func (c *EvmExample) Meta() (plugin.Meta, error) {
 	return plugin.Meta{
-		Name:    "wrapstore",
+		Name:    "EvmExample",
 		Version: "1.0.0",
 	}, nil
 }
 
-func (c *WrapStore) SetValue(ctx contractpb.Context, value *types.WrapValue) error {
+func (c *EvmExample) SetValue(ctx contractpb.Context, value *types.WrapValue) error {
 	ssAddr, err := ctx.Resolve("SimpleStore")
 	if err != nil {
 		return err
@@ -45,7 +45,7 @@ func (c *WrapStore) SetValue(ctx contractpb.Context, value *types.WrapValue) err
 	return err
 }
 
-func (c *WrapStore) GetValue(ctx contractpb.Context, req *types.Dummy) (*types.WrapValue, error) {
+func (c *EvmExample) GetValue(ctx contractpb.Context, req *types.Dummy) (*types.WrapValue, error) {
 	ssAddr, err := ctx.Resolve("SimpleStore")
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func (c *WrapStore) GetValue(ctx contractpb.Context, req *types.Dummy) (*types.W
 	}, err
 }
 
-var Contract = contractpb.MakePluginContract(&WrapStore{})
+var Contract = contractpb.MakePluginContract(&EvmExample{})
 
 func main() {
 	plugin.Serve(Contract)

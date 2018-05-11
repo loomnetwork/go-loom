@@ -4,13 +4,13 @@
       "vm": "EVM",
       "format": "truffle",
       "name": "SimpleStore",
-      "location": "/path/to/go-loom/examples/wrapstore/contract/contracts/SimpleStore.json"
+      "location": "/path/to/go-loom/examples/evmexample/contract/contracts/SimpleStore.json"
     },
     {
       "vm": "plugin",
       "format": "plugin",
-      "name": "wrapstore",
-      "location": "wrapstore:1.0.0",
+      "name": "evmexample",
+      "location": "evmexample:1.0.0",
       "init": {
 
       }

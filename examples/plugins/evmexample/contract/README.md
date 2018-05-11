@@ -1,4 +1,4 @@
-## Wrapstore
+## evmexample
 
 This example plugin shows how to call a solidity contract running on the DAppChain's virtual machine from a loom plugin.
 
@@ -31,13 +31,13 @@ path of your go-loom directory.
 
 `ed genesis.json`
 
-Build the wrapstore library.
+Build the evmexample library.
 Assuming loom is in your path initialise the DAppChain `./loom init`. 
 copy the `example.genesis.json` to `genesis.json` and then 
 run the chain with `./loom run`
 
 ```bash
-go build -tags "evm" -o contracts/wrapstore.1.0.0  wrapstore.go
+go build -tags "evm" -o contracts/evmexample.1.0.0  evmexample.go
 loom init
 cp example.genesis.json genesis.json
 loom run
@@ -47,13 +47,13 @@ loom run
 The cli can be bult with
 ```bash
 cd ../cli
-go build simplestore.go
+go build evmexample.go
 ```
 
-You can now run the wrapstore/cli.go tool to access the solidty contract. 
+You can now run the evmexample/cli.go tool to access the solidty contract. 
 You might need to use -r and -w to the DAppChain's URL.
 ```bash
-./simplestore set -v 3455
-./simplestore get
+./evmexample set -v 3455
+./evmexample get
 ```
 

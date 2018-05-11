@@ -16,7 +16,7 @@ example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
 example-plugins-external: contracts/helloworld.1.0.0
 
-example-evm-plugins: contracts/wrapstore.1.0.0
+example-evm-plugins: contracts/evmexample.1.0.0
 
 contracts/helloworld.1.0.0: proto
 	go build -o $@ $(PKG)/examples/plugins/helloworld
@@ -27,8 +27,8 @@ contracts/helloworld.so.1.0.0: proto
 contracts/lottery.so.1.0.0: examples/plugins/lottery/lottery.pb.go
 	go build -o $@ $(PKG)/examples/plugins/lottery
 
-contracts/wrapstore.1.0.0: proto
-	go build -tags "evm" -o $@ $(PKG)/examples/plugins/wrapstore/contract
+contracts/evmexample.1.0.0: proto
+	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmexample/contract
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
