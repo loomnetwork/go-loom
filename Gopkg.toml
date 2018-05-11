@@ -1,0 +1,54 @@
+# Gopkg.toml example
+#
+# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
+# for detailed Gopkg.toml documentation.
+#
+# required = ["github.com/user/thing/cmd/thing"]
+# ignored = ["github.com/user/project/pkgX", "bitbucket.org/user/project/pkgA/pkgY"]
+#
+# [[constraint]]
+#   name = "github.com/user/project"
+#   version = "1.0.0"
+#
+# [[constraint]]
+#   name = "github.com/user/project2"
+#   branch = "dev"
+#   source = "github.com/myfork/project2"
+#
+# [[override]]
+#   name = "github.com/x/y"
+#   version = "2.4.0"
+#
+# [prune]
+#   non-go = false
+#   go-tests = true
+#   unused-packages = true
+
+
+ignored = [
+  "github.com/loomnetwork/go-loom*",
+  "golang.org/x/crypto*",
+  "golang.org/x/net*",
+  "google.golang.org/grpc*",
+  "github.com/gogo/protobuf*",
+  "github.com/hashicorp/go-plugin*",
+  "github.com/spf13/cobra*",
+  "github.com/spf13/pflag*",
+  "github.com/ethereum/go-ethereum*",
+]
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/grpc-ecosystem/go-grpc-prometheus"
+
+[[constraint]]
+  name = "github.com/prometheus/client_golang"
+  version = "0.8.0"
+
+[[constraint]]
+  name = "github.com/stretchr/testify"
+  version = "1.2.1"
+
+[prune]
+  go-tests = true
+  unused-packages = true
