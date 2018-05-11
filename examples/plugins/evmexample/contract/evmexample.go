@@ -8,13 +8,10 @@ import (
 	"github.com/loomnetwork/go-loom/examples/plugins/evmexample/types"
 	"github.com/loomnetwork/go-loom/plugin"
 	"github.com/loomnetwork/go-loom/plugin/contractpb"
+	"io/ioutil"
 	"math/big"
 	"strconv"
 	"strings"
-)
-
-var (
-	SimpleStoreABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 )
 
 type EvmExample struct {
@@ -28,33 +25,46 @@ func (c *EvmExample) Meta() (plugin.Meta, error) {
 }
 
 func (c *EvmExample) SetValue(ctx contractpb.Context, value *types.WrapValue) error {
-	ssAddr, err := ctx.Resolve("SimpleStore")
+	simpleStoreAddr, err := ctx.Resolve("SimpleStore")
 	if err != nil {
 		return err
 	}
-	abiSS, err := abi.JSON(strings.NewReader(SimpleStoreABI))
+	simpleStoreData, err := ioutil.ReadFile("SimpleStore.abi")
 	if err != nil {
 		return err
 	}
-	input, err := abiSS.Pack("set", big.NewInt(value.Value))
+	abiSimpleStore, err := abi.JSON(strings.NewReader(string(simpleStoreData)))
+	if err != nil {
+		return err
+	}
+	input, err := abiSimpleStore.Pack("set", big.NewInt(value.Value))
 	if err != nil {
 		return err
 	}
 	evmOut := []byte{}
-	err = contractpb.CallEVM(ctx, ssAddr, input, &evmOut)
+	err = contractpb.CallEVM(ctx, simpleStoreAddr, input, &evmOut)
 	return err
 }
 
 func (c *EvmExample) GetValue(ctx contractpb.Context, req *types.Dummy) (*types.WrapValue, error) {
-	ssAddr, err := ctx.Resolve("SimpleStore")
+	simpleStoreAddr, err := ctx.Resolve("SimpleStore")
 	if err != nil {
 		return nil, err
 	}
-	abiSS, err := abi.JSON(strings.NewReader(SimpleStoreABI))
-	input, err := abiSS.Pack("get")
-
+	simpleStoreData, err := ioutil.ReadFile("SimpleStore.abi")
+	if err != nil {
+		return nil, err
+	}
+	abiSimpleStore, err := abi.JSON(strings.NewReader(string(simpleStoreData)))
+	if err != nil {
+		return nil, err
+	}
+	input, err := abiSimpleStore.Pack("get")
+	if err != nil {
+		return nil, err
+	}
 	evmOut := []byte{}
-	err = contractpb.CallEVM(ctx, ssAddr, input, &evmOut)
+	err = contractpb.CallEVM(ctx, simpleStoreAddr, input, &evmOut)
 	if err != nil {
 		return nil, err
 	}

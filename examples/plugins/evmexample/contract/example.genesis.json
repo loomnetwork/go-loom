@@ -2,9 +2,9 @@
   "contracts": [
     {
       "vm": "EVM",
-      "format": "truffle",
+      "format": "hex",
       "name": "SimpleStore",
-      "location": "/path/to/go-loom/examples/evmexample/contract/contracts/SimpleStore.json"
+      "location": "/path/to/go-loom/examples/evmexample/contract/contracts/SimpleStore.bin"
     },
     {
       "vm": "plugin",

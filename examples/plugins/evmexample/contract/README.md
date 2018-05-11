@@ -2,21 +2,14 @@
 
 This example plugin shows how to call a solidity contract running on the DAppChain's virtual machine from a loom plugin.
 
-It wraps the SimpleStore contract.
-```solidity
-pragma solidity ^0.4.18;
-contract SimpleStore {
-  function set(uint _value) public {
-    value = _value;
-  }
-
-  function get() public constant returns (uint) {
-    return value;
-  }
-
-  uint value;
-}
+It wraps the smart contract in SimpleStore.sol. If you have the solidity compiler solc installed
+you can generate the abi and bin files with.
+```bash
+solc  --bin -o ./contracts SimpleStore.sol
+solc  --abi -o. SimpleStore.sol
 ```
+If you run the DAppChain in another directory, both `solc` output files need to be copied across.
+
 ## Prerequisite
 This example requires the 
 [go-ethereum package](https://github.com/ethereum/go-ethereum),
@@ -51,7 +44,7 @@ go build evmexample.go
 ```
 
 You can now run the evmexample/cli.go tool to access the solidty contract. 
-You might need to use -r and -w to the DAppChain's URL.
+You might need to use -r and -w to set the DAppChain's URL.
 ```bash
 ./evmexample set -v 3455
 ./evmexample get
