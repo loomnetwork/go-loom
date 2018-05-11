@@ -1,17 +1,16 @@
 PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local/include
+
 .PHONY: all clean test lint deps proto examples example-plugins example-plugins-external example-cmds
 
 all: examples
 
 evm: all example-evm-plugins
 
-examples: example-plugins example-plugins-external example-cmds
+examples: example-plugins example-plugins-external example-cli
 
-example-cmds: cli
-
-cli: examples/types/types.pb.go
-	go build -o out/cmds/cli  $(PKG)/examples/$@
+example-cli: examples/types/types.pb.go
+	go build -o $@ $(PKG)/examples/cli
 
 example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
@@ -46,7 +45,6 @@ proto: \
 	builtin/types/dpos/dpos.pb.go \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
-	examples/plugins/wrapstore/types/types.pb.go \
 	examples/plugins/lottery/lottery.pb.go
 
 test: proto
@@ -65,6 +63,7 @@ deps:
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert
+	dep ensure -vendor-only
 
 clean:
 	go clean
@@ -76,7 +75,6 @@ clean:
 		builtin/types/coin/coin.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
-		examples/plugins/wrapstore/types/types.pb.go \
 		builtin/plugins/lottery/lottery.pb.go \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
