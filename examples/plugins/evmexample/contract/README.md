@@ -40,13 +40,13 @@ loom run
 The cli can be bult with
 ```bash
 cd ../cli
-go build evmexample.go
+go build -o evmexample-cli evmexample.go
 ```
 
-You can now run the evmexample/cli.go tool to access the solidty contract. 
+You can now run the cli/evmexample.go tool to access the solidty contract. 
 You might need to use -r and -w to set the DAppChain's URL.
 ```bash
-./evmexample set -v 3455
-./evmexample get
+./evmexample-cli set -v 3455
+./evmexample-cli get
 ```
 

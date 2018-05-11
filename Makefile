@@ -5,12 +5,15 @@ PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local
 
 all: examples
 
-evm: all example-evm-plugins
+evm: all example-evm-plugins evmexample-cli
 
 examples: example-plugins example-plugins-external example-cli
 
 example-cli: examples/types/types.pb.go
 	go build -o $@ $(PKG)/examples/cli
+
+evmexample-cli: examples/types/types.pb.go
+	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmexample/cli
 
 example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
@@ -22,7 +25,7 @@ contracts/helloworld.1.0.0: proto
 	go build -o $@ $(PKG)/examples/plugins/helloworld
 
 contracts/helloworld.so.1.0.0: proto
-	go build -buildmode=plugin -o $@ $(PKG)/examples/plugins/helloworld
+	go build  -o $@ $(PKG)/examples/plugins/helloworld
 
 contracts/lottery.so.1.0.0: examples/plugins/lottery/lottery.pb.go
 	go build -o $@ $(PKG)/examples/plugins/lottery
@@ -45,7 +48,8 @@ proto: \
 	builtin/types/dpos/dpos.pb.go \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
-	examples/plugins/lottery/lottery.pb.go
+	examples/plugins/lottery/lottery.pb.go \
+	examples/plugins/evmexample/types/types.pb.go
 
 test: proto
 	go test -v $(PKG)/...
@@ -75,7 +79,11 @@ clean:
 		builtin/types/coin/coin.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
+		examples/plugins/evmexample/types/types.pb.go \
+		evmexample-cli \
 		builtin/plugins/lottery/lottery.pb.go \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
-		out/cmds/cli \
+		contracts/evmexample.1.0.0 \
+		contracts/lottery.so.1.0.0 \
+		out/cmds/cli
