@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	proto "github.com/gogo/protobuf/proto"
+	"github.com/gogo/protobuf/proto"
 
-	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin"
 )
 
@@ -143,6 +143,12 @@ func Call(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.Messag
 	}
 
 	return nil
+}
+
+func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error {
+	resp, err := ctx.CallEVM(addr, input)
+	*output = resp
+	return err
 }
 
 func WrapPluginContext(ctx plugin.Context) Context {

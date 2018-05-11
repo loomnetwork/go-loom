@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message Dummy {
+}
+
+message WrapValue {
+    int64 value = 1;
+}
