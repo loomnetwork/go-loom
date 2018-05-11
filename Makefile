@@ -56,6 +56,7 @@ deps:
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert
+	dep ensure -vendor-only
 
 clean:
 	go clean
