@@ -25,7 +25,7 @@ contracts/helloworld.1.0.0: proto
 	go build -o $@ $(PKG)/examples/plugins/helloworld
 
 contracts/helloworld.so.1.0.0: proto
-	go build  -o $@ $(PKG)/examples/plugins/helloworld
+	go build -buildmode=plugin -o $@ $(PKG)/examples/plugins/helloworld
 
 contracts/lottery.so.1.0.0: examples/plugins/lottery/lottery.pb.go
 	go build -o $@ $(PKG)/examples/plugins/lottery
