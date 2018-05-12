@@ -35,6 +35,7 @@ ignored = [
   "github.com/spf13/cobra*",
   "github.com/spf13/pflag*",
   "github.com/ethereum/go-ethereum*",
+  "github.com/go-kit/kit*"
 ]
 
 [[constraint]]
@@ -48,6 +49,10 @@ ignored = [
 [[constraint]]
   name = "github.com/stretchr/testify"
   version = "1.2.1"
+
+[[constraint]]
+  name = "github.com/go-kit/kit"
+  version = "0.6.0"
 
 [prune]
   go-tests = true

@@ -62,7 +62,8 @@ deps:
 		google.golang.org/grpc \
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
-		github.com/stretchr/testify/assert
+		github.com/stretchr/testify/assert \
+		github.com/go-kit/kit
 	dep ensure -vendor-only
 
 clean:

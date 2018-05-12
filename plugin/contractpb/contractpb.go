@@ -3,6 +3,7 @@ package contractpb
 import (
 	"errors"
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/gogo/protobuf/proto"
@@ -23,6 +24,7 @@ type StaticContext interface {
 	Now() time.Time
 	Message() plugin.Message
 	ContractAddress() loom.Address
+	Logger() *loom.Logger
 }
 
 type Context interface {
@@ -42,9 +44,14 @@ type Contract interface {
 
 type wrappedPluginStaticContext struct {
 	plugin.StaticContext
+	logger *loom.Logger
 }
 
 var _ StaticContext = &wrappedPluginStaticContext{}
+
+func (c *wrappedPluginStaticContext) Logger() *loom.Logger {
+	return c.logger
+}
 
 func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 	data := c.StaticContext.Get(key)
@@ -57,9 +64,14 @@ func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 
 type wrappedPluginContext struct {
 	plugin.Context
+	logger *loom.Logger
 }
 
 var _ Context = &wrappedPluginContext{}
+
+func (c *wrappedPluginContext) Logger() *loom.Logger {
+	return c.logger
+}
 
 func (c *wrappedPluginContext) Get(key []byte, pb proto.Message) error {
 	data := c.Context.Get(key)
@@ -151,6 +163,23 @@ func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error
 	return err
 }
 
+var logger *loom.Logger
+var onceSetup sync.Once
+
+func setupLogger() {
+	onceSetup.Do(func() {
+		level := "info"
+		dest := "file://contract.log"
+		logger = loom.NewLoomLogger(level, dest)
+	})
+}
+
 func WrapPluginContext(ctx plugin.Context) Context {
-	return &wrappedPluginContext{ctx}
+	setupLogger()
+	return &wrappedPluginContext{ctx, logger}
+}
+
+func WrapPluginStaticContext(ctx plugin.StaticContext) StaticContext {
+	setupLogger()
+	return &wrappedPluginStaticContext{ctx, logger}
 }
