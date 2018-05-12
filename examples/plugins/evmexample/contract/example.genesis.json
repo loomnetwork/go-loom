@@ -1,0 +1,19 @@
+{
+  "contracts": [
+    {
+      "vm": "EVM",
+      "format": "hex",
+      "name": "SimpleStore",
+      "location": "/path/to/go-loom/examples/evmexample/contract/contracts/SimpleStore.bin"
+    },
+    {
+      "vm": "plugin",
+      "format": "plugin",
+      "name": "evmexample",
+      "location": "evmexample:1.0.0",
+      "init": {
+
+      }
+    }
+  ]
+}

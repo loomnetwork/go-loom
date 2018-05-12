@@ -7,7 +7,7 @@ import (
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	"github.com/loomnetwork/go-loom/client"
-	"github.com/loomnetwork/go-loom/examples/plugins/wrapstore/types"
+	"github.com/loomnetwork/go-loom/examples/plugins/evmexample/types"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ed25519"
 	"log"
@@ -72,7 +72,7 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr string) (int64, err
 	if err != nil {
 		return 0, err
 	}
-	contract := client.NewContract(rpcClient, contractAddr, "wrapstore")
+	contract := client.NewContract(rpcClient, contractAddr, "EvmExample")
 
 	dummy := &types.Dummy{}
 	result := &types.WrapValue{}
@@ -93,7 +93,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) 
 	if err != nil {
 		return err
 	}
-	contract := client.NewContract(rpcClient, contractAddr, "wrapstore")
+	contract := client.NewContract(rpcClient, contractAddr, "EvmExample")
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
