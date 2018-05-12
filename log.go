@@ -44,7 +44,8 @@ var msgKey = "_msg"
 // Info logs a message at level Info.
 func (l *Logger) Info(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Info(l)
-	if err := kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...); err != nil {
+	err := kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...)
+	if err != nil {
 		errLogger := kitlevel.Error(l)
 		kitlog.With(errLogger, msgKey, msg).Log("err", err)
 	}

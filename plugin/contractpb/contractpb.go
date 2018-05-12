@@ -132,6 +132,7 @@ func MakePluginContract(c Contract) plugin.Contract {
 	if err != nil {
 		panic(err)
 	}
+	setupLogger()
 
 	return r
 }
@@ -175,11 +176,9 @@ func setupLogger() {
 }
 
 func WrapPluginContext(ctx plugin.Context) Context {
-	setupLogger()
 	return &wrappedPluginContext{ctx, logger}
 }
 
 func WrapPluginStaticContext(ctx plugin.StaticContext) StaticContext {
-	setupLogger()
 	return &wrappedPluginStaticContext{ctx, logger}
 }
