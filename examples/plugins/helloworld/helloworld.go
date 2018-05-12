@@ -17,7 +17,7 @@ func (c *HelloWorld) Meta() (plugin.Meta, error) {
 }
 
 func (c *HelloWorld) Init(ctx contract.Context, req *types.HelloRequest) {
-	data := &types.Dummy{
+	data := &types.MapEntry{
 		Key:   "foo",
 		Value: "bar",
 	}
@@ -31,12 +31,12 @@ func (c *HelloWorld) Hello(ctx contract.StaticContext, req *types.HelloRequest) 
 	}, nil
 }
 
-func (c *HelloWorld) SetMsg(ctx contract.Context, req *types.Dummy) error {
+func (c *HelloWorld) SetMsg(ctx contract.Context, req *types.MapEntry) error {
 	return ctx.Set([]byte(req.Key), req)
 }
 
-func (c *HelloWorld) GetMsg(ctx contract.StaticContext, req *types.Dummy) (*types.Dummy, error) {
-	var result types.Dummy
+func (c *HelloWorld) GetMsg(ctx contract.StaticContext, req *types.MapEntry) (*types.MapEntry, error) {
+	var result types.MapEntry
 	if err := ctx.Get([]byte(req.Key), &result); err != nil {
 		return nil, err
 	}
