@@ -84,7 +84,8 @@ func (l *Logger) Warn(msg string, keyvals ...interface{}) {
 func NewLoomLogger(loomLogLevel, dest string) *Logger {
 	w := MakeFileLoggerWriter(loomLogLevel, dest)
 	logTr := func(w io.Writer) kitlog.Logger {
-		return kitlog.NewLogfmtLogger(kitlog.NewSyncWriter(w))
+		fmtLogger := kitlog.NewLogfmtLogger(kitlog.NewSyncWriter(w))
+		return kitlog.With(fmtLogger, "ts", kitlog.DefaultTimestampUTC)
 	}
 	return MakeLoomLogger(loomLogLevel, w, logTr)
 }
