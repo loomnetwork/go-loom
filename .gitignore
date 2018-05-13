@@ -13,3 +13,9 @@
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 /vendor/**
+app.db
+chaindata
+contracts
+example-cli
+genesis.json
+protoc-gen-gogo
