@@ -44,8 +44,8 @@ var msgKey = "_msg"
 // Info logs a message at level Info.
 func (l *Logger) Info(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Info(l)
-	err := kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...)
-	if err != nil {
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
 		errLogger := kitlevel.Error(l)
 		kitlog.With(errLogger, msgKey, msg).Log("err", err)
 	}
@@ -54,7 +54,8 @@ func (l *Logger) Info(msg string, keyvals ...interface{}) {
 // Debug logs a message at level Debug.
 func (l *Logger) Debug(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Debug(l)
-	if err := kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...); err != nil {
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
 		errLogger := kitlevel.Error(l)
 		errLogger.Log("err", err)
 	}
@@ -63,16 +64,18 @@ func (l *Logger) Debug(msg string, keyvals ...interface{}) {
 // Error logs a message at level Error.
 func (l *Logger) Error(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Error(l)
-	lWithMsg := kitlog.With(lWithLevel, msgKey, msg)
-	if err := lWithMsg.Log(keyvals...); err != nil {
-		lWithMsg.Log("err", err)
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
+		args = append([]interface{}{"err", err}, args...)
+		lWithLevel.Log(args)
 	}
 }
 
 // Warn logs a message at level Debug.
 func (l *Logger) Warn(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Warn(l)
-	if err := kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...); err != nil {
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
 		errLogger := kitlevel.Error(l)
 		kitlog.With(errLogger, msgKey, msg).Log("err", err)
 	}
@@ -83,14 +86,14 @@ func NewLoomLogger(loomLogLevel, dest string) *Logger {
 	logTr := func(w io.Writer) kitlog.Logger {
 		return kitlog.NewLogfmtLogger(kitlog.NewSyncWriter(w))
 	}
-	return MakeLoomLogger(w, logTr)
+	return MakeLoomLogger(loomLogLevel, w, logTr)
 }
 
-func MakeLoomLogger(w io.Writer, tr func(w io.Writer) kitlog.Logger) *Logger {
+func MakeLoomLogger(logLevel string, w io.Writer, tr func(w io.Writer) kitlog.Logger) *Logger {
 	loggerFunc := func(w io.Writer) *Logger {
 		baseLogger := kitlog.With(tr(w), "module", "loom")
 		return &Logger{
-			NewFilter(baseLogger, AllowDebug()),
+			NewFilter(baseLogger, Allow(logLevel)),
 		}
 	}
 	return loggerFunc(w)
