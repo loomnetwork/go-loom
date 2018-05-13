@@ -3,6 +3,7 @@ package contractpb
 import (
 	"errors"
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
@@ -170,7 +171,15 @@ var onceSetup sync.Once
 func setupLogger() {
 	onceSetup.Do(func() {
 		level := "info"
+		envLevel := os.Getenv("CONTRACT_LOG_LEVEL")
+		if envLevel != "" {
+			level = envLevel
+		}
 		dest := "file://contract.log"
+		envDest := os.Getenv("CONTRACT_LOG_DESTINATION")
+		if envDest != "" {
+			dest = envDest
+		}
 		logger = loom.NewLoomLogger(level, dest)
 	})
 }
