@@ -4,10 +4,8 @@ package main
 
 import (
 	"encoding/hex"
-	"math/big"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/loomnetwork/go-loom/examples/plugins/evmproxy/types"
 	"github.com/loomnetwork/go-loom/plugin"
@@ -30,52 +28,7 @@ func (c *EvmProxy) EthTransaction(ctx contractpb.Context, tx *types.EthTransacti
 		return err
 	}
 
-	// input, err := hex.DecodeString(strings.TrimPrefix(tx.Data, "0x"))
-	// if err != nil {
-	// 	return err
-	// }
-
-	// evmOut := []byte{}
-	// err = contractpb.CallEVM(ctx, simpleStoreAddr, input, &evmOut)
-
-	simpleStoreData := `[
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "_value",
-					"type": "uint256"
-				}
-			],
-			"name": "set",
-			"outputs": [],
-			"payable": false,
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [],
-			"name": "get",
-			"outputs": [
-				{
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		}
-	]
-	`
-
-	abiSimpleStore, err := abi.JSON(strings.NewReader(string(simpleStoreData)))
-	if err != nil {
-		return err
-	}
-
-	input, err := abiSimpleStore.Pack("set", big.NewInt(1))
+	input, err := hex.DecodeString(strings.TrimPrefix(tx.Data, "0x"))
 	if err != nil {
 		return err
 	}
@@ -86,13 +39,13 @@ func (c *EvmProxy) EthTransaction(ctx contractpb.Context, tx *types.EthTransacti
 	return err
 }
 
-func (c *EvmProxy) EthCall(ctx contractpb.Context, tx *types.EthCall) (*types.EthCall, error) {
+func (c *EvmProxy) EthCall(ctx contractpb.Context, tx *types.EthCall) (*types.EthCallResult, error) {
 	simpleStoreAddr, err := ctx.Resolve("SimpleStore")
 	if err != nil {
 		return nil, err
 	}
 
-	input, err := hex.DecodeString(tx.Data)
+	input, err := hex.DecodeString(strings.TrimPrefix(tx.Data, "0x"))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +58,7 @@ func (c *EvmProxy) EthCall(ctx contractpb.Context, tx *types.EthCall) (*types.Et
 
 	value := common.Bytes2Hex(evmOut)
 
-	return &types.EthCall{
+	return &types.EthCallResult{
 		Data: value,
 	}, err
 }

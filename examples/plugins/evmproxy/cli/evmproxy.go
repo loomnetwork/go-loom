@@ -67,27 +67,27 @@ func main() {
 	}
 }
 
-func GetValueCmd(chainId, writeUri, readUri, contractHexAddr string) (int64, error) {
+func GetValueCmd(chainId, writeUri, readUri, contractHexAddr string) (string, error) {
 	rpcClient := client.NewDAppChainRPCClient(chainId, writeUri, readUri)
 	contractAddr, err := loom.LocalAddressFromHexString(contractHexAddr)
 	if err != nil {
-		return 0, err
+		return "", err
 	}
 	contract := client.NewContract(rpcClient, contractAddr, "evmproxy")
 
-	dummy := &types.EthCall{}
-	result := &types.EthCall{}
+	dummy := &types.EthCall{
+		Data: "0x6d4ce63c",
+	}
+	result := &types.EthCallResult{}
 	// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
 	_, priv, err := ed25519.GenerateKey(nil)
 	if err != nil {
-		return 0, err
+		return "", err
 	}
 	signer := auth.NewEd25519Signer(priv)
 	_, err = contract.Call("EthCall", dummy, signer, result)
 
-	fmt.Printf("RESULT %s", dummy.Data)
-
-	return 1, err
+	return result.GetData(), err
 }
 
 func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) error {

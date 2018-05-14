@@ -9,3 +9,8 @@ message EthCall {
 	uint32 version = 1;
 	string data = 2;
 }
+
+message EthCallResult {
+	uint32 version = 1;
+	string data = 2;
+}
