@@ -26,7 +26,6 @@
 
 
 ignored = [
-  "github.com/loomnetwork/go-loom*",
   "golang.org/x/crypto*",
   "golang.org/x/net*",
   "google.golang.org/grpc*",
