@@ -151,7 +151,7 @@ func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error
 	return err
 }
 
-func StaticCall(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.Message) error {
+func StaticCall(ctx StaticContext, addr loom.Address, inpb proto.Message, outpb proto.Message) error {
 	input, err := proto.Marshal(inpb)
 	if err != nil {
 		return err
@@ -172,7 +172,7 @@ func StaticCall(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.
 	return nil
 }
 
-func StaticCallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error {
+func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[]byte) error {
 	resp, err := ctx.StaticCallEVM(addr, input)
 	*output = resp
 	return err
