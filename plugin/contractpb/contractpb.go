@@ -151,6 +151,33 @@ func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error
 	return err
 }
 
+func StaticCall(ctx StaticContext, addr loom.Address, inpb proto.Message, outpb proto.Message) error {
+	input, err := proto.Marshal(inpb)
+	if err != nil {
+		return err
+	}
+
+	output, err := ctx.StaticCall(addr, input)
+	if err != nil {
+		return err
+	}
+
+	if outpb != nil {
+		err = proto.Unmarshal(output, outpb)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[]byte) error {
+	resp, err := ctx.StaticCallEVM(addr, input)
+	*output = resp
+	return err
+}
+
 func WrapPluginContext(ctx plugin.Context) Context {
 	return &wrappedPluginContext{ctx}
 }

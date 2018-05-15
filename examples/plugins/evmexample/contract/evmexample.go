@@ -64,7 +64,7 @@ func (c *EvmExample) GetValue(ctx contractpb.Context, req *types.Dummy) (*types.
 		return nil, err
 	}
 	evmOut := []byte{}
-	err = contractpb.CallEVM(ctx, simpleStoreAddr, input, &evmOut)
+	err = contractpb.StaticCallEVM(ctx, simpleStoreAddr, input, &evmOut)
 	if err != nil {
 		return nil, err
 	}
