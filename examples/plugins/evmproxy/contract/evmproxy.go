@@ -51,7 +51,7 @@ func (c *EvmProxy) EthCall(ctx contractpb.Context, tx *types.EthCall) (*types.Et
 	}
 
 	evmOut := []byte{}
-	err = contractpb.CallEVM(ctx, simpleStoreAddr, input, &evmOut)
+	err = contractpb.StaticCallEVM(ctx, simpleStoreAddr, input, &evmOut)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,8 @@ func (c *EvmProxy) EthCall(ctx contractpb.Context, tx *types.EthCall) (*types.Et
 	value := common.Bytes2Hex(evmOut)
 
 	return &types.EthCallResult{
-		Data: value,
+		Version: 1,
+		Data:    value,
 	}, err
 }
 

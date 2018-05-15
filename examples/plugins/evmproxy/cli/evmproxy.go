@@ -75,19 +75,21 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr string) (string, er
 	}
 	contract := client.NewContract(rpcClient, contractAddr, "evmproxy")
 
-	dummy := &types.EthCall{
+	ethCall := &types.EthCall{
 		Data: "0x6d4ce63c",
 	}
-	result := &types.EthCallResult{}
+
+	ethCallResult := &types.EthCallResult{}
 	// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
 	_, priv, err := ed25519.GenerateKey(nil)
 	if err != nil {
 		return "", err
 	}
-	signer := auth.NewEd25519Signer(priv)
-	_, err = contract.Call("EthCall", dummy, signer, result)
 
-	return result.GetData(), err
+	signer := auth.NewEd25519Signer(priv)
+	_, err = contract.Call("EthCall", ethCall, signer, ethCallResult)
+
+	return ethCallResult.GetData(), err
 }
 
 func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) error {
@@ -104,10 +106,13 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) 
 	if err != nil {
 		return err
 	}
+
 	signer := auth.NewEd25519Signer(priv)
 
+	// set(uint256) = 60fe47b1 (4 bytes)
+	// 0000000000000000000000000000000000000000000000000000000000000001 = 1 (64 bytes)
 	payload := &types.EthCall{
-		Data: "0x60fe47b10000000000000000000000000000000000000000000000000000000000000001",
+		Data: "0x60fe47b10000000000000000000000000000000000000000000000000000000000000002",
 	}
 	_, err = contract.Call("EthTransaction", payload, signer, nil)
 	return err
