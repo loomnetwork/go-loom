@@ -121,9 +121,23 @@ func (c *DAppChainRPCClient) Query(contractAddr loom.LocalAddress, query proto.M
 	params := map[string]interface{}{
 		"contract": contractAddr.String(),
 		"query":    queryBytes,
+		"vmType":   vm.VMType_PLUGIN,
 	}
 	var r []byte
 	if err = c.queryClient.Call("query", params, c.getNextRequestID(), &r); err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func (c *DAppChainRPCClient) QueryEvm(contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
+	params := map[string]interface{}{
+		"contract": contractAddr.String(),
+		"query":    query,
+		"vmType":   vm.VMType_EVM,
+	}
+	var r []byte
+	if err := c.queryClient.Call("query", params, c.getNextRequestID(), &r); err != nil {
 		return nil, err
 	}
 	return r, nil
