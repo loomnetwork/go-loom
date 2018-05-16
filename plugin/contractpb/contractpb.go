@@ -3,6 +3,8 @@ package contractpb
 import (
 	"errors"
 	"fmt"
+	"os"
+	"sync"
 	"time"
 
 	"github.com/gogo/protobuf/proto"
@@ -23,6 +25,7 @@ type StaticContext interface {
 	Now() time.Time
 	Message() plugin.Message
 	ContractAddress() loom.Address
+	Logger() *loom.Logger
 }
 
 type Context interface {
@@ -42,9 +45,14 @@ type Contract interface {
 
 type wrappedPluginStaticContext struct {
 	plugin.StaticContext
+	logger *loom.Logger
 }
 
 var _ StaticContext = &wrappedPluginStaticContext{}
+
+func (c *wrappedPluginStaticContext) Logger() *loom.Logger {
+	return c.logger
+}
 
 func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 	data := c.StaticContext.Get(key)
@@ -57,9 +65,14 @@ func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 
 type wrappedPluginContext struct {
 	plugin.Context
+	logger *loom.Logger
 }
 
 var _ Context = &wrappedPluginContext{}
+
+func (c *wrappedPluginContext) Logger() *loom.Logger {
+	return c.logger
+}
 
 func (c *wrappedPluginContext) Get(key []byte, pb proto.Message) error {
 	data := c.Context.Get(key)
@@ -120,6 +133,7 @@ func MakePluginContract(c Contract) plugin.Contract {
 	if err != nil {
 		panic(err)
 	}
+	setupLogger()
 
 	return r
 }
@@ -151,6 +165,25 @@ func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error
 	return err
 }
 
+var logger *loom.Logger
+var onceSetup sync.Once
+
+func setupLogger() {
+	onceSetup.Do(func() {
+		level := "info"
+		envLevel := os.Getenv("CONTRACT_LOG_LEVEL")
+		if envLevel != "" {
+			level = envLevel
+		}
+		dest := "file://contract.log"
+		envDest := os.Getenv("CONTRACT_LOG_DESTINATION")
+		if envDest != "" {
+			dest = envDest
+		}
+		logger = loom.NewLoomLogger(level, dest)
+	})
+}
+
 func StaticCall(ctx StaticContext, addr loom.Address, inpb proto.Message, outpb proto.Message) error {
 	input, err := proto.Marshal(inpb)
 	if err != nil {
@@ -179,5 +212,9 @@ func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[
 }
 
 func WrapPluginContext(ctx plugin.Context) Context {
-	return &wrappedPluginContext{ctx}
+	return &wrappedPluginContext{ctx, logger}
+}
+
+func WrapPluginStaticContext(ctx plugin.StaticContext) StaticContext {
+	return &wrappedPluginStaticContext{ctx, logger}
 }

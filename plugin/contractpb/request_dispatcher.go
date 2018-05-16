@@ -36,7 +36,7 @@ func NewRequestDispatcher(contract Contract) (*RequestDispatcher, error) {
 }
 
 func (s *RequestDispatcher) Init(ctx plugin.Context, req *plugin.Request) error {
-	_, err := s.doCall(methodSigInit, &wrappedPluginContext{Context: ctx}, req)
+	_, err := s.doCall(methodSigInit, WrapPluginContext(ctx), req)
 	if err != ErrMethodNotFound {
 		err = nil
 	}
@@ -44,11 +44,11 @@ func (s *RequestDispatcher) Init(ctx plugin.Context, req *plugin.Request) error 
 }
 
 func (s *RequestDispatcher) StaticCall(ctx plugin.StaticContext, req *plugin.Request) (*plugin.Response, error) {
-	return s.doCall(methodSigStaticCall, &wrappedPluginStaticContext{StaticContext: ctx}, req)
+	return s.doCall(methodSigStaticCall, WrapPluginStaticContext(ctx), req)
 }
 
 func (s *RequestDispatcher) Call(ctx plugin.Context, req *plugin.Request) (*plugin.Response, error) {
-	return s.doCall(methodSigCall, &wrappedPluginContext{Context: ctx}, req)
+	return s.doCall(methodSigCall, WrapPluginContext(ctx), req)
 }
 
 func (s *RequestDispatcher) doCall(sig methodSig, ctx interface{}, req *plugin.Request) (*plugin.Response, error) {
