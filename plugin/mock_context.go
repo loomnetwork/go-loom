@@ -1,45 +1,121 @@
 package plugin
 
 import (
+	"bytes"
+	"encoding/binary"
 	"time"
 
+	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/types"
+	"github.com/loomnetwork/go-loom/util"
+	"github.com/loomnetwork/transfer-gateway/gocontracts/sha3"
 )
 
 type FakeContext struct {
-	caller  loom.Address
-	address loom.Address
-	data    map[string][]byte
+	caller        loom.Address
+	address       loom.Address
+	data          map[string][]byte
+	contractNonce uint64
+	contracts     map[string]Contract
 }
 
 var _ Context = &FakeContext{}
 
-func CreateFakeContext(caller, address loom.Address) *FakeContext {
-	return &FakeContext{
-		caller:  caller,
-		address: address,
-		data:    make(map[string][]byte),
+func createAddress(parent loom.Address, nonce uint64) loom.Address {
+	var nonceBuf bytes.Buffer
+	binary.Write(&nonceBuf, binary.BigEndian, nonce)
+	data := util.PrefixKey(parent.Bytes(), nonceBuf.Bytes())
+	hash := sha3.Sum256(data)
+	return loom.Address{
+		ChainID: parent.ChainID,
+		Local:   hash[12:],
 	}
 }
 
-func (c *FakeContext) WithSender(caller loom.Address) Context {
+func CreateFakeContext(caller, address loom.Address) *FakeContext {
 	return &FakeContext{
-		caller:  caller,
-		address: c.address,
-		data:    c.data,
+		caller:    caller,
+		address:   address,
+		data:      make(map[string][]byte),
+		contracts: make(map[string]Contract),
 	}
+}
+
+func (c *FakeContext) WithSender(caller loom.Address) *FakeContext {
+	return &FakeContext{
+		caller:    caller,
+		address:   c.address,
+		data:      c.data,
+		contracts: c.contracts,
+	}
+}
+
+func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
+	return &FakeContext{
+		caller:    c.caller,
+		address:   addr,
+		data:      c.data,
+		contracts: c.contracts,
+	}
+}
+
+func (c *FakeContext) CreateContract(contract Contract) loom.Address {
+	addr := createAddress(c.address, c.contractNonce)
+	c.contractNonce++
+	c.contracts[addr.String()] = contract
+	return addr
 }
 
 func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
-	return nil, nil
-}
+	contract := c.contracts[addr.String()]
 
-func (c *FakeContext) CallEVM(addr loom.Address, input []byte) ([]byte, error) {
-	return nil, nil
+	ctx := &FakeContext{
+		caller:    c.address,
+		address:   addr,
+		data:      c.data,
+		contracts: c.contracts,
+	}
+
+	var req Request
+	err := proto.Unmarshal(input, &req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := contract.Call(ctx, &req)
+	if err != nil {
+		return nil, err
+	}
+
+	return proto.Marshal(resp)
 }
 
 func (c *FakeContext) StaticCall(addr loom.Address, input []byte) ([]byte, error) {
+	contract := c.contracts[addr.String()]
+
+	ctx := &FakeContext{
+		caller:    c.address,
+		address:   addr,
+		data:      c.data,
+		contracts: c.contracts,
+	}
+
+	var req Request
+	err := proto.Unmarshal(input, &req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := contract.StaticCall(ctx, &req)
+	if err != nil {
+		return nil, err
+	}
+
+	return proto.Marshal(resp)
+}
+
+func (c *FakeContext) CallEVM(addr loom.Address, input []byte) ([]byte, error) {
 	return nil, nil
 }
 
@@ -76,21 +152,26 @@ func (c *FakeContext) Now() time.Time {
 func (c *FakeContext) Emit(event []byte) {
 }
 
+func (c *FakeContext) makeKey(key []byte) string {
+	return string(util.PrefixKey(c.address.Bytes(), key))
+}
+
 func (c *FakeContext) Get(key []byte) []byte {
-	v, _ := c.data[string(key)]
+	v, _ := c.data[c.makeKey(key)]
 	return v
 }
 
 func (c *FakeContext) Has(key []byte) bool {
-	_, ok := c.data[string(key)]
+	_, ok := c.data[c.makeKey(key)]
 	return ok
 }
 
 func (c *FakeContext) Set(key []byte, value []byte) {
-	c.data[string(key)] = value
+	c.data[c.makeKey(key)] = value
 }
 
 func (c *FakeContext) Delete(key []byte) {
+	delete(c.data, c.makeKey(key))
 }
 
 func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
