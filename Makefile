@@ -19,7 +19,7 @@ example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
 
 example-plugins-external: contracts/helloworld.1.0.0
 
-example-evm-plugins: contracts/evmexample.1.0.0
+example-evm-plugins: contracts/evmexample.1.0.0 contracts/evmproxy.1.0.0
 
 contracts/helloworld.1.0.0: proto
 	go build -o $@ $(PKG)/examples/plugins/helloworld
@@ -32,6 +32,9 @@ contracts/lottery.so.1.0.0: examples/plugins/lottery/lottery.pb.go
 
 contracts/evmexample.1.0.0: proto
 	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmexample/contract
+
+contracts/evmproxy.1.0.0: proto
+	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmproxy/contract
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
@@ -49,7 +52,8 @@ proto: \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
 	examples/plugins/lottery/lottery.pb.go \
-	examples/plugins/evmexample/types/types.pb.go
+	examples/plugins/evmexample/types/types.pb.go \
+	examples/plugins/evmproxy/types/types.pb.go
 
 test: proto
 	go test -v $(PKG)/...
@@ -88,4 +92,5 @@ clean:
 		out/cmds/cli \
 		contracts/evmexample.1.0.0 \
 		contracts/lottery.so.1.0.0 \
+		contracts/evmproxy.so.1.0.0 \
 		out/cmds/cli

@@ -19,3 +19,6 @@ contracts
 example-cli
 genesis.json
 protoc-gen-gogo
+loom.yaml
+evmexample-cli
+examples/plugins/evmproxy/cli/evmproxy
