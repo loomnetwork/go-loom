@@ -69,12 +69,11 @@ func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
 }
 
 func NewJSONRPCClient(host string) *JSONRPCClient {
-	url, _ := url.Parse(host)
 	return &JSONRPCClient{
 		host: host,
 		client: &http.Client{
 			Transport: &http.Transport{
-				Dial: newHTTPDialer(url.Host),
+				Dial: newHTTPDialer(host),
 			},
 		},
 	}
