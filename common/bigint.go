@@ -60,10 +60,6 @@ func (b *BigUInt) Div(x, y *BigUInt) *BigUInt {
 	return &BigUInt{b.Int.Div(x.Int, y.Int)}
 }
 
-func (b *BigUInt) Uint64() uint64 {
-	return b.Uint64()
-}
-
 // Exp sets z = x**y mod |m| (i.e. the sign of m is ignored), and returns z.
 // If y <= 0, the result is 1 mod |m|; if m == nil or m == 0, z = x**y.
 //
@@ -71,4 +67,8 @@ func (b *BigUInt) Uint64() uint64 {
 // cryptographically constant-time operation.
 func (b *BigUInt) Exp(x, y, m *BigUInt) *BigUInt {
 	return &BigUInt{b.Int.Exp(x.Int, y.Int, m.int())}
+}
+
+func (b *BigUInt) Uint64() uint64 {
+	return b.Int.Uint64()
 }
