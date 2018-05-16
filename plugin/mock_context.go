@@ -5,11 +5,12 @@ import (
 	"encoding/binary"
 	"time"
 
+	"golang.org/x/crypto/sha3"
+
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
-	"github.com/loomnetwork/transfer-gateway/gocontracts/sha3"
 )
 
 type FakeContext struct {
