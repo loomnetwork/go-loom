@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euxo pipefail
+
 PROTOBUF_VERSION=3.5.1
 
 cd /tmp
@@ -11,10 +13,10 @@ curl -OL https://github.com/google/protobuf/releases/download/v${PROTOBUF_VERSIO
 unzip protoc-${PROTOBUF_VERSION}-linux-x86_64.zip -d protoc3
 
 # Move protoc to /usr/local/bin/
-mv protoc3/bin/* /usr/local/bin/
+sudo mv protoc3/bin/* /usr/local/bin/
 
 # Move protoc3/include to /usr/local/include/
-mv protoc3/include/* /usr/local/include/
+sudo mv protoc3/include/* /usr/local/include/
 
 # Install dep
 curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
