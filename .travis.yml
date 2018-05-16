@@ -7,7 +7,7 @@ addons:
     - curl
 
 before_install:
-  - .travis_before_install.sh
+  - ./travis_before_install.sh
 
 script:
   - make deps

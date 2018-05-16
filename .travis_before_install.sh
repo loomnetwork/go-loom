@@ -2,6 +2,8 @@
 
 PROTOBUF_VERSION=v3.5.1
 
+cd /tmp
+
 # Grab the latest version
 curl -OL https://github.com/google/protobuf/releases/download/${PROTOBUF_VERSION}/protoc-${PROTOBUF_VERSION}-linux-x86_64.zip
 
