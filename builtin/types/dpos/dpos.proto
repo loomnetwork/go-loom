@@ -81,5 +81,8 @@ message UnproxyVoteRequest {
 message UnproxyVoteResponse {
 }
 
-message Elect {
+message ElectRequest {
+}
+
+message ElectResponse {
 }
