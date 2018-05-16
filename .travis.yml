@@ -1,0 +1,18 @@
+language: go
+
+addons:
+  apt:
+    packages:
+    - unzip
+    - curl
+
+before_install:
+  - .travis_before_install.sh
+
+script:
+  - make deps
+  - make
+  - make test
+
+go:
+  - 1.10.x
