@@ -8,7 +8,6 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 type RPCRequest struct {
@@ -53,14 +52,10 @@ type JSONRPCClient struct {
 }
 
 func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
-	parts := strings.SplitN(host, "://", 2)
-	var protocol, address string
+	u, err := url.Parse(host)
 	// default to tcp if nothing specified
-	if len(parts) == 1 {
-		protocol, address = "tcp", host
-	} else if len(parts) == 2 {
-		protocol, address = parts[0], parts[1]
-	} else {
+	protocol := u.Scheme
+	if err != nil {
 		return func(_ string, _ string) (net.Conn, error) {
 			return nil, fmt.Errorf("Invalid host: %s", host)
 		}
@@ -69,7 +64,7 @@ func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
 		protocol = "tcp"
 	}
 	return func(p, a string) (net.Conn, error) {
-		return net.Dial(protocol, address)
+		return net.Dial(protocol, u.Host)
 	}
 }
 
