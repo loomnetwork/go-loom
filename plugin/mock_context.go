@@ -19,6 +19,7 @@ type FakeContext struct {
 	data          map[string][]byte
 	contractNonce uint64
 	contracts     map[string]Contract
+	validators    loom.ValidatorSet
 }
 
 var _ Context = &FakeContext{}
@@ -36,28 +37,31 @@ func createAddress(parent loom.Address, nonce uint64) loom.Address {
 
 func CreateFakeContext(caller, address loom.Address) *FakeContext {
 	return &FakeContext{
-		caller:    caller,
-		address:   address,
-		data:      make(map[string][]byte),
-		contracts: make(map[string]Contract),
+		caller:     caller,
+		address:    address,
+		data:       make(map[string][]byte),
+		contracts:  make(map[string]Contract),
+		validators: loom.NewValidatorSet(),
 	}
 }
 
 func (c *FakeContext) WithSender(caller loom.Address) *FakeContext {
 	return &FakeContext{
-		caller:    caller,
-		address:   c.address,
-		data:      c.data,
-		contracts: c.contracts,
+		caller:     caller,
+		address:    c.address,
+		data:       c.data,
+		contracts:  c.contracts,
+		validators: c.validators,
 	}
 }
 
 func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
 	return &FakeContext{
-		caller:    c.caller,
-		address:   addr,
-		data:      c.data,
-		contracts: c.contracts,
+		caller:     c.caller,
+		address:    addr,
+		data:       c.data,
+		contracts:  c.contracts,
+		validators: c.validators,
 	}
 }
 
@@ -72,10 +76,11 @@ func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 	contract := c.contracts[addr.String()]
 
 	ctx := &FakeContext{
-		caller:    c.address,
-		address:   addr,
-		data:      c.data,
-		contracts: c.contracts,
+		caller:     c.address,
+		address:    addr,
+		data:       c.data,
+		contracts:  c.contracts,
+		validators: c.validators,
 	}
 
 	var req Request
@@ -176,6 +181,11 @@ func (c *FakeContext) Delete(key []byte) {
 }
 
 func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
+	c.validators.Set(&loom.Validator{PubKey: pubKey, Power: power})
+}
+
+func (c *FakeContext) Validators() []*loom.Validator {
+	return c.validators.Slice()
 }
 
 func (c *FakeContext) HasPermission(token []byte, roles []string) (bool, []string) {
