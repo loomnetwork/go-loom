@@ -70,7 +70,8 @@ deps:
 		google.golang.org/grpc \
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
-		github.com/stretchr/testify/assert
+		github.com/stretchr/testify/assert \
+		github.com/go-kit/kit
 	dep ensure -vendor-only
 
 clean:
@@ -88,6 +89,7 @@ clean:
 		builtin/plugins/lottery/lottery.pb.go \
 		contracts/helloworld.1.0.0 \
 		contracts/helloworld.so.1.0.0 \
+		out/cmds/cli \
 		contracts/evmexample.1.0.0 \
 		contracts/lottery.so.1.0.0 \
 		contracts/evmproxy.so.1.0.0 \

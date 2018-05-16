@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -73,11 +74,12 @@ func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
 }
 
 func NewJSONRPCClient(host string) *JSONRPCClient {
+	url, _ := url.Parse(host)
 	return &JSONRPCClient{
 		host: host,
 		client: &http.Client{
 			Transport: &http.Transport{
-				Dial: newHTTPDialer(host),
+				Dial: newHTTPDialer(url.Host),
 			},
 		},
 	}
