@@ -11,6 +11,7 @@ import (
 
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin"
+	"github.com/loomnetwork/go-loom/plugin/types"
 )
 
 var (
@@ -139,7 +140,7 @@ func MakePluginContract(c Contract) plugin.Contract {
 }
 
 func Call(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.Message) error {
-	input, err := proto.Marshal(inpb)
+	input, err := makeEnvelope(inpb)
 	if err != nil {
 		return err
 	}
@@ -149,8 +150,14 @@ func Call(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.Messag
 		return err
 	}
 
+	var resp plugin.Response
+	err = proto.Unmarshal(output, &resp)
+	if err != nil {
+		return err
+	}
+
 	if outpb != nil {
-		err = proto.Unmarshal(output, outpb)
+		err = proto.Unmarshal(resp.Body, outpb)
 		if err != nil {
 			return err
 		}
@@ -159,10 +166,18 @@ func Call(ctx Context, addr loom.Address, inpb proto.Message, outpb proto.Messag
 	return nil
 }
 
-func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error {
-	resp, err := ctx.CallEVM(addr, input)
-	*output = resp
-	return err
+func CallMethod(ctx Context, addr loom.Address, method string, inpb proto.Message, outpb proto.Message) error {
+	args, err := proto.Marshal(inpb)
+	if err != nil {
+		return err
+	}
+
+	query := &types.ContractMethodCall{
+		Method: method,
+		Args:   args,
+	}
+
+	return Call(ctx, addr, query, outpb)
 }
 
 var logger *loom.Logger
@@ -185,7 +200,7 @@ func setupLogger() {
 }
 
 func StaticCall(ctx StaticContext, addr loom.Address, inpb proto.Message, outpb proto.Message) error {
-	input, err := proto.Marshal(inpb)
+	input, err := makeEnvelope(inpb)
 	if err != nil {
 		return err
 	}
@@ -195,14 +210,40 @@ func StaticCall(ctx StaticContext, addr loom.Address, inpb proto.Message, outpb 
 		return err
 	}
 
+	var resp plugin.Response
+	err = proto.Unmarshal(output, &resp)
+	if err != nil {
+		return err
+	}
+
 	if outpb != nil {
-		err = proto.Unmarshal(output, outpb)
+		err = proto.Unmarshal(resp.Body, outpb)
 		if err != nil {
 			return err
 		}
 	}
 
 	return nil
+}
+
+func StaticCallMethod(ctx StaticContext, addr loom.Address, method string, inpb proto.Message, outpb proto.Message) error {
+	args, err := proto.Marshal(inpb)
+	if err != nil {
+		return err
+	}
+
+	query := &types.ContractMethodCall{
+		Method: method,
+		Args:   args,
+	}
+
+	return StaticCall(ctx, addr, query, outpb)
+}
+
+func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error {
+	resp, err := ctx.CallEVM(addr, input)
+	*output = resp
+	return err
 }
 
 func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[]byte) error {
@@ -217,4 +258,19 @@ func WrapPluginContext(ctx plugin.Context) Context {
 
 func WrapPluginStaticContext(ctx plugin.StaticContext) StaticContext {
 	return &wrappedPluginStaticContext{ctx, logger}
+}
+
+func makeEnvelope(inpb proto.Message) ([]byte, error) {
+	body, err := proto.Marshal(inpb)
+	if err != nil {
+		return nil, err
+	}
+
+	req := &plugin.Request{
+		ContentType: plugin.EncodingType_PROTOBUF3,
+		Accept:      plugin.EncodingType_PROTOBUF3,
+		Body:        body,
+	}
+
+	return proto.Marshal(req)
 }
