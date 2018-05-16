@@ -71,7 +71,7 @@ deps:
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert \
-		github.com/go-kit/kit
+		github.com/go-kit/kit/log
 	dep ensure -vendor-only
 
 clean:
