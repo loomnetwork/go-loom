@@ -4,9 +4,17 @@ import (
 	"math/big"
 )
 
-// BigUint is a simple wrapper on bigint to support marshaling to protobufs
+// BigUInt is a simple wrapper on bigint to support marshaling to protobufs
 type BigUInt struct {
 	*big.Int
+}
+
+func (b *BigUInt) int() *big.Int {
+	if b == nil {
+		return nil
+	}
+
+	return b.Int
 }
 
 // Unmarshal unmarshals protobuf data
@@ -43,4 +51,24 @@ func (b *BigUInt) Add(x, y *BigUInt) *BigUInt {
 // Mul sets z to the product x*y and returns z.
 func (b *BigUInt) Mul(x, y *BigUInt) *BigUInt {
 	return &BigUInt{b.Int.Mul(x.Int, y.Int)}
+}
+
+// Div sets z to the quotient x/y for y != 0 and returns z.
+// If y == 0, a division-by-zero run-time panic occurs.
+// Div implements Euclidean division (unlike Go); see DivMod for more details.
+func (b *BigUInt) Div(x, y *BigUInt) *BigUInt {
+	return &BigUInt{b.Int.Div(x.Int, y.Int)}
+}
+
+func (b *BigUInt) Uint64() uint64 {
+	return b.Uint64()
+}
+
+// Exp sets z = x**y mod |m| (i.e. the sign of m is ignored), and returns z.
+// If y <= 0, the result is 1 mod |m|; if m == nil or m == 0, z = x**y.
+//
+// Modular exponentation of inputs of a particular size is not a
+// cryptographically constant-time operation.
+func (b *BigUInt) Exp(x, y, m *BigUInt) *BigUInt {
+	return &BigUInt{b.Int.Exp(x.Int, y.Int, m.int())}
 }

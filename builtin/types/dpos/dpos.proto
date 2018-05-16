@@ -28,10 +28,18 @@ message Candidate {
     bytes pub_key = 2;
 }
 
+message CandidateSet {
+    map<string, Candidate> candidates = 1;
+}
+
 message Vote {
     Address voter_address = 1;
     Address candidate_address = 2;
-    uint64 size = 3;
+    uint64 amount = 3;
+}
+
+message VoteSet {
+    map<string, Vote> votes = 1;
 }
 
 message InitRequest {

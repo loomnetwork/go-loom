@@ -7,8 +7,11 @@ import (
 	"github.com/loomnetwork/go-loom/types"
 )
 
-type BigUInt = common.BigUInt
-type BlockHeader = types.BlockHeader
+type (
+	BigUInt     = common.BigUInt
+	BlockHeader = types.BlockHeader
+	Validator   = types.Validator
+)
 
 // NewBigUint creates a biguint from a bigint
 func NewBigUInt(i *big.Int) *BigUInt {
