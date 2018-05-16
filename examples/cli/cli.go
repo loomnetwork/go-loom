@@ -51,7 +51,7 @@ func main() {
 			if err != nil {
 				return err
 			}
-			params := &types.Dummy{
+			params := &types.MapEntry{
 				Key:   key,
 				Value: value,
 			}
@@ -72,10 +72,10 @@ func main() {
 			if err != nil {
 				return err
 			}
-			params := &types.Dummy{
+			params := &types.MapEntry{
 				Key: key,
 			}
-			var result types.Dummy
+			var result types.MapEntry
 			if _, err := contract.StaticCall(methodName, params, &result); err != nil {
 				return err
 			}
