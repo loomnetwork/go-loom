@@ -92,3 +92,10 @@ message ElectRequest {
 
 message ElectResponse {
 }
+
+message ListWitnessesRequest {
+}
+
+message ListWitnessesResponse {
+    repeated Witness witnesses = 1;
+}
