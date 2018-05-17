@@ -13,17 +13,17 @@ import (
 
 var writeURI, readURI, chainID string
 
-func getContract(contractHexAddr, contractName string) (*client.Contract, error) {
+func getContract(contractHexAddr string) (*client.Contract, error) {
 	rpcClient := client.NewDAppChainRPCClient(chainID, writeURI, readURI)
 	contractAddr, err := loom.LocalAddressFromHexString(contractHexAddr)
 	if err != nil {
 		return nil, err
 	}
-	return client.NewContract(rpcClient, contractAddr, contractName), nil
+	return client.NewContract(rpcClient, contractAddr), nil
 }
 
 func main() {
-	var contractHexAddr, contractName, methodName string
+	var contractHexAddr, methodName string
 	rootCmd := &cobra.Command{
 		Use:   "cli",
 		Short: "CLI example",
@@ -31,7 +31,6 @@ func main() {
 	rootCmd.PersistentFlags().StringVarP(&writeURI, "write", "w", "http://localhost:46657", "URI for sending txs")
 	rootCmd.PersistentFlags().StringVarP(&readURI, "read", "r", "http://localhost:47000", "URI for quering app state")
 	rootCmd.PersistentFlags().StringVarP(&contractHexAddr, "contract", "", "0x005B17864f3adbF53b1384F2E6f2120c6652F779", "contract address")
-	rootCmd.PersistentFlags().StringVarP(&contractName, "name", "n", "helloworld", "smart contract name")
 	rootCmd.PersistentFlags().StringVarP(&chainID, "chain", "", "default", "chain ID")
 	rootCmd.PersistentFlags().StringVarP(&methodName, "method", "m", "", "smart contract method name")
 
@@ -47,7 +46,7 @@ func main() {
 				return err
 			}
 			signer := auth.NewEd25519Signer(privateKey)
-			contract, err := getContract(contractHexAddr, contractName)
+			contract, err := getContract(contractHexAddr)
 			if err != nil {
 				return err
 			}
@@ -68,7 +67,7 @@ func main() {
 		Use:   "static-call",
 		Short: "Calls a read-only method on a smart contract",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			contract, err := getContract(contractHexAddr, contractName)
+			contract, err := getContract(contractHexAddr)
 			if err != nil {
 				return err
 			}

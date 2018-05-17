@@ -2,7 +2,6 @@ package client
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 
 	"github.com/gogo/protobuf/proto"
@@ -26,14 +25,13 @@ type Contract struct {
 	Name    string
 }
 
-func NewContract(client *DAppChainRPCClient, contractAddr loom.LocalAddress, name string) *Contract {
+func NewContract(client *DAppChainRPCClient, contractAddr loom.LocalAddress) *Contract {
 	return &Contract{
 		client: client,
 		Address: loom.Address{
 			ChainID: client.GetChainID(),
 			Local:   contractAddr,
 		},
-		Name: name,
 	}
 }
 
@@ -47,7 +45,7 @@ func (c *Contract) Call(method string, args proto.Message, signer auth.Signer, r
 		return nil, err
 	}
 	methodCallBytes, err := proto.Marshal(&plugin.ContractMethodCall{
-		Method: fmt.Sprintf("%s.%s", c.Name, method),
+		Method: method,
 		Args:   argsBytes,
 	})
 	if err != nil {
@@ -109,7 +107,7 @@ func (c *Contract) StaticCall(method string, args proto.Message, result interfac
 		return nil, err
 	}
 	methodCall := &plugin.ContractMethodCall{
-		Method: fmt.Sprintf("%s.%s", c.Name, method),
+		Method: method,
 		Args:   argsBytes,
 	}
 	resultBytes, err := c.client.Query(c.Address.Local, methodCall)
