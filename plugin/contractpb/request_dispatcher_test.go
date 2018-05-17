@@ -2,7 +2,6 @@ package contractpb
 
 import (
 	"bytes"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -66,17 +65,14 @@ func newFakeRequestDispatcherContract(t *testing.T) *RequestDispatcher {
 func TestEmbeddedRequestDispatcherDoesNotRegisterOwnMethods(t *testing.T) {
 	var err error
 	c := newFakeRequestDispatcherContract(t)
-	_, _, err = c.callbacks.Get("fakecontract.Call")
+	_, _, err = c.callbacks.Get("contract.Call")
 	require.NotNil(t, err)
-	_, _, err = c.callbacks.Get("fakecontract.StaticCall")
+	_, _, err = c.callbacks.Get("contract.StaticCall")
 	require.NotNil(t, err)
 }
 
 func TestRequestDispatcherCallMethod(t *testing.T) {
 	c := newFakeRequestDispatcherContract(t)
-	meta, err := c.Meta()
-	require.Nil(t, err)
-
 	encodings := []plugin.EncodingType{plugin.EncodingType_JSON, plugin.EncodingType_PROTOBUF3}
 
 	for _, encoding := range encodings {
@@ -87,7 +83,7 @@ func TestRequestDispatcherCallMethod(t *testing.T) {
 		require.Nil(t, marshaler.Marshal(&argsBuffer, &callArgs))
 
 		msg := &plugin.ContractMethodCall{
-			Method: fmt.Sprintf("%s.HandleTx", meta.Name),
+			Method: "HandleTx",
 			Args:   argsBuffer.Bytes(),
 		}
 
@@ -108,9 +104,6 @@ func TestRequestDispatcherCallMethod(t *testing.T) {
 
 func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 	c := newFakeRequestDispatcherContract(t)
-	meta, err := c.Meta()
-	require.Nil(t, err)
-
 	encodings := []plugin.EncodingType{plugin.EncodingType_JSON, plugin.EncodingType_PROTOBUF3}
 
 	for _, encoding := range encodings {
@@ -121,7 +114,7 @@ func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 		require.Nil(t, marshaler.Marshal(&argsBuffer, &staticCallArgs))
 
 		msg := &plugin.ContractMethodCall{
-			Method: fmt.Sprintf("%s.HandleQuery", meta.Name),
+			Method: "HandleQuery",
 			Args:   argsBuffer.Bytes(),
 		}
 

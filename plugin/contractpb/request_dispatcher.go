@@ -23,11 +23,7 @@ func NewRequestDispatcher(contract Contract) (*RequestDispatcher, error) {
 		Contract:  contract,
 		callbacks: new(serviceMap),
 	}
-	meta, err := contract.Meta()
-	if err != nil {
-		return nil, err
-	}
-	err = s.callbacks.Register(contract, meta.Name)
+	err := s.callbacks.Register(contract, "contract")
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +64,7 @@ func (s *RequestDispatcher) doCall(sig methodSig, ctx interface{}, req *plugin.R
 		return nil, err
 	}
 
-	serviceSpec, methodSpec, err := s.callbacks.Get(query.Method)
+	serviceSpec, methodSpec, err := s.callbacks.Get("contract." + query.Method)
 	if err != nil {
 		return nil, err
 	}
