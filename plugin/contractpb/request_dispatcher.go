@@ -32,10 +32,35 @@ func NewRequestDispatcher(contract Contract) (*RequestDispatcher, error) {
 }
 
 func (s *RequestDispatcher) Init(ctx plugin.Context, req *plugin.Request) error {
-	_, err := s.doCall(methodSigInit, WrapPluginContext(ctx), req)
-	if err != ErrMethodNotFound {
-		err = nil
+	wrappedCtx := WrapPluginContext(ctx)
+	body := bytes.NewBuffer(req.Body)
+	unmarshaler, err := UnmarshalerFactory(req.ContentType)
+	if err != nil {
+		return err
 	}
+
+	serviceSpec, methodSpec, err := s.callbacks.Get("contract.Init")
+	if err != nil {
+		return err
+	}
+
+	if methodSpec.methodSig != methodSigInit {
+		return errors.New("method call does not match method signature type")
+	}
+
+	queryParams := reflect.New(methodSpec.argsType)
+	err = unmarshaler.Unmarshal(body, queryParams.Interface().(proto.Message))
+	if err != nil {
+		return err
+	}
+
+	resultTypes := methodSpec.method.Func.Call([]reflect.Value{
+		serviceSpec.rcvr,
+		reflect.ValueOf(wrappedCtx),
+		queryParams,
+	})
+
+	err, _ = resultTypes[0].Interface().(error)
 	return err
 }
 
