@@ -46,7 +46,7 @@ func (m *BinaryPBUnmarshaler) Unmarshal(r io.Reader, pb proto.Message) error {
 	return proto.Unmarshal(b, pb)
 }
 
-func marshalerFactory(encoding plugin.EncodingType) (PBMarshaler, error) {
+func MarshalerFactory(encoding plugin.EncodingType) (PBMarshaler, error) {
 	switch encoding {
 	case plugin.EncodingType_JSON:
 		return &jsonpb.Marshaler{}, nil
@@ -57,7 +57,7 @@ func marshalerFactory(encoding plugin.EncodingType) (PBMarshaler, error) {
 	return nil, errUnknownEncodingType
 }
 
-func unmarshalerFactory(encoding plugin.EncodingType) (PBUnmarshaler, error) {
+func UnmarshalerFactory(encoding plugin.EncodingType) (PBUnmarshaler, error) {
 	switch encoding {
 	case plugin.EncodingType_JSON:
 		return &jsonpb.Unmarshaler{}, nil

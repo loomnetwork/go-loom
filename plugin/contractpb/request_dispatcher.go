@@ -53,11 +53,11 @@ func (s *RequestDispatcher) Call(ctx plugin.Context, req *plugin.Request) (*plug
 
 func (s *RequestDispatcher) doCall(sig methodSig, ctx interface{}, req *plugin.Request) (*plugin.Response, error) {
 	body := bytes.NewBuffer(req.Body)
-	unmarshaler, err := unmarshalerFactory(req.ContentType)
+	unmarshaler, err := UnmarshalerFactory(req.ContentType)
 	if err != nil {
 		return nil, err
 	}
-	marshaler, err := marshalerFactory(req.Accept)
+	marshaler, err := MarshalerFactory(req.Accept)
 	if err != nil {
 		return nil, err
 	}

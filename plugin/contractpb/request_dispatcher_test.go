@@ -80,7 +80,7 @@ func TestRequestDispatcherCallMethod(t *testing.T) {
 	encodings := []plugin.EncodingType{plugin.EncodingType_JSON, plugin.EncodingType_PROTOBUF3}
 
 	for _, encoding := range encodings {
-		marshaler, err := marshalerFactory(encoding)
+		marshaler, err := MarshalerFactory(encoding)
 		require.Nil(t, err)
 
 		var argsBuffer bytes.Buffer
@@ -114,7 +114,7 @@ func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 	encodings := []plugin.EncodingType{plugin.EncodingType_JSON, plugin.EncodingType_PROTOBUF3}
 
 	for _, encoding := range encodings {
-		marshaler, err := marshalerFactory(encoding)
+		marshaler, err := MarshalerFactory(encoding)
 		require.Nil(t, err)
 
 		var argsBuffer bytes.Buffer
@@ -138,7 +138,7 @@ func TestRequestDispatcherStaticCallMethod(t *testing.T) {
 		require.Nil(t, err)
 		require.Equal(t, req.Accept, resp.ContentType)
 
-		unmarshaler, err := unmarshalerFactory(resp.ContentType)
+		unmarshaler, err := UnmarshalerFactory(resp.ContentType)
 		require.Nil(t, err)
 
 		var callResult testdata.StaticCallResult
