@@ -130,6 +130,17 @@ func (c *DAppChainRPCClient) Query(contractAddr loom.LocalAddress, query proto.M
 	return r, nil
 }
 
+func (c *DAppChainRPCClient) Resolve(name string) (loom.Address, error) {
+	params := map[string]interface{}{
+		"name": name,
+	}
+	var addrStr string
+	if err := c.queryClient.Call("resolve", params, c.getNextRequestID(), &addrStr); err != nil {
+		return loom.Address{}, err
+	}
+	return loom.ParseAddress(addrStr)
+}
+
 func (c *DAppChainRPCClient) QueryEvm(contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
 	params := map[string]interface{}{
 		"contract": contractAddr.String(),
