@@ -3,7 +3,7 @@ syntax = "proto3";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
 message Params {
-    uint64 validator_count = 1;
+    uint64 witness_count = 1;
     uint64 vote_allocation = 2;
     uint64 term_length = 3;
     uint64 min_power_fraction = 4;
@@ -13,7 +13,7 @@ message Params {
 message State {
     Params params = 1;
     uint64 last_election = 2;
-    repeated Validator validators = 3;
+    repeated Witness witnesses = 3;
 }
 
 message Voter {
@@ -21,6 +21,12 @@ message Voter {
     uint64 balance = 2;
     Address proxy_address = 3;
     repeated Address principal_addresses = 4;
+}
+
+message Witness {
+    bytes pub_key = 1;
+    uint64 vote_total = 2;
+    uint64 power_total = 3;
 }
 
 message Candidate {
