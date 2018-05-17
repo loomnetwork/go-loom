@@ -17,8 +17,13 @@ message Allowance {
     BigUInt amount = 3;
 }
 
+message InitialAccount {
+    Address owner = 1;
+    uint64 balance = 2;
+}
+
 message InitRequest {
-    repeated Account accounts = 1;
+    repeated InitialAccount accounts = 1;
 }
 
 // ERC20 messages
