@@ -92,7 +92,7 @@ func ParseAddress(s string) (Address, error) {
 		return Address{}, ErrInvalidAddress
 	}
 
-	local, err := hex.DecodeString(parts[1])
+	local, err := LocalAddressFromHexString(parts[1])
 	if err != nil {
 		return Address{}, ErrInvalidAddress
 	}

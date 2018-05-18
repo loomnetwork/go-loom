@@ -23,7 +23,7 @@ var (
 		Name:  "john",
 	}
 
-	addr1 = loom.MustParseAddress("chain:b16a379ec18d4093666f8f38b11a3071c920207d")
+	addr1 = loom.MustParseAddress("chain:0xb16a379ec18d4093666f8f38b11a3071c920207d")
 )
 
 type MockContract struct {
