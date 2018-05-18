@@ -3,88 +3,57 @@ package main
 import (
 	"log"
 
-	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/auth"
-	"github.com/loomnetwork/go-loom/client"
-	"github.com/loomnetwork/go-loom/examples/types"
 	"github.com/spf13/cobra"
-	"golang.org/x/crypto/ed25519"
+
+	"github.com/loomnetwork/go-loom/cli"
+	"github.com/loomnetwork/go-loom/examples/types"
 )
 
 var writeURI, readURI, chainID string
 
-func getContract(contractHexAddr string) (*client.Contract, error) {
-	rpcClient := client.NewDAppChainRPCClient(chainID, writeURI, readURI)
-	contractAddr, err := loom.LocalAddressFromHexString(contractHexAddr)
-	if err != nil {
-		return nil, err
-	}
-	return client.NewContract(rpcClient, contractAddr), nil
-}
-
 func main() {
-	var contractHexAddr, methodName string
 	rootCmd := &cobra.Command{
 		Use:   "cli",
 		Short: "CLI example",
 	}
-	rootCmd.PersistentFlags().StringVarP(&writeURI, "write", "w", "http://localhost:46657", "URI for sending txs")
-	rootCmd.PersistentFlags().StringVarP(&readURI, "read", "r", "http://localhost:47000", "URI for quering app state")
-	rootCmd.PersistentFlags().StringVarP(&contractHexAddr, "contract", "", "0x005B17864f3adbF53b1384F2E6f2120c6652F779", "contract address")
-	rootCmd.PersistentFlags().StringVarP(&chainID, "chain", "", "default", "chain ID")
-	rootCmd.PersistentFlags().StringVarP(&methodName, "method", "m", "", "smart contract method name")
+	callCmd := cli.ContractCallCommand()
 
 	var key, value string
 
-	callCmd := &cobra.Command{
-		Use:   "call",
-		Short: "Calls a method on a smart contract",
+	setMsgCmd := &cobra.Command{
+		Use:   "set_msg",
+		Short: "Calls the SetMsg method of the helloworld contract",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
-			_, privateKey, err := ed25519.GenerateKey(nil)
-			if err != nil {
-				return err
-			}
-			signer := auth.NewEd25519Signer(privateKey)
-			contract, err := getContract(contractHexAddr)
-			if err != nil {
-				return err
-			}
 			params := &types.MapEntry{
 				Key:   key,
 				Value: value,
 			}
-			if _, err := contract.Call(methodName, params, signer, nil); err != nil {
-				return err
-			}
-			return nil
+
+			return cli.CallContract("SetMsg", params, nil)
 		},
 	}
-	callCmd.Flags().StringVarP(&key, "key", "k", "", "")
-	callCmd.Flags().StringVarP(&value, "value", "v", "", "value to associate with the key")
+	setMsgCmd.Flags().StringVarP(&key, "key", "k", "", "")
+	setMsgCmd.Flags().StringVarP(&value, "value", "v", "", "value to associate with the key")
 
-	staticCallCmd := &cobra.Command{
-		Use:   "static-call",
-		Short: "Calls a read-only method on a smart contract",
+	getMsgCmd := &cobra.Command{
+		Use:   "get_msg",
+		Short: "Calls the GetMsg method of the helloworld contract",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			contract, err := getContract(contractHexAddr)
-			if err != nil {
-				return err
-			}
 			params := &types.MapEntry{
 				Key: key,
 			}
 			var result types.MapEntry
-			if _, err := contract.StaticCall(methodName, params, &result); err != nil {
+			err := cli.StaticCallContract("GetMsg", params, &result)
+			if err != nil {
 				return err
 			}
 			log.Printf("{ key: \"%s\", value: \"%s\" }\n", result.Key, result.Value)
 			return nil
 		},
 	}
-	staticCallCmd.Flags().StringVarP(&key, "key", "k", "", "")
+	getMsgCmd.Flags().StringVarP(&key, "key", "k", "", "")
 
-	rootCmd.AddCommand(callCmd)
-	rootCmd.AddCommand(staticCallCmd)
+	callCmd.AddCommand(setMsgCmd)
+	callCmd.AddCommand(getMsgCmd)
 	rootCmd.Execute()
 }
