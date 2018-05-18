@@ -16,6 +16,7 @@ import (
 type FakeContext struct {
 	caller        loom.Address
 	address       loom.Address
+	block         loom.BlockHeader
 	data          map[string][]byte
 	contractNonce uint64
 	contracts     map[string]Contract
@@ -45,6 +46,17 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 	}
 }
 
+func (c *FakeContext) WithBlock(header loom.BlockHeader) *FakeContext {
+	return &FakeContext{
+		caller:     c.caller,
+		address:    c.address,
+		data:       c.data,
+		contracts:  c.contracts,
+		validators: c.validators,
+		block:      header,
+	}
+}
+
 func (c *FakeContext) WithSender(caller loom.Address) *FakeContext {
 	return &FakeContext{
 		caller:     caller,
@@ -52,6 +64,7 @@ func (c *FakeContext) WithSender(caller loom.Address) *FakeContext {
 		data:       c.data,
 		contracts:  c.contracts,
 		validators: c.validators,
+		block:      c.block,
 	}
 }
 
@@ -62,6 +75,7 @@ func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
 		data:       c.data,
 		contracts:  c.contracts,
 		validators: c.validators,
+		block:      c.block,
 	}
 }
 
@@ -152,7 +166,7 @@ func (c *FakeContext) ContractAddress() loom.Address {
 }
 
 func (c *FakeContext) Now() time.Time {
-	return time.Unix(0, 0)
+	return time.Unix(c.block.Time, 0)
 }
 
 func (c *FakeContext) Emit(event []byte) {
