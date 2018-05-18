@@ -12,11 +12,11 @@ import (
 )
 
 var txFlags struct {
-	WriteURI        string
-	ReadURI         string
-	ContractHexAddr string
-	ChainID         string
-	PrivFile        string
+	WriteURI     string
+	ReadURI      string
+	ContractAddr string
+	ChainID      string
+	PrivFile     string
 }
 
 func ContractCallCommand() *cobra.Command {
@@ -27,20 +27,24 @@ func ContractCallCommand() *cobra.Command {
 	pflags := cmd.PersistentFlags()
 	pflags.StringVarP(&txFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
 	pflags.StringVarP(&txFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
-	pflags.StringVarP(&txFlags.ContractHexAddr, "contract", "", "0x005B17864f3adbF53b1384F2E6f2120c6652F779", "contract address")
+	pflags.StringVarP(&txFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&txFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&txFlags.PrivFile, "key", "k", "", "private key file")
 	return cmd
 }
 
 func contract() (*client.Contract, error) {
-	contractAddr, err := ParseAddress(txFlags.ContractHexAddr)
-	if err != nil {
-		return nil, err
-	}
-
 	// create rpc client
 	rpcClient := client.NewDAppChainRPCClient(txFlags.ChainID, txFlags.WriteURI, txFlags.ReadURI)
+
+	contractAddr, err := ParseAddress(txFlags.ContractAddr)
+	if err != nil {
+		// if address invalid, try to resolve it using registry
+		contractAddr, err = rpcClient.Resolve(txFlags.ContractAddr)
+		if err != nil {
+			return nil, err
+		}
+	}
 	// create contract
 	contract := client.NewContract(rpcClient, contractAddr.Local)
 	return contract, nil
