@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 
@@ -58,9 +59,15 @@ func VoteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			amount, err := strconv.ParseInt(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
+
 			return cli.CallContract(DPOSContractName, "Vote", &dpos.VoteRequest{
 				CandidateAddress: addr.MarshalPB(),
-				Amount:           10,
+				Amount:           amount,
 			}, nil)
 		},
 	}
