@@ -3,23 +3,13 @@ package commands
 import (
 	"fmt"
 
-	"github.com/gogo/protobuf/jsonpb"
-	"github.com/gogo/protobuf/proto"
 	"github.com/spf13/cobra"
 
 	"github.com/loomnetwork/go-loom/builtin/types/dpos"
 	"github.com/loomnetwork/go-loom/cli"
 )
 
-const DefaultContractName = "dpos"
-
-func formatJSON(pb proto.Message) (string, error) {
-	marshaler := jsonpb.Marshaler{
-		Indent:       "  ",
-		EmitDefaults: true,
-	}
-	return marshaler.MarshalToString(pb)
-}
+const DPOSContractName = "dpos"
 
 func ListWitnessesCmd() *cobra.Command {
 	return &cobra.Command{
@@ -27,7 +17,7 @@ func ListWitnessesCmd() *cobra.Command {
 		Short: "List the current witnesses",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp dpos.ListWitnessesResponse
-			err := cli.StaticCallContract(DefaultContractName, "ListWitnesses", &dpos.ListWitnessesRequest{}, &resp)
+			err := cli.StaticCallContract(DPOSContractName, "ListWitnesses", &dpos.ListWitnessesRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -51,7 +41,7 @@ func RegisterCandidateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return cli.CallContract(DefaultContractName, "RegisterCandidate", &dpos.RegisterCandidateRequest{
+			return cli.CallContract(DPOSContractName, "RegisterCandidate", &dpos.RegisterCandidateRequest{
 				PubKey: pubKey,
 			}, nil)
 		},
@@ -68,7 +58,7 @@ func VoteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return cli.CallContract(DefaultContractName, "Vote", &dpos.VoteRequest{
+			return cli.CallContract(DPOSContractName, "Vote", &dpos.VoteRequest{
 				CandidateAddress: addr.MarshalPB(),
 				Amount:           10,
 			}, nil)
@@ -81,7 +71,7 @@ func ElectCmd() *cobra.Command {
 		Use:   "elect",
 		Short: "Run an election",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return cli.CallContract(DefaultContractName, "Elect", &dpos.ElectRequest{}, nil)
+			return cli.CallContract(DPOSContractName, "Elect", &dpos.ElectRequest{}, nil)
 		},
 	}
 }
