@@ -9,10 +9,10 @@ evm: all example-evm-plugins evmexample-cli
 
 examples: example-plugins example-plugins-external example-cli
 
-example-cli: examples/types/types.pb.go
+example-cli: proto
 	go build -o $@ $(PKG)/examples/cli
 
-evmexample-cli: examples/types/types.pb.go
+evmexample-cli: proto
 	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmexample/cli
 
 example-plugins: contracts/helloworld.so.1.0.0 contracts/lottery.so.1.0.0
@@ -85,6 +85,7 @@ clean:
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
 		examples/plugins/evmexample/types/types.pb.go \
+		example-cli \
 		evmexample-cli \
 		builtin/plugins/lottery/lottery.pb.go \
 		contracts/helloworld.1.0.0 \

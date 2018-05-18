@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/loomnetwork/go-loom/builtin/commands"
 	"github.com/loomnetwork/go-loom/cli"
 	"github.com/loomnetwork/go-loom/examples/types"
 )
@@ -17,6 +18,8 @@ func main() {
 		Short: "CLI example",
 	}
 	callCmd := cli.ContractCallCommand()
+	rootCmd.AddCommand(callCmd)
+	commands.Add(callCmd)
 
 	defaultContract := "helloworld"
 	var key, value string
@@ -35,6 +38,7 @@ func main() {
 	}
 	setMsgCmd.Flags().StringVarP(&key, "key", "k", "", "")
 	setMsgCmd.Flags().StringVarP(&value, "value", "v", "", "value to associate with the key")
+	callCmd.AddCommand(setMsgCmd)
 
 	getMsgCmd := &cobra.Command{
 		Use:   "get_msg",
@@ -53,8 +57,6 @@ func main() {
 		},
 	}
 	getMsgCmd.Flags().StringVarP(&key, "key", "k", "", "")
-
-	callCmd.AddCommand(setMsgCmd)
 	callCmd.AddCommand(getMsgCmd)
 	rootCmd.Execute()
 }
