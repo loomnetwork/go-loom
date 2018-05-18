@@ -16,13 +16,14 @@ func (c *HelloWorld) Meta() (plugin.Meta, error) {
 	}, nil
 }
 
-func (c *HelloWorld) Init(ctx contract.Context, req *types.HelloRequest) {
+func (c *HelloWorld) Init(ctx contract.Context, req *types.HelloRequest) error {
 	data := &types.MapEntry{
 		Key:   "foo",
 		Value: "bar",
 	}
 
 	ctx.Set([]byte("mydata"), data)
+	return nil
 }
 
 func (c *HelloWorld) Hello(ctx contract.StaticContext, req *types.HelloRequest) (*types.HelloResponse, error) {
