@@ -32,5 +32,5 @@ func ParseAddress(s string) (loom.Address, error) {
 		return loom.Address{}, loom.ErrInvalidAddress
 	}
 
-	return loom.Address{Local: loom.LocalAddress(b)}, nil
+	return loom.Address{ChainID: txFlags.ChainID, Local: loom.LocalAddress(b)}, nil
 }
