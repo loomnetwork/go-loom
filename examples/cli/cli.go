@@ -18,6 +18,7 @@ func main() {
 	}
 	callCmd := cli.ContractCallCommand()
 
+	defaultContract := "helloworld"
 	var key, value string
 
 	setMsgCmd := &cobra.Command{
@@ -29,7 +30,7 @@ func main() {
 				Value: value,
 			}
 
-			return cli.CallContract("SetMsg", params, nil)
+			return cli.CallContract(defaultContract, "SetMsg", params, nil)
 		},
 	}
 	setMsgCmd.Flags().StringVarP(&key, "key", "k", "", "")
@@ -43,7 +44,7 @@ func main() {
 				Key: key,
 			}
 			var result types.MapEntry
-			err := cli.StaticCallContract("GetMsg", params, &result)
+			err := cli.StaticCallContract(defaultContract, "GetMsg", params, &result)
 			if err != nil {
 				return err
 			}

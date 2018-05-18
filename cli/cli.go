@@ -33,14 +33,23 @@ func ContractCallCommand() *cobra.Command {
 	return cmd
 }
 
-func contract() (*client.Contract, error) {
+func contract(defaultAddr string) (*client.Contract, error) {
+	contractAddrStr := txFlags.ContractAddr
+	if contractAddrStr == "" {
+		contractAddrStr = defaultAddr
+	}
+
+	if contractAddrStr == "" {
+		return nil, errors.New("contract address or name required")
+	}
+
 	// create rpc client
 	rpcClient := client.NewDAppChainRPCClient(txFlags.ChainID, txFlags.WriteURI, txFlags.ReadURI)
 
-	contractAddr, err := ParseAddress(txFlags.ContractAddr)
+	contractAddr, err := ParseAddress(contractAddrStr)
 	if err != nil {
 		// if address invalid, try to resolve it using registry
-		contractAddr, err = rpcClient.Resolve(txFlags.ContractAddr)
+		contractAddr, err = rpcClient.Resolve(contractAddrStr)
 		if err != nil {
 			return nil, err
 		}
@@ -50,7 +59,7 @@ func contract() (*client.Contract, error) {
 	return contract, nil
 }
 
-func CallContract(method string, params proto.Message, result interface{}) error {
+func CallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
 	if txFlags.PrivFile == "" {
 		return errors.New("private key required to call contract")
 	}
@@ -61,7 +70,7 @@ func CallContract(method string, params proto.Message, result interface{}) error
 
 	signer := auth.NewEd25519Signer(privKey)
 
-	contract, err := contract()
+	contract, err := contract(defaultAddr)
 	if err != nil {
 		return err
 	}
@@ -69,8 +78,8 @@ func CallContract(method string, params proto.Message, result interface{}) error
 	return err
 }
 
-func StaticCallContract(method string, params proto.Message, result interface{}) error {
-	contract, err := contract()
+func StaticCallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
+	contract, err := contract(defaultAddr)
 	if err != nil {
 		return err
 	}
