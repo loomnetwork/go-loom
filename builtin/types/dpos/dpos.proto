@@ -5,15 +5,15 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 message Params {
     uint64 witness_count = 1;
     uint64 vote_allocation = 2;
-    uint64 election_cycle_length = 3;
+    int64 election_cycle_length = 3;
     uint64 min_power_fraction = 4;
     Address coin_contract_address = 5;
 }
 
 message State {
     Params params = 1;
-    uint64 last_election = 2;
-    repeated Witness witnesses = 3;
+    repeated Witness witnesses = 2;
+    int64 last_election_time = 3;
 }
 
 message Voter {
