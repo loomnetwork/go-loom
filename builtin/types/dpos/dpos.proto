@@ -48,7 +48,7 @@ message VoteSet {
     map<string, Vote> votes = 1;
 }
 
-message InitRequest {
+message DPOSInitRequest {
     Params params = 1;
     repeated Validator validators = 2;
 }
