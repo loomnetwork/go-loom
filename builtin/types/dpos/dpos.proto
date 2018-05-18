@@ -8,6 +8,7 @@ message Params {
     int64 election_cycle_length = 3;
     uint64 min_power_fraction = 4;
     Address coin_contract_address = 5;
+    uint64 witness_salary = 6;
 }
 
 message State {

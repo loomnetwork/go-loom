@@ -158,7 +158,7 @@ func (c *FakeContext) Message() Message {
 }
 
 func (c *FakeContext) Block() types.BlockHeader {
-	return types.BlockHeader{}
+	return c.block
 }
 
 func (c *FakeContext) ContractAddress() loom.Address {
