@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"encoding/base64"
 	"errors"
 	"io/ioutil"
 
@@ -63,7 +64,13 @@ func CallContract(defaultAddr string, method string, params proto.Message, resul
 	if txFlags.PrivFile == "" {
 		return errors.New("private key required to call contract")
 	}
-	privKey, err := ioutil.ReadFile(txFlags.PrivFile)
+
+	privKeyB64, err := ioutil.ReadFile(txFlags.PrivFile)
+	if err != nil {
+		return err
+	}
+
+	privKey, err := base64.StdEncoding.DecodeString(string(privKeyB64))
 	if err != nil {
 		return err
 	}
