@@ -55,7 +55,7 @@ func VoteCmd() *cobra.Command {
 		Short: "Allocate votes to a candidate",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ParseAddress(args[0])
+			addr, err := cli.ResolveAddress(args[0])
 			if err != nil {
 				return err
 			}

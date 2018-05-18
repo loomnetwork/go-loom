@@ -44,17 +44,13 @@ func contract(defaultAddr string) (*client.Contract, error) {
 		return nil, errors.New("contract address or name required")
 	}
 
+	contractAddr, err := ResolveAddress(contractAddrStr)
+	if err != nil {
+		return nil, err
+	}
+
 	// create rpc client
 	rpcClient := client.NewDAppChainRPCClient(txFlags.ChainID, txFlags.WriteURI, txFlags.ReadURI)
-
-	contractAddr, err := ParseAddress(contractAddrStr)
-	if err != nil {
-		// if address invalid, try to resolve it using registry
-		contractAddr, err = rpcClient.Resolve(contractAddrStr)
-		if err != nil {
-			return nil, err
-		}
-	}
 	// create contract
 	contract := client.NewContract(rpcClient, contractAddr.Local)
 	return contract, nil
