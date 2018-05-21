@@ -22,3 +22,6 @@ protoc-gen-gogo
 loom.yaml
 evmexample-cli
 examples/plugins/evmproxy/cli/evmproxy
+loom.log
+contract.log
+
