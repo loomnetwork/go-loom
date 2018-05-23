@@ -154,6 +154,20 @@ func (c *DAppChainRPCClient) QueryEvm(contractAddr loom.LocalAddress, query []by
 	return r, nil
 }
 
+func (c *DAppChainRPCClient) EvmTxReceipt(txHash []byte) (vm.EvmTxReciept, error) {
+	params := map[string]interface{}{
+		"txHash": txHash,
+	}
+	var r []byte
+	if err := c.queryClient.Call("txreceipt", params, c.getNextRequestID(), &r); err != nil {
+		return vm.EvmTxReceipt{}, err
+	}
+	var receipt vm.EvmTxReceipt
+	err := proto.Unmarshal(r, &receipt)
+
+	return receipt, err
+}
+
 func (c *DAppChainRPCClient) CommitDeployTx(
 	from loom.Address,
 	signer auth.Signer,
