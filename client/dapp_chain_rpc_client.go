@@ -154,7 +154,7 @@ func (c *DAppChainRPCClient) QueryEvm(contractAddr loom.LocalAddress, query []by
 	return r, nil
 }
 
-func (c *DAppChainRPCClient) EvmTxReceipt(txHash []byte) (vm.EvmTxReciept, error) {
+func (c *DAppChainRPCClient) EvmTxReceipt(txHash []byte) (vm.EvmTxReceipt, error) {
 	params := map[string]interface{}{
 		"txHash": txHash,
 	}
