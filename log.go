@@ -102,7 +102,7 @@ func MakeLoomLogger(logLevel string, w io.Writer, tr func(w io.Writer) kitlog.Lo
 
 func MakeFileLoggerWriter(loomLogLevel, dest string) io.Writer {
 	if dest == "" {
-		dest = "file://loom.log"
+		dest = "file://-"
 	}
 	destParts := strings.Split(dest, "://")
 	if len(destParts) != 2 {

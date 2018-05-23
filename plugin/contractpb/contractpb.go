@@ -190,7 +190,7 @@ func setupLogger() {
 		if envLevel != "" {
 			level = envLevel
 		}
-		dest := "file://contract.log"
+		dest := "file://-"
 		envDest := os.Getenv("CONTRACT_LOG_DESTINATION")
 		if envDest != "" {
 			dest = envDest
