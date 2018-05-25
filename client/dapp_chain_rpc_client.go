@@ -173,10 +173,12 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 	signer auth.Signer,
 	vmType vm.VMType,
 	code []byte,
+	name string,
 ) ([]byte, error) {
 	deployTxBytes, err := proto.Marshal(&vm.DeployTx{
 		VmType: vmType,
 		Code:   code,
+		Name:   name,
 	})
 	if err != nil {
 		return nil, err
