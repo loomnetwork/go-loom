@@ -16,6 +16,7 @@ message MessageTx {
 message DeployTx {
     VMType vm_type = 1;
     bytes code = 2;
+    string name = 3;
 }
 
 message CallTx {
