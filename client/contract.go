@@ -35,6 +35,39 @@ func NewContract(client *DAppChainRPCClient, contractAddr loom.LocalAddress) *Co
 	}
 }
 
+func NewNamedContract(client *DAppChainRPCClient, name string) *Contract {
+	addr, err := client.Resolve(name)
+	if err != nil {
+		return nil
+	}
+	return &Contract{
+		client:  client,
+		Address: addr,
+		Name:    name,
+	}
+}
+
+func NewDeployEvmContract(client *DAppChainRPCClient, signer auth.Signer, byteCode []byte, name string) *Contract {
+	callerAddr := loom.Address{
+		ChainID: client.GetChainID(),
+		Local:   loom.LocalAddressFromPublicKey(signer.PublicKey()),
+	}
+	resp, err := client.CommitDeployTx(callerAddr, signer, vm.VMType_EVM, byteCode, name)
+	if err != nil {
+		return nil
+	}
+	response := vm.DeployResponse{}
+	err = proto.Unmarshal(resp, &response)
+	if err != nil {
+		return nil
+	}
+	return &Contract{
+		client:  client,
+		Address: loom.UnmarshalAddressPB(response.Contract),
+		Name:    name,
+	}
+}
+
 func (c *Contract) Call(method string, args proto.Message, signer auth.Signer, result interface{}) (interface{}, error) {
 	if result != nil && !reflect.TypeOf(result).Implements(typeOfPBMessage) {
 		return nil, errors.New("Contract.Call result parameter must be a protobuf")
@@ -120,4 +153,16 @@ func (c *Contract) StaticCall(method string, args proto.Message, result interfac
 		}
 	}
 	return nil, nil
+}
+
+func (c *Contract) CallEvm(input []byte, signer auth.Signer) ([]byte, error) {
+	callerAddr := loom.Address{
+		ChainID: c.client.GetChainID(),
+		Local:   loom.LocalAddressFromPublicKey(signer.PublicKey()),
+	}
+	return c.client.CommitCallTx(callerAddr, c.Address, signer, vm.VMType_EVM, input)
+}
+
+func (c *Contract) StaticCallEvm(input []byte) ([]byte, error) {
+	return c.client.QueryEvm(c.Address.Local, input)
 }
