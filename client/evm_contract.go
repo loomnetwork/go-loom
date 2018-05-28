@@ -8,7 +8,7 @@ import (
 )
 
 // Contract provides a thin abstraction over DAppChainClient that makes it easier to perform
-// read & write operations on a contract running on a Loom DAppChain.
+// read & write operations on a contract running the EVM of a Loom DAppChain.
 type EvmContract struct {
 	client  *DAppChainRPCClient
 	Address loom.Address
