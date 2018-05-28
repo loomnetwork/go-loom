@@ -30,7 +30,7 @@ func ContractCallCommand() *cobra.Command {
 	pflags.StringVarP(&txFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
 	pflags.StringVarP(&txFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&txFlags.ChainID, "chain", "", "default", "chain ID")
-	pflags.StringVarP(&txFlags.PrivFile, "key", "k", "", "private key file")
+	pflags.StringVarP(&txFlags.PrivFile, "private-key", "p", "", "private key file")
 	return cmd
 }
 

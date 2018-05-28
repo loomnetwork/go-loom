@@ -14,7 +14,7 @@ var writeURI, readURI, chainID string
 
 func main() {
 	rootCmd := &cobra.Command{
-		Use:   "cli",
+		Use:   "example-cli",
 		Short: "CLI example",
 	}
 	callCmd := cli.ContractCallCommand()
