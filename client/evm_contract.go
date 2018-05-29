@@ -25,28 +25,28 @@ func NewEvmContract(client *DAppChainRPCClient, contractAddr loom.LocalAddress) 
 	}
 }
 
-func NewDeployEvmContract(client *DAppChainRPCClient, signer auth.Signer, byteCode []byte, name string) *EvmContract {
+func DeployContract(client *DAppChainRPCClient, signer auth.Signer, byteCode []byte, name string) (*EvmContract, error) {
 	callerAddr := loom.Address{
 		ChainID: client.GetChainID(),
 		Local:   loom.LocalAddressFromPublicKey(signer.PublicKey()),
 	}
 	resp, err := client.CommitDeployTx(callerAddr, signer, vm.VMType_EVM, byteCode, name)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	response := vm.DeployResponse{}
 	err = proto.Unmarshal(resp, &response)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	return &EvmContract{
 		client:  client,
 		Address: loom.UnmarshalAddressPB(response.Contract),
 		Name:    name,
-	}
+	}, nil
 }
 
-func (c *EvmContract) CallEvm(input []byte, signer auth.Signer) ([]byte, error) {
+func (c *EvmContract) Call(input []byte, signer auth.Signer) ([]byte, error) {
 	callerAddr := loom.Address{
 		ChainID: c.client.GetChainID(),
 		Local:   loom.LocalAddressFromPublicKey(signer.PublicKey()),
@@ -54,6 +54,6 @@ func (c *EvmContract) CallEvm(input []byte, signer auth.Signer) ([]byte, error) 
 	return c.client.CommitCallTx(callerAddr, c.Address, signer, vm.VMType_EVM, input)
 }
 
-func (c *EvmContract) StaticCallEvm(input []byte) ([]byte, error) {
+func (c *EvmContract) StaticCall(input []byte) ([]byte, error) {
 	return c.client.QueryEvm(c.Address.Local, input)
 }
