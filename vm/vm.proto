@@ -29,6 +29,11 @@ message DeployResponse {
     bytes output = 2;
 }
 
+message DeployResponseData {
+    bytes txHash = 1;
+    bytes bytecode = 2;
+}
+
 message Event {
     Address contract = 1;
     repeated bytes topics = 2;
