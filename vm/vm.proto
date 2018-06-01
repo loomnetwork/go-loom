@@ -30,7 +30,7 @@ message DeployResponse {
 }
 
 message DeployResponseData {
-    bytes txHash = 1;
+    bytes tx_hash = 1;
     bytes bytecode = 2;
 }
 
