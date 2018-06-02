@@ -113,12 +113,13 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	return r.DeliverTx.Data, nil
 }
 
-func (c *DAppChainRPCClient) Query(contractAddr loom.LocalAddress, query proto.Message) ([]byte, error) {
+func (c *DAppChainRPCClient) Query(caller loom.Address, contractAddr loom.LocalAddress, query proto.Message) ([]byte, error) {
 	queryBytes, err := proto.Marshal(query)
 	if err != nil {
 		return nil, err
 	}
 	params := map[string]interface{}{
+		"caller":   caller.String(),
 		"contract": contractAddr.String(),
 		"query":    queryBytes,
 		"vmType":   vm.VMType_PLUGIN,
@@ -141,8 +142,9 @@ func (c *DAppChainRPCClient) Resolve(name string) (loom.Address, error) {
 	return loom.ParseAddress(addrStr)
 }
 
-func (c *DAppChainRPCClient) QueryEvm(contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
+func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
 	params := map[string]interface{}{
+		"caller":   caller.String(),
 		"contract": contractAddr.String(),
 		"query":    query,
 		"vmType":   vm.VMType_EVM,
