@@ -25,7 +25,7 @@ func NewEvmContract(client *DAppChainRPCClient, contractAddr loom.LocalAddress) 
 	}
 }
 
-func DeployContract(client *DAppChainRPCClient, signer auth.Signer, byteCode []byte, name string) (*EvmContract, error) {
+func DeployContract(client *DAppChainRPCClient, byteCode []byte, signer auth.Signer, name string) (*EvmContract, error) {
 	callerAddr := loom.Address{
 		ChainID: client.GetChainID(),
 		Local:   loom.LocalAddressFromPublicKey(signer.PublicKey()),
@@ -54,6 +54,6 @@ func (c *EvmContract) Call(input []byte, signer auth.Signer) ([]byte, error) {
 	return c.client.CommitCallTx(callerAddr, c.Address, signer, vm.VMType_EVM, input)
 }
 
-func (c *EvmContract) StaticCall(caller loom.Address, input []byte) ([]byte, error) {
+func (c *EvmContract) StaticCall(input []byte, caller loom.Address) ([]byte, error) {
 	return c.client.QueryEvm(caller, c.Address.Local, input)
 }

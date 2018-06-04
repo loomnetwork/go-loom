@@ -98,7 +98,7 @@ func (c *Contract) Call(method string, args proto.Message, signer auth.Signer, r
 	return nil, nil
 }
 
-func (c *Contract) StaticCall(caller loom.Address, method string, args proto.Message, result interface{}) (interface{}, error) {
+func (c *Contract) StaticCall(method string, args proto.Message, caller loom.Address, result interface{}) (interface{}, error) {
 	if result == nil || !reflect.TypeOf(result).Implements(typeOfPBMessage) {
 		return nil, errors.New("Contract.StaticCall result parameter must be a protobuf")
 	}
