@@ -8,6 +8,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/spf13/cobra"
 
+	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	"github.com/loomnetwork/go-loom/client"
 )
@@ -87,6 +88,6 @@ func StaticCallContract(defaultAddr string, method string, params proto.Message,
 		return err
 	}
 
-	_, err = contract.StaticCall(method, params, result)
+	_, err = contract.StaticCall(loom.Address{}, method, params, result)
 	return err
 }
