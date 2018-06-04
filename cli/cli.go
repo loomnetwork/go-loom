@@ -88,6 +88,6 @@ func StaticCallContract(defaultAddr string, method string, params proto.Message,
 		return err
 	}
 
-	_, err = contract.StaticCall(loom.Address{}, method, params, result)
+	_, err = contract.StaticCall(method, params, loom.Address{}, result)
 	return err
 }
