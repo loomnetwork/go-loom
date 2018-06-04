@@ -54,6 +54,6 @@ func (c *EvmContract) Call(input []byte, signer auth.Signer) ([]byte, error) {
 	return c.client.CommitCallTx(callerAddr, c.Address, signer, vm.VMType_EVM, input)
 }
 
-func (c *EvmContract) StaticCall(input []byte) ([]byte, error) {
-	return c.client.QueryEvm(c.Address.Local, input)
+func (c *EvmContract) StaticCall(caller loom.Address, input []byte) ([]byte, error) {
+	return c.client.QueryEvm(caller, c.Address.Local, input)
 }
