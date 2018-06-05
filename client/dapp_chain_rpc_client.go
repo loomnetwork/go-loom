@@ -142,6 +142,22 @@ func (c *DAppChainRPCClient) Resolve(name string) (loom.Address, error) {
 	return loom.ParseAddress(addrStr)
 }
 
+// GetCode returns the runtime byte-code of a contract running on a DAppChain's EVM.
+// Gives an error for non-EVM contracts.
+// contract - address of the contract in the form of a string. (Use loom.Address.String() to convert)
+// return []byte - runtime bytecode of the contract.
+func (c *DAppChainRPCClient) GetCode(contract string) ([]byte, error) {
+	params := map[string]interface{}{
+		"contract": contract,
+	}
+
+	var bytecode []byte
+	if err := c.queryClient.Call("getcode", params, c.getNextRequestID(), &bytecode); err != nil {
+		return []byte{}, err
+	}
+	return bytecode, nil
+}
+
 func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
 	params := map[string]interface{}{
 		"caller":   caller.String(),
