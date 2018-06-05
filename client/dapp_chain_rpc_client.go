@@ -146,6 +146,7 @@ func (c *DAppChainRPCClient) GetCode(contract string) ([]byte, error) {
 	params := map[string]interface{}{
 		"contract": contract,
 	}
+
 	var bytecode []byte
 	if err := c.queryClient.Call("getcode", params, c.getNextRequestID(), &bytecode); err != nil {
 		return []byte{}, err
