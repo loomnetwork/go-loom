@@ -30,7 +30,7 @@ type StaticAPI interface {
 	StaticCallEVM(addr loom.Address, input []byte) ([]byte, error)
 	Resolve(name string) (loom.Address, error)
 	ValidatorPower(pubKey []byte) int64
-	Emit(event []byte)
+	Emit(event []byte, topics ...string)
 }
 
 type VolatileAPI interface {

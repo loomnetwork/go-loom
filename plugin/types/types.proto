@@ -61,6 +61,16 @@ message InitResponse {
 
 }
 
+message EventData {
+    repeated string topics = 1;
+    Address caller = 2;
+    Address address = 3;
+    string plugin_name = 4;
+    uint64 block_height = 5;
+    bytes encoded_body = 6;
+    bytes original_request = 7;
+}
+
 service Contract {
     rpc Meta(MetaRequest) returns (ContractMeta);
     rpc Init(ContractCallRequest) returns (InitResponse);
@@ -120,6 +130,7 @@ message ResolveResponse {
 
 message EmitRequest {
     bytes data = 1;
+    repeated string topics = 2;
 }
 
 message EmitResponse {

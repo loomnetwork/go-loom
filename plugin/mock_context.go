@@ -169,7 +169,7 @@ func (c *FakeContext) Now() time.Time {
 	return time.Unix(c.block.Time, 0)
 }
 
-func (c *FakeContext) Emit(event []byte) {
+func (c *FakeContext) Emit(event []byte, topics ...string) {
 }
 
 func (c *FakeContext) makeKey(key []byte) string {
