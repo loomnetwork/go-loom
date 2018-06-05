@@ -25,25 +25,27 @@ func NewEvmContract(client *DAppChainRPCClient, contractAddr loom.LocalAddress) 
 	}
 }
 
-func DeployContract(client *DAppChainRPCClient, byteCode []byte, signer auth.Signer, name string) (*EvmContract, error) {
+func DeployContract(client *DAppChainRPCClient, byteCode []byte, signer auth.Signer, name string) (*EvmContract, []byte, error) {
 	callerAddr := loom.Address{
 		ChainID: client.GetChainID(),
 		Local:   loom.LocalAddressFromPublicKey(signer.PublicKey()),
 	}
 	resp, err := client.CommitDeployTx(callerAddr, signer, vm.VMType_EVM, byteCode, name)
 	if err != nil {
-		return nil, err
+		return nil, []byte{}, err
 	}
 	response := vm.DeployResponse{}
 	err = proto.Unmarshal(resp, &response)
 	if err != nil {
-		return nil, err
+		return nil, []byte{}, err
 	}
+	data := vm.DeployResponseData{}
+	err = proto.Unmarshal(response.Output, &data)
 	return &EvmContract{
 		client:  client,
 		Address: loom.UnmarshalAddressPB(response.Contract),
 		Name:    name,
-	}, nil
+	}, data.GetTxHash(), nil
 }
 
 func (c *EvmContract) Call(input []byte, signer auth.Signer) ([]byte, error) {
