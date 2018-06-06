@@ -19,4 +19,5 @@ curl -s -X POST \
   -H "Travis-API-Version: 3" \
   -H "Authorization: token ${TRAVIS_TOKEN}" \
   -d "$body" \
-  https://api.travis-ci.org/repo/loomnetwork/tiles-chain/requests
+  https://api.travis-ci.org/repo/loomnetwork%2Ftiles-chain/requests
+
