@@ -98,6 +98,13 @@ func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
 	return loom.UnmarshalAddressPB(resp.Address), nil
 }
 
+func (c *GRPCAPIClient) GetCode(contract loom.Address) []byte {
+	resp, _ := c.client.GetCode(context.TODO(), &types.GetCodeRequest{
+		Contract: contract.MarshalPB(),
+	})
+	return resp.Bytecode
+}
+
 func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType) ([]byte, error) {
 	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
 		Address: addr.MarshalPB(),

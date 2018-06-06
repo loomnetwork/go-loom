@@ -31,6 +31,7 @@ type StaticAPI interface {
 	Resolve(name string) (loom.Address, error)
 	ValidatorPower(pubKey []byte) int64
 	Emit(event []byte)
+	GetCode(loom.Address) []byte
 }
 
 type VolatileAPI interface {

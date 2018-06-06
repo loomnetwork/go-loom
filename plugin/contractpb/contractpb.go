@@ -27,6 +27,7 @@ type StaticContext interface {
 	Message() plugin.Message
 	ContractAddress() loom.Address
 	Logger() *loom.Logger
+	//Caller() loom.Address
 }
 
 type Context interface {
@@ -250,6 +251,11 @@ func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[
 	resp, err := ctx.StaticCallEVM(addr, input)
 	*output = resp
 	return err
+}
+
+func GetCode(ctx StaticContext, contract loom.Address, output *[]byte) {
+	resp := ctx.GetCode(contract)
+	*output = resp
 }
 
 func WrapPluginContext(ctx plugin.Context) Context {

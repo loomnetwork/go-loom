@@ -147,6 +147,10 @@ func (c *FakeContext) Resolve(name string) (loom.Address, error) {
 	return loom.Address{}, nil
 }
 
+func (c *FakeContext) GetCode(contract loom.Address) []byte {
+	return []byte{}
+}
+
 func (c *FakeContext) ValidatorPower(pubKey []byte) int64 {
 	return 0
 }
