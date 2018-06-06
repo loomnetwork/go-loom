@@ -27,7 +27,7 @@ type StaticContext interface {
 	Message() plugin.Message
 	ContractAddress() loom.Address
 	Logger() *loom.Logger
-	//Caller() loom.Address
+	// todo Caller() loom.Address
 }
 
 type Context interface {
