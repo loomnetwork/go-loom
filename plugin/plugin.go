@@ -153,11 +153,15 @@ func (c *GRPCContext) Message() Message {
 	}
 }
 
-func (c *GRPCContext) Emit(data []byte, topics ...string) {
+func (c *GRPCContext) EmitTopics(data []byte, topics ...string) {
 	if topics == nil {
 		topics = []string{}
 	}
 	c.client.Emit(context.TODO(), &types.EmitRequest{Data: data, Topics: topics})
+}
+
+func (c *GRPCContext) Emit(data []byte) {
+	c.EmitTopics(data)
 }
 
 func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRPCContext {
