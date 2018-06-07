@@ -169,6 +169,9 @@ func (c *FakeContext) Now() time.Time {
 	return time.Unix(c.block.Time, 0)
 }
 
+func (c *FakeContext) EmitTopics(event []byte, topics ...string) {
+}
+
 func (c *FakeContext) Emit(event []byte) {
 }
 
