@@ -73,7 +73,7 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr string) (string, er
 	if err != nil {
 		return "", err
 	}
-	contract := client.NewContract(rpcClient, contractAddr, "evmproxy")
+	contract := client.NewContract(rpcClient, contractAddr)
 
 	ethCall := &types.EthCall{
 		Data: "0x6d4ce63c",
@@ -98,7 +98,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) 
 	if err != nil {
 		return err
 	}
-	contract := client.NewContract(rpcClient, contractAddr, "evmproxy")
+	contract := client.NewContract(rpcClient, contractAddr)
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...

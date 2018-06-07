@@ -28,6 +28,9 @@ Build the evmexample library.
 Assuming loom is in your path initialise the DAppChain `./loom init`. 
 copy the `example.genesis.json` to `genesis.json` and then 
 run the chain with `./loom run`
+alternatly if using the evmexample-cli you can run `./evmexample-cli`
+to deploy the SimpleStore solidity contract after the loomchina is running.
+You still need to use the genesis file to deploy the evmexample plugin. 
 
 ```bash
 go build -tags "evm" -o contracts/evmexample.1.0.0  evmexample.go
@@ -42,7 +45,10 @@ The cli can be bult with
 cd ../cli
 go build -o evmexample-cli evmexample.go
 ```
-
+Depoy the contract with
+```bash
+./evemxample-cli deploy -b /path/to/SimpleStore/bin
+```
 You can now run the cli/evmexample.go tool to access the solidty contract. 
 You might need to use -r and -w to set the DAppChain's URL.
 ```bash
