@@ -61,6 +61,10 @@ message InitResponse {
 
 }
 
+message EventDataList {
+    repeated EventData events = 1;
+}
+
 message EventData {
     repeated string topics = 1;
     Address caller = 2;
@@ -69,6 +73,22 @@ message EventData {
     uint64 block_height = 5;
     bytes encoded_body = 6;
     bytes original_request = 7;
+}
+
+message TxReceiptList {
+    repeated EvmTxReceipt tx_receipts = 1;
+}
+
+message EvmTxReceipt {
+    int32 transaction_index = 1;
+    bytes block_hash = 2;
+    int64 block_number = 3;
+    int32 cumulative_gas_used = 4;
+    int32 gas_used = 5 ;
+    bytes contract_address = 6;
+    repeated EventData logs = 7;
+    bytes logs_bloom = 8;
+    int32 status = 9;
 }
 
 service Contract {

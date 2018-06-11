@@ -8,6 +8,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
+	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
 )
@@ -172,15 +173,15 @@ func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.Loc
 	return r, nil
 }
 
-func (c *DAppChainRPCClient) GetEvmTxReceipt(txHash []byte) (vm.EvmTxReceipt, error) {
+func (c *DAppChainRPCClient) GetEvmTxReceipt(txHash []byte) (ptypes.EvmTxReceipt, error) {
 	params := map[string]interface{}{
 		"txHash": txHash,
 	}
 	var r []byte
 	if err := c.queryClient.Call("txreceipt", params, c.getNextRequestID(), &r); err != nil {
-		return vm.EvmTxReceipt{}, err
+		return ptypes.EvmTxReceipt{}, err
 	}
-	var receipt vm.EvmTxReceipt
+	var receipt ptypes.EvmTxReceipt
 	err := proto.Unmarshal(r, &receipt)
 
 	return receipt, err
