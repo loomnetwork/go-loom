@@ -49,6 +49,7 @@ proto: \
 	plugin/types/types.pb.go \
 	builtin/types/coin/coin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
+	builtin/types/cron/cron.pb.go \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
 	examples/plugins/lottery/lottery.pb.go \
