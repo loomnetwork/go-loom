@@ -73,6 +73,7 @@ message EventData {
     uint64 block_height = 5;
     bytes encoded_body = 6;
     bytes original_request = 7;
+    bytes tx_hash = 8;
 }
 
 message TxReceiptList {
