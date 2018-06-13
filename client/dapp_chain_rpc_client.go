@@ -159,6 +159,23 @@ func (c *DAppChainRPCClient) GetCode(contract string) ([]byte, error) {
 	return bytecode, nil
 }
 
+func (c *DAppChainRPCClient) GetLogs(filter string) (ptypes.EthFilterLogList, error) {
+	params := map[string]interface{}{
+		"filter": filter,
+	}
+
+	var r []byte
+	if err := c.queryClient.Call("getlogs", params, c.getNextRequestID(), &r); err != nil {
+		return ptypes.EthFilterLogList{}, err
+	}
+	var logs ptypes.EthFilterLogList
+	if err := proto.Unmarshal(r, &logs); err != nil {
+		return ptypes.EthFilterLogList{}, err
+	}
+
+	return logs, nil
+}
+
 func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
 	params := map[string]interface{}{
 		"caller":   caller.String(),
