@@ -34,20 +34,7 @@ message DeployResponseData {
     bytes bytecode = 2;
 }
 
-message Event {
-    Address contract = 1;
-    repeated bytes topics = 2;
-    bytes data = 3;
+message TxHashList {
+    repeated bytes tx_hash = 1;
 }
 
-message EvmTxReceipt {
-    int32 transaction_index = 1;
-    bytes block_hash = 2;
-    int64 block_number = 3;
-    int32 cumulative_gas_used = 4;
-    int32 gas_used = 5 ;
-    bytes contract_address = 6;
-    repeated Event logs = 7;
-    bytes logs_bloom = 8;
-    int32 status = 9;
-}

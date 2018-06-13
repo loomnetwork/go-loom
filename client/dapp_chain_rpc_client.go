@@ -8,6 +8,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
+	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
 )
@@ -158,6 +159,23 @@ func (c *DAppChainRPCClient) GetCode(contract string) ([]byte, error) {
 	return bytecode, nil
 }
 
+func (c *DAppChainRPCClient) GetLogs(filter string) (ptypes.EthFilterLogList, error) {
+	params := map[string]interface{}{
+		"filter": filter,
+	}
+
+	var r []byte
+	if err := c.queryClient.Call("getlogs", params, c.getNextRequestID(), &r); err != nil {
+		return ptypes.EthFilterLogList{}, err
+	}
+	var logs ptypes.EthFilterLogList
+	if err := proto.Unmarshal(r, &logs); err != nil {
+		return ptypes.EthFilterLogList{}, err
+	}
+
+	return logs, nil
+}
+
 func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
 	params := map[string]interface{}{
 		"caller":   caller.String(),
@@ -172,15 +190,15 @@ func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.Loc
 	return r, nil
 }
 
-func (c *DAppChainRPCClient) GetEvmTxReceipt(txHash []byte) (vm.EvmTxReceipt, error) {
+func (c *DAppChainRPCClient) GetEvmTxReceipt(txHash []byte) (ptypes.EvmTxReceipt, error) {
 	params := map[string]interface{}{
 		"txHash": txHash,
 	}
 	var r []byte
 	if err := c.queryClient.Call("txreceipt", params, c.getNextRequestID(), &r); err != nil {
-		return vm.EvmTxReceipt{}, err
+		return ptypes.EvmTxReceipt{}, err
 	}
-	var receipt vm.EvmTxReceipt
+	var receipt ptypes.EvmTxReceipt
 	err := proto.Unmarshal(r, &receipt)
 
 	return receipt, err
