@@ -176,6 +176,53 @@ func (c *DAppChainRPCClient) GetLogs(filter string) (ptypes.EthFilterLogList, er
 	return logs, nil
 }
 
+// Sets up new filter for polling
+// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newfilter
+func (c *DAppChainRPCClient) NewFilter(filter string) (string, error) {
+	params := map[string]interface{}{
+		"filter": filter,
+	}
+
+	var id string
+	if err := c.queryClient.Call("newfilter", params, c.getNextRequestID(), &id); err != nil {
+		return "", err
+	}
+	return id, nil
+}
+
+// Get logs since last poll
+// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getfilterchanges
+func (c *DAppChainRPCClient) GetFilterChanges(id string) (ptypes.EthFilterLogList, error) {
+	params := map[string]interface{}{
+		"id": id,
+	}
+
+	var r []byte
+	if err := c.queryClient.Call("getfilterchanges", params, c.getNextRequestID(), &r); err != nil {
+		return ptypes.EthFilterLogList{}, err
+	}
+	var logs ptypes.EthFilterLogList
+	if err := proto.Unmarshal(r, &logs); err != nil {
+		return ptypes.EthFilterLogList{}, err
+	}
+
+	return logs, nil
+}
+
+// Forget filter
+// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_uninstallfilter
+func (c *DAppChainRPCClient) UninstallFilter(id string) (bool, error) {
+	params := map[string]interface{}{
+		"id": id,
+	}
+
+	var ok bool
+	if err := c.queryClient.Call("uninstallfilter", params, c.getNextRequestID(), &ok); err != nil {
+		return ok, err
+	}
+	return ok, nil
+}
+
 func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
 	params := map[string]interface{}{
 		"caller":   caller.String(),
