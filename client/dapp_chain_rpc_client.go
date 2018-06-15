@@ -190,6 +190,29 @@ func (c *DAppChainRPCClient) NewFilter(filter string) (string, error) {
 	return id, nil
 }
 
+// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newblockfilter
+func (c *DAppChainRPCClient) NewBlockFilter(filter string) (string, error) {
+	params := map[string]interface{}{
+	}
+	var id string
+	if err := c.queryClient.Call("newblockfilter", params, c.getNextRequestID(), &id); err != nil {
+		return "", err
+	}
+	return id, nil
+}
+
+// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newpendingtransactionfilter
+func (c *DAppChainRPCClient) NewPendingTransactionFilter(filter string) (string, error) {
+	params := map[string]interface{}{
+	}
+	
+	var id string
+	if err := c.queryClient.Call("newpendingtransactionfilter", params, c.getNextRequestID(), &id); err != nil {
+		return "", err
+	}
+	return id, nil
+}
+
 // Get logs since last poll
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getfilterchanges
 func (c *DAppChainRPCClient) GetFilterChanges(id string) (ptypes.EthFilterLogList, error) {
