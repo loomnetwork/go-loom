@@ -109,6 +109,14 @@ message EthFilterLog {
     repeated bytes topics = 9;
 }
 
+message EthBlockHashList {
+    repeated bytes eth_block_hash = 1;
+}
+
+message EthTxHashList {
+    repeated bytes eth_tx_hash = 1;
+}
+
 service Contract {
     rpc Meta(MetaRequest) returns (ContractMeta);
     rpc Init(ContractCallRequest) returns (InitResponse);
