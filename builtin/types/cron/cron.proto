@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+
+message CronJob {
+    Address owner = 1;
+    string interval = 2;
+}
+
+message InitCronRequest {
+    repeated CronJob cronjob = 1;
+}
+
+message AddCronRequest {
+    CronJob cronjob = 1;
+}
+
+message AddCronResponse {
+    uint32 CronID = 1;
+    string Error = 2;
+}
+
+
+
+message ListCronRequest {
+    Address owner = 1;
+}
+
+message ListCronResponse {
+    repeated CronJob cronjob = 1;
+}
