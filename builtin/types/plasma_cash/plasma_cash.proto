@@ -39,19 +39,19 @@ message SubmitBlockToMainnetRequest {
 message SubmitBlockToMainnetResponse {
 }
 
-message SubmitPlasmaTxRequest {
+message PlasmaTxRequest {
     PlasmaTx plasmatx = 1;
 }
 
-message SubmitPlasmaTxResponse {
+message PlasmaTxResponse {
 }
 
 // This only originates from the validator
-message SubmitDepositRequest {
+message DepositRequest {
     PlasmaTx plasmatx = 1;
 }
 
-message SubmitDepositResponse {
+message DepositResponse {
 }
 
 message GetProofRequest {
