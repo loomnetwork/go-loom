@@ -147,25 +147,25 @@ func (c *DAppChainRPCClient) Resolve(name string) (loom.Address, error) {
 // Gives an error for non-EVM contracts.
 // contract - address of the contract in the form of a string. (Use loom.Address.String() to convert)
 // return []byte - runtime bytecode of the contract.
-func (c *DAppChainRPCClient) GetCode(contract string) ([]byte, error) {
+func (c *DAppChainRPCClient) GetEvmCode(contract string) ([]byte, error) {
 	params := map[string]interface{}{
 		"contract": contract,
 	}
 
 	var bytecode []byte
-	if err := c.queryClient.Call("getcode", params, c.getNextRequestID(), &bytecode); err != nil {
+	if err := c.queryClient.Call("getevmcode", params, c.getNextRequestID(), &bytecode); err != nil {
 		return []byte{}, err
 	}
 	return bytecode, nil
 }
 
-func (c *DAppChainRPCClient) GetLogs(filter string) (ptypes.EthFilterLogList, error) {
+func (c *DAppChainRPCClient) GetEvmLogs(filter string) (ptypes.EthFilterLogList, error) {
 	params := map[string]interface{}{
 		"filter": filter,
 	}
 
 	var r []byte
-	if err := c.queryClient.Call("getlogs", params, c.getNextRequestID(), &r); err != nil {
+	if err := c.queryClient.Call("getevmlogs", params, c.getNextRequestID(), &r); err != nil {
 		return ptypes.EthFilterLogList{}, err
 	}
 	var logs ptypes.EthFilterLogList
@@ -178,34 +178,34 @@ func (c *DAppChainRPCClient) GetLogs(filter string) (ptypes.EthFilterLogList, er
 
 // Sets up new filter for polling
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newfilter
-func (c *DAppChainRPCClient) NewFilter(filter string) (string, error) {
+func (c *DAppChainRPCClient) NewEvmFilter(filter string) (string, error) {
 	params := map[string]interface{}{
 		"filter": filter,
 	}
 
 	var id string
-	if err := c.queryClient.Call("newfilter", params, c.getNextRequestID(), &id); err != nil {
+	if err := c.queryClient.Call("newevmfilter", params, c.getNextRequestID(), &id); err != nil {
 		return "", err
 	}
 	return id, nil
 }
 
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newblockfilter
-func (c *DAppChainRPCClient) NewBlockFilter() (string, error) {
+func (c *DAppChainRPCClient) NewBlockEvmFilter() (string, error) {
 	params := map[string]interface{}{}
 	var id string
-	if err := c.queryClient.Call("newblockfilter", params, c.getNextRequestID(), &id); err != nil {
+	if err := c.queryClient.Call("newblockevmfilter", params, c.getNextRequestID(), &id); err != nil {
 		return "", err
 	}
 	return id, nil
 }
 
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newpendingtransactionfilter
-func (c *DAppChainRPCClient) NewPendingTransactionFilter() (string, error) {
+func (c *DAppChainRPCClient) NewPendingTransactionEvmFilter() (string, error) {
 	params := map[string]interface{}{}
 
 	var id string
-	if err := c.queryClient.Call("newpendingtransactionfilter", params, c.getNextRequestID(), &id); err != nil {
+	if err := c.queryClient.Call("newpendingtransactionevmfilter", params, c.getNextRequestID(), &id); err != nil {
 		return "", err
 	}
 	return id, nil
@@ -214,13 +214,13 @@ func (c *DAppChainRPCClient) NewPendingTransactionFilter() (string, error) {
 // Get logs since last poll
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getfilterchanges
 // could return protbuf of EthFilterLogList, EthBlockHashList or EthTxHashList
-func (c *DAppChainRPCClient) GetFilterChanges(id string) ([]byte, error) {
+func (c *DAppChainRPCClient) GetEvmFilterChanges(id string) ([]byte, error) {
 	params := map[string]interface{}{
 		"id": id,
 	}
 
 	var r []byte
-	if err := c.queryClient.Call("getfilterchanges", params, c.getNextRequestID(), &r); err != nil {
+	if err := c.queryClient.Call("getevmfilterchanges", params, c.getNextRequestID(), &r); err != nil {
 		return nil, err
 	}
 
@@ -229,16 +229,52 @@ func (c *DAppChainRPCClient) GetFilterChanges(id string) ([]byte, error) {
 
 // Forget filter
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_uninstallfilter
-func (c *DAppChainRPCClient) UninstallFilter(id string) (bool, error) {
+func (c *DAppChainRPCClient) UninstallEvmFilter(id string) (bool, error) {
 	params := map[string]interface{}{
 		"id": id,
 	}
 
 	var ok bool
-	if err := c.queryClient.Call("uninstallfilter", params, c.getNextRequestID(), &ok); err != nil {
+	if err := c.queryClient.Call("uninstallevmfilter", params, c.getNextRequestID(), &ok); err != nil {
 		return ok, err
 	}
 	return ok, nil
+}
+
+func (c *DAppChainRPCClient) GetEvmBlockByNumber(number int64, full bool) (ptypes.EthBlockInfo, error) {
+	params := map[string]interface{}{
+		"number": number,
+		"full":   full,
+	}
+
+	var r []byte
+	if err := c.queryClient.Call("getevmblockbyheight", params, c.getNextRequestID(), &r); err != nil {
+		return ptypes.EthBlockInfo{}, err
+	}
+	var blockInfo ptypes.EthBlockInfo
+	if err := proto.Unmarshal(r, &blockInfo); err != nil {
+		return ptypes.EthBlockInfo{}, err
+	}
+
+	return blockInfo, nil
+}
+
+func (c *DAppChainRPCClient) GetEvmBlockByHash(hash []byte, full bool) (ptypes.EthBlockInfo, error) {
+	params := map[string]interface{}{
+		"hash": hash,
+		"full": full,
+	}
+
+	var r []byte
+	if err := c.queryClient.Call("getevmblockbyhash", params, c.getNextRequestID(), &r); err != nil {
+		return ptypes.EthBlockInfo{}, err
+	}
+	var blockInfo ptypes.EthBlockInfo
+	if err := proto.Unmarshal(r, &blockInfo); err != nil {
+		return ptypes.EthBlockInfo{}, err
+	}
+
+	return blockInfo, nil
 }
 
 func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
@@ -260,7 +296,7 @@ func (c *DAppChainRPCClient) GetEvmTxReceipt(txHash []byte) (ptypes.EvmTxReceipt
 		"txHash": txHash,
 	}
 	var r []byte
-	if err := c.queryClient.Call("txreceipt", params, c.getNextRequestID(), &r); err != nil {
+	if err := c.queryClient.Call("evmtxreceipt", params, c.getNextRequestID(), &r); err != nil {
 		return ptypes.EvmTxReceipt{}, err
 	}
 	var receipt ptypes.EvmTxReceipt
