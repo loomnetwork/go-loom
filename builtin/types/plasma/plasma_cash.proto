@@ -19,7 +19,7 @@ message PlasmaTx {
     bytes signature = 5; // Signature of the block’s hash
     bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (it was included in a block which is not a multiple of 1000), its hash is the hash of its uid(ref).
     bytes markle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
-    Address sender = 8 [(gogoproto.customname)="NewOwner"]; // The transaction’s sender, derived from the hash and the signature
+    Address sender = 8; // The transaction’s sender, derived from the hash and the signature
 }
 
 
