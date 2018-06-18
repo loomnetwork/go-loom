@@ -8,7 +8,8 @@ message PlasmaBlock {
     BigUInt uid = 1;
     repeated PlasmaTx transactions = 2; // List of transactions included in Block
     bytes signature = 3; // Signature on the block’s hash hash(byte32): The hash of the RLP encoded unsigned block’s bytes.
-    bytes merkle_hash = 4; //The hash of the RLP encoded signed transaction’s bytes
+    bytes merkle_hash = 4; // The block's merkle root from its included transactions
+    bytes hash = 5; // The hash of the RLP encoded unsigned block’s bytes.
 }
 
 message PlasmaTx { 
@@ -17,8 +18,8 @@ message PlasmaTx {
     BigUInt denomination = 3; // How many coins are included in that UTXO. Currently this is always 1 since we’re using ERC721 tokens which are unique, however in future iterations this can be any number.
     Address new_owner = 4 [(gogoproto.customname)="NewOwner"]; //  The new owner of the transaction.
     bytes signature = 5; // Signature of the block’s hash
-    bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (it was included in a block which is not a multiple of 1000), its hash is the hash of its uid(ref).
-    bytes markle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
+    bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (its prevblock is 0), its hash is the hash of its uid
+    bytes merkle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
     Address sender = 8; // The transaction’s sender, derived from the hash and the signature
 }
 
