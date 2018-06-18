@@ -7,7 +7,7 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 message PlasmaBlock {
     BigUInt uid = 1;
     repeated PlasmaTx transactions = 2; // List of transactions included in Block
-    bytes signature = 3; // Signature on the block’s hash hash(byte32): The hash of the RLP encoded unsigned block’s bytes.
+    bytes signature = 3; // Signature on the block’s hash
     bytes merkle_hash = 4; // The block's merkle root from its included transactions
     bytes hash = 5; // The hash of the RLP encoded unsigned block’s bytes.
 }
@@ -65,4 +65,15 @@ message GetProofRequest {
 
 message GetProofResponse {
     bytes proof = 1; 
+}
+
+
+// Initialization of state from Genesis.json
+message Params {
+    uint64 block_interval = 1;
+}
+
+
+message PlasmaCashInitRequest {
+    Params params = 1;
 }
