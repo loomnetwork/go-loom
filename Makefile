@@ -1,5 +1,5 @@
 PKG = github.com/loomnetwork/go-loom
-PROTOC = protoc --plugin=./protoc-gen-gogo -Ivendor -I$(GOPATH)/src -I/usr/local/include
+PROTOC = protoc --plugin=./protoc-gen-gogo -I$(GOPATH)/src -I/usr/local/include
 
 .PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean
 
@@ -49,6 +49,7 @@ proto: \
 	plugin/types/types.pb.go \
 	builtin/types/coin/coin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
+	builtin/types/plasma_cash/plasma_cash.pb.go \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
 	examples/plugins/lottery/lottery.pb.go \
@@ -82,6 +83,7 @@ clean:
 		auth/auth.pb.go \
 		vm/vm.pb.go \
 		builtin/types/coin/coin.pb.go \
+		builtin/types/plasma_cash/plasma_cash.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
 		examples/plugins/evmexample/types/types.pb.go \
