@@ -24,12 +24,12 @@ message PlasmaTx {
 }
 
 
-message ListTransactionsRequest {
+message GetBlockRequest {
     BigUInt block_height = 1; 
 }
 
-message ListTransactionsResponse {
-    repeated PlasmaTx transactions = 1;
+message GetBlockResponse {
+    PlasmaBlock block = 1;
 }
 
 // This only originates from the validator
