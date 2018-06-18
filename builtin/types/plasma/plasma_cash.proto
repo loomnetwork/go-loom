@@ -57,11 +57,11 @@ message SubmitDepositRequest {
 message SubmitDepositResponse {
 }
 
-message SubmitProofRequest {
+message GetProofRequest {
     BigUInt block_height = 1; 
     BigUInt uid = 2; 
 }
 
-message SubmitProofResponse {
+message GetProofResponse {
     bytes proof = 1; 
 }
