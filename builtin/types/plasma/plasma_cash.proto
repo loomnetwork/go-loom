@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+
+message PlasmaBlock {
+    BigUInt uid = 1;
+    repeated PlasmaTx transactions = 2; // List of transactions included in Block
+    bytes signature = 3; // Signature on the block’s hash hash(byte32): The hash of the RLP encoded unsigned block’s bytes.
+    bytes merkle_hash = 4; //The hash of the RLP encoded signed transaction’s bytes
+}
+
+message PlasmaTx { 
+    uint64 uid = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    BigUInt previous_block = 2 [(gogoproto.customname)="PreviousBlock"]; //Each time a transaction is created, it MUST refer to a previous block which also included that transaction. A transaction is considered a “deposit transaction”, if it’s the first UTXO after a user deposits their coin in the Plasma Chain. This transaction mints coins from nowhere in the Plasma Chain and as a result its previous block is 0.
+    BigUInt denomination = 3; // How many coins are included in that UTXO. Currently this is always 1 since we’re using ERC721 tokens which are unique, however in future iterations this can be any number.
+    Address new_owner = 4 [(gogoproto.customname)="NewOwner"]; //  The new owner of the transaction.
+    bytes signature = 5; // Signature of the block’s hash
+    bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (it was included in a block which is not a multiple of 1000), its hash is the hash of its uid(ref).
+    bytes markle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
+    Address sender = 8 [(gogoproto.customname)="NewOwner"]; // The transaction’s sender, derived from the hash and the signature
+}
+
+
+message ListTransactionsRequest {
+    BigUInt block_height = 1; 
+}
+
+message ListTransactionsResponse {
+    repeated PlasmaTx transactions = 1;
+}
+
+// This only originates from the validator
+message SubmitBlockToMainnetRequest {
+    uint64 slot = 1;
+    BigUInt deposit_block_number = 2  [(gogoproto.customname)="DepositBlockNumber"];
+    uint64 denomination = 3;
+    Address address = 4;
+}
+
+message SubmitBlockToMainnetResponse {
+}
+
+message SubmitPlasmaTxRequest {
+    PlasmaTx plasmatx = 1;
+}
+
+message SubmitPlasmaTxResponse {
+}
+
+// This only originates from the validator
+message SubmitDepositRequest {
+    PlasmaTx plasmatx = 1;
+}
+
+message SubmitDepositResponse {
+}
+
+message SubmitProofRequest {
+    BigUInt block_height = 1; 
+    BigUInt uid = 2; 
+}
+
+message SubmitProofResponse {
+    bytes proof = 1; 
+}
