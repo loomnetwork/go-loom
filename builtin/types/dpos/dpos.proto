@@ -35,8 +35,8 @@ message Candidate {
     bytes pub_key = 2;
 }
 
-message CandidateSet {
-    map<string, Candidate> candidates = 1;
+message CandidateList {
+    repeated Candidate candidates = 1;
 }
 
 message Vote {
@@ -45,8 +45,8 @@ message Vote {
     uint64 amount = 3;
 }
 
-message VoteSet {
-    map<string, Vote> votes = 1;
+message VoteList {
+    repeated Vote votes = 1;
 }
 
 message DPOSInitRequest {
@@ -99,4 +99,11 @@ message ListWitnessesRequest {
 
 message ListWitnessesResponse {
     repeated Witness witnesses = 1;
+}
+
+message ListCandidateRequest {
+}
+
+message ListCandiateResponse {
+    repeated Candidate candidates = 1;
 }

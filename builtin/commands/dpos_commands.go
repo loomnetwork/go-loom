@@ -32,6 +32,26 @@ func ListWitnessesCmd() *cobra.Command {
 	}
 }
 
+func ListCandidatesCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "list_candidates",
+		Short: "List the registered candidates",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dpos.ListCandiateResponse
+			err := cli.StaticCallContract(DPOSContractName, "ListCandidates", &dpos.ListCandidateRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 func RegisterCandidateCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "register_candidate [public key]",
@@ -89,5 +109,6 @@ func AddDPOS(root *cobra.Command) {
 		RegisterCandidateCmd(),
 		VoteCmd(),
 		ElectCmd(),
+		ListCandidatesCmd(),
 	)
 }
