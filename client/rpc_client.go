@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 type RPCRequest struct {
@@ -69,7 +70,7 @@ func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
 }
 
 func NewJSONRPCClient(host string) *JSONRPCClient {
-	return &JSONRPCClient{
+	rpcClient := &JSONRPCClient{
 		host: host,
 		client: &http.Client{
 			Transport: &http.Transport{
@@ -77,6 +78,12 @@ func NewJSONRPCClient(host string) *JSONRPCClient {
 			},
 		},
 	}
+	// Replace tcp:// with http:// so http.Client doesn't get confused
+	parts := strings.SplitN(host, "://", 2)
+	if len(parts) == 2 && parts[0] == "tcp" {
+		rpcClient.host = "http://" + parts[1]
+	}
+	return rpcClient
 }
 
 func (c *JSONRPCClient) Call(method string, params map[string]interface{}, id string, result interface{}) error {
