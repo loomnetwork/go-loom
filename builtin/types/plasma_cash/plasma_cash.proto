@@ -19,7 +19,7 @@ message PlasmaTx {
     Address new_owner = 4 [(gogoproto.customname)="NewOwner"]; //  The new owner of the transaction.
     bytes signature = 5; // Signature on the transaction's hash
     bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (its prevblock is 0), its hash is the hash of its uid
-    bytes merkle_hash = 7; // The hash ofSessionDuration the RLP encoded signed transaction’s bytes
+    bytes merkle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
     Address sender = 8; // The transaction’s sender, derived from the hash and the signature
 }
 
