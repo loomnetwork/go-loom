@@ -65,11 +65,11 @@ message GetProofResponse {
 
 
 // Initialization of state from Genesis.json
-message Params {
+message PlasmaCashParams {
     uint64 block_interval = 1;
 }
 
 
 message PlasmaCashInitRequest {
-    Params params = 1;
+    PlasmaCashParams params = 1;
 }
