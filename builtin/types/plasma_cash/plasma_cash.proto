@@ -24,12 +24,12 @@ message PlasmaTx {
 }
 
 
-message ListTransactionsRequest {
-    BigUInt block_height = 1; 
+message GetBlockRequest {
+    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
 }
 
-message ListTransactionsResponse {
-    repeated PlasmaTx transactions = 1;
+message GetBlockResponse {
+    PlasmaBlock block = 1;
 }
 
 // This only originates from the validator
