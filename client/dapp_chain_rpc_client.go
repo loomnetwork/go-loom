@@ -248,7 +248,7 @@ func (c *DAppChainRPCClient) GetEvmBlockByNumber(number int64, full bool) (ptype
 	}
 
 	var r []byte
-	if err := c.queryClient.Call("getevmblockbyheight", params, c.getNextRequestID(), &r); err != nil {
+	if err := c.queryClient.Call("getevmblockbynumber", params, c.getNextRequestID(), &r); err != nil {
 		return ptypes.EthBlockInfo{}, err
 	}
 	var blockInfo ptypes.EthBlockInfo
