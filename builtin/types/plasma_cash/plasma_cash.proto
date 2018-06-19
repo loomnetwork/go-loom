@@ -24,6 +24,18 @@ message PlasmaTx {
 }
 
 
+message PlasmaBookKeeping {
+    BigUInt current_height = 1  [(gogoproto.customname)="CurrentHeight"]; // Height of all the plasma blocks
+}
+
+message GetCurrentBlockRequest { 
+}
+
+message GetCurrentBlockResponse {
+    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
+}
+
+
 message GetBlockRequest {
     BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
 }
