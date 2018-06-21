@@ -61,7 +61,10 @@ message PlasmaTxResponse {
 
 // This only originates from the validator
 message DepositRequest {
-    PlasmaTx plasmatx = 1;
+    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    BigUInt deposit_block = 2 [(gogoproto.customname)="DepositBlock"]; 
+    BigUInt denomination = 3; // How many coins are included in that UTXO. Currently this is always 1 since we’re using ERC721 tokens which are unique, however in future iterations this can be any number.
+    Address from = 4; 
 }
 
 message DepositResponse {
