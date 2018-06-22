@@ -79,6 +79,10 @@ message GetProofResponse {
     bytes proof = 1; 
 }
 
+message PendingSMT {
+    bytes data = 1;
+    uint64 version = 2;
+}
 
 // Initialization of state from Genesis.json
 message PlasmaCashParams {
