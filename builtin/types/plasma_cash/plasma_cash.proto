@@ -49,6 +49,7 @@ message SubmitBlockToMainnetRequest {
 }
 
 message SubmitBlockToMainnetResponse {
+    bytes merkle_hash = 1; // Merkle root of Plasma block to be submitted to mainnet
 }
 
 message PlasmaTxRequest {
