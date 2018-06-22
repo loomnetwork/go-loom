@@ -1,5 +1,3 @@
-// build evm
-
 package evmcompat
 
 import (
@@ -58,7 +56,6 @@ func SolidityPackedBytes(pairs []*Pair) (error, []byte) {
 			//			binary.LittleEndian.PutUint32(bTest, uint32(u))
 			//			fmt.Printf("little-%v\n", bTest)
 			binary.BigEndian.PutUint16(bTest, uint16(u))
-			fmt.Printf("big-%v\n", bTest)
 			b.Write(bTest)
 		case "uint32": //"uint", "uint16", "uint64":
 			//pack integers
@@ -70,19 +67,17 @@ func SolidityPackedBytes(pairs []*Pair) (error, []byte) {
 			//			binary.LittleEndian.PutUint32(bTest, uint32(u))
 			//			fmt.Printf("little-%v\n", bTest)
 			binary.BigEndian.PutUint32(bTest, uint32(u))
-			fmt.Printf("big-%v\n", bTest)
 			b.Write(bTest)
 		case "uint64": //"uint", "uint16", "uint64":
 			//pack integers
-			u, err := strconv.ParseUint(pair.Value, 10, 32)
+			u, err := strconv.ParseUint(pair.Value, 10, 64)
 			if err != nil {
 				return err, nil
 			}
-			var bTest []byte = make([]byte, 4)
+			var bTest []byte = make([]byte, 8)
 			//			binary.LittleEndian.PutUint32(bTest, uint32(u))
 			//			fmt.Printf("little-%v\n", bTest)
-			binary.BigEndian.PutUint32(bTest, uint32(u))
-			fmt.Printf("big-%v\n", bTest)
+			binary.BigEndian.PutUint64(bTest, u)
 			b.Write(bTest)
 		case "uint256":
 			n := new(big.Int)

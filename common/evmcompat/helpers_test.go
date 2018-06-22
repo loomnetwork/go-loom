@@ -1,5 +1,3 @@
-// +build evm
-
 package evmcompat
 
 import (
@@ -181,5 +179,37 @@ func TestAnotherSoliditySha3With256(t *testing.T) {
 	//hash := d.Sum(nil)
 	if want != got {
 		t.Errorf("hashes don't match -\n%s\n%s", want, g)
+	}
+}
+
+func TestAnotherSoliditySha3WithUnit64(t *testing.T) {
+	want := "920ae4155769cd69c30626f054134b5f003772473f57f84837402df6d166e663"
+
+	pairs := []*Pair{
+		&Pair{"uint32", "5"},
+	}
+
+	err, g := SoliditySHA3(pairs)
+	if err != nil {
+		t.Errorf("TestSoliditySha3With256 failed got error %q", err)
+	}
+	got := hex.EncodeToString([]byte(g))
+	if want != got {
+		t.Errorf("hashes don't match -\n%s\n%s", want, got)
+	}
+
+	want2 := "fe07a98784cd1850eae35ede546d7028e6bf9569108995fc410868db775e5e6a"
+
+	pairs2 := []*Pair{
+		&Pair{"uint64", "5"},
+	}
+
+	err, g2 := SoliditySHA3(pairs2)
+	if err != nil {
+		t.Errorf("TestSoliditySha3With256 failed got error %q", err)
+	}
+	got2 := hex.EncodeToString([]byte(g2))
+	if want2 != got2 {
+		t.Errorf("hashes don't match -\n%s\n%s", want2, got2)
 	}
 }
