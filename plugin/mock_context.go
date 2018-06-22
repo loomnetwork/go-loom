@@ -13,6 +13,11 @@ import (
 	"github.com/loomnetwork/go-loom/util"
 )
 
+type FEvent struct {
+	Event  []byte
+	Topics []string
+}
+
 type FakeContext struct {
 	caller        loom.Address
 	address       loom.Address
@@ -21,6 +26,7 @@ type FakeContext struct {
 	contractNonce uint64
 	contracts     map[string]Contract
 	validators    loom.ValidatorSet
+	Events        []FEvent
 }
 
 var _ Context = &FakeContext{}
@@ -43,6 +49,7 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		data:       make(map[string][]byte),
 		contracts:  make(map[string]Contract),
 		validators: loom.NewValidatorSet(),
+		Events:     make([]FEvent, 0),
 	}
 }
 
@@ -170,6 +177,8 @@ func (c *FakeContext) Now() time.Time {
 }
 
 func (c *FakeContext) EmitTopics(event []byte, topics ...string) {
+	//Store last emitted strings, to make it testable
+	c.Events = append(c.Events, FEvent{event, topics})
 }
 
 func (c *FakeContext) Emit(event []byte) {
