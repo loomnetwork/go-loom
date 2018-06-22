@@ -24,7 +24,7 @@ func TestSolidityPackedBytes(t *testing.T) {
 
 	pairs := []*Pair{&Pair{"uint32", "8"}, &Pair{"Address", "43989fb883ba8111221e89123897538475893837"}, &Pair{"uint32", "7"}}
 
-	err, g := SolidityPackedBytes(pairs)
+	g, err := SolidityPackedBytes(pairs)
 	if err != nil {
 		t.Errorf("TestSolidityPackedBytes failed got error %q", err)
 	}
@@ -36,7 +36,7 @@ func TestSolidityPackedBytes(t *testing.T) {
 
 	wantsha3 := "5611aae8648e01a2e4721917fd1706014b8f4d387928e3cad536be41e5af4f77"
 
-	err, g2 := SoliditySHA3(pairs)
+	g2, err := SoliditySHA3(pairs)
 	if err != nil {
 		t.Errorf("TestSolidityPackedBytes failed got error %q", err)
 	}
@@ -57,7 +57,7 @@ func TestSoliditySha3(t *testing.T) {
 		&Pair{"uint32", "1448075779"},
 	}
 
-	err, g := SolidityPackedBytes(pairs)
+	g, err := SolidityPackedBytes(pairs)
 	if err != nil {
 		t.Errorf("TestSoliditySha3 failed got error %q", err)
 	}
@@ -69,7 +69,7 @@ func TestSoliditySha3(t *testing.T) {
 
 	wantsha3 := "7221df1d75e4baccbccd8a1fb33dbc5fca5f3c543e4acbb37c1b9edf990d3e1e"
 
-	err, g2 := SoliditySHA3(pairs)
+	g2, err := SoliditySHA3(pairs)
 	if err != nil {
 		t.Errorf("TestSoliditySha3 failed got error %q", err)
 	}
@@ -87,7 +87,7 @@ func TestSolidityPackedBytesTypeAddress(t *testing.T) {
 		&Pair{"Address", "43989fb883ba8111221e89123897538475893837"},
 	}
 
-	err, g := SolidityPackedBytes(pairs)
+	g, err := SolidityPackedBytes(pairs)
 	if err != nil {
 		t.Errorf("TestSolidityPackedBytesTypeAddress failed got error %q", err)
 	}
@@ -103,7 +103,7 @@ func TestSolidityPackedUint16(t *testing.T) {
 
 	pairs := []*Pair{&Pair{"uint16", "42"}}
 
-	err, g := SolidityPackedBytes(pairs)
+	g, err := SolidityPackedBytes(pairs)
 	if err != nil {
 		t.Errorf("TestSolidityPackedBytes failed got error %q", err)
 	}
@@ -119,7 +119,7 @@ func TestSolidityPackedUint256(t *testing.T) {
 
 	pairs := []*Pair{&Pair{"uint256", "42"}}
 
-	err, g := SolidityPackedBytes(pairs)
+	g, err := SolidityPackedBytes(pairs)
 	if err != nil {
 		t.Errorf("TestSolidityPackedBytes failed got error %q", err)
 	}
@@ -140,7 +140,7 @@ func TestSoliditySha3With256(t *testing.T) {
 		&Pair{"uint256", "52"},
 	}
 
-	err, g := SolidityPackedBytes(pairs)
+	g, err := SolidityPackedBytes(pairs)
 	if err != nil {
 		t.Errorf("TestSoliditySha3With256 failed got error %q", err)
 	}
@@ -166,7 +166,7 @@ func TestAnotherSoliditySha3With256(t *testing.T) {
 		&Pair{"uint256", "1448075779"},
 	}
 
-	err, g := SolidityPackedBytes(pairs)
+	g, err := SolidityPackedBytes(pairs)
 	if err != nil {
 		t.Errorf("TestSoliditySha3With256 failed got error %q", err)
 	}
@@ -189,7 +189,7 @@ func TestAnotherSoliditySha3WithUnit64(t *testing.T) {
 		&Pair{"uint32", "5"},
 	}
 
-	err, g := SoliditySHA3(pairs)
+	g, err := SoliditySHA3(pairs)
 	if err != nil {
 		t.Errorf("TestSoliditySha3With256 failed got error %q", err)
 	}
@@ -204,7 +204,7 @@ func TestAnotherSoliditySha3WithUnit64(t *testing.T) {
 		&Pair{"uint64", "5"},
 	}
 
-	err, g2 := SoliditySHA3(pairs2)
+	g2, err := SoliditySHA3(pairs2)
 	if err != nil {
 		t.Errorf("TestSoliditySha3With256 failed got error %q", err)
 	}
