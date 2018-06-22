@@ -10,7 +10,6 @@ message PlasmaBlock {
     bytes signature = 3; // Signature on the block’s hash
     bytes merkle_hash = 4; // The block's merkle root from its included transactions
     bytes hash = 5; // The hash of the RLP encoded unsigned block’s bytes.
-    bytes proof = 6; 
 }
 
 message PlasmaTx { 
@@ -68,15 +67,6 @@ message DepositRequest {
 }
 
 message DepositResponse {
-}
-
-message GetProofRequest {
-    BigUInt block_height = 1; 
-    BigUInt uid = 2; 
-}
-
-message GetProofResponse {
-    bytes proof = 1; 
 }
 
 message Pending {
