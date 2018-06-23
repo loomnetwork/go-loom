@@ -241,7 +241,7 @@ func (c *DAppChainRPCClient) UninstallEvmFilter(id string) (bool, error) {
 	return ok, nil
 }
 
-func (c *DAppChainRPCClient) GetEvmBlockByNumber(number int64, full bool) (ptypes.EthBlockInfo, error) {
+func (c *DAppChainRPCClient) GetEvmBlockByNumber(number string, full bool) (ptypes.EthBlockInfo, error) {
 	params := map[string]interface{}{
 		"number": number,
 		"full":   full,
