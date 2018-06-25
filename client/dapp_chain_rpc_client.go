@@ -277,6 +277,23 @@ func (c *DAppChainRPCClient) GetEvmBlockByHash(hash []byte, full bool) (ptypes.E
 	return blockInfo, nil
 }
 
+func (c *DAppChainRPCClient) GetEvmTransactionByHash(hash []byte) (ptypes.EvmTxObject, error) {
+	params := map[string]interface{}{
+		"hash": hash,
+	}
+
+	var r []byte
+	if err := c.queryClient.Call("getevmtransactionbyhash", params, c.getNextRequestID(), &r); err != nil {
+		return ptypes.EvmTxObject{}, err
+	}
+	var txInfo ptypes.EvmTxObject
+	if err := proto.Unmarshal(r, &txInfo); err != nil {
+		return ptypes.EvmTxObject{}, err
+	}
+
+	return txInfo, nil
+}
+
 func (c *DAppChainRPCClient) QueryEvm(caller loom.Address, contractAddr loom.LocalAddress, query []byte) ([]byte, error) {
 	params := map[string]interface{}{
 		"caller":   caller.String(),
