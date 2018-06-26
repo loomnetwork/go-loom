@@ -22,6 +22,7 @@ message PlasmaTx {
     bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (its prevblock is 0), its hash is the hash of its uid
     bytes merkle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
     Address sender = 8; // The transaction’s sender, derived from the hash and the signature
+    bytes proof = 9; // Proof after its inserted into the block
 }
 
 
