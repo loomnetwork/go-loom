@@ -10,10 +10,11 @@ message PlasmaBlock {
     bytes signature = 3; // Signature on the block’s hash
     bytes merkle_hash = 4; // The block's merkle root from its included transactions
     bytes hash = 5; // The hash of the RLP encoded unsigned block’s bytes.
+    bytes proof = 6; 
 }
 
 message PlasmaTx { 
-    uint64 uid = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
     BigUInt previous_block = 2 [(gogoproto.customname)="PreviousBlock"]; //Each time a transaction is created, it MUST refer to a previous block which also included that transaction. A transaction is considered a “deposit transaction”, if it’s the first UTXO after a user deposits their coin in the Plasma Chain. This transaction mints coins from nowhere in the Plasma Chain and as a result its previous block is 0.
     BigUInt denomination = 3; // How many coins are included in that UTXO. Currently this is always 1 since we’re using ERC721 tokens which are unique, however in future iterations this can be any number.
     Address new_owner = 4 [(gogoproto.customname)="NewOwner"]; //  The new owner of the transaction.
@@ -21,6 +22,19 @@ message PlasmaTx {
     bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (its prevblock is 0), its hash is the hash of its uid
     bytes merkle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
     Address sender = 8; // The transaction’s sender, derived from the hash and the signature
+    bytes proof = 9; // Proof after its inserted into the block
+}
+
+
+message PlasmaBookKeeping {
+    BigUInt current_height = 1  [(gogoproto.customname)="CurrentHeight"]; // Height of all the plasma blocks
+}
+
+message GetCurrentBlockRequest { 
+}
+
+message GetCurrentBlockResponse {
+    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
 }
 
 
@@ -37,6 +51,7 @@ message SubmitBlockToMainnetRequest {
 }
 
 message SubmitBlockToMainnetResponse {
+    bytes merkle_hash = 1; // Merkle root of Plasma block to be submitted to mainnet
 }
 
 message PlasmaTxRequest {
@@ -48,21 +63,18 @@ message PlasmaTxResponse {
 
 // This only originates from the validator
 message DepositRequest {
-    PlasmaTx plasmatx = 1;
+    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    BigUInt deposit_block = 2 [(gogoproto.customname)="DepositBlock"]; 
+    BigUInt denomination = 3; // How many coins are included in that UTXO. Currently this is always 1 since we’re using ERC721 tokens which are unique, however in future iterations this can be any number.
+    Address from = 4; 
 }
 
 message DepositResponse {
 }
 
-message GetProofRequest {
-    BigUInt block_height = 1; 
-    BigUInt uid = 2; 
+message Pending {
+   repeated PlasmaTx transactions  = 1;
 }
-
-message GetProofResponse {
-    bytes proof = 1; 
-}
-
 
 // Initialization of state from Genesis.json
 message PlasmaCashParams {
