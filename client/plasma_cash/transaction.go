@@ -64,10 +64,9 @@ func (l *LoomTx) Hash() []byte {
 		return ret
 	}
 
-	//      else
 	data, err := soliditySha3(l.Slot)
 	if err != nil {
-		panic(err) //TODO
+		panic(err) //TODO cleanup error interface
 	}
 	if len(data) != 32 {
 		panic(fmt.Sprintf("wrong hash size! expected 32, got %v", len(data)))
@@ -78,9 +77,9 @@ func (l *LoomTx) Hash() []byte {
 func (l *LoomTx) MerkleHash() []byte {
 	data, err := l.rlpEncodeWithSha3()
 	if err != nil {
-		panic(err) //TODO
+		panic(err) //TODO cleanup error interface
 	}
-	panic("TODO")
+	panic("Debug")
 
 	return data
 }
