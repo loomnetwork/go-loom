@@ -81,7 +81,8 @@ deps:
 	dep ensure -vendor-only
 
 deps-evm:
-	go get github.com/ethereum/go-ethereum
+	go get github.com/ethereum/go-ethereum \
+		gopkg.in/check.v1
 
 clean:
 	go clean
