@@ -1,8 +1,9 @@
+// +build evm
+
 package plasma_cash
 
 import (
 	"math/big"
-	"strings"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -18,7 +19,7 @@ type EncodingTestSuite struct{}
 var _ = Suite(&EncodingTestSuite{})
 
 func (s *EncodingTestSuite) TestUnsignedTxRlpEncode(c *C) {
-	privKey, err := crypto.HexToECDSA(strings.TrimPrefix(GetTestAccountHexKey("alice"), "0x"))
+	privKey, err := crypto.HexToECDSA("bb63b692f9d8f21f0b978b596dc2b8611899f053d68aec6c1c20d1df4f5b6ee2")
 	if err != nil {
 		c.Fatal(err)
 	}
@@ -46,7 +47,7 @@ func (s *EncodingTestSuite) TestUnsignedTxRlpEncode(c *C) {
 }
 
 func (s *EncodingTestSuite) TestTxHash(c *C) {
-	privKey, err := crypto.HexToECDSA(strings.TrimPrefix(GetTestAccountHexKey("alice"), "0x"))
+	privKey, err := crypto.HexToECDSA("bb63b692f9d8f21f0b978b596dc2b8611899f053d68aec6c1c20d1df4f5b6ee2")
 	if err != nil {
 		c.Fatal(err)
 	}
@@ -62,7 +63,7 @@ func (s *EncodingTestSuite) TestTxHash(c *C) {
 }
 
 func (s *EncodingTestSuite) TestTxSignature(c *C) {
-	privKey, err := crypto.HexToECDSA(strings.TrimPrefix(GetTestAccountHexKey("alice"), "0x"))
+	privKey, err := crypto.HexToECDSA("bb63b692f9d8f21f0b978b596dc2b8611899f053d68aec6c1c20d1df4f5b6ee2")
 	if err != nil {
 		c.Fatal(err)
 	}

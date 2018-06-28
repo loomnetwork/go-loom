@@ -13,6 +13,7 @@ script:
 - make deps
 - make
 - make test
+- make test-evm
 after_success:
 - "./.travis_trigger_build.sh"
 go:
