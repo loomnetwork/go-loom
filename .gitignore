@@ -25,3 +25,4 @@ examples/plugins/evmproxy/cli/evmproxy
 loom.log
 contract.log
 
+.DS_Store
