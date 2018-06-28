@@ -40,7 +40,7 @@ func main() {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			result, err := GetValueCmd(flags.ChainId, flags.WriteUri, flags.ReadUri, flags.ContractHexAddr)
 			if err == nil {
-				log.Printf("{ Out: '%d' }", result)
+				log.Printf("{ Out: '%v' }", result)
 				fmt.Println("output:", result)
 			}
 			return err
