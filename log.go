@@ -116,10 +116,10 @@ func MakeFileLoggerWriter(loomLogLevel, dest string) io.Writer {
 	//			log.Fatal(err)
 	//		}
 	//		Default = kitsyslog.NewSyslogLogger(sysLog, loggerFunc, kitsyslog.PrioritySelectorOption)
-	log.Printf("Sending logs to %s\n", dest)
 	if destParts[1] == "-" {
 		return os.Stderr
 	} else {
+		log.Printf("Sending logs to file %s\n", destParts[1])
 		f, err := os.OpenFile(destParts[1], os.O_RDWR|os.O_CREATE, 0755)
 		if err != nil {
 			log.Fatal(err)
