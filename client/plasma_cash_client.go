@@ -104,7 +104,7 @@ func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock int64, denomin
 	return nil
 }
 
-func NewPlasmaCashClient(signer auth.Signer, chainID, readuri, writeuri string) (plasma_cash.ChainServiceClient, error) {
+func NewPlasmaCashClient(signer auth.Signer, chainID, writeuri, readuri string) (plasma_cash.ChainServiceClient, error) {
 	//for now assume plasmacash
 	s := "plasmacash"
 

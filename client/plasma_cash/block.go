@@ -27,7 +27,6 @@ func (p *PbBlock) TxFromSlot(slot uint64) (Tx, error) {
 	var tx *pctypes.PlasmaTx
 
 	for _, v := range p.block.Transactions {
-		fmt.Printf("testing transaction at slot-%d\n", v.Slot)
 		if v.Slot == slot {
 			tx = v
 		}
@@ -37,11 +36,8 @@ func (p *PbBlock) TxFromSlot(slot uint64) (Tx, error) {
 	}
 
 	address := tx.NewOwner.Local.String()
-	fmt.Printf("ethaddress-b-%s\n", address)
 	ethAddress := common.HexToAddress(address)
-	fmt.Printf("ethaddress-%s previous block -%d   Denomination-%d\n", ethAddress, tx.GetPreviousBlock().Value.Int64(), tx.Denomination.Value.Uint64())
 
-	fmt.Printf("tx.Proof-%x -len(%d)\n", tx.Proof, len(tx.Proof))
 	return &LoomTx{Slot: slot,
 		PrevBlock:    big.NewInt(tx.GetPreviousBlock().Value.Int64()), //TODO ugh bad casting
 		Denomination: uint32(tx.Denomination.Value.Uint64()),          //TODO get this from somewhere
