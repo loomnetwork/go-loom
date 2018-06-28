@@ -10,9 +10,10 @@ addons:
 before_install:
 - "./.travis_before_install.sh"
 script:
-- make deps
+- make deps-all
 - make
 - make test
+- make test-evm
 after_success:
 - "./.travis_trigger_build.sh"
 go:

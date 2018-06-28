@@ -1,7 +1,7 @@
 PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -I$(GOPATH)/src -I/usr/local/include
 
-.PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean
+.PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
 
 all: examples
 
@@ -59,8 +59,13 @@ proto: \
 test: proto
 	go test -v $(PKG)/...
 
+test-evm: proto
+	go test -tags "evm" -v $(PKG)/...
+
 lint:
 	golint ./...
+
+deps-all: deps deps-evm
 
 deps:
 	go get \
@@ -74,6 +79,10 @@ deps:
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log
 	dep ensure -vendor-only
+
+deps-evm:
+	go get github.com/ethereum/go-ethereum \
+		gopkg.in/check.v1
 
 clean:
 	go clean
