@@ -67,8 +67,11 @@ type PlasmaCoin struct {
 	State           PlasmaCoinState
 }
 
-type DespositEvent struct {
+type DepositEventData struct {
+	// Plasma slot, a unique identifier, assigned to the deposit.
 	Slot uint64
+	// Index of the Plasma block in which the deposit transaction was included.
+	BlockNum *big.Int
 }
 
 type RootChainClient interface {
@@ -95,5 +98,5 @@ type RootChainClient interface {
 	SubmitBlock(blockNum *big.Int, merkleRoot [32]byte) error
 
 	DebugCoinMetaData(slots []uint64)
-	DepositEventData(txHash common.Hash) (*DespositEvent, error)
+	DepositEventData(txHash common.Hash) (*DepositEventData, error)
 }
