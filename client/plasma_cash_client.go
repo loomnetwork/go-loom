@@ -11,6 +11,7 @@ import (
 	pctypes "github.com/loomnetwork/go-loom/builtin/types/plasma_cash"
 	"github.com/loomnetwork/go-loom/client/plasma_cash"
 	"github.com/loomnetwork/go-loom/types"
+	"github.com/pkg/errors"
 )
 
 // PlasmaCashClient client to loom plasma cash server
@@ -75,6 +76,16 @@ func (c *PlasmaCashClient) SubmitBlock() error {
 
 	log.Println("succeeded submitting a block ")
 
+	return nil
+}
+
+// Deposit , submits a deposit from the Ethereum Blockchain onto the DAppChain
+// ** note that only validators, or test clients use this method
+// normal clients should not use it as it will be rejected by the server
+func (c *PlasmaCashClient) Deposit(deposit *pctypes.DepositRequest) error {
+	if _, err := c.loomcontract.Call("DepositRequest", deposit, c.signer, nil); err != nil {
+		return errors.Wrap(err, "failed to commit DepositRequest tx")
+	}
 	return nil
 }
 

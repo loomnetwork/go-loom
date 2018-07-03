@@ -26,9 +26,13 @@ func (p *PbBlock) MerkleHash() []byte {
 func (p *PbBlock) TxFromSlot(slot uint64) (Tx, error) {
 	var tx *pctypes.PlasmaTx
 
+	if p.block.Transactions == nil {
+		return nil, nil
+	}
 	for _, v := range p.block.Transactions {
 		if v.Slot == slot {
 			tx = v
+			break
 		}
 	}
 	if tx == nil {

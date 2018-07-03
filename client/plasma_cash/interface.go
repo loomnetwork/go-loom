@@ -7,6 +7,8 @@ import (
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
+
+	pctypes "github.com/loomnetwork/go-loom/builtin/types/plasma_cash"
 )
 
 type Proof []byte
@@ -24,6 +26,9 @@ type Tx interface {
 	Proof() Proof
 }
 
+type Deposit interface {
+}
+
 type ChainServiceClient interface {
 	CurrentBlock() (Block, error)
 	BlockNumber() (int64, error)
@@ -32,6 +37,7 @@ type ChainServiceClient interface {
 	//Proof(blknum int64, slot uint64) (Proof, error)
 
 	SubmitBlock() error
+	Deposit(deposit *pctypes.DepositRequest) error
 
 	SendTransaction(slot uint64, prevBlock int64, denomination int64, newOwner string, sig []byte) error
 }
