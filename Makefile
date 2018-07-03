@@ -78,7 +78,7 @@ deps:
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log \ 
-		github.com/pkg/errors
+		github.com/pkg/errors \
 	dep ensure -vendor-only
 
 deps-evm:
