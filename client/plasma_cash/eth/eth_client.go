@@ -1,3 +1,5 @@
+// +build evm
+
 package eth
 
 import (
