@@ -27,8 +27,8 @@ func ContractCallCommand() *cobra.Command {
 		Short: "call a contract method",
 	}
 	pflags := cmd.PersistentFlags()
-	pflags.StringVarP(&txFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
-	pflags.StringVarP(&txFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
+	pflags.StringVarP(&txFlags.WriteURI, "write", "w", "http://localhost:46657/", "URI for sending txs")
+	pflags.StringVarP(&txFlags.ReadURI, "read", "r", "http://localhost:46657/query/", "URI for quering app state")
 	pflags.StringVarP(&txFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&txFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&txFlags.PrivFile, "private-key", "p", "", "private key file")
