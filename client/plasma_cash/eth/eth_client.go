@@ -111,7 +111,7 @@ func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pct
 	}
 	deposits := []*pctypes.DepositRequest{}
 
-	it, err := c.plasmaContract.FilterDeposit(filterOpts, nil, nil)
+	it, err := c.plasmaContract.FilterDeposit(filterOpts, nil, nil, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get Plasma deposit logs")
 	}
@@ -123,11 +123,16 @@ func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pct
 			if err != nil {
 				return nil, errors.Wrap(err, "failed to parse Plasma deposit 'from' address")
 			}
+			contractAddr, err := loom.LocalAddressFromHexString(ev.ContractAddress.Hex())
+			if err != nil {
+				return nil, errors.Wrap(err, "failed to parse Plasma deposit contract address")
+			}
 			deposits = append(deposits, &pctypes.DepositRequest{
 				Slot:         ev.Slot,
 				DepositBlock: &ltypes.BigUInt{Value: *loom.NewBigUInt(ev.BlockNumber)},
 				Denomination: &ltypes.BigUInt{Value: *loom.NewBigUIntFromInt(1)}, // TODO: ev.Denomination
 				From:         loom.Address{ChainID: "eth", Local: fromAddr}.MarshalPB(),
+				Contract:     loom.Address{ChainID: "eth", Local: contractAddr}.MarshalPB(),
 				// TODO: store ev.Hash... it's always a hash of ev.Slot, so a bit redundant
 			})
 		} else {
