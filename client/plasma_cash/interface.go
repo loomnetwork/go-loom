@@ -70,6 +70,7 @@ type PlasmaCoin struct {
 	DepositBlockNum int64
 	Denomination    uint32
 	Owner           string
+	ContractAddress string
 	State           PlasmaCoinState
 }
 
