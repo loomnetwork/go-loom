@@ -98,6 +98,18 @@ message DepositRequest {
 message DepositResponse {
 }
 
+message PlasmaCashExitCoinRequest {
+    Address owner = 1;
+    Address contract = 2;
+    uint64 slot = 3;
+}
+
+message PlasmaCashWithdrawCoinRequest {
+    Address owner = 1;
+    Address contract =2;
+    uint64 slot = 3;
+}
+
 message Pending {
    repeated PlasmaTx transactions  = 1;
 }
