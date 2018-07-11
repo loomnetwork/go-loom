@@ -3,6 +3,28 @@ syntax = "proto3";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
+enum PlasmaCashCoinState {
+    DEPOSITED = 0;
+    EXITING = 1;
+    CHALLENGED = 2;
+    EXITED = 3;
+}
+
+// Plasma Cash coin holds a single ERC721 token
+message PlasmaCashCoin {
+    // Unique ID
+    uint64 slot = 1;
+    PlasmaCashCoinState state = 2;
+    // ERC721 token ID
+    BigUInt token = 3;
+}
+
+message PlasmaCashAccount {
+    Address owner = 1;
+    // Address of ERC721 contract the tokens in the Plasma coins originated from
+    Address contract = 2;
+    repeated PlasmaCashCoin coins = 3;
+}
 
 message PlasmaBlock {
     BigUInt uid = 1;
@@ -76,6 +98,18 @@ message DepositRequest {
 message DepositResponse {
 }
 
+message PlasmaCashExitCoinRequest {
+    Address owner = 1;
+    Address contract = 2;
+    uint64 slot = 3;
+}
+
+message PlasmaCashWithdrawCoinRequest {
+    Address owner = 1;
+    Address contract =2;
+    uint64 slot = 3;
+}
+
 message Pending {
    repeated PlasmaTx transactions  = 1;
 }
@@ -88,4 +122,15 @@ message PlasmaCashParams {
 
 message PlasmaCashInitRequest {
     PlasmaCashParams params = 1;
+}
+
+// Static Calls
+
+message PlasmaCashBalanceOfRequest {
+    Address owner = 1;
+    Address contract = 2;
+}
+
+message PlasmaCashBalanceOfResponse {
+    repeated PlasmaCashCoin coins = 1;
 }
