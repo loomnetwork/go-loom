@@ -17,13 +17,16 @@ message PlasmaCashCoin {
     PlasmaCashCoinState state = 2;
     // ERC721 token ID
     BigUInt token = 3;
+    // ERC721 token contract address
+    Address contract = 4;
 }
 
 message PlasmaCashAccount {
     Address owner = 1;
     // Address of ERC721 contract the tokens in the Plasma coins originated from
     Address contract = 2;
-    repeated PlasmaCashCoin coins = 3;
+    // Plasma coins in this account, identified by their slot number.
+    repeated uint64 slots = 3;
 }
 
 message PlasmaBlock {
@@ -100,14 +103,12 @@ message DepositResponse {
 
 message PlasmaCashExitCoinRequest {
     Address owner = 1;
-    Address contract = 2;
-    uint64 slot = 3;
+    uint64 slot = 2;
 }
 
 message PlasmaCashWithdrawCoinRequest {
     Address owner = 1;
-    Address contract =2;
-    uint64 slot = 3;
+    uint64 slot = 2;
 }
 
 message Pending {
