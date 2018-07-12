@@ -90,15 +90,16 @@ func (c *PlasmaCashClient) Deposit(deposit *pctypes.DepositRequest) error {
 }
 
 // Sends a plasma cash transaciton to be added to the current plasma cash block
-func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock int64, denomination int64, newOwner string, sig []byte) error {
-	loomAddress := fmt.Sprintf("chain:%s", newOwner)
-
-	address := loom.MustParseAddress(loomAddress)
+func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock int64, denomination int64,
+	newOwner, prevOwner string, sig []byte) error {
+	receiverAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", newOwner))
+	senderAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", prevOwner))
 	tx := &pctypes.PlasmaTx{
 		Slot:          uint64(slot),
 		PreviousBlock: &types.BigUInt{*loom.NewBigUIntFromInt(prevBlock)},
 		Denomination:  &types.BigUInt{*loom.NewBigUIntFromInt(denomination)},
-		NewOwner:      address.MarshalPB(),
+		NewOwner:      receiverAddr.MarshalPB(),
+		Sender:        senderAddr.MarshalPB(),
 		Signature:     sig,
 	}
 
@@ -116,14 +117,11 @@ func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock int64, denomin
 }
 
 func NewPlasmaCashClient(signer auth.Signer, chainID, writeuri, readuri string) (plasma_cash.ChainServiceClient, error) {
-	//for now assume plasmacash
-	s := "plasmacash"
-
 	// create rpc client
 	rpcClient := NewDAppChainRPCClient(chainID, writeuri, readuri)
 
 	// try to resolve it using registry
-	contractAddr, err := rpcClient.Resolve(s)
+	contractAddr, err := rpcClient.Resolve("plasmacash")
 	if err != nil {
 		return nil, err
 	}
