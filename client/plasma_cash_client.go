@@ -16,11 +16,9 @@ import (
 
 // PlasmaCashClient client to loom plasma cash server
 type PlasmaCashClient struct {
-	url          string
 	ChainID      string
 	WriteURI     string
 	ReadURI      string
-	contractAddr string
 	loomcontract *Contract
 	caller       loom.Address
 	signer       auth.Signer
@@ -116,12 +114,12 @@ func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock int64, denomin
 	return nil
 }
 
-func NewPlasmaCashClient(signer auth.Signer, chainID, writeuri, readuri string) (plasma_cash.ChainServiceClient, error) {
+func NewPlasmaCashClient(contractName string, signer auth.Signer, chainID, writeuri, readuri string) (plasma_cash.ChainServiceClient, error) {
 	// create rpc client
 	rpcClient := NewDAppChainRPCClient(chainID, writeuri, readuri)
 
 	// try to resolve it using registry
-	contractAddr, err := rpcClient.Resolve("plasmacash")
+	contractAddr, err := rpcClient.Resolve(contractName)
 	if err != nil {
 		return nil, err
 	}
