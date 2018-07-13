@@ -214,17 +214,21 @@ func (c *DAppChainRPCClient) NewPendingTransactionEvmFilter() (string, error) {
 // Get logs since last poll
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getfilterchanges
 // could return protbuf of EthFilterLogList, EthBlockHashList or EthTxHashList
-func (c *DAppChainRPCClient) GetEvmFilterChanges(id string) ([]byte, error) {
+func (c *DAppChainRPCClient) GetEvmFilterChanges(id string) (ptypes.EthFilterEnvelope, error) {
 	params := map[string]interface{}{
 		"id": id,
 	}
 
 	var r []byte
 	if err := c.queryClient.Call("getevmfilterchanges", params, c.getNextRequestID(), &r); err != nil {
-		return nil, err
+		return ptypes.EthFilterEnvelope{}, err
+	}
+	var envolope ptypes.EthFilterEnvelope
+	if err := proto.Unmarshal(r, &envolope); err != nil {
+		return ptypes.EthFilterEnvelope{}, err
 	}
 
-	return r, nil
+	return envolope, nil
 }
 
 // Forget filter
