@@ -59,3 +59,7 @@ func (a LocalAddress) Marshal() ([]byte, error) {
 	}
 	return []byte(a), nil
 }
+
+func (a LocalAddress) Size() int {
+	return len(a)
+}
