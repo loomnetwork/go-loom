@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+message GatewayState {
+    uint64 last_eth_block = 1;
+}
+
+// Fungible Token Deposit (ETH or ERC20) made into the Gateway on Ethereum mainnet
+message TokenDeposit {
+    // Token contract address, blank if ETH 
+    Address token = 1;
+    // Ethereum mainnet address of entity that made the deposit
+    Address from = 2;
+    // DAppChain address of entity that should receive the deposit
+    Address to = 3;
+    BigUInt amount = 4;
+    uint64 eth_block = 5;
+}
+
+// Non-Fungible Token Deposit (ERC721) made into the Gateway on Ethereum mainnet
+message NFTDeposit {
+    // Token contract address
+    Address token = 1;
+    Address from = 2;
+    BigUInt uid = 3;
+    uint64 eth_block = 4;
+}
+
+message GatewayTokenMapping {
+    // Address of a token contract on Ethereum mainnet
+    Address from_token = 1;
+    // Address of the corresponding token contract on DAppChain
+    Address to_token = 2;
+}
+
+message GatewayInitRequest {
+    // List of oracles that the Gateway should accept data from, each oracle is identified by the
+    // address of the validator node it runs in
+    repeated Address oracles = 1;
+    // Address of the Gateway contract on Ethereum mainnet
+    Address gateway_address = 2;
+    // Map of token contracts on Ethereum mainnet to the corresponding token contracts on DAppChain
+    repeated GatewayTokenMapping Tokens = 3;
+}
+
+// Batch of events from the Gateway on Ethereum mainnet
+message ProcessEventBatchRequest {
+    repeated TokenDeposit ft_deposits = 1;
+    repeated NFTDeposit nft_deposits = 2;
+}
+
+message GatewayStateRequest {
+}
+
+message GatewayStateResponse {
+    GatewayState state = 1;
+}

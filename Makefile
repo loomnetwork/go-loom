@@ -51,6 +51,7 @@ proto: \
 	builtin/types/coin/coin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
 	builtin/types/plasma_cash/plasma_cash.pb.go \
+	builtin/types/transfer_gateway/transfer_gateway.pb.go \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
 	examples/plugins/lottery/lottery.pb.go \
