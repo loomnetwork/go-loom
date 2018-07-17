@@ -16,7 +16,7 @@ var coinContractKey = []byte("coincontract")
 func transfer(ctx contract.Context, to loom.Address, amount *loom.BigUInt) error {
 	req := &coin.TransferRequest{
 		To:     to.MarshalPB(),
-		Amount: &types.BigUInt{*amount},
+		Amount: &types.BigUInt{Value: *amount},
 	}
 
 	coinAddr, err := ctx.Resolve("coin")

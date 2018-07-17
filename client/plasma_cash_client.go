@@ -46,7 +46,7 @@ func (c *PlasmaCashClient) BlockNumber() (int64, error) {
 
 // Block get the block, transactions and proofs for a given block height
 func (c *PlasmaCashClient) Block(blknum int64) (plasma_cash.Block, error) {
-	blk := &types.BigUInt{*loom.NewBigUIntFromInt(blknum)}
+	blk := &types.BigUInt{Value: *loom.NewBigUIntFromInt(blknum)}
 
 	var result pctypes.GetBlockResponse
 	params := &pctypes.GetBlockRequest{
@@ -94,8 +94,8 @@ func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock int64, denomin
 	senderAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", prevOwner))
 	tx := &pctypes.PlasmaTx{
 		Slot:          uint64(slot),
-		PreviousBlock: &types.BigUInt{*loom.NewBigUIntFromInt(prevBlock)},
-		Denomination:  &types.BigUInt{*loom.NewBigUIntFromInt(denomination)},
+		PreviousBlock: &types.BigUInt{Value: *loom.NewBigUIntFromInt(prevBlock)},
+		Denomination:  &types.BigUInt{Value: *loom.NewBigUIntFromInt(denomination)},
 		NewOwner:      receiverAddr.MarshalPB(),
 		Sender:        senderAddr.MarshalPB(),
 		Signature:     sig,

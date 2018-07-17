@@ -23,6 +23,11 @@ func (b *BigUInt) Unmarshal(by []byte) error {
 	return nil
 }
 
+// Size returns the length of the protobuf data
+func (b *BigUInt) Size() int {
+	return len(b.Bytes())
+}
+
 // Marshal converts to a byte buffer for protobufs
 func (b *BigUInt) Marshal() ([]byte, error) {
 	return b.Int.Bytes(), nil
