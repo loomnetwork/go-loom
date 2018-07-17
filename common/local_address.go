@@ -59,3 +59,8 @@ func (a LocalAddress) Marshal() ([]byte, error) {
 	}
 	return []byte(a), nil
 }
+
+// Size returns the number of bytes for deterministic marshaling
+func (a LocalAddress) Size() int {
+	return len(a)
+}

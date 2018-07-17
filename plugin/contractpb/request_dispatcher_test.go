@@ -42,12 +42,12 @@ func (c *MockContract) Init(ctx Context, req *plugin.Request) error {
 }
 
 func (c *MockContract) HandleTx(ctx Context, args *testdata.CallArgs) error {
-	require.Equal(c.t, &callArgs, args)
+	require.Equal(c.t, callArgs.String(), args.String())
 	return nil
 }
 
 func (c *MockContract) HandleQuery(ctx StaticContext, args *testdata.StaticCallArgs) (*testdata.StaticCallResult, error) {
-	require.Equal(c.t, &staticCallArgs, args)
+	require.Equal(c.t, staticCallArgs.String(), args.String())
 	return &testdata.StaticCallResult{
 		Code:   123,
 		Result: "QueryResult",
