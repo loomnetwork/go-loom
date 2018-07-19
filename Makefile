@@ -48,6 +48,7 @@ proto: \
 	auth/auth.pb.go \
 	vm/vm.pb.go \
 	plugin/types/types.pb.go \
+	builtin/types/address_mapper/address_mapper.pb.go \
 	builtin/types/coin/coin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
 	builtin/types/plasma_cash/plasma_cash.pb.go \

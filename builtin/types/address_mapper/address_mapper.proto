@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+// Bidirectional mapping between addresses (contracts or accounts) on two different blockchains.
+message AddressMapperMapping {
+    // Address on a blockchain
+    Address from = 1;
+    // Corresponding address on another blockchain
+    Address to = 2;
+}
+
+// Genesis
+
+message AddressMapperInitRequest {
+
+}
+
+// Request & Response
+
+message AddressMapperAddMappingRequest {
+    // Address on a blockchain
+    Address from = 1;
+    // Corresponding address on another blockchain
+    Address to = 2;
+    // TODO: add proof fields to verify ownership
+}
+
+message AddressMapperRemoveMappingRequest {
+    // TODO
+}
+
+message AddressMapperGetMappingRequest {
+    Address from = 1;
+}
+
+message AddressMapperGetMappingResponse {
+    Address from = 1; // Address that was provided in the request
+    Address to = 2;
+}
