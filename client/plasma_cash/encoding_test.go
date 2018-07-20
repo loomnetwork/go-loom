@@ -8,6 +8,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/loomnetwork/go-loom/common/evmcompat"
 	. "gopkg.in/check.v1"
 )
 
@@ -82,7 +83,7 @@ func (s *EncodingTestSuite) TestTxSignature(c *C) {
 	hexStr := common.Bytes2Hex(sig)
 	c.Assert(hexStr, Equals, "00b0e4901dc74b9851dba3c52406e1325c2ac9c4fe9f4d0379099a3357b763c96c104d3fffb78e99515db2e583568588d740b743ad3105d63fb252014f806fd06b1b")
 
-	signer, err := SolidityRecover(tx.Hash(), sig[1:])
+	signer, err := evmcompat.SolidityRecover(tx.Hash(), sig[1:])
 	if err != nil {
 		c.Fatal(err)
 	}
