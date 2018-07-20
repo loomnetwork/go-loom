@@ -3,6 +3,7 @@ package plugin
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 	"time"
 
 	"golang.org/x/crypto/sha3"
@@ -151,7 +152,16 @@ func (c *FakeContext) StaticCallEVM(addr loom.Address, input []byte) ([]byte, er
 }
 
 func (c *FakeContext) Resolve(name string) (loom.Address, error) {
-	return loom.Address{}, nil
+	for addrStr, contract := range c.contracts {
+		meta, err := contract.Meta()
+		if err != nil {
+			return loom.Address{}, err
+		}
+		if meta.Name == name {
+			return loom.MustParseAddress(addrStr), nil
+		}
+	}
+	return loom.Address{}, fmt.Errorf("failed  to resolve address of contract '%s'", name)
 }
 
 func (c *FakeContext) ValidatorPower(pubKey []byte) int64 {
