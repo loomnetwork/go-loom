@@ -3,6 +3,7 @@ package plugin
 import (
 	"bytes"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"time"
 
@@ -240,4 +241,10 @@ func (c *FakeContext) GrantPermissionTo(addr loom.Address, token []byte, role st
 
 // GrantPermission sets a given `role` permission on `token` for the sender of the tx
 func (c *FakeContext) GrantPermission(token []byte, roles []string) {
+}
+
+// Sign signs the given data using the key & algo associated with the given keyID.
+// Returns the signature, or an error.
+func (c *FakeContext) Sign(data []byte, keyID string) ([]byte, error) {
+	return nil, errors.New("FakeContext.Sign() not implemented yet")
 }
