@@ -32,6 +32,12 @@ type StaticAPI interface {
 	ValidatorPower(pubKey []byte) int64
 	EmitTopics(event []byte, topics ...string)
 	Emit(event []byte)
+
+	// Privileged API
+
+	// Sign signs the given data using the key & algo associated with the given keyID.
+	// Returns the signature, or an error.
+	Sign(data []byte, keyID string) ([]byte, error)
 }
 
 type VolatileAPI interface {

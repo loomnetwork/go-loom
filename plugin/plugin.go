@@ -164,6 +164,10 @@ func (c *GRPCContext) Emit(data []byte) {
 	c.EmitTopics(data)
 }
 
+func (c *GRPCContext) Sign(data []byte, keyID string) ([]byte, error) {
+	return nil, errors.New("GRPCContext.Sign() not implemented yet")
+}
+
 func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRPCContext {
 	return &GRPCContext{
 		GRPCAPIClient: &GRPCAPIClient{
