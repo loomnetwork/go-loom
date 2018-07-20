@@ -36,7 +36,7 @@ func (l *LoomTx) NewOwner() common.Address {
 }
 
 func (l *LoomTx) Sign(key *ecdsa.PrivateKey) ([]byte, error) {
-	sig, err := SoliditySign(l.Hash(), key)
+	sig, err := evmcompat.SoliditySign(l.Hash(), key)
 	if err != nil {
 		return nil, err
 	}
