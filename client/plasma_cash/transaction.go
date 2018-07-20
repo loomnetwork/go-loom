@@ -36,7 +36,7 @@ func (l *LoomTx) NewOwner() common.Address {
 }
 
 func (l *LoomTx) Sign(key *ecdsa.PrivateKey) ([]byte, error) {
-	sig, err := SoliditySign(l.Hash(), key)
+	sig, err := evmcompat.SoliditySign(l.Hash(), key)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func (l *LoomTx) MerkleHash() []byte {
 }
 
 func soliditySha3(data uint64) ([]byte, error) {
-	pairs := []*evmcompat.Pair{&evmcompat.Pair{"uint64", strconv.FormatUint(data, 10)}}
+	pairs := []*evmcompat.Pair{&evmcompat.Pair{Type: "uint64", Value: strconv.FormatUint(data, 10)}}
 	hash, err := evmcompat.SoliditySHA3(pairs)
 	if err != nil {
 		return []byte{}, err
