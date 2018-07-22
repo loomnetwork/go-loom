@@ -11,8 +11,9 @@ It has these top-level messages:
 	TransferGatewayState
 	TransferGatewayWithdrawalReceipt
 	TransferGatewayAccount
-	TransferGatewayTokenDeposit
-	TransferGatewayNFTDeposit
+	TransferGatewayTokenDeposited
+	TransferGatewayTokenWithdrawn
+	TransferGatewayMainnetEvent
 	TransferGatewayInitRequest
 	TransferGatewayProcessEventBatchRequest
 	TransferGatewayStateRequest
@@ -38,6 +39,30 @@ var _ = math.Inf
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+
+type TokenKind int32
+
+const (
+	TokenKind_ETH    TokenKind = 0
+	TokenKind_ERC20  TokenKind = 1
+	TokenKind_ERC721 TokenKind = 2
+)
+
+var TokenKind_name = map[int32]string{
+	0: "ETH",
+	1: "ERC20",
+	2: "ERC721",
+}
+var TokenKind_value = map[string]int32{
+	"ETH":    0,
+	"ERC20":  1,
+	"ERC721": 2,
+}
+
+func (x TokenKind) String() string {
+	return proto.EnumName(TokenKind_name, int32(x))
+}
+func (TokenKind) EnumDescriptor() ([]byte, []int) { return fileDescriptorTransferGateway, []int{0} }
 
 type TransferGatewayState struct {
 	LastEthBlock uint64 `protobuf:"varint,1,opt,name=last_eth_block,json=lastEthBlock,proto3" json:"last_eth_block,omitempty"`
@@ -118,102 +143,227 @@ func (m *TransferGatewayAccount) GetWithdrawalReceipt() *TransferGatewayWithdraw
 	return nil
 }
 
-// Fungible Token Deposit (ETH or ERC20) made into the Gateway on Ethereum mainnet
-type TransferGatewayTokenDeposit struct {
-	// Token contract address, blank if ETH
-	Token *types.Address `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
-	// Ethereum mainnet address of entity that made the deposit
-	From *types.Address `protobuf:"bytes,2,opt,name=from" json:"from,omitempty"`
-	// DAppChain address of entity that should receive the deposit
-	To       *types.Address `protobuf:"bytes,3,opt,name=to" json:"to,omitempty"`
-	Amount   *types.BigUInt `protobuf:"bytes,4,opt,name=amount" json:"amount,omitempty"`
-	EthBlock uint64         `protobuf:"varint,5,opt,name=eth_block,json=ethBlock,proto3" json:"eth_block,omitempty"`
+// Token Deposit (ETH/ERC20/ERC721) made into the Mainnet Gateway
+type TransferGatewayTokenDeposited struct {
+	// Mainnet address of token owner
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// Mainnet address of token contract, blank if ETH was deposited
+	TokenContract *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
+	TokenKind     TokenKind      `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=TokenKind" json:"token_kind,omitempty"`
+	// ERC721 token ID, or amount of ERC20/ETH
+	Value *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
 }
 
-func (m *TransferGatewayTokenDeposit) Reset()         { *m = TransferGatewayTokenDeposit{} }
-func (m *TransferGatewayTokenDeposit) String() string { return proto.CompactTextString(m) }
-func (*TransferGatewayTokenDeposit) ProtoMessage()    {}
-func (*TransferGatewayTokenDeposit) Descriptor() ([]byte, []int) {
+func (m *TransferGatewayTokenDeposited) Reset()         { *m = TransferGatewayTokenDeposited{} }
+func (m *TransferGatewayTokenDeposited) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayTokenDeposited) ProtoMessage()    {}
+func (*TransferGatewayTokenDeposited) Descriptor() ([]byte, []int) {
 	return fileDescriptorTransferGateway, []int{3}
 }
 
-func (m *TransferGatewayTokenDeposit) GetToken() *types.Address {
+func (m *TransferGatewayTokenDeposited) GetTokenOwner() *types.Address {
 	if m != nil {
-		return m.Token
+		return m.TokenOwner
 	}
 	return nil
 }
 
-func (m *TransferGatewayTokenDeposit) GetFrom() *types.Address {
+func (m *TransferGatewayTokenDeposited) GetTokenContract() *types.Address {
 	if m != nil {
-		return m.From
+		return m.TokenContract
 	}
 	return nil
 }
 
-func (m *TransferGatewayTokenDeposit) GetTo() *types.Address {
+func (m *TransferGatewayTokenDeposited) GetTokenKind() TokenKind {
 	if m != nil {
-		return m.To
+		return m.TokenKind
+	}
+	return TokenKind_ETH
+}
+
+func (m *TransferGatewayTokenDeposited) GetValue() *types.BigUInt {
+	if m != nil {
+		return m.Value
 	}
 	return nil
 }
 
-func (m *TransferGatewayTokenDeposit) GetAmount() *types.BigUInt {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
+// Withdrawal from Mainnet Transfer Gateway
+type TransferGatewayTokenWithdrawn struct {
+	// Mainnet address of token owner
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// Mainnet address of token contract, blank if ETH was withdrawn
+	TokenContract *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
+	TokenKind     TokenKind      `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=TokenKind" json:"token_kind,omitempty"`
+	// ERC721 token ID, or amount of ERC20/ETH
+	Value *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
 }
 
-func (m *TransferGatewayTokenDeposit) GetEthBlock() uint64 {
-	if m != nil {
-		return m.EthBlock
-	}
-	return 0
-}
-
-// Non-Fungible Token Deposit (ERC721) made into the Gateway on Ethereum mainnet
-type TransferGatewayNFTDeposit struct {
-	// Token contract address
-	Token    *types.Address `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
-	From     *types.Address `protobuf:"bytes,2,opt,name=from" json:"from,omitempty"`
-	Uid      *types.BigUInt `protobuf:"bytes,3,opt,name=uid" json:"uid,omitempty"`
-	EthBlock uint64         `protobuf:"varint,4,opt,name=eth_block,json=ethBlock,proto3" json:"eth_block,omitempty"`
-}
-
-func (m *TransferGatewayNFTDeposit) Reset()         { *m = TransferGatewayNFTDeposit{} }
-func (m *TransferGatewayNFTDeposit) String() string { return proto.CompactTextString(m) }
-func (*TransferGatewayNFTDeposit) ProtoMessage()    {}
-func (*TransferGatewayNFTDeposit) Descriptor() ([]byte, []int) {
+func (m *TransferGatewayTokenWithdrawn) Reset()         { *m = TransferGatewayTokenWithdrawn{} }
+func (m *TransferGatewayTokenWithdrawn) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayTokenWithdrawn) ProtoMessage()    {}
+func (*TransferGatewayTokenWithdrawn) Descriptor() ([]byte, []int) {
 	return fileDescriptorTransferGateway, []int{4}
 }
 
-func (m *TransferGatewayNFTDeposit) GetToken() *types.Address {
+func (m *TransferGatewayTokenWithdrawn) GetTokenOwner() *types.Address {
 	if m != nil {
-		return m.Token
+		return m.TokenOwner
 	}
 	return nil
 }
 
-func (m *TransferGatewayNFTDeposit) GetFrom() *types.Address {
+func (m *TransferGatewayTokenWithdrawn) GetTokenContract() *types.Address {
 	if m != nil {
-		return m.From
+		return m.TokenContract
 	}
 	return nil
 }
 
-func (m *TransferGatewayNFTDeposit) GetUid() *types.BigUInt {
+func (m *TransferGatewayTokenWithdrawn) GetTokenKind() TokenKind {
 	if m != nil {
-		return m.Uid
+		return m.TokenKind
+	}
+	return TokenKind_ETH
+}
+
+func (m *TransferGatewayTokenWithdrawn) GetValue() *types.BigUInt {
+	if m != nil {
+		return m.Value
 	}
 	return nil
 }
 
-func (m *TransferGatewayNFTDeposit) GetEthBlock() uint64 {
+type TransferGatewayMainnetEvent struct {
+	EthBlock uint64 `protobuf:"varint,1,opt,name=eth_block,json=ethBlock,proto3" json:"eth_block,omitempty"`
+	// Types that are valid to be assigned to Payload:
+	//	*TransferGatewayMainnetEvent_Deposit
+	//	*TransferGatewayMainnetEvent_Withdrawal
+	Payload isTransferGatewayMainnetEvent_Payload `protobuf_oneof:"payload"`
+}
+
+func (m *TransferGatewayMainnetEvent) Reset()         { *m = TransferGatewayMainnetEvent{} }
+func (m *TransferGatewayMainnetEvent) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayMainnetEvent) ProtoMessage()    {}
+func (*TransferGatewayMainnetEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{5}
+}
+
+type isTransferGatewayMainnetEvent_Payload interface {
+	isTransferGatewayMainnetEvent_Payload()
+}
+
+type TransferGatewayMainnetEvent_Deposit struct {
+	Deposit *TransferGatewayTokenDeposited `protobuf:"bytes,2,opt,name=deposit,oneof"`
+}
+type TransferGatewayMainnetEvent_Withdrawal struct {
+	Withdrawal *TransferGatewayTokenWithdrawn `protobuf:"bytes,3,opt,name=withdrawal,oneof"`
+}
+
+func (*TransferGatewayMainnetEvent_Deposit) isTransferGatewayMainnetEvent_Payload()    {}
+func (*TransferGatewayMainnetEvent_Withdrawal) isTransferGatewayMainnetEvent_Payload() {}
+
+func (m *TransferGatewayMainnetEvent) GetPayload() isTransferGatewayMainnetEvent_Payload {
+	if m != nil {
+		return m.Payload
+	}
+	return nil
+}
+
+func (m *TransferGatewayMainnetEvent) GetEthBlock() uint64 {
 	if m != nil {
 		return m.EthBlock
 	}
 	return 0
+}
+
+func (m *TransferGatewayMainnetEvent) GetDeposit() *TransferGatewayTokenDeposited {
+	if x, ok := m.GetPayload().(*TransferGatewayMainnetEvent_Deposit); ok {
+		return x.Deposit
+	}
+	return nil
+}
+
+func (m *TransferGatewayMainnetEvent) GetWithdrawal() *TransferGatewayTokenWithdrawn {
+	if x, ok := m.GetPayload().(*TransferGatewayMainnetEvent_Withdrawal); ok {
+		return x.Withdrawal
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*TransferGatewayMainnetEvent) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _TransferGatewayMainnetEvent_OneofMarshaler, _TransferGatewayMainnetEvent_OneofUnmarshaler, _TransferGatewayMainnetEvent_OneofSizer, []interface{}{
+		(*TransferGatewayMainnetEvent_Deposit)(nil),
+		(*TransferGatewayMainnetEvent_Withdrawal)(nil),
+	}
+}
+
+func _TransferGatewayMainnetEvent_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*TransferGatewayMainnetEvent)
+	// payload
+	switch x := m.Payload.(type) {
+	case *TransferGatewayMainnetEvent_Deposit:
+		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Deposit); err != nil {
+			return err
+		}
+	case *TransferGatewayMainnetEvent_Withdrawal:
+		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Withdrawal); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("TransferGatewayMainnetEvent.Payload has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _TransferGatewayMainnetEvent_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*TransferGatewayMainnetEvent)
+	switch tag {
+	case 2: // payload.deposit
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransferGatewayTokenDeposited)
+		err := b.DecodeMessage(msg)
+		m.Payload = &TransferGatewayMainnetEvent_Deposit{msg}
+		return true, err
+	case 3: // payload.withdrawal
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransferGatewayTokenWithdrawn)
+		err := b.DecodeMessage(msg)
+		m.Payload = &TransferGatewayMainnetEvent_Withdrawal{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _TransferGatewayMainnetEvent_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*TransferGatewayMainnetEvent)
+	// payload
+	switch x := m.Payload.(type) {
+	case *TransferGatewayMainnetEvent_Deposit:
+		s := proto.Size(x.Deposit)
+		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *TransferGatewayMainnetEvent_Withdrawal:
+		s := proto.Size(x.Withdrawal)
+		n += proto.SizeVarint(3<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
 }
 
 type TransferGatewayInitRequest struct {
@@ -226,7 +376,7 @@ func (m *TransferGatewayInitRequest) Reset()         { *m = TransferGatewayInitR
 func (m *TransferGatewayInitRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayInitRequest) ProtoMessage()    {}
 func (*TransferGatewayInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{5}
+	return fileDescriptorTransferGateway, []int{6}
 }
 
 func (m *TransferGatewayInitRequest) GetOracles() []*types.Address {
@@ -238,8 +388,7 @@ func (m *TransferGatewayInitRequest) GetOracles() []*types.Address {
 
 // Batch of events from the Gateway on Ethereum mainnet
 type TransferGatewayProcessEventBatchRequest struct {
-	FtDeposits  []*TransferGatewayTokenDeposit `protobuf:"bytes,1,rep,name=ft_deposits,json=ftDeposits" json:"ft_deposits,omitempty"`
-	NftDeposits []*TransferGatewayNFTDeposit   `protobuf:"bytes,2,rep,name=nft_deposits,json=nftDeposits" json:"nft_deposits,omitempty"`
+	Events []*TransferGatewayMainnetEvent `protobuf:"bytes,1,rep,name=events" json:"events,omitempty"`
 }
 
 func (m *TransferGatewayProcessEventBatchRequest) Reset() {
@@ -248,19 +397,12 @@ func (m *TransferGatewayProcessEventBatchRequest) Reset() {
 func (m *TransferGatewayProcessEventBatchRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayProcessEventBatchRequest) ProtoMessage()    {}
 func (*TransferGatewayProcessEventBatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{6}
+	return fileDescriptorTransferGateway, []int{7}
 }
 
-func (m *TransferGatewayProcessEventBatchRequest) GetFtDeposits() []*TransferGatewayTokenDeposit {
+func (m *TransferGatewayProcessEventBatchRequest) GetEvents() []*TransferGatewayMainnetEvent {
 	if m != nil {
-		return m.FtDeposits
-	}
-	return nil
-}
-
-func (m *TransferGatewayProcessEventBatchRequest) GetNftDeposits() []*TransferGatewayNFTDeposit {
-	if m != nil {
-		return m.NftDeposits
+		return m.Events
 	}
 	return nil
 }
@@ -272,7 +414,7 @@ func (m *TransferGatewayStateRequest) Reset()         { *m = TransferGatewayStat
 func (m *TransferGatewayStateRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateRequest) ProtoMessage()    {}
 func (*TransferGatewayStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{7}
+	return fileDescriptorTransferGateway, []int{8}
 }
 
 type TransferGatewayStateResponse struct {
@@ -283,7 +425,7 @@ func (m *TransferGatewayStateResponse) Reset()         { *m = TransferGatewaySta
 func (m *TransferGatewayStateResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateResponse) ProtoMessage()    {}
 func (*TransferGatewayStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{8}
+	return fileDescriptorTransferGateway, []int{9}
 }
 
 func (m *TransferGatewayStateResponse) GetState() *TransferGatewayState {
@@ -304,7 +446,7 @@ func (m *TransferGatewayWithdrawERC721Request) Reset()         { *m = TransferGa
 func (m *TransferGatewayWithdrawERC721Request) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawERC721Request) ProtoMessage()    {}
 func (*TransferGatewayWithdrawERC721Request) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{9}
+	return fileDescriptorTransferGateway, []int{10}
 }
 
 func (m *TransferGatewayWithdrawERC721Request) GetTokenId() *types.BigUInt {
@@ -331,7 +473,7 @@ func (m *TransferGatewayWithdrawalReceiptRequest) Reset() {
 func (m *TransferGatewayWithdrawalReceiptRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{10}
+	return fileDescriptorTransferGateway, []int{11}
 }
 
 func (m *TransferGatewayWithdrawalReceiptRequest) GetOwner() *types.Address {
@@ -351,7 +493,7 @@ func (m *TransferGatewayWithdrawalReceiptResponse) Reset() {
 func (m *TransferGatewayWithdrawalReceiptResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptResponse) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{11}
+	return fileDescriptorTransferGateway, []int{12}
 }
 
 func (m *TransferGatewayWithdrawalReceiptResponse) GetReceipt() *TransferGatewayWithdrawalReceipt {
@@ -365,8 +507,9 @@ func init() {
 	proto.RegisterType((*TransferGatewayState)(nil), "TransferGatewayState")
 	proto.RegisterType((*TransferGatewayWithdrawalReceipt)(nil), "TransferGatewayWithdrawalReceipt")
 	proto.RegisterType((*TransferGatewayAccount)(nil), "TransferGatewayAccount")
-	proto.RegisterType((*TransferGatewayTokenDeposit)(nil), "TransferGatewayTokenDeposit")
-	proto.RegisterType((*TransferGatewayNFTDeposit)(nil), "TransferGatewayNFTDeposit")
+	proto.RegisterType((*TransferGatewayTokenDeposited)(nil), "TransferGatewayTokenDeposited")
+	proto.RegisterType((*TransferGatewayTokenWithdrawn)(nil), "TransferGatewayTokenWithdrawn")
+	proto.RegisterType((*TransferGatewayMainnetEvent)(nil), "TransferGatewayMainnetEvent")
 	proto.RegisterType((*TransferGatewayInitRequest)(nil), "TransferGatewayInitRequest")
 	proto.RegisterType((*TransferGatewayProcessEventBatchRequest)(nil), "TransferGatewayProcessEventBatchRequest")
 	proto.RegisterType((*TransferGatewayStateRequest)(nil), "TransferGatewayStateRequest")
@@ -374,6 +517,7 @@ func init() {
 	proto.RegisterType((*TransferGatewayWithdrawERC721Request)(nil), "TransferGatewayWithdrawERC721Request")
 	proto.RegisterType((*TransferGatewayWithdrawalReceiptRequest)(nil), "TransferGatewayWithdrawalReceiptRequest")
 	proto.RegisterType((*TransferGatewayWithdrawalReceiptResponse)(nil), "TransferGatewayWithdrawalReceiptResponse")
+	proto.RegisterEnum("TokenKind", TokenKind_name, TokenKind_value)
 }
 
 func init() {
@@ -381,43 +525,46 @@ func init() {
 }
 
 var fileDescriptorTransferGateway = []byte{
-	// 595 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xdd, 0x6e, 0xd3, 0x4c,
-	0x10, 0x95, 0x53, 0xf7, 0x6f, 0xda, 0xaf, 0x1f, 0xac, 0x00, 0x99, 0x34, 0xa0, 0x60, 0x2a, 0x51,
-	0x84, 0xb0, 0xa1, 0x5c, 0x70, 0x01, 0x95, 0x68, 0x4b, 0x41, 0x11, 0x52, 0x55, 0x99, 0x20, 0x2e,
-	0xad, 0x8d, 0xbd, 0xb1, 0xad, 0x3a, 0xbb, 0x61, 0x77, 0x8c, 0x55, 0x89, 0xa7, 0xe0, 0x25, 0x78,
-	0x01, 0x78, 0x3f, 0xe4, 0xb5, 0xdd, 0xa4, 0x76, 0x4b, 0xb8, 0xe0, 0x26, 0xb2, 0xcf, 0x99, 0x39,
-	0x39, 0x3b, 0x67, 0xc7, 0x30, 0x8c, 0x12, 0x8c, 0xb3, 0x91, 0x13, 0x88, 0x89, 0x9b, 0x0a, 0x31,
-	0xe1, 0x0c, 0x73, 0x21, 0xcf, 0xdc, 0x48, 0x3c, 0x2d, 0x5e, 0xdd, 0x51, 0x96, 0xa4, 0x98, 0x70,
-	0x17, 0xcf, 0xa7, 0x4c, 0xb9, 0x28, 0x29, 0x57, 0x63, 0x26, 0xfd, 0x88, 0x22, 0xcb, 0xe9, 0x79,
-	0x0b, 0x70, 0xa6, 0x52, 0xa0, 0xe8, 0x3e, 0x5b, 0xa0, 0x5a, 0xa9, 0x15, 0xbf, 0x65, 0x87, 0xfd,
-	0x1a, 0x6e, 0x0d, 0x2b, 0xad, 0xf7, 0xa5, 0xd4, 0x47, 0xa4, 0xc8, 0xc8, 0x0e, 0x6c, 0xa5, 0x54,
-	0xa1, 0xcf, 0x30, 0xf6, 0x47, 0xa9, 0x08, 0xce, 0x2c, 0xa3, 0x6f, 0xec, 0x9a, 0xde, 0x66, 0x81,
-	0x1e, 0x63, 0x7c, 0x58, 0x60, 0xf6, 0x10, 0xfa, 0x8d, 0xee, 0xcf, 0x09, 0xc6, 0xa1, 0xa4, 0x39,
-	0x4d, 0x3d, 0x16, 0xb0, 0x64, 0x8a, 0x84, 0x80, 0x19, 0x53, 0x15, 0xeb, 0xfe, 0x4d, 0x4f, 0x3f,
-	0x93, 0x1e, 0xac, 0xab, 0x24, 0xe2, 0x14, 0x33, 0xc9, 0xac, 0x8e, 0x26, 0x66, 0x80, 0xfd, 0xcb,
-	0x80, 0x3b, 0x0d, 0xd9, 0x83, 0x20, 0x10, 0x19, 0x47, 0x72, 0x1f, 0x96, 0x45, 0xce, 0x99, 0xd4,
-	0x6a, 0x1b, 0x7b, 0x6b, 0xce, 0x41, 0x18, 0x4a, 0xa6, 0x94, 0x57, 0xc2, 0xe4, 0x31, 0xdc, 0xc8,
-	0x2f, 0x1c, 0xf8, 0x5c, 0xf0, 0xa0, 0xd4, 0x37, 0xbd, 0xff, 0x67, 0xf8, 0x49, 0x01, 0x93, 0x53,
-	0x20, 0x73, 0xa5, 0xb2, 0x74, 0x6b, 0x2d, 0x69, 0xdd, 0x07, 0xce, 0xa2, 0x63, 0x79, 0x37, 0xf3,
-	0x26, 0x64, 0xff, 0x34, 0x60, 0xbb, 0xd1, 0x37, 0x14, 0x67, 0x8c, 0xbf, 0x65, 0x53, 0xa1, 0x12,
-	0x6d, 0x1e, 0x8b, 0xf7, 0xb6, 0x79, 0x0d, 0x93, 0x1e, 0x98, 0x63, 0x29, 0x26, 0xda, 0xf0, 0x3c,
-	0xad, 0x51, 0x62, 0x41, 0x07, 0x45, 0xe5, 0x6f, 0xc6, 0x75, 0x50, 0x90, 0x3e, 0xac, 0xd0, 0x49,
-	0x31, 0x1e, 0xcb, 0xac, 0xd8, 0xc3, 0x24, 0xfa, 0x34, 0xe0, 0xe8, 0x55, 0x38, 0xd9, 0x86, 0xf5,
-	0x59, 0x90, 0xcb, 0x7a, 0x1e, 0x6b, 0xac, 0x0e, 0xf1, 0xbb, 0x01, 0x77, 0x1b, 0xb6, 0x4f, 0xde,
-	0x0d, 0xff, 0x8d, 0xe9, 0x2e, 0x2c, 0x65, 0x49, 0x78, 0xe1, 0xba, 0xf6, 0x55, 0x80, 0x97, 0x4d,
-	0x99, 0x0d, 0x53, 0x6f, 0xa0, 0xdb, 0xf0, 0x34, 0xe0, 0x09, 0x7a, 0xec, 0x4b, 0xc6, 0x14, 0x12,
-	0x1b, 0x56, 0x85, 0xa4, 0x41, 0xca, 0x94, 0x65, 0xf4, 0x97, 0x2e, 0xfd, 0x6f, 0x4d, 0xd8, 0x3f,
-	0x0c, 0x78, 0xd4, 0x90, 0x38, 0x95, 0x22, 0x60, 0x4a, 0x1d, 0x7f, 0x65, 0x1c, 0x0f, 0x29, 0x06,
-	0x71, 0xad, 0xb7, 0x0f, 0x1b, 0x63, 0xf4, 0xc3, 0xf2, 0xc8, 0xb5, 0x66, 0xcf, 0xf9, 0x43, 0x98,
-	0x1e, 0x8c, 0xb1, 0x7a, 0x54, 0x64, 0x1f, 0x36, 0xf9, 0x7c, 0x7f, 0x47, 0xf7, 0x77, 0x9d, 0x6b,
-	0xa7, 0xea, 0x6d, 0xf0, 0x59, 0xbb, 0x7d, 0xaf, 0x75, 0x6d, 0xf4, 0x0e, 0x56, 0xe6, 0xec, 0x0f,
-	0xd0, 0xbb, 0x9a, 0x56, 0x53, 0xc1, 0x15, 0x23, 0x4f, 0x60, 0x59, 0x15, 0x40, 0x95, 0xd0, 0x6d,
-	0xe7, 0xca, 0xea, 0xb2, 0xc6, 0xfe, 0x06, 0x3b, 0xd7, 0x5c, 0xed, 0x63, 0xef, 0xe8, 0xe5, 0xde,
-	0xf3, 0x7a, 0x22, 0x0f, 0x61, 0x4d, 0xe7, 0xeb, 0x27, 0xe1, 0x45, 0xf2, 0x75, 0x7a, 0xab, 0x9a,
-	0x19, 0x84, 0xc4, 0x85, 0xad, 0xb2, 0x28, 0x10, 0x1c, 0x25, 0x0d, 0xb0, 0x75, 0x0b, 0xfe, 0xd3,
-	0xfc, 0x51, 0x45, 0xdb, 0x83, 0x56, 0x24, 0xed, 0xc5, 0xaa, 0x0c, 0x2c, 0xd8, 0x74, 0x3b, 0x82,
-	0xdd, 0xc5, 0x52, 0xd5, 0x84, 0x5e, 0xc1, 0x6a, 0xbd, 0xdf, 0xc6, 0xdf, 0xee, 0x77, 0xdd, 0x31,
-	0x5a, 0xd1, 0x1f, 0xca, 0x17, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0x1b, 0xbe, 0x91, 0x47, 0xb2,
-	0x05, 0x00, 0x00,
+	// 648 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x55, 0xdd, 0x6e, 0xd3, 0x4c,
+	0x10, 0xad, 0xdb, 0xb4, 0x69, 0xa6, 0xfd, 0xfa, 0x85, 0x15, 0xa0, 0xa8, 0x7f, 0x2a, 0xa6, 0x12,
+	0x2d, 0x15, 0x4e, 0x09, 0x48, 0x48, 0xc0, 0x45, 0x9b, 0x12, 0xd1, 0xa8, 0x02, 0xaa, 0x25, 0x88,
+	0x4b, 0x6b, 0x63, 0x2f, 0xf1, 0x2a, 0xee, 0x6e, 0xf0, 0x4e, 0x6a, 0x55, 0xe2, 0xb5, 0x78, 0x02,
+	0x24, 0x9e, 0x0b, 0x79, 0x6d, 0xa7, 0xc1, 0x49, 0x1b, 0xb8, 0xe4, 0xa6, 0x72, 0xcf, 0xcc, 0x39,
+	0x9a, 0x39, 0x3e, 0x9e, 0x40, 0xa7, 0x27, 0x30, 0x18, 0x76, 0x1d, 0x4f, 0x5d, 0xd4, 0x43, 0xa5,
+	0x2e, 0x24, 0xc7, 0x58, 0x45, 0xfd, 0x7a, 0x4f, 0x3d, 0x49, 0xfe, 0xad, 0x77, 0x87, 0x22, 0x44,
+	0x21, 0xeb, 0x78, 0x35, 0xe0, 0xba, 0x8e, 0x11, 0x93, 0xfa, 0x0b, 0x8f, 0xdc, 0x1e, 0x43, 0x1e,
+	0xb3, 0xab, 0x09, 0xc0, 0x19, 0x44, 0x0a, 0xd5, 0xfa, 0xe1, 0x0c, 0xd5, 0x4c, 0x2d, 0xf9, 0x9b,
+	0x32, 0xec, 0xd7, 0x70, 0xb7, 0x93, 0x69, 0xbd, 0x4d, 0xa5, 0x3e, 0x22, 0x43, 0x4e, 0x76, 0x61,
+	0x2d, 0x64, 0x1a, 0x5d, 0x8e, 0x81, 0xdb, 0x0d, 0x95, 0xd7, 0xaf, 0x59, 0x3b, 0xd6, 0x5e, 0x89,
+	0xae, 0x26, 0x68, 0x0b, 0x83, 0x66, 0x82, 0xd9, 0x1d, 0xd8, 0x29, 0xb0, 0x3f, 0x0b, 0x0c, 0xfc,
+	0x88, 0xc5, 0x2c, 0xa4, 0xdc, 0xe3, 0x62, 0x80, 0x84, 0x40, 0x29, 0x60, 0x3a, 0x30, 0xfc, 0x55,
+	0x6a, 0x9e, 0xc9, 0x26, 0x54, 0xb4, 0xe8, 0x49, 0x86, 0xc3, 0x88, 0xd7, 0xe6, 0x4d, 0xe1, 0x1a,
+	0xb0, 0xbf, 0x5b, 0x70, 0xbf, 0x20, 0x7b, 0xec, 0x79, 0x6a, 0x28, 0x91, 0x6c, 0xc3, 0xa2, 0x8a,
+	0x25, 0x8f, 0x8c, 0xda, 0x4a, 0x63, 0xd9, 0x39, 0xf6, 0xfd, 0x88, 0x6b, 0x4d, 0x53, 0x98, 0xec,
+	0x43, 0x35, 0x1e, 0x4d, 0xe0, 0x4a, 0x25, 0xbd, 0x54, 0xbf, 0x44, 0xff, 0xbf, 0xc6, 0xdf, 0x27,
+	0x30, 0x39, 0x07, 0x32, 0xd6, 0x1a, 0xa5, 0xd3, 0xd6, 0x16, 0x8c, 0xee, 0x03, 0x67, 0xd6, 0x5a,
+	0xf4, 0x4e, 0x5c, 0x84, 0xec, 0x9f, 0x16, 0x6c, 0x15, 0x78, 0x1d, 0xd5, 0xe7, 0xf2, 0x0d, 0x1f,
+	0x28, 0x2d, 0x90, 0xfb, 0x64, 0x1f, 0x56, 0x30, 0x41, 0xdc, 0xe9, 0x4b, 0x80, 0x29, 0x7e, 0x30,
+	0x9b, 0xd4, 0x61, 0x2d, 0x6d, 0xf5, 0x94, 0xc4, 0x88, 0x79, 0x68, 0xf6, 0x18, 0xef, 0xfe, 0xcf,
+	0xd4, 0x4f, 0xb2, 0x32, 0xd9, 0x87, 0x94, 0xee, 0xf6, 0x85, 0xf4, 0xcd, 0x1e, 0x6b, 0x0d, 0x70,
+	0xcc, 0x00, 0x67, 0x42, 0xfa, 0xb4, 0x82, 0xf9, 0x63, 0xe2, 0xe2, 0x25, 0x0b, 0x87, 0xbc, 0x56,
+	0xca, 0x24, 0x9b, 0xa2, 0xf7, 0xa9, 0x2d, 0x91, 0xa6, 0xf0, 0x8d, 0x8b, 0xe4, 0x2e, 0xc8, 0x7f,
+	0x65, 0x91, 0x1f, 0x16, 0x6c, 0x14, 0x16, 0x79, 0xc7, 0x84, 0x94, 0x1c, 0x5b, 0x97, 0x5c, 0x22,
+	0xd9, 0x80, 0x4a, 0x31, 0xe0, 0xcb, 0x3c, 0x0b, 0x37, 0x79, 0x09, 0x65, 0x3f, 0x7d, 0x73, 0xd9,
+	0xc4, 0xdb, 0xce, 0xad, 0x6f, 0xf7, 0x74, 0x8e, 0xe6, 0x04, 0x72, 0x04, 0x70, 0x9d, 0x8f, 0x2c,
+	0x54, 0xd3, 0xe9, 0x23, 0x4f, 0x4f, 0xe7, 0xe8, 0x18, 0xa7, 0x59, 0x81, 0xf2, 0x80, 0x5d, 0x85,
+	0x8a, 0xf9, 0xf6, 0x11, 0xac, 0x17, 0x98, 0x6d, 0x29, 0x90, 0xf2, 0xaf, 0x43, 0xae, 0x91, 0xd8,
+	0x50, 0x56, 0x11, 0xf3, 0x42, 0xae, 0x6b, 0xd6, 0xce, 0xc2, 0x6f, 0xc6, 0xe6, 0x05, 0xdb, 0x85,
+	0x47, 0x05, 0x85, 0xf3, 0x48, 0x79, 0x5c, 0x6b, 0x63, 0x43, 0x93, 0xa1, 0x17, 0xe4, 0x72, 0xcf,
+	0x61, 0x89, 0x27, 0x60, 0xae, 0xb6, 0xe9, 0xdc, 0x62, 0x20, 0xcd, 0x7a, 0xed, 0xad, 0x09, 0x9f,
+	0xcd, 0x19, 0xc9, 0x44, 0xed, 0x33, 0xd8, 0x9c, 0x5e, 0xd6, 0x03, 0x25, 0x35, 0x27, 0x07, 0xb0,
+	0xa8, 0x13, 0x20, 0x0b, 0xd2, 0x3d, 0x67, 0x6a, 0x77, 0xda, 0x63, 0x7f, 0x83, 0xdd, 0x1b, 0xbe,
+	0xce, 0x16, 0x3d, 0x79, 0xd1, 0x78, 0x9a, 0x6f, 0xf2, 0x10, 0x96, 0xd3, 0x1c, 0x09, 0x7f, 0x14,
+	0xd0, 0x3c, 0x1f, 0x65, 0x53, 0x69, 0xfb, 0x7f, 0x9d, 0x4e, 0xbb, 0x3d, 0x61, 0xe5, 0xe4, 0x6d,
+	0xc8, 0x06, 0x98, 0x71, 0xac, 0xec, 0x1e, 0xec, 0xcd, 0x96, 0xca, 0x1c, 0x7a, 0x05, 0xe5, 0xfc,
+	0x44, 0x59, 0x7f, 0x7a, 0xa2, 0x72, 0xc6, 0xe3, 0x03, 0xa8, 0x8c, 0x3e, 0x1f, 0x52, 0x86, 0x85,
+	0x56, 0xe7, 0xb4, 0x3a, 0x47, 0x2a, 0xb0, 0xd8, 0xa2, 0x27, 0x8d, 0xc3, 0xaa, 0x45, 0x00, 0x96,
+	0x52, 0xef, 0xaa, 0xf3, 0xdd, 0x25, 0xf3, 0xc3, 0xf0, 0xec, 0x57, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0xef, 0x3c, 0x59, 0x5b, 0xa2, 0x06, 0x00, 0x00,
 }

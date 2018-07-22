@@ -18,25 +18,41 @@ message TransferGatewayAccount {
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
 }
 
-// Fungible Token Deposit (ETH or ERC20) made into the Gateway on Ethereum mainnet
-message TransferGatewayTokenDeposit {
-    // Token contract address, blank if ETH 
-    Address token = 1;
-    // Ethereum mainnet address of entity that made the deposit
-    Address from = 2;
-    // DAppChain address of entity that should receive the deposit
-    Address to = 3;
-    BigUInt amount = 4;
-    uint64 eth_block = 5;
+enum TokenKind {
+    ETH = 0;
+    ERC20 = 1;
+    ERC721 = 2;
 }
 
-// Non-Fungible Token Deposit (ERC721) made into the Gateway on Ethereum mainnet
-message TransferGatewayNFTDeposit {
-    // Token contract address
-    Address token = 1;
-    Address from = 2;
-    BigUInt uid = 3;
-    uint64 eth_block = 4;
+// Token Deposit (ETH/ERC20/ERC721) made into the Mainnet Gateway
+message TransferGatewayTokenDeposited {
+    // Mainnet address of token owner
+    Address token_owner = 1;
+    // Mainnet address of token contract, blank if ETH was deposited
+    Address token_contract = 2;
+    TokenKind token_kind = 3;
+    // ERC721 token ID, or amount of ERC20/ETH
+    BigUInt value = 4;
+}
+
+
+// Withdrawal from Mainnet Transfer Gateway
+message TransferGatewayTokenWithdrawn {
+    // Mainnet address of token owner
+    Address token_owner = 1;
+    // Mainnet address of token contract, blank if ETH was withdrawn
+    Address token_contract = 2;
+    TokenKind token_kind = 3;
+    // ERC721 token ID, or amount of ERC20/ETH
+    BigUInt value = 4;
+}
+
+message TransferGatewayMainnetEvent {
+    uint64 eth_block = 1;
+    oneof payload {
+        TransferGatewayTokenDeposited deposit = 2;
+        TransferGatewayTokenWithdrawn withdrawal = 3;
+    }
 }
 
 // Genesis
@@ -51,8 +67,7 @@ message TransferGatewayInitRequest {
 
 // Batch of events from the Gateway on Ethereum mainnet
 message TransferGatewayProcessEventBatchRequest {
-    repeated TransferGatewayTokenDeposit ft_deposits = 1;
-    repeated TransferGatewayNFTDeposit nft_deposits = 2;
+    repeated TransferGatewayMainnetEvent events = 1;
 }
 
 message TransferGatewayStateRequest {
