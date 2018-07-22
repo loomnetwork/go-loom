@@ -18,7 +18,7 @@ message TransferGatewayAccount {
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
 }
 
-enum TokenKind {
+enum TransferGatewayTokenKind {
     ETH = 0;
     ERC20 = 1;
     ERC721 = 2;
@@ -30,7 +30,7 @@ message TransferGatewayTokenDeposited {
     Address token_owner = 1;
     // Mainnet address of token contract, blank if ETH was deposited
     Address token_contract = 2;
-    TokenKind token_kind = 3;
+    TransferGatewayTokenKind token_kind = 3;
     // ERC721 token ID, or amount of ERC20/ETH
     BigUInt value = 4;
 }
@@ -42,7 +42,7 @@ message TransferGatewayTokenWithdrawn {
     Address token_owner = 1;
     // Mainnet address of token contract, blank if ETH was withdrawn
     Address token_contract = 2;
-    TokenKind token_kind = 3;
+    TransferGatewayTokenKind token_kind = 3;
     // ERC721 token ID, or amount of ERC20/ETH
     BigUInt value = 4;
 }
