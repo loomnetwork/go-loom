@@ -45,6 +45,19 @@ func (c *GRPCAPIClient) Get(key []byte) []byte {
 	return resp.Value
 }
 
+func (c *GRPCAPIClient) Range(prefix []byte) RangeData {
+	ret := make(RangeData, 0)
+	resp, _ := c.client.Range(context.TODO(), &types.RangeRequest{Prefix: prefix})
+	for _, x := range resp.RangeEntries {
+		r := &RangeEntry{
+			Key:   x.Key,
+			Value: x.Value,
+		}
+		ret = append(ret, r)
+	}
+	return ret
+}
+
 func (c *GRPCAPIClient) Has(key []byte) bool {
 	resp, _ := c.client.Has(context.TODO(), &types.HasRequest{Key: key})
 	return resp.Value
