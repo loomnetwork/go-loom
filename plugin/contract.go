@@ -47,10 +47,20 @@ type API interface {
 	VolatileAPI
 }
 
+// RangeEntry a single entry in a range
+type RangeEntry struct {
+	Key   []byte
+	Value []byte
+}
+
+// RangeData an array of key value pairs for a range of data
+type RangeData []*RangeEntry
+
 type StaticContext interface {
 	StaticAPI
 	Get(key []byte) []byte
 	Has(key []byte) bool
+	Range(prefix []byte) RangeData
 	Block() loom.BlockHeader
 	Now() time.Time
 	Message() Message

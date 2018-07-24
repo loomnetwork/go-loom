@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"strings"
 	"time"
 
 	"golang.org/x/crypto/sha3"
@@ -196,6 +197,23 @@ func (c *FakeContext) Emit(event []byte) {
 
 func (c *FakeContext) makeKey(key []byte) string {
 	return string(util.PrefixKey(c.address.Bytes(), key))
+}
+
+func (c *FakeContext) Range(prefix []byte) RangeData {
+	ret := make(RangeData, 0)
+
+	for key, value := range c.data {
+		if strings.HasPrefix(key, string(prefix)) == true {
+			r := &RangeEntry{
+				Key:   []byte(key),
+				Value: value,
+			}
+
+			ret = append(ret, r)
+		}
+	}
+
+	return ret
 }
 
 func (c *FakeContext) Get(key []byte) []byte {

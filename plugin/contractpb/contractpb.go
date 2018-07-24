@@ -21,6 +21,7 @@ var (
 type StaticContext interface {
 	plugin.StaticAPI
 	Get(key []byte, pb proto.Message) error
+	Range(prefix []byte) plugin.RangeData
 	Has(key []byte) bool
 	Block() loom.BlockHeader
 	Now() time.Time
@@ -62,6 +63,11 @@ func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 	}
 
 	return proto.Unmarshal(data, pb)
+}
+
+func (c *wrappedPluginStaticContext) Range(prefix []byte) plugin.RangeData {
+	//TODO should we auto unprotobuf each entry like Get method does?
+	return c.StaticContext.Range(prefix)
 }
 
 type wrappedPluginContext struct {
