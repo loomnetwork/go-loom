@@ -8,14 +8,23 @@ It is generated from these files:
 	github.com/loomnetwork/go-loom/builtin/types/transfer_gateway/transfer_gateway.proto
 
 It has these top-level messages:
-	GatewayState
-	TokenDeposit
-	NFTDeposit
-	GatewayTokenMapping
-	GatewayInitRequest
-	ProcessEventBatchRequest
-	GatewayStateRequest
-	GatewayStateResponse
+	TransferGatewayState
+	TransferGatewayWithdrawalReceipt
+	TransferGatewayPendingWithdrawalSummary
+	TransferGatewayAccount
+	TransferGatewayTokenDeposited
+	TransferGatewayTokenWithdrawn
+	TransferGatewayMainnetEvent
+	TransferGatewayInitRequest
+	TransferGatewayProcessEventBatchRequest
+	TransferGatewayStateRequest
+	TransferGatewayStateResponse
+	TransferGatewayWithdrawERC721Request
+	TransferGatewayWithdrawalReceiptRequest
+	TransferGatewayWithdrawalReceiptResponse
+	TransferGatewayConfirmWithdrawalReceiptRequest
+	TransferGatewayPendingWithdrawalsRequest
+	TransferGatewayPendingWithdrawalsResponse
 */
 package transfer_gateway
 
@@ -35,246 +44,630 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-type GatewayState struct {
-	LastEthBlock uint64 `protobuf:"varint,1,opt,name=last_eth_block,json=lastEthBlock,proto3" json:"last_eth_block,omitempty"`
+type TransferGatewayTokenKind int32
+
+const (
+	TransferGatewayTokenKind_ETH    TransferGatewayTokenKind = 0
+	TransferGatewayTokenKind_ERC20  TransferGatewayTokenKind = 1
+	TransferGatewayTokenKind_ERC721 TransferGatewayTokenKind = 2
+)
+
+var TransferGatewayTokenKind_name = map[int32]string{
+	0: "ETH",
+	1: "ERC20",
+	2: "ERC721",
+}
+var TransferGatewayTokenKind_value = map[string]int32{
+	"ETH":    0,
+	"ERC20":  1,
+	"ERC721": 2,
 }
 
-func (m *GatewayState) Reset()                    { *m = GatewayState{} }
-func (m *GatewayState) String() string            { return proto.CompactTextString(m) }
-func (*GatewayState) ProtoMessage()               {}
-func (*GatewayState) Descriptor() ([]byte, []int) { return fileDescriptorTransferGateway, []int{0} }
+func (x TransferGatewayTokenKind) String() string {
+	return proto.EnumName(TransferGatewayTokenKind_name, int32(x))
+}
+func (TransferGatewayTokenKind) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{0}
+}
 
-func (m *GatewayState) GetLastEthBlock() uint64 {
+type TransferGatewayState struct {
+	// Last Mainnet block processed by the Transfer Gateway contract
+	LastEthBlock uint64 `protobuf:"varint,1,opt,name=last_eth_block,json=lastEthBlock,proto3" json:"last_eth_block,omitempty"`
+	// Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
+	TokenWithdrawers []*types.Address `protobuf:"bytes,2,rep,name=token_withdrawers,json=tokenWithdrawers" json:"token_withdrawers,omitempty"`
+}
+
+func (m *TransferGatewayState) Reset()         { *m = TransferGatewayState{} }
+func (m *TransferGatewayState) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayState) ProtoMessage()    {}
+func (*TransferGatewayState) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{0}
+}
+
+func (m *TransferGatewayState) GetLastEthBlock() uint64 {
 	if m != nil {
 		return m.LastEthBlock
 	}
 	return 0
 }
 
-// Fungible Token Deposit (ETH or ERC20) made into the Gateway on Ethereum mainnet
-type TokenDeposit struct {
-	// Token contract address, blank if ETH
-	Token *types.Address `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
-	// Ethereum mainnet address of entity that made the deposit
-	From *types.Address `protobuf:"bytes,2,opt,name=from" json:"from,omitempty"`
-	// DAppChain address of entity that should receive the deposit
-	To       *types.Address `protobuf:"bytes,3,opt,name=to" json:"to,omitempty"`
-	Amount   *types.BigUInt `protobuf:"bytes,4,opt,name=amount" json:"amount,omitempty"`
-	EthBlock uint64         `protobuf:"varint,5,opt,name=eth_block,json=ethBlock,proto3" json:"eth_block,omitempty"`
-}
-
-func (m *TokenDeposit) Reset()                    { *m = TokenDeposit{} }
-func (m *TokenDeposit) String() string            { return proto.CompactTextString(m) }
-func (*TokenDeposit) ProtoMessage()               {}
-func (*TokenDeposit) Descriptor() ([]byte, []int) { return fileDescriptorTransferGateway, []int{1} }
-
-func (m *TokenDeposit) GetToken() *types.Address {
+func (m *TransferGatewayState) GetTokenWithdrawers() []*types.Address {
 	if m != nil {
-		return m.Token
+		return m.TokenWithdrawers
 	}
 	return nil
 }
 
-func (m *TokenDeposit) GetFrom() *types.Address {
+type TransferGatewayWithdrawalReceipt struct {
+	// Mainnet address of token owner
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// Mainnet address of token contract
+	TokenContract *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
+	// // ERC721 token ID, or amount of ERC20/ETH
+	Value           *types.BigUInt `protobuf:"bytes,3,opt,name=value" json:"value,omitempty"`
+	WithdrawalNonce uint64         `protobuf:"varint,4,opt,name=withdrawal_nonce,json=withdrawalNonce,proto3" json:"withdrawal_nonce,omitempty"`
+	// Signature generated by the Oracle that confirmed the withdrawal
+	OracleSignature []byte `protobuf:"bytes,5,opt,name=oracle_signature,json=oracleSignature,proto3" json:"oracle_signature,omitempty"`
+}
+
+func (m *TransferGatewayWithdrawalReceipt) Reset()         { *m = TransferGatewayWithdrawalReceipt{} }
+func (m *TransferGatewayWithdrawalReceipt) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayWithdrawalReceipt) ProtoMessage()    {}
+func (*TransferGatewayWithdrawalReceipt) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{1}
+}
+
+func (m *TransferGatewayWithdrawalReceipt) GetTokenOwner() *types.Address {
 	if m != nil {
-		return m.From
+		return m.TokenOwner
 	}
 	return nil
 }
 
-func (m *TokenDeposit) GetTo() *types.Address {
+func (m *TransferGatewayWithdrawalReceipt) GetTokenContract() *types.Address {
 	if m != nil {
-		return m.To
+		return m.TokenContract
 	}
 	return nil
 }
 
-func (m *TokenDeposit) GetAmount() *types.BigUInt {
+func (m *TransferGatewayWithdrawalReceipt) GetValue() *types.BigUInt {
 	if m != nil {
-		return m.Amount
+		return m.Value
 	}
 	return nil
 }
 
-func (m *TokenDeposit) GetEthBlock() uint64 {
+func (m *TransferGatewayWithdrawalReceipt) GetWithdrawalNonce() uint64 {
 	if m != nil {
-		return m.EthBlock
+		return m.WithdrawalNonce
 	}
 	return 0
 }
 
-// Non-Fungible Token Deposit (ERC721) made into the Gateway on Ethereum mainnet
-type NFTDeposit struct {
-	// Token contract address
-	Token    *types.Address `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
-	From     *types.Address `protobuf:"bytes,2,opt,name=from" json:"from,omitempty"`
-	Uid      *types.BigUInt `protobuf:"bytes,3,opt,name=uid" json:"uid,omitempty"`
-	EthBlock uint64         `protobuf:"varint,4,opt,name=eth_block,json=ethBlock,proto3" json:"eth_block,omitempty"`
-}
-
-func (m *NFTDeposit) Reset()                    { *m = NFTDeposit{} }
-func (m *NFTDeposit) String() string            { return proto.CompactTextString(m) }
-func (*NFTDeposit) ProtoMessage()               {}
-func (*NFTDeposit) Descriptor() ([]byte, []int) { return fileDescriptorTransferGateway, []int{2} }
-
-func (m *NFTDeposit) GetToken() *types.Address {
+func (m *TransferGatewayWithdrawalReceipt) GetOracleSignature() []byte {
 	if m != nil {
-		return m.Token
+		return m.OracleSignature
 	}
 	return nil
 }
 
-func (m *NFTDeposit) GetFrom() *types.Address {
+type TransferGatewayPendingWithdrawalSummary struct {
+	// DAppChain address of token owner
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// Hash of the unsigned withdrawal receipt
+	Hash []byte `protobuf:"bytes,2,opt,name=hash,proto3" json:"hash,omitempty"`
+}
+
+func (m *TransferGatewayPendingWithdrawalSummary) Reset() {
+	*m = TransferGatewayPendingWithdrawalSummary{}
+}
+func (m *TransferGatewayPendingWithdrawalSummary) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayPendingWithdrawalSummary) ProtoMessage()    {}
+func (*TransferGatewayPendingWithdrawalSummary) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{2}
+}
+
+func (m *TransferGatewayPendingWithdrawalSummary) GetTokenOwner() *types.Address {
 	if m != nil {
-		return m.From
+		return m.TokenOwner
 	}
 	return nil
 }
 
-func (m *NFTDeposit) GetUid() *types.BigUInt {
+func (m *TransferGatewayPendingWithdrawalSummary) GetHash() []byte {
 	if m != nil {
-		return m.Uid
+		return m.Hash
 	}
 	return nil
 }
 
-func (m *NFTDeposit) GetEthBlock() uint64 {
-	if m != nil {
-		return m.EthBlock
-	}
-	return 0
+type TransferGatewayAccount struct {
+	Owner             *types.Address                    `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	WithdrawalNonce   uint64                            `protobuf:"varint,2,opt,name=withdrawal_nonce,json=withdrawalNonce,proto3" json:"withdrawal_nonce,omitempty"`
+	WithdrawalReceipt *TransferGatewayWithdrawalReceipt `protobuf:"bytes,3,opt,name=withdrawal_receipt,json=withdrawalReceipt" json:"withdrawal_receipt,omitempty"`
 }
 
-type GatewayTokenMapping struct {
-	// Address of a token contract on Ethereum mainnet
-	FromToken *types.Address `protobuf:"bytes,1,opt,name=from_token,json=fromToken" json:"from_token,omitempty"`
-	// Address of the corresponding token contract on DAppChain
-	ToToken *types.Address `protobuf:"bytes,2,opt,name=to_token,json=toToken" json:"to_token,omitempty"`
-}
-
-func (m *GatewayTokenMapping) Reset()         { *m = GatewayTokenMapping{} }
-func (m *GatewayTokenMapping) String() string { return proto.CompactTextString(m) }
-func (*GatewayTokenMapping) ProtoMessage()    {}
-func (*GatewayTokenMapping) Descriptor() ([]byte, []int) {
+func (m *TransferGatewayAccount) Reset()         { *m = TransferGatewayAccount{} }
+func (m *TransferGatewayAccount) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayAccount) ProtoMessage()    {}
+func (*TransferGatewayAccount) Descriptor() ([]byte, []int) {
 	return fileDescriptorTransferGateway, []int{3}
 }
 
-func (m *GatewayTokenMapping) GetFromToken() *types.Address {
+func (m *TransferGatewayAccount) GetOwner() *types.Address {
 	if m != nil {
-		return m.FromToken
+		return m.Owner
 	}
 	return nil
 }
 
-func (m *GatewayTokenMapping) GetToToken() *types.Address {
+func (m *TransferGatewayAccount) GetWithdrawalNonce() uint64 {
 	if m != nil {
-		return m.ToToken
+		return m.WithdrawalNonce
+	}
+	return 0
+}
+
+func (m *TransferGatewayAccount) GetWithdrawalReceipt() *TransferGatewayWithdrawalReceipt {
+	if m != nil {
+		return m.WithdrawalReceipt
 	}
 	return nil
 }
 
-type GatewayInitRequest struct {
-	// List of oracles that the Gateway should accept data from, each oracle is identified by the
-	// address of the validator node it runs in
-	Oracles []*types.Address `protobuf:"bytes,1,rep,name=oracles" json:"oracles,omitempty"`
-	// Address of the Gateway contract on Ethereum mainnet
-	GatewayAddress *types.Address `protobuf:"bytes,2,opt,name=gateway_address,json=gatewayAddress" json:"gateway_address,omitempty"`
-	// Map of token contracts on Ethereum mainnet to the corresponding token contracts on DAppChain
-	Tokens []*GatewayTokenMapping `protobuf:"bytes,3,rep,name=Tokens" json:"Tokens,omitempty"`
+// Token Deposit (ETH/ERC20/ERC721) made into the Mainnet Gateway
+type TransferGatewayTokenDeposited struct {
+	// Mainnet address of token owner
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// Mainnet address of token contract, blank if ETH was deposited
+	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
+	TokenKind     TransferGatewayTokenKind `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=TransferGatewayTokenKind" json:"token_kind,omitempty"`
+	// ERC721 token ID, or amount of ERC20/ETH
+	Value *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
 }
 
-func (m *GatewayInitRequest) Reset()         { *m = GatewayInitRequest{} }
-func (m *GatewayInitRequest) String() string { return proto.CompactTextString(m) }
-func (*GatewayInitRequest) ProtoMessage()    {}
-func (*GatewayInitRequest) Descriptor() ([]byte, []int) {
+func (m *TransferGatewayTokenDeposited) Reset()         { *m = TransferGatewayTokenDeposited{} }
+func (m *TransferGatewayTokenDeposited) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayTokenDeposited) ProtoMessage()    {}
+func (*TransferGatewayTokenDeposited) Descriptor() ([]byte, []int) {
 	return fileDescriptorTransferGateway, []int{4}
 }
 
-func (m *GatewayInitRequest) GetOracles() []*types.Address {
+func (m *TransferGatewayTokenDeposited) GetTokenOwner() *types.Address {
+	if m != nil {
+		return m.TokenOwner
+	}
+	return nil
+}
+
+func (m *TransferGatewayTokenDeposited) GetTokenContract() *types.Address {
+	if m != nil {
+		return m.TokenContract
+	}
+	return nil
+}
+
+func (m *TransferGatewayTokenDeposited) GetTokenKind() TransferGatewayTokenKind {
+	if m != nil {
+		return m.TokenKind
+	}
+	return TransferGatewayTokenKind_ETH
+}
+
+func (m *TransferGatewayTokenDeposited) GetValue() *types.BigUInt {
+	if m != nil {
+		return m.Value
+	}
+	return nil
+}
+
+// Withdrawal from Mainnet Transfer Gateway
+type TransferGatewayTokenWithdrawn struct {
+	// Mainnet address of token owner
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// Mainnet address of token contract, blank if ETH was withdrawn
+	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
+	TokenKind     TransferGatewayTokenKind `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=TransferGatewayTokenKind" json:"token_kind,omitempty"`
+	// ERC721 token ID, or amount of ERC20/ETH
+	Value *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
+}
+
+func (m *TransferGatewayTokenWithdrawn) Reset()         { *m = TransferGatewayTokenWithdrawn{} }
+func (m *TransferGatewayTokenWithdrawn) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayTokenWithdrawn) ProtoMessage()    {}
+func (*TransferGatewayTokenWithdrawn) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{5}
+}
+
+func (m *TransferGatewayTokenWithdrawn) GetTokenOwner() *types.Address {
+	if m != nil {
+		return m.TokenOwner
+	}
+	return nil
+}
+
+func (m *TransferGatewayTokenWithdrawn) GetTokenContract() *types.Address {
+	if m != nil {
+		return m.TokenContract
+	}
+	return nil
+}
+
+func (m *TransferGatewayTokenWithdrawn) GetTokenKind() TransferGatewayTokenKind {
+	if m != nil {
+		return m.TokenKind
+	}
+	return TransferGatewayTokenKind_ETH
+}
+
+func (m *TransferGatewayTokenWithdrawn) GetValue() *types.BigUInt {
+	if m != nil {
+		return m.Value
+	}
+	return nil
+}
+
+type TransferGatewayMainnetEvent struct {
+	EthBlock uint64 `protobuf:"varint,1,opt,name=eth_block,json=ethBlock,proto3" json:"eth_block,omitempty"`
+	// Types that are valid to be assigned to Payload:
+	//	*TransferGatewayMainnetEvent_Deposit
+	//	*TransferGatewayMainnetEvent_Withdrawal
+	Payload isTransferGatewayMainnetEvent_Payload `protobuf_oneof:"payload"`
+}
+
+func (m *TransferGatewayMainnetEvent) Reset()         { *m = TransferGatewayMainnetEvent{} }
+func (m *TransferGatewayMainnetEvent) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayMainnetEvent) ProtoMessage()    {}
+func (*TransferGatewayMainnetEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{6}
+}
+
+type isTransferGatewayMainnetEvent_Payload interface {
+	isTransferGatewayMainnetEvent_Payload()
+}
+
+type TransferGatewayMainnetEvent_Deposit struct {
+	Deposit *TransferGatewayTokenDeposited `protobuf:"bytes,2,opt,name=deposit,oneof"`
+}
+type TransferGatewayMainnetEvent_Withdrawal struct {
+	Withdrawal *TransferGatewayTokenWithdrawn `protobuf:"bytes,3,opt,name=withdrawal,oneof"`
+}
+
+func (*TransferGatewayMainnetEvent_Deposit) isTransferGatewayMainnetEvent_Payload()    {}
+func (*TransferGatewayMainnetEvent_Withdrawal) isTransferGatewayMainnetEvent_Payload() {}
+
+func (m *TransferGatewayMainnetEvent) GetPayload() isTransferGatewayMainnetEvent_Payload {
+	if m != nil {
+		return m.Payload
+	}
+	return nil
+}
+
+func (m *TransferGatewayMainnetEvent) GetEthBlock() uint64 {
+	if m != nil {
+		return m.EthBlock
+	}
+	return 0
+}
+
+func (m *TransferGatewayMainnetEvent) GetDeposit() *TransferGatewayTokenDeposited {
+	if x, ok := m.GetPayload().(*TransferGatewayMainnetEvent_Deposit); ok {
+		return x.Deposit
+	}
+	return nil
+}
+
+func (m *TransferGatewayMainnetEvent) GetWithdrawal() *TransferGatewayTokenWithdrawn {
+	if x, ok := m.GetPayload().(*TransferGatewayMainnetEvent_Withdrawal); ok {
+		return x.Withdrawal
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*TransferGatewayMainnetEvent) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _TransferGatewayMainnetEvent_OneofMarshaler, _TransferGatewayMainnetEvent_OneofUnmarshaler, _TransferGatewayMainnetEvent_OneofSizer, []interface{}{
+		(*TransferGatewayMainnetEvent_Deposit)(nil),
+		(*TransferGatewayMainnetEvent_Withdrawal)(nil),
+	}
+}
+
+func _TransferGatewayMainnetEvent_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*TransferGatewayMainnetEvent)
+	// payload
+	switch x := m.Payload.(type) {
+	case *TransferGatewayMainnetEvent_Deposit:
+		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Deposit); err != nil {
+			return err
+		}
+	case *TransferGatewayMainnetEvent_Withdrawal:
+		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Withdrawal); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("TransferGatewayMainnetEvent.Payload has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _TransferGatewayMainnetEvent_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*TransferGatewayMainnetEvent)
+	switch tag {
+	case 2: // payload.deposit
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransferGatewayTokenDeposited)
+		err := b.DecodeMessage(msg)
+		m.Payload = &TransferGatewayMainnetEvent_Deposit{msg}
+		return true, err
+	case 3: // payload.withdrawal
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransferGatewayTokenWithdrawn)
+		err := b.DecodeMessage(msg)
+		m.Payload = &TransferGatewayMainnetEvent_Withdrawal{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _TransferGatewayMainnetEvent_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*TransferGatewayMainnetEvent)
+	// payload
+	switch x := m.Payload.(type) {
+	case *TransferGatewayMainnetEvent_Deposit:
+		s := proto.Size(x.Deposit)
+		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *TransferGatewayMainnetEvent_Withdrawal:
+		s := proto.Size(x.Withdrawal)
+		n += proto.SizeVarint(3<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type TransferGatewayInitRequest struct {
+	// List of oracles that the Gateway should accept data from, each oracle is identified by the
+	// address of the validator node it runs in
+	Oracles []*types.Address `protobuf:"bytes,1,rep,name=oracles" json:"oracles,omitempty"`
+}
+
+func (m *TransferGatewayInitRequest) Reset()         { *m = TransferGatewayInitRequest{} }
+func (m *TransferGatewayInitRequest) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayInitRequest) ProtoMessage()    {}
+func (*TransferGatewayInitRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{7}
+}
+
+func (m *TransferGatewayInitRequest) GetOracles() []*types.Address {
 	if m != nil {
 		return m.Oracles
 	}
 	return nil
 }
 
-func (m *GatewayInitRequest) GetGatewayAddress() *types.Address {
-	if m != nil {
-		return m.GatewayAddress
-	}
-	return nil
-}
-
-func (m *GatewayInitRequest) GetTokens() []*GatewayTokenMapping {
-	if m != nil {
-		return m.Tokens
-	}
-	return nil
-}
-
 // Batch of events from the Gateway on Ethereum mainnet
-type ProcessEventBatchRequest struct {
-	FtDeposits  []*TokenDeposit `protobuf:"bytes,1,rep,name=ft_deposits,json=ftDeposits" json:"ft_deposits,omitempty"`
-	NftDeposits []*NFTDeposit   `protobuf:"bytes,2,rep,name=nft_deposits,json=nftDeposits" json:"nft_deposits,omitempty"`
+type TransferGatewayProcessEventBatchRequest struct {
+	Events []*TransferGatewayMainnetEvent `protobuf:"bytes,1,rep,name=events" json:"events,omitempty"`
 }
 
-func (m *ProcessEventBatchRequest) Reset()         { *m = ProcessEventBatchRequest{} }
-func (m *ProcessEventBatchRequest) String() string { return proto.CompactTextString(m) }
-func (*ProcessEventBatchRequest) ProtoMessage()    {}
-func (*ProcessEventBatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{5}
+func (m *TransferGatewayProcessEventBatchRequest) Reset() {
+	*m = TransferGatewayProcessEventBatchRequest{}
+}
+func (m *TransferGatewayProcessEventBatchRequest) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayProcessEventBatchRequest) ProtoMessage()    {}
+func (*TransferGatewayProcessEventBatchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{8}
 }
 
-func (m *ProcessEventBatchRequest) GetFtDeposits() []*TokenDeposit {
+func (m *TransferGatewayProcessEventBatchRequest) GetEvents() []*TransferGatewayMainnetEvent {
 	if m != nil {
-		return m.FtDeposits
+		return m.Events
 	}
 	return nil
 }
 
-func (m *ProcessEventBatchRequest) GetNftDeposits() []*NFTDeposit {
-	if m != nil {
-		return m.NftDeposits
-	}
-	return nil
+type TransferGatewayStateRequest struct {
 }
 
-type GatewayStateRequest struct {
+func (m *TransferGatewayStateRequest) Reset()         { *m = TransferGatewayStateRequest{} }
+func (m *TransferGatewayStateRequest) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayStateRequest) ProtoMessage()    {}
+func (*TransferGatewayStateRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{9}
 }
 
-func (m *GatewayStateRequest) Reset()         { *m = GatewayStateRequest{} }
-func (m *GatewayStateRequest) String() string { return proto.CompactTextString(m) }
-func (*GatewayStateRequest) ProtoMessage()    {}
-func (*GatewayStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{6}
+type TransferGatewayStateResponse struct {
+	State *TransferGatewayState `protobuf:"bytes,1,opt,name=state" json:"state,omitempty"`
 }
 
-type GatewayStateResponse struct {
-	State *GatewayState `protobuf:"bytes,1,opt,name=state" json:"state,omitempty"`
+func (m *TransferGatewayStateResponse) Reset()         { *m = TransferGatewayStateResponse{} }
+func (m *TransferGatewayStateResponse) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayStateResponse) ProtoMessage()    {}
+func (*TransferGatewayStateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{10}
 }
 
-func (m *GatewayStateResponse) Reset()         { *m = GatewayStateResponse{} }
-func (m *GatewayStateResponse) String() string { return proto.CompactTextString(m) }
-func (*GatewayStateResponse) ProtoMessage()    {}
-func (*GatewayStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptorTransferGateway, []int{7}
-}
-
-func (m *GatewayStateResponse) GetState() *GatewayState {
+func (m *TransferGatewayStateResponse) GetState() *TransferGatewayState {
 	if m != nil {
 		return m.State
 	}
 	return nil
 }
 
+type TransferGatewayWithdrawERC721Request struct {
+	// ID of ERC721 token
+	TokenId *types.BigUInt `protobuf:"bytes,1,opt,name=token_id,json=tokenId" json:"token_id,omitempty"`
+	// DAppChain address of ERC721 contract token belongs to
+	TokenContract *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
+}
+
+func (m *TransferGatewayWithdrawERC721Request) Reset()         { *m = TransferGatewayWithdrawERC721Request{} }
+func (m *TransferGatewayWithdrawERC721Request) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayWithdrawERC721Request) ProtoMessage()    {}
+func (*TransferGatewayWithdrawERC721Request) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{11}
+}
+
+func (m *TransferGatewayWithdrawERC721Request) GetTokenId() *types.BigUInt {
+	if m != nil {
+		return m.TokenId
+	}
+	return nil
+}
+
+func (m *TransferGatewayWithdrawERC721Request) GetTokenContract() *types.Address {
+	if m != nil {
+		return m.TokenContract
+	}
+	return nil
+}
+
+type TransferGatewayWithdrawalReceiptRequest struct {
+	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+}
+
+func (m *TransferGatewayWithdrawalReceiptRequest) Reset() {
+	*m = TransferGatewayWithdrawalReceiptRequest{}
+}
+func (m *TransferGatewayWithdrawalReceiptRequest) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayWithdrawalReceiptRequest) ProtoMessage()    {}
+func (*TransferGatewayWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{12}
+}
+
+func (m *TransferGatewayWithdrawalReceiptRequest) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+type TransferGatewayWithdrawalReceiptResponse struct {
+	Receipt *TransferGatewayWithdrawalReceipt `protobuf:"bytes,1,opt,name=receipt" json:"receipt,omitempty"`
+}
+
+func (m *TransferGatewayWithdrawalReceiptResponse) Reset() {
+	*m = TransferGatewayWithdrawalReceiptResponse{}
+}
+func (m *TransferGatewayWithdrawalReceiptResponse) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayWithdrawalReceiptResponse) ProtoMessage()    {}
+func (*TransferGatewayWithdrawalReceiptResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{13}
+}
+
+func (m *TransferGatewayWithdrawalReceiptResponse) GetReceipt() *TransferGatewayWithdrawalReceipt {
+	if m != nil {
+		return m.Receipt
+	}
+	return nil
+}
+
+type TransferGatewayConfirmWithdrawalReceiptRequest struct {
+	// DAppChain address of the entity attempting to make the withdrawal
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// 66-byte hash of the withdrawal hash
+	OracleSignature []byte `protobuf:"bytes,2,opt,name=oracle_signature,json=oracleSignature,proto3" json:"oracle_signature,omitempty"`
+	// 32-byte hash of the withdrawal details
+	WithdrawalHash []byte `protobuf:"bytes,3,opt,name=withdrawal_hash,json=withdrawalHash,proto3" json:"withdrawal_hash,omitempty"`
+}
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequest) Reset() {
+	*m = TransferGatewayConfirmWithdrawalReceiptRequest{}
+}
+func (m *TransferGatewayConfirmWithdrawalReceiptRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayConfirmWithdrawalReceiptRequest) ProtoMessage() {}
+func (*TransferGatewayConfirmWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{14}
+}
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequest) GetTokenOwner() *types.Address {
+	if m != nil {
+		return m.TokenOwner
+	}
+	return nil
+}
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequest) GetOracleSignature() []byte {
+	if m != nil {
+		return m.OracleSignature
+	}
+	return nil
+}
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequest) GetWithdrawalHash() []byte {
+	if m != nil {
+		return m.WithdrawalHash
+	}
+	return nil
+}
+
+type TransferGatewayPendingWithdrawalsRequest struct {
+}
+
+func (m *TransferGatewayPendingWithdrawalsRequest) Reset() {
+	*m = TransferGatewayPendingWithdrawalsRequest{}
+}
+func (m *TransferGatewayPendingWithdrawalsRequest) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayPendingWithdrawalsRequest) ProtoMessage()    {}
+func (*TransferGatewayPendingWithdrawalsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{15}
+}
+
+type TransferGatewayPendingWithdrawalsResponse struct {
+	Withdrawals []*TransferGatewayPendingWithdrawalSummary `protobuf:"bytes,1,rep,name=withdrawals" json:"withdrawals,omitempty"`
+}
+
+func (m *TransferGatewayPendingWithdrawalsResponse) Reset() {
+	*m = TransferGatewayPendingWithdrawalsResponse{}
+}
+func (m *TransferGatewayPendingWithdrawalsResponse) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayPendingWithdrawalsResponse) ProtoMessage()    {}
+func (*TransferGatewayPendingWithdrawalsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptorTransferGateway, []int{16}
+}
+
+func (m *TransferGatewayPendingWithdrawalsResponse) GetWithdrawals() []*TransferGatewayPendingWithdrawalSummary {
+	if m != nil {
+		return m.Withdrawals
+	}
+	return nil
+}
+
 func init() {
-	proto.RegisterType((*GatewayState)(nil), "GatewayState")
-	proto.RegisterType((*TokenDeposit)(nil), "TokenDeposit")
-	proto.RegisterType((*NFTDeposit)(nil), "NFTDeposit")
-	proto.RegisterType((*GatewayTokenMapping)(nil), "GatewayTokenMapping")
-	proto.RegisterType((*GatewayInitRequest)(nil), "GatewayInitRequest")
-	proto.RegisterType((*ProcessEventBatchRequest)(nil), "ProcessEventBatchRequest")
-	proto.RegisterType((*GatewayStateRequest)(nil), "GatewayStateRequest")
-	proto.RegisterType((*GatewayStateResponse)(nil), "GatewayStateResponse")
+	proto.RegisterType((*TransferGatewayState)(nil), "TransferGatewayState")
+	proto.RegisterType((*TransferGatewayWithdrawalReceipt)(nil), "TransferGatewayWithdrawalReceipt")
+	proto.RegisterType((*TransferGatewayPendingWithdrawalSummary)(nil), "TransferGatewayPendingWithdrawalSummary")
+	proto.RegisterType((*TransferGatewayAccount)(nil), "TransferGatewayAccount")
+	proto.RegisterType((*TransferGatewayTokenDeposited)(nil), "TransferGatewayTokenDeposited")
+	proto.RegisterType((*TransferGatewayTokenWithdrawn)(nil), "TransferGatewayTokenWithdrawn")
+	proto.RegisterType((*TransferGatewayMainnetEvent)(nil), "TransferGatewayMainnetEvent")
+	proto.RegisterType((*TransferGatewayInitRequest)(nil), "TransferGatewayInitRequest")
+	proto.RegisterType((*TransferGatewayProcessEventBatchRequest)(nil), "TransferGatewayProcessEventBatchRequest")
+	proto.RegisterType((*TransferGatewayStateRequest)(nil), "TransferGatewayStateRequest")
+	proto.RegisterType((*TransferGatewayStateResponse)(nil), "TransferGatewayStateResponse")
+	proto.RegisterType((*TransferGatewayWithdrawERC721Request)(nil), "TransferGatewayWithdrawERC721Request")
+	proto.RegisterType((*TransferGatewayWithdrawalReceiptRequest)(nil), "TransferGatewayWithdrawalReceiptRequest")
+	proto.RegisterType((*TransferGatewayWithdrawalReceiptResponse)(nil), "TransferGatewayWithdrawalReceiptResponse")
+	proto.RegisterType((*TransferGatewayConfirmWithdrawalReceiptRequest)(nil), "TransferGatewayConfirmWithdrawalReceiptRequest")
+	proto.RegisterType((*TransferGatewayPendingWithdrawalsRequest)(nil), "TransferGatewayPendingWithdrawalsRequest")
+	proto.RegisterType((*TransferGatewayPendingWithdrawalsResponse)(nil), "TransferGatewayPendingWithdrawalsResponse")
+	proto.RegisterEnum("TransferGatewayTokenKind", TransferGatewayTokenKind_name, TransferGatewayTokenKind_value)
 }
 
 func init() {
@@ -282,35 +675,55 @@ func init() {
 }
 
 var fileDescriptorTransferGateway = []byte{
-	// 467 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x93, 0xdf, 0x6e, 0xd3, 0x30,
-	0x14, 0xc6, 0x95, 0xfe, 0x5b, 0x77, 0xda, 0x0d, 0xc9, 0x0c, 0x29, 0x1a, 0x08, 0x55, 0x19, 0x12,
-	0x5c, 0x80, 0xc3, 0xbf, 0x3b, 0xae, 0xa8, 0x18, 0x68, 0x17, 0x20, 0x14, 0xca, 0x75, 0xe4, 0xa6,
-	0x6e, 0x1a, 0x35, 0xf5, 0x09, 0xf6, 0x09, 0xd3, 0xb8, 0xe5, 0x29, 0x78, 0x00, 0xde, 0x13, 0xd9,
-	0x71, 0xd7, 0xb5, 0xab, 0xc4, 0xcd, 0x6e, 0xa2, 0xf8, 0xfb, 0xbe, 0x73, 0xce, 0x2f, 0xb6, 0x03,
-	0x93, 0xbc, 0xa0, 0x45, 0x3d, 0xe5, 0x19, 0xae, 0xe2, 0x12, 0x71, 0xa5, 0x24, 0x5d, 0xa2, 0x5e,
-	0xc6, 0x39, 0xbe, 0xb0, 0xcb, 0x78, 0x5a, 0x17, 0x25, 0x15, 0x2a, 0xa6, 0xab, 0x4a, 0x9a, 0x98,
-	0xb4, 0x50, 0x66, 0x2e, 0x75, 0x9a, 0x0b, 0x92, 0x97, 0xe2, 0xea, 0x96, 0xc0, 0x2b, 0x8d, 0x84,
-	0xa7, 0x2f, 0xff, 0xd3, 0xd5, 0x77, 0xb3, 0xcf, 0xa6, 0x22, 0x7a, 0x0b, 0xc3, 0x4f, 0x4d, 0x8b,
-	0x6f, 0x24, 0x48, 0xb2, 0x27, 0x70, 0x5c, 0x0a, 0x43, 0xa9, 0xa4, 0x45, 0x3a, 0x2d, 0x31, 0x5b,
-	0x86, 0xc1, 0x28, 0x78, 0xd6, 0x49, 0x86, 0x56, 0x3d, 0xa7, 0xc5, 0xd8, 0x6a, 0xd1, 0xdf, 0x00,
-	0x86, 0x13, 0x5c, 0x4a, 0xf5, 0x41, 0x56, 0x68, 0x0a, 0x62, 0x8f, 0xa1, 0x4b, 0x76, 0xed, 0xd2,
-	0x83, 0xd7, 0x7d, 0xfe, 0x7e, 0x36, 0xd3, 0xd2, 0x98, 0xa4, 0x91, 0xd9, 0x23, 0xe8, 0xcc, 0x35,
-	0xae, 0xc2, 0xd6, 0x8e, 0xed, 0x54, 0x16, 0x42, 0x8b, 0x30, 0x6c, 0xef, 0x78, 0x2d, 0x42, 0x36,
-	0x82, 0x9e, 0x58, 0x61, 0xad, 0x28, 0xec, 0x78, 0x77, 0x5c, 0xe4, 0xdf, 0x2f, 0x14, 0x25, 0x5e,
-	0x67, 0x0f, 0xe1, 0x70, 0xc3, 0xda, 0x75, 0xac, 0x7d, 0xb9, 0xe6, 0xfc, 0x1d, 0x00, 0x7c, 0xf9,
-	0x38, 0xb9, 0x1b, 0xca, 0x53, 0x68, 0xd7, 0xc5, 0xec, 0x1a, 0x73, 0x0d, 0x62, 0xc5, 0x6d, 0x8a,
-	0xce, 0x0e, 0x45, 0x06, 0xf7, 0xfd, 0x1e, 0xbb, 0x3d, 0xfb, 0x2c, 0xaa, 0xaa, 0x50, 0x39, 0x7b,
-	0x0a, 0x60, 0xfb, 0xa6, 0xfb, 0x91, 0x0e, 0xad, 0xe7, 0xf2, 0xec, 0x0c, 0xfa, 0x84, 0x3e, 0xb6,
-	0x8b, 0x76, 0x40, 0xe8, 0x42, 0xd1, 0x9f, 0x00, 0x98, 0x9f, 0x72, 0xa1, 0x0a, 0x4a, 0xe4, 0x8f,
-	0x5a, 0x1a, 0x62, 0x11, 0x1c, 0xa0, 0x16, 0x59, 0x29, 0x4d, 0x18, 0x8c, 0xda, 0xdb, 0xa5, 0xde,
-	0x60, 0xaf, 0xe0, 0x9e, 0xbf, 0x46, 0xa9, 0x68, 0xbc, 0x5b, 0x63, 0x8e, 0x7d, 0xc0, 0xaf, 0xd9,
-	0x73, 0xe8, 0xb9, 0xb1, 0x26, 0x6c, 0xbb, 0xae, 0x27, 0x7c, 0xcf, 0x17, 0x26, 0x3e, 0x13, 0xfd,
-	0x82, 0xf0, 0xab, 0xc6, 0x4c, 0x1a, 0x73, 0xfe, 0x53, 0x2a, 0x1a, 0x0b, 0xca, 0x16, 0x6b, 0x40,
-	0x0e, 0x83, 0x39, 0xa5, 0xb3, 0xe6, 0x84, 0xd6, 0x90, 0x47, 0xfc, 0xe6, 0xed, 0x4a, 0x60, 0x4e,
-	0xfe, 0xd5, 0x30, 0x0e, 0x43, 0x75, 0xb3, 0xa0, 0xe5, 0x0a, 0x06, 0x7c, 0x73, 0xcc, 0xc9, 0x40,
-	0x6d, 0xf2, 0xd1, 0x83, 0xeb, 0xcd, 0x77, 0x17, 0xdc, 0x8f, 0x8d, 0xde, 0xc1, 0xc9, 0xb6, 0x6c,
-	0x2a, 0x54, 0x46, 0xb2, 0x33, 0xe8, 0x1a, 0x2b, 0xf8, 0xf3, 0x38, 0xe2, 0x5b, 0xa9, 0xc6, 0x9b,
-	0xf6, 0xdc, 0xbf, 0xf3, 0xe6, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa5, 0x66, 0x8c, 0xf1, 0xc5,
-	0x03, 0x00, 0x00,
+	// 787 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x56, 0xdd, 0x6e, 0xda, 0x48,
+	0x14, 0x8e, 0xf9, 0x09, 0xe1, 0x24, 0x4b, 0xc8, 0x68, 0x77, 0xe5, 0xcd, 0x9f, 0x58, 0x6f, 0xa4,
+	0x90, 0xac, 0x6a, 0x52, 0xda, 0xaa, 0x55, 0x7a, 0x93, 0x40, 0x51, 0xa1, 0x51, 0xdb, 0xc8, 0xa1,
+	0xea, 0xa5, 0x35, 0xd8, 0x13, 0x6c, 0x61, 0x66, 0xa8, 0x67, 0x88, 0x85, 0xd4, 0x77, 0xea, 0x55,
+	0x9f, 0xa0, 0xcf, 0xd0, 0x37, 0xe9, 0x03, 0x54, 0xfe, 0x0b, 0xc8, 0x98, 0x90, 0x5c, 0xf4, 0xa2,
+	0x37, 0x91, 0xf3, 0x9d, 0xef, 0x9c, 0x99, 0xef, 0xcc, 0x37, 0x67, 0x80, 0x6e, 0xdf, 0x16, 0xd6,
+	0xb8, 0xa7, 0x1a, 0x6c, 0x58, 0x73, 0x18, 0x1b, 0x52, 0x22, 0x3c, 0xe6, 0x0e, 0x6a, 0x7d, 0xf6,
+	0xc8, 0xff, 0xb7, 0xd6, 0x1b, 0xdb, 0x8e, 0xb0, 0x69, 0x4d, 0x4c, 0x46, 0x84, 0xd7, 0x84, 0x8b,
+	0x29, 0xbf, 0x26, 0xae, 0xde, 0xc7, 0x82, 0x78, 0x78, 0x32, 0x07, 0xa8, 0x23, 0x97, 0x09, 0xb6,
+	0x7d, 0xb2, 0xa4, 0x6a, 0x54, 0xcd, 0xff, 0x1b, 0x66, 0x28, 0x1c, 0xfe, 0xec, 0x46, 0xb5, 0x5e,
+	0x87, 0xa5, 0xae, 0x04, 0x16, 0x04, 0x1d, 0x40, 0xc9, 0xc1, 0x5c, 0xe8, 0x44, 0x58, 0x7a, 0xcf,
+	0x61, 0xc6, 0x40, 0x96, 0x2a, 0x52, 0x35, 0xa7, 0x6d, 0xf8, 0x68, 0x4b, 0x58, 0x0d, 0x1f, 0x43,
+	0xcf, 0x60, 0x4b, 0xb0, 0x01, 0xa1, 0xba, 0x67, 0x0b, 0xcb, 0x74, 0xb1, 0x47, 0x5c, 0x2e, 0x67,
+	0x2a, 0xd9, 0xea, 0x7a, 0x7d, 0x4d, 0x3d, 0x37, 0x4d, 0x97, 0x70, 0xae, 0x95, 0x03, 0xca, 0xc7,
+	0x29, 0x43, 0xf9, 0x21, 0x41, 0x25, 0xb1, 0x6a, 0x1c, 0xc6, 0x8e, 0x46, 0x0c, 0x62, 0x8f, 0x04,
+	0x3a, 0x82, 0xf5, 0xb0, 0x36, 0xf3, 0x28, 0x71, 0x83, 0xe5, 0x67, 0xab, 0x42, 0x10, 0x7c, 0xef,
+	0xc7, 0x50, 0x0d, 0x4a, 0x21, 0xd5, 0x60, 0x54, 0xb8, 0xd8, 0x10, 0x72, 0x26, 0xc1, 0xfe, 0x23,
+	0x88, 0x37, 0xa3, 0x30, 0xda, 0x87, 0xfc, 0x0d, 0x76, 0xc6, 0x44, 0xce, 0x46, 0xbc, 0x86, 0xdd,
+	0xff, 0xd0, 0xa1, 0x42, 0x0b, 0x61, 0x74, 0x04, 0x65, 0xef, 0x76, 0x43, 0x3a, 0x65, 0xd4, 0x20,
+	0x72, 0x2e, 0xd0, 0xbf, 0x39, 0xc5, 0xdf, 0xf9, 0xb0, 0x4f, 0x65, 0x2e, 0x36, 0x1c, 0xa2, 0x73,
+	0xbb, 0x4f, 0xb1, 0x18, 0xbb, 0x44, 0xce, 0x57, 0xa4, 0xea, 0x86, 0xb6, 0x19, 0xe2, 0x57, 0x31,
+	0xac, 0x58, 0x70, 0x98, 0x50, 0x7d, 0x49, 0xa8, 0x69, 0xd3, 0xfe, 0x54, 0xfc, 0xd5, 0x78, 0x38,
+	0xc4, 0xee, 0xe4, 0x21, 0xe2, 0x11, 0xe4, 0x2c, 0xcc, 0xad, 0x40, 0xf2, 0x86, 0x16, 0x7c, 0x2b,
+	0x5f, 0x25, 0xf8, 0x3b, 0xb1, 0xd4, 0xb9, 0x61, 0xb0, 0x31, 0x0d, 0xa4, 0xa7, 0xd7, 0x0c, 0xe1,
+	0x54, 0xe9, 0x99, 0x74, 0xe9, 0x97, 0x80, 0x66, 0xa8, 0x6e, 0x78, 0x6e, 0x51, 0x4b, 0xff, 0x55,
+	0x97, 0x1d, 0xb0, 0xb6, 0xe5, 0x25, 0x21, 0xe5, 0xbb, 0x04, 0x7b, 0x89, 0xbc, 0xae, 0xaf, 0xf4,
+	0x15, 0x19, 0x31, 0x6e, 0x0b, 0x62, 0xfe, 0x52, 0x57, 0xbc, 0x80, 0x30, 0x5d, 0x1f, 0xd8, 0xd4,
+	0x0c, 0x74, 0x94, 0xea, 0xff, 0xa8, 0x69, 0xfb, 0xb9, 0xb0, 0xa9, 0xa9, 0x15, 0x45, 0xfc, 0x39,
+	0xf5, 0x53, 0x2e, 0xd5, 0x4f, 0x0b, 0x75, 0xc5, 0x4d, 0xa1, 0xbf, 0xa9, 0xae, 0x6f, 0x12, 0xec,
+	0x24, 0xea, 0xbc, 0xc5, 0x36, 0xa5, 0x44, 0xb4, 0x6e, 0x08, 0x15, 0x68, 0x07, 0x8a, 0xc9, 0x01,
+	0xb2, 0x46, 0xe2, 0xe1, 0x71, 0x0a, 0x05, 0x33, 0x3c, 0xd7, 0x48, 0xc0, 0xbe, 0x7a, 0xe7, 0xd9,
+	0xb7, 0x57, 0xb4, 0x38, 0x01, 0x9d, 0x01, 0x4c, 0xdd, 0x13, 0x59, 0x2e, 0x3d, 0xfd, 0xb6, 0xc5,
+	0xed, 0x15, 0x6d, 0x26, 0xa7, 0x51, 0x84, 0xc2, 0x08, 0x4f, 0x1c, 0x86, 0x4d, 0xe5, 0x0c, 0xb6,
+	0x13, 0x99, 0x1d, 0x6a, 0x0b, 0x8d, 0x7c, 0x1a, 0x13, 0x2e, 0x90, 0x02, 0x85, 0xf0, 0x22, 0x73,
+	0x59, 0x4a, 0x4c, 0xb6, 0x38, 0xa0, 0xe8, 0xf3, 0x37, 0xdb, 0x65, 0x06, 0xe1, 0x3c, 0x68, 0x43,
+	0x03, 0x0b, 0xc3, 0x8a, 0xcb, 0x3d, 0x85, 0x55, 0xe2, 0x83, 0x71, 0xb5, 0x5d, 0xf5, 0x8e, 0x06,
+	0x6a, 0x11, 0x57, 0xd9, 0x9b, 0xeb, 0x73, 0x30, 0xa6, 0xa3, 0xa2, 0xca, 0x05, 0xec, 0xa6, 0x87,
+	0xf9, 0x88, 0x51, 0x4e, 0xd0, 0xff, 0x90, 0xe7, 0x3e, 0x10, 0xf9, 0xea, 0x2f, 0x35, 0x95, 0x1d,
+	0x72, 0x94, 0xcf, 0x70, 0xb0, 0xe0, 0xee, 0xb6, 0xb4, 0xe6, 0xf3, 0xfa, 0xe3, 0x58, 0xc9, 0x7f,
+	0xb0, 0x16, 0xda, 0xca, 0x36, 0x6f, 0xfd, 0x1a, 0xfb, 0xa3, 0x10, 0x44, 0x3a, 0xe6, 0x83, 0xcd,
+	0xaa, 0x74, 0xe6, 0x5a, 0x39, 0x3f, 0x39, 0xa2, 0x0d, 0x2c, 0x19, 0x65, 0x4a, 0x1f, 0xaa, 0xcb,
+	0x4b, 0x45, 0x1d, 0x7a, 0x09, 0x85, 0x78, 0x80, 0x49, 0xf7, 0x1d, 0x60, 0x71, 0x86, 0xf2, 0x45,
+	0x82, 0x24, 0xbb, 0xc9, 0xe8, 0xb5, 0xed, 0x0e, 0x17, 0xee, 0xfd, 0x01, 0xf7, 0x3d, 0xed, 0x85,
+	0xc9, 0xa4, 0xbe, 0x30, 0xe8, 0x10, 0x66, 0x86, 0xb4, 0x1e, 0x3c, 0x0b, 0xd9, 0x80, 0x59, 0x9a,
+	0xc2, 0x6d, 0xff, 0x81, 0x38, 0x9e, 0x6b, 0xcd, 0xdc, 0x53, 0xc4, 0x63, 0x73, 0x79, 0x70, 0x74,
+	0x0f, 0x6e, 0xd4, 0xc7, 0x37, 0xb0, 0x3e, 0x5d, 0x2a, 0xf6, 0x78, 0x55, 0xbd, 0xe7, 0xbb, 0xa7,
+	0xcd, 0x26, 0x1f, 0x9f, 0x82, 0xbc, 0x68, 0x48, 0xa1, 0x02, 0x64, 0x5b, 0xdd, 0x76, 0x79, 0x05,
+	0x15, 0x21, 0xdf, 0xd2, 0x9a, 0xf5, 0x93, 0xb2, 0x84, 0x00, 0x56, 0x43, 0x87, 0x96, 0x33, 0xbd,
+	0xd5, 0xe0, 0xe7, 0xcd, 0x93, 0x9f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x68, 0x4d, 0x74, 0xcd, 0x68,
+	0x09, 0x00, 0x00,
 }
