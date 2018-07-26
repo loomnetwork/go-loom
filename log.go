@@ -1,6 +1,7 @@
 package loom
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -10,11 +11,19 @@ import (
 	kitlevel "github.com/go-kit/kit/log/level"
 )
 
+type ILogger interface {
+	With(keyvals ...interface{}) ILogger
+	Debug(msg string, keyvals ...interface{})
+	Info(msg string, keyvals ...interface{})
+	Error(msg string, keyvals ...interface{})
+	Log(keyvals ...interface{}) error
+}
+
 type Logger struct {
 	kitlog.Logger
 }
 
-func NewFilter(next kitlog.Logger, options ...kitlevel.Option) *Logger {
+func NewFilter(next kitlog.Logger, options ...kitlevel.Option) ILogger {
 	return &Logger{kitlevel.NewFilter(next, options...)}
 }
 
@@ -45,10 +54,18 @@ var msgKey = "_msg"
 func (l *Logger) Info(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Info(l)
 	args := append([]interface{}{msgKey, msg}, keyvals...)
+	//	fmt.Printf("lWithLevel-%s\n", lWithLevel)
 	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
 		errLogger := kitlevel.Error(l)
 		kitlog.With(errLogger, msgKey, msg).Log("err", err)
 	}
+}
+
+// Log dont call this directly, its for compatibility for gokit
+func (l *Logger) Log(keyvals ...interface{}) error {
+	//	fmt.Printf("In Log -%v\n", keyvals...)
+	//	fmt.Printf("In Log(inner) -%v\n", l.Logger)
+	return l.Logger.Log(keyvals...)
 }
 
 // Debug logs a message at level Debug.
@@ -63,6 +80,7 @@ func (l *Logger) Debug(msg string, keyvals ...interface{}) {
 
 // Error logs a message at level Error.
 func (l *Logger) Error(msg string, keyvals ...interface{}) {
+	fmt.Printf("In error msg-%s\n", msg)
 	lWithLevel := kitlevel.Error(l)
 	args := append([]interface{}{msgKey, msg}, keyvals...)
 	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
@@ -79,9 +97,15 @@ func (l *Logger) Warn(msg string, keyvals ...interface{}) {
 		errLogger := kitlevel.Error(l)
 		kitlog.With(errLogger, msgKey, msg).Log("err", err)
 	}
+
 }
 
-func NewLoomLogger(loomLogLevel, dest string) *Logger {
+func (l *Logger) With(keyvals ...interface{}) ILogger {
+	return &Logger{kitlog.With(l.Logger, keyvals...)}
+}
+
+func NewLoomLogger(loomLogLevel, dest string) ILogger {
+	fmt.Printf("NewLoomLogger-loglevel-%s\n", loomLogLevel)
 	w := MakeFileLoggerWriter(loomLogLevel, dest)
 	logTr := func(w io.Writer) kitlog.Logger {
 		fmtLogger := kitlog.NewLogfmtLogger(kitlog.NewSyncWriter(w))
