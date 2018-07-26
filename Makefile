@@ -81,7 +81,6 @@ deps:
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log \
-		github.com/prometheus/client_golang/prometheus \
 		github.com/pkg/errors
 	dep ensure -vendor-only
 	cd $(GOGO_PROTOBUF_DIR) && git checkout 1ef32a8b9fc3f8ec940126907cedb5998f6318e4
