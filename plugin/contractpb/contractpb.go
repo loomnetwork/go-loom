@@ -27,7 +27,7 @@ type StaticContext interface {
 	Now() time.Time
 	Message() plugin.Message
 	ContractAddress() loom.Address
-	Logger() loom.ILogger
+	Logger() loom.Logger
 }
 
 type Context interface {
@@ -47,12 +47,12 @@ type Contract interface {
 
 type wrappedPluginStaticContext struct {
 	plugin.StaticContext
-	logger loom.ILogger
+	logger loom.Logger
 }
 
 var _ StaticContext = &wrappedPluginStaticContext{}
 
-func (c *wrappedPluginStaticContext) Logger() loom.ILogger {
+func (c *wrappedPluginStaticContext) Logger() loom.Logger {
 	return c.logger
 }
 
@@ -72,12 +72,12 @@ func (c *wrappedPluginStaticContext) Range(prefix []byte) plugin.RangeData {
 
 type wrappedPluginContext struct {
 	plugin.Context
-	logger loom.ILogger
+	logger loom.Logger
 }
 
 var _ Context = &wrappedPluginContext{}
 
-func (c *wrappedPluginContext) Logger() loom.ILogger {
+func (c *wrappedPluginContext) Logger() loom.Logger {
 	return c.logger
 }
 
@@ -186,7 +186,7 @@ func CallMethod(ctx Context, addr loom.Address, method string, inpb proto.Messag
 	return Call(ctx, addr, query, outpb)
 }
 
-var logger loom.ILogger
+var logger loom.Logger
 var onceSetup sync.Once
 
 func setupLogger() {
