@@ -5,12 +5,17 @@ import (
 	"errors"
 	"strconv"
 
+	"fmt"
+	"github.com/go-kit/kit/metrics"
+	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
+	stdprometheus "github.com/prometheus/client_golang/prometheus"
+	"time"
 )
 
 type TxHandlerResult struct {
@@ -52,6 +57,34 @@ func NewDAppChainRPCClient(chainID, writeURI, readURI string) *DAppChainRPCClien
 	}
 }
 
+var (
+	nonceLatency  metrics.Histogram
+	callTxLatency metrics.Histogram
+	commitCount   metrics.Counter
+)
+
+func init() {
+	fieldKeys := []string{"method", "error"}
+	commitCount = kitprometheus.NewCounterFrom(stdprometheus.CounterOpts{
+		Namespace: "go_loom",
+		Subsystem: "application",
+		Name:      "commit_count",
+		Help:      "Number of tx calls sent.",
+	}, fieldKeys)
+	callTxLatency = kitprometheus.NewSummaryFrom(stdprometheus.SummaryOpts{
+		Namespace: "go_loom",
+		Subsystem: "application",
+		Name:      "callTx_latency_microseconds",
+		Help:      "Total duration of Tx call in microseconds.",
+	}, fieldKeys)
+	nonceLatency = kitprometheus.NewSummaryFrom(stdprometheus.SummaryOpts{
+		Namespace: "go_loom",
+		Subsystem: "application",
+		Name:      "query_nonce_latency_microseconds",
+		Help:      "Total duration of nonce query in microseconds.",
+	}, fieldKeys)
+}
+
 func (c *DAppChainRPCClient) getNextRequestID() string {
 	id := strconv.FormatUint(c.nextRequestID, 10)
 	c.nextRequestID++
@@ -73,10 +106,21 @@ func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
 
 func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
 	// TODO: signing & noncing should be handled by middleware
+
+	var err error
+	beforeNonce := time.Now()
 	nonce, err := c.GetNonce(signer)
+	lvs := []string{"method", "GetNonce", "error", fmt.Sprint(err != nil)}
+	nonceLatency.With(lvs...).Observe(time.Since(beforeNonce).Seconds())
 	if err != nil {
 		return nil, err
 	}
+
+	defer func(begin time.Time) {
+		lvs := []string{"method", "CommitTx", "error", fmt.Sprint(err != nil)}
+		commitCount.With(lvs...).Add(1)
+		callTxLatency.With(lvs...).Observe(time.Since(begin).Seconds())
+	}(time.Now())
 	txBytes, err := proto.Marshal(tx)
 	if err != nil {
 		return nil, err
