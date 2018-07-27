@@ -3,6 +3,8 @@ syntax = "proto3";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
 // Bidirectional mapping between addresses (contracts or accounts) on two different blockchains.
+// One of the address fields must contain a local address (same chain ID as the contract), while the
+// other must contain a foreign address.
 message AddressMapperMapping {
     // Address on a blockchain
     Address from = 1;
@@ -18,12 +20,21 @@ message AddressMapperInitRequest {
 
 // Request & Response
 
-message AddressMapperAddMappingRequest {
+message AddressMapperAddIdentityMappingRequest {
     // Address on a blockchain
     Address from = 1;
     // Corresponding address on another blockchain
     Address to = 2;
-    // TODO: add proof fields to verify ownership
+    // Signature of a hash of the two addresses signed with the key that corresponds to the foreign address
+    bytes signature = 3;
+}
+
+message AddressMapperAddContractMappingRequest {
+    // Address on a blockchain
+    Address from = 1;
+    // Corresponding address on another blockchain
+    Address to = 2;
+    // TODO: proof of ownership fields
 }
 
 message AddressMapperRemoveMappingRequest {
