@@ -35,7 +35,8 @@ ignored = [
   "github.com/spf13/cobra*",
   "github.com/spf13/pflag*",
   "github.com/ethereum/go-ethereum*",
-  "github.com/go-kit/kit*"
+  "github.com/go-kit/kit*",
+  "github.com/miguelmota/go-solidity-sha3*"
 ]
 
 [[constraint]]

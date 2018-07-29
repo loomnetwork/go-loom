@@ -33,6 +33,9 @@ func SoliditySign(data []byte, privKey *ecdsa.PrivateKey) ([]byte, error) {
 
 // SolidityRecover recovers the Ethereum address from the signed hash and the 65-byte signature.
 func SolidityRecover(hash []byte, sig []byte) (common.Address, error) {
+	if len(sig) != 65 {
+		return common.Address{}, fmt.Errorf("signature must be 65 bytes, got %d bytes", len(sig))
+	}
 	stdSig := make([]byte, 65)
 	copy(stdSig[:], sig[:])
 	stdSig[len(sig)-1] -= 27
@@ -53,6 +56,7 @@ type Pair struct {
 	Value string
 }
 
+// NOTE: This function is deprecated, use the one in github.com/miguelmota/go-solidity-sha3 instead!
 func SoliditySHA3(pairs []*Pair) ([]byte, error) {
 	//convert to packed bytes like solidity
 	data, err := SolidityPackedBytes(pairs)
