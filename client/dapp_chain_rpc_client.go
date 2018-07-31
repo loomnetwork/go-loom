@@ -3,7 +3,6 @@ package client
 import (
 	"encoding/hex"
 	"errors"
-	"strconv"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
@@ -11,6 +10,8 @@ import (
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
+	"net/http"
+	"strconv"
 )
 
 type TxHandlerResult struct {
@@ -50,6 +51,22 @@ func NewDAppChainRPCClient(chainID, writeURI, readURI string) *DAppChainRPCClien
 		queryClient:   NewJSONRPCClient(readURI),
 		nextRequestID: 1,
 	}
+}
+
+func NewDAppChainRPCClientShareTransport(chainID, writeURI, readURI string, transport *http.Transport) *DAppChainRPCClient {
+	return &DAppChainRPCClient{
+		chainID:       chainID,
+		writeURI:      writeURI,
+		readURI:       readURI,
+		txClient:      NewJSONRPCClientShareTransport(writeURI, transport),
+		queryClient:   NewJSONRPCClientShareTransport(readURI, transport),
+		nextRequestID: 1,
+	}
+}
+
+func (c *DAppChainRPCClient) CloseIdleConnections() {
+	c.txClient.client.Transport.(*http.Transport).CloseIdleConnections()
+	c.queryClient.client.Transport.(*http.Transport).CloseIdleConnections()
 }
 
 func (c *DAppChainRPCClient) getNextRequestID() string {
