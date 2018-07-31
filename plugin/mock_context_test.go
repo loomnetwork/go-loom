@@ -24,5 +24,5 @@ func TestRange(t *testing.T) {
 	assert.Equal(t, 4, len(data))
 
 	//The mock context uses map underneath and the real context does not so ordering will be different then real server!
-	assert.Equal(t, string(s.makeKey([]byte("bob5"))), string(data[0].Key))
+	//	assert.Equal(t, string(s.makeKey([]byte("bob5"))), string(data[0].Key))
 }
