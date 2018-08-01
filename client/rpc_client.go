@@ -70,12 +70,15 @@ func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
 }
 
 func NewJSONRPCClient(host string) *JSONRPCClient {
+	return NewJSONRPCClientShareTransport(host, &http.Transport{})
+}
+
+func NewJSONRPCClientShareTransport(host string, transport *http.Transport) *JSONRPCClient {
+	transport.Dial = newHTTPDialer(host)
 	rpcClient := &JSONRPCClient{
 		host: host,
 		client: &http.Client{
-			Transport: &http.Transport{
-				Dial: newHTTPDialer(host),
-			},
+			Transport: transport,
 		},
 	}
 	// Replace tcp:// with http:// so http.Client doesn't get confused
@@ -102,6 +105,9 @@ func (c *JSONRPCClient) Call(method string, params map[string]interface{}, id st
 	}
 	defer resp.Body.Close()
 	respBytes, err := ioutil.ReadAll(resp.Body)
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("post status not OK: %s, response body: %s", resp.Status, string(respBytes))
+	}
 	if err != nil {
 		return err
 	}
