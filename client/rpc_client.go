@@ -103,11 +103,17 @@ func (c *JSONRPCClient) Call(method string, params map[string]interface{}, id st
 	if err != nil {
 		return err
 	}
-	if resp.StatusCode != 200 {
-		return fmt.Errorf("post status not OK: %s", resp.Status)
-	}
 	defer resp.Body.Close()
 	respBytes, err := ioutil.ReadAll(resp.Body)
+	if resp.StatusCode != 200 {
+		var rpcResp RPCResponse
+		if err := json.Unmarshal(respBytes, &rpcResp); err == nil {
+			if rpcResp.Error == nil {
+				json.Unmarshal(rpcResp.Result, result)
+			}
+		}
+		return fmt.Errorf("post status not OK: %s", resp.Status)
+	}
 	if err != nil {
 		return err
 	}
