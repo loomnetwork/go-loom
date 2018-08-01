@@ -543,8 +543,8 @@ type TransferGatewayInitRequest struct {
 	Oracles []*types.Address `protobuf:"bytes,2,rep,name=oracles" json:"oracles,omitempty"`
 	// Initial value for TransferGatewayState.last_mainnet_block_num,
 	// Oracles will start looking for relevant Mainnet events from this block onwards.
-	// Should be set to the Mainnet block number containing the tx that deployed the
-	// Mainnet Gateway contract.
+	// Should be set to the Mainnet block number that immediately preceeded the block containing
+	// the tx that deployed the Mainnet Gateway contract.
 	FirstMainnetBlockNum uint64 `protobuf:"varint,3,opt,name=first_mainnet_block_num,json=firstMainnetBlockNum,proto3" json:"first_mainnet_block_num,omitempty"`
 }
 
