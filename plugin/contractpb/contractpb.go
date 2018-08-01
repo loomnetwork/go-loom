@@ -38,6 +38,7 @@ type Context interface {
 	HasPermission(token []byte, roles []string) (bool, []string)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
 	GrantPermissionTo(addr loom.Address, token []byte, role string)
+	RevokePermissionFrom(addr loom.Address, token []byte, role string)
 	GrantPermission(token []byte, roles []string)
 }
 
@@ -110,7 +111,7 @@ func (c *wrappedPluginContext) HasPermissionFor(addr loom.Address, token []byte,
 	found := false
 	foundRoles := []string{}
 	for _, role := range roles {
-		v := c.Context.Get(c.rolePermKey(addr, token, role))
+		v := c.Context.Get(rolePermKey(addr, token, role))
 		if v != nil && string(v) == "true" {
 			found = true
 			foundRoles = append(foundRoles, role)
@@ -121,10 +122,15 @@ func (c *wrappedPluginContext) HasPermissionFor(addr loom.Address, token []byte,
 
 // GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
 func (c *wrappedPluginContext) GrantPermissionTo(addr loom.Address, token []byte, role string) {
-	c.Context.Set(c.rolePermKey(addr, token, role), []byte("true"))
+	c.Context.Set(rolePermKey(addr, token, role), []byte("true"))
 }
 
-func (c *wrappedPluginContext) rolePermKey(addr loom.Address, token []byte, role string) []byte {
+// RevokePermissionFrom removes a permission previously granted by GrantPermissionTo
+func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []byte, role string) {
+	c.Context.Delete(rolePermKey(addr, token, role))
+}
+
+func rolePermKey(addr loom.Address, token []byte, role string) []byte {
 	return []byte(fmt.Sprintf("%stoken:%s:role:%s", loom.PermPrefix(addr), token, []byte(role)))
 }
 
