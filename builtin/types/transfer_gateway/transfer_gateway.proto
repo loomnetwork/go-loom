@@ -9,10 +9,16 @@ enum TransferGatewayTokenKind {
 }
 
 message TransferGatewayState {
+    Address owner = 1;
     // Last Mainnet block processed by the Transfer Gateway contract
-    uint64 last_eth_block = 1;
+    uint64 last_mainnet_block_num = 2;
     // Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
-    repeated Address token_withdrawers = 2;
+    repeated Address token_withdrawers = 3;
+}
+
+message TransferGatewayOracleState {
+    // DAppChain address of the Oracle
+    Address address = 1;
 }
 
 message TransferGatewayWithdrawalReceipt {
@@ -91,12 +97,33 @@ message TransferGatewayTokenWithdrawalSigned {
 // Genesis
 
 message TransferGatewayInitRequest {
-    // List of oracles that the Gateway should accept data from, each oracle is identified by the
-    // address of the validator node it runs in
-    repeated Address oracles = 1;
+    // Only the owner will be allowed to add/remove oracles
+    Address owner = 1;
+    // List of oracles that the Gateway should accept data from
+    repeated Address oracles = 2;
+    // Initial value for TransferGatewayState.last_mainnet_block_num,
+    // Oracles will start looking for relevant Mainnet events from this block onwards.
+    // Should be set to the Mainnet block number that immediately preceeded the block containing
+    // the tx that deployed the Mainnet Gateway contract.
+    uint64 first_mainnet_block_num = 3;
 }
 
 // Request & Response
+
+message TransferGatewayAddOracleRequest {
+    Address oracle = 1;
+}
+
+message TransferGatewayRemoveOracleRequest {
+    Address oracle = 1;
+}
+
+message TransferGatewayGetOraclesRequest {
+}
+
+message TransferGatewayGetOraclesResponse {
+    repeated TransferGatewayOracleState oracles = 1;
+}
 
 // Batch of events from the Gateway on Ethereum mainnet
 message TransferGatewayProcessEventBatchRequest {

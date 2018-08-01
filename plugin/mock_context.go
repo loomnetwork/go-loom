@@ -202,8 +202,9 @@ func (c *FakeContext) makeKey(key []byte) string {
 func (c *FakeContext) Range(prefix []byte) RangeData {
 	ret := make(RangeData, 0)
 
+	keyedPrefix := c.makeKey(prefix)
 	for key, value := range c.data {
-		if strings.HasPrefix(key, string(prefix)) == true {
+		if strings.HasPrefix(key, keyedPrefix) == true {
 			r := &RangeEntry{
 				Key:   []byte(key),
 				Value: value,
