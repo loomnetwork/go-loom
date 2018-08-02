@@ -61,7 +61,6 @@ const (
 	PlasmaCoinDeposited PlasmaCoinState = iota
 	PlasmaCoinExiting
 	PlasmaCoinChallenged
-	PlasmaCoinResponded
 	PlasmaCoinExited
 )
 
@@ -81,6 +80,13 @@ type DepositEventData struct {
 	BlockNum *big.Int
 }
 
+type ChallengedExitEventData struct {
+	// Plasma slot, a unique identifier, assigned to the deposit.
+	Slot uint64
+    // Hash of the transaction used for the response to a challenge.
+	TxHash [32]byte
+}
+
 type RootChainClient interface {
 	FinalizeExits() error
 	Withdraw(slot uint64) error
@@ -93,8 +99,8 @@ type RootChainClient interface {
 		prevTxInclusionProof Proof, exitingTxInclusionProof Proof,
 		sig []byte, prevTxBlockNum int64, exitingTxBlockNum int64) ([]byte, error)
 
-	RespondChallengeBefore(slot uint64, challengingBlockNumber int64,
-		challengingTransaction Tx, proof Proof, sig []byte) ([]byte, error)
+	RespondChallengeBefore(slot uint64, challengingTxHash [32]byte, respondingBlockNumber int64,
+		respondingTransaction Tx, proof Proof, sig []byte) ([]byte, error)
 
 	ChallengeBetween(slot uint64, challengingBlockNumber int64,
 		challengingTransaction Tx, proof Proof, sig []byte) ([]byte, error)
@@ -106,4 +112,5 @@ type RootChainClient interface {
 
 	DebugCoinMetaData(slots []uint64)
 	DepositEventData(txHash common.Hash) (*DepositEventData, error)
+	ChallengedExitEventData(txHash common.Hash) (*ChallengedExitEventData, error)
 }
