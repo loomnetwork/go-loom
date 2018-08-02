@@ -28,3 +28,23 @@ func (rc *RootChainFilterer) DepositEventData(txReceipt *types.Receipt) (*RootCh
 	}
 	return nil, nil
 }
+
+func (rc *RootChainFilterer) ChallengedExitEventData(txReceipt *types.Receipt) (*RootChainChallengedExit, error) {
+	contractABI, err := abi.JSON(strings.NewReader(RootChainABI))
+	if err != nil {
+		return nil, err
+	}
+	eventTopic := contractABI.Events["ChallengedExit"].Id()
+	eventData := new(RootChainChallengedExit)
+	for _, log := range txReceipt.Logs {
+		for _, topic := range log.Topics {
+			if topic.Hex() == eventTopic.Hex() {
+				if err := rc.contract.UnpackLog(eventData, "ChallengedExit", *log); err != nil {
+					return nil, err
+				}
+				return eventData, nil
+			}
+		}
+	}
+	return nil, nil
+}
