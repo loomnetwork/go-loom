@@ -29,14 +29,6 @@ message AddressMapperAddIdentityMappingRequest {
     bytes signature = 3;
 }
 
-message AddressMapperAddContractMappingRequest {
-    // Address on a blockchain
-    Address from = 1;
-    // Corresponding address on another blockchain
-    Address to = 2;
-    // TODO: proof of ownership fields
-}
-
 message AddressMapperRemoveMappingRequest {
     // TODO
 }
