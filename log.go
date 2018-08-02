@@ -1,7 +1,6 @@
 package loom
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -87,7 +86,6 @@ func (l *GoKitLogger) With(keyvals ...interface{}) Logger {
 }
 
 func NewLoomLogger(loomLogLevel, dest string) Logger {
-	fmt.Printf("NewGoKitLogger-loglevel-%s\n", loomLogLevel)
 	w := MakeFileLoggerWriter(loomLogLevel, dest)
 	logTr := func(w io.Writer) kitlog.Logger {
 		fmtLogger := kitlog.NewLogfmtLogger(kitlog.NewSyncWriter(w))
