@@ -16,7 +16,7 @@ import (
 
 type LoomTx struct {
 	Slot         uint64
-	Denomination uint32 //TODO should be bigint
+	Denomination *big.Int
 	Owner        common.Address
 	PrevBlock    *big.Int
 	Signature    []byte
@@ -41,7 +41,7 @@ func (l *LoomTx) Sign(key *ecdsa.PrivateKey) ([]byte, error) {
 		return nil, err
 	}
 
-	// The first byte should be the signature more, for details about the signature format refer to
+	// The first byte should be the signature mode, for details about the signature format refer to
 	// https://github.com/loomnetwork/plasma-erc721/blob/master/server/contracts/Libraries/ECVerify.sol
 	return append(make([]byte, 1, 66), sig...), nil
 }
@@ -49,14 +49,14 @@ func (l *LoomTx) Sign(key *ecdsa.PrivateKey) ([]byte, error) {
 func (l *LoomTx) RlpEncode() ([]byte, error) {
 	return rlp.EncodeToBytes([]interface{}{
 		uint64(l.Slot),
-		l.PrevBlock.Uint64(),
+		l.PrevBlock,
 		l.Denomination,
 		l.Owner,
 	})
 }
 
 func (l *LoomTx) Hash() []byte {
-	if l.PrevBlock.Int64() != 0 {
+	if l.PrevBlock.Cmp(big.NewInt(0)) != 0 {
 		ret, err := l.rlpEncodeWithSha3()
 		if err != nil {
 			panic(err)

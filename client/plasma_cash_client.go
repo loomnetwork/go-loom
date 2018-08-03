@@ -5,6 +5,7 @@ package client
 import (
 	"fmt"
 	"log"
+	"math/big"
 
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
@@ -27,27 +28,26 @@ type PlasmaCashClient struct {
 // CurrentBlock gets the highest block of plasma cash
 // does not grab pending transactions yet
 func (c *PlasmaCashClient) CurrentBlock() (plasma_cash.Block, error) {
-	return c.Block(0) //asking for block zero gives latest
+	return c.Block(big.NewInt(0)) //asking for block zero gives latest
 }
 
 // BlockNumber gets the current plasma cash block height
-func (c *PlasmaCashClient) BlockNumber() (int64, error) {
+func (c *PlasmaCashClient) BlockNumber() (*big.Int, error) {
 	request := &pctypes.GetCurrentBlockRequest{}
 	var result pctypes.GetCurrentBlockResponse
 
 	if _, err := c.loomcontract.StaticCall("GetCurrentBlockRequest", request, c.caller, &result); err != nil {
 		log.Fatalf("failed getting Block number - %v\n", err)
 
-		return 0, err
+		return big.NewInt(0), err
 	}
 
-	return result.BlockHeight.Value.Int64(), nil
+	return result.BlockHeight.Value.Int, nil
 }
 
 // Block get the block, transactions and proofs for a given block height
-func (c *PlasmaCashClient) Block(blknum int64) (plasma_cash.Block, error) {
-	blk := &types.BigUInt{Value: *loom.NewBigUIntFromInt(blknum)}
-
+func (c *PlasmaCashClient) Block(blknum *big.Int) (plasma_cash.Block, error) {
+	blk := &types.BigUInt{Value: *loom.NewBigUInt(blknum)}
 	var result pctypes.GetBlockResponse
 	params := &pctypes.GetBlockRequest{
 		BlockHeight: blk,
@@ -88,14 +88,14 @@ func (c *PlasmaCashClient) Deposit(deposit *pctypes.DepositRequest) error {
 }
 
 // Sends a plasma cash transaciton to be added to the current plasma cash block
-func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock int64, denomination int64,
+func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int,
 	newOwner, prevOwner string, sig []byte) error {
 	receiverAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", newOwner))
 	senderAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", prevOwner))
 	tx := &pctypes.PlasmaTx{
 		Slot:          uint64(slot),
-		PreviousBlock: &types.BigUInt{Value: *loom.NewBigUIntFromInt(prevBlock)},
-		Denomination:  &types.BigUInt{Value: *loom.NewBigUIntFromInt(denomination)},
+		PreviousBlock: &types.BigUInt{Value: *loom.NewBigUInt(prevBlock)},
+		Denomination:  &types.BigUInt{Value: *loom.NewBigUInt(denomination)},
 		NewOwner:      receiverAddr.MarshalPB(),
 		Sender:        senderAddr.MarshalPB(),
 		Signature:     sig,

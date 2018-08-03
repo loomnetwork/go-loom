@@ -31,15 +31,15 @@ type Deposit interface {
 
 type ChainServiceClient interface {
 	CurrentBlock() (Block, error)
-	BlockNumber() (int64, error)
+	BlockNumber() (*big.Int, error)
 
-	Block(blknum int64) (Block, error)
+	Block(blknum *big.Int) (Block, error)
 	//Proof(blknum int64, slot uint64) (Proof, error)
 
 	SubmitBlock() error
 	Deposit(deposit *pctypes.DepositRequest) error
 
-	SendTransaction(slot uint64, prevBlock int64, denomination int64, newOwner, prevOwner string, sig []byte) error
+	SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int, newOwner string, prevOwner string, sig []byte) error
 }
 
 type Account struct {
@@ -49,8 +49,8 @@ type Account struct {
 
 type TokenContract interface {
 	Register() error
-	Deposit(int64) (common.Hash, error)
-	BalanceOf() (int64, error)
+	Deposit(*big.Int) (common.Hash, error)
+	BalanceOf() (*big.Int, error)
 
 	Account() (*Account, error)
 }
@@ -60,17 +60,25 @@ type PlasmaCoinState uint8
 const (
 	PlasmaCoinDeposited PlasmaCoinState = iota
 	PlasmaCoinExiting
-	PlasmaCoinChallenged
 	PlasmaCoinExited
 )
 
+type PlasmaCoinMode uint8
+
+const (
+	PlasmaCoinEth PlasmaCoinMode = iota
+	PlasmaCoinERC20
+	PlasmaCoinERC721
+)
+
 type PlasmaCoin struct {
-	UID             uint64
-	DepositBlockNum int64
-	Denomination    uint32
+	UID             *big.Int
+	DepositBlockNum *big.Int
+	Denomination    *big.Int
 	Owner           string
 	ContractAddress string
 	State           PlasmaCoinState
+	Mode            PlasmaCoinMode
 }
 
 type DepositEventData struct {
@@ -83,7 +91,7 @@ type DepositEventData struct {
 type ChallengedExitEventData struct {
 	// Plasma slot, a unique identifier, assigned to the deposit.
 	Slot uint64
-    // Hash of the transaction used for the response to a challenge.
+	// Hash of the transaction used for the response to a challenge.
 	TxHash [32]byte
 }
 
@@ -93,19 +101,19 @@ type RootChainClient interface {
 	WithdrawBonds() error
 	PlasmaCoin(slot uint64) (*PlasmaCoin, error)
 	StartExit(slot uint64, prevTx Tx, exitingTx Tx, prevTxProof Proof,
-		exitingTxProof Proof, sigs []byte, prevTxBlkNum int64, txBlkNum int64) ([]byte, error)
+		exitingTxProof Proof, sigs []byte, prevTxBlkNum *big.Int, txBlkNum *big.Int) ([]byte, error)
 
 	ChallengeBefore(slot uint64, prevTx Tx, exitingTx Tx,
 		prevTxInclusionProof Proof, exitingTxInclusionProof Proof,
-		sig []byte, prevTxBlockNum int64, exitingTxBlockNum int64) ([]byte, error)
+		sig []byte, prevTxBlockNum *big.Int, exitingTxBlockNum *big.Int) ([]byte, error)
 
-	RespondChallengeBefore(slot uint64, challengingTxHash [32]byte, respondingBlockNumber int64,
+	RespondChallengeBefore(slot uint64, challengingTxHash [32]byte, respondingBlockNumber *big.Int,
 		respondingTransaction Tx, proof Proof, sig []byte) ([]byte, error)
 
-	ChallengeBetween(slot uint64, challengingBlockNumber int64,
+	ChallengeBetween(slot uint64, challengingBlockNumber *big.Int,
 		challengingTransaction Tx, proof Proof, sig []byte) ([]byte, error)
 
-	ChallengeAfter(slot uint64, challengingBlockNumber int64,
+	ChallengeAfter(slot uint64, challengingBlockNumber *big.Int,
 		challengingTransaction Tx, proof Proof, sig []byte) ([]byte, error)
 
 	SubmitBlock(blockNum *big.Int, merkleRoot [32]byte) error
