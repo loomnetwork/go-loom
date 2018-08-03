@@ -60,17 +60,25 @@ type PlasmaCoinState uint8
 const (
 	PlasmaCoinDeposited PlasmaCoinState = iota
 	PlasmaCoinExiting
-	PlasmaCoinChallenged
 	PlasmaCoinExited
+)
+
+type PlasmaCoinMode uint8
+
+const (
+	PlasmaCoinEth PlasmaCoinMode = iota
+	PlasmaCoinERC20
+	PlasmaCoinERC721
 )
 
 type PlasmaCoin struct {
 	UID             uint64
 	DepositBlockNum int64
-	Denomination    uint32
+	Denomination    uint64
 	Owner           string
 	ContractAddress string
 	State           PlasmaCoinState
+	Mode            PlasmaCoinMode
 }
 
 type DepositEventData struct {
@@ -83,7 +91,7 @@ type DepositEventData struct {
 type ChallengedExitEventData struct {
 	// Plasma slot, a unique identifier, assigned to the deposit.
 	Slot uint64
-    // Hash of the transaction used for the response to a challenge.
+	// Hash of the transaction used for the response to a challenge.
 	TxHash [32]byte
 }
 

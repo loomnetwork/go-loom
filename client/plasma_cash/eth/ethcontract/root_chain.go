@@ -16,7 +16,7 @@ import (
 )
 
 // RootChainABI is the input ABI used to generate the binding from.
-const RootChainABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"name\":\"bonded\",\"type\":\"uint256\"},{\"name\":\"withdrawable\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"childBlockInterval\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"numCoins\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"exitSlots\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"currentBlock\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"childChain\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"createdAt\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"denomination\",\"type\":\"uint64\"},{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"root\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SubmittedBlock\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"StartedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"txHash\",\"type\":\"bytes32\"}],\"name\":\"ChallengedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"RespondedExitChallenge\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"FinalizedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"FreedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SlashedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"WithdrewBonds\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"root\",\"type\":\"bytes32\"}],\"name\":\"submitBlock\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"prevTxBytes\",\"type\":\"bytes\"},{\"name\":\"exitingTxBytes\",\"type\":\"bytes\"},{\"name\":\"prevTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"exitingTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blocks\",\"type\":\"uint256[2]\"}],\"name\":\"startExit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"finalizeExit\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"finalizeExits\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"prevTxBytes\",\"type\":\"bytes\"},{\"name\":\"txBytes\",\"type\":\"bytes\"},{\"name\":\"prevTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"txInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blocks\",\"type\":\"uint256[2]\"}],\"name\":\"challengeBefore\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingTxHash\",\"type\":\"bytes32\"},{\"name\":\"respondingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"respondingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"respondChallengeBefore\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeBetween\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeAfter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"withdrawBonds\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"txHash\",\"type\":\"bytes32\"},{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"proof\",\"type\":\"bytes\"}],\"name\":\"checkMembership\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getPlasmaCoin\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint32\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getExit\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getBlockRoot\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const RootChainABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"name\":\"bonded\",\"type\":\"uint256\"},{\"name\":\"withdrawable\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"childBlockInterval\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"numCoins\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"exitSlots\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"currentBlock\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"childChain\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"createdAt\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"denomination\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"root\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SubmittedBlock\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"StartedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"txHash\",\"type\":\"bytes32\"}],\"name\":\"ChallengedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"RespondedExitChallenge\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"FinalizedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"FreedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SlashedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"WithdrewBonds\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"mode\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"uid\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"denomination\",\"type\":\"uint256\"}],\"name\":\"Withdrew\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"root\",\"type\":\"bytes32\"}],\"name\":\"submitBlock\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"prevTxBytes\",\"type\":\"bytes\"},{\"name\":\"exitingTxBytes\",\"type\":\"bytes\"},{\"name\":\"prevTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"exitingTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blocks\",\"type\":\"uint256[2]\"}],\"name\":\"startExit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"finalizeExit\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"finalizeExits\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"prevTxBytes\",\"type\":\"bytes\"},{\"name\":\"txBytes\",\"type\":\"bytes\"},{\"name\":\"prevTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"txInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blocks\",\"type\":\"uint256[2]\"}],\"name\":\"challengeBefore\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingTxHash\",\"type\":\"bytes32\"},{\"name\":\"respondingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"respondingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"respondChallengeBefore\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeBetween\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeAfter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"withdrawBonds\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC20Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"txHash\",\"type\":\"bytes32\"},{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"proof\",\"type\":\"bytes\"}],\"name\":\"checkMembership\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getPlasmaCoin\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint8\"},{\"name\":\"\",\"type\":\"uint8\"},{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getExit\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getBlockRoot\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // RootChain is an auto generated Go binding around an Ethereum contract.
 type RootChain struct {
@@ -398,15 +398,16 @@ func (_RootChain *RootChainCallerSession) GetExit(slot uint64) (common.Address, 
 
 // GetPlasmaCoin is a free data retrieval call binding the contract method 0xf8353cf0.
 //
-// Solidity: function getPlasmaCoin(slot uint64) constant returns(uint64, uint256, uint32, address, address, uint8)
-func (_RootChain *RootChainCaller) GetPlasmaCoin(opts *bind.CallOpts, slot uint64) (uint64, *big.Int, uint32, common.Address, common.Address, uint8, error) {
+// Solidity: function getPlasmaCoin(slot uint64) constant returns(uint256, uint256, uint256, address, uint8, uint8, address)
+func (_RootChain *RootChainCaller) GetPlasmaCoin(opts *bind.CallOpts, slot uint64) (*big.Int, *big.Int, *big.Int, common.Address, uint8, uint8, common.Address, error) {
 	var (
-		ret0 = new(uint64)
+		ret0 = new(*big.Int)
 		ret1 = new(*big.Int)
-		ret2 = new(uint32)
+		ret2 = new(*big.Int)
 		ret3 = new(common.Address)
-		ret4 = new(common.Address)
+		ret4 = new(uint8)
 		ret5 = new(uint8)
+		ret6 = new(common.Address)
 	)
 	out := &[]interface{}{
 		ret0,
@@ -415,22 +416,23 @@ func (_RootChain *RootChainCaller) GetPlasmaCoin(opts *bind.CallOpts, slot uint6
 		ret3,
 		ret4,
 		ret5,
+		ret6,
 	}
 	err := _RootChain.contract.Call(opts, out, "getPlasmaCoin", slot)
-	return *ret0, *ret1, *ret2, *ret3, *ret4, *ret5, err
+	return *ret0, *ret1, *ret2, *ret3, *ret4, *ret5, *ret6, err
 }
 
 // GetPlasmaCoin is a free data retrieval call binding the contract method 0xf8353cf0.
 //
-// Solidity: function getPlasmaCoin(slot uint64) constant returns(uint64, uint256, uint32, address, address, uint8)
-func (_RootChain *RootChainSession) GetPlasmaCoin(slot uint64) (uint64, *big.Int, uint32, common.Address, common.Address, uint8, error) {
+// Solidity: function getPlasmaCoin(slot uint64) constant returns(uint256, uint256, uint256, address, uint8, uint8, address)
+func (_RootChain *RootChainSession) GetPlasmaCoin(slot uint64) (*big.Int, *big.Int, *big.Int, common.Address, uint8, uint8, common.Address, error) {
 	return _RootChain.Contract.GetPlasmaCoin(&_RootChain.CallOpts, slot)
 }
 
 // GetPlasmaCoin is a free data retrieval call binding the contract method 0xf8353cf0.
 //
-// Solidity: function getPlasmaCoin(slot uint64) constant returns(uint64, uint256, uint32, address, address, uint8)
-func (_RootChain *RootChainCallerSession) GetPlasmaCoin(slot uint64) (uint64, *big.Int, uint32, common.Address, common.Address, uint8, error) {
+// Solidity: function getPlasmaCoin(slot uint64) constant returns(uint256, uint256, uint256, address, uint8, uint8, address)
+func (_RootChain *RootChainCallerSession) GetPlasmaCoin(slot uint64) (*big.Int, *big.Int, *big.Int, common.Address, uint8, uint8, common.Address, error) {
 	return _RootChain.Contract.GetPlasmaCoin(&_RootChain.CallOpts, slot)
 }
 
@@ -563,6 +565,27 @@ func (_RootChain *RootChainSession) FinalizeExits() (*types.Transaction, error) 
 // Solidity: function finalizeExits() returns()
 func (_RootChain *RootChainTransactorSession) FinalizeExits() (*types.Transaction, error) {
 	return _RootChain.Contract.FinalizeExits(&_RootChain.TransactOpts)
+}
+
+// OnERC20Received is a paid mutator transaction binding the contract method 0x65d83056.
+//
+// Solidity: function onERC20Received(_from address, _amount uint256,  bytes) returns(bytes4)
+func (_RootChain *RootChainTransactor) OnERC20Received(opts *bind.TransactOpts, _from common.Address, _amount *big.Int, arg2 []byte) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "onERC20Received", _from, _amount, arg2)
+}
+
+// OnERC20Received is a paid mutator transaction binding the contract method 0x65d83056.
+//
+// Solidity: function onERC20Received(_from address, _amount uint256,  bytes) returns(bytes4)
+func (_RootChain *RootChainSession) OnERC20Received(_from common.Address, _amount *big.Int, arg2 []byte) (*types.Transaction, error) {
+	return _RootChain.Contract.OnERC20Received(&_RootChain.TransactOpts, _from, _amount, arg2)
+}
+
+// OnERC20Received is a paid mutator transaction binding the contract method 0x65d83056.
+//
+// Solidity: function onERC20Received(_from address, _amount uint256,  bytes) returns(bytes4)
+func (_RootChain *RootChainTransactorSession) OnERC20Received(_from common.Address, _amount *big.Int, arg2 []byte) (*types.Transaction, error) {
+	return _RootChain.Contract.OnERC20Received(&_RootChain.TransactOpts, _from, _amount, arg2)
 }
 
 // OnERC721Received is a paid mutator transaction binding the contract method 0xf0b9e5ba.
@@ -895,15 +918,15 @@ func (it *RootChainDepositIterator) Close() error {
 type RootChainDeposit struct {
 	Slot            uint64
 	BlockNumber     *big.Int
-	Denomination    uint64
+	Denomination    *big.Int
 	From            common.Address
 	ContractAddress common.Address
 	Raw             types.Log // Blockchain specific contextual infos
 }
 
-// FilterDeposit is a free log retrieval operation binding the contract event 0xd986268aed6074e7376db923df55ed41523cdf24bc906df2ad602751b0009834.
+// FilterDeposit is a free log retrieval operation binding the contract event 0xaa231413cf2b61ec7d73eeef7c722cd8ef6ed7a76e4d9e533867281e94f9a823.
 //
-// Solidity: e Deposit(slot indexed uint64, blockNumber uint256, denomination uint64, from indexed address, contractAddress indexed address)
+// Solidity: e Deposit(slot indexed uint64, blockNumber uint256, denomination uint256, from indexed address, contractAddress indexed address)
 func (_RootChain *RootChainFilterer) FilterDeposit(opts *bind.FilterOpts, slot []uint64, from []common.Address, contractAddress []common.Address) (*RootChainDepositIterator, error) {
 
 	var slotRule []interface{}
@@ -927,9 +950,9 @@ func (_RootChain *RootChainFilterer) FilterDeposit(opts *bind.FilterOpts, slot [
 	return &RootChainDepositIterator{contract: _RootChain.contract, event: "Deposit", logs: logs, sub: sub}, nil
 }
 
-// WatchDeposit is a free log subscription operation binding the contract event 0xd986268aed6074e7376db923df55ed41523cdf24bc906df2ad602751b0009834.
+// WatchDeposit is a free log subscription operation binding the contract event 0xaa231413cf2b61ec7d73eeef7c722cd8ef6ed7a76e4d9e533867281e94f9a823.
 //
-// Solidity: e Deposit(slot indexed uint64, blockNumber uint256, denomination uint64, from indexed address, contractAddress indexed address)
+// Solidity: e Deposit(slot indexed uint64, blockNumber uint256, denomination uint256, from indexed address, contractAddress indexed address)
 func (_RootChain *RootChainFilterer) WatchDeposit(opts *bind.WatchOpts, sink chan<- *RootChainDeposit, slot []uint64, from []common.Address, contractAddress []common.Address) (event.Subscription, error) {
 
 	var slotRule []interface{}
@@ -1763,6 +1786,142 @@ func (_RootChain *RootChainFilterer) WatchSubmittedBlock(opts *bind.WatchOpts, s
 				// New log arrived, parse the event and forward to the user
 				event := new(RootChainSubmittedBlock)
 				if err := _RootChain.contract.UnpackLog(event, "SubmittedBlock", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// RootChainWithdrewIterator is returned from FilterWithdrew and is used to iterate over the raw logs and unpacked data for Withdrew events raised by the RootChain contract.
+type RootChainWithdrewIterator struct {
+	Event *RootChainWithdrew // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *RootChainWithdrewIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(RootChainWithdrew)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(RootChainWithdrew)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *RootChainWithdrewIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *RootChainWithdrewIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// RootChainWithdrew represents a Withdrew event raised by the RootChain contract.
+type RootChainWithdrew struct {
+	From            common.Address
+	Mode            uint8
+	ContractAddress common.Address
+	Uid             *big.Int
+	Denomination    *big.Int
+	Raw             types.Log // Blockchain specific contextual infos
+}
+
+// FilterWithdrew is a free log retrieval operation binding the contract event 0xdf9b1156d45cedd38f6d4f4d1b7358b242045d6a14b7d94b87eaa231317870e8.
+//
+// Solidity: e Withdrew(from indexed address, mode uint8, contractAddress address, uid uint256, denomination uint256)
+func (_RootChain *RootChainFilterer) FilterWithdrew(opts *bind.FilterOpts, from []common.Address) (*RootChainWithdrewIterator, error) {
+
+	var fromRule []interface{}
+	for _, fromItem := range from {
+		fromRule = append(fromRule, fromItem)
+	}
+
+	logs, sub, err := _RootChain.contract.FilterLogs(opts, "Withdrew", fromRule)
+	if err != nil {
+		return nil, err
+	}
+	return &RootChainWithdrewIterator{contract: _RootChain.contract, event: "Withdrew", logs: logs, sub: sub}, nil
+}
+
+// WatchWithdrew is a free log subscription operation binding the contract event 0xdf9b1156d45cedd38f6d4f4d1b7358b242045d6a14b7d94b87eaa231317870e8.
+//
+// Solidity: e Withdrew(from indexed address, mode uint8, contractAddress address, uid uint256, denomination uint256)
+func (_RootChain *RootChainFilterer) WatchWithdrew(opts *bind.WatchOpts, sink chan<- *RootChainWithdrew, from []common.Address) (event.Subscription, error) {
+
+	var fromRule []interface{}
+	for _, fromItem := range from {
+		fromRule = append(fromRule, fromItem)
+	}
+
+	logs, sub, err := _RootChain.contract.WatchLogs(opts, "Withdrew", fromRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(RootChainWithdrew)
+				if err := _RootChain.contract.UnpackLog(event, "Withdrew", log); err != nil {
 					return err
 				}
 				event.Raw = log
