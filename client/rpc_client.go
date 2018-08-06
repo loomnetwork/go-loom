@@ -26,7 +26,7 @@ type RPCResponse struct {
 }
 
 type RPCError struct {
-	Code    string `json:"code"`
+	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Data    string `json:"data,omitempty"`
 }
