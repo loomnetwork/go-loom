@@ -4,14 +4,15 @@ import (
 	"encoding/hex"
 	"errors"
 
+	"net/http"
+	"strconv"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
-	"net/http"
-	"strconv"
 )
 
 type TxHandlerResult struct {
@@ -24,7 +25,7 @@ type BroadcastTxCommitResult struct {
 	CheckTx   TxHandlerResult `json:"check_tx"`
 	DeliverTx TxHandlerResult `json:"deliver_tx"`
 	Hash      string          `json:"hash"`
-	Height    int64           `json:"height"`
+	Height    string          `json:"height"`
 }
 
 // Implements the DAppChainClient interface
@@ -83,13 +84,17 @@ func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
 	params := map[string]interface{}{
 		"key": hex.EncodeToString(signer.PublicKey()),
 	}
-	var r uint64
-	err := c.queryClient.Call("nonce", params, c.getNextRequestID(), &r)
-	return r, err
+	var rRes string
+	err := c.queryClient.Call("nonce", params, c.getNextRequestID(), &rRes)
+	if err != nil {
+		return 0, err
+	}
+	return strconv.ParseUint(rRes, 10, 64)
 }
 
 func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
 	// TODO: signing & noncing should be handled by middleware
+
 	nonce, err := c.GetNonce(signer)
 	if err != nil {
 		return nil, err
@@ -128,6 +133,7 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 		}
 		return nil, errors.New("DeliverTx failed")
 	}
+
 	return r.DeliverTx.Data, nil
 }
 
