@@ -56,6 +56,9 @@ type RangeEntry struct {
 // RangeData an array of key value pairs for a range of data
 type RangeData []*RangeEntry
 
+// StaticContext is the low-level context provided to RequestDispatcher.Call().
+// The primary implementation of this interface is plugin.contractContext (loomchain/plugin package).
+// For external GRPC contracts plugin.contractContext is wrapped by GRPCContext (go-loom/plugin package).
 type StaticContext interface {
 	StaticAPI
 	Get(key []byte) []byte
@@ -67,6 +70,7 @@ type StaticContext interface {
 	ContractAddress() loom.Address
 }
 
+// Context is the low-level context provided to RequestDispatcher.StaticCall().
 type Context interface {
 	StaticContext
 	VolatileAPI
