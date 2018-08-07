@@ -10,21 +10,12 @@ import (
 	kitlevel "github.com/go-kit/kit/log/level"
 )
 
-type Logger interface {
-	With(keyvals ...interface{}) Logger
-	Debug(msg string, keyvals ...interface{})
-	Info(msg string, keyvals ...interface{})
-	Warn(msg string, keyvals ...interface{})
-	Error(msg string, keyvals ...interface{})
-	Log(keyvals ...interface{}) error
-}
-
-type GoKitLogger struct {
+type Logger struct {
 	kitlog.Logger
 }
 
-func NewFilter(next kitlog.Logger, options ...kitlevel.Option) Logger {
-	return &GoKitLogger{kitlevel.NewFilter(next, options...)}
+func NewFilter(next kitlog.Logger, options ...kitlevel.Option) *Logger {
+	return &Logger{kitlevel.NewFilter(next, options...)}
 }
 
 var (
@@ -51,41 +42,46 @@ var (
 var msgKey = "_msg"
 
 // Info logs a message at level Info.
-func (l *GoKitLogger) Info(msg string, keyvals ...interface{}) {
+func (l *Logger) Info(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Info(l)
-	kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...)
-}
-
-// Log dont call this directly, its for compatibility for gokit
-func (l *GoKitLogger) Log(keyvals ...interface{}) error {
-	//	fmt.Printf("In Log -%v\n", keyvals...)
-	//	fmt.Printf("In Log(inner) -%v\n", l.Logger)
-	return l.Logger.Log(keyvals...)
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
+		errLogger := kitlevel.Error(l)
+		kitlog.With(errLogger, msgKey, msg).Log("err", err)
+	}
 }
 
 // Debug logs a message at level Debug.
-func (l *GoKitLogger) Debug(msg string, keyvals ...interface{}) {
+func (l *Logger) Debug(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Debug(l)
-	kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...)
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
+		errLogger := kitlevel.Error(l)
+		errLogger.Log("err", err)
+	}
 }
 
 // Error logs a message at level Error.
-func (l *GoKitLogger) Error(msg string, keyvals ...interface{}) {
+func (l *Logger) Error(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Error(l)
-	kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...)
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
+		args = append([]interface{}{"err", err}, args...)
+		lWithLevel.Log(args)
+	}
 }
 
 // Warn logs a message at level Debug.
-func (l *GoKitLogger) Warn(msg string, keyvals ...interface{}) {
+func (l *Logger) Warn(msg string, keyvals ...interface{}) {
 	lWithLevel := kitlevel.Warn(l)
-	kitlog.With(lWithLevel, msgKey, msg).Log(keyvals...)
+	args := append([]interface{}{msgKey, msg}, keyvals...)
+	if err := kitlog.With(lWithLevel).Log(args...); err != nil {
+		errLogger := kitlevel.Error(l)
+		kitlog.With(errLogger, msgKey, msg).Log("err", err)
+	}
 }
 
-func (l *GoKitLogger) With(keyvals ...interface{}) Logger {
-	return &GoKitLogger{kitlog.With(l.Logger, keyvals...)}
-}
-
-func NewLoomLogger(loomLogLevel, dest string) Logger {
+func NewLoomLogger(loomLogLevel, dest string) *Logger {
 	w := MakeFileLoggerWriter(loomLogLevel, dest)
 	logTr := func(w io.Writer) kitlog.Logger {
 		fmtLogger := kitlog.NewLogfmtLogger(kitlog.NewSyncWriter(w))
@@ -94,10 +90,10 @@ func NewLoomLogger(loomLogLevel, dest string) Logger {
 	return MakeLoomLogger(loomLogLevel, w, logTr)
 }
 
-func MakeLoomLogger(logLevel string, w io.Writer, tr func(w io.Writer) kitlog.Logger) *GoKitLogger {
-	loggerFunc := func(w io.Writer) *GoKitLogger {
+func MakeLoomLogger(logLevel string, w io.Writer, tr func(w io.Writer) kitlog.Logger) *Logger {
+	loggerFunc := func(w io.Writer) *Logger {
 		baseLogger := kitlog.With(tr(w), "module", "loom")
-		return &GoKitLogger{
+		return &Logger{
 			NewFilter(baseLogger, Allow(logLevel)),
 		}
 	}
@@ -120,10 +116,10 @@ func MakeFileLoggerWriter(loomLogLevel, dest string) io.Writer {
 	//			log.Fatal(err)
 	//		}
 	//		Default = kitsyslog.NewSyslogLogger(sysLog, loggerFunc, kitsyslog.PrioritySelectorOption)
+	log.Printf("Sending logs to %s\n", dest)
 	if destParts[1] == "-" {
 		return os.Stderr
 	} else {
-		log.Printf("Sending logs to file %s\n", destParts[1])
 		f, err := os.OpenFile(destParts[1], os.O_RDWR|os.O_CREATE, 0755)
 		if err != nil {
 			log.Fatal(err)
