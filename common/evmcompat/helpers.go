@@ -16,6 +16,15 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/sha3"
+	ssha "github.com/miguelmota/go-solidity-sha3"
+)
+
+type SignatureType uint8
+
+const (
+	SignatureType_EIP712 SignatureType = 0
+	SignatureType_GETH   SignatureType = 1
+	SignatureType_TREZOR SignatureType = 2
 )
 
 // SoliditySign signs the given data with the specified private key and returns the 65-byte signature.
@@ -48,6 +57,51 @@ func SolidityRecover(hash []byte, sig []byte) (common.Address, error) {
 
 	copy(signer[:], crypto.Keccak256(pubKey[1:])[12:])
 	return signer, nil
+}
+
+// GenerateTypedSig signs the given data with the specified private key and returns the 66-byte signature
+// (the first byte of which is used to denote the SignatureType).
+func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureType) ([]byte, error) {
+	if sigType != SignatureType_EIP712 {
+		return nil, errors.New("signing failed, sig type not implemented")
+	}
+
+	sig, err := SoliditySign(data, privKey)
+	if err != nil {
+		return nil, err
+	}
+	// Prefix the sig with a single byte indicating the sig type, in this case EIP712
+	typedSig := append(make([]byte, 0, 66), byte(SignatureType_EIP712))
+	return append(typedSig, sig...), nil
+}
+
+// RecoverAddressFromTypedSig recovers the Ethereum address from a signed hash and a 66-byte signature
+// (the first byte of which is expected to denote the SignatureType).
+func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error) {
+	var signer common.Address
+
+	if len(sig) != 66 {
+		return signer, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
+	}
+
+	switch SignatureType(sig[0]) {
+	case SignatureType_EIP712:
+	case SignatureType_GETH:
+		hash = ssha.SoliditySHA3(
+			ssha.String("\x19Ethereum Signed Message:\n32"),
+			ssha.Bytes32(hash),
+		)
+	case SignatureType_TREZOR:
+		hash = ssha.SoliditySHA3(
+			ssha.String("\x19Ethereum Signed Message:\n\x20"),
+			ssha.Bytes32(hash),
+		)
+	default:
+		return signer, fmt.Errorf("invalid signature type: %d", sig[0])
+	}
+
+	signer, err := SolidityRecover(hash, sig[1:])
+	return signer, err
 }
 
 //TODO in future all interfaces and not do conversions from strings

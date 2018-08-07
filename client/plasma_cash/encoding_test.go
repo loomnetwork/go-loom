@@ -28,7 +28,7 @@ func (s *EncodingTestSuite) TestUnsignedTxRlpEncode(c *C) {
 	tx := &LoomTx{
 		Slot:         5,
 		PrevBlock:    big.NewInt(0),
-		Denomination: 1,
+		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
 	}
 	txBytes, err := tx.RlpEncode()
@@ -56,7 +56,7 @@ func (s *EncodingTestSuite) TestTxHash(c *C) {
 	tx := &LoomTx{
 		Slot:         5,
 		PrevBlock:    big.NewInt(85478557858583),
-		Denomination: 1,
+		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
 	}
 	hexStr := common.Bytes2Hex(tx.Hash())
@@ -72,7 +72,7 @@ func (s *EncodingTestSuite) TestTxSignature(c *C) {
 	tx := &LoomTx{
 		Slot:         5,
 		PrevBlock:    big.NewInt(85478557858583),
-		Denomination: 1,
+		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
 	}
 	sig, err := tx.Sign(privKey)
@@ -97,7 +97,7 @@ func (s *EncodingTestSuite) TestUnsignedTxRlpEncode2(c *C) {
 	tx := &LoomTx{
 		Slot:         2,
 		PrevBlock:    big.NewInt(1000),
-		Denomination: 1,
+		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
 	}
 	txBytes, err := tx.RlpEncode()

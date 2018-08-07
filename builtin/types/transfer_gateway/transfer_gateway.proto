@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
 enum TransferGatewayTokenKind {
@@ -12,8 +13,10 @@ message TransferGatewayState {
     Address owner = 1;
     // Last Mainnet block processed by the Transfer Gateway contract
     uint64 last_mainnet_block_num = 2;
+    // ID that should be used for the next pending contract mapping
+    uint64 next_contract_mapping_id = 3 [(gogoproto.customname)="NextContractMappingID"];
     // Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
-    repeated Address token_withdrawers = 3;
+    repeated Address token_withdrawers = 4;
 }
 
 message TransferGatewayOracleState {
@@ -78,7 +81,45 @@ message TransferGatewayMainnetEvent {
     }
 }
 
+message TransferGatewayPendingContractMapping {
+    uint64 id = 1 [(gogoproto.customname)="ID"];
+    // Address on foreign blockchain
+    Address foreign_contract = 2;
+    // Corresponding address on local blockchain
+    Address local_contract = 3;
+    // Foreign address of the creator of the foreign contract
+    Address foreign_contract_creator = 4;
+    // Hash of the transaction which created the foreign contract
+    bytes foreign_contract_tx_hash = 5;
+}
+
+message TransferGatewayContractAddressMapping {
+    // Address on a blockchain
+    Address from = 1;
+    // Corresponding address on another blockchain
+    Address to = 2;
+}
+
+message TransferGatewayUnverifiedContractCreator {
+    uint64 contract_mapping_id = 1 [(gogoproto.customname)="ContractMappingID"];
+    // Hash of tx that created a contract, an Oracle will use this to lookup the creator & contract
+    bytes contract_tx_hash = 2;
+}
+
+message TransferGatewayVerifiedContractCreator {
+    uint64 contract_mapping_id = 1 [(gogoproto.customname)="ContractMappingID"];
+    Address creator = 2;
+    Address contract = 3;
+}
+
 // Events emitted by the contract
+
+message TransferGatewayContractMappingConfirmed {
+    // Address of a contract on a foreign blockchain
+    Address foreign_contract = 1;
+    // Address of corresponding contract on the local blockchain
+    Address local_contract = 2;
+}
 
 // Emitted when a withdrawal to the Mainnet Gateway has been signed.
 // This event contains all the required data to complete a toke withdrawal via the Mainnet Gateway.
@@ -110,6 +151,8 @@ message TransferGatewayInitRequest {
 
 // Request & Response
 
+// Oracle Management
+
 message TransferGatewayAddOracleRequest {
     Address oracle = 1;
 }
@@ -125,6 +168,30 @@ message TransferGatewayGetOraclesResponse {
     repeated TransferGatewayOracleState oracles = 1;
 }
 
+// Contract Mapping
+
+message TransferGatewayAddContractMappingRequest {
+    // Address on foreign blockchain
+    Address foreign_contract = 1;
+    // Corresponding address on local blockchain
+    Address local_contract = 2;
+    // Signature of the creator of the foreign contract
+    bytes foreign_contract_creator_sig = 3;
+    // Hash of the transaction which created the foreign contract
+    bytes foreign_contract_tx_hash = 4;
+}
+
+message TransferGatewayUnverifiedContractCreatorsRequest {
+}
+
+message TransferGatewayUnverifiedContractCreatorsResponse {
+    repeated TransferGatewayUnverifiedContractCreator creators = 1;
+}
+
+message TransferGatewayVerifyContractCreatorsRequest {
+    repeated TransferGatewayVerifiedContractCreator creators = 1;
+}
+
 // Batch of events from the Gateway on Ethereum mainnet
 message TransferGatewayProcessEventBatchRequest {
     repeated TransferGatewayMainnetEvent events = 1;
@@ -136,6 +203,8 @@ message TransferGatewayStateRequest {
 message TransferGatewayStateResponse {
     TransferGatewayState state = 1;
 }
+
+// Withdrawal Management
 
 message TransferGatewayWithdrawERC721Request {
     // ID of ERC721 token

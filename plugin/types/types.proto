@@ -61,6 +61,11 @@ message InitResponse {
 
 }
 
+message EthMessage {
+    bytes body = 1;
+    string id = 2;
+}
+
 message EventDataList {
     repeated EventData events = 1;
 }

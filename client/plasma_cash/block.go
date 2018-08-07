@@ -41,14 +41,14 @@ func (p *PbBlock) TxFromSlot(slot uint64) (Tx, error) {
 
 	prevBlock := big.NewInt(0)
 	if tx.GetPreviousBlock() != nil {
-		prevBlock = big.NewInt(tx.GetPreviousBlock().Value.Int64()) //TODO cleanup this casting
+		prevBlock = tx.GetPreviousBlock().Value.Int
 	}
 	address := tx.NewOwner.Local.String()
 	ethAddress := common.HexToAddress(address)
 
 	return &LoomTx{Slot: slot,
 		PrevBlock:    prevBlock,
-		Denomination: uint32(tx.Denomination.Value.Uint64()), //TODO First iteration is for ERC721 so this is always 1
+		Denomination: tx.Denomination.Value.Int,
 		Owner:        ethAddress,
 		Signature:    tx.Signature,
 		TXProof:      tx.Proof}, nil
