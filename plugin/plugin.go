@@ -139,6 +139,20 @@ func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
 	})
 }
 
+func (c *GRPCAPIClient) ContractRecord(contractAddr loom.Address) (*ContractRecord, error) {
+	resp, err := c.client.ContractRecord(context.TODO(), &types.ContractRecordRequest{
+		Contract: contractAddr.MarshalPB(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &ContractRecord{
+		ContractName:    resp.ContractName,
+		ContractAddress: loom.UnmarshalAddressPB(resp.ContractAddress),
+		CreatorAddress:  loom.UnmarshalAddressPB(resp.CreatorAddress),
+	}, nil
+}
+
 type GRPCContext struct {
 	*GRPCAPIClient
 	message      *types.Message

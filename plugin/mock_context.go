@@ -3,6 +3,7 @@ package plugin
 import (
 	"bytes"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -241,4 +242,8 @@ func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
 
 func (c *FakeContext) Validators() []*loom.Validator {
 	return c.validators.Slice()
+}
+
+func (c *FakeContext) ContractRecord(contractAddr loom.Address) (*ContractRecord, error) {
+	return nil, errors.New("not implemented")
 }
