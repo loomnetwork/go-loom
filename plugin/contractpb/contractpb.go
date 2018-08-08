@@ -18,6 +18,7 @@ var (
 	ErrNotFound = errors.New("not found")
 )
 
+// StaticContext is the high-level context provided to Go contract methods that don't mutate state.
 type StaticContext interface {
 	plugin.StaticAPI
 	Get(key []byte, pb proto.Message) error
@@ -27,16 +28,20 @@ type StaticContext interface {
 	Now() time.Time
 	Message() plugin.Message
 	ContractAddress() loom.Address
-	Logger() loom.Logger
+	Logger() *loom.Logger
+	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
+	// ContractRecord retrieves the contract meta data stored in the Registry.
+	// NOTE: This method requires Registry v2.
+	ContractRecord(contractAddr loom.Address) (*plugin.ContractRecord, error)
 }
 
+// Context is the high-level context provided to Go contract methods that mutate state.
 type Context interface {
 	plugin.VolatileAPI
 	StaticContext
 	Set(key []byte, pb proto.Message) error
 	Delete(key []byte)
 	HasPermission(token []byte, roles []string) (bool, []string)
-	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
 	GrantPermissionTo(addr loom.Address, token []byte, role string)
 	RevokePermissionFrom(addr loom.Address, token []byte, role string)
 	GrantPermission(token []byte, roles []string)
@@ -46,14 +51,15 @@ type Contract interface {
 	Meta() (plugin.Meta, error)
 }
 
+// Implements the StaticContext interface for Go contract methods.
 type wrappedPluginStaticContext struct {
 	plugin.StaticContext
-	logger loom.Logger
+	logger *loom.Logger
 }
 
 var _ StaticContext = &wrappedPluginStaticContext{}
 
-func (c *wrappedPluginStaticContext) Logger() loom.Logger {
+func (c *wrappedPluginStaticContext) Logger() *loom.Logger {
 	return c.logger
 }
 
@@ -66,29 +72,30 @@ func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 	return proto.Unmarshal(data, pb)
 }
 
-func (c *wrappedPluginStaticContext) Range(prefix []byte) plugin.RangeData {
-	//TODO should we auto unprotobuf each entry like Get method does?
-	return c.StaticContext.Range(prefix)
+// HasPermissionFor checks whether the given `addr` has any of the permission given in `roles` on `token`
+func (c *wrappedPluginStaticContext) HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string) {
+	found := false
+	foundRoles := []string{}
+	for _, role := range roles {
+		v := c.StaticContext.Get(rolePermKey(addr, token, role))
+		if v != nil && string(v) == "true" {
+			found = true
+			foundRoles = append(foundRoles, role)
+		}
+	}
+	return found, foundRoles
 }
 
+// Implements the Context interface for Go contract methods.
 type wrappedPluginContext struct {
 	plugin.Context
-	logger loom.Logger
+	wrappedPluginStaticContext
 }
 
 var _ Context = &wrappedPluginContext{}
 
-func (c *wrappedPluginContext) Logger() loom.Logger {
-	return c.logger
-}
-
 func (c *wrappedPluginContext) Get(key []byte, pb proto.Message) error {
-	data := c.Context.Get(key)
-	if len(data) == 0 {
-		return ErrNotFound
-	}
-
-	return proto.Unmarshal(data, pb)
+	return c.wrappedPluginStaticContext.Get(key, pb)
 }
 
 func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
@@ -104,20 +111,6 @@ func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
 func (c *wrappedPluginContext) HasPermission(token []byte, roles []string) (bool, []string) {
 	addr := c.Message().Sender
 	return c.HasPermissionFor(addr, token, roles)
-}
-
-// HasPermissionFor checks whether the given `addr` has any of the permission given in `roles` on `token`
-func (c *wrappedPluginContext) HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string) {
-	found := false
-	foundRoles := []string{}
-	for _, role := range roles {
-		v := c.Context.Get(rolePermKey(addr, token, role))
-		if v != nil && string(v) == "true" {
-			found = true
-			foundRoles = append(foundRoles, role)
-		}
-	}
-	return found, foundRoles
 }
 
 // GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
@@ -192,7 +185,7 @@ func CallMethod(ctx Context, addr loom.Address, method string, inpb proto.Messag
 	return Call(ctx, addr, query, outpb)
 }
 
-var logger loom.Logger
+var logger *loom.Logger
 var onceSetup sync.Once
 
 func setupLogger() {
@@ -265,7 +258,7 @@ func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[
 }
 
 func WrapPluginContext(ctx plugin.Context) Context {
-	return &wrappedPluginContext{ctx, logger}
+	return &wrappedPluginContext{ctx, wrappedPluginStaticContext{ctx, logger}}
 }
 
 func WrapPluginStaticContext(ctx plugin.StaticContext) StaticContext {
