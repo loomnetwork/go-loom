@@ -30,6 +30,9 @@ type StaticContext interface {
 	ContractAddress() loom.Address
 	Logger() *loom.Logger
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
+	// ContractRecord retrieves the contract meta data stored in the Registry.
+	// NOTE: This method requires Registry v2.
+	ContractRecord(contractAddr loom.Address) (*plugin.ContractRecord, error)
 }
 
 // Context is the high-level context provided to Go contract methods that mutate state.
