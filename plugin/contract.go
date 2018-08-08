@@ -56,6 +56,12 @@ type RangeEntry struct {
 // RangeData an array of key value pairs for a range of data
 type RangeData []*RangeEntry
 
+type ContractRecord struct {
+	ContractName    string
+	ContractAddress loom.Address
+	CreatorAddress  loom.Address
+}
+
 // StaticContext is the low-level context provided to RequestDispatcher.Call().
 // The primary implementation of this interface is plugin.contractContext (loomchain/plugin package).
 // For external GRPC contracts plugin.contractContext is wrapped by GRPCContext (go-loom/plugin package).
@@ -68,6 +74,9 @@ type StaticContext interface {
 	Now() time.Time
 	Message() Message
 	ContractAddress() loom.Address
+	// ContractRecord retrieves the contract meta data stored in the Registry.
+	// NOTE: This method requires Registry v2.
+	ContractRecord(contractAddr loom.Address) (*ContractRecord, error)
 }
 
 // Context is the low-level context provided to RequestDispatcher.StaticCall().
