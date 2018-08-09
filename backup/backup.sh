@@ -19,6 +19,7 @@ PROCESS_NAME="loom"
 SHOULD_KICK_SERVICE="true"
 KICK_TIMEOUT=180
 MAXIMUM_NUMBER_OF_KICKS=100
+PORT="46657"
 
 # Send a SIGUSR1 to the service.
 SHOULD_SIGUSR1_SERVICE="false"
@@ -54,6 +55,9 @@ FILENAME="/tmp/`date +%Y-%m-%d--%H%M%S`-`hostname`.tar.bz2"
 
 # Where to store the temporary files.
 TMP_LOCATION=/tmp/loom-bu-stage
+
+# Shutdown the server after a successful backup. This is useful if you have created a temporary server to replicate, backup, shutdown.
+SHOULD_SHUTDOWN='false'
 
 ## END Default config ##
 
@@ -125,6 +129,10 @@ function sanityChecks
   if [ "$SHOULD_STOP_SERVICE" == 'true' ] && [ "$SHOULD_SIGUSR1_SERVICE" == 'true' ]; then
     echo "WARN: Both SHOULD_STOP_SERVICE and SHOULD_SIGUSR1_SERVICE are configured. You probably don't want this." >&2
   fi
+  
+  if [ "$SHOULD_SHUTDOWN" == 'true' ] && [ "$SHOULD_KICK_SERVICE" == 'true' ]; then
+    echo "WARN: Both SHOULD_SHUTDOWN and SHOULD_KICK_SERVICE are configured. You probably don't want this." >&2
+  fi
 }
 
 function prep
@@ -176,7 +184,7 @@ function doStop
 
 function doStart
 {
-  if [ "$SHOULD_STOP_SERVICE" == 'true' ]; then
+  if [ "$SHOULD_STOP_SERVICE" == 'true' ] && [ "SHOULD_SHUTDOWN" == 'false' ]; then
     sudo systemctl start "$SERVICE_NAME"
   fi
 }
@@ -242,7 +250,7 @@ function waitForSeconds
 
 function serviceIsAlive
 {
-  curl -s localhost:46657/status | grep -q latest_block_height
+  curl -s localhost:$PORT/status | grep -q latest_block_height
   return $?
 }
 
@@ -260,6 +268,13 @@ function upload
     /usr/bin/aws s3 cp $FILENAME "$S3BUCKET" --region "$S3BUCKET_REGION"
   else
     echo "Upload and/or compression is turned off. Therefore won't upload. Unless If you aren't testing, this is probably a configuration issue."
+  fi
+}
+
+function shutdownIfRequested
+{
+  if [ "SHOULD_SHUTDOWN" == 'true' ]; then
+    sudo shutdown -h 0
   fi
 }
 
