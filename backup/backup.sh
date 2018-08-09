@@ -15,6 +15,10 @@ STOP_TIMEOUT="300"
 SERVICE_NAME="loom.service"
 PROCESS_NAME="loom"
 
+# Send a SIGUSR1 to the service.
+SHOULD_SIGUSR1_SERVICE="false"
+SIGUSR1_WAIT_SECONDS=3
+
 # Bucket upload details.
 S3BUCKET="s3://your-s3-bucket/"
 S3BUCKET_REGION="us-east-2"
@@ -63,6 +67,7 @@ function rsyncBasedBackup
   time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   
   # Repeat to get any minor changes that happened during the second go.
+  doSIGUSR1
   doStop
   sleep 1
   time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
@@ -84,6 +89,7 @@ function oldStyleBackup
   # If the service isn't stopped, the backup is usually corrupted on a busy
   # server. Therefore this shouldn't be relied on.
 
+  doSIGUSR1
   doStop
   if [ "$SHOULD_COMPRESS" == 'true' ]; then
     tar -cjf $FILENAME -C "$START_DIRECTORY" $STUFF_TO_BACKUP
@@ -103,10 +109,14 @@ function sanityChecks
 {
   for TOOL in rsync aws; do
     if ! which "$TOOL" > /dev/null; then
-      echo "Couild not find ${TOOL}. Backup will not work."
+      echo "ERROR: Couild not find ${TOOL}. Backup will not work." >&2
       exit 1
     fi
   done
+  
+  if [ "$SHOULD_STOP_SERVICE" == 'true' ] && [ "$SHOULD_SIGUSR1_SERVICE" == 'true' ]; then
+    echo "WARN: Both SHOULD_STOP_SERVICE and SHOULD_SIGUSR1_SERVICE are configured. You probably don't want this." >&2
+  fi
 }
 
 function prep
@@ -155,6 +165,14 @@ function doStart
 {
   if [ "$SHOULD_STOP_SERVICE" == 'true' ]; then
     sudo systemctl start "$SERVICE_NAME"
+  fi
+}
+
+function doSIGUSR1
+{
+  if [ "$SHOULD_SIGUSR1_SERVICE" == 'true' ]; 
+    sudo killall -SIGUSR1 loom
+    sleep $SIGUSR1_WAIT_SECONDS # Give a few seconds for stuff to be written to file before we proceed with the next step.
   fi
 }
 
