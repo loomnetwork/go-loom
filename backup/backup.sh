@@ -56,6 +56,9 @@ FILENAME="/tmp/`date +%Y-%m-%d--%H%M%S`-`hostname`.tar.bz2"
 # Where to store the temporary files.
 TMP_LOCATION=/tmp/loom-bu-stage
 
+# Wait until the local node has caught up with the cluster. This is particularly useful when spinning up a machine just for the backup.
+SHOULD_WAIT_UNTIL_CAUGHT_UP="true"
+
 # Shutdown the server after a successful backup. This is useful if you have created a temporary server to replicate, backup, shutdown.
 SHOULD_SHUTDOWN='false'
 
@@ -275,6 +278,48 @@ function upload
   fi
 }
 
+function waitUntilCaughtUp
+{
+  if [ "$SHOULD_WAIT_UNTIL_CAUGHT_UP" == 'true' ]; then
+    LOCAL_HEIGHT=`getHeight 127.0.0.1`
+    CLUSTER_HEIGHT=`getHighestHeight`
+    while [ $LOCAL_HEIGHT -lt $CLUSTER_HEIGHT ]; do
+      echo "INFO: Waiting until local height ($LOCAL_HEIGHT) has caught up with the rest of the cluster ($CLUSTER_HEIGHT)."
+      sleep 30
+      LOCAL_HEIGHT=`getHeight 127.0.0.1`
+      CLUSTER_HEIGHT=`getHighestHeight`
+    done
+    
+    echo "INFO: Up to speed. Let's get to it."
+  fi
+}
+
+function getHighestHeight
+{
+  MAX_HEIGHT=0
+  
+  while read IP; do 
+    VALUE="`getHeight $IP`"
+    if [ $VALUE -gt $MAX_HEIGHT ]; then
+      let MAX_HEIGHT=$VALUE
+    fi
+  done < <(getIPs)
+  
+  echo "$MAX_HEIGHT"
+}
+
+function getHeight
+{
+  curl -s http://$1:$PORT/status | grep latest_block_height | sed 's/^.*: //g;s/,//g'
+}
+
+function getIPs
+{
+  grep 'ExecStart=/usr/bin/loom' /etc/systemd/system/*.service | \
+    sed 's/^.* //g;s/,/\n/g' | \
+    sed 's/tcp.*@//g;s/:46656//g'
+}
+
 function shutdownIfRequested
 {
   if [ "SHOULD_SHUTDOWN" == 'true' ]; then
@@ -292,6 +337,7 @@ function doIt
 {
   sanityChecks
   prep
+  waitUntilCaughtUp
 
 
   case "$BACKUP_METHOD" in
