@@ -28,6 +28,7 @@ type FakeContext struct {
 	data          map[string][]byte
 	contractNonce uint64
 	contracts     map[string]Contract
+	registry      map[string]*ContractRecord
 	validators    loom.ValidatorSet
 	Events        []FEvent
 }
@@ -51,42 +52,42 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		address:    address,
 		data:       make(map[string][]byte),
 		contracts:  make(map[string]Contract),
+		registry:   make(map[string]*ContractRecord),
 		validators: loom.NewValidatorSet(),
 		Events:     make([]FEvent, 0),
 	}
 }
 
-func (c *FakeContext) WithBlock(header loom.BlockHeader) *FakeContext {
+func (c *FakeContext) shallowClone() *FakeContext {
 	return &FakeContext{
-		caller:     c.caller,
-		address:    c.address,
-		data:       c.data,
-		contracts:  c.contracts,
-		validators: c.validators,
-		block:      header,
+		caller:        c.caller,
+		address:       c.address,
+		block:         c.block,
+		data:          c.data,
+		contractNonce: c.contractNonce,
+		contracts:     c.contracts,
+		registry:      c.registry,
+		validators:    c.validators,
+		Events:        c.Events,
 	}
+}
+
+func (c *FakeContext) WithBlock(header loom.BlockHeader) *FakeContext {
+	clone := c.shallowClone()
+	clone.block = header
+	return clone
 }
 
 func (c *FakeContext) WithSender(caller loom.Address) *FakeContext {
-	return &FakeContext{
-		caller:     caller,
-		address:    c.address,
-		data:       c.data,
-		contracts:  c.contracts,
-		validators: c.validators,
-		block:      c.block,
-	}
+	clone := c.shallowClone()
+	clone.caller = caller
+	return clone
 }
 
 func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
-	return &FakeContext{
-		caller:     c.caller,
-		address:    addr,
-		data:       c.data,
-		contracts:  c.contracts,
-		validators: c.validators,
-		block:      c.block,
-	}
+	clone := c.shallowClone()
+	clone.address = addr
+	return clone
 }
 
 func (c *FakeContext) CreateContract(contract Contract) loom.Address {
@@ -96,16 +97,18 @@ func (c *FakeContext) CreateContract(contract Contract) loom.Address {
 	return addr
 }
 
+func (c *FakeContext) RegisterContract(contractName string, contractAddr, creatorAddr loom.Address) {
+	c.registry[contractAddr.String()] = &ContractRecord{
+		ContractName:    contractName,
+		ContractAddress: contractAddr,
+		CreatorAddress:  creatorAddr,
+	}
+}
+
 func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 	contract := c.contracts[addr.String()]
 
-	ctx := &FakeContext{
-		caller:     c.address,
-		address:    addr,
-		data:       c.data,
-		contracts:  c.contracts,
-		validators: c.validators,
-	}
+	ctx := c.WithAddress(addr)
 
 	var req Request
 	err := proto.Unmarshal(input, &req)
@@ -124,12 +127,7 @@ func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 func (c *FakeContext) StaticCall(addr loom.Address, input []byte) ([]byte, error) {
 	contract := c.contracts[addr.String()]
 
-	ctx := &FakeContext{
-		caller:    c.address,
-		address:   addr,
-		data:      c.data,
-		contracts: c.contracts,
-	}
+	ctx := c.WithAddress(addr)
 
 	var req Request
 	err := proto.Unmarshal(input, &req)
@@ -245,5 +243,9 @@ func (c *FakeContext) Validators() []*loom.Validator {
 }
 
 func (c *FakeContext) ContractRecord(contractAddr loom.Address) (*ContractRecord, error) {
-	return nil, errors.New("not implemented")
+	rec := c.registry[contractAddr.String()]
+	if rec == nil {
+		return nil, errors.New("contract not found in registry")
+	}
+	return rec, nil
 }
