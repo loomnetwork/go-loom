@@ -184,7 +184,7 @@ function doStop
 
 function doStart
 {
-  if [ "$SHOULD_STOP_SERVICE" == 'true' ] && [ "SHOULD_SHUTDOWN" == 'false' ]; then
+  if [ "$SHOULD_STOP_SERVICE" == 'true' ] && [ "$SHOULD_SHUTDOWN" == 'false' ]; then
     sudo systemctl start "$SERVICE_NAME"
   fi
 }
