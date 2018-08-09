@@ -11,7 +11,9 @@
 
 # Stopping gives a more confident backup, but gives down time.
 SHOULD_STOP_SERVICE="false"
+STOP_TIMEOUT="300"
 SERVICE_NAME="loom.service"
+PROCESS_NAME="loom"
 
 # Bucket upload details.
 S3BUCKET="s3://your-s3-bucket/"
@@ -128,7 +130,24 @@ function cleanup
 function doStop
 {
   if [ "$SHOULD_STOP_SERVICE" == 'true' ]; then
+    STOP_BEGIN=`date +%s`
     sudo systemctl stop "$SERVICE_NAME"
+    
+    if pidof "$PROCESS_NAME" > dev/null; then
+      echo "Waiting for the process $PROCESS_NAME to stop."
+      while pidof "$PROCESS_NAME" > dev/null; do
+        NOW=`date +%s`
+        let DURATION=$NOW-$STOP_BEGIN
+        
+        if [ $DURATION -gt $STOP_TIMEOUT ]; then
+          echo "Timed out while stopping the service. Not sane to consinue. Here is the status of the service." >&2
+          sudo systemctl status "$SERVICE_NAME" >&2
+          exit 1
+        fi
+        sleep 0.1
+      done
+      echo "Process $PROCESS_NAME stopped."
+    fi
   fi
 }
 
