@@ -199,10 +199,14 @@ function kickServiceIfNotHappy
     fi
     
     if ! serviceIsAlive; then
-      echo "WARN: The service is not healthy. Waiting for $KICK_TIMEOUT seconds from $TIMEOUT_START to restart the service. Now=`now`."
+      echo "WARN: The service is not healthy. Waiting for $KICK_TIMEOUT seconds from $TIMEOUT_START to check again and restart the service if necessary. Now=`now`."
       waitForSeconds $KICK_TIMEOUT $TIMEOUT_START
-      sudo systemctl restart "$SERVICE_NAME"
-      return 1
+      if ! serviceIsAlive; then
+        sudo systemctl restart "$SERVICE_NAME"
+        return 1
+      else
+        echo "INFO: The service is now alive. No further action is necessary."
+      fi
     else
       echo "INFO: The service is alive."
       return 0
@@ -242,8 +246,8 @@ function waitForSeconds
   fi
   
   let WAIT_CURRENT=`now`-$WAIT_START
-  while [ $WAIT_DURATION -lt -$WAIT_CURRENT ]; do
-    sleep 0.5
+  while [ $WAIT_CURRENT -lt $WAIT_DURATION  ]; do
+    sleep 1
     let WAIT_CURRENT=`now`-$WAIT_START
   done
 }
