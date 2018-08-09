@@ -4,6 +4,11 @@
 #   MAILTO=""
 #   55 * * * * /home/ubuntu/backup.sh
 
+# Run ./backup.sh config to dump these settings to ~/.backup_config
+
+
+## BEGIN Default config ##
+
 # Stopping gives a more confident backup, but gives down time.
 SHOULD_STOP_SERVICE="false"
 SERVICE_NAME="loom.service"
@@ -13,7 +18,7 @@ S3BUCKET="s3://your-s3-bucket/"
 S3BUCKET_REGION="us-east-2"
 
 # What we want to back up.
-STUFF_TO_BACKUP="chaindata app.db genesis.json loom.yml /etc/systemd/system/delegatecall.service"
+STUFF_TO_BACKUP="chaindata app.db genesis.json loom.yml /etc/systemd/system/$SERVICE_NAME"
 
 # Anything that doesn't have an explicit path will be backed up from this directory.
 START_DIRECTORY="/home/ubuntu"
@@ -37,7 +42,11 @@ FILENAME="/tmp/`date +%Y-%m-%d--%H%M%S`-`hostname`.tar.bz2"
 # Where to store the temporary files.
 TMP_LOCATION=/tmp/loom-bu-stage
 
+## END Default config ##
 
+
+# Where backup config is stored.
+CONFIG_LOCATION=~/.backup_config
 
 function rsyncBasedBackup
 {
@@ -46,15 +55,15 @@ function rsyncBasedBackup
   
   # Get the initial backup. This is likely to have inconsistencies.
   cd "$START_DIRECTORY"
-  time rsync -ru $STUFF_TO_BACKUP "$TMP_LOCATION"
+  time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   
   # Repeat to get any major changes that happened during the first go.
-  time rsync -ru $STUFF_TO_BACKUP "$TMP_LOCATION"
+  time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   
   # Repeat to get any minor changes that happened during the second go.
   doStop
   sleep 1
-  time rsync -ru $STUFF_TO_BACKUP "$TMP_LOCATION"
+  time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   doStart
   
   
@@ -139,6 +148,12 @@ function upload
   fi
 }
 
+function generateConfig
+{
+  grep -A 1000 '^## BEGIN Default config ##' $0 | grep -B 1000 "^## END Default config ##" | grep -v 'Default config ##' > "$CONFIG_LOCATION"
+  echo "Default config dumped to $CONFIG_LOCATION. Edit this to get the behavior you want."
+}
+
 function doIt
 {
   sanityChecks
@@ -160,5 +175,16 @@ function doIt
   upload
   cleanup
 }
+
+if [ "$1" == 'config' ]; then
+  generateConfig
+  exit 0
+fi
+
+if [ -e "$CONFIG_LOCATION" ]; then
+  . "$CONFIG_LOCATION"
+else
+  echo "WARNING: $CONFIG_LOCATION does not exist, so internal defaults have been used. Run ./backup.sh config to create it."
+fi
 
 doIt
