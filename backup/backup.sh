@@ -15,6 +15,11 @@ STOP_TIMEOUT="300"
 SERVICE_NAME="loom.service"
 PROCESS_NAME="loom"
 
+# If the service doesn't come back up, give it another kick.
+SHOULD_KICK_SERVICE="true"
+KICK_TIMEOUT=180
+MAXIMUM_NUMBER_OF_KICKS=100
+
 # Send a SIGUSR1 to the service.
 SHOULD_SIGUSR1_SERVICE="false"
 SIGUSR1_WAIT_SECONDS=3
@@ -24,7 +29,9 @@ S3BUCKET="s3://your-s3-bucket/"
 S3BUCKET_REGION="us-east-2"
 
 # What we want to back up.
-STUFF_TO_BACKUP="chaindata app.db genesis.json loom.yml /etc/systemd/system/$SERVICE_NAME"
+BACKUP_DATA="chaindata app.db"
+BACKUP_CONFIG="genesis.json loom.yml /etc/systemd/system/$SERVICE_NAME"
+STUFF_TO_BACKUP="$BACKUP_DATA $BACKUP_CONFIG"
 
 # Anything that doesn't have an explicit path will be backed up from this directory.
 START_DIRECTORY="/home/ubuntu"
@@ -61,18 +68,18 @@ function rsyncBasedBackup
   
   # Get the initial backup. This is likely to have inconsistencies.
   cd "$START_DIRECTORY"
-  time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
+  time rsync -rui --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   
   # Repeat to get any major changes that happened during the first go.
-  time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
+  time rsync -rui --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   
   # Repeat to get any minor changes that happened during the second go.
   doSIGUSR1
   doStop
   sleep 1
-  time rsync -ru --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
+  time rsync -rui --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   doStart
-  
+  START_TIME=`now`
   
   # Compress it.
   if [ "$SHOULD_COMPRESS" == 'true' ]; then
@@ -97,6 +104,7 @@ function oldStyleBackup
     echo "Sanity check: The oldStyleBackup only does a compress, but SHOULD_COMPRESS is not true. Check configuration."
   fi
   doStart
+  START_TIME=`now`
 }
 
 
@@ -137,16 +145,21 @@ function cleanup
   fi
 }
 
+function now
+{
+  date +%s
+}
+
 function doStop
 {
   if [ "$SHOULD_STOP_SERVICE" == 'true' ]; then
-    STOP_BEGIN=`date +%s`
+    STOP_BEGIN=`now`
     sudo systemctl stop "$SERVICE_NAME"
     
-    if pidof "$PROCESS_NAME" > dev/null; then
+    if pidof "$PROCESS_NAME" > /dev/null; then
       echo "Waiting for the process $PROCESS_NAME to stop."
-      while pidof "$PROCESS_NAME" > dev/null; do
-        NOW=`date +%s`
+      while pidof "$PROCESS_NAME" > /dev/null; do
+        NOW=`now`
         let DURATION=$NOW-$STOP_BEGIN
         
         if [ $DURATION -gt $STOP_TIMEOUT ]; then
@@ -168,9 +181,74 @@ function doStart
   fi
 }
 
+function kickServiceIfNotHappy
+{
+  if [ "$SHOULD_KICK_SERVICE" == 'true' ]; then
+    if [ "$1" == '' ]; then
+      TIMEOUT_START=`now`
+    else
+      TIMEOUT_START="$1"
+    fi
+    
+    if ! serviceIsAlive; then
+      echo "WARN: The service is not healthy. Waiting for $KICK_TIMEOUT seconds from $TIMEOUT_START to restart the service. Now=`now`."
+      waitForSeconds $KICK_TIMEOUT $TIMEOUT_START
+      sudo systemctl restart "$SERVICE_NAME"
+      return 1
+    else
+      echo "INFO: The service is alive."
+      return 0
+    fi
+  fi
+}
+
+function repetitivelyKickServiceUntilHappy
+{
+  if [ "$1" == '' ]; then
+    TIMEOUT_START=`now`
+  else
+    TIMEOUT_START="$1"
+  fi
+  
+  kickServiceIfNotHappy "$TIMEOUT_START"
+  
+  KICKS=1
+  while ! serviceIsAlive && [ $KICKS -lt $MAXIMUM_NUMBER_OF_KICKS ] ; do
+    kickServiceIfNotHappy
+    let KICKS=$KICKS+1
+    
+    if ! [ $KICKS -lt $MAXIMUM_NUMBER_OF_KICKS ]; then
+      echo "ERROR: Kicked the service $KICKS times and was not able to get it started." >&2
+    fi
+  done
+}
+
+function waitForSeconds
+{
+  WAIT_DURATION="$1"
+  
+  if [ "$1" == '' ]; then
+    WAIT_START=`now`
+  else
+    WAIT_START="$2"
+  fi
+  
+  let WAIT_CURRENT=`now`-$WAIT_START
+  while [ $WAIT_DURATION -lt -$WAIT_CURRENT ]; do
+    sleep 0.5
+    let WAIT_CURRENT=`now`-$WAIT_START
+  done
+}
+
+function serviceIsAlive
+{
+  curl -s localhost:46657/status | grep -q latest_block_height
+  return $?
+}
+
 function doSIGUSR1
 {
-  if [ "$SHOULD_SIGUSR1_SERVICE" == 'true' ]; 
+  if [ "$SHOULD_SIGUSR1_SERVICE" == 'true' ]; then
     sudo killall -SIGUSR1 loom
     sleep $SIGUSR1_WAIT_SECONDS # Give a few seconds for stuff to be written to file before we proceed with the next step.
   fi
@@ -211,6 +289,9 @@ function doIt
 
   upload
   cleanup
+  
+  # This should never be needed, but it's here just incase.
+  repetitivelyKickServiceUntilHappy "$START_TIME"
 }
 
 if [ "$1" == 'config' ]; then
