@@ -37,7 +37,7 @@ func ListCandidatesCmd() *cobra.Command {
 		Use:   "list_candidates",
 		Short: "List the registered candidates",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dpos.ListCandiateResponse
+			var resp dpos.ListCandidateResponse
 			err := cli.StaticCallContract(DPOSContractName, "ListCandidates", &dpos.ListCandidateRequest{}, &resp)
 			if err != nil {
 				return err

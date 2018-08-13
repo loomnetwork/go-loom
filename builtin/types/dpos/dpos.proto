@@ -104,6 +104,6 @@ message ListWitnessesResponse {
 message ListCandidateRequest {
 }
 
-message ListCandiateResponse {
+message ListCandidateResponse {
     repeated Candidate candidates = 1;
 }
