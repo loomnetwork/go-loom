@@ -215,6 +215,13 @@ message TransferGatewayWithdrawERC721Request {
     //Address token_owner = 3;
 }
 
+message TransferGatewayWithdrawERC20Request {
+    // Amount of tokens to withdraw
+    BigUInt amount = 1;
+    // DAppChain address of ERC20 contract tokens belongs to
+    Address token_contract = 2;
+}
+
 message TransferGatewayWithdrawalReceiptRequest {
     Address owner = 1;
 }
