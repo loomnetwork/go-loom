@@ -31,7 +31,7 @@ S3BUCKET_REGION="us-east-2"
 
 # What we want to back up.
 BACKUP_DATA="chaindata app.db"
-BACKUP_CONFIG="genesis.json loom.yml /etc/systemd/system/$SERVICE_NAME"
+BACKUP_CONFIG="genesis.json loom.yml /etc/systemd/system/$SERVICE_NAME chaindata/config/node_key.json chaindata/config/config.toml"
 STUFF_TO_BACKUP="$BACKUP_DATA $BACKUP_CONFIG"
 
 # Anything that doesn't have an explicit path will be backed up from this directory.
