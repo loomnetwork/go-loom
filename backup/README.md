@@ -1,15 +1,40 @@
-# Backup
+# Backup and Restore Introduction
 
 A little bit of care needs to be taken to ensure that backups are usable. So it is worth testing your backups from time to time.
 
-Scripts to make this easier for you can be found [here](https://github.com/loomnetwork/go-loom/tree/master/backup). Of interest are
+There are several different ways to do it, this document details one way that is known to work.
+
+# Backup and Restore Overview
+
+* Backup
+  * On the existing nodes
+    * Backup the config. This can be done with using [backup.sh](https://github.com/loomnetwork/go-loom/tree/master/backup/utils/backup.sh) and configuring `STUFF_TO_BACKUP` accordingly.
+  * Create an extra node that has `--peers` for the other nodes, but is not in the `--peers` of the other nodes.
+    * Run the [backup.sh](https://github.com/loomnetwork/go-loom/tree/master/backup/utils/backup.sh) script periodically.
+      * Stopps the service.
+      * Takes a dump.
+      * Starts the service.
+      * Uploads to S3.
+* Restore
+  * Stop the service on all nodes you want to restore the data on.
+  * Restore the config. Note, you may need to alter the service definition. See below.
+  * Restore the data.
+  * Start the service.
+
+# Backup
+
+Scripts to make this easier for you can be found [here](https://github.com/loomnetwork/go-loom/tree/master/backup/utils). Of interest are
 
 * backup.sh - For performing the actual backup.
 * mangleDCBackupServiceDefinition.sh - for helping get the correct IPs and tokens into the service definition.
 
+
 ## backup.sh
 
-This should be run by cron as the same user that the service runs as, or as a user with enough permissions to read everything listed in the STUFF_TO_BACKUP variable.
+This should be run by cron as the same user that the service runs as, or as a user with enough permissions to 
+
+* read everything listed in the STUFF_TO_BACKUP variable.
+* sudo to stop and start the service. Info for doing that [here](https://unix.stackexchange.com/questions/18830/how-to-run-a-specific-program-as-root-without-a-password-prompt).
 
 It can be scheduled in cron like this
 
