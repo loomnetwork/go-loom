@@ -222,6 +222,11 @@ message TransferGatewayWithdrawERC20Request {
     Address token_contract = 2;
 }
 
+message TransferGatewayWithdrawETHRequest {
+    // Amount of ETH to withdraw
+    BigUInt amount = 1;
+}
+
 message TransferGatewayWithdrawalReceiptRequest {
     Address owner = 1;
 }

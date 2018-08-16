@@ -3,17 +3,16 @@ package plugin
 import (
 	"bytes"
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
-
-	"golang.org/x/crypto/sha3"
 
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
+	"github.com/pkg/errors"
+	"golang.org/x/crypto/sha3"
 )
 
 type FEvent struct {
@@ -31,6 +30,7 @@ type FakeContext struct {
 	registry      map[string]*ContractRecord
 	validators    loom.ValidatorSet
 	Events        []FEvent
+	ethBalances   map[string]*loom.BigUInt
 }
 
 var _ Context = &FakeContext{}
@@ -48,13 +48,14 @@ func createAddress(parent loom.Address, nonce uint64) loom.Address {
 
 func CreateFakeContext(caller, address loom.Address) *FakeContext {
 	return &FakeContext{
-		caller:     caller,
-		address:    address,
-		data:       make(map[string][]byte),
-		contracts:  make(map[string]Contract),
-		registry:   make(map[string]*ContractRecord),
-		validators: loom.NewValidatorSet(),
-		Events:     make([]FEvent, 0),
+		caller:      caller,
+		address:     address,
+		data:        make(map[string][]byte),
+		contracts:   make(map[string]Contract),
+		registry:    make(map[string]*ContractRecord),
+		validators:  loom.NewValidatorSet(),
+		Events:      make([]FEvent, 0),
+		ethBalances: make(map[string]*loom.BigUInt),
 	}
 }
 
@@ -69,6 +70,7 @@ func (c *FakeContext) shallowClone() *FakeContext {
 		registry:      c.registry,
 		validators:    c.validators,
 		Events:        c.Events,
+		ethBalances:   c.ethBalances,
 	}
 }
 
@@ -248,4 +250,41 @@ func (c *FakeContext) ContractRecord(contractAddr loom.Address) (*ContractRecord
 		return nil, errors.New("contract not found in registry")
 	}
 	return rec, nil
+}
+
+func (c *FakeContext) MintEth(to loom.Address, amount *loom.BigUInt) error {
+	// Currently only the Transfer Gateway can mint ETH
+	gatewayAddr, err := c.Resolve("gateway")
+	if err != nil {
+		return errors.Wrap(err, "failed to mint ETH")
+	}
+	if (c.address.Compare(gatewayAddr) != 0) || (to.Compare(gatewayAddr) != 0) {
+		return errors.New("not authorized to mint ETH")
+	}
+
+	k := to.String()
+	prevBal := c.ethBalances[k]
+	if prevBal != nil {
+		c.ethBalances[k] = prevBal.Add(prevBal, amount)
+	} else {
+		c.ethBalances[k] = amount
+	}
+	return nil
+}
+
+func (c *FakeContext) TransferEth(from, to loom.Address, amount *loom.BigUInt) error {
+	fk := from.String()
+	fromBal := c.ethBalances[fk]
+	if fromBal.Cmp(amount) < 0 {
+		return errors.New("insufficient funds")
+	}
+	tk := to.String()
+	toBal := c.ethBalances[tk]
+	c.ethBalances[fk] = fromBal.Sub(fromBal, amount)
+	c.ethBalances[tk] = toBal.Add(toBal, amount)
+	return nil
+}
+
+func (c *FakeContext) EthBalanceOf(owner loom.Address) (*loom.BigUInt, error) {
+	return c.ethBalances[owner.String()], nil
 }

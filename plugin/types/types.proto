@@ -273,6 +273,23 @@ message ContractRecordResponse {
     Address creator_address = 3;
 }
 
+message EthBalanceRequest {
+    Address address = 1;
+}
+
+message EthBalanceResponse {
+    BigUInt balance = 1;
+}
+
+message TransferEthRequest {
+    Address from = 1;
+    Address to = 2;
+    BigUInt amount = 3; 
+}
+
+message TransferEthResponse {
+}
+
 service API {
     rpc Get(GetRequest) returns (GetResponse);
     rpc Has(HasRequest) returns (HasResponse);
@@ -287,4 +304,7 @@ service API {
     rpc Call(CallRequest) returns (CallResponse);
     rpc SetValidatorPower(SetValidatorPowerRequest) returns (SetValidatorPowerResponse);
     rpc ContractRecord(ContractRecordRequest) returns (ContractRecordResponse);
+
+    rpc EthBalanceOf(EthBalanceRequest) returns (EthBalanceResponse);
+    rpc TransferEth(TransferEthRequest) returns (TransferEthResponse);
 }
