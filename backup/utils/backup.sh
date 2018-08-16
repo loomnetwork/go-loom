@@ -41,7 +41,7 @@ START_DIRECTORY="/home/ubuntu"
 SHOULD_CLEAN_TMP="false"
 
 # How the backup is done.
-# * rsyncBasedBackup - Recommended. Most likely to give reliable results.
+# * rsyncBasedBackup - Recommended. Faster, and most likely to give reliable results.
 # * oldStyleBackup - Simpler, requires less space.
 BACKUP_METHOD="rsyncBasedBackup"
 
@@ -323,7 +323,7 @@ function getIPs
 function shutdownIfRequested
 {
   if [ "SHOULD_SHUTDOWN" == 'true' ]; then
-    sudo shutdown -h 0
+    sudo shutdown -h 5
   fi
 }
 
