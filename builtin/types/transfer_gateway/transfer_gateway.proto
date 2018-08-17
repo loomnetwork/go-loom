@@ -211,8 +211,6 @@ message TransferGatewayWithdrawERC721Request {
     BigUInt token_id = 1;
     // DAppChain address of ERC721 contract token belongs to
     Address token_contract = 2;
-    // DAppChain address of the current owner of the token
-    //Address token_owner = 3;
 }
 
 message TransferGatewayWithdrawERC20Request {
@@ -225,6 +223,8 @@ message TransferGatewayWithdrawERC20Request {
 message TransferGatewayWithdrawETHRequest {
     // Amount of ETH to withdraw
     BigUInt amount = 1;
+    // Address of Mainnet Gateway contract
+    Address mainnet_gateway = 2;
 }
 
 message TransferGatewayWithdrawalReceiptRequest {
