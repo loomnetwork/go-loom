@@ -32,17 +32,14 @@ type StaticAPI interface {
 	ValidatorPower(pubKey []byte) int64
 	EmitTopics(event []byte, topics ...string)
 	Emit(event []byte)
-	EthBalanceOf(addr loom.Address) (*loom.BigUInt, error)
 }
 
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
 	CallEVM(addr loom.Address, input []byte) ([]byte, error)
-	TransferEth(from, to loom.Address, amount *loom.BigUInt) error
 
 	// Privileged API
 	SetValidatorPower(pubKey []byte, power int64)
-	MintEth(to loom.Address, amount *loom.BigUInt) error
 }
 
 type API interface {

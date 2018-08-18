@@ -13,7 +13,6 @@ import (
 	extplugin "github.com/hashicorp/go-plugin"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
-	ltypes "github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -152,32 +151,6 @@ func (c *GRPCAPIClient) ContractRecord(contractAddr loom.Address) (*ContractReco
 		ContractAddress: loom.UnmarshalAddressPB(resp.ContractAddress),
 		CreatorAddress:  loom.UnmarshalAddressPB(resp.CreatorAddress),
 	}, nil
-}
-
-func (c *GRPCAPIClient) EthBalanceOf(addr loom.Address) (*loom.BigUInt, error) {
-	resp, err := c.client.EthBalanceOf(context.TODO(), &types.EthBalanceRequest{
-		Address: addr.MarshalPB(),
-	})
-	if err != nil {
-		return nil, err
-	}
-	if resp.Balance != nil {
-		return &resp.Balance.Value, nil
-	}
-	return nil, nil
-}
-
-func (c *GRPCAPIClient) TransferEth(from, to loom.Address, amount *loom.BigUInt) error {
-	_, err := c.client.TransferEth(context.TODO(), &types.TransferEthRequest{
-		From:   from.MarshalPB(),
-		To:     to.MarshalPB(),
-		Amount: &ltypes.BigUInt{Value: *amount},
-	})
-	return err
-}
-
-func (c *GRPCAPIClient) MintEth(to loom.Address, amount *loom.BigUInt) error {
-	return errors.New("external plugins are not authorized to mint ETH")
 }
 
 type GRPCContext struct {
