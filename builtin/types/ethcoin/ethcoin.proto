@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+// TODO: copy all the coin types
+
+message ETHCoinInitRequest {
+}
+
+message ETHCoinMintToGatewayRequest {
+    BigUInt amount = 1;
+}

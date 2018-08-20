@@ -50,6 +50,7 @@ proto: \
 	plugin/types/types.pb.go \
 	builtin/types/address_mapper/address_mapper.pb.go \
 	builtin/types/coin/coin.pb.go \
+	builtin/types/ethcoin/ethcoin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
 	builtin/types/plasma_cash/plasma_cash.pb.go \
 	builtin/types/transfer_gateway/transfer_gateway.pb.go \
@@ -98,6 +99,7 @@ clean:
 		auth/auth.pb.go \
 		vm/vm.pb.go \
 		builtin/types/coin/coin.pb.go \
+		builtin/types/ethcoin/ethcoin.pb.go \
 		builtin/types/plasma_cash/plasma_cash.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \

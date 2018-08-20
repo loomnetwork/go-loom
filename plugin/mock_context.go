@@ -3,17 +3,16 @@ package plugin
 import (
 	"bytes"
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
-
-	"golang.org/x/crypto/sha3"
 
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
+	"github.com/pkg/errors"
+	"golang.org/x/crypto/sha3"
 )
 
 type FEvent struct {
@@ -31,6 +30,7 @@ type FakeContext struct {
 	registry      map[string]*ContractRecord
 	validators    loom.ValidatorSet
 	Events        []FEvent
+	ethBalances   map[string]*loom.BigUInt
 }
 
 var _ Context = &FakeContext{}
@@ -48,13 +48,14 @@ func createAddress(parent loom.Address, nonce uint64) loom.Address {
 
 func CreateFakeContext(caller, address loom.Address) *FakeContext {
 	return &FakeContext{
-		caller:     caller,
-		address:    address,
-		data:       make(map[string][]byte),
-		contracts:  make(map[string]Contract),
-		registry:   make(map[string]*ContractRecord),
-		validators: loom.NewValidatorSet(),
-		Events:     make([]FEvent, 0),
+		caller:      caller,
+		address:     address,
+		data:        make(map[string][]byte),
+		contracts:   make(map[string]Contract),
+		registry:    make(map[string]*ContractRecord),
+		validators:  loom.NewValidatorSet(),
+		Events:      make([]FEvent, 0),
+		ethBalances: make(map[string]*loom.BigUInt),
 	}
 }
 
@@ -69,6 +70,7 @@ func (c *FakeContext) shallowClone() *FakeContext {
 		registry:      c.registry,
 		validators:    c.validators,
 		Events:        c.Events,
+		ethBalances:   c.ethBalances,
 	}
 }
 
