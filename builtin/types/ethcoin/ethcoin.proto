@@ -4,9 +4,9 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 // TODO: copy all the coin types
 
-message EthCoinInitRequest {
+message ETHCoinInitRequest {
 }
 
-message EthCoinMintToGatewayRequest {
+message ETHCoinMintToGatewayRequest {
     BigUInt amount = 1;
 }
