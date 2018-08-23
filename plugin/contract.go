@@ -2,7 +2,7 @@ package plugin
 
 import (
 	"time"
-	
+
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
 )

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 	"time"
-	
+
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
 	"github.com/loomnetwork/go-loom"
