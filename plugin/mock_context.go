@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 	"time"
-
+	
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/types"

@@ -1,9 +1,10 @@
 package plugin
 
 import (
-	"github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/plugin/types"
 	"time"
+	
+	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/plugin/types"
 )
 
 type (
