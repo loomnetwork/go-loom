@@ -11,6 +11,7 @@ import (
 
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
+	ltypes "github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/vm"
