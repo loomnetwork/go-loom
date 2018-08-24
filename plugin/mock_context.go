@@ -145,7 +145,7 @@ func (c *FakeContext) StaticCall(addr loom.Address, input []byte) ([]byte, error
 	return proto.Marshal(resp)
 }
 
-func (c *FakeContext) CallEVM(addr loom.Address, input []byte) ([]byte, error) {
+func (c *FakeContext) CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error) {
 	return nil, nil
 }
 

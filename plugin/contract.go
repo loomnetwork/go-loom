@@ -36,8 +36,7 @@ type StaticAPI interface {
 
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
-	CallEVM(addr loom.Address, input []byte) ([]byte, error)
-
+	CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error)
 	// Privileged API
 	SetValidatorPower(pubKey []byte, power int64)
 }

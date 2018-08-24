@@ -11,6 +11,7 @@ import (
 
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
+	ltypes "github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/vm"
@@ -111,11 +112,15 @@ func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
 	return loom.UnmarshalAddressPB(resp.Address), nil
 }
 
-func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType) ([]byte, error) {
+func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType, value *loom.BigUInt) ([]byte, error) {
+	if value == nil {
+		value = loom.NewBigUIntFromInt(0)
+	}
 	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
 		Address: addr.MarshalPB(),
 		Input:   input,
 		VmType:  vmType,
+		Value:   &ltypes.BigUInt{Value: *value},
 	})
 	if err != nil {
 		return nil, err
@@ -125,11 +130,11 @@ func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType) 
 }
 
 func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
-	return c.call(addr, input, vm.VMType_PLUGIN)
+	return c.call(addr, input, vm.VMType_PLUGIN, loom.NewBigUIntFromInt(0))
 }
 
-func (c *GRPCAPIClient) CallEVM(addr loom.Address, input []byte) ([]byte, error) {
-	return c.call(addr, input, vm.VMType_EVM)
+func (c *GRPCAPIClient) CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error) {
+	return c.call(addr, input, vm.VMType_EVM, value)
 }
 
 func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {

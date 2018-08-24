@@ -246,7 +246,7 @@ func StaticCallMethod(ctx StaticContext, addr loom.Address, method string, inpb 
 }
 
 func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error {
-	resp, err := ctx.CallEVM(addr, input)
+	resp, err := ctx.CallEVM(addr, input, loom.NewBigUIntFromInt(0))
 	*output = resp
 	return err
 }
