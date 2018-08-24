@@ -113,6 +113,9 @@ func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
 }
 
 func (c *GRPCAPIClient) call(addr loom.Address, input []byte, vmType vm.VMType, value *loom.BigUInt) ([]byte, error) {
+	if value == nil {
+		value = loom.NewBigUIntFromInt(0)
+	}
 	resp, err := c.client.Call(context.TODO(), &types.CallRequest{
 		Address: addr.MarshalPB(),
 		Input:   input,
