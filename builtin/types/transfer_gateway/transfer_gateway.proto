@@ -216,8 +216,16 @@ message TransferGatewayStateResponse {
 
 // Recovery
 
-// Asks the Gateway to transfer unclaimed tokens to the sender
-message TransferGatewayReclaimTokensRequest {
+// Transfer unclaimed tokens to the sender, or to the specified depositors
+message TransferGatewayReclaimDepositorTokensRequest {
+    // Foreign address of depositors
+    repeated Address depositors = 1;
+}
+
+// Transfer any unclaimed tokens originating from a specific contract to their depositors
+message TransferGatewayReclaimContractTokensRequest {
+    // Foreign address of token contract
+    Address token_contract = 1;
 }
 
 // Withdrawal Management
