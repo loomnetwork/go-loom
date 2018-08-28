@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+package karma;
+
+message KarmaParams {
+    bool mutable_oracle = 1;
+    int64 max_karma = 2;
+    Address Oracle = 3;
+    repeated KarmaSourceReward sources = 4;
+    repeated Validator validators = 5;
+    int64 deploy_karma = 6;
+}
+
+message KarmaParamsValidator {
+    KarmaParams Params = 1;
+    Validator Validator = 2;
+    Address Oracle = 3;
+}
+
+message KarmaParamsValidatorNewMaxKarma {
+    int64 max_karma = 1;
+    Validator Validator = 2;
+}
+
+message KarmaParamsValidatorNewOracle {
+    Address NewOracle = 1;
+    Validator Validator = 2;
+}
+message KarmaParamsMutableValidator{
+    bool mutable_oracle = 1;
+    Validator Validator = 2;
+}
+
+message KarmaSourceReward {
+    string name = 1;
+    int64 reward = 2;
+}
+
+message KarmaSource {
+    string name = 1;
+    int64 count = 2;
+}
+
+message KarmaConfig {
+    bool mutable_oracle = 1;
+    int64 max_karma = 2;
+    Address Oracle = 3;
+    repeated KarmaSourceReward sources = 4;
+    int64 last_update_time = 5;
+}
+
+
+message KarmaState {
+    repeated KarmaSource source_states = 1;
+    int64 last_update_time = 2;
+}
+
+message KarmaStateUser {
+    repeated KarmaSource source_states = 1;
+    Address User = 2;
+    Address Oracle = 3;
+}
+
+message KarmaStateKeyUser {
+    repeated string state_keys = 1;
+    Address User = 2;
+    Address Oracle = 3;
+}
+
+message KarmaInitRequest {
+    KarmaParams Params = 1;
+}
+
+message KarmaUserToken{
+    Address Owner = 1;
+    int64 token_count = 2;
+}
+
+message KarmaTotal{
+    int64 count = 1;
+}
+
+message KarmaDeploy{
+    int64 count = 1;
+}
