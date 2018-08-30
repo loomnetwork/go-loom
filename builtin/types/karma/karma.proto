@@ -11,6 +11,7 @@ message KarmaParams {
     repeated KarmaSourceReward sources = 4;
     repeated Validator validators = 5;
     int64 deploy_karma = 6;
+    repeated KarmaAddressSource users = 7;
 }
 
 message KarmaParamsValidator {
@@ -41,6 +42,11 @@ message KarmaSourceReward {
 message KarmaSource {
     string name = 1;
     int64 count = 2;
+}
+
+message KarmaAddressSource {
+    Address user = 1;
+    repeated KarmaSource source = 2;
 }
 
 message KarmaConfig {
