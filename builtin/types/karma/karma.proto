@@ -46,7 +46,7 @@ message KarmaSource {
 
 message KarmaAddressSource {
     Address user = 1;
-    repeated KarmaSource source = 2;
+    repeated KarmaSource sources = 2;
 }
 
 message KarmaConfig {
