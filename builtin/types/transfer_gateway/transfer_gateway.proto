@@ -269,6 +269,8 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
 }
 
 message TransferGatewayPendingWithdrawalsRequest {
+    // Address of Mainnet Gateway contract
+    Address mainnet_gateway = 1;
 }
 
 message TransferGatewayPendingWithdrawalsResponse {
