@@ -5,33 +5,27 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 package karma;
 
 message KarmaParams {
-    bool mutable_oracle = 1;
-    int64 max_karma = 2;
-    Address Oracle = 3;
-    repeated KarmaSourceReward sources = 4;
-    repeated Validator validators = 5;
-    int64 deploy_karma = 6;
-    repeated KarmaAddressSource users = 7;
+    KarmaConfig config = 1;
+    repeated KarmaAddressSource users = 2;
 }
 
-message KarmaParamsValidator {
-    KarmaParams Params = 1;
-    Validator Validator = 2;
-    Address Oracle = 3;
+message KarmaConfigValidator {
+    KarmaConfig config = 1;
+    Address oracle = 2;
 }
 
 message KarmaParamsValidatorNewMaxKarma {
     int64 max_karma = 1;
-    Validator Validator = 2;
+    Address oracle = 2;
 }
 
 message KarmaParamsValidatorNewOracle {
-    Address NewOracle = 1;
-    Validator Validator = 2;
+    Address new_oracle = 1;
+    Address old_oracle = 2;
 }
 message KarmaParamsMutableValidator{
     bool mutable_oracle = 1;
-    Validator Validator = 2;
+    Address oracle = 2;
 }
 
 message KarmaSourceReward {
@@ -50,13 +44,16 @@ message KarmaAddressSource {
 }
 
 message KarmaConfig {
-    bool mutable_oracle = 1;
-    int64 max_karma = 2;
-    Address Oracle = 3;
-    repeated KarmaSourceReward sources = 4;
-    int64 last_update_time = 5;
+    bool enabled = 1;
+    bool mutable_oracle = 2;
+    Address Oracle = 4;
+    repeated KarmaSourceReward sources = 5;
+    int64 session_max_access_count = 6;
+    int64 session_duration = 7;
+    bool deploy_enabled = 8;
+    bool call_enabled = 9;
+    int64 last_update_time = 10;
 }
-
 
 message KarmaState {
     repeated KarmaSource source_states = 1;
