@@ -13,10 +13,11 @@ Scripts to make this easier for you can be found [here](https://github.com/loomn
     * Backup the config. This can be done with using [backup.sh](https://github.com/loomnetwork/go-loom/tree/master/backup/utils/backup.sh) and configuring `STUFF_TO_BACKUP` accordingly.
   * Create an extra node that has `--peers` for the other nodes, but is not in the `--peers` of the other nodes.
     * Run the [backup.sh](https://github.com/loomnetwork/go-loom/tree/master/backup/utils/backup.sh) script periodically.
-      * Stopps the service.
+      * Stops the service.
       * Takes a dump.
       * Starts the service.
       * Uploads to S3.
+      * Makes sure the service has come back up healthy.
 * Restore
   * Stop the service on all nodes you want to restore the data on.
   * Restore the data.
@@ -25,7 +26,7 @@ Scripts to make this easier for you can be found [here](https://github.com/loomn
 
 # Backup
 
-* Create an extra node, which will be the backup node. It should have it's `--peers` pointing to the live nodes. They should not reference this node at all.
+* Create an extra node, which will be the backup node. It should have it's `--peers` pointing to the live nodes. The live nodes should not reference this node at all.
 * Run [backup.sh](https://github.com/loomnetwork/go-loom/tree/master/backup/utils/backup.sh) periodically.
 
 ## backup.sh
@@ -41,6 +42,12 @@ It can be scheduled in cron like this
     MAILTO=""
     55 * * * * /home/ubuntu/backup.sh
 ```
+
+## Configuration
+
+Run `./backup.sh config` to dump the default configuration to `backup_config`. I suggest putting this file in /etc.
+
+The backup will run without it, but you really should set it up. At the minimum, you should set `S3BUCKET`.
 
 There are several settings you can tune. Of particular interest are
 
