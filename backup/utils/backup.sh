@@ -15,11 +15,23 @@ STOP_TIMEOUT="300"
 SERVICE_NAME="loom.service"
 PROCESS_NAME="loom"
 
+# If the service isn't up when we start.
+SHOULD_START_SERVICE_IF_NOT_STARTED='true'
+WAIT_SECONDS_AFTER_STARTUP=180
+
 # If the service doesn't come back up, give it another kick.
 SHOULD_KICK_SERVICE="true"
 KICK_TIMEOUT=180
 MAXIMUM_NUMBER_OF_KICKS=100
 PORT="46657"
+
+# At various points we test that the backup node is up to date. On a rapidly active cluster, it may be a little behind, but healthy. This is the amount of grace we want to give it.
+HEIGHT_GRACE=3
+
+# For when the height is further behind.
+HEIGHT_BEHIND_GRACE=50
+SHOULD_RESTART_SERVICE_IF_BEHIND="true"
+SHOULD_TERMINATE_BACKUP_IF_BEHIND="false"
 
 # Send a SIGUSR1 to the service.
 SHOULD_SIGUSR1_SERVICE="false"
@@ -31,7 +43,7 @@ S3BUCKET_REGION="us-east-2"
 
 # What we want to back up.
 BACKUP_DATA="chaindata app.db"
-BACKUP_CONFIG="genesis.json loom.yml /etc/systemd/system/$SERVICE_NAME chaindata/config/"
+BACKUP_CONFIG="genesis.json loom.yml /etc/systemd/system/$SERVICE_NAME chaindata/config"
 STUFF_TO_BACKUP="$BACKUP_DATA $BACKUP_CONFIG"
 
 # Anything that doesn't have an explicit path will be backed up from this directory.
@@ -65,25 +77,39 @@ SHOULD_SHUTDOWN='false'
 ## END Default config ##
 
 
-# Where backup config is stored.
-CONFIG_LOCATION=~/.backup_config
+function findConfig
+{
+  if [ -e ~/.backup_config ]; then
+    echo ~/.backup_config
+  elif [ -e "/etc/backup_config" ]; then
+    echo "/etc/backup_config"
+  elif [ -e "`dirname $0`/backup_config" ]; then
+    echo "`dirname $0`/backup_config"
+  else
+    echo "backup_config"
+  fi
+}
 
 function rsyncBasedBackup
 {
+  echo "INFO: Rsync based backup."
   # This works on the premise that stuff is going to change while we back it up,
   # so let's just cope with that and update the backup 
   
   # Get the initial backup. This is likely to have inconsistencies.
   cd "$START_DIRECTORY"
+  echo "INFO: Initial sync."
   time rsync -rui --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   
   # Repeat to get any major changes that happened during the first go.
+  echo "INFO: Intermediate sync to get any changes while the initial sync was running."
   time rsync -rui --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   
   # Repeat to get any minor changes that happened during the second go.
   doSIGUSR1
   doStop
   sleep 1
+  echo "INFO: Final sync."
   time rsync -rui --delete $STUFF_TO_BACKUP "$TMP_LOCATION"
   doStart
   START_TIME=`now`
@@ -93,10 +119,12 @@ function rsyncBasedBackup
     cd "$TMP_LOCATION"
     tar -cjf $FILENAME *
   fi
+  echo "INFO: Rsync based backup."
 }
 
 function oldStyleBackup
 {
+  echo "INFO: Old style backup."
   # This works well enough if the service is stopped, but it causes some down-
   # time, and a risk that the service might not come back up with repeated
   # backups.
@@ -112,6 +140,7 @@ function oldStyleBackup
   fi
   doStart
   START_TIME=`now`
+  echo "INFO: Old style backup done."
 }
 
 
@@ -122,6 +151,7 @@ function oldStyleBackup
 # Supporting functionality.
 function sanityChecks
 {
+  echo "INFO: Running sanity checks."
   for TOOL in rsync aws; do
     if ! which "$TOOL" > /dev/null; then
       echo "ERROR: Couild not find ${TOOL}. Backup will not work." >&2
@@ -140,6 +170,7 @@ function sanityChecks
 
 function prep
 {
+  echo "INFO: Prep."
   mkdir -p "$TMP_LOCATION"
 }
 
@@ -165,6 +196,7 @@ function doStop
 {
   if [ "$SHOULD_STOP_SERVICE" == 'true' ]; then
     STOP_BEGIN=`now`
+    echo "INFO: Stop."
     sudo systemctl stop "$SERVICE_NAME"
     
     if pidof "$PROCESS_NAME" > /dev/null; then
@@ -178,7 +210,7 @@ function doStop
           sudo systemctl status "$SERVICE_NAME" >&2
           exit 1
         fi
-        sleep 0.1
+        sleep 1
       done
       echo "Process $PROCESS_NAME stopped."
     fi
@@ -188,6 +220,7 @@ function doStop
 function doStart
 {
   if [ "$SHOULD_STOP_SERVICE" == 'true' ] && [ "$SHOULD_SHUTDOWN" == 'false' ]; then
+    echo "INFO: Start."
     sudo systemctl start "$SERVICE_NAME"
   fi
 }
@@ -219,23 +252,24 @@ function kickServiceIfNotHappy
 
 function repetitivelyKickServiceUntilHappy
 {
-  if [ "$1" == '' ]; then
-    TIMEOUT_START=`now`
-  else
-    TIMEOUT_START="$1"
-  fi
-  
-  kickServiceIfNotHappy "$TIMEOUT_START"
-  
-  KICKS=1
-  while ! serviceIsAlive && [ $KICKS -lt $MAXIMUM_NUMBER_OF_KICKS ] ; do
-    kickServiceIfNotHappy
-    let KICKS=$KICKS+1
-    
-    if ! [ $KICKS -lt $MAXIMUM_NUMBER_OF_KICKS ]; then
-      echo "ERROR: Kicked the service $KICKS times and was not able to get it started." >&2
+  echo "INFO: Repetitively kicking the service until it's happy."
+  if [ "$SHOULD_KICK_SERVICE" == 'true' ]; then
+    if [ "$1" == '' ]; then
+      TIMEOUT_START=`now`
+    else
+      TIMEOUT_START="$1"
     fi
-  done
+    
+    KICKS=1
+    while ! kickServiceIfNotHappy && [ $KICKS -lt $MAXIMUM_NUMBER_OF_KICKS ] ; do
+      let KICKS=$KICKS+1
+      
+      if ! [ $KICKS -lt $MAXIMUM_NUMBER_OF_KICKS ]; then
+        echo "ERROR: Kicked the service $KICKS times and was not able to get it started." >&2
+      fi
+      sleep 1
+    done
+  fi
 }
 
 function waitForSeconds
@@ -264,6 +298,7 @@ function serviceIsAlive
 function doSIGUSR1
 {
   if [ "$SHOULD_SIGUSR1_SERVICE" == 'true' ]; then
+    echo "INFO: Sending SIGUSR1."
     sudo killall -SIGUSR1 loom
     sleep $SIGUSR1_WAIT_SECONDS # Give a few seconds for stuff to be written to file before we proceed with the next step.
   fi
@@ -272,25 +307,75 @@ function doSIGUSR1
 function upload
 {
   if [ "$SHOULD_UPLOAD" == 'true' ] && [ "$SHOULD_COMPRESS" == 'true' ]; then
+    echo "INFO: Upload to $S3BUCKET_REGION."
     /usr/bin/aws s3 cp $FILENAME "$S3BUCKET" --region "$S3BUCKET_REGION"
   else
-    echo "Upload and/or compression is turned off. Therefore won't upload. Unless If you aren't testing, this is probably a configuration issue."
+    echo "Upload and/or $compression is turned off. Therefore won't upload. Unless If you aren't testing, this is probably a configuration issue."
+  fi
+}
+
+function restartServiceIfTooFarBehind
+{
+  if [ "$SHOULD_RESTART_SERVICE_IF_BEHIND" == 'true' ]; then
+    echo "INFO: Backup node is too far behind, and SHOULD_RESTART_SERVICE_IF_BEHIND is true. Restarting the service."
+    systemctl restart "$SERVICE_NAME"
+    repetitivelyKickServiceUntilHappy "`now`"
+  fi
+}
+
+function terminateBackupIfTooFarBehind
+{
+  if [ "$SHOULD_TERMINATE_BACKUP_IF_BEHIND" == 'true' ]; then
+    echo "INFO: Backup node is too far behind, and SHOULD_TERMINATE_BACKUP_IF_BEHIND is true. Terminating the backup."
+    exit 1
+  fi
+}
+
+function startIfNotStarted
+{
+  if [ "$SHOULD_START_SERVICE_IF_NOT_STARTED" == 'true' ]; then
+    echo "INFO: Starting if not started."
+    repetitivelyKickServiceUntilHappy "`now`"
+    sleep "$WAIT_SECONDS_AFTER_STARTUP"
   fi
 }
 
 function waitUntilCaughtUp
 {
   if [ "$SHOULD_WAIT_UNTIL_CAUGHT_UP" == 'true' ]; then
+    echo "INFO: Checking if we need to wait until it's caught up."
+    
     LOCAL_HEIGHT=`getHeight 127.0.0.1`
+    if [ "$LOCAL_HEIGHT" =='' ]; then
+      repetitivelyKickServiceUntilHappy
+      LOCAL_HEIGHT=`getHeight 127.0.0.1`
+      
+      if [ "$LOCAL_HEIGHT" =='' ]; then
+        echo "FATAL: Could not get the height from the service, and could not start it." >&2
+        exit 1
+      fi
+    fi
+    
+    let LOCAL_GRACED_HEIGHT=$LOCAL_HEIGHT+$HEIGHT_GRACE
     CLUSTER_HEIGHT=`getHighestHeight`
-    while [ $LOCAL_HEIGHT -lt $CLUSTER_HEIGHT ]; do
-      echo "INFO: Waiting until local height ($LOCAL_HEIGHT) has caught up with the rest of the cluster ($CLUSTER_HEIGHT)."
+    while [ $LOCAL_GRACED_HEIGHT -lt $CLUSTER_HEIGHT ]; do
+      echo "INFO: Local height + grace ($LOCAL_HEIGHT + $HEIGHT_GRACE = $LOCAL_GRACED_HEIGHT) is behind the cluster the cluster ($CLUSTER_HEIGHT)."
+      
+      let HEIGHT_DIFFERENCE=$CLUSTER_HEIGHT-$LOCAL_HEIGHT
+      if [ "$HEIGHT_DIFFERENCE" -gt "$HEIGHT_BEHIND_GRACE"  ]; then
+        restartServiceIfTooFarBehind
+        terminateBackupIfTooFarBehind
+      fi
+      
+      echo "INFO: Waiting until local height + grace ($LOCAL_HEIGHT + $HEIGHT_GRACE = $LOCAL_GRACED_HEIGHT) has caught up with the rest of the cluster ($CLUSTER_HEIGHT)."
       sleep 30
       LOCAL_HEIGHT=`getHeight 127.0.0.1`
       CLUSTER_HEIGHT=`getHighestHeight`
     done
     
     echo "INFO: Up to speed. Let's get to it."
+  else
+    echo "INFO: SHOULD_WAIT_UNTIL_CAUGHT_UP is not true, so not checking or waiting."
   fi
 }
 
@@ -310,7 +395,7 @@ function getHighestHeight
 
 function getHeight
 {
-  curl -s http://$1:$PORT/status | grep latest_block_height | sed 's/^.*: //g;s/,//g'
+  curl -s http://$1:$PORT/status | grep latest_block_height | sed 's/^.*: //g;s/,//g; s/"//g'
 }
 
 function getIPs
@@ -337,6 +422,7 @@ function doIt
 {
   sanityChecks
   prep
+  startIfNotStarted
   waitUntilCaughtUp
 
 
@@ -358,6 +444,9 @@ function doIt
   # This should never be needed, but it's here just incase.
   repetitivelyKickServiceUntilHappy "$START_TIME"
 }
+
+# Where backup config is stored.
+CONFIG_LOCATION=`findConfig`
 
 if [ "$1" == 'config' ]; then
   generateConfig
