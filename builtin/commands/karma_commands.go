@@ -1,15 +1,12 @@
 package commands
 
 import (
-	"github.com/loomnetwork/go-loom/builtin/types/karma"
-	"github.com/loomnetwork/go-loom/cli"
-	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"strconv"
 )
 
 const KarmaContractName = "karma"
 
+/*
 func UpdateSourcesForUserCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "update [user] [oracle] [name] [count]",
@@ -38,7 +35,7 @@ func UpdateSourcesForUserCmd() *cobra.Command {
 	}
 }
 
-/*
+
 
 func GetConfig() *cobra.Command {
 	return &cobra.Command{
@@ -103,8 +100,8 @@ func UpdateConfig() *cobra.Command {
 */
 func AddKarma(root *cobra.Command) {
 	root.AddCommand(
-		UpdateSourcesForUserCmd(),
-		//GetConfig(),
-		//UpdateConfig(),
+	//UpdateSourcesForUserCmd(),
+	//GetConfig(),
+	//UpdateConfig(),
 	)
 }
