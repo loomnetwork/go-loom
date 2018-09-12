@@ -8,22 +8,17 @@ It is generated from these files:
 	github.com/loomnetwork/go-loom/builtin/types/karma/karma.proto
 
 It has these top-level messages:
-	KarmaParams
-	KarmaConfigValidator
-	KarmaParamsValidatorNewMaxKarma
-	KarmaParamsValidatorNewOracle
-	KarmaParamsMutableValidator
+	KarmaInitRequest
+	KarmaSources
+	KarmaSourcesValidator
+	KarmaNewOracleValidator
 	KarmaSourceReward
 	KarmaSource
 	KarmaAddressSource
-	KarmaConfig
 	KarmaState
 	KarmaStateUser
 	KarmaStateKeyUser
-	KarmaInitRequest
-	KarmaUserToken
 	KarmaTotal
-	KarmaDeploy
 */
 package karma
 
@@ -43,166 +38,98 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-type KarmaParams struct {
-	Config *KarmaConfig          `protobuf:"bytes,1,opt,name=config" json:"config,omitempty"`
-	Oracle *types.Address        `protobuf:"bytes,2,opt,name=Oracle" json:"Oracle,omitempty"`
-	Users  []*KarmaAddressSource `protobuf:"bytes,3,rep,name=users" json:"users,omitempty"`
+type KarmaInitRequest struct {
+	Oracle  *types.Address        `protobuf:"bytes,1,opt,name=Oracle" json:"Oracle,omitempty"`
+	Sources []*KarmaSourceReward  `protobuf:"bytes,2,rep,name=sources" json:"sources,omitempty"`
+	Users   []*KarmaAddressSource `protobuf:"bytes,3,rep,name=users" json:"users,omitempty"`
 }
 
-func (m *KarmaParams) Reset()                    { *m = KarmaParams{} }
-func (m *KarmaParams) String() string            { return proto.CompactTextString(m) }
-func (*KarmaParams) ProtoMessage()               {}
-func (*KarmaParams) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{0} }
+func (m *KarmaInitRequest) Reset()                    { *m = KarmaInitRequest{} }
+func (m *KarmaInitRequest) String() string            { return proto.CompactTextString(m) }
+func (*KarmaInitRequest) ProtoMessage()               {}
+func (*KarmaInitRequest) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{0} }
 
-func (m *KarmaParams) GetConfig() *KarmaConfig {
-	if m != nil {
-		return m.Config
-	}
-	return nil
-}
-
-func (m *KarmaParams) GetOracle() *types.Address {
+func (m *KarmaInitRequest) GetOracle() *types.Address {
 	if m != nil {
 		return m.Oracle
 	}
 	return nil
 }
 
-func (m *KarmaParams) GetUsers() []*KarmaAddressSource {
+func (m *KarmaInitRequest) GetSources() []*KarmaSourceReward {
+	if m != nil {
+		return m.Sources
+	}
+	return nil
+}
+
+func (m *KarmaInitRequest) GetUsers() []*KarmaAddressSource {
 	if m != nil {
 		return m.Users
 	}
 	return nil
 }
 
-type KarmaConfigValidator struct {
-	Enabled               bool           `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	SessionMaxAccessCount int64          `protobuf:"varint,2,opt,name=session_max_access_count,json=sessionMaxAccessCount,proto3" json:"session_max_access_count,omitempty"`
-	SessionDuration       int64          `protobuf:"varint,3,opt,name=session_duration,json=sessionDuration,proto3" json:"session_duration,omitempty"`
-	DeployEnabled         bool           `protobuf:"varint,4,opt,name=deploy_enabled,json=deployEnabled,proto3" json:"deploy_enabled,omitempty"`
-	CallEnabled           bool           `protobuf:"varint,5,opt,name=call_enabled,json=callEnabled,proto3" json:"call_enabled,omitempty"`
-	Oracle                *types.Address `protobuf:"bytes,6,opt,name=oracle" json:"oracle,omitempty"`
+type KarmaSources struct {
+	Sources []*KarmaSourceReward `protobuf:"bytes,1,rep,name=sources" json:"sources,omitempty"`
 }
 
-func (m *KarmaConfigValidator) Reset()                    { *m = KarmaConfigValidator{} }
-func (m *KarmaConfigValidator) String() string            { return proto.CompactTextString(m) }
-func (*KarmaConfigValidator) ProtoMessage()               {}
-func (*KarmaConfigValidator) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{1} }
+func (m *KarmaSources) Reset()                    { *m = KarmaSources{} }
+func (m *KarmaSources) String() string            { return proto.CompactTextString(m) }
+func (*KarmaSources) ProtoMessage()               {}
+func (*KarmaSources) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{1} }
 
-func (m *KarmaConfigValidator) GetEnabled() bool {
+func (m *KarmaSources) GetSources() []*KarmaSourceReward {
 	if m != nil {
-		return m.Enabled
+		return m.Sources
 	}
-	return false
+	return nil
 }
 
-func (m *KarmaConfigValidator) GetSessionMaxAccessCount() int64 {
+type KarmaSourcesValidator struct {
+	Sources []*KarmaSourceReward `protobuf:"bytes,1,rep,name=sources" json:"sources,omitempty"`
+	Oracle  *types.Address       `protobuf:"bytes,2,opt,name=oracle" json:"oracle,omitempty"`
+}
+
+func (m *KarmaSourcesValidator) Reset()                    { *m = KarmaSourcesValidator{} }
+func (m *KarmaSourcesValidator) String() string            { return proto.CompactTextString(m) }
+func (*KarmaSourcesValidator) ProtoMessage()               {}
+func (*KarmaSourcesValidator) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{2} }
+
+func (m *KarmaSourcesValidator) GetSources() []*KarmaSourceReward {
 	if m != nil {
-		return m.SessionMaxAccessCount
+		return m.Sources
 	}
-	return 0
+	return nil
 }
 
-func (m *KarmaConfigValidator) GetSessionDuration() int64 {
-	if m != nil {
-		return m.SessionDuration
-	}
-	return 0
-}
-
-func (m *KarmaConfigValidator) GetDeployEnabled() bool {
-	if m != nil {
-		return m.DeployEnabled
-	}
-	return false
-}
-
-func (m *KarmaConfigValidator) GetCallEnabled() bool {
-	if m != nil {
-		return m.CallEnabled
-	}
-	return false
-}
-
-func (m *KarmaConfigValidator) GetOracle() *types.Address {
+func (m *KarmaSourcesValidator) GetOracle() *types.Address {
 	if m != nil {
 		return m.Oracle
 	}
 	return nil
 }
 
-type KarmaParamsValidatorNewMaxKarma struct {
-	MaxKarma int64          `protobuf:"varint,1,opt,name=max_karma,json=maxKarma,proto3" json:"max_karma,omitempty"`
-	Oracle   *types.Address `protobuf:"bytes,2,opt,name=oracle" json:"oracle,omitempty"`
-}
-
-func (m *KarmaParamsValidatorNewMaxKarma) Reset()         { *m = KarmaParamsValidatorNewMaxKarma{} }
-func (m *KarmaParamsValidatorNewMaxKarma) String() string { return proto.CompactTextString(m) }
-func (*KarmaParamsValidatorNewMaxKarma) ProtoMessage()    {}
-func (*KarmaParamsValidatorNewMaxKarma) Descriptor() ([]byte, []int) {
-	return fileDescriptorKarma, []int{2}
-}
-
-func (m *KarmaParamsValidatorNewMaxKarma) GetMaxKarma() int64 {
-	if m != nil {
-		return m.MaxKarma
-	}
-	return 0
-}
-
-func (m *KarmaParamsValidatorNewMaxKarma) GetOracle() *types.Address {
-	if m != nil {
-		return m.Oracle
-	}
-	return nil
-}
-
-type KarmaParamsValidatorNewOracle struct {
+type KarmaNewOracleValidator struct {
 	NewOracle *types.Address `protobuf:"bytes,1,opt,name=new_oracle,json=newOracle" json:"new_oracle,omitempty"`
 	OldOracle *types.Address `protobuf:"bytes,2,opt,name=old_oracle,json=oldOracle" json:"old_oracle,omitempty"`
 }
 
-func (m *KarmaParamsValidatorNewOracle) Reset()         { *m = KarmaParamsValidatorNewOracle{} }
-func (m *KarmaParamsValidatorNewOracle) String() string { return proto.CompactTextString(m) }
-func (*KarmaParamsValidatorNewOracle) ProtoMessage()    {}
-func (*KarmaParamsValidatorNewOracle) Descriptor() ([]byte, []int) {
-	return fileDescriptorKarma, []int{3}
-}
+func (m *KarmaNewOracleValidator) Reset()                    { *m = KarmaNewOracleValidator{} }
+func (m *KarmaNewOracleValidator) String() string            { return proto.CompactTextString(m) }
+func (*KarmaNewOracleValidator) ProtoMessage()               {}
+func (*KarmaNewOracleValidator) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{3} }
 
-func (m *KarmaParamsValidatorNewOracle) GetNewOracle() *types.Address {
+func (m *KarmaNewOracleValidator) GetNewOracle() *types.Address {
 	if m != nil {
 		return m.NewOracle
 	}
 	return nil
 }
 
-func (m *KarmaParamsValidatorNewOracle) GetOldOracle() *types.Address {
+func (m *KarmaNewOracleValidator) GetOldOracle() *types.Address {
 	if m != nil {
 		return m.OldOracle
-	}
-	return nil
-}
-
-type KarmaParamsMutableValidator struct {
-	MutableOracle bool           `protobuf:"varint,1,opt,name=mutable_oracle,json=mutableOracle,proto3" json:"mutable_oracle,omitempty"`
-	Oracle        *types.Address `protobuf:"bytes,2,opt,name=oracle" json:"oracle,omitempty"`
-}
-
-func (m *KarmaParamsMutableValidator) Reset()                    { *m = KarmaParamsMutableValidator{} }
-func (m *KarmaParamsMutableValidator) String() string            { return proto.CompactTextString(m) }
-func (*KarmaParamsMutableValidator) ProtoMessage()               {}
-func (*KarmaParamsMutableValidator) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{4} }
-
-func (m *KarmaParamsMutableValidator) GetMutableOracle() bool {
-	if m != nil {
-		return m.MutableOracle
-	}
-	return false
-}
-
-func (m *KarmaParamsMutableValidator) GetOracle() *types.Address {
-	if m != nil {
-		return m.Oracle
 	}
 	return nil
 }
@@ -215,7 +142,7 @@ type KarmaSourceReward struct {
 func (m *KarmaSourceReward) Reset()                    { *m = KarmaSourceReward{} }
 func (m *KarmaSourceReward) String() string            { return proto.CompactTextString(m) }
 func (*KarmaSourceReward) ProtoMessage()               {}
-func (*KarmaSourceReward) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{5} }
+func (*KarmaSourceReward) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{4} }
 
 func (m *KarmaSourceReward) GetName() string {
 	if m != nil {
@@ -239,7 +166,7 @@ type KarmaSource struct {
 func (m *KarmaSource) Reset()                    { *m = KarmaSource{} }
 func (m *KarmaSource) String() string            { return proto.CompactTextString(m) }
 func (*KarmaSource) ProtoMessage()               {}
-func (*KarmaSource) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{6} }
+func (*KarmaSource) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{5} }
 
 func (m *KarmaSource) GetName() string {
 	if m != nil {
@@ -263,7 +190,7 @@ type KarmaAddressSource struct {
 func (m *KarmaAddressSource) Reset()                    { *m = KarmaAddressSource{} }
 func (m *KarmaAddressSource) String() string            { return proto.CompactTextString(m) }
 func (*KarmaAddressSource) ProtoMessage()               {}
-func (*KarmaAddressSource) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{7} }
+func (*KarmaAddressSource) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{6} }
 
 func (m *KarmaAddressSource) GetUser() *types.Address {
 	if m != nil {
@@ -279,78 +206,6 @@ func (m *KarmaAddressSource) GetSources() []*KarmaSource {
 	return nil
 }
 
-type KarmaConfig struct {
-	Enabled               bool                 `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	MutableOracle         bool                 `protobuf:"varint,2,opt,name=mutable_oracle,json=mutableOracle,proto3" json:"mutable_oracle,omitempty"`
-	Sources               []*KarmaSourceReward `protobuf:"bytes,3,rep,name=sources" json:"sources,omitempty"`
-	SessionMaxAccessCount int64                `protobuf:"varint,4,opt,name=session_max_access_count,json=sessionMaxAccessCount,proto3" json:"session_max_access_count,omitempty"`
-	SessionDuration       int64                `protobuf:"varint,5,opt,name=session_duration,json=sessionDuration,proto3" json:"session_duration,omitempty"`
-	DeployEnabled         bool                 `protobuf:"varint,6,opt,name=deploy_enabled,json=deployEnabled,proto3" json:"deploy_enabled,omitempty"`
-	CallEnabled           bool                 `protobuf:"varint,7,opt,name=call_enabled,json=callEnabled,proto3" json:"call_enabled,omitempty"`
-	LastUpdateTime        int64                `protobuf:"varint,8,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time,omitempty"`
-}
-
-func (m *KarmaConfig) Reset()                    { *m = KarmaConfig{} }
-func (m *KarmaConfig) String() string            { return proto.CompactTextString(m) }
-func (*KarmaConfig) ProtoMessage()               {}
-func (*KarmaConfig) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{8} }
-
-func (m *KarmaConfig) GetEnabled() bool {
-	if m != nil {
-		return m.Enabled
-	}
-	return false
-}
-
-func (m *KarmaConfig) GetMutableOracle() bool {
-	if m != nil {
-		return m.MutableOracle
-	}
-	return false
-}
-
-func (m *KarmaConfig) GetSources() []*KarmaSourceReward {
-	if m != nil {
-		return m.Sources
-	}
-	return nil
-}
-
-func (m *KarmaConfig) GetSessionMaxAccessCount() int64 {
-	if m != nil {
-		return m.SessionMaxAccessCount
-	}
-	return 0
-}
-
-func (m *KarmaConfig) GetSessionDuration() int64 {
-	if m != nil {
-		return m.SessionDuration
-	}
-	return 0
-}
-
-func (m *KarmaConfig) GetDeployEnabled() bool {
-	if m != nil {
-		return m.DeployEnabled
-	}
-	return false
-}
-
-func (m *KarmaConfig) GetCallEnabled() bool {
-	if m != nil {
-		return m.CallEnabled
-	}
-	return false
-}
-
-func (m *KarmaConfig) GetLastUpdateTime() int64 {
-	if m != nil {
-		return m.LastUpdateTime
-	}
-	return 0
-}
-
 type KarmaState struct {
 	SourceStates   []*KarmaSource `protobuf:"bytes,1,rep,name=source_states,json=sourceStates" json:"source_states,omitempty"`
 	LastUpdateTime int64          `protobuf:"varint,2,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time,omitempty"`
@@ -359,7 +214,7 @@ type KarmaState struct {
 func (m *KarmaState) Reset()                    { *m = KarmaState{} }
 func (m *KarmaState) String() string            { return proto.CompactTextString(m) }
 func (*KarmaState) ProtoMessage()               {}
-func (*KarmaState) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{9} }
+func (*KarmaState) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{7} }
 
 func (m *KarmaState) GetSourceStates() []*KarmaSource {
 	if m != nil {
@@ -384,7 +239,7 @@ type KarmaStateUser struct {
 func (m *KarmaStateUser) Reset()                    { *m = KarmaStateUser{} }
 func (m *KarmaStateUser) String() string            { return proto.CompactTextString(m) }
 func (*KarmaStateUser) ProtoMessage()               {}
-func (*KarmaStateUser) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{10} }
+func (*KarmaStateUser) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{8} }
 
 func (m *KarmaStateUser) GetSourceStates() []*KarmaSource {
 	if m != nil {
@@ -416,7 +271,7 @@ type KarmaStateKeyUser struct {
 func (m *KarmaStateKeyUser) Reset()                    { *m = KarmaStateKeyUser{} }
 func (m *KarmaStateKeyUser) String() string            { return proto.CompactTextString(m) }
 func (*KarmaStateKeyUser) ProtoMessage()               {}
-func (*KarmaStateKeyUser) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{11} }
+func (*KarmaStateKeyUser) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{9} }
 
 func (m *KarmaStateKeyUser) GetStateKeys() []string {
 	if m != nil {
@@ -439,46 +294,6 @@ func (m *KarmaStateKeyUser) GetOracle() *types.Address {
 	return nil
 }
 
-type KarmaInitRequest struct {
-	Params *KarmaParams `protobuf:"bytes,1,opt,name=Params" json:"Params,omitempty"`
-}
-
-func (m *KarmaInitRequest) Reset()                    { *m = KarmaInitRequest{} }
-func (m *KarmaInitRequest) String() string            { return proto.CompactTextString(m) }
-func (*KarmaInitRequest) ProtoMessage()               {}
-func (*KarmaInitRequest) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{12} }
-
-func (m *KarmaInitRequest) GetParams() *KarmaParams {
-	if m != nil {
-		return m.Params
-	}
-	return nil
-}
-
-type KarmaUserToken struct {
-	Owner      *types.Address `protobuf:"bytes,1,opt,name=Owner" json:"Owner,omitempty"`
-	TokenCount int64          `protobuf:"varint,2,opt,name=token_count,json=tokenCount,proto3" json:"token_count,omitempty"`
-}
-
-func (m *KarmaUserToken) Reset()                    { *m = KarmaUserToken{} }
-func (m *KarmaUserToken) String() string            { return proto.CompactTextString(m) }
-func (*KarmaUserToken) ProtoMessage()               {}
-func (*KarmaUserToken) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{13} }
-
-func (m *KarmaUserToken) GetOwner() *types.Address {
-	if m != nil {
-		return m.Owner
-	}
-	return nil
-}
-
-func (m *KarmaUserToken) GetTokenCount() int64 {
-	if m != nil {
-		return m.TokenCount
-	}
-	return 0
-}
-
 type KarmaTotal struct {
 	Count int64 `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
 }
@@ -486,7 +301,7 @@ type KarmaTotal struct {
 func (m *KarmaTotal) Reset()                    { *m = KarmaTotal{} }
 func (m *KarmaTotal) String() string            { return proto.CompactTextString(m) }
 func (*KarmaTotal) ProtoMessage()               {}
-func (*KarmaTotal) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{14} }
+func (*KarmaTotal) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{10} }
 
 func (m *KarmaTotal) GetCount() int64 {
 	if m != nil {
@@ -495,39 +310,18 @@ func (m *KarmaTotal) GetCount() int64 {
 	return 0
 }
 
-type KarmaDeploy struct {
-	Count int64 `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
-}
-
-func (m *KarmaDeploy) Reset()                    { *m = KarmaDeploy{} }
-func (m *KarmaDeploy) String() string            { return proto.CompactTextString(m) }
-func (*KarmaDeploy) ProtoMessage()               {}
-func (*KarmaDeploy) Descriptor() ([]byte, []int) { return fileDescriptorKarma, []int{15} }
-
-func (m *KarmaDeploy) GetCount() int64 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
-}
-
 func init() {
-	proto.RegisterType((*KarmaParams)(nil), "karma.KarmaParams")
-	proto.RegisterType((*KarmaConfigValidator)(nil), "karma.KarmaConfigValidator")
-	proto.RegisterType((*KarmaParamsValidatorNewMaxKarma)(nil), "karma.KarmaParamsValidatorNewMaxKarma")
-	proto.RegisterType((*KarmaParamsValidatorNewOracle)(nil), "karma.KarmaParamsValidatorNewOracle")
-	proto.RegisterType((*KarmaParamsMutableValidator)(nil), "karma.KarmaParamsMutableValidator")
+	proto.RegisterType((*KarmaInitRequest)(nil), "karma.KarmaInitRequest")
+	proto.RegisterType((*KarmaSources)(nil), "karma.KarmaSources")
+	proto.RegisterType((*KarmaSourcesValidator)(nil), "karma.KarmaSourcesValidator")
+	proto.RegisterType((*KarmaNewOracleValidator)(nil), "karma.KarmaNewOracleValidator")
 	proto.RegisterType((*KarmaSourceReward)(nil), "karma.KarmaSourceReward")
 	proto.RegisterType((*KarmaSource)(nil), "karma.KarmaSource")
 	proto.RegisterType((*KarmaAddressSource)(nil), "karma.KarmaAddressSource")
-	proto.RegisterType((*KarmaConfig)(nil), "karma.KarmaConfig")
 	proto.RegisterType((*KarmaState)(nil), "karma.KarmaState")
 	proto.RegisterType((*KarmaStateUser)(nil), "karma.KarmaStateUser")
 	proto.RegisterType((*KarmaStateKeyUser)(nil), "karma.KarmaStateKeyUser")
-	proto.RegisterType((*KarmaInitRequest)(nil), "karma.KarmaInitRequest")
-	proto.RegisterType((*KarmaUserToken)(nil), "karma.KarmaUserToken")
 	proto.RegisterType((*KarmaTotal)(nil), "karma.KarmaTotal")
-	proto.RegisterType((*KarmaDeploy)(nil), "karma.KarmaDeploy")
 }
 
 func init() {
@@ -535,52 +329,35 @@ func init() {
 }
 
 var fileDescriptorKarma = []byte{
-	// 740 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0xcf, 0x4f, 0xdb, 0x4a,
-	0x10, 0x56, 0x7e, 0x99, 0x64, 0x02, 0x79, 0xbc, 0x15, 0xef, 0xc9, 0xef, 0x01, 0x25, 0x75, 0x85,
-	0x4a, 0xab, 0x36, 0xa9, 0xe8, 0x81, 0x1b, 0x15, 0x82, 0x1e, 0x2a, 0x44, 0x69, 0x5d, 0xe8, 0xd5,
-	0x6c, 0xec, 0x85, 0x5a, 0xb1, 0xbd, 0xc1, 0xbb, 0x56, 0xc8, 0xad, 0xd7, 0x4a, 0xfd, 0x0b, 0xfb,
-	0xd7, 0x54, 0x3b, 0xbb, 0x26, 0x86, 0x38, 0x40, 0xdb, 0x4b, 0x94, 0xfd, 0xe6, 0x9b, 0xf9, 0x66,
-	0xc7, 0xf3, 0xd9, 0xb0, 0x7b, 0x11, 0xca, 0x2f, 0xd9, 0xa0, 0xe7, 0xf3, 0xb8, 0x1f, 0x71, 0x1e,
-	0x27, 0x4c, 0x8e, 0x79, 0x3a, 0xec, 0x5f, 0xf0, 0x97, 0xea, 0xd8, 0x1f, 0x64, 0x61, 0x24, 0xc3,
-	0xa4, 0x2f, 0x27, 0x23, 0x26, 0xfa, 0x43, 0x9a, 0xc6, 0x54, 0xff, 0xf6, 0x46, 0x29, 0x97, 0x9c,
-	0x34, 0xf0, 0xf0, 0xff, 0xab, 0x7b, 0xca, 0xe8, 0x74, 0xfc, 0xd5, 0x89, 0xce, 0xf7, 0x0a, 0xb4,
-	0x0f, 0x55, 0xee, 0x07, 0x9a, 0xd2, 0x58, 0x90, 0xe7, 0x60, 0xf9, 0x3c, 0x39, 0x0f, 0x2f, 0xec,
-	0x4a, 0xb7, 0xb2, 0xd5, 0xde, 0x26, 0x3d, 0x2d, 0x83, 0x9c, 0x7d, 0x8c, 0xb8, 0x86, 0x41, 0xba,
-	0x60, 0x1d, 0xa7, 0xd4, 0x8f, 0x98, 0x5d, 0x45, 0x6e, 0xb3, 0xb7, 0x17, 0x04, 0x29, 0x13, 0xc2,
-	0x35, 0x38, 0xe9, 0x43, 0x23, 0x13, 0x2c, 0x15, 0x76, 0xad, 0x5b, 0xdb, 0x6a, 0x6f, 0xff, 0x57,
-	0x2c, 0x66, 0xb8, 0x9f, 0x78, 0x96, 0xfa, 0xcc, 0xd5, 0x3c, 0xe7, 0x6b, 0x15, 0x56, 0x0a, 0x52,
-	0x9f, 0x69, 0x14, 0x06, 0x54, 0xf2, 0x94, 0xd8, 0xb0, 0xc0, 0x12, 0x3a, 0x88, 0x58, 0x80, 0x8d,
-	0x35, 0xdd, 0xfc, 0x48, 0x76, 0xc0, 0x16, 0x4c, 0x88, 0x90, 0x27, 0x5e, 0x4c, 0xaf, 0x3c, 0xea,
-	0xfb, 0x4c, 0x08, 0xcf, 0xe7, 0x59, 0x22, 0xb1, 0xaf, 0x9a, 0xfb, 0x8f, 0x89, 0x1f, 0xd1, 0xab,
-	0x3d, 0x8c, 0xee, 0xab, 0x20, 0x79, 0x06, 0xcb, 0x79, 0x62, 0x90, 0xa5, 0x54, 0x86, 0x3c, 0xb1,
-	0x6b, 0x98, 0xf0, 0x97, 0xc1, 0x0f, 0x0c, 0x4c, 0x36, 0xa1, 0x13, 0xb0, 0x51, 0xc4, 0x27, 0x5e,
-	0xde, 0x44, 0x1d, 0x9b, 0x58, 0xd2, 0xe8, 0x5b, 0xd3, 0xca, 0x63, 0x58, 0xf4, 0x69, 0x14, 0x5d,
-	0x93, 0x1a, 0x48, 0x6a, 0x2b, 0x2c, 0xa7, 0x74, 0xc1, 0xe2, 0x7a, 0x66, 0xd6, 0xed, 0x99, 0x69,
-	0xdc, 0x39, 0x83, 0x8d, 0xc2, 0x03, 0xb9, 0x9e, 0xc0, 0x7b, 0x36, 0x3e, 0xa2, 0x57, 0x18, 0x21,
-	0xab, 0xd0, 0x52, 0x57, 0xc5, 0x61, 0xe2, 0x38, 0x6a, 0x6e, 0x33, 0xce, 0x83, 0x53, 0x85, 0xea,
-	0x1c, 0x85, 0x4b, 0x58, 0x9f, 0xa3, 0x60, 0x1e, 0xdb, 0x53, 0x80, 0x84, 0x8d, 0x3d, 0x53, 0xa6,
-	0x72, 0xab, 0x4c, 0x2b, 0x29, 0x12, 0x79, 0x14, 0x78, 0x73, 0xf4, 0x5a, 0x3c, 0x0a, 0x34, 0xd1,
-	0x39, 0x87, 0xd5, 0x82, 0xe4, 0x51, 0x26, 0xd5, 0x34, 0xa6, 0x4f, 0x77, 0x13, 0x3a, 0xb1, 0xc6,
-	0x8a, 0xa2, 0x4d, 0x77, 0xc9, 0xa0, 0x46, 0xee, 0xfe, 0xab, 0xbd, 0x81, 0xbf, 0x51, 0xc7, 0x6c,
-	0x15, 0x1b, 0xd3, 0x34, 0x20, 0x04, 0xea, 0x09, 0x8d, 0x75, 0xcd, 0x96, 0x8b, 0xff, 0xc9, 0xbf,
-	0x60, 0xa5, 0x18, 0x35, 0x3b, 0x62, 0x4e, 0xce, 0x8e, 0xb1, 0x83, 0x2e, 0x50, 0x9a, 0xba, 0x02,
-	0x8d, 0xe2, 0x76, 0xe9, 0x83, 0x73, 0x06, 0x64, 0x76, 0xad, 0xc9, 0x1a, 0xd4, 0xd5, 0x62, 0xcf,
-	0xcc, 0x10, 0x51, 0xf2, 0x02, 0x16, 0x04, 0xf2, 0x84, 0x5d, 0x45, 0x83, 0xdc, 0x70, 0x9b, 0xb9,
-	0x43, 0x4e, 0x71, 0x7e, 0x54, 0x4d, 0x6f, 0xda, 0x1b, 0x77, 0x58, 0x62, 0x76, 0x9c, 0xd5, 0xb2,
-	0x71, 0x6e, 0x4f, 0xe5, 0xb5, 0x3f, 0xed, 0x12, 0x79, 0x1c, 0xcb, 0x75, 0x13, 0x77, 0xba, 0xad,
-	0xfe, 0xab, 0x6e, 0x6b, 0x3c, 0xd4, 0x6d, 0xd6, 0x43, 0xdc, 0xb6, 0x30, 0xeb, 0xb6, 0x2d, 0x58,
-	0x8e, 0xa8, 0x90, 0x5e, 0x36, 0x0a, 0xa8, 0x64, 0x9e, 0x0c, 0x63, 0x66, 0x37, 0x51, 0xb4, 0xa3,
-	0xf0, 0x53, 0x84, 0x4f, 0xc2, 0x98, 0x39, 0x1c, 0x40, 0xdf, 0x5a, 0x52, 0xc9, 0xc8, 0x0e, 0x2c,
-	0xe9, 0x0b, 0x7b, 0x42, 0x9d, 0x85, 0x5d, 0x99, 0xfb, 0x78, 0x16, 0x35, 0x11, 0xf3, 0x44, 0xa9,
-	0x60, 0xb5, 0x54, 0xf0, 0x5b, 0x05, 0x3a, 0x53, 0xc5, 0x53, 0xb5, 0x0e, 0xbf, 0xad, 0xba, 0x06,
-	0x75, 0x55, 0x60, 0xc6, 0x15, 0x88, 0x16, 0x5e, 0xd3, 0xb5, 0xf2, 0xd7, 0xb4, 0x93, 0xe6, 0xae,
-	0x51, 0xe5, 0x0e, 0xd9, 0x04, 0xd3, 0xd6, 0x01, 0xb0, 0x0d, 0x6f, 0xc8, 0x26, 0xba, 0x95, 0x96,
-	0xdb, 0x12, 0x86, 0xf1, 0xe7, 0x9a, 0xbb, 0xb0, 0x8c, 0x9a, 0xef, 0x92, 0x50, 0xba, 0xec, 0x32,
-	0x63, 0x42, 0xaa, 0x8f, 0x8f, 0x7e, 0x41, 0x94, 0x7d, 0x7c, 0x74, 0xc4, 0x35, 0x0c, 0xe7, 0xa3,
-	0x19, 0x9f, 0x92, 0x3b, 0xe1, 0x43, 0x96, 0x90, 0x47, 0xd0, 0x38, 0x1e, 0x27, 0x25, 0x66, 0xd3,
-	0x30, 0xd9, 0x80, 0xb6, 0x54, 0xc4, 0x1b, 0xdf, 0x06, 0x40, 0x08, 0x57, 0xd4, 0x71, 0xcc, 0x0e,
-	0x9c, 0x70, 0x49, 0xa3, 0xa9, 0xcd, 0x2b, 0x45, 0x9b, 0x3f, 0x31, 0x1e, 0x3c, 0xc0, 0x55, 0x2c,
-	0x27, 0x0d, 0x2c, 0xfc, 0xb6, 0xbe, 0xfe, 0x19, 0x00, 0x00, 0xff, 0xff, 0xc3, 0x69, 0xcf, 0x8d,
-	0xd6, 0x07, 0x00, 0x00,
+	// 469 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0x95, 0x9b, 0x0f, 0xf0, 0xa4, 0x54, 0x65, 0xc5, 0x47, 0x40, 0x45, 0x8a, 0xf6, 0x42, 0x0e,
+	0x10, 0xa3, 0x70, 0xe8, 0x0d, 0x04, 0x37, 0x54, 0x09, 0x24, 0xd3, 0x72, 0x35, 0x9b, 0x78, 0x54,
+	0xac, 0xd8, 0x9e, 0xb0, 0xbb, 0x56, 0x94, 0x9f, 0xc0, 0x4f, 0xe0, 0xdf, 0xa2, 0x9d, 0xdd, 0x10,
+	0xab, 0x31, 0x02, 0x95, 0x8b, 0x95, 0x99, 0x9d, 0xf7, 0xde, 0xf8, 0xbd, 0xac, 0xe1, 0xcd, 0x75,
+	0x61, 0xbf, 0x35, 0x8b, 0xd9, 0x92, 0xaa, 0xa4, 0x24, 0xaa, 0x6a, 0xb4, 0x1b, 0xd2, 0xab, 0xe4,
+	0x9a, 0x5e, 0xba, 0x32, 0x59, 0x34, 0x45, 0x69, 0x8b, 0x3a, 0xb1, 0xdb, 0x35, 0x9a, 0x64, 0xa5,
+	0x74, 0xa5, 0xfc, 0x73, 0xb6, 0xd6, 0x64, 0x49, 0x0c, 0xb8, 0x78, 0xfa, 0xea, 0x2f, 0x34, 0x1e,
+	0xce, 0x4f, 0x0f, 0x94, 0x3f, 0x23, 0x38, 0xbd, 0x70, 0xd8, 0x0f, 0x75, 0x61, 0x53, 0xfc, 0xde,
+	0xa0, 0xb1, 0x62, 0x02, 0xc3, 0x4f, 0x5a, 0x2d, 0x4b, 0x1c, 0x47, 0x93, 0x68, 0x3a, 0x9a, 0xdf,
+	0x9d, 0xbd, 0xcb, 0x73, 0x8d, 0xc6, 0xa4, 0xa1, 0x2f, 0xe6, 0x70, 0xc7, 0x50, 0xa3, 0x97, 0x68,
+	0xc6, 0x47, 0x93, 0xde, 0x74, 0x34, 0x1f, 0xcf, 0xfc, 0x3a, 0xcc, 0xf5, 0x99, 0x8f, 0x52, 0xdc,
+	0x28, 0x9d, 0xa7, 0xbb, 0x41, 0x91, 0xc0, 0xa0, 0x31, 0xa8, 0xcd, 0xb8, 0xc7, 0x88, 0x27, 0x6d,
+	0x44, 0xe0, 0x0f, 0x40, 0x3f, 0x27, 0xdf, 0xc3, 0x71, 0x8b, 0xce, 0xb4, 0x45, 0xa3, 0x7f, 0x14,
+	0x95, 0x15, 0x3c, 0x6c, 0x73, 0x7c, 0x51, 0x65, 0x91, 0x2b, 0x4b, 0xfa, 0x36, 0x64, 0xce, 0x17,
+	0xf2, 0xbe, 0x1c, 0xdd, 0xf4, 0xc5, 0xf7, 0xe5, 0x0a, 0x1e, 0x33, 0xfe, 0x23, 0x6e, 0xbc, 0x53,
+	0x7b, 0xc1, 0xe7, 0x00, 0x35, 0x6e, 0x32, 0xea, 0x36, 0x36, 0xae, 0x77, 0x08, 0x37, 0x48, 0x65,
+	0x9e, 0xfd, 0x41, 0x29, 0xa6, 0x32, 0xf7, 0x83, 0xf2, 0x2d, 0xdc, 0x3f, 0x58, 0x56, 0x08, 0xe8,
+	0xd7, 0xaa, 0xf2, 0x02, 0x71, 0xca, 0xbf, 0xc5, 0x23, 0x18, 0x6a, 0x3e, 0x65, 0xb6, 0x5e, 0x1a,
+	0x2a, 0x79, 0x0e, 0xa3, 0x16, 0x41, 0x27, 0xf4, 0x01, 0x0c, 0x96, 0xd4, 0xd4, 0x36, 0x20, 0x7d,
+	0x21, 0xbf, 0x82, 0x38, 0x8c, 0x4d, 0x9c, 0x41, 0xdf, 0x05, 0x77, 0xf0, 0x6e, 0xdc, 0x15, 0x2f,
+	0x6e, 0xfe, 0x65, 0x44, 0x87, 0xe1, 0xbf, 0x73, 0x23, 0x00, 0xdf, 0xb7, 0xca, 0xa2, 0x38, 0x87,
+	0x7b, 0xfe, 0x20, 0x33, 0xae, 0xde, 0x45, 0xd6, 0xc5, 0x70, 0xec, 0x07, 0x19, 0x67, 0xc4, 0x14,
+	0x4e, 0x4b, 0x65, 0x6c, 0xd6, 0xac, 0x73, 0x65, 0x31, 0xb3, 0x45, 0x85, 0xe1, 0x4d, 0x4e, 0x5c,
+	0xff, 0x8a, 0xdb, 0x97, 0x45, 0x85, 0xf2, 0x47, 0x04, 0x27, 0x7b, 0xc5, 0x2b, 0xb7, 0xf1, 0xad,
+	0x55, 0xcf, 0xa0, 0xef, 0x08, 0x0e, 0xb2, 0xe3, 0x6e, 0xeb, 0x76, 0xf5, 0xba, 0x6f, 0x97, 0xd4,
+	0xbb, 0x60, 0x1d, 0xdd, 0x05, 0x6e, 0x19, 0xf6, 0x0c, 0x80, 0xd7, 0xc8, 0x56, 0xb8, 0xf5, 0xab,
+	0xc4, 0x69, 0x6c, 0xc2, 0xc4, 0xff, 0x6b, 0xca, 0x60, 0xf8, 0x25, 0x59, 0x55, 0xee, 0x63, 0x8f,
+	0x5a, 0xb1, 0x2f, 0x86, 0xfc, 0xcd, 0x78, 0xfd, 0x2b, 0x00, 0x00, 0xff, 0xff, 0xf3, 0x29, 0xc1,
+	0x62, 0xae, 0x04, 0x00, 0x00,
 }
