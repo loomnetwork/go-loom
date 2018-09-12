@@ -39,6 +39,7 @@ func UpdateSourcesForUserCmd() *cobra.Command {
 }
 
 /*
+
 func GetConfig() *cobra.Command {
 	return &cobra.Command{
 		Use:   "getconfig [user]",
@@ -99,12 +100,11 @@ func UpdateConfig() *cobra.Command {
 
 	return cmd
 }
-
+*/
 func AddKarma(root *cobra.Command) {
 	root.AddCommand(
 		UpdateSourcesForUserCmd(),
-		GetConfig(),
-		UpdateConfig(),
+		//GetConfig(),
+		//UpdateConfig(),
 	)
 }
-*/
