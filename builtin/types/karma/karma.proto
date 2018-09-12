@@ -4,33 +4,24 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 package karma;
 
-message KarmaParams {
-    KarmaConfig config = 1;
-    Address Oracle = 2;
+message KarmaInitRequest {
+    Address Oracle = 1;
+    repeated KarmaSourceReward sources = 2;
     repeated KarmaAddressSource users = 3;
 }
 
-message KarmaConfigValidator {
-    bool enabled = 1;
-    int64 session_max_access_count = 2;
-    int64 session_duration = 3;
-    bool deploy_enabled = 4;
-    bool call_enabled = 5;
-    Address oracle = 6;
+message KarmaSources {
+    repeated KarmaSourceReward sources = 1;
 }
 
-message KarmaParamsValidatorNewMaxKarma {
-    int64 max_karma = 1;
+message KarmaSourcesValidator {
+    repeated KarmaSourceReward sources = 1;
     Address oracle = 2;
 }
 
-message KarmaParamsValidatorNewOracle {
+message KarmaNewOracleValidator {
     Address new_oracle = 1;
     Address old_oracle = 2;
-}
-message KarmaParamsMutableValidator{
-    bool mutable_oracle = 1;
-    Address oracle = 2;
 }
 
 message KarmaSourceReward {
@@ -46,17 +37,6 @@ message KarmaSource {
 message KarmaAddressSource {
     Address user = 1;
     repeated KarmaSource sources = 2;
-}
-
-message KarmaConfig {
-    bool enabled = 1;
-    bool mutable_oracle = 2;
-    repeated KarmaSourceReward sources = 3;
-    int64 session_max_access_count = 4;
-    int64 session_duration = 5;
-    bool deploy_enabled = 6;
-    bool call_enabled = 7;
-    int64 last_update_time = 8;
 }
 
 message KarmaState {
@@ -76,19 +56,6 @@ message KarmaStateKeyUser {
     Address Oracle = 3;
 }
 
-message KarmaInitRequest {
-    KarmaParams Params = 1;
-}
-
-message KarmaUserToken{
-    Address Owner = 1;
-    int64 token_count = 2;
-}
-
 message KarmaTotal{
-    int64 count = 1;
-}
-
-message KarmaDeploy{
     int64 count = 1;
 }
