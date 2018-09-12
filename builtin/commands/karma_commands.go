@@ -1,12 +1,11 @@
 package commands
 
 import (
-	`fmt`
-	`github.com/loomnetwork/go-loom/builtin/types/karma`
-	`github.com/loomnetwork/go-loom/cli`
+	"github.com/loomnetwork/go-loom/builtin/types/karma"
+	"github.com/loomnetwork/go-loom/cli"
 	"github.com/pkg/errors"
-	`github.com/spf13/cobra`
-	`strconv`
+	"github.com/spf13/cobra"
+	"strconv"
 )
 
 const KarmaContractName = "karma"
@@ -31,14 +30,15 @@ func UpdateSourcesForUserCmd() *cobra.Command {
 				return errors.Wrap(err, "parse count")
 			}
 			return cli.CallContract(KarmaContractName, "UpdateSourcesForUser", &karma.KarmaStateUser{
-				User: user.MarshalPB(),
-				Oracle: oracle.MarshalPB(),
+				User:         user.MarshalPB(),
+				Oracle:       oracle.MarshalPB(),
 				SourceStates: []*karma.KarmaSource{{name, count}},
 			}, nil)
 		},
 	}
 }
 
+/*
 func GetConfig() *cobra.Command {
 	return &cobra.Command{
 		Use:   "getconfig [user]",
@@ -96,7 +96,7 @@ func UpdateConfig() *cobra.Command {
 	cmd.Flags().Int64VarP(&cmdFlags.SessionDuration, "input", "d", 0, "session duration")
 	cmd.Flags().BoolVar(&cmdFlags.DeployEnabled, "deploy-enable", true , "contract address")
 	cmd.Flags().BoolVar(&cmdFlags.CallEnabled, "call-enable", true,  "contract address")
-	
+
 	return cmd
 }
 
@@ -107,3 +107,4 @@ func AddKarma(root *cobra.Command) {
 		UpdateConfig(),
 	)
 }
+*/
