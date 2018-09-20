@@ -13,6 +13,7 @@ enum EncodingType {
 message PluginCode {
     string name = 1;
     bytes input = 2;
+    string version = 3;
 }
 
 message Request {
@@ -190,7 +191,7 @@ message RangeRequest {
 
 message RangeEntry {
     bytes key = 1;
-    bytes value = 2;      
+    bytes value = 2;
 }
 
 message RangeResponse {
@@ -235,6 +236,7 @@ message SetValidatorPowerResponse {
 
 message ResolveRequest {
     string name = 1;
+    string version = 2;
 }
 
 message ResolveResponse {

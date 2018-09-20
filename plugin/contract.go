@@ -28,7 +28,7 @@ type Message struct {
 type StaticAPI interface {
 	StaticCall(addr loom.Address, input []byte) ([]byte, error)
 	StaticCallEVM(addr loom.Address, input []byte) ([]byte, error)
-	Resolve(name string) (loom.Address, error)
+	Resolve(name, address string) (loom.Address, error)
 	ValidatorPower(pubKey []byte) int64
 	EmitTopics(event []byte, topics ...string)
 	Emit(event []byte)

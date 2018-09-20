@@ -11,6 +11,7 @@ import (
 )
 
 const DPOSContractName = "dpos"
+const DPOSContractVersion = "1.0.0"
 
 func ListWitnessesCmd() *cobra.Command {
 	return &cobra.Command{
@@ -18,7 +19,7 @@ func ListWitnessesCmd() *cobra.Command {
 		Short: "List the current witnesses",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp dpos.ListWitnessesResponse
-			err := cli.StaticCallContract(DPOSContractName, "ListWitnesses", &dpos.ListWitnessesRequest{}, &resp)
+			err := cli.StaticCallContract(DPOSContractName, DPOSContractVersion, "ListWitnesses", &dpos.ListWitnessesRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -38,7 +39,7 @@ func ListCandidatesCmd() *cobra.Command {
 		Short: "List the registered candidates",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp dpos.ListCandidateResponse
-			err := cli.StaticCallContract(DPOSContractName, "ListCandidates", &dpos.ListCandidateRequest{}, &resp)
+			err := cli.StaticCallContract(DPOSContractName, DPOSContractVersion, "ListCandidates", &dpos.ListCandidateRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -62,7 +63,7 @@ func RegisterCandidateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return cli.CallContract(DPOSContractName, "RegisterCandidate", &dpos.RegisterCandidateRequest{
+			return cli.CallContract(DPOSContractName, DPOSContractVersion, "RegisterCandidate", &dpos.RegisterCandidateRequest{
 				PubKey: pubKey,
 			}, nil)
 		},
@@ -73,19 +74,19 @@ func VoteCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "vote [candidate address] [amount]",
 		Short: "Allocate votes to a candidate",
-		Args:  cobra.MinimumNArgs(2),
+		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
+			addr, err := cli.ResolveAddress(args[0], args[1])
 			if err != nil {
 				return err
 			}
 
-			amount, err := strconv.ParseInt(args[1], 10, 64)
+			amount, err := strconv.ParseInt(args[2], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			return cli.CallContract(DPOSContractName, "Vote", &dpos.VoteRequest{
+			return cli.CallContract(DPOSContractName, DPOSContractVersion, "Vote", &dpos.VoteRequest{
 				CandidateAddress: addr.MarshalPB(),
 				Amount:           amount,
 			}, nil)
@@ -98,7 +99,7 @@ func ElectCmd() *cobra.Command {
 		Use:   "elect",
 		Short: "Run an election",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return cli.CallContract(DPOSContractName, "Elect", &dpos.ElectRequest{}, nil)
+			return cli.CallContract(DPOSContractName, DPOSContractVersion, "Elect", &dpos.ElectRequest{}, nil)
 		},
 	}
 }

@@ -18,6 +18,8 @@ message DeployTx {
     bytes code = 2;
     string name = 3;
     BigUInt value = 4;
+
+    string version = 5;
 }
 
 message CallTx {
@@ -39,4 +41,3 @@ message DeployResponseData {
 message TxHashList {
     repeated bytes tx_hash = 1;
 }
-

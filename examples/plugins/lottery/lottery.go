@@ -19,7 +19,7 @@ func transfer(ctx contract.Context, to loom.Address, amount *loom.BigUInt) error
 		Amount: &types.BigUInt{Value: *amount},
 	}
 
-	coinAddr, err := ctx.Resolve("coin")
+	coinAddr, err := ctx.Resolve("coin", "1.0.0")
 	if err != nil {
 		return err
 	}

@@ -153,13 +153,13 @@ func (c *FakeContext) StaticCallEVM(addr loom.Address, input []byte) ([]byte, er
 	return nil, nil
 }
 
-func (c *FakeContext) Resolve(name string) (loom.Address, error) {
+func (c *FakeContext) Resolve(name, version string) (loom.Address, error) {
 	for addrStr, contract := range c.contracts {
 		meta, err := contract.Meta()
 		if err != nil {
 			return loom.Address{}, err
 		}
-		if meta.Name == name {
+		if meta.Name == name && meta.Version == version {
 			return loom.MustParseAddress(addrStr), nil
 		}
 	}
