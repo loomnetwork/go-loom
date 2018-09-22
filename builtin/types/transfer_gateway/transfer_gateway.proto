@@ -47,10 +47,20 @@ message TransferGatewayPendingWithdrawalSummary {
     bytes hash = 2;
 }
 
-message TransferGatewayAccount {
+message TransferGatewayLocalAccount {
     Address owner = 1;
     uint64 withdrawal_nonce = 2;
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
+}
+
+message TransferGatewayForeignAccount {
+    // Foreign address of the foreign account
+    Address owner = 1;
+    // Nonce that should be used for the next withdrawal to this foreign account
+    uint64 withdrawal_nonce = 2;
+    // Local address of the account being withdrawn from (if any).
+    // This will only be set when there's a withdrawal to the Ethereum Gateway in progress.
+    Address current_withdrawer = 3;
 }
 
 message TransferGatewayTokenAmount {
@@ -253,6 +263,11 @@ message TransferGatewayWithdrawTokenRequest {
     BigUInt token_id = 3 [(gogoproto.customname)="TokenID"];
     // ERC721X/ERC20 amount
     BigUInt token_amount = 4;
+    // Ethereum address of the account that should receive the token.
+    // If this field is omitted the Gateway will attempt to obtain the recipient address from a
+    // previously created mapping between the sender's DAppChain address and their Ethereum address,
+    // if no such mapping exists the request will error out.
+    Address recipient = 5;
 }
 
 message TransferGatewayWithdrawETHRequest {
@@ -260,6 +275,11 @@ message TransferGatewayWithdrawETHRequest {
     BigUInt amount = 1;
     // Address of Mainnet Gateway contract
     Address mainnet_gateway = 2;
+    // Ethereum address of the account that should receive the ETH.
+    // If this field is omitted the Gateway will attempt to obtain the recipient address from a
+    // previously created mapping between the sender's DAppChain address and their Ethereum address,
+    // if no such mapping exists the request will error out.
+    Address recipient = 3;
 }
 
 message TransferGatewayWithdrawalReceiptRequest {
