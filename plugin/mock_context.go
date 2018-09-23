@@ -110,7 +110,7 @@ func (c *FakeContext) RegisterContract(contractName string, contractAddr, creato
 func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 	contract := c.contracts[addr.String()]
 
-	ctx := c.WithAddress(addr)
+	ctx := c.WithSender(c.address).WithAddress(addr)
 
 	var req Request
 	err := proto.Unmarshal(input, &req)
@@ -129,7 +129,7 @@ func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 func (c *FakeContext) StaticCall(addr loom.Address, input []byte) ([]byte, error) {
 	contract := c.contracts[addr.String()]
 
-	ctx := c.WithAddress(addr)
+	ctx := c.WithSender(c.address).WithAddress(addr)
 
 	var req Request
 	err := proto.Unmarshal(input, &req)
