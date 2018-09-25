@@ -155,10 +155,9 @@ func (c *DAppChainRPCClient) Query(caller loom.Address, contractAddr loom.LocalA
 	return r, nil
 }
 
-func (c *DAppChainRPCClient) Resolve(name, version string) (loom.Address, error) {
+func (c *DAppChainRPCClient) Resolve(name string) (loom.Address, error) {
 	params := map[string]interface{}{
-		"name":    name,
-		"version": version,
+		"name": name,
 	}
 	var addrStr string
 	if err := c.queryClient.Call("resolve", params, c.getNextRequestID(), &addrStr); err != nil {

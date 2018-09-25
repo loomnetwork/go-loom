@@ -13,7 +13,7 @@ enum EncodingType {
 message PluginCode {
     string name = 1;
     bytes input = 2;
-    string version = 3;
+    string initial_version = 3;
 }
 
 message Request {
@@ -236,7 +236,6 @@ message SetValidatorPowerResponse {
 
 message ResolveRequest {
     string name = 1;
-    string version = 2;
 }
 
 message ResolveResponse {
