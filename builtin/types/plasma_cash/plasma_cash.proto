@@ -100,6 +100,7 @@ message GetUserSlotsRequest {
 }
 
 message GetUserSlotsResponse {
+    repeated uint64 slots = 1;
 }
 
 // This only originates from the validator
