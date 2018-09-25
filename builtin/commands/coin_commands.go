@@ -11,24 +11,23 @@ import (
 )
 
 const CoinContractName = "coin"
-const CoinContractVersion = "1.0.0"
 
 func TransferCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "transfer [address] [amount]",
 		Short: "Transfer coins to another account",
-		Args:  cobra.MinimumNArgs(3),
+		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0], args[1])
+			addr, err := cli.ResolveAddress(args[0])
 			if err != nil {
 				return err
 			}
 
-			amount, err := cli.ParseAmount(args[2])
+			amount, err := cli.ParseAmount(args[1])
 			if err != nil {
 				return err
 			}
-			return cli.CallContract(CoinContractName, CoinContractVersion, "Transfer", &coin.TransferRequest{
+			return cli.CallContract(CoinContractName, "Transfer", &coin.TransferRequest{
 				To: addr.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
@@ -42,14 +41,14 @@ func BalanceCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "balance [address]",
 		Short: "Fetch the balance of a coin account",
-		Args:  cobra.MinimumNArgs(2),
+		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0], args[1])
+			addr, err := cli.ResolveAddress(args[0])
 			if err != nil {
 				return err
 			}
 			var resp coin.BalanceOfResponse
-			err = cli.StaticCallContract(CoinContractName, CoinContractVersion, "BalanceOf", &coin.BalanceOfRequest{
+			err = cli.StaticCallContract(CoinContractName, "BalanceOf", &coin.BalanceOfRequest{
 				Owner: addr.MarshalPB(),
 			}, &resp)
 			if err != nil {

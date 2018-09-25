@@ -35,7 +35,7 @@ func ContractCallCommand() *cobra.Command {
 	return cmd
 }
 
-func contract(defaultAddr, defaultVersion string) (*client.Contract, error) {
+func contract(defaultAddr string) (*client.Contract, error) {
 	contractAddrStr := txFlags.ContractAddr
 	if contractAddrStr == "" {
 		contractAddrStr = defaultAddr
@@ -45,7 +45,7 @@ func contract(defaultAddr, defaultVersion string) (*client.Contract, error) {
 		return nil, errors.New("contract address or name required")
 	}
 
-	contractAddr, err := ResolveAddress(contractAddrStr, defaultVersion)
+	contractAddr, err := ResolveAddress(contractAddrStr)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func contract(defaultAddr, defaultVersion string) (*client.Contract, error) {
 	return contract, nil
 }
 
-func CallContract(defaultAddr string, version string, method string, params proto.Message, result interface{}) error {
+func CallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
 	if txFlags.PrivFile == "" {
 		return errors.New("private key required to call contract")
 	}
@@ -74,7 +74,7 @@ func CallContract(defaultAddr string, version string, method string, params prot
 
 	signer := auth.NewEd25519Signer(privKey)
 
-	contract, err := contract(defaultAddr, version)
+	contract, err := contract(defaultAddr)
 	if err != nil {
 		return err
 	}
@@ -82,8 +82,8 @@ func CallContract(defaultAddr string, version string, method string, params prot
 	return err
 }
 
-func StaticCallContract(defaultAddr string, defaultVersion string, method string, params proto.Message, result interface{}) error {
-	contract, err := contract(defaultAddr, defaultVersion)
+func StaticCallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
+	contract, err := contract(defaultAddr)
 	if err != nil {
 		return err
 	}
