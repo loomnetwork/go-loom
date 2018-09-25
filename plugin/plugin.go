@@ -297,7 +297,7 @@ func Serve(contract Contract) {
 	go func() {
 		if err := httpServer.ListenAndServe(); err != nil {
 			fmt.Fprintf(os.Stderr, "unable to start http server: %v", err)
-			//os.Exit(1)
+			os.Exit(1)
 		}
 	}()
 
