@@ -119,7 +119,7 @@ func NewPlasmaCashClient(contractName string, signer auth.Signer, chainID, write
 	rpcClient := NewDAppChainRPCClient(chainID, writeuri, readuri)
 
 	// try to resolve it using registry
-	contractAddr, err := rpcClient.Resolve(contractName, "")
+	contractAddr, err := rpcClient.Resolve(contractName)
 	if err != nil {
 		return nil, err
 	}
