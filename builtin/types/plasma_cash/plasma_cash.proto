@@ -86,6 +86,23 @@ message PlasmaTxRequest {
 message PlasmaTxResponse {
 }
 
+message GetSlotMerkleProofRequest {
+    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    BigUInt block_height = 2 [(gogoproto.customname)="BlockHeight"];
+}
+
+message GetSlotMerkleProofResponse {
+    bytes proof = 1; // Proof after its inserted into the bloc
+}
+
+message GetUserSlotsRequest {
+    PlasmaCashAccount account = 1;
+}
+
+message GetUserSlotsResponse {
+    repeated uint64 slots = 1;
+}
+
 // This only originates from the validator
 message DepositRequest {
     uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
