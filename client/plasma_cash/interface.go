@@ -92,7 +92,9 @@ type ChallengedExitEventData struct {
 	// Plasma slot, a unique identifier, assigned to the deposit.
 	Slot uint64
 	// Hash of the transaction used for the response to a challenge.
-	TxHash [32]byte
+       TxHash [32]byte
+	// Index of the Plasma block in which the challenge happened.
+       ChallengingBlockNumber *big.Int
 }
 
 type RootChainClient interface {
