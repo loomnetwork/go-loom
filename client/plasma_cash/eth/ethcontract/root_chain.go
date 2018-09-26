@@ -2109,4 +2109,3 @@ func (_RootChain *RootChainFilterer) WatchWithdrewBonds(opts *bind.WatchOpts, si
 		}
 	}), nil
 }
-
