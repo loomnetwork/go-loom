@@ -86,13 +86,13 @@ message PlasmaTxRequest {
 message PlasmaTxResponse {
 }
 
-message GetPlasmaTxRequest {
+message GetSlotMerkleProofRequest {
     uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
     BigUInt block_height = 2 [(gogoproto.customname)="BlockHeight"];
 }
 
-message GetPlasmaTxResponse {
-    PlasmaTx plasmatx = 1; 
+message GetSlotMerkleProofResponse {
+    bytes proof = 1; // Proof after its inserted into the bloc
 }
 
 message GetUserSlotsRequest {
