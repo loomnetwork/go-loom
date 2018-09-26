@@ -76,6 +76,7 @@ func CallContract(defaultAddr string, method string, params proto.Message, resul
 
 	contract, err := contract(defaultAddr)
 	if err != nil {
+		return err
 	}
 	_, err = contract.Call(method, params, signer, result)
 	return err
