@@ -8,13 +8,13 @@ It is generated from these files:
 	github.com/loomnetwork/go-loom/builtin/types/config/config.proto
 
 It has these top-level messages:
+	ValueType
 	ConfigInitRequest
 	Receipts
-	NewOracle
-	NewReceiptStorageMethod
-	NewMaxReceipts
-	MaxReceipts
-	ReceiptStorageMethod
+	SetParam
+	ConfigValue
+	ReceiptsStorageMethod
+	ReceiptsMax
 */
 package config
 
@@ -34,26 +34,69 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-type ReceiptStorage int32
+type ReceiptsStorage int32
 
 const (
-	ReceiptStorage_CHAIN   ReceiptStorage = 0
-	ReceiptStorage_LEVELDB ReceiptStorage = 1
+	ReceiptsStorage_CHAIN   ReceiptsStorage = 0
+	ReceiptsStorage_LEVELDB ReceiptsStorage = 1
 )
 
-var ReceiptStorage_name = map[int32]string{
+var ReceiptsStorage_name = map[int32]string{
 	0: "CHAIN",
 	1: "LEVELDB",
 }
-var ReceiptStorage_value = map[string]int32{
+var ReceiptsStorage_value = map[string]int32{
 	"CHAIN":   0,
 	"LEVELDB": 1,
 }
 
-func (x ReceiptStorage) String() string {
-	return proto.EnumName(ReceiptStorage_name, int32(x))
+func (x ReceiptsStorage) String() string {
+	return proto.EnumName(ReceiptsStorage_name, int32(x))
 }
-func (ReceiptStorage) EnumDescriptor() ([]byte, []int) { return fileDescriptorConfig, []int{0} }
+func (ReceiptsStorage) EnumDescriptor() ([]byte, []int) { return fileDescriptorConfig, []int{0} }
+
+type ConfigParamter int32
+
+const (
+	ConfigParamter_ORACLE          ConfigParamter = 0
+	ConfigParamter_RECEIPT_STORAGE ConfigParamter = 1
+	ConfigParamter_RECEIPT_MAX     ConfigParamter = 2
+	ConfigParamter_UNKNOWN         ConfigParamter = 3
+)
+
+var ConfigParamter_name = map[int32]string{
+	0: "ORACLE",
+	1: "RECEIPT_STORAGE",
+	2: "RECEIPT_MAX",
+	3: "UNKNOWN",
+}
+var ConfigParamter_value = map[string]int32{
+	"ORACLE":          0,
+	"RECEIPT_STORAGE": 1,
+	"RECEIPT_MAX":     2,
+	"UNKNOWN":         3,
+}
+
+func (x ConfigParamter) String() string {
+	return proto.EnumName(ConfigParamter_name, int32(x))
+}
+func (ConfigParamter) EnumDescriptor() ([]byte, []int) { return fileDescriptorConfig, []int{1} }
+
+type ValueType struct {
+	Type ConfigParamter `protobuf:"varint,1,opt,name=type,proto3,enum=ConfigParamter" json:"type,omitempty"`
+}
+
+func (m *ValueType) Reset()                    { *m = ValueType{} }
+func (m *ValueType) String() string            { return proto.CompactTextString(m) }
+func (*ValueType) ProtoMessage()               {}
+func (*ValueType) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{0} }
+
+func (m *ValueType) GetType() ConfigParamter {
+	if m != nil {
+		return m.Type
+	}
+	return ConfigParamter_ORACLE
+}
 
 type ConfigInitRequest struct {
 	Oracle   *types.Address `protobuf:"bytes,1,opt,name=Oracle" json:"Oracle,omitempty"`
@@ -63,7 +106,7 @@ type ConfigInitRequest struct {
 func (m *ConfigInitRequest) Reset()                    { *m = ConfigInitRequest{} }
 func (m *ConfigInitRequest) String() string            { return proto.CompactTextString(m) }
 func (*ConfigInitRequest) ProtoMessage()               {}
-func (*ConfigInitRequest) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{0} }
+func (*ConfigInitRequest) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{1} }
 
 func (m *ConfigInitRequest) GetOracle() *types.Address {
 	if m != nil {
@@ -80,142 +123,247 @@ func (m *ConfigInitRequest) GetReceipts() *Receipts {
 }
 
 type Receipts struct {
-	StorageMethod ReceiptStorage `protobuf:"varint,1,opt,name=storage_method,json=storageMethod,proto3,enum=ReceiptStorage" json:"storage_method,omitempty"`
-	MaxReceipts   uint64         `protobuf:"varint,2,opt,name=max_receipts,json=maxReceipts,proto3" json:"max_receipts,omitempty"`
+	StorageMethod ReceiptsStorage `protobuf:"varint,1,opt,name=storage_method,json=storageMethod,proto3,enum=ReceiptsStorage" json:"storage_method,omitempty"`
+	Max           uint64          `protobuf:"varint,2,opt,name=max,proto3" json:"max,omitempty"`
 }
 
 func (m *Receipts) Reset()                    { *m = Receipts{} }
 func (m *Receipts) String() string            { return proto.CompactTextString(m) }
 func (*Receipts) ProtoMessage()               {}
-func (*Receipts) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{1} }
+func (*Receipts) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{2} }
 
-func (m *Receipts) GetStorageMethod() ReceiptStorage {
+func (m *Receipts) GetStorageMethod() ReceiptsStorage {
 	if m != nil {
 		return m.StorageMethod
 	}
-	return ReceiptStorage_CHAIN
+	return ReceiptsStorage_CHAIN
 }
 
-func (m *Receipts) GetMaxReceipts() uint64 {
+func (m *Receipts) GetMax() uint64 {
 	if m != nil {
-		return m.MaxReceipts
+		return m.Max
 	}
 	return 0
 }
 
-type NewOracle struct {
-	NewOracle *types.Address `protobuf:"bytes,1,opt,name=new_oracle,json=newOracle" json:"new_oracle,omitempty"`
-	OldOracle *types.Address `protobuf:"bytes,2,opt,name=old_oracle,json=oldOracle" json:"old_oracle,omitempty"`
+type SetParam struct {
+	Oracle *types.Address `protobuf:"bytes,1,opt,name=oracle" json:"oracle,omitempty"`
+	Value  *ConfigValue   `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
 }
 
-func (m *NewOracle) Reset()                    { *m = NewOracle{} }
-func (m *NewOracle) String() string            { return proto.CompactTextString(m) }
-func (*NewOracle) ProtoMessage()               {}
-func (*NewOracle) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{2} }
+func (m *SetParam) Reset()                    { *m = SetParam{} }
+func (m *SetParam) String() string            { return proto.CompactTextString(m) }
+func (*SetParam) ProtoMessage()               {}
+func (*SetParam) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{3} }
 
-func (m *NewOracle) GetNewOracle() *types.Address {
-	if m != nil {
-		return m.NewOracle
-	}
-	return nil
-}
-
-func (m *NewOracle) GetOldOracle() *types.Address {
-	if m != nil {
-		return m.OldOracle
-	}
-	return nil
-}
-
-type NewReceiptStorageMethod struct {
-	NewStorageMethod ReceiptStorage `protobuf:"varint,1,opt,name=new_storage_method,json=newStorageMethod,proto3,enum=ReceiptStorage" json:"new_storage_method,omitempty"`
-	Oracle           *types.Address `protobuf:"bytes,2,opt,name=oracle" json:"oracle,omitempty"`
-}
-
-func (m *NewReceiptStorageMethod) Reset()                    { *m = NewReceiptStorageMethod{} }
-func (m *NewReceiptStorageMethod) String() string            { return proto.CompactTextString(m) }
-func (*NewReceiptStorageMethod) ProtoMessage()               {}
-func (*NewReceiptStorageMethod) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{3} }
-
-func (m *NewReceiptStorageMethod) GetNewStorageMethod() ReceiptStorage {
-	if m != nil {
-		return m.NewStorageMethod
-	}
-	return ReceiptStorage_CHAIN
-}
-
-func (m *NewReceiptStorageMethod) GetOracle() *types.Address {
+func (m *SetParam) GetOracle() *types.Address {
 	if m != nil {
 		return m.Oracle
 	}
 	return nil
 }
 
-type NewMaxReceipts struct {
-	MaxReceipts uint64         `protobuf:"varint,1,opt,name=max_receipts,json=maxReceipts,proto3" json:"max_receipts,omitempty"`
-	Oracle      *types.Address `protobuf:"bytes,2,opt,name=oracle" json:"oracle,omitempty"`
-}
-
-func (m *NewMaxReceipts) Reset()                    { *m = NewMaxReceipts{} }
-func (m *NewMaxReceipts) String() string            { return proto.CompactTextString(m) }
-func (*NewMaxReceipts) ProtoMessage()               {}
-func (*NewMaxReceipts) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{4} }
-
-func (m *NewMaxReceipts) GetMaxReceipts() uint64 {
+func (m *SetParam) GetValue() *ConfigValue {
 	if m != nil {
-		return m.MaxReceipts
-	}
-	return 0
-}
-
-func (m *NewMaxReceipts) GetOracle() *types.Address {
-	if m != nil {
-		return m.Oracle
+		return m.Value
 	}
 	return nil
 }
 
-type MaxReceipts struct {
-	MaxReceipts uint64 `protobuf:"varint,1,opt,name=max_receipts,json=maxReceipts,proto3" json:"max_receipts,omitempty"`
+type ConfigValue struct {
+	// Types that are valid to be assigned to Value:
+	//	*ConfigValue_NewOracle
+	//	*ConfigValue_ReceiptsStorageMethod
+	//	*ConfigValue_ReceiptsMax
+	Value isConfigValue_Value `protobuf_oneof:"value"`
 }
 
-func (m *MaxReceipts) Reset()                    { *m = MaxReceipts{} }
-func (m *MaxReceipts) String() string            { return proto.CompactTextString(m) }
-func (*MaxReceipts) ProtoMessage()               {}
-func (*MaxReceipts) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{5} }
+func (m *ConfigValue) Reset()                    { *m = ConfigValue{} }
+func (m *ConfigValue) String() string            { return proto.CompactTextString(m) }
+func (*ConfigValue) ProtoMessage()               {}
+func (*ConfigValue) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{4} }
 
-func (m *MaxReceipts) GetMaxReceipts() uint64 {
+type isConfigValue_Value interface {
+	isConfigValue_Value()
+}
+
+type ConfigValue_NewOracle struct {
+	NewOracle *types.Address `protobuf:"bytes,1,opt,name=new_oracle,json=newOracle,oneof"`
+}
+type ConfigValue_ReceiptsStorageMethod struct {
+	ReceiptsStorageMethod *ReceiptsStorageMethod `protobuf:"bytes,2,opt,name=receipts_storage_method,json=receiptsStorageMethod,oneof"`
+}
+type ConfigValue_ReceiptsMax struct {
+	ReceiptsMax *ReceiptsMax `protobuf:"bytes,3,opt,name=receipts_max,json=receiptsMax,oneof"`
+}
+
+func (*ConfigValue_NewOracle) isConfigValue_Value()             {}
+func (*ConfigValue_ReceiptsStorageMethod) isConfigValue_Value() {}
+func (*ConfigValue_ReceiptsMax) isConfigValue_Value()           {}
+
+func (m *ConfigValue) GetValue() isConfigValue_Value {
 	if m != nil {
-		return m.MaxReceipts
+		return m.Value
 	}
-	return 0
+	return nil
 }
 
-type ReceiptStorageMethod struct {
-	StorageMethod ReceiptStorage `protobuf:"varint,1,opt,name=storage_method,json=storageMethod,proto3,enum=ReceiptStorage" json:"storage_method,omitempty"`
+func (m *ConfigValue) GetNewOracle() *types.Address {
+	if x, ok := m.GetValue().(*ConfigValue_NewOracle); ok {
+		return x.NewOracle
+	}
+	return nil
 }
 
-func (m *ReceiptStorageMethod) Reset()                    { *m = ReceiptStorageMethod{} }
-func (m *ReceiptStorageMethod) String() string            { return proto.CompactTextString(m) }
-func (*ReceiptStorageMethod) ProtoMessage()               {}
-func (*ReceiptStorageMethod) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{6} }
+func (m *ConfigValue) GetReceiptsStorageMethod() *ReceiptsStorageMethod {
+	if x, ok := m.GetValue().(*ConfigValue_ReceiptsStorageMethod); ok {
+		return x.ReceiptsStorageMethod
+	}
+	return nil
+}
 
-func (m *ReceiptStorageMethod) GetStorageMethod() ReceiptStorage {
+func (m *ConfigValue) GetReceiptsMax() *ReceiptsMax {
+	if x, ok := m.GetValue().(*ConfigValue_ReceiptsMax); ok {
+		return x.ReceiptsMax
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*ConfigValue) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _ConfigValue_OneofMarshaler, _ConfigValue_OneofUnmarshaler, _ConfigValue_OneofSizer, []interface{}{
+		(*ConfigValue_NewOracle)(nil),
+		(*ConfigValue_ReceiptsStorageMethod)(nil),
+		(*ConfigValue_ReceiptsMax)(nil),
+	}
+}
+
+func _ConfigValue_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*ConfigValue)
+	// value
+	switch x := m.Value.(type) {
+	case *ConfigValue_NewOracle:
+		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.NewOracle); err != nil {
+			return err
+		}
+	case *ConfigValue_ReceiptsStorageMethod:
+		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ReceiptsStorageMethod); err != nil {
+			return err
+		}
+	case *ConfigValue_ReceiptsMax:
+		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ReceiptsMax); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("ConfigValue.Value has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _ConfigValue_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*ConfigValue)
+	switch tag {
+	case 1: // value.new_oracle
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(types.Address)
+		err := b.DecodeMessage(msg)
+		m.Value = &ConfigValue_NewOracle{msg}
+		return true, err
+	case 2: // value.receipts_storage_method
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ReceiptsStorageMethod)
+		err := b.DecodeMessage(msg)
+		m.Value = &ConfigValue_ReceiptsStorageMethod{msg}
+		return true, err
+	case 3: // value.receipts_max
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ReceiptsMax)
+		err := b.DecodeMessage(msg)
+		m.Value = &ConfigValue_ReceiptsMax{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _ConfigValue_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*ConfigValue)
+	// value
+	switch x := m.Value.(type) {
+	case *ConfigValue_NewOracle:
+		s := proto.Size(x.NewOracle)
+		n += proto.SizeVarint(1<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ConfigValue_ReceiptsStorageMethod:
+		s := proto.Size(x.ReceiptsStorageMethod)
+		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ConfigValue_ReceiptsMax:
+		s := proto.Size(x.ReceiptsMax)
+		n += proto.SizeVarint(3<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type ReceiptsStorageMethod struct {
+	StorageMethod ReceiptsStorage `protobuf:"varint,1,opt,name=storage_method,json=storageMethod,proto3,enum=ReceiptsStorage" json:"storage_method,omitempty"`
+}
+
+func (m *ReceiptsStorageMethod) Reset()                    { *m = ReceiptsStorageMethod{} }
+func (m *ReceiptsStorageMethod) String() string            { return proto.CompactTextString(m) }
+func (*ReceiptsStorageMethod) ProtoMessage()               {}
+func (*ReceiptsStorageMethod) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{5} }
+
+func (m *ReceiptsStorageMethod) GetStorageMethod() ReceiptsStorage {
 	if m != nil {
 		return m.StorageMethod
 	}
-	return ReceiptStorage_CHAIN
+	return ReceiptsStorage_CHAIN
+}
+
+type ReceiptsMax struct {
+	Max uint64 `protobuf:"varint,1,opt,name=max,proto3" json:"max,omitempty"`
+}
+
+func (m *ReceiptsMax) Reset()                    { *m = ReceiptsMax{} }
+func (m *ReceiptsMax) String() string            { return proto.CompactTextString(m) }
+func (*ReceiptsMax) ProtoMessage()               {}
+func (*ReceiptsMax) Descriptor() ([]byte, []int) { return fileDescriptorConfig, []int{6} }
+
+func (m *ReceiptsMax) GetMax() uint64 {
+	if m != nil {
+		return m.Max
+	}
+	return 0
 }
 
 func init() {
+	proto.RegisterType((*ValueType)(nil), "ValueType")
 	proto.RegisterType((*ConfigInitRequest)(nil), "ConfigInitRequest")
 	proto.RegisterType((*Receipts)(nil), "Receipts")
-	proto.RegisterType((*NewOracle)(nil), "NewOracle")
-	proto.RegisterType((*NewReceiptStorageMethod)(nil), "NewReceiptStorageMethod")
-	proto.RegisterType((*NewMaxReceipts)(nil), "NewMaxReceipts")
-	proto.RegisterType((*MaxReceipts)(nil), "MaxReceipts")
-	proto.RegisterType((*ReceiptStorageMethod)(nil), "ReceiptStorageMethod")
-	proto.RegisterEnum("ReceiptStorage", ReceiptStorage_name, ReceiptStorage_value)
+	proto.RegisterType((*SetParam)(nil), "SetParam")
+	proto.RegisterType((*ConfigValue)(nil), "ConfigValue")
+	proto.RegisterType((*ReceiptsStorageMethod)(nil), "ReceiptsStorageMethod")
+	proto.RegisterType((*ReceiptsMax)(nil), "ReceiptsMax")
+	proto.RegisterEnum("ReceiptsStorage", ReceiptsStorage_name, ReceiptsStorage_value)
+	proto.RegisterEnum("ConfigParamter", ConfigParamter_name, ConfigParamter_value)
 }
 
 func init() {
@@ -223,27 +371,34 @@ func init() {
 }
 
 var fileDescriptorConfig = []byte{
-	// 350 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x92, 0xdf, 0x4b, 0xbb, 0x50,
-	0x18, 0xc6, 0xbf, 0x8e, 0x6f, 0x6b, 0xbe, 0x96, 0xad, 0x43, 0xd0, 0xe8, 0x6a, 0x09, 0xd1, 0x08,
-	0xd2, 0xb1, 0xa0, 0xbb, 0xa0, 0xb5, 0x06, 0x0d, 0x36, 0x03, 0xa3, 0xae, 0x8a, 0xe1, 0xf4, 0xcd,
-	0x49, 0x7a, 0xce, 0xd2, 0x33, 0x5c, 0xfd, 0xf5, 0x31, 0x3d, 0x56, 0xb6, 0x45, 0xab, 0x1b, 0xc5,
-	0xe7, 0x7c, 0x9e, 0xe7, 0xfd, 0xe1, 0x81, 0x73, 0xcf, 0xe7, 0xe3, 0xe9, 0x48, 0x77, 0x58, 0x68,
-	0x04, 0x8c, 0x85, 0x14, 0x79, 0xc2, 0xa2, 0x27, 0xc3, 0x63, 0xc7, 0xf3, 0x4f, 0x63, 0x34, 0xf5,
-	0x03, 0xee, 0x53, 0x83, 0xbf, 0x4c, 0x30, 0x36, 0x1c, 0x46, 0x1f, 0x7d, 0x4f, 0xbc, 0xf4, 0x49,
-	0xc4, 0x38, 0xdb, 0x6b, 0xfe, 0x90, 0x90, 0x39, 0xd3, 0x67, 0xe6, 0xd0, 0xee, 0x61, 0xbb, 0x93,
-	0x26, 0xf4, 0xa8, 0xcf, 0x2d, 0x7c, 0x9e, 0x62, 0xcc, 0x49, 0x1d, 0xca, 0xd7, 0x91, 0xed, 0x04,
-	0x58, 0x93, 0xea, 0x52, 0x43, 0x69, 0x55, 0xf4, 0xb6, 0xeb, 0x46, 0x18, 0xc7, 0x96, 0xd0, 0xc9,
-	0x01, 0x54, 0x22, 0x74, 0xd0, 0x9f, 0xf0, 0xb8, 0x56, 0x4a, 0x19, 0x59, 0xb7, 0x84, 0x60, 0xbd,
-	0x1f, 0x69, 0x08, 0x95, 0x5c, 0x25, 0xa7, 0xa0, 0xc6, 0x9c, 0x45, 0xb6, 0x87, 0xc3, 0x10, 0xf9,
-	0x98, 0xb9, 0x69, 0xb8, 0xda, 0xda, 0xca, 0x8d, 0x37, 0xd9, 0xa9, 0xb5, 0x29, 0xb0, 0x41, 0x4a,
-	0x91, 0x7d, 0xd8, 0x08, 0xed, 0xd9, 0xb0, 0x50, 0xee, 0xbf, 0xa5, 0x84, 0xf6, 0x2c, 0x8f, 0xd6,
-	0x1e, 0x40, 0x36, 0x31, 0x11, 0xad, 0x1d, 0x02, 0x50, 0x4c, 0x86, 0x6c, 0xf9, 0x00, 0x32, 0xfd,
-	0x0c, 0xb2, 0xc0, 0xcd, 0xc1, 0xd2, 0x57, 0x90, 0x05, 0x6e, 0x06, 0x6a, 0xaf, 0xb0, 0x6b, 0x62,
-	0x52, 0xec, 0x52, 0x34, 0x77, 0x06, 0x64, 0x5e, 0x6c, 0xb5, 0xc1, 0xaa, 0x14, 0x93, 0xa2, 0xbd,
-	0x0e, 0xe5, 0x6f, 0xca, 0x0b, 0x5d, 0xbb, 0x05, 0xd5, 0xc4, 0x64, 0xf0, 0x31, 0xec, 0xc2, 0x3e,
-	0xa4, 0x85, 0x7d, 0xac, 0x10, 0xdb, 0x04, 0xe5, 0x77, 0x99, 0x9a, 0x09, 0x3b, 0x4b, 0x37, 0xf0,
-	0xc7, 0xdf, 0x7a, 0xd4, 0x00, 0xb5, 0x08, 0x10, 0x19, 0xd6, 0x3a, 0x57, 0xed, 0x9e, 0x59, 0xfd,
-	0x47, 0x14, 0x58, 0xef, 0x77, 0xef, 0xba, 0xfd, 0xcb, 0x8b, 0xaa, 0x34, 0x2a, 0xa7, 0x37, 0xf5,
-	0xe4, 0x2d, 0x00, 0x00, 0xff, 0xff, 0x21, 0xb5, 0x49, 0x9d, 0x1f, 0x03, 0x00, 0x00,
+	// 459 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x52, 0xd1, 0x6e, 0xd3, 0x30,
+	0x14, 0x4d, 0xd6, 0xad, 0x6b, 0x6f, 0x46, 0x6b, 0x8c, 0x06, 0x13, 0x2f, 0x4c, 0x46, 0x48, 0x6c,
+	0x12, 0xc9, 0x18, 0x0f, 0xbc, 0x92, 0x95, 0x88, 0x56, 0xb4, 0x4d, 0xe4, 0x76, 0x83, 0x07, 0xa4,
+	0x2a, 0x6d, 0x4d, 0x17, 0xd1, 0xc4, 0xc5, 0x71, 0xe9, 0xf6, 0x83, 0x7c, 0x17, 0x8a, 0xed, 0x94,
+	0x52, 0x15, 0x21, 0xf1, 0xd2, 0xc6, 0xe7, 0xdc, 0x7b, 0xee, 0x3d, 0xc7, 0x86, 0x77, 0xb3, 0x44,
+	0xde, 0x2e, 0xc7, 0xee, 0x84, 0xa7, 0xde, 0x9c, 0xf3, 0x34, 0x63, 0x72, 0xc5, 0xc5, 0x37, 0x6f,
+	0xc6, 0x5f, 0x15, 0x47, 0x6f, 0xbc, 0x4c, 0xe6, 0x32, 0xc9, 0x3c, 0x79, 0xbf, 0x60, 0xb9, 0x37,
+	0xe1, 0xd9, 0xd7, 0x64, 0x66, 0xfe, 0xdc, 0x85, 0xe0, 0x92, 0x3f, 0xbd, 0xf8, 0x87, 0x82, 0xee,
+	0x54, 0xbf, 0xba, 0x83, 0x5c, 0x40, 0xfd, 0x26, 0x9e, 0x2f, 0xd9, 0xf0, 0x7e, 0xc1, 0xf0, 0x73,
+	0xd8, 0x2f, 0xb8, 0x13, 0xfb, 0xd4, 0x7e, 0xd9, 0xb8, 0x6c, 0xba, 0x2d, 0xa5, 0x1d, 0xc5, 0x22,
+	0x4e, 0x25, 0x13, 0x54, 0x91, 0xe4, 0x0b, 0x3c, 0xd4, 0x78, 0x27, 0x4b, 0x24, 0x65, 0xdf, 0x97,
+	0x2c, 0x97, 0xf8, 0x14, 0xaa, 0xa1, 0x88, 0x27, 0x73, 0xdd, 0xeb, 0x5c, 0xd6, 0x5c, 0x7f, 0x3a,
+	0x15, 0x2c, 0xcf, 0xa9, 0xc1, 0xf1, 0x0b, 0xa8, 0x09, 0x36, 0x61, 0xc9, 0x42, 0xe6, 0x27, 0x7b,
+	0xaa, 0xa6, 0xee, 0x52, 0x03, 0xd0, 0x35, 0x45, 0xae, 0xa1, 0x56, 0xa2, 0xf8, 0x2d, 0x34, 0x72,
+	0xc9, 0x45, 0x3c, 0x63, 0xa3, 0x94, 0xc9, 0x5b, 0x3e, 0x35, 0x8b, 0xa1, 0x75, 0xe3, 0x40, 0xd3,
+	0xf4, 0x81, 0xa9, 0xeb, 0xa9, 0x32, 0x8c, 0xa0, 0x92, 0xc6, 0x77, 0x6a, 0xcc, 0x3e, 0x2d, 0x3e,
+	0x49, 0x04, 0xb5, 0x01, 0x93, 0xca, 0x49, 0xb1, 0x2b, 0xff, 0xcb, 0xae, 0x1a, 0xc7, 0x04, 0x0e,
+	0x7e, 0x14, 0xa1, 0x98, 0x45, 0x8f, 0x4c, 0x10, 0x2a, 0x28, 0xaa, 0x29, 0xf2, 0xd3, 0x06, 0x67,
+	0x03, 0xc6, 0x67, 0x00, 0x19, 0x5b, 0x8d, 0x76, 0x2b, 0xb7, 0x2d, 0x5a, 0xcf, 0xd8, 0xca, 0x44,
+	0x11, 0xc1, 0x93, 0xd2, 0xef, 0x68, 0xcb, 0xa0, 0x1e, 0xf8, 0x78, 0xdb, 0xa0, 0xf6, 0xd5, 0xb6,
+	0xe8, 0xb1, 0xd8, 0x45, 0xe0, 0xd7, 0x70, 0xb4, 0x56, 0x2c, 0x9c, 0x57, 0xcc, 0xde, 0xa5, 0x4c,
+	0x2f, 0xbe, 0x6b, 0x5b, 0xd4, 0x11, 0xbf, 0x8f, 0x57, 0x87, 0xc6, 0x23, 0x89, 0xe0, 0x78, 0xe7,
+	0xb4, 0xff, 0x8e, 0x9f, 0x3c, 0x03, 0x67, 0x63, 0x70, 0x79, 0x1b, 0xf6, 0xfa, 0x36, 0xce, 0xcf,
+	0xa0, 0xb9, 0x25, 0x81, 0xeb, 0x70, 0xd0, 0x6a, 0xfb, 0x9d, 0x3e, 0xb2, 0xb0, 0x03, 0x87, 0xdd,
+	0xe0, 0x26, 0xe8, 0xbe, 0xbf, 0x42, 0xf6, 0x79, 0x08, 0x8d, 0x3f, 0x5f, 0x21, 0x06, 0xa8, 0x86,
+	0xd4, 0x6f, 0x75, 0x03, 0x64, 0xe1, 0x47, 0xd0, 0xa4, 0x41, 0x2b, 0xe8, 0x44, 0xc3, 0xd1, 0x60,
+	0x18, 0x52, 0xff, 0x43, 0x80, 0x6c, 0xdc, 0x04, 0xa7, 0x04, 0x7b, 0xfe, 0x67, 0xb4, 0x57, 0x08,
+	0x5e, 0xf7, 0x3f, 0xf6, 0xc3, 0x4f, 0x7d, 0x54, 0x19, 0x57, 0xd5, 0xbb, 0x7f, 0xf3, 0x2b, 0x00,
+	0x00, 0xff, 0xff, 0x02, 0x64, 0x5f, 0x1d, 0x6d, 0x03, 0x00, 0x00,
 }
