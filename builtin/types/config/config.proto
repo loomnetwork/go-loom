@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+enum ReceiptStorage {
+    CHAIN = 0;
+    LEVELDB = 1;
+}
+
+message ConfigInitRequest {
+    Address Oracle = 1;
+    Receipts receipts = 2;
+}
+
+message Receipts {
+    ReceiptStorage storage_method = 1;
+    uint64 max_receipts = 2;
+}
+
+message NewOracle {
+    Address new_oracle = 1;
+    Address old_oracle = 2;
+}
+
+message NewReceiptStorageMethod {
+    ReceiptStorage new_storage_method = 1;
+    Address oracle = 2;
+}
+
+message NewMaxReceipts {
+    uint64 max_receipts = 1;
+    Address oracle = 2;
+}
+
+message MaxReceipts {
+    uint64 max_receipts = 1;
+}
+
+message ReceiptStorageMethod {
+    ReceiptStorage storage_method = 1;
+}
