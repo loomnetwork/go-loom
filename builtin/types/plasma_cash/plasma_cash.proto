@@ -94,7 +94,7 @@ message GetPlasmaTxResponse {
 }
 
 message GetUserSlotsRequest {
-    PlasmaCashAccount account = 1;
+    Address from = 1;
 }
 
 message GetUserSlotsResponse {
