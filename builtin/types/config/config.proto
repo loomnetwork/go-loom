@@ -12,7 +12,7 @@ message ConfigInitRequest {
     repeated Setting settings = 2;
 }
 
-message Key {
+message GetSetting {
     string key = 1;
 }
 
