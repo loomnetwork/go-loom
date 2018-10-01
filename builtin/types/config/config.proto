@@ -21,7 +21,7 @@ message Setting {
     Value value = 2;
 }
 
-message SetKeyValue {
+message UpdateSetting {
     Address oracle = 1;
     string key = 2;
     Value value = 3;
