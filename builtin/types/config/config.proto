@@ -2,49 +2,35 @@ syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
-enum ReceiptsStorage {
+enum ReceiptStorage {
     CHAIN = 0;
     LEVELDB = 1;
 }
 
-enum ConfigParamter {
-    ORACLE = 0;
-    RECEIPT_STORAGE = 1;
-    RECEIPT_MAX = 2;
-    UNKNOWN = 3;
-}
-
-message ValueType {
-    ConfigParamter type = 1;
-}
-
 message ConfigInitRequest {
-    Address Oracle = 1;
-    Receipts receipts = 2;
-}
-
-message Receipts {
-    ReceiptsStorage storage_method = 1;
-    uint64 max = 2;
-}
-
-message SetParam {
     Address oracle = 1;
-    ConfigValue value = 2;
+    repeated KeyValue settings = 2;
 }
 
-message ConfigValue {
-    oneof value {
-        Address new_oracle = 1;
-        ReceiptsStorageMethod receipts_storage_method = 2;
-        ReceiptsMax receipts_max = 3;
+message Key {
+    string key = 1;
+}
+
+message KeyValue {
+    string key = 1;
+    Value value = 2;
+}
+
+message SetKeyValue {
+    Address oracle = 1;
+    string key = 2;
+    Value value = 3;
+}
+
+message Value {
+    oneof data {
+        uint64  uint64_val = 1;
+        ReceiptStorage receipt_storage = 2;
+        Address address = 3;
     }
-}
-
-message ReceiptsStorageMethod {
-    ReceiptsStorage storage_method = 1;
-}
-
-message ReceiptsMax {
-    uint64 max = 1;
 }
