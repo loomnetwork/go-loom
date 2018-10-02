@@ -9,16 +9,11 @@ enum ReceiptStorage {
 
 message ConfigInitRequest {
     Address oracle = 1;
-    repeated Setting settings = 2;
+    repeated UpdateSetting settings = 2;
 }
 
 message GetSetting {
     string key = 1;
-}
-
-message Setting {
-    string key = 1;
-    Value value = 2;
 }
 
 message UpdateSetting {
