@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
-option csharp_namespace = "Loom.Client";
+option csharp_namespace = "Loom.Client.Internal.Protobuf";
 
 // Blockchain Types
 
