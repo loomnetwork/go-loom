@@ -85,6 +85,11 @@ message EvmTxReceiptList {
     repeated EvmTxReceipt tx_receipts = 1;
 }
 
+message EvmTxReceiptListItem {
+    EvmTxReceipt receipt = 1;
+    bytes nextTxHash = 2;
+}
+
 message EvmTxReceipt {
     int32 transaction_index = 1;
     bytes block_hash = 2;
