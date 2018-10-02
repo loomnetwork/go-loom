@@ -22,9 +22,8 @@ message Setting {
 }
 
 message UpdateSetting {
-    Address oracle = 1;
-    string key = 2;
-    Value value = 3;
+    string key = 1;
+    Value value = 2;
 }
 
 message Value {
