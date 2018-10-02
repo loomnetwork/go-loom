@@ -3,6 +3,8 @@ syntax = "proto3";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 import "github.com/loomnetwork/go-loom/vm/vm.proto";
 
+option csharp_namespace = "Loom.Client";
+
 // Contract specific data structures
 
 enum EncodingType {
