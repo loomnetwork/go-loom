@@ -11,9 +11,9 @@ import (
 
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
-	ltypes "github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
+	ltypes "github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -105,6 +105,7 @@ func (c *GRPCAPIClient) Resolve(name string) (loom.Address, error) {
 	resp, err := c.client.Resolve(context.TODO(), &types.ResolveRequest{
 		Name: name,
 	})
+
 	if err != nil {
 		return loom.Address{}, err
 	}

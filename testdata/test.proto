@@ -17,3 +17,7 @@ message StaticCallResult {
     int32 code = 1;
     string result = 2;
 }
+
+message CallResult {
+    string result = 1;
+}

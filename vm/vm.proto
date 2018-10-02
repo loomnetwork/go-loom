@@ -18,12 +18,16 @@ message DeployTx {
     bytes code = 2;
     string name = 3;
     BigUInt value = 4;
+
+    string contract_version = 5;
 }
 
 message CallTx {
     VMType vm_type = 1;
     bytes input = 2;
     BigUInt value = 3;
+
+    string contract_version = 4;
 }
 
 message DeployResponse {
@@ -39,4 +43,3 @@ message DeployResponseData {
 message TxHashList {
     repeated bytes tx_hash = 1;
 }
-
