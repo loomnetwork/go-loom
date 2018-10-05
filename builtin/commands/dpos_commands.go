@@ -12,13 +12,13 @@ import (
 
 const DPOSContractName = "dpos"
 
-func ListWitnessesCmd() *cobra.Command {
+func ListValidatorsCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "list_witnesses",
-		Short: "List the current witnesses",
+		Use:   "list_validators",
+		Short: "List the current validators",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dpos.ListWitnessesResponse
-			err := cli.StaticCallContract(DPOSContractName, "ListWitnesses", &dpos.ListWitnessesRequest{}, &resp)
+			var resp dpos.ListValidatorsResponse
+			err := cli.StaticCallContract(DPOSContractName, "ListValidators", &dpos.ListValidatorsRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -55,7 +55,7 @@ func ListCandidatesCmd() *cobra.Command {
 func RegisterCandidateCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "register_candidate [public key]",
-		Short: "Register a candidate for witness",
+		Short: "Register a candidate for validator",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			pubKey, err := cli.ParseBytes(args[0])
@@ -105,7 +105,7 @@ func ElectCmd() *cobra.Command {
 
 func AddDPOS(root *cobra.Command) {
 	root.AddCommand(
-		ListWitnessesCmd(),
+		ListValidatorsCmd(),
 		RegisterCandidateCmd(),
 		VoteCmd(),
 		ElectCmd(),
