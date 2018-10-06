@@ -3,8 +3,9 @@ syntax = "proto3";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
 enum ReceiptStorage {
-    CHAIN = 0;
-    LEVELDB = 1;
+    UNKNOWN = 0;
+    CHAIN = 1;
+    LEVELDB = 2;
 }
 
 message ConfigInitRequest {
