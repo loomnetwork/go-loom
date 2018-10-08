@@ -84,19 +84,6 @@ message VoteRequest {
 message VoteResponse {
 }
 
-message ProxyVoteRequest {
-    Address proxy_address = 1;
-}
-
-message ProxyVoteResponse {
-}
-
-message UnproxyVoteRequest {
-}
-
-message UnproxyVoteResponse {
-}
-
 message ElectRequest {
 }
 
