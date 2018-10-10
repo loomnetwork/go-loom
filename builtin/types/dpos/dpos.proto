@@ -48,21 +48,6 @@ message DPOSInitRequest {
     repeated Validator validators = 2;
 }
 
-message DelegateRequest {
-    Address validator_address = 1;
-    int64 amount = 2;
-}
-
-message RedelegateRequest {
-    Address validator_address = 1;
-    int64 amount = 2;
-}
-
-message UnbondRequest {
-    Address validator_address = 1;
-    int64 amount = 2;
-}
-
 message RegisterCandidateRequest {
     bytes pub_key = 1;
 }
@@ -82,6 +67,19 @@ message VoteRequest {
 }
 
 message VoteResponse {
+}
+
+message ProxyVoteRequest {
+    Address proxy_address = 1;
+}
+
+message ProxyVoteResponse {
+}
+
+message UnproxyVoteRequest {
+}
+
+message UnproxyVoteResponse {
 }
 
 message ElectRequest {
