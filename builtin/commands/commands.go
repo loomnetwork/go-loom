@@ -16,5 +16,6 @@ func formatJSON(pb proto.Message) (string, error) {
 
 func Add(cmd *cobra.Command) {
 	AddDPOS(cmd)
+	AddDPOSV2(cmd)
 	AddCoin(cmd)
 }
