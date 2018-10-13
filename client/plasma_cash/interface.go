@@ -34,7 +34,7 @@ type ChainServiceClient interface {
 	BlockNumber() (*big.Int, error)
 
 	Block(blknum *big.Int) (Block, error)
-	//Proof(blknum int64, slot uint64) (Proof, error)
+	PlasmaTx(blknum *big.Int, slot uint64) (Tx, error)
 
 	SubmitBlock() error
 	Deposit(deposit *pctypes.DepositRequest) error

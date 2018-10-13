@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/big"
 
+	"github.com/ethereum/go-ethereum/common"
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	pctypes "github.com/loomnetwork/go-loom/builtin/types/plasma_cash"
@@ -43,6 +44,35 @@ func (c *PlasmaCashClient) BlockNumber() (*big.Int, error) {
 	}
 
 	return result.BlockHeight.Value.Int, nil
+}
+
+// Get the transaction given slot and block height
+func (c *PlasmaCashClient) PlasmaTx(blknum *big.Int, slot uint64) (plasma_cash.Tx, error) {
+	blk := &types.BigUInt{Value: *loom.NewBigUInt(blknum)}
+	var result pctypes.GetPlasmaTxResponse
+	params := &pctypes.GetPlasmaTxRequest{
+		BlockHeight: blk,
+		Slot:        slot,
+	}
+
+	if _, err := c.loomcontract.StaticCall("GetPlasmaTxRequest", params, c.caller, &result); err != nil {
+		return &plasma_cash.LoomTx{}, nil
+	}
+
+	tx := result.Plasmatx
+	prevBlock := big.NewInt(0)
+	if tx.GetPreviousBlock() != nil {
+		prevBlock = tx.GetPreviousBlock().Value.Int
+	}
+	address := tx.NewOwner.Local.String()
+	ethAddress := common.HexToAddress(address)
+
+	return &plasma_cash.LoomTx{Slot: slot,
+		PrevBlock:    prevBlock,
+		Denomination: tx.Denomination.Value.Int,
+		Owner:        ethAddress,
+		Signature:    tx.Signature,
+		TXProof:      tx.Proof}, nil
 }
 
 // Block get the block, transactions and proofs for a given block height
