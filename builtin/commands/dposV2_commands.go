@@ -181,6 +181,7 @@ func AddDPOSV2(root *cobra.Command) {
 		ElectCmdV2(),
 		ListCandidatesCmdV2(),
 		DelegateCmdV2(),
+		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
 	)
 }
