@@ -119,6 +119,24 @@ func DelegateCmdV2() *cobra.Command {
 	}
 }
 
+func CheckDelegationCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "check_delegationV2 [validator address]",
+		Short: "check delegation to a particular validator",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+
+			return cli.CallContract(DPOSV2ContractName, "CheckDelegation", &dposv2.CheckDelegationRequestV2{
+				ValidatorAddress: addr.MarshalPB(),
+			}, nil)
+		},
+	}
+}
+
 func UnbondCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "unbondV2 [validator address] [amount]",
