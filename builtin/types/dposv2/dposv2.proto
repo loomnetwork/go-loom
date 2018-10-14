@@ -64,15 +64,17 @@ message DelegateRequestV2 {
     BigUInt amount = 2;
 }
 
-message DelegateResponseV2 {
-}
-
 message RedelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
 }
 
-message RedelegateResponseV2 {
+message CheckDelegationRequestV2 {
+    Address validator_address = 1;
+}
+
+message CheckDelegationResponseV2 {
+	DelegationV2 delegation = 1;
 }
 
 message UnbondRequestV2 {
@@ -80,20 +82,11 @@ message UnbondRequestV2 {
     BigUInt amount = 2;
 }
 
-message UnbondResponseV2 {
-}
-
 message RegisterCandidateRequestV2 {
     bytes pub_key = 1;
 }
 
-message RegisterCandidateResponseV2 {
-}
-
 message UnregisterCandidateRequestV2 {
-}
-
-message UnregisterCandidateResponseV2 {
 }
 
 message VoteRequestV2 {
@@ -101,13 +94,7 @@ message VoteRequestV2 {
     int64 amount = 2;
 }
 
-message VoteResponseV2 {
-}
-
 message ElectRequestV2 {
-}
-
-message ElectResponseV2 {
 }
 
 message ListValidatorsRequestV2 {
