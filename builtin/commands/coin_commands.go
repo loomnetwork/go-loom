@@ -122,7 +122,9 @@ func BalanceCmd() *cobra.Command {
 
 func AddCoin(root *cobra.Command) {
 	root.AddCommand(
+		ApproveCmd(),
 		BalanceCmd(),
 		TransferCmd(),
+		TransferFromCmd(),
 	)
 }
