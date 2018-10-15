@@ -158,7 +158,7 @@ func (c *EthPlasmaClientImpl) FetchFinalizedExit(startBlock, endBlock uint64) ([
 
 	iterator, err := c.plasmaContract.FilterFinalizedExit(filterOpts, nil)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to get Plasma Exit start logs")
+		return nil, errors.Wrap(err, "failed to get Plasma finalized exit logs")
 	}
 	defer iterator.Close()
 
@@ -192,7 +192,7 @@ func (c *EthPlasmaClientImpl) FetchStartedExit(startBlock, endBlock uint64) ([]*
 
 	iterator, err := c.plasmaContract.FilterStartedExit(filterOpts, nil, nil)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to get Plasma Exit start logs")
+		return nil, errors.Wrap(err, "failed to get Plasma start exit logs")
 	}
 	defer iterator.Close()
 
@@ -253,7 +253,7 @@ func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pct
 	}
 
 	if err := iterator.Error(); err != nil {
-		return nil, errors.Wrap(err, "failed to get event data for Plasma deposit")
+		return nil, errors.Wrap(err, "failed to iterate event data for Plasma deposit")
 	}
 
 	return depositEvents, nil
