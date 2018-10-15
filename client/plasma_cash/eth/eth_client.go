@@ -225,38 +225,35 @@ func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pct
 	}
 	depositEvents := []*pctypes.PlasmaDepositEvent{}
 
-	it, err := c.plasmaContract.FilterDeposit(filterOpts, nil, nil, nil)
+	iterator, err := c.plasmaContract.FilterDeposit(filterOpts, nil, nil, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get Plasma deposit logs")
 	}
-	for {
-		ok := it.Next()
-		if ok {
-			ev := it.Event
-			fromAddr, err := loom.LocalAddressFromHexString(ev.From.Hex())
-			if err != nil {
-				return nil, errors.Wrap(err, "failed to parse Plasma deposit 'from' address")
-			}
-			contractAddr, err := loom.LocalAddressFromHexString(ev.ContractAddress.Hex())
-			if err != nil {
-				return nil, errors.Wrap(err, "failed to parse Plasma deposit contract address")
-			}
-			depositEvents = append(depositEvents, &pctypes.PlasmaDepositEvent{
-				Slot:         ev.Slot,
-				DepositBlock: &ltypes.BigUInt{Value: *loom.NewBigUInt(ev.BlockNumber)},
-				Denomination: &ltypes.BigUInt{Value: *loom.NewBigUIntFromInt(1)}, // TODO: ev.Denomination
-				From:         loom.Address{ChainID: "eth", Local: fromAddr}.MarshalPB(),
-				Contract:     loom.Address{ChainID: "eth", Local: contractAddr}.MarshalPB(),
-				// TODO: store ev.Hash... it's always a hash of ev.Slot, so a bit redundant
-			})
-		} else {
-			err := it.Error()
-			if err != nil {
-				return nil, errors.Wrap(err, "failed to get event data for Plasma deposit")
-			}
-			it.Close()
-			break
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+		localFromAddr, err := loom.LocalAddressFromHexString(event.From.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse Plasma deposit 'from' address")
 		}
+		localContractAddr, err := loom.LocalAddressFromHexString(event.ContractAddress.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse Plasma deposit contract address")
+		}
+
+		depositEvents = append(depositEvents, &pctypes.PlasmaDepositEvent{
+			Slot:         event.Slot,
+			DepositBlock: &ltypes.BigUInt{Value: *loom.NewBigUInt(event.BlockNumber)},
+			Denomination: &ltypes.BigUInt{Value: *loom.NewBigUIntFromInt(1)}, // TODO: ev.Denomination
+			From:         loom.Address{ChainID: "eth", Local: localFromAddr}.MarshalPB(),
+			Contract:     loom.Address{ChainID: "eth", Local: localContractAddr}.MarshalPB(),
+			// TODO: store ev.Hash... it's always a hash of ev.Slot, so a bit redundant
+		})
+	}
+
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrap(err, "failed to get event data for Plasma deposit")
 	}
 
 	return depositEvents, nil
