@@ -33,10 +33,10 @@ message PlasmaBlock {
     bytes signature = 3; // Signature on the block’s hash
     bytes merkle_hash = 4; // The block's merkle root from its included transactions
     bytes hash = 5; // The hash of the RLP encoded unsigned block’s bytes.
-    bytes proof = 6; 
+    bytes proof = 6;
 }
 
-message PlasmaTx { 
+message PlasmaTx {
     uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
     BigUInt previous_block = 2 [(gogoproto.customname)="PreviousBlock"]; //Each time a transaction is created, it MUST refer to a previous block which also included that transaction. A transaction is considered a “deposit transaction”, if it’s the first UTXO after a user deposits their coin in the Plasma Chain. This transaction mints coins from nowhere in the Plasma Chain and as a result its previous block is 0.
     BigUInt denomination = 3; // How many coins are included in that UTXO. Currently this is always 1 since we’re using ERC721 tokens which are unique, however in future iterations this can be any number.
@@ -53,16 +53,16 @@ message PlasmaBookKeeping {
     BigUInt current_height = 1  [(gogoproto.customname)="CurrentHeight"]; // Height of all the plasma blocks
 }
 
-message GetCurrentBlockRequest { 
+message GetCurrentBlockRequest {
 }
 
 message GetCurrentBlockResponse {
-    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
+    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"];
 }
 
 
 message GetBlockRequest {
-    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
+    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"];
 }
 
 message GetBlockResponse {
@@ -149,4 +149,35 @@ message PlasmaCashBalanceOfRequest {
 
 message PlasmaCashBalanceOfResponse {
     repeated PlasmaCashCoin coins = 1;
+}
+
+// Event structures
+
+message PlasmaDepositEvent {
+    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    BigUInt deposit_block = 2;
+    // For ERC20 this is the number of coins deposited, for ERC721 this is a token ID.
+    BigUInt denomination = 3;
+    // Entity that made the deposit
+    Address from = 4;
+    // Contract from which the coins originated (i.e. the currency of the coins)
+    Address contract = 5;
+}
+
+message PlasmaCashStartedExitEvent {
+    Address owner = 1;
+    uint64 slot = 2;
+}
+
+message PlasmaCashFinalizedExitEvent {
+    Address owner = 1;
+    uint64 slot = 2;
+}
+
+message PlasmaCashWithdrewEvent {
+    Address from = 1;
+    uint32 mode = 2;
+    Address contract = 3;
+    BigUInt uid = 4;
+    BigUInt denomination = 5;
 }
