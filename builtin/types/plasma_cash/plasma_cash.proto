@@ -182,3 +182,11 @@ message PlasmaCashWithdrewEvent {
     BigUInt denomination = 5;
     uint64 slot = 6;
 }
+
+// Events emitted by the contract
+
+message PlasmaCashTransferConfirmed {
+    Address from = 1;
+    Address to = 2;
+    uint64 slot = 3;
+}
