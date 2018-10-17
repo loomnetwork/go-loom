@@ -175,9 +175,10 @@ message PlasmaCashFinalizedExitEvent {
 }
 
 message PlasmaCashWithdrewEvent {
-    Address from = 1;
+    Address owner = 1;
     uint32 mode = 2;
     Address contract = 3;
     BigUInt uid = 4;
     BigUInt denomination = 5;
+    uint64 slot = 6;
 }

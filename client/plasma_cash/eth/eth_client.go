@@ -114,7 +114,7 @@ func (c *EthPlasmaClientImpl) FetchWithdrews(startBlock, endBlock uint64) ([]*pc
 
 	withdrawCoinEvents := []*pctypes.PlasmaCashWithdrewEvent{}
 
-	iterator, err := c.plasmaContract.FilterWithdrew(filterOpts, nil)
+	iterator, err := c.plasmaContract.FilterWithdrew(filterOpts, nil, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get Plasma coin withdraw logs")
 	}
@@ -123,9 +123,9 @@ func (c *EthPlasmaClientImpl) FetchWithdrews(startBlock, endBlock uint64) ([]*pc
 	for iterator.Next() {
 		event := iterator.Event
 
-		localFromAddress, err := loom.LocalAddressFromHexString(event.From.Hex())
+		localOwnerAddress, err := loom.LocalAddressFromHexString(event.Owner.Hex())
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to parse plasma coin withdraw from's address")
+			return nil, errors.Wrap(err, "failed to parse plasma coin withdraw owner's address")
 		}
 		localContractAddr, err := loom.LocalAddressFromHexString(event.ContractAddress.Hex())
 		if err != nil {
@@ -133,7 +133,8 @@ func (c *EthPlasmaClientImpl) FetchWithdrews(startBlock, endBlock uint64) ([]*pc
 		}
 
 		withdrawCoinEvents = append(withdrawCoinEvents, &pctypes.PlasmaCashWithdrewEvent{
-			From:         loom.Address{ChainID: "eth", Local: localFromAddress}.MarshalPB(),
+			Slot:         event.Slot,
+			Owner:        loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
 			Mode:         uint32(event.Mode),
 			Uid:          &ltypes.BigUInt{Value: *loom.NewBigUInt(event.Uid)},
 			Denomination: &ltypes.BigUInt{Value: *loom.NewBigUInt(event.Denomination)},
