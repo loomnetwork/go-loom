@@ -33,6 +33,17 @@ message CandidateListV2 {
     repeated CandidateV2 candidates = 1;
 }
 
+message DelegationV2 {
+    Address validator = 1;
+    Address delegator = 2;
+    uint64 height = 3;
+    BigUInt amount = 4;
+}
+
+message DelegationListV2 {
+    repeated DelegationV2 delegations = 1;
+}
+
 message VoteV2 {
     Address voter_address = 1;
     Address candidate_address = 2;
@@ -50,39 +61,32 @@ message DPOSInitRequestV2 {
 
 message DelegateRequestV2 {
     Address validator_address = 1;
-    int64 amount = 2;
-}
-
-message DelegateResponseV2 {
+    BigUInt amount = 2;
 }
 
 message RedelegateRequestV2 {
     Address validator_address = 1;
-    int64 amount = 2;
+    BigUInt amount = 2;
 }
 
-message RedelegateResponseV2 {
+message CheckDelegationRequestV2 {
+    Address validator_address = 1;
+}
+
+message CheckDelegationResponseV2 {
+	DelegationV2 delegation = 1;
 }
 
 message UnbondRequestV2 {
     Address validator_address = 1;
-    int64 amount = 2;
-}
-
-message UnbondResponseV2 {
+    BigUInt amount = 2;
 }
 
 message RegisterCandidateRequestV2 {
     bytes pub_key = 1;
 }
 
-message RegisterCandidateResponseV2 {
-}
-
 message UnregisterCandidateRequestV2 {
-}
-
-message UnregisterCandidateResponseV2 {
 }
 
 message VoteRequestV2 {
@@ -90,13 +94,7 @@ message VoteRequestV2 {
     int64 amount = 2;
 }
 
-message VoteResponseV2 {
-}
-
 message ElectRequestV2 {
-}
-
-message ElectResponseV2 {
 }
 
 message ListValidatorsRequestV2 {
