@@ -123,15 +123,15 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	}
 	if r.CheckTx.Code != 0 {
 		if len(r.CheckTx.Error) != 0 {
-			return nil, errors.New(r.CheckTx.Error)
+			return r.CheckTx.Data, errors.New(r.CheckTx.Error)
 		}
-		return nil, errors.New("CheckTx failed")
+		return r.CheckTx.Data, errors.New("CheckTx failed")
 	}
 	if r.DeliverTx.Code != 0 {
 		if len(r.DeliverTx.Error) != 0 {
-			return nil, errors.New(r.DeliverTx.Error)
+			return r.DeliverTx.Data, errors.New(r.DeliverTx.Error)
 		}
-		return nil, errors.New("DeliverTx failed")
+		return r.DeliverTx.Data, errors.New("DeliverTx failed")
 	}
 
 	return r.DeliverTx.Data, nil
