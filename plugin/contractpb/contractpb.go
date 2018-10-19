@@ -31,6 +31,7 @@ type StaticContext interface {
 	Logger() *loom.Logger
 	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
+
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
 	ContractRecord(contractAddr loom.Address) (*plugin.ContractRecord, error)
