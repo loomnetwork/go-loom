@@ -28,6 +28,11 @@ type BroadcastTxCommitResult struct {
 	Height    string          `json:"height"`
 }
 
+// Allows custom handling of CommitTx
+type TxCommiter interface {
+	CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error)
+}
+
 // Implements the DAppChainClient interface
 type DAppChainRPCClient struct {
 	chainID       string
@@ -36,6 +41,7 @@ type DAppChainRPCClient struct {
 	txClient      *JSONRPCClient
 	queryClient   *JSONRPCClient
 	nextRequestID uint64
+	commiter      TxCommiter
 }
 
 // NewDAppChainRPCClient creates a new dumb client that can be used to commit txs and query contract
@@ -44,7 +50,7 @@ type DAppChainRPCClient struct {
 // submitted to (port 46657 by default), readURI is the host that will be queried for current app
 // state (47000 by default).
 func NewDAppChainRPCClient(chainID, writeURI, readURI string) *DAppChainRPCClient {
-	return &DAppChainRPCClient{
+	client := &DAppChainRPCClient{
 		chainID:       chainID,
 		writeURI:      writeURI,
 		readURI:       readURI,
@@ -52,6 +58,8 @@ func NewDAppChainRPCClient(chainID, writeURI, readURI string) *DAppChainRPCClien
 		queryClient:   NewJSONRPCClient(readURI),
 		nextRequestID: 1,
 	}
+	client.commiter = client
+	return client
 }
 
 func NewDAppChainRPCClientShareTransport(chainID, writeURI, readURI string, transport *http.Transport) *DAppChainRPCClient {
@@ -372,7 +380,7 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 		Id:   1,
 		Data: msgBytes,
 	}
-	return c.CommitTx(signer, tx)
+	return c.commiter.CommitTx(signer, tx)
 }
 
 func (c *DAppChainRPCClient) CommitCallTx(
@@ -403,15 +411,18 @@ func (c *DAppChainRPCClient) CommitCallTx(
 		Id:   2,
 		Data: msgBytes,
 	}
-	return c.CommitTx(signer, tx)
+	return c.commiter.CommitTx(signer, tx)
 }
 
+// EVM client allows returning txHash value on Failed EVM transaction
 type EVMDAppChainRPCClient struct {
 	DAppChainRPCClient
 }
 
 func NewEVMDAppChainRPCClient(chainID, writeURI, readURI string) *EVMDAppChainRPCClient {
-	return &EVMDAppChainRPCClient{*NewDAppChainRPCClient(chainID, writeURI, readURI)}
+	client := &EVMDAppChainRPCClient{*NewDAppChainRPCClient(chainID, writeURI, readURI)}
+	client.commiter = client
+	return client
 }
 
 func (c *EVMDAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
