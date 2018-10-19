@@ -64,6 +64,11 @@ func (c *GRPCAPIClient) Has(key []byte) bool {
 	return resp.Value
 }
 
+func (c *GRPCAPIClient) GetEvmTxReceipt(hash []byte) (types.EvmTxReceipt, error) {
+	resp, err := c.client.GetEvmTxReceipt(context.TODO(), &types.HashRequest{hash})
+	return *resp, err
+}
+
 func (c *GRPCAPIClient) ValidatorPower(pubKey []byte) int64 {
 	resp, _ := c.client.ValidatorPower(context.TODO(), &types.ValidatorPowerRequest{
 		PubKey: pubKey,
