@@ -138,6 +138,7 @@ message PlasmaCashParams {
 
 message PlasmaCashInitRequest {
     PlasmaCashParams params = 1;
+    Address oracle = 2;
 }
 
 // Static Calls
@@ -149,6 +150,10 @@ message PlasmaCashBalanceOfRequest {
 
 message PlasmaCashBalanceOfResponse {
     repeated PlasmaCashCoin coins = 1;
+}
+
+message PlasmaCashUpdateOracleRequest {
+    Address new_oracle = 1;
 }
 
 // Event structures
