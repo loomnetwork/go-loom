@@ -37,6 +37,62 @@ func TransferCmd() *cobra.Command {
 	}
 }
 
+func TransferFromCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "transfer_from [from_address] [to_address] [amount]",
+		Short: "Transfer coins from a specified address to another",
+		Args:  cobra.MinimumNArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			fromAddress, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+			toAddress, err := cli.ResolveAddress(args[1])
+			if err != nil {
+				return err
+			}
+			amount, err := cli.ParseAmount(args[2])
+			if err != nil {
+				return err
+			}
+
+			return cli.CallContract(CoinContractName, "TransferFrom", &coin.TransferFromRequest{
+				From: fromAddress.MarshalPB(),
+				To: toAddress.MarshalPB(),
+				Amount: &types.BigUInt{
+					Value: *amount,
+				},
+			}, nil)
+		},
+	}
+}
+
+func ApproveCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "approve [address] [amount]",
+		Short: "Approve the transfer of coins to another account",
+		Args:  cobra.MinimumNArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+			amount, err := cli.ParseAmount(args[1])
+			if err != nil {
+				return err
+			}
+
+			return cli.CallContract(CoinContractName, "Approve", &coin.ApproveRequest{
+				Spender: addr.MarshalPB(),
+				Amount: &types.BigUInt{
+					Value: *amount,
+				},
+			}, nil)
+		},
+	}
+}
+
+
 func BalanceCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "balance [address]",
@@ -66,7 +122,9 @@ func BalanceCmd() *cobra.Command {
 
 func AddCoin(root *cobra.Command) {
 	root.AddCommand(
+		ApproveCmd(),
 		BalanceCmd(),
 		TransferCmd(),
+		TransferFromCmd(),
 	)
 }

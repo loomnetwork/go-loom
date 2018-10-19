@@ -52,7 +52,7 @@ proto: \
 	builtin/types/coin/coin.pb.go \
 	builtin/types/ethcoin/ethcoin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
-	builtin/types/dposv2/dpos.pb.go \
+	builtin/types/dposv2/dposv2.pb.go \
 	builtin/types/plasma_cash/plasma_cash.pb.go \
 	builtin/types/karma/karma.pb.go \
 	builtin/types/config/config.pb.go \
