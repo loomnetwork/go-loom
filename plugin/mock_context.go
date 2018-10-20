@@ -9,6 +9,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
+	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
 	"github.com/pkg/errors"
@@ -182,6 +183,10 @@ func (c *FakeContext) Block() types.BlockHeader {
 
 func (c *FakeContext) ContractAddress() loom.Address {
 	return c.address
+}
+
+func (c *FakeContext) GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error) {
+	return ptypes.EvmTxReceipt{}, nil
 }
 
 func (c *FakeContext) Now() time.Time {

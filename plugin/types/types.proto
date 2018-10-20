@@ -189,7 +189,9 @@ message GetResponse {
     bytes value = 1;
 }
 
-
+message EvmTxReceiptRequest{
+    bytes value = 1;
+}
 
 message RangeRequest {
     bytes prefix = 1;
@@ -289,7 +291,7 @@ service API {
     rpc StaticCall(CallRequest) returns (CallResponse);
     rpc Resolve(ResolveRequest) returns (ResolveResponse);
     rpc Emit(EmitRequest) returns (EmitResponse);
-
+    rpc GetEvmTxReceipt(EvmTxReceiptRequest) returns (EvmTxReceipt);
     rpc Set(SetRequest) returns (SetResponse);
     rpc Delete(DeleteRequest) returns (DeleteResponse);
     rpc Call(CallRequest) returns (CallResponse);
