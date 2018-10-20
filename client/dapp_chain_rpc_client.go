@@ -28,11 +28,6 @@ type BroadcastTxCommitResult struct {
 	Height    string          `json:"height"`
 }
 
-// Allows custom handling of CommitTx
-type TxCommiter interface {
-	CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error)
-}
-
 // Implements the DAppChainClient interface
 type DAppChainRPCClient struct {
 	chainID       string
@@ -41,7 +36,6 @@ type DAppChainRPCClient struct {
 	txClient      *JSONRPCClient
 	queryClient   *JSONRPCClient
 	nextRequestID uint64
-	commiter      TxCommiter
 }
 
 // NewDAppChainRPCClient creates a new dumb client that can be used to commit txs and query contract
@@ -50,7 +44,7 @@ type DAppChainRPCClient struct {
 // submitted to (port 46657 by default), readURI is the host that will be queried for current app
 // state (47000 by default).
 func NewDAppChainRPCClient(chainID, writeURI, readURI string) *DAppChainRPCClient {
-	client := &DAppChainRPCClient{
+	return &DAppChainRPCClient{
 		chainID:       chainID,
 		writeURI:      writeURI,
 		readURI:       readURI,
@@ -58,8 +52,6 @@ func NewDAppChainRPCClient(chainID, writeURI, readURI string) *DAppChainRPCClien
 		queryClient:   NewJSONRPCClient(readURI),
 		nextRequestID: 1,
 	}
-	client.commiter = client
-	return client
 }
 
 func NewDAppChainRPCClientShareTransport(chainID, writeURI, readURI string, transport *http.Transport) *DAppChainRPCClient {
@@ -131,15 +123,15 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	}
 	if r.CheckTx.Code != 0 {
 		if len(r.CheckTx.Error) != 0 {
-			return r.CheckTx.Data, errors.New(r.CheckTx.Error)
+			return nil, errors.New(r.CheckTx.Error)
 		}
-		return r.CheckTx.Data, errors.New("CheckTx failed")
+		return nil, errors.New("CheckTx failed")
 	}
 	if r.DeliverTx.Code != 0 {
 		if len(r.DeliverTx.Error) != 0 {
-			return r.DeliverTx.Data, errors.New(r.DeliverTx.Error)
+			return nil, errors.New(r.DeliverTx.Error)
 		}
-		return r.DeliverTx.Data, errors.New("DeliverTx failed")
+		return nil, errors.New("DeliverTx failed")
 	}
 
 	return r.DeliverTx.Data, nil
@@ -380,7 +372,7 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 		Id:   1,
 		Data: msgBytes,
 	}
-	return c.commiter.CommitTx(signer, tx)
+	return c.CommitTx(signer, tx)
 }
 
 func (c *DAppChainRPCClient) CommitCallTx(
@@ -411,59 +403,5 @@ func (c *DAppChainRPCClient) CommitCallTx(
 		Id:   2,
 		Data: msgBytes,
 	}
-	return c.commiter.CommitTx(signer, tx)
-}
-
-// EVM client allows returning txHash value on Failed EVM transaction
-type EVMDAppChainRPCClient struct {
-	DAppChainRPCClient
-}
-
-func NewEVMDAppChainRPCClient(chainID, writeURI, readURI string) *EVMDAppChainRPCClient {
-	client := &EVMDAppChainRPCClient{*NewDAppChainRPCClient(chainID, writeURI, readURI)}
-	client.commiter = client
-	return client
-}
-
-func (c *EVMDAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
-	nonce, err := c.GetNonce(signer)
-	if err != nil {
-		return nil, err
-	}
-	txBytes, err := proto.Marshal(tx)
-	if err != nil {
-		return nil, err
-	}
-	nonceTxBytes, err := proto.Marshal(&auth.NonceTx{
-		Inner:    txBytes,
-		Sequence: nonce + 1,
-	})
-	if err != nil {
-		return nil, err
-	}
-	signedTxBytes, err := proto.Marshal(auth.SignTx(signer, nonceTxBytes))
-	if err != nil {
-		return nil, err
-	}
-	params := map[string]interface{}{
-		"tx": signedTxBytes,
-	}
-	var r BroadcastTxCommitResult
-	if err = c.txClient.Call("broadcast_tx_commit", params, c.getNextRequestID(), &r); err != nil {
-		return nil, err
-	}
-	if r.CheckTx.Code != 0 {
-		if len(r.CheckTx.Error) != 0 {
-			return r.CheckTx.Data, errors.New(r.CheckTx.Error)
-		}
-		return r.CheckTx.Data, errors.New("CheckTx failed")
-	}
-	if r.DeliverTx.Code != 0 {
-		if len(r.DeliverTx.Error) != 0 {
-			return r.DeliverTx.Data, errors.New(r.DeliverTx.Error)
-		}
-		return r.DeliverTx.Data, errors.New("DeliverTx failed")
-	}
-
-	return r.DeliverTx.Data, nil
+	return c.CommitTx(signer, tx)
 }
