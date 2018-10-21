@@ -116,6 +116,11 @@ message DepositRequest {
 message DepositResponse {
 }
 
+message PlasmaCashCoinResetRequest {
+    Address owner = 1;
+    uint64 slot = 2;
+}
+
 message PlasmaCashExitCoinRequest {
     Address owner = 1;
     uint64 slot = 2;
@@ -167,6 +172,11 @@ message PlasmaDepositEvent {
     Address from = 4;
     // Contract from which the coins originated (i.e. the currency of the coins)
     Address contract = 5;
+}
+
+message PlasmaCashCoinResetEvent {
+    Address owner = 1;
+    uint64 slot = 2;
 }
 
 message PlasmaCashStartedExitEvent {

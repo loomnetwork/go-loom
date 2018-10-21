@@ -43,6 +43,7 @@ type EthPlasmaClient interface {
 	SubmitPlasmaBlock(plasmaBlockNum *big.Int, merkleRoot [32]byte) error
 
 	FetchDeposits(startBlock, endBlock uint64) ([]*pctypes.PlasmaDepositEvent, error)
+	FetchCoinReset(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashCoinResetEvent, error)
 	FetchWithdrews(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashWithdrewEvent, error)
 	FetchFinalizedExit(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashFinalizedExitEvent, error)
 	FetchStartedExit(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashStartedExitEvent, error)
@@ -181,6 +182,40 @@ func (c *EthPlasmaClientImpl) FetchFinalizedExit(startBlock, endBlock uint64) ([
 	}
 
 	return finalizedExitEvents, nil
+}
+
+func (c *EthPlasmaClientImpl) FetchCoinReset(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashCoinResetEvent, error) {
+	filterOpts := &bind.FilterOpts{
+		Start: startBlock,
+		End:   &endBlock,
+	}
+
+	coinResetEvents := []*pctypes.PlasmaCashCoinResetEvent{}
+
+	iterator, err := c.plasmaContract.FilterCoinReset(filterOpts, nil, nil)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get Plasma start exit logs")
+	}
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+		localOwnerAddress, err := loom.LocalAddressFromHexString(event.Owner.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse plasma start exit owner's address")
+		}
+
+		coinResetEvents = append(coinResetEvents, &pctypes.PlasmaCashCoinResetEvent{
+			Owner: loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
+			Slot:  event.Slot,
+		})
+	}
+
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrapf(err, "failed to iterate event data for plasma start exit")
+	}
+
+	return coinResetEvents, nil
 }
 
 func (c *EthPlasmaClientImpl) FetchStartedExit(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashStartedExitEvent, error) {
