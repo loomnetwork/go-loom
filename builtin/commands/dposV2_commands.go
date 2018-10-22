@@ -180,12 +180,23 @@ func ElectCmdV2() *cobra.Command {
 	}
 }
 
+func ElectDelegationCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "elect_delegationV2",
+		Short: "Run an election based on delegations",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return cli.CallContract(DPOSV2ContractName, "ElectByDelegation", &dposv2.ElectDelegationRequestV2{}, nil)
+		},
+	}
+}
+
 func AddDPOSV2(root *cobra.Command) {
 	root.AddCommand(
 		ListValidatorsCmdV2(),
 		RegisterCandidateCmdV2(),
 		VoteCmdV2(),
 		ElectCmdV2(),
+		ElectDelegationCmdV2(),
 		ListCandidatesCmdV2(),
 		DelegateCmdV2(),
 		CheckDelegationCmdV2(),

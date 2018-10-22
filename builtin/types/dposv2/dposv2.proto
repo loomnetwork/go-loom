@@ -97,6 +97,10 @@ message VoteRequestV2 {
 message ElectRequestV2 {
 }
 
+message ElectDelegationRequestV2 {
+}
+
+
 message ListValidatorsRequestV2 {
 }
 
