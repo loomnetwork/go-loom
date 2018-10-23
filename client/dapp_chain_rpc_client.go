@@ -84,12 +84,12 @@ func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
 	params := map[string]interface{}{
 		"key": hex.EncodeToString(signer.PublicKey()),
 	}
-	var rRes string
+	var rRes uint64
 	err := c.queryClient.Call("nonce", params, c.getNextRequestID(), &rRes)
 	if err != nil {
 		return 0, err
 	}
-	return strconv.ParseUint(rRes, 10, 64)
+	return rRes, nil
 }
 
 func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
