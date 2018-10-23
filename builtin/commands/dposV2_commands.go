@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/spf13/cobra"
 
@@ -65,30 +64,6 @@ func RegisterCandidateCmdV2() *cobra.Command {
 			}
 			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate", &dposv2.RegisterCandidateRequestV2{
 				PubKey: pubKey,
-			}, nil)
-		},
-	}
-}
-
-func VoteCmdV2() *cobra.Command {
-	return &cobra.Command{
-		Use:   "voteV2 [candidate address] [amount]",
-		Short: "Allocate votes to a candidate",
-		Args:  cobra.MinimumNArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
-			if err != nil {
-				return err
-			}
-
-			amount, err := strconv.ParseInt(args[1], 10, 64)
-			if err != nil {
-				return err
-			}
-
-			return cli.CallContract(DPOSV2ContractName, "Vote", &dposv2.VoteRequestV2{
-				CandidateAddress: addr.MarshalPB(),
-				Amount:           amount,
 			}, nil)
 		},
 	}
@@ -169,17 +144,6 @@ func UnbondCmdV2() *cobra.Command {
 	}
 }
 
-
-func ElectCmdV2() *cobra.Command {
-	return &cobra.Command{
-		Use:   "electV2",
-		Short: "Run an election",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return cli.CallContract(DPOSV2ContractName, "Elect", &dposv2.ElectRequestV2{}, nil)
-		},
-	}
-}
-
 func ElectDelegationCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "elect_delegationV2",
@@ -194,8 +158,6 @@ func AddDPOSV2(root *cobra.Command) {
 	root.AddCommand(
 		ListValidatorsCmdV2(),
 		RegisterCandidateCmdV2(),
-		VoteCmdV2(),
-		ElectCmdV2(),
 		ElectDelegationCmdV2(),
 		ListCandidatesCmdV2(),
 		DelegateCmdV2(),
