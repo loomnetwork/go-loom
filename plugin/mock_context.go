@@ -189,6 +189,10 @@ func (c *FakeContext) GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error) {
 	return ptypes.EvmTxReceipt{}, nil
 }
 
+func (c *FakeContext) SetTime(t time.Time) {
+	c.block.Time = t.Unix()
+}
+
 func (c *FakeContext) Now() time.Time {
 	return time.Unix(c.block.Time, 0)
 }
