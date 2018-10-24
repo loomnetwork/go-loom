@@ -31,7 +31,6 @@ type StaticContext interface {
 	Logger() *loom.Logger
 	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
-	//SetTime(time.Time)
 
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
@@ -48,7 +47,6 @@ type Context interface {
 	GrantPermissionTo(addr loom.Address, token []byte, role string)
 	RevokePermissionFrom(addr loom.Address, token []byte, role string)
 	GrantPermission(token []byte, roles []string)
-	SetTime(time.Time)
 }
 
 type Contract interface {
@@ -136,9 +134,6 @@ func (c *wrappedPluginContext) GrantPermission(token []byte, roles []string) {
 	for _, r := range roles {
 		c.GrantPermissionTo(c.Message().Sender, token, r)
 	}
-}
-func (c *wrappedPluginContext) SetTime(t time.Time) {
-	c.Context.SetTime(t)
 }
 
 func MakePluginContract(c Contract) plugin.Contract {
