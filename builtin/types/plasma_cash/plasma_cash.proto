@@ -205,3 +205,30 @@ message PlasmaCashTransferConfirmed {
     Address to = 2;
     uint64 slot = 3;
 }
+
+message PlasmaCashExitConfirmedEvent {
+    Address owner = 1;
+    uint64 slot = 2;
+}
+
+message PlasmaCashResetConfirmedEvent {
+    Address owner = 1;
+    uint64 slot = 2;
+}
+
+message PlasmaCashWithdrawConfirmedEvent {
+    PlasmaCashCoin coin = 1;
+    Address owner = 2;
+    uint64 slot = 3;
+}
+
+message PlasmaCashDepositConfirmedEvent {
+    PlasmaCashCoin coin = 1;
+    Address owner = 2;
+}
+
+message PlasmaCashSubmitBlockConfirmedEvent {
+    uint64 number_of_pending_transactions = 1;
+    BigUInt current_block_height = 2;
+    bytes merkle_hash = 3;
+}
