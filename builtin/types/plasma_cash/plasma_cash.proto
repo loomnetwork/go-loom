@@ -131,6 +131,9 @@ message PlasmaCashWithdrawCoinRequest {
     uint64 slot = 2 [jstype = JS_STRING];
 }
 
+message GetPendingTxsRequest{
+}
+
 message Pending {
    repeated PlasmaTx transactions  = 1;
 }
