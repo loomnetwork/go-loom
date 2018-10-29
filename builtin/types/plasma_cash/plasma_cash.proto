@@ -134,7 +134,7 @@ message PlasmaCashWithdrawCoinRequest {
 message GetPendingTxsRequest{
 }
 
-message Pending {
+message PendingTxs {
    repeated PlasmaTx transactions  = 1;
 }
 
