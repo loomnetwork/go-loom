@@ -23,8 +23,17 @@ message PlasmaCashCoin {
 
 message PlasmaCashAccount {
     Address owner = 1;
+    uint64 plasma_tx_nonce = 2;
     // Plasma coins in this account, identified by their slot number.
     repeated uint64 slots = 3 [jstype = JS_STRING];
+}
+
+message GetAccountNonceRequest {
+    Address sender = 1;
+}
+
+message AccountNonceResponse {
+    uint64 nonce = 1;
 }
 
 message PlasmaBlock {
@@ -44,8 +53,8 @@ message PlasmaTx {
     bytes signature = 5; // Signature on the transaction's hash
     bytes hash = 6;   // The hash of the RLP encoded unsigned transaction’s bytes. If the transaction is a deposit transaction (its prevblock is 0), its hash is the hash of its uid
     bytes merkle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
-    Address sender = 8; // The transaction’s sender, derived from the hash and the signature
-    bytes proof = 9; // Proof after its inserted into the block
+    bytes proof = 8; // Proof after its inserted into the block
+    uint64 nonce = 9; // Nonce for plasma transaction
 }
 
 
