@@ -32,10 +32,6 @@ func (c *PlasmaCashClient) CurrentBlock() (plasma_cash.Block, error) {
 	return c.Block(big.NewInt(0)) //asking for block zero gives latest
 }
 
-func (c *PlasmaCashClient) ContractAddress() loom.Address {
-	return c.loomcontract.Address
-}
-
 // BlockNumber gets the current plasma cash block height
 func (c *PlasmaCashClient) BlockNumber() (*big.Int, error) {
 	request := &pctypes.GetCurrentBlockRequest{}
