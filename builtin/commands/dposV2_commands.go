@@ -101,11 +101,11 @@ func CheckDelegationCmdV2() *cobra.Command {
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp dposv2.CheckDelegationResponseV2
-			validatorAddress, err := cli.ResolveAddress(args[0])
+			validatorAddress, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
-			delegatorAddress, err := cli.ResolveAddress(args[1])
+			delegatorAddress, err := cli.ParseAddress(args[1])
 			if err != nil {
 				return err
 			}
