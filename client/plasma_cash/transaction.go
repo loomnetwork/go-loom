@@ -19,6 +19,7 @@ type LoomTx struct {
 	Denomination *big.Int
 	Owner        common.Address
 	PrevBlock    *big.Int
+	Nonce        uint64
 	Signature    []byte
 	TXProof      []byte
 }
@@ -36,7 +37,12 @@ func (l *LoomTx) NewOwner() common.Address {
 }
 
 func (l *LoomTx) Sign(key *ecdsa.PrivateKey) ([]byte, error) {
-	sig, err := evmcompat.SoliditySign(l.Hash(), key)
+	hash, err := l.Hash()
+	if err != nil {
+		return nil, err
+	}
+
+	sig, err := evmcompat.SoliditySign(hash, key)
 	if err != nil {
 		return nil, err
 	}
@@ -52,26 +58,27 @@ func (l *LoomTx) RlpEncode() ([]byte, error) {
 		l.PrevBlock,
 		l.Denomination,
 		l.Owner,
+		l.Nonce,
 	})
 }
 
-func (l *LoomTx) Hash() []byte {
+func (l *LoomTx) Hash() ([]byte, error) {
 	if l.PrevBlock.Cmp(big.NewInt(0)) != 0 {
 		ret, err := l.rlpEncodeWithSha3()
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
-		return ret
+		return ret, nil
 	}
 
 	data, err := soliditySha3(l.Slot)
 	if err != nil {
-		panic(err) //TODO cleanup error interface
+		return nil, err
 	}
 	if len(data) != 32 {
-		panic(fmt.Sprintf("wrong hash size! expected 32, got %v", len(data)))
+		return nil, fmt.Errorf("wrong hash size! expected 32, got %v", len(data))
 	}
-	return data
+	return data, nil
 }
 
 func (l *LoomTx) MerkleHash() []byte {

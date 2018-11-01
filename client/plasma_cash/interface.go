@@ -21,6 +21,7 @@ type Block interface {
 type Tx interface {
 	RlpEncode() ([]byte, error)
 	Sign(key *ecdsa.PrivateKey) ([]byte, error)
+	Hash() ([]byte, error)
 	Sig() []byte
 	NewOwner() common.Address
 	Proof() Proof
@@ -39,7 +40,7 @@ type ChainServiceClient interface {
 	SubmitBlock() error
 	Deposit(deposit *pctypes.DepositRequest) error
 
-	SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int, newOwner string, prevOwner string, sig []byte) error
+	SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int, newOwner string, prevOwner string, sig []byte, hash []byte) error
 }
 
 type Account struct {
