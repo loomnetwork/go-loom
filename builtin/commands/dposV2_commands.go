@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"encoding/base64"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -58,7 +59,7 @@ func RegisterCandidateCmdV2() *cobra.Command {
 		Short: "Register a candidate for validator",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			pubKey, err := cli.ParseBytes(args[0])
+			pubKey, err := base64.StdEncoding.DecodeString(args[0])
 			if err != nil {
 				return err
 			}
@@ -86,7 +87,7 @@ func DelegateCmdV2() *cobra.Command {
 
 			return cli.CallContract(DPOSV2ContractName, "Delegate", &dposv2.DelegateRequestV2{
 				ValidatorAddress: addr.MarshalPB(),
-				Amount:           &types.BigUInt{
+				Amount: &types.BigUInt{
 					Value: *amount,
 				},
 			}, nil)
@@ -140,7 +141,7 @@ func UnbondCmdV2() *cobra.Command {
 			}
 			return cli.CallContract(DPOSV2ContractName, "Unbond", &dposv2.UnbondRequestV2{
 				ValidatorAddress: addr.MarshalPB(),
-				Amount:           &types.BigUInt{
+				Amount: &types.BigUInt{
 					Value: *amount,
 				},
 			}, nil)
