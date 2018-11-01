@@ -32,6 +32,10 @@ func (c *PlasmaCashClient) CurrentBlock() (plasma_cash.Block, error) {
 	return c.Block(big.NewInt(0)) //asking for block zero gives latest
 }
 
+func (c *PlasmaCashClient) ContractAddress() loom.Address {
+	return c.loomcontract.Address
+}
+
 // BlockNumber gets the current plasma cash block height
 func (c *PlasmaCashClient) BlockNumber() (*big.Int, error) {
 	request := &pctypes.GetCurrentBlockRequest{}
@@ -119,16 +123,15 @@ func (c *PlasmaCashClient) Deposit(deposit *pctypes.DepositRequest) error {
 
 // Sends a plasma cash transaciton to be added to the current plasma cash block
 func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int,
-	newOwner, prevOwner string, sig []byte) error {
+	newOwner, prevOwner string, sig []byte, hash []byte) error {
 	receiverAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", newOwner))
-	senderAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", prevOwner))
 	tx := &pctypes.PlasmaTx{
 		Slot:          uint64(slot),
 		PreviousBlock: &types.BigUInt{Value: *loom.NewBigUInt(prevBlock)},
 		Denomination:  &types.BigUInt{Value: *loom.NewBigUInt(denomination)},
 		NewOwner:      receiverAddr.MarshalPB(),
-		Sender:        senderAddr.MarshalPB(),
 		Signature:     sig,
+		Hash:          hash,
 	}
 
 	params := &pctypes.PlasmaTxRequest{
