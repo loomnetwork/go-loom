@@ -81,6 +81,7 @@ message EventData {
     bytes encoded_body = 6;
     bytes original_request = 7;
     bytes tx_hash = 8;
+    uint64 transaction_index = 9;
 }
 
 message EvmTxReceiptList {
@@ -104,6 +105,7 @@ message EvmTxReceipt {
     int32 status = 9;
     bytes tx_hash = 10;
     Address caller_address = 11;
+    int64 nonce = 12;
 }
 
 message EvmTxObject {
