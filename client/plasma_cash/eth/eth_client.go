@@ -93,7 +93,7 @@ func (c *EthPlasmaClientImpl) SubmitPlasmaBlock(blockNum *big.Int, merkleRoot [3
 		auth.GasPrice = big.NewInt(20000)
 		auth.GasLimit = uint64(3141592)
 	}
-	tx, err := c.plasmaContract.SubmitBlock(auth, merkleRoot)
+	tx, err := c.plasmaContract.SubmitBlock(auth, blockNum, merkleRoot)
 	if err != nil {
 		return errors.Wrap(err, failMsg)
 	}
