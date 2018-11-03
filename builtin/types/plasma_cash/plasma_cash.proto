@@ -23,9 +23,9 @@ message PlasmaCashCoin {
 
 message PlasmaCashAccount {
     Address owner = 1;
-    uint64 plasma_tx_nonce = 2;
+    uint64 plasma_tx_nonce = 2 [jstype = JS_STRING];
     // Plasma coins in this account, identified by their slot number.
-    repeated uint64 slots = 3 [jstype = JS_STRING];
+    repeated uint64 slots = 3;
 }
 
 message AccountNonceRequest {
