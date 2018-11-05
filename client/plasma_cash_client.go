@@ -119,19 +119,22 @@ func (c *PlasmaCashClient) Deposit(deposit *pctypes.DepositRequest) error {
 
 // Sends a plasma cash transaciton to be added to the current plasma cash block
 func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int,
-	newOwner, prevOwner string, sig []byte, hash []byte) error {
+	newOwner, prevOwner string, sig []byte, hash []byte, replayProtection *pctypes.ReplayProtection) error {
 	receiverAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", newOwner))
+	senderAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", prevOwner))
 	tx := &pctypes.PlasmaTx{
 		Slot:          uint64(slot),
 		PreviousBlock: &types.BigUInt{Value: *loom.NewBigUInt(prevBlock)},
 		Denomination:  &types.BigUInt{Value: *loom.NewBigUInt(denomination)},
 		NewOwner:      receiverAddr.MarshalPB(),
+		Sender:        senderAddr.MarshalPB(),
 		Signature:     sig,
 		Hash:          hash,
 	}
 
 	params := &pctypes.PlasmaTxRequest{
-		Plasmatx: tx,
+		Plasmatx:         tx,
+		ReplayProtection: replayProtection,
 	}
 
 	if _, err := c.loomcontract.Call("PlasmaTxRequest", params, c.signer, nil); err != nil {
