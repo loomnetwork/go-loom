@@ -30,14 +30,13 @@ func (s *EncodingTestSuite) TestUnsignedTxRlpEncode(c *C) {
 		PrevBlock:    big.NewInt(0),
 		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
-		Nonce:        0,
 	}
 	txBytes, err := tx.RlpEncode()
 	if err != nil {
 		c.Fatal(err)
 	}
 	hexStr := common.Bytes2Hex(txBytes)
-	c.Assert(hexStr, Equals, "d9058001945194b63f10691e46635b27925100cfc0a5ceca6280")
+	c.Assert(hexStr, Equals, "d8058001945194b63f10691e46635b27925100cfc0a5ceca62")
 
 	tx.PrevBlock = big.NewInt(85478557858583)
 	txBytes, err = tx.RlpEncode()
@@ -45,7 +44,7 @@ func (s *EncodingTestSuite) TestUnsignedTxRlpEncode(c *C) {
 		c.Fatal(err)
 	}
 	hexStr = common.Bytes2Hex(txBytes)
-	c.Assert(hexStr, Equals, "df05864dbe0713bb1701945194b63f10691e46635b27925100cfc0a5ceca6280")
+	c.Assert(hexStr, Equals, "de05864dbe0713bb1701945194b63f10691e46635b27925100cfc0a5ceca62")
 }
 
 func (s *EncodingTestSuite) TestTxHash(c *C) {
@@ -59,7 +58,6 @@ func (s *EncodingTestSuite) TestTxHash(c *C) {
 		PrevBlock:    big.NewInt(85478557858583),
 		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
-		Nonce:        0,
 	}
 
 	hash, err := tx.Hash()
@@ -68,7 +66,7 @@ func (s *EncodingTestSuite) TestTxHash(c *C) {
 	}
 
 	hexStr := common.Bytes2Hex(hash)
-	c.Assert(hexStr, Equals, "e973665de5d78b6f4ab345c5e9f9f11ba326d35a1bd324dc462177060f142d0a")
+	c.Assert(hexStr, Equals, "b10da41825f94bd447ebce74913e82ceae90c6ba27aa6781d611f8530f78ec4c")
 }
 
 func (s *EncodingTestSuite) TestTxSignature(c *C) {
@@ -82,7 +80,6 @@ func (s *EncodingTestSuite) TestTxSignature(c *C) {
 		PrevBlock:    big.NewInt(85478557858583),
 		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
-		Nonce:        0,
 	}
 	sig, err := tx.Sign(privKey)
 	if err != nil {
@@ -90,7 +87,7 @@ func (s *EncodingTestSuite) TestTxSignature(c *C) {
 	}
 
 	hexStr := common.Bytes2Hex(sig)
-	c.Assert(hexStr, Equals, "00dcfe2f3aca758f0c35994da2af16ac686cd9cff6f2bb0bbdcfbdcb6f4139229271bac95b0a7ae94d3eaa506b77dd4b09c084dee9fbbe3c2d4843978d5e33ca011c")
+	c.Assert(hexStr, Equals, "00b0e4901dc74b9851dba3c52406e1325c2ac9c4fe9f4d0379099a3357b763c96c104d3fffb78e99515db2e583568588d740b743ad3105d63fb252014f806fd06b1b")
 
 	hash, err := tx.Hash()
 	if err != nil {
@@ -113,12 +110,11 @@ func (s *EncodingTestSuite) TestUnsignedTxRlpEncode2(c *C) {
 		PrevBlock:    big.NewInt(1000),
 		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
-		Nonce:        0,
 	}
 	txBytes, err := tx.RlpEncode()
 	if err != nil {
 		c.Fatal(err)
 	}
 	hexStr := common.Bytes2Hex(txBytes)
-	c.Assert(hexStr, Equals, "db028203e8019450bce46ff7f6b92e4d383e4ada3ecba9e86d129280")
+	c.Assert(hexStr, Equals, "da028203e8019450bce46ff7f6b92e4d383e4ada3ecba9e86d1292")
 }
