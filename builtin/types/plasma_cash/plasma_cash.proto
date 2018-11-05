@@ -48,7 +48,7 @@ message PlasmaBlock {
 message ReplayProtection {
     uint64 nonce = 1 [jstype = JS_STRING]; // Nonce for replay protection
     bytes signature = 2; // Signature to recover sender from
-    bytes hash = 3; // 
+    bytes hash = 3; // Hash of PlasmaTx.Hash, nonce and sender
 }
 
 message PlasmaTx {
