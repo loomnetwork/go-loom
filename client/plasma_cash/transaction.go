@@ -18,7 +18,6 @@ type LoomTx struct {
 	Denomination *big.Int
 	Owner        common.Address
 	PrevBlock    *big.Int
-	Nonce        uint64
 	Signature    []byte
 	TXProof      []byte
 }
@@ -50,7 +49,6 @@ func (l *LoomTx) RlpEncode() ([]byte, error) {
 		l.PrevBlock,
 		l.Denomination,
 		l.Owner,
-		l.Nonce,
 	})
 }
 
