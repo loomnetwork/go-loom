@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto/sha3"
 	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
 )
@@ -40,7 +41,14 @@ func (l *LoomTx) Sign(key *ecdsa.PrivateKey) ([]byte, error) {
 		return nil, err
 	}
 
-	return SolidityTypedSign(hash, key)
+	sig, err := evmcompat.SoliditySign(hash, key)
+	if err != nil {
+		return nil, err
+	}
+
+	// The first byte should be the signature mode, for details about the signature format refer to
+	// https://github.com/loomnetwork/plasma-erc721/blob/master/server/contracts/Libraries/ECVerify.sol
+	return append(make([]byte, 1, 66), sig...), nil
 }
 
 func (l *LoomTx) RlpEncode() ([]byte, error) {
@@ -54,11 +62,11 @@ func (l *LoomTx) RlpEncode() ([]byte, error) {
 
 func (l *LoomTx) Hash() ([]byte, error) {
 	if l.PrevBlock.Cmp(big.NewInt(0)) != 0 {
-		ret, err := l.RlpEncode()
+		ret, err := l.rlpEncodeWithSha3()
 		if err != nil {
 			return nil, err
 		}
-		return Sha3(ret), nil
+		return ret, nil
 	}
 
 	data, err := soliditySha3(l.Slot)
@@ -72,12 +80,7 @@ func (l *LoomTx) Hash() ([]byte, error) {
 }
 
 func (l *LoomTx) MerkleHash() ([]byte, error) {
-	data, err := l.RlpEncode()
-	if err != nil {
-		return nil, err
-	}
-
-	return Sha3(data), nil
+	return l.rlpEncodeWithSha3()
 }
 
 func soliditySha3(data uint64) ([]byte, error) {
@@ -87,4 +90,14 @@ func soliditySha3(data uint64) ([]byte, error) {
 		return []byte{}, err
 	}
 	return hash, err
+}
+
+func (l *LoomTx) rlpEncodeWithSha3() ([]byte, error) {
+	hash, err := l.RlpEncode()
+	if err != nil {
+		return []byte{}, err
+	}
+	d := sha3.NewKeccak256()
+	d.Write(hash)
+	return d.Sum(nil), nil
 }

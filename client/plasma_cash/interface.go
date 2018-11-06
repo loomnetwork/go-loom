@@ -40,7 +40,7 @@ type ChainServiceClient interface {
 	SubmitBlock() error
 	Deposit(deposit *pctypes.DepositRequest) error
 
-	SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int, newOwner string, prevOwner string, sig []byte, hash []byte, replayProtection *pctypes.ReplayProtection) error
+	SendTransaction(slot uint64, prevBlock *big.Int, denomination *big.Int, newOwner string, prevOwner string, sig []byte, hash []byte, replayProtectionSignature []byte) error
 }
 
 type Account struct {
