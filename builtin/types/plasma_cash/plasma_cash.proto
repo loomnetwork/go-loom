@@ -45,12 +45,6 @@ message PlasmaBlock {
     bytes proof = 6;
 }
 
-message ReplayProtection {
-    uint64 nonce = 1 [jstype = JS_STRING]; // Nonce for replay protection
-    bytes signature = 2; // Signature to recover sender from
-    bytes hash = 3; // Hash of PlasmaTx.Hash, nonce and sender
-}
-
 message PlasmaTx {
     uint64 slot = 1 [jstype = JS_STRING]; // The slot of the UTXO - Currently uint64, subject to change.
     BigUInt previous_block = 2 [(gogoproto.customname)="PreviousBlock"]; //Each time a transaction is created, it MUST refer to a previous block which also included that transaction. A transaction is considered a “deposit transaction”, if it’s the first UTXO after a user deposits their coin in the Plasma Chain. This transaction mints coins from nowhere in the Plasma Chain and as a result its previous block is 0.
@@ -61,6 +55,7 @@ message PlasmaTx {
     bytes merkle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
     Address sender = 8; // The transaction’s sender, derived from the hash and the signature
     bytes proof = 9; // Proof after its inserted into the block
+    bytes replay_protection_signature = 10; // Replay protection signature
 }
 
 
@@ -94,7 +89,6 @@ message SubmitBlockToMainnetResponse {
 
 message PlasmaTxRequest {
     PlasmaTx plasmatx = 1;
-    ReplayProtection replay_protection = 2;
 }
 
 message PlasmaTxResponse {
