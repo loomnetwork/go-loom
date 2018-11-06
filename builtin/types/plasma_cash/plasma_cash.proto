@@ -55,7 +55,6 @@ message PlasmaTx {
     bytes merkle_hash = 7; // The hash of the RLP encoded signed transaction’s bytes
     Address sender = 8; // The transaction’s sender, derived from the hash and the signature
     bytes proof = 9; // Proof after its inserted into the block
-    bytes replay_protection_signature = 10; // Replay protection signature
 }
 
 
@@ -89,6 +88,7 @@ message SubmitBlockToMainnetResponse {
 
 message PlasmaTxRequest {
     PlasmaTx plasmatx = 1;
+    bytes replay_protection_signature = 10; // Replay protection signature
 }
 
 message PlasmaTxResponse {

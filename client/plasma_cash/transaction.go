@@ -79,10 +79,6 @@ func (l *LoomTx) Hash() ([]byte, error) {
 	return data, nil
 }
 
-func (l *LoomTx) MerkleHash() ([]byte, error) {
-	return l.rlpEncodeWithSha3()
-}
-
 func soliditySha3(data uint64) ([]byte, error) {
 	pairs := []*evmcompat.Pair{&evmcompat.Pair{Type: "uint64", Value: strconv.FormatUint(data, 10)}}
 	hash, err := evmcompat.SoliditySHA3(pairs)

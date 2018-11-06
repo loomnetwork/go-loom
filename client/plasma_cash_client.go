@@ -123,18 +123,18 @@ func (c *PlasmaCashClient) SendTransaction(slot uint64, prevBlock *big.Int, deno
 	receiverAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", newOwner))
 	senderAddr := loom.MustParseAddress(fmt.Sprintf("eth:%s", prevOwner))
 	tx := &pctypes.PlasmaTx{
-		Slot:                      uint64(slot),
-		PreviousBlock:             &types.BigUInt{Value: *loom.NewBigUInt(prevBlock)},
-		Denomination:              &types.BigUInt{Value: *loom.NewBigUInt(denomination)},
-		NewOwner:                  receiverAddr.MarshalPB(),
-		Sender:                    senderAddr.MarshalPB(),
-		Signature:                 sig,
-		Hash:                      hash,
-		ReplayProtectionSignature: replayProtectionSignature,
+		Slot:          uint64(slot),
+		PreviousBlock: &types.BigUInt{Value: *loom.NewBigUInt(prevBlock)},
+		Denomination:  &types.BigUInt{Value: *loom.NewBigUInt(denomination)},
+		NewOwner:      receiverAddr.MarshalPB(),
+		Sender:        senderAddr.MarshalPB(),
+		Signature:     sig,
+		Hash:          hash,
 	}
 
 	params := &pctypes.PlasmaTxRequest{
-		Plasmatx: tx,
+		Plasmatx:                  tx,
+		ReplayProtectionSignature: replayProtectionSignature,
 	}
 
 	if _, err := c.loomcontract.Call("PlasmaTxRequest", params, c.signer, nil); err != nil {
