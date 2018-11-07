@@ -21,6 +21,7 @@ type Block interface {
 type Tx interface {
 	RlpEncode() ([]byte, error)
 	Sign(key *ecdsa.PrivateKey) ([]byte, error)
+	Hash() ([]byte, error)
 	Sig() []byte
 	NewOwner() common.Address
 	Proof() Proof
