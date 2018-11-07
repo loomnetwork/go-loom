@@ -28,14 +28,6 @@ message PlasmaCashAccount {
     repeated uint64 slots = 3 [jstype = JS_STRING];
 }
 
-message AccountNonceRequest {
-    Address sender = 1;
-}
-
-message AccountNonceResponse {
-    uint64 nonce = 1 [jstype = JS_STRING];
-}
-
 message PlasmaBlock {
     BigUInt uid = 1;
     repeated PlasmaTx transactions = 2; // List of transactions included in Block
@@ -88,7 +80,6 @@ message SubmitBlockToMainnetResponse {
 
 message PlasmaTxRequest {
     PlasmaTx plasmatx = 1;
-    bytes replay_protection_signature = 10; // Replay protection signature
 }
 
 message PlasmaTxResponse {
