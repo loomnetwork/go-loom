@@ -13,6 +13,7 @@ import (
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
+	"github.com/loomnetwork/loomchain/registry"
 )
 
 type TxHandlerResult struct {
@@ -164,6 +165,17 @@ func (c *DAppChainRPCClient) Resolve(name string) (loom.Address, error) {
 		return loom.Address{}, err
 	}
 	return loom.ParseAddress(addrStr)
+}
+
+func (c *DAppChainRPCClient) GetContractRecord(contract loom.Address) (registry.Record, error) {
+	params := map[string]interface{}{
+		"contract": contract.String(),
+	}
+	var record registry.Record
+	if err := c.queryClient.Call("getcontractrecord", params, c.getNextRequestID(), &record); err != nil {
+		return record, err
+	}
+	return record, nil
 }
 
 // GetCode returns the runtime byte-code of a contract running on a DAppChain's EVM.
