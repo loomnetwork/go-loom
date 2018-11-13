@@ -99,7 +99,10 @@ type ChallengedExitEventData struct {
 }
 
 type RootChainClient interface {
-	FinalizeExits() error
+	CancelExits(slots []uint64) error
+	CancelExit(slot uint64) error
+	FinalizeExits(slots []uint64) error
+	FinalizeExit(slot uint64) error
 	Withdraw(slot uint64) error
 	WithdrawBonds() error
 	PlasmaCoin(slot uint64) (*PlasmaCoin, error)
