@@ -16,6 +16,7 @@ message BlockHeader {
     bytes data_hash = 7;
     bytes validators_hash = 8;
     bytes app_hash = 9;
+    bytes current_hash = 10;
 }
 
 message BlockID {
