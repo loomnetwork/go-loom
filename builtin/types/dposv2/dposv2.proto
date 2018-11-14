@@ -10,8 +10,16 @@ message ParamsV2 {
 
 message StateV2 {
     ParamsV2 params = 1;
-    repeated Validator validators = 2;
+    repeated DposValidator validators = 2;
     int64 last_election_time = 3;
+}
+
+message DposValidator {
+    bytes pub_key = 1;
+    int64 power = 2;
+    uint64 upblock_count = 3;
+    BigUInt total_distribution = 4;
+    BigUInt total_delegation = 5;
 }
 
 message CandidateV2 {
@@ -66,6 +74,14 @@ message CheckDelegationRequestV2 {
 
 message CheckDelegationResponseV2 {
 	DelegationV2 delegation = 1;
+}
+
+message ClaimDistributionRequestV2 {
+    Address delegator_address = 1;
+}
+
+message ClaimDistributionResponseV2 {
+	BigUInt amount = 1;
 }
 
 message UnbondRequestV2 {
