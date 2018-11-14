@@ -2,7 +2,9 @@ package commands
 
 import (
 	"encoding/base64"
+	"errors"
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 
@@ -55,16 +57,21 @@ func ListCandidatesCmdV2() *cobra.Command {
 
 func RegisterCandidateCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "register_candidateV2 [public key]",
+		Use:   "register_candidateV2 [public key] [validator fee (in basis points)]",
 		Short: "Register a candidate for validator",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			pubKey, err := base64.StdEncoding.DecodeString(args[0])
+			candidateFee, err := strconv.ParseUint(args[1], 10, 64)
 			if err != nil {
 				return err
 			}
+			if candidateFee > 10000 {
+				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
+			}
 			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate", &dposv2.RegisterCandidateRequestV2{
 				PubKey: pubKey,
+				Fee: candidateFee,
 			}, nil)
 		},
 	}

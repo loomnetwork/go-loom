@@ -17,6 +17,7 @@ message StateV2 {
 message CandidateV2 {
     Address address = 1;
     bytes pub_key = 2;
+    uint64 fee = 3;
 }
 
 message CandidateListV2 {
@@ -65,6 +66,7 @@ message UnbondRequestV2 {
 
 message RegisterCandidateRequestV2 {
     bytes pub_key = 1;
+    uint64 fee = 2;
 }
 
 message UnregisterCandidateRequestV2 {
