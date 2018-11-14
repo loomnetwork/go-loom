@@ -35,6 +35,15 @@ message DelegationListV2 {
     repeated DelegationV2 delegations = 1;
 }
 
+message DistributionV2 {
+    Address address = 1;
+    BigUInt amount = 2;
+}
+
+message DistributionListV2 {
+    repeated DistributionV2 distributions = 1;
+}
+
 message DPOSInitRequestV2 {
     ParamsV2 params = 1;
     repeated Validator validators = 2;
