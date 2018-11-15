@@ -140,6 +140,10 @@ func (c *EthPlasmaClientImpl) FetchWithdrews(startBlock, endBlock uint64) ([]*pc
 			Uid:          &ltypes.BigUInt{Value: *loom.NewBigUInt(event.Uid)},
 			Denomination: &ltypes.BigUInt{Value: *loom.NewBigUInt(event.Denomination)},
 			Contract:     loom.Address{ChainID: "eth", Local: localContractAddr}.MarshalPB(),
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				LogIndex:    uint64(event.Raw.Index),
+			},
 		})
 	}
 
@@ -174,6 +178,10 @@ func (c *EthPlasmaClientImpl) FetchFinalizedExit(startBlock, endBlock uint64) ([
 		finalizedExitEvents = append(finalizedExitEvents, &pctypes.PlasmaCashFinalizedExitEvent{
 			Owner: loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
 			Slot:  event.Slot,
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				LogIndex:    uint64(event.Raw.Index),
+			},
 		})
 	}
 
@@ -208,6 +216,10 @@ func (c *EthPlasmaClientImpl) FetchCoinReset(startBlock, endBlock uint64) ([]*pc
 		coinResetEvents = append(coinResetEvents, &pctypes.PlasmaCashCoinResetEvent{
 			Owner: loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
 			Slot:  event.Slot,
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				LogIndex:    uint64(event.Raw.Index),
+			},
 		})
 	}
 
@@ -242,6 +254,10 @@ func (c *EthPlasmaClientImpl) FetchStartedExit(startBlock, endBlock uint64) ([]*
 		startedExitEvents = append(startedExitEvents, &pctypes.PlasmaCashStartedExitEvent{
 			Owner: loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
 			Slot:  event.Slot,
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				LogIndex:    uint64(event.Raw.Index),
+			},
 		})
 	}
 
@@ -284,6 +300,10 @@ func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pct
 			Denomination: &ltypes.BigUInt{Value: *loom.NewBigUIntFromInt(1)}, // TODO: ev.Denomination
 			From:         loom.Address{ChainID: "eth", Local: localFromAddr}.MarshalPB(),
 			Contract:     loom.Address{ChainID: "eth", Local: localContractAddr}.MarshalPB(),
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				LogIndex:    uint64(event.Raw.Index),
+			},
 			// TODO: store ev.Hash... it's always a hash of ev.Slot, so a bit redundant
 		})
 	}
