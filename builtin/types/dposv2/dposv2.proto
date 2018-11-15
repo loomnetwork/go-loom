@@ -18,8 +18,8 @@ message DposValidator {
     bytes pub_key = 1;
     int64 power = 2;
     uint64 upblock_count = 3;
-    BigUInt total_distribution = 4;
-    BigUInt total_delegation = 5;
+    BigUInt distribution_total = 4;
+    BigUInt delegation_total = 5;
 }
 
 message CandidateV2 {
@@ -104,7 +104,7 @@ message ListValidatorsRequestV2 {
 }
 
 message ListValidatorsResponseV2 {
-    repeated Validator validators = 1;
+    repeated DposValidator validators = 1;
 }
 
 message ListCandidateRequestV2 {
