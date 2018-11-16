@@ -4,8 +4,8 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 message ParamsV2 {
     uint64 validator_count = 1;
-    int64 election_cycle_length = 3;
-    Address coin_contract_address = 5;
+    int64 election_cycle_length = 2;
+    Address coin_contract_address = 3;
 }
 
 message StateV2 {
