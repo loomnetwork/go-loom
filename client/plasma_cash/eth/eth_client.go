@@ -142,6 +142,7 @@ func (c *EthPlasmaClientImpl) FetchWithdrews(startBlock, endBlock uint64) ([]*pc
 			Contract:     loom.Address{ChainID: "eth", Local: localContractAddr}.MarshalPB(),
 			Meta: &pctypes.PlasmaCashEventMeta{
 				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
 				LogIndex:    uint64(event.Raw.Index),
 			},
 		})
@@ -180,6 +181,7 @@ func (c *EthPlasmaClientImpl) FetchFinalizedExit(startBlock, endBlock uint64) ([
 			Slot:  event.Slot,
 			Meta: &pctypes.PlasmaCashEventMeta{
 				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
 				LogIndex:    uint64(event.Raw.Index),
 			},
 		})
@@ -218,6 +220,7 @@ func (c *EthPlasmaClientImpl) FetchCoinReset(startBlock, endBlock uint64) ([]*pc
 			Slot:  event.Slot,
 			Meta: &pctypes.PlasmaCashEventMeta{
 				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
 				LogIndex:    uint64(event.Raw.Index),
 			},
 		})
@@ -256,6 +259,7 @@ func (c *EthPlasmaClientImpl) FetchStartedExit(startBlock, endBlock uint64) ([]*
 			Slot:  event.Slot,
 			Meta: &pctypes.PlasmaCashEventMeta{
 				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
 				LogIndex:    uint64(event.Raw.Index),
 			},
 		})
@@ -302,6 +306,7 @@ func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pct
 			Contract:     loom.Address{ChainID: "eth", Local: localContractAddr}.MarshalPB(),
 			Meta: &pctypes.PlasmaCashEventMeta{
 				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
 				LogIndex:    uint64(event.Raw.Index),
 			},
 			// TODO: store ev.Hash... it's always a hash of ev.Slot, so a bit redundant
