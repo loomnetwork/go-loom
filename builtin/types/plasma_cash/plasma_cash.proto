@@ -186,6 +186,9 @@ message PlasmaCashRequestBatchTally {
     uint64 last_seen_log_index = 3;
 }
 
+message PlasmaCashGetRequestBatchTallyRequest {
+}
+
 message PlasmaCashEventMeta {
     uint64 block_number = 1;
     uint64 tx_index = 2;
