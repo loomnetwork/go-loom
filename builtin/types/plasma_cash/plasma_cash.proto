@@ -131,6 +131,20 @@ message PlasmaCashWithdrawCoinRequest {
     uint64 slot = 2 [jstype = JS_STRING];
 }
 
+message PlasmaCashRequest {
+    oneof data {
+        DepositRequest deposit = 1;
+        PlasmaCashCoinResetRequest coin_reset = 2;
+        PlasmaCashExitCoinRequest started_exit = 3;
+        PlasmaCashWithdrawCoinRequest withdraw = 4;
+    }
+    PlasmaCashEventMeta meta = 5;
+}
+
+message PlasmaCashRequestBatch {
+    repeated PlasmaCashRequest requests = 1;
+}
+
 message GetPendingTxsRequest{
 }
 
@@ -166,6 +180,18 @@ message PlasmaCashUpdateOracleRequest {
 
 // Event structures
 
+message PlasmaCashRequestBatchTally {
+    uint64 last_seen_block_number = 1;
+    uint64 last_seen_tx_index = 2;
+    uint64 last_seen_log_index = 3;
+}
+
+message PlasmaCashEventMeta {
+    uint64 block_number = 1;
+    uint64 tx_index = 2;
+    uint64 log_index = 3;
+}
+
 message PlasmaDepositEvent {
     uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
     BigUInt deposit_block = 2;
@@ -175,21 +201,25 @@ message PlasmaDepositEvent {
     Address from = 4;
     // Contract from which the coins originated (i.e. the currency of the coins)
     Address contract = 5;
+    PlasmaCashEventMeta meta = 6;
 }
 
 message PlasmaCashCoinResetEvent {
     Address owner = 1;
     uint64 slot = 2 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 3;
 }
 
 message PlasmaCashStartedExitEvent {
     Address owner = 1;
     uint64 slot = 2 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 3;
 }
 
 message PlasmaCashFinalizedExitEvent {
     Address owner = 1;
     uint64 slot = 2 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 3;
 }
 
 message PlasmaCashWithdrewEvent {
@@ -199,6 +229,7 @@ message PlasmaCashWithdrewEvent {
     BigUInt uid = 4;
     BigUInt denomination = 5;
     uint64 slot = 6 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 7;
 }
 
 // Events emitted by the contract
