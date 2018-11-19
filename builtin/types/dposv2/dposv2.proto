@@ -77,7 +77,7 @@ message CheckDelegationResponseV2 {
 }
 
 message ClaimDistributionRequestV2 {
-    Address delegator_address = 1;
+    Address withdrawal_address = 1;
 }
 
 message ClaimDistributionResponseV2 {

@@ -156,6 +156,35 @@ func UnbondCmdV2() *cobra.Command {
 	}
 }
 
+func ClaimDistributionCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "claim_distributionV2 [withdrawal address]",
+		Short: "claim dpos distributions due to a validator or delegator",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+
+			var resp dposv2.ClaimDistributionResponseV2
+			err = cli.CallContract(DPOSV2ContractName, "ClaimDistribution", &dposv2.ClaimDistributionRequestV2{
+				WithdrawalAddress: addr.MarshalPB(),
+			}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
+
 func ElectDelegationCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "elect_delegationV2",
@@ -175,5 +204,6 @@ func AddDPOSV2(root *cobra.Command) {
 		DelegateCmdV2(),
 		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
+		ClaimDistributionCmdV2(),
 	)
 }
