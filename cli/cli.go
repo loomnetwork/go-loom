@@ -86,7 +86,7 @@ func CallContract(defaultAddr string, method string, params proto.Message, resul
 		return err
 	}
 
-	signer := auth.NewEd25519Signer(privKey)
+	signer := auth.NewSigner(privKey)
 
 	contract, err := contract(defaultAddr)
 	if err != nil {
