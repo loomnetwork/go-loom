@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"crypto/sha256"
 
 	"golang.org/x/crypto/ripemd160"
 
@@ -37,6 +38,12 @@ func LocalAddressFromPublicKey(pubKey []byte) LocalAddress {
 	hasher := ripemd160.New()
 	hasher.Write(pubKey[:]) // does not error
 	return LocalAddress(hasher.Sum(nil))
+}
+
+// recent versions of Tendermint > 0.22.0
+func LocalAddressFromPublicKeyV2(pubKey []byte) LocalAddress {
+	hash := sha256.Sum256(pubKey)
+	return LocalAddress(hash[:20])
 }
 
 type Address struct {

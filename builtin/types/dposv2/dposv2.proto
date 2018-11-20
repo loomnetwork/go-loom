@@ -17,9 +17,19 @@ message StateV2 {
 message DposValidator {
     bytes pub_key = 1;
     int64 power = 2;
-    uint64 upblock_count = 3;
-    BigUInt distribution_total = 4;
-    BigUInt delegation_total = 5;
+    BigUInt delegation_total = 3;
+}
+
+message ValidatorStatisticV2 {
+    Address address = 1;
+    uint64 upblock_count = 2;
+    uint64 block_count = 3;
+    BigUInt slash_total = 4;
+    BigUInt distribution_total = 5;
+}
+
+message ValidatorStatisticListV2 {
+    repeated ValidatorStatisticV2 statistics = 1;
 }
 
 message CandidateV2 {
