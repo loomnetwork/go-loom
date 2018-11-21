@@ -4,6 +4,11 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 package karma;
 
+enum SourceTarget {
+    CALL = 0;
+    DEPLOY = 1;
+}
+
 message KarmaInitRequest {
     Address Oracle = 1;
     repeated KarmaSourceReward sources = 2;
@@ -27,6 +32,7 @@ message KarmaNewOracleValidator {
 message KarmaSourceReward {
     string name = 1;
     int64 reward = 2;
+    SourceTarget target = 3;
 }
 
 message KarmaSource {
