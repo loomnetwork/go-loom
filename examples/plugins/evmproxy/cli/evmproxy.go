@@ -96,7 +96,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) 
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	signer := auth.NewSigner(auth.Ed25519Signer, nil)
+	signer := auth.NewSigner(auth.SignerTypeEd25519, nil)
 
 	// set(uint256) = 60fe47b1 (4 bytes)
 	// 0000000000000000000000000000000000000000000000000000000000000001 = 1 (64 bytes)
