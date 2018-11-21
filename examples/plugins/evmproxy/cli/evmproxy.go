@@ -80,12 +80,7 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr string) (string, er
 
 	ethCallResult := &types.EthCallResult{}
 	// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
-	_, priv, err := auth.NewAuthKey()
-	if err != nil {
-		return "", err
-	}
-
-	signer := auth.NewSigner(priv)
+	signer := auth.NewSigner(auth.SignerTypeEd25519, nil)
 	_, err = contract.Call("EthCall", ethCall, signer, ethCallResult)
 
 	return ethCallResult.GetData(), err
@@ -101,12 +96,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) 
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	_, priv, err := auth.NewAuthKey()
-	if err != nil {
-		return err
-	}
-
-	signer := auth.NewSigner(priv)
+	signer := auth.NewSigner(auth.Ed25519Signer, nil)
 
 	// set(uint256) = 60fe47b1 (4 bytes)
 	// 0000000000000000000000000000000000000000000000000000000000000001 = 1 (64 bytes)

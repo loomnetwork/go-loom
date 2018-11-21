@@ -19,6 +19,7 @@ var TxFlags struct {
 	ContractAddr string
 	ChainID      string
 	PrivFile     string
+	KeyType      string
 }
 
 func ContractCallCommand() *cobra.Command {
@@ -32,6 +33,7 @@ func ContractCallCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.KeyType, "key-type", "k", "ed25519", "type of private key")
 	return cmd
 }
 
@@ -46,6 +48,7 @@ func ContractResolveCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.KeyType, "key-type", "k", "ed25519", "type of private key")
 	return cmd
 }
 
@@ -86,7 +89,7 @@ func CallContract(defaultAddr string, method string, params proto.Message, resul
 		return err
 	}
 
-	signer := auth.NewSigner(privKey)
+	signer := auth.NewSigner(TxFlags.KeyType, privKey)
 
 	contract, err := contract(defaultAddr)
 	if err != nil {
