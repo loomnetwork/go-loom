@@ -109,9 +109,8 @@ type RootChainClient interface {
 	StartExit(slot uint64, prevTx Tx, exitingTx Tx, prevTxProof Proof,
 		exitingTxProof Proof, sigs []byte, prevTxBlkNum *big.Int, txBlkNum *big.Int) ([]byte, error)
 
-	ChallengeBefore(slot uint64, prevTx Tx, exitingTx Tx,
-		prevTxInclusionProof Proof, exitingTxInclusionProof Proof,
-		sig []byte, prevTxBlockNum *big.Int, exitingTxBlockNum *big.Int) ([]byte, error)
+	ChallengeBefore(slot uint64, exitingTx Tx, exitingTxInclusionProof Proof,
+		sig []byte, exitingTxBlockNum *big.Int) ([]byte, error)
 
 	RespondChallengeBefore(slot uint64, challengingTxHash [32]byte, respondingBlockNumber *big.Int,
 		respondingTransaction Tx, proof Proof, sig []byte) ([]byte, error)
