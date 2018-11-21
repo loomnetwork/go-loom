@@ -7,6 +7,7 @@ package karma;
 enum SourceTarget {
     CALL = 0;
     DEPLOY = 1;
+    ALL = 2;
 }
 
 message KarmaInitRequest {
