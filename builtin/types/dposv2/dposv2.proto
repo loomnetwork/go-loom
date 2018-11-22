@@ -4,19 +4,38 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 message ParamsV2 {
     uint64 validator_count = 1;
-    int64 election_cycle_length = 3;
-    Address coin_contract_address = 5;
+    int64 election_cycle_length = 2;
+    Address coin_contract_address = 3;
 }
 
 message StateV2 {
     ParamsV2 params = 1;
-    repeated Validator validators = 2;
+    repeated DposValidator validators = 2;
     int64 last_election_time = 3;
+}
+
+message DposValidator {
+    bytes pub_key = 1;
+    int64 power = 2;
+    BigUInt delegation_total = 3;
+}
+
+message ValidatorStatisticV2 {
+    Address address = 1;
+    uint64 upblock_count = 2;
+    uint64 block_count = 3;
+    BigUInt slash_total = 4;
+    BigUInt distribution_total = 5;
+}
+
+message ValidatorStatisticListV2 {
+    repeated ValidatorStatisticV2 statistics = 1;
 }
 
 message CandidateV2 {
     Address address = 1;
     bytes pub_key = 2;
+    uint64 fee = 3;
 }
 
 message CandidateListV2 {
@@ -32,6 +51,15 @@ message DelegationV2 {
 
 message DelegationListV2 {
     repeated DelegationV2 delegations = 1;
+}
+
+message DistributionV2 {
+    Address address = 1;
+    BigUInt amount = 2;
+}
+
+message DistributionListV2 {
+    repeated DistributionV2 distributions = 1;
 }
 
 message DPOSInitRequestV2 {
@@ -58,6 +86,14 @@ message CheckDelegationResponseV2 {
 	DelegationV2 delegation = 1;
 }
 
+message ClaimDistributionRequestV2 {
+    Address withdrawal_address = 1;
+}
+
+message ClaimDistributionResponseV2 {
+	BigUInt amount = 1;
+}
+
 message UnbondRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
@@ -65,6 +101,7 @@ message UnbondRequestV2 {
 
 message RegisterCandidateRequestV2 {
     bytes pub_key = 1;
+    uint64 fee = 2;
 }
 
 message UnregisterCandidateRequestV2 {
@@ -77,7 +114,7 @@ message ListValidatorsRequestV2 {
 }
 
 message ListValidatorsResponseV2 {
-    repeated Validator validators = 1;
+    repeated DposValidator validators = 1;
 }
 
 message ListCandidateRequestV2 {
