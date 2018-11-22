@@ -27,6 +27,7 @@ type persistFlags struct {
 	ContractHexAddr string `json:"contractaddr"`
 	ChainId         string `json:"chainid"`
 	ContractName    string `json:"contract-name"`
+	KeyType         string `json:"key-type"`
 }
 
 func main() {
@@ -36,13 +37,14 @@ func main() {
 	RootCmd.PersistentFlags().StringVarP(&flags.ContractHexAddr, "contract", "c", "", "contract address")
 	RootCmd.PersistentFlags().StringVarP(&flags.ChainId, "chainId", "i", "default", "chain ID")
 	RootCmd.PersistentFlags().StringVarP(&flags.ContractName, "contract-name", "n", "evmexample", "contract name")
+	RootCmd.PersistentFlags().StringVarP(&flags.KeyType, "key-type", "k", "ed25519", "key type")
 
 	var binFile string
 	deployCmd := &cobra.Command{
 		Use:   "deploy",
 		Short: "deploy SimpleStore Solidity contract",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			contract, txHash, err := deployTx(flags.ChainId, flags.WriteUri, flags.ReadUri, binFile, flags.ContractName)
+			contract, txHash, err := deployTx(flags.ChainId, flags.WriteUri, flags.ReadUri, binFile, flags.ContractName, flags.KeyType)
 			if err == nil {
 				fmt.Println("address ", contract.Address.String())
 				fmt.Println("transaction hash", txHash)
@@ -62,7 +64,7 @@ func main() {
 		Use:   "get",
 		Short: "get the value from the store",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			result, err := GetValueCmd(flags.ChainId, flags.WriteUri, flags.ReadUri, flags.ContractHexAddr, flags.ContractName)
+			result, err := GetValueCmd(flags.ChainId, flags.WriteUri, flags.ReadUri, flags.ContractHexAddr, flags.ContractName, flags.KeyType)
 			if err == nil {
 				log.Printf("{ Out: '%d' }", result)
 				fmt.Println("output:", result)
@@ -76,7 +78,7 @@ func main() {
 		Use:   "set",
 		Short: "set the value in the store",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return SetValueCmd(flags.ChainId, flags.WriteUri, flags.ReadUri, flags.ContractHexAddr, flags.ContractName, value)
+			return SetValueCmd(flags.ChainId, flags.WriteUri, flags.ReadUri, flags.ContractHexAddr, flags.ContractName, flags.KeyType, value)
 		},
 	}
 	setCmd.Flags().IntVarP(&value, "value", "v", 0, "value to set in store")
@@ -93,7 +95,7 @@ func main() {
 	}
 }
 
-func deployTx(chainId, writeUri, readUri, binFile, name string) (*client.EvmContract, []byte, error) {
+func deployTx(chainId, writeUri, readUri, binFile, name, keyType string) (*client.EvmContract, []byte, error) {
 	bytetext, err := ioutil.ReadFile(binFile)
 
 	if err != nil {
@@ -109,13 +111,13 @@ func deployTx(chainId, writeUri, readUri, binFile, name string) (*client.EvmCont
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	signer := auth.NewSigner(auth.SignerTypeEd25519, nil)
+	signer := auth.NewSigner(keyType, nil)
 
 	rpcClient := client.NewDAppChainRPCClient(chainId, writeUri, readUri)
 	return client.DeployContract(rpcClient, bytecode, signer, name)
 }
 
-func GetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string) (int64, error) {
+func GetValueCmd(chainId, writeUri, readUri, contractHexAddr, name, keyType string) (int64, error) {
 	rpcClient := client.NewDAppChainRPCClient(chainId, writeUri, readUri)
 
 	var contractLocalAddr loom.LocalAddress
@@ -140,13 +142,13 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string) (int6
 	dummy := &types.Dummy{}
 	result := &types.WrapValue{}
 	// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
-	signer := auth.NewSigner(auth.SignerTypeEd25519, nil)
+	signer := auth.NewSigner(keyType, nil)
 	_, err = contract.Call("GetValue", dummy, signer, result)
 
 	return result.Value, err
 }
 
-func SetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string, value int) error {
+func SetValueCmd(chainId, writeUri, readUri, contractHexAddr, name, keyType string, value int) error {
 	rpcClient := client.NewDAppChainRPCClient(chainId, writeUri, readUri)
 	var contractLocalAddr loom.LocalAddress
 	var err error
@@ -169,7 +171,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string, value
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	signer := auth.NewSigner(auth.SignerTypeEd25519, nil)
+	signer := auth.NewSigner(keyType, nil)
 
 	payload := &types.WrapValue{
 		Value: int64(value),
