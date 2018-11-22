@@ -65,7 +65,7 @@ func (c *GRPCAPIClient) Has(key []byte) bool {
 }
 
 func (c *GRPCAPIClient) GetEvmTxReceipt(hash []byte) (types.EvmTxReceipt, error) {
-	resp, err := c.client.GetEvmTxReceipt(context.TODO(), &types.EvmTxReceiptRequest{hash})
+	resp, err := c.client.GetEvmTxReceipt(context.TODO(), &types.EvmTxReceiptRequest{Value: hash})
 	return *resp, err
 }
 

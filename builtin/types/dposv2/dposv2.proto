@@ -10,7 +10,7 @@ message ParamsV2 {
 
 message StateV2 {
     ParamsV2 params = 1;
-    repeated DposValidator validators = 2;
+    repeated Validator validators = 2; //DposValidator revert back to 
     int64 last_election_time = 3;
 }
 
@@ -114,7 +114,7 @@ message ListValidatorsRequestV2 {
 }
 
 message ListValidatorsResponseV2 {
-    repeated DposValidator validators = 1;
+    repeated Validator validators = 1; //DposValidator
 }
 
 message ListCandidateRequestV2 {
