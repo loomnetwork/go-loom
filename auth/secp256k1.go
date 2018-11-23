@@ -62,6 +62,12 @@ func GenSecp256k1Key() ([]byte, []byte) {
 	return pubKey, privKeyBytes[:]
 }
 
+func VerifyBytes(pubKey []byte, msg []byte, sig []byte) bool {
+	hash := sha256.Sum256(msg)
+
+	return secp256k1.VerifySignature(pubKey, hash[:], sig)
+}
+
 func (s *Secp256k1Signer) Sign(msg []byte) []byte {
 	var sig [Secp256k1SigBytes]byte
 
