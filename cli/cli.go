@@ -33,7 +33,7 @@ func ContractCallCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
-	pflags.StringVarP(&TxFlags.KeyType, "key-type", "k", "ed25519", "type of private key")
+	pflags.StringVarP(&TxFlags.KeyType, "key-type", "t", "ed25519", "type of private key")
 	return cmd
 }
 
@@ -48,7 +48,7 @@ func ContractResolveCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
-	pflags.StringVarP(&TxFlags.KeyType, "key-type", "k", "ed25519", "type of private key")
+	pflags.StringVarP(&TxFlags.KeyType, "key-type", "t", "ed25519", "type of private key")
 	return cmd
 }
 

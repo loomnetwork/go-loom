@@ -37,7 +37,7 @@ func main() {
 	RootCmd.PersistentFlags().StringVarP(&flags.ContractHexAddr, "contract", "c", "", "contract address")
 	RootCmd.PersistentFlags().StringVarP(&flags.ChainId, "chainId", "i", "default", "chain ID")
 	RootCmd.PersistentFlags().StringVarP(&flags.ContractName, "contract-name", "n", "evmexample", "contract name")
-	RootCmd.PersistentFlags().StringVarP(&flags.KeyType, "key-type", "k", "ed25519", "key type")
+	RootCmd.PersistentFlags().StringVarP(&flags.KeyType, "key-type", "t", "ed25519", "key type")
 
 	var binFile string
 	deployCmd := &cobra.Command{
