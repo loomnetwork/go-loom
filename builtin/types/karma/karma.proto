@@ -30,6 +30,16 @@ message KarmaNewOracleValidator {
     Address old_oracle = 2;
 }
 
+message KarmaUserTarget {
+    Address user = 1;
+    SourceTarget target = 2;
+}
+
+message KarmaUserAmmount {
+    Address user = 1;
+    BigUInt amount = 2;
+}
+
 message KarmaSourceReward {
     string name = 1;
     int64 reward = 2;
@@ -48,7 +58,9 @@ message KarmaAddressSource {
 
 message KarmaState {
     repeated KarmaSource source_states = 1;
-    int64 last_update_time = 2;
+    int64 deploy_karma_total = 2;
+    int64 call_karma_total = 3;
+    int64 last_update_time = 4;
 }
 
 message KarmaStateUser {
