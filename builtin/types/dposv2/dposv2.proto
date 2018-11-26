@@ -26,6 +26,7 @@ message ValidatorStatisticV2 {
     uint64 block_count = 3;
     BigUInt slash_total = 4;
     BigUInt distribution_total = 5;
+    bytes pub_key = 6;
 }
 
 message ValidatorStatisticListV2 {
