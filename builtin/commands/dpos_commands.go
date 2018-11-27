@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"encoding/base64"
 	"fmt"
 	"strconv"
 
@@ -58,7 +59,7 @@ func RegisterCandidateCmd() *cobra.Command {
 		Short: "Register a candidate for witness",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			pubKey, err := cli.ParseBytes(args[0])
+			pubKey, err := base64.StdEncoding.DecodeString(args[0])
 			if err != nil {
 				return err
 			}

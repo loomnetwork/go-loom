@@ -34,11 +34,11 @@ func ParseAddress(s string) (loom.Address, error) {
 		return loom.Address{}, loom.ErrInvalidAddress
 	}
 
-	return loom.Address{ChainID: txFlags.ChainID, Local: loom.LocalAddress(b)}, nil
+	return loom.Address{ChainID: TxFlags.ChainID, Local: loom.LocalAddress(b)}, nil
 }
 
 func ResolveAddress(s string) (loom.Address, error) {
-	rpcClient := client.NewDAppChainRPCClient(txFlags.ChainID, txFlags.WriteURI, txFlags.ReadURI)
+	rpcClient := client.NewDAppChainRPCClient(TxFlags.ChainID, TxFlags.WriteURI, TxFlags.ReadURI)
 	contractAddr, err := ParseAddress(s)
 	if err != nil {
 		// if address invalid, try to resolve it using registry

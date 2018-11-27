@@ -16,7 +16,7 @@ import (
 )
 
 // RootChainABI is the input ABI used to generate the binding from.
-const RootChainABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"name\":\"bonded\",\"type\":\"uint256\"},{\"name\":\"withdrawable\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"childBlockInterval\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"numCoins\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"exitSlots\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"currentBlock\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"childChain\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"createdAt\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"denomination\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"root\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SubmittedBlock\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"StartedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"txHash\",\"type\":\"bytes32\"}],\"name\":\"ChallengedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"RespondedExitChallenge\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"FinalizedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"FreedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SlashedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"WithdrewBonds\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"mode\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"uid\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"denomination\",\"type\":\"uint256\"}],\"name\":\"Withdrew\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"root\",\"type\":\"bytes32\"}],\"name\":\"submitBlock\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"prevTxBytes\",\"type\":\"bytes\"},{\"name\":\"exitingTxBytes\",\"type\":\"bytes\"},{\"name\":\"prevTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"exitingTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blocks\",\"type\":\"uint256[2]\"}],\"name\":\"startExit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"finalizeExit\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"finalizeExits\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"prevTxBytes\",\"type\":\"bytes\"},{\"name\":\"txBytes\",\"type\":\"bytes\"},{\"name\":\"prevTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"txInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blocks\",\"type\":\"uint256[2]\"}],\"name\":\"challengeBefore\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingTxHash\",\"type\":\"bytes32\"},{\"name\":\"respondingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"respondingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"respondChallengeBefore\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeBetween\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeAfter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"withdrawBonds\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC20Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"txHash\",\"type\":\"bytes32\"},{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"proof\",\"type\":\"bytes\"}],\"name\":\"checkMembership\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getPlasmaCoin\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint8\"},{\"name\":\"\",\"type\":\"uint8\"},{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getExit\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getBlockRoot\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const RootChainABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"name\":\"bonded\",\"type\":\"uint256\"},{\"name\":\"withdrawable\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"childBlockInterval\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"numCoins\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"currentBlock\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"childChain\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"createdAt\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"denomination\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"root\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SubmittedBlock\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"StartedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"txHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"}],\"name\":\"ChallengedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"RespondedExitChallenge\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"CoinReset\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"FinalizedExit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"FreedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SlashedBond\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"WithdrewBonds\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"slot\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"mode\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"uid\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"denomination\",\"type\":\"uint256\"}],\"name\":\"Withdrew\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"status\",\"type\":\"bool\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"name\":\"root\",\"type\":\"bytes32\"}],\"name\":\"submitBlock\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"prevTxBytes\",\"type\":\"bytes\"},{\"name\":\"exitingTxBytes\",\"type\":\"bytes\"},{\"name\":\"prevTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"exitingTxInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blocks\",\"type\":\"uint256[2]\"}],\"name\":\"startExit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"finalizeExit\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slots\",\"type\":\"uint64[]\"}],\"name\":\"finalizeExits\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"cancelExit\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slots\",\"type\":\"uint64[]\"}],\"name\":\"cancelExits\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"txBytes\",\"type\":\"bytes\"},{\"name\":\"txInclusionProof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"},{\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"challengeBefore\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingTxHash\",\"type\":\"bytes32\"},{\"name\":\"respondingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"respondingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"respondChallengeBefore\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeBetween\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"challengingBlockNumber\",\"type\":\"uint256\"},{\"name\":\"challengingTransaction\",\"type\":\"bytes\"},{\"name\":\"proof\",\"type\":\"bytes\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"challengeAfter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"withdrawBonds\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC20Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"txHash\",\"type\":\"bytes32\"},{\"name\":\"root\",\"type\":\"bytes32\"},{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"proof\",\"type\":\"bytes\"}],\"name\":\"checkMembership\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getPlasmaCoin\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint8\"},{\"name\":\"\",\"type\":\"uint8\"},{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"},{\"name\":\"txHash\",\"type\":\"bytes32\"}],\"name\":\"getChallenge\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"getExit\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"uint8\"},{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getBlockRoot\",\"outputs\":[{\"name\":\"root\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // RootChain is an auto generated Go binding around an Ethereum contract.
 type RootChain struct {
@@ -310,32 +310,6 @@ func (_RootChain *RootChainCallerSession) CurrentBlock() (*big.Int, error) {
 	return _RootChain.Contract.CurrentBlock(&_RootChain.CallOpts)
 }
 
-// ExitSlots is a free data retrieval call binding the contract method 0xbcd5df39.
-//
-// Solidity: function exitSlots( uint256) constant returns(uint64)
-func (_RootChain *RootChainCaller) ExitSlots(opts *bind.CallOpts, arg0 *big.Int) (uint64, error) {
-	var (
-		ret0 = new(uint64)
-	)
-	out := ret0
-	err := _RootChain.contract.Call(opts, out, "exitSlots", arg0)
-	return *ret0, err
-}
-
-// ExitSlots is a free data retrieval call binding the contract method 0xbcd5df39.
-//
-// Solidity: function exitSlots( uint256) constant returns(uint64)
-func (_RootChain *RootChainSession) ExitSlots(arg0 *big.Int) (uint64, error) {
-	return _RootChain.Contract.ExitSlots(&_RootChain.CallOpts, arg0)
-}
-
-// ExitSlots is a free data retrieval call binding the contract method 0xbcd5df39.
-//
-// Solidity: function exitSlots( uint256) constant returns(uint64)
-func (_RootChain *RootChainCallerSession) ExitSlots(arg0 *big.Int) (uint64, error) {
-	return _RootChain.Contract.ExitSlots(&_RootChain.CallOpts, arg0)
-}
-
 // GetBlockRoot is a free data retrieval call binding the contract method 0xe41a5d17.
 //
 // Solidity: function getBlockRoot(blockNumber uint256) constant returns(root bytes32)
@@ -362,15 +336,15 @@ func (_RootChain *RootChainCallerSession) GetBlockRoot(blockNumber *big.Int) ([3
 	return _RootChain.Contract.GetBlockRoot(&_RootChain.CallOpts, blockNumber)
 }
 
-// GetExit is a free data retrieval call binding the contract method 0xd157796e.
+// GetChallenge is a free data retrieval call binding the contract method 0x81686e6b.
 //
-// Solidity: function getExit(slot uint64) constant returns(address, uint256, uint256, uint8)
-func (_RootChain *RootChainCaller) GetExit(opts *bind.CallOpts, slot uint64) (common.Address, *big.Int, *big.Int, uint8, error) {
+// Solidity: function getChallenge(slot uint64, txHash bytes32) constant returns(address, address, bytes32, uint256)
+func (_RootChain *RootChainCaller) GetChallenge(opts *bind.CallOpts, slot uint64, txHash [32]byte) (common.Address, common.Address, [32]byte, *big.Int, error) {
 	var (
 		ret0 = new(common.Address)
-		ret1 = new(*big.Int)
-		ret2 = new(*big.Int)
-		ret3 = new(uint8)
+		ret1 = new(common.Address)
+		ret2 = new([32]byte)
+		ret3 = new(*big.Int)
 	)
 	out := &[]interface{}{
 		ret0,
@@ -378,21 +352,57 @@ func (_RootChain *RootChainCaller) GetExit(opts *bind.CallOpts, slot uint64) (co
 		ret2,
 		ret3,
 	}
-	err := _RootChain.contract.Call(opts, out, "getExit", slot)
+	err := _RootChain.contract.Call(opts, out, "getChallenge", slot, txHash)
 	return *ret0, *ret1, *ret2, *ret3, err
+}
+
+// GetChallenge is a free data retrieval call binding the contract method 0x81686e6b.
+//
+// Solidity: function getChallenge(slot uint64, txHash bytes32) constant returns(address, address, bytes32, uint256)
+func (_RootChain *RootChainSession) GetChallenge(slot uint64, txHash [32]byte) (common.Address, common.Address, [32]byte, *big.Int, error) {
+	return _RootChain.Contract.GetChallenge(&_RootChain.CallOpts, slot, txHash)
+}
+
+// GetChallenge is a free data retrieval call binding the contract method 0x81686e6b.
+//
+// Solidity: function getChallenge(slot uint64, txHash bytes32) constant returns(address, address, bytes32, uint256)
+func (_RootChain *RootChainCallerSession) GetChallenge(slot uint64, txHash [32]byte) (common.Address, common.Address, [32]byte, *big.Int, error) {
+	return _RootChain.Contract.GetChallenge(&_RootChain.CallOpts, slot, txHash)
 }
 
 // GetExit is a free data retrieval call binding the contract method 0xd157796e.
 //
-// Solidity: function getExit(slot uint64) constant returns(address, uint256, uint256, uint8)
-func (_RootChain *RootChainSession) GetExit(slot uint64) (common.Address, *big.Int, *big.Int, uint8, error) {
+// Solidity: function getExit(slot uint64) constant returns(address, uint256, uint256, uint8, uint256)
+func (_RootChain *RootChainCaller) GetExit(opts *bind.CallOpts, slot uint64) (common.Address, *big.Int, *big.Int, uint8, *big.Int, error) {
+	var (
+		ret0 = new(common.Address)
+		ret1 = new(*big.Int)
+		ret2 = new(*big.Int)
+		ret3 = new(uint8)
+		ret4 = new(*big.Int)
+	)
+	out := &[]interface{}{
+		ret0,
+		ret1,
+		ret2,
+		ret3,
+		ret4,
+	}
+	err := _RootChain.contract.Call(opts, out, "getExit", slot)
+	return *ret0, *ret1, *ret2, *ret3, *ret4, err
+}
+
+// GetExit is a free data retrieval call binding the contract method 0xd157796e.
+//
+// Solidity: function getExit(slot uint64) constant returns(address, uint256, uint256, uint8, uint256)
+func (_RootChain *RootChainSession) GetExit(slot uint64) (common.Address, *big.Int, *big.Int, uint8, *big.Int, error) {
 	return _RootChain.Contract.GetExit(&_RootChain.CallOpts, slot)
 }
 
 // GetExit is a free data retrieval call binding the contract method 0xd157796e.
 //
-// Solidity: function getExit(slot uint64) constant returns(address, uint256, uint256, uint8)
-func (_RootChain *RootChainCallerSession) GetExit(slot uint64) (common.Address, *big.Int, *big.Int, uint8, error) {
+// Solidity: function getExit(slot uint64) constant returns(address, uint256, uint256, uint8, uint256)
+func (_RootChain *RootChainCallerSession) GetExit(slot uint64) (common.Address, *big.Int, *big.Int, uint8, *big.Int, error) {
 	return _RootChain.Contract.GetExit(&_RootChain.CallOpts, slot)
 }
 
@@ -462,6 +472,48 @@ func (_RootChain *RootChainCallerSession) NumCoins() (uint64, error) {
 	return _RootChain.Contract.NumCoins(&_RootChain.CallOpts)
 }
 
+// CancelExit is a paid mutator transaction binding the contract method 0xcbd8da63.
+//
+// Solidity: function cancelExit(slot uint64) returns()
+func (_RootChain *RootChainTransactor) CancelExit(opts *bind.TransactOpts, slot uint64) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "cancelExit", slot)
+}
+
+// CancelExit is a paid mutator transaction binding the contract method 0xcbd8da63.
+//
+// Solidity: function cancelExit(slot uint64) returns()
+func (_RootChain *RootChainSession) CancelExit(slot uint64) (*types.Transaction, error) {
+	return _RootChain.Contract.CancelExit(&_RootChain.TransactOpts, slot)
+}
+
+// CancelExit is a paid mutator transaction binding the contract method 0xcbd8da63.
+//
+// Solidity: function cancelExit(slot uint64) returns()
+func (_RootChain *RootChainTransactorSession) CancelExit(slot uint64) (*types.Transaction, error) {
+	return _RootChain.Contract.CancelExit(&_RootChain.TransactOpts, slot)
+}
+
+// CancelExits is a paid mutator transaction binding the contract method 0xdf3b8377.
+//
+// Solidity: function cancelExits(slots uint64[]) returns()
+func (_RootChain *RootChainTransactor) CancelExits(opts *bind.TransactOpts, slots []uint64) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "cancelExits", slots)
+}
+
+// CancelExits is a paid mutator transaction binding the contract method 0xdf3b8377.
+//
+// Solidity: function cancelExits(slots uint64[]) returns()
+func (_RootChain *RootChainSession) CancelExits(slots []uint64) (*types.Transaction, error) {
+	return _RootChain.Contract.CancelExits(&_RootChain.TransactOpts, slots)
+}
+
+// CancelExits is a paid mutator transaction binding the contract method 0xdf3b8377.
+//
+// Solidity: function cancelExits(slots uint64[]) returns()
+func (_RootChain *RootChainTransactorSession) CancelExits(slots []uint64) (*types.Transaction, error) {
+	return _RootChain.Contract.CancelExits(&_RootChain.TransactOpts, slots)
+}
+
 // ChallengeAfter is a paid mutator transaction binding the contract method 0x058a6508.
 //
 // Solidity: function challengeAfter(slot uint64, challengingBlockNumber uint256, challengingTransaction bytes, proof bytes, signature bytes) returns()
@@ -483,25 +535,25 @@ func (_RootChain *RootChainTransactorSession) ChallengeAfter(slot uint64, challe
 	return _RootChain.Contract.ChallengeAfter(&_RootChain.TransactOpts, slot, challengingBlockNumber, challengingTransaction, proof, signature)
 }
 
-// ChallengeBefore is a paid mutator transaction binding the contract method 0x82251cd9.
+// ChallengeBefore is a paid mutator transaction binding the contract method 0x7eb7b0f6.
 //
-// Solidity: function challengeBefore(slot uint64, prevTxBytes bytes, txBytes bytes, prevTxInclusionProof bytes, txInclusionProof bytes, signature bytes, blocks uint256[2]) returns()
-func (_RootChain *RootChainTransactor) ChallengeBefore(opts *bind.TransactOpts, slot uint64, prevTxBytes []byte, txBytes []byte, prevTxInclusionProof []byte, txInclusionProof []byte, signature []byte, blocks [2]*big.Int) (*types.Transaction, error) {
-	return _RootChain.contract.Transact(opts, "challengeBefore", slot, prevTxBytes, txBytes, prevTxInclusionProof, txInclusionProof, signature, blocks)
+// Solidity: function challengeBefore(slot uint64, txBytes bytes, txInclusionProof bytes, signature bytes, blockNumber uint256) returns()
+func (_RootChain *RootChainTransactor) ChallengeBefore(opts *bind.TransactOpts, slot uint64, txBytes []byte, txInclusionProof []byte, signature []byte, blockNumber *big.Int) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "challengeBefore", slot, txBytes, txInclusionProof, signature, blockNumber)
 }
 
-// ChallengeBefore is a paid mutator transaction binding the contract method 0x82251cd9.
+// ChallengeBefore is a paid mutator transaction binding the contract method 0x7eb7b0f6.
 //
-// Solidity: function challengeBefore(slot uint64, prevTxBytes bytes, txBytes bytes, prevTxInclusionProof bytes, txInclusionProof bytes, signature bytes, blocks uint256[2]) returns()
-func (_RootChain *RootChainSession) ChallengeBefore(slot uint64, prevTxBytes []byte, txBytes []byte, prevTxInclusionProof []byte, txInclusionProof []byte, signature []byte, blocks [2]*big.Int) (*types.Transaction, error) {
-	return _RootChain.Contract.ChallengeBefore(&_RootChain.TransactOpts, slot, prevTxBytes, txBytes, prevTxInclusionProof, txInclusionProof, signature, blocks)
+// Solidity: function challengeBefore(slot uint64, txBytes bytes, txInclusionProof bytes, signature bytes, blockNumber uint256) returns()
+func (_RootChain *RootChainSession) ChallengeBefore(slot uint64, txBytes []byte, txInclusionProof []byte, signature []byte, blockNumber *big.Int) (*types.Transaction, error) {
+	return _RootChain.Contract.ChallengeBefore(&_RootChain.TransactOpts, slot, txBytes, txInclusionProof, signature, blockNumber)
 }
 
-// ChallengeBefore is a paid mutator transaction binding the contract method 0x82251cd9.
+// ChallengeBefore is a paid mutator transaction binding the contract method 0x7eb7b0f6.
 //
-// Solidity: function challengeBefore(slot uint64, prevTxBytes bytes, txBytes bytes, prevTxInclusionProof bytes, txInclusionProof bytes, signature bytes, blocks uint256[2]) returns()
-func (_RootChain *RootChainTransactorSession) ChallengeBefore(slot uint64, prevTxBytes []byte, txBytes []byte, prevTxInclusionProof []byte, txInclusionProof []byte, signature []byte, blocks [2]*big.Int) (*types.Transaction, error) {
-	return _RootChain.Contract.ChallengeBefore(&_RootChain.TransactOpts, slot, prevTxBytes, txBytes, prevTxInclusionProof, txInclusionProof, signature, blocks)
+// Solidity: function challengeBefore(slot uint64, txBytes bytes, txInclusionProof bytes, signature bytes, blockNumber uint256) returns()
+func (_RootChain *RootChainTransactorSession) ChallengeBefore(slot uint64, txBytes []byte, txInclusionProof []byte, signature []byte, blockNumber *big.Int) (*types.Transaction, error) {
+	return _RootChain.Contract.ChallengeBefore(&_RootChain.TransactOpts, slot, txBytes, txInclusionProof, signature, blockNumber)
 }
 
 // ChallengeBetween is a paid mutator transaction binding the contract method 0xf6d0ba1a.
@@ -525,6 +577,48 @@ func (_RootChain *RootChainTransactorSession) ChallengeBetween(slot uint64, chal
 	return _RootChain.Contract.ChallengeBetween(&_RootChain.TransactOpts, slot, challengingBlockNumber, challengingTransaction, proof, signature)
 }
 
+// DepositERC20 is a paid mutator transaction binding the contract method 0x392d661c.
+//
+// Solidity: function depositERC20(amount uint256, contractAddress address) returns()
+func (_RootChain *RootChainTransactor) DepositERC20(opts *bind.TransactOpts, amount *big.Int, contractAddress common.Address) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "depositERC20", amount, contractAddress)
+}
+
+// DepositERC20 is a paid mutator transaction binding the contract method 0x392d661c.
+//
+// Solidity: function depositERC20(amount uint256, contractAddress address) returns()
+func (_RootChain *RootChainSession) DepositERC20(amount *big.Int, contractAddress common.Address) (*types.Transaction, error) {
+	return _RootChain.Contract.DepositERC20(&_RootChain.TransactOpts, amount, contractAddress)
+}
+
+// DepositERC20 is a paid mutator transaction binding the contract method 0x392d661c.
+//
+// Solidity: function depositERC20(amount uint256, contractAddress address) returns()
+func (_RootChain *RootChainTransactorSession) DepositERC20(amount *big.Int, contractAddress common.Address) (*types.Transaction, error) {
+	return _RootChain.Contract.DepositERC20(&_RootChain.TransactOpts, amount, contractAddress)
+}
+
+// DepositERC721 is a paid mutator transaction binding the contract method 0xc8ac6542.
+//
+// Solidity: function depositERC721(uid uint256, contractAddress address) returns()
+func (_RootChain *RootChainTransactor) DepositERC721(opts *bind.TransactOpts, uid *big.Int, contractAddress common.Address) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "depositERC721", uid, contractAddress)
+}
+
+// DepositERC721 is a paid mutator transaction binding the contract method 0xc8ac6542.
+//
+// Solidity: function depositERC721(uid uint256, contractAddress address) returns()
+func (_RootChain *RootChainSession) DepositERC721(uid *big.Int, contractAddress common.Address) (*types.Transaction, error) {
+	return _RootChain.Contract.DepositERC721(&_RootChain.TransactOpts, uid, contractAddress)
+}
+
+// DepositERC721 is a paid mutator transaction binding the contract method 0xc8ac6542.
+//
+// Solidity: function depositERC721(uid uint256, contractAddress address) returns()
+func (_RootChain *RootChainTransactorSession) DepositERC721(uid *big.Int, contractAddress common.Address) (*types.Transaction, error) {
+	return _RootChain.Contract.DepositERC721(&_RootChain.TransactOpts, uid, contractAddress)
+}
+
 // FinalizeExit is a paid mutator transaction binding the contract method 0x78417214.
 //
 // Solidity: function finalizeExit(slot uint64) returns()
@@ -546,25 +640,25 @@ func (_RootChain *RootChainTransactorSession) FinalizeExit(slot uint64) (*types.
 	return _RootChain.Contract.FinalizeExit(&_RootChain.TransactOpts, slot)
 }
 
-// FinalizeExits is a paid mutator transaction binding the contract method 0xc6ab44cd.
+// FinalizeExits is a paid mutator transaction binding the contract method 0x74c0a56f.
 //
-// Solidity: function finalizeExits() returns()
-func (_RootChain *RootChainTransactor) FinalizeExits(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _RootChain.contract.Transact(opts, "finalizeExits")
+// Solidity: function finalizeExits(slots uint64[]) returns()
+func (_RootChain *RootChainTransactor) FinalizeExits(opts *bind.TransactOpts, slots []uint64) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "finalizeExits", slots)
 }
 
-// FinalizeExits is a paid mutator transaction binding the contract method 0xc6ab44cd.
+// FinalizeExits is a paid mutator transaction binding the contract method 0x74c0a56f.
 //
-// Solidity: function finalizeExits() returns()
-func (_RootChain *RootChainSession) FinalizeExits() (*types.Transaction, error) {
-	return _RootChain.Contract.FinalizeExits(&_RootChain.TransactOpts)
+// Solidity: function finalizeExits(slots uint64[]) returns()
+func (_RootChain *RootChainSession) FinalizeExits(slots []uint64) (*types.Transaction, error) {
+	return _RootChain.Contract.FinalizeExits(&_RootChain.TransactOpts, slots)
 }
 
-// FinalizeExits is a paid mutator transaction binding the contract method 0xc6ab44cd.
+// FinalizeExits is a paid mutator transaction binding the contract method 0x74c0a56f.
 //
-// Solidity: function finalizeExits() returns()
-func (_RootChain *RootChainTransactorSession) FinalizeExits() (*types.Transaction, error) {
-	return _RootChain.Contract.FinalizeExits(&_RootChain.TransactOpts)
+// Solidity: function finalizeExits(slots uint64[]) returns()
+func (_RootChain *RootChainTransactorSession) FinalizeExits(slots []uint64) (*types.Transaction, error) {
+	return _RootChain.Contract.FinalizeExits(&_RootChain.TransactOpts, slots)
 }
 
 // OnERC20Received is a paid mutator transaction binding the contract method 0x65d83056.
@@ -609,6 +703,27 @@ func (_RootChain *RootChainTransactorSession) OnERC721Received(_from common.Addr
 	return _RootChain.Contract.OnERC721Received(&_RootChain.TransactOpts, _from, _uid, arg2)
 }
 
+// Pause is a paid mutator transaction binding the contract method 0x8456cb59.
+//
+// Solidity: function pause() returns()
+func (_RootChain *RootChainTransactor) Pause(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "pause")
+}
+
+// Pause is a paid mutator transaction binding the contract method 0x8456cb59.
+//
+// Solidity: function pause() returns()
+func (_RootChain *RootChainSession) Pause() (*types.Transaction, error) {
+	return _RootChain.Contract.Pause(&_RootChain.TransactOpts)
+}
+
+// Pause is a paid mutator transaction binding the contract method 0x8456cb59.
+//
+// Solidity: function pause() returns()
+func (_RootChain *RootChainTransactorSession) Pause() (*types.Transaction, error) {
+	return _RootChain.Contract.Pause(&_RootChain.TransactOpts)
+}
+
 // RespondChallengeBefore is a paid mutator transaction binding the contract method 0x4d69a8a1.
 //
 // Solidity: function respondChallengeBefore(slot uint64, challengingTxHash bytes32, respondingBlockNumber uint256, respondingTransaction bytes, proof bytes, signature bytes) returns()
@@ -651,25 +766,46 @@ func (_RootChain *RootChainTransactorSession) StartExit(slot uint64, prevTxBytes
 	return _RootChain.Contract.StartExit(&_RootChain.TransactOpts, slot, prevTxBytes, exitingTxBytes, prevTxInclusionProof, exitingTxInclusionProof, signature, blocks)
 }
 
-// SubmitBlock is a paid mutator transaction binding the contract method 0xbaa47694.
+// SubmitBlock is a paid mutator transaction binding the contract method 0x149be19f.
 //
-// Solidity: function submitBlock(root bytes32) returns()
-func (_RootChain *RootChainTransactor) SubmitBlock(opts *bind.TransactOpts, root [32]byte) (*types.Transaction, error) {
-	return _RootChain.contract.Transact(opts, "submitBlock", root)
+// Solidity: function submitBlock(blockNumber uint256, root bytes32) returns()
+func (_RootChain *RootChainTransactor) SubmitBlock(opts *bind.TransactOpts, blockNumber *big.Int, root [32]byte) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "submitBlock", blockNumber, root)
 }
 
-// SubmitBlock is a paid mutator transaction binding the contract method 0xbaa47694.
+// SubmitBlock is a paid mutator transaction binding the contract method 0x149be19f.
 //
-// Solidity: function submitBlock(root bytes32) returns()
-func (_RootChain *RootChainSession) SubmitBlock(root [32]byte) (*types.Transaction, error) {
-	return _RootChain.Contract.SubmitBlock(&_RootChain.TransactOpts, root)
+// Solidity: function submitBlock(blockNumber uint256, root bytes32) returns()
+func (_RootChain *RootChainSession) SubmitBlock(blockNumber *big.Int, root [32]byte) (*types.Transaction, error) {
+	return _RootChain.Contract.SubmitBlock(&_RootChain.TransactOpts, blockNumber, root)
 }
 
-// SubmitBlock is a paid mutator transaction binding the contract method 0xbaa47694.
+// SubmitBlock is a paid mutator transaction binding the contract method 0x149be19f.
 //
-// Solidity: function submitBlock(root bytes32) returns()
-func (_RootChain *RootChainTransactorSession) SubmitBlock(root [32]byte) (*types.Transaction, error) {
-	return _RootChain.Contract.SubmitBlock(&_RootChain.TransactOpts, root)
+// Solidity: function submitBlock(blockNumber uint256, root bytes32) returns()
+func (_RootChain *RootChainTransactorSession) SubmitBlock(blockNumber *big.Int, root [32]byte) (*types.Transaction, error) {
+	return _RootChain.Contract.SubmitBlock(&_RootChain.TransactOpts, blockNumber, root)
+}
+
+// Unpause is a paid mutator transaction binding the contract method 0x3f4ba83a.
+//
+// Solidity: function unpause() returns()
+func (_RootChain *RootChainTransactor) Unpause(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _RootChain.contract.Transact(opts, "unpause")
+}
+
+// Unpause is a paid mutator transaction binding the contract method 0x3f4ba83a.
+//
+// Solidity: function unpause() returns()
+func (_RootChain *RootChainSession) Unpause() (*types.Transaction, error) {
+	return _RootChain.Contract.Unpause(&_RootChain.TransactOpts)
+}
+
+// Unpause is a paid mutator transaction binding the contract method 0x3f4ba83a.
+//
+// Solidity: function unpause() returns()
+func (_RootChain *RootChainTransactorSession) Unpause() (*types.Transaction, error) {
+	return _RootChain.Contract.Unpause(&_RootChain.TransactOpts)
 }
 
 // Withdraw is a paid mutator transaction binding the contract method 0x750f0acc.
@@ -783,14 +919,15 @@ func (it *RootChainChallengedExitIterator) Close() error {
 
 // RootChainChallengedExit represents a ChallengedExit event raised by the RootChain contract.
 type RootChainChallengedExit struct {
-	Slot   uint64
-	TxHash [32]byte
-	Raw    types.Log // Blockchain specific contextual infos
+	Slot                   uint64
+	TxHash                 [32]byte
+	ChallengingBlockNumber *big.Int
+	Raw                    types.Log // Blockchain specific contextual infos
 }
 
-// FilterChallengedExit is a free log retrieval operation binding the contract event 0x93ad89acff8702a4fd0b404bba4012eb03de956317e6892a3d30d62554038aeb.
+// FilterChallengedExit is a free log retrieval operation binding the contract event 0x057d34b2360e71f2764a7189966401bc058621905c0bef7123a6bdfe9a13284b.
 //
-// Solidity: e ChallengedExit(slot indexed uint64, txHash bytes32)
+// Solidity: e ChallengedExit(slot indexed uint64, txHash bytes32, challengingBlockNumber uint256)
 func (_RootChain *RootChainFilterer) FilterChallengedExit(opts *bind.FilterOpts, slot []uint64) (*RootChainChallengedExitIterator, error) {
 
 	var slotRule []interface{}
@@ -805,9 +942,9 @@ func (_RootChain *RootChainFilterer) FilterChallengedExit(opts *bind.FilterOpts,
 	return &RootChainChallengedExitIterator{contract: _RootChain.contract, event: "ChallengedExit", logs: logs, sub: sub}, nil
 }
 
-// WatchChallengedExit is a free log subscription operation binding the contract event 0x93ad89acff8702a4fd0b404bba4012eb03de956317e6892a3d30d62554038aeb.
+// WatchChallengedExit is a free log subscription operation binding the contract event 0x057d34b2360e71f2764a7189966401bc058621905c0bef7123a6bdfe9a13284b.
 //
-// Solidity: e ChallengedExit(slot indexed uint64, txHash bytes32)
+// Solidity: e ChallengedExit(slot indexed uint64, txHash bytes32, challengingBlockNumber uint256)
 func (_RootChain *RootChainFilterer) WatchChallengedExit(opts *bind.WatchOpts, sink chan<- *RootChainChallengedExit, slot []uint64) (event.Subscription, error) {
 
 	var slotRule []interface{}
@@ -827,6 +964,147 @@ func (_RootChain *RootChainFilterer) WatchChallengedExit(opts *bind.WatchOpts, s
 				// New log arrived, parse the event and forward to the user
 				event := new(RootChainChallengedExit)
 				if err := _RootChain.contract.UnpackLog(event, "ChallengedExit", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// RootChainCoinResetIterator is returned from FilterCoinReset and is used to iterate over the raw logs and unpacked data for CoinReset events raised by the RootChain contract.
+type RootChainCoinResetIterator struct {
+	Event *RootChainCoinReset // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *RootChainCoinResetIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(RootChainCoinReset)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(RootChainCoinReset)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *RootChainCoinResetIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *RootChainCoinResetIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// RootChainCoinReset represents a CoinReset event raised by the RootChain contract.
+type RootChainCoinReset struct {
+	Slot  uint64
+	Owner common.Address
+	Raw   types.Log // Blockchain specific contextual infos
+}
+
+// FilterCoinReset is a free log retrieval operation binding the contract event 0x35cc9c4d0d9a2ce748d131382582af17dbf1f0d72167ea7906ea3f18597b31a4.
+//
+// Solidity: e CoinReset(slot indexed uint64, owner indexed address)
+func (_RootChain *RootChainFilterer) FilterCoinReset(opts *bind.FilterOpts, slot []uint64, owner []common.Address) (*RootChainCoinResetIterator, error) {
+
+	var slotRule []interface{}
+	for _, slotItem := range slot {
+		slotRule = append(slotRule, slotItem)
+	}
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
+	}
+
+	logs, sub, err := _RootChain.contract.FilterLogs(opts, "CoinReset", slotRule, ownerRule)
+	if err != nil {
+		return nil, err
+	}
+	return &RootChainCoinResetIterator{contract: _RootChain.contract, event: "CoinReset", logs: logs, sub: sub}, nil
+}
+
+// WatchCoinReset is a free log subscription operation binding the contract event 0x35cc9c4d0d9a2ce748d131382582af17dbf1f0d72167ea7906ea3f18597b31a4.
+//
+// Solidity: e CoinReset(slot indexed uint64, owner indexed address)
+func (_RootChain *RootChainFilterer) WatchCoinReset(opts *bind.WatchOpts, sink chan<- *RootChainCoinReset, slot []uint64, owner []common.Address) (event.Subscription, error) {
+
+	var slotRule []interface{}
+	for _, slotItem := range slot {
+		slotRule = append(slotRule, slotItem)
+	}
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
+	}
+
+	logs, sub, err := _RootChain.contract.WatchLogs(opts, "CoinReset", slotRule, ownerRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(RootChainCoinReset)
+				if err := _RootChain.contract.UnpackLog(event, "CoinReset", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -1247,6 +1525,128 @@ func (_RootChain *RootChainFilterer) WatchFreedBond(opts *bind.WatchOpts, sink c
 				// New log arrived, parse the event and forward to the user
 				event := new(RootChainFreedBond)
 				if err := _RootChain.contract.UnpackLog(event, "FreedBond", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// RootChainPausedIterator is returned from FilterPaused and is used to iterate over the raw logs and unpacked data for Paused events raised by the RootChain contract.
+type RootChainPausedIterator struct {
+	Event *RootChainPaused // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *RootChainPausedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(RootChainPaused)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(RootChainPaused)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *RootChainPausedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *RootChainPausedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// RootChainPaused represents a Paused event raised by the RootChain contract.
+type RootChainPaused struct {
+	Status bool
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterPaused is a free log retrieval operation binding the contract event 0x0e2fb031ee032dc02d8011dc50b816eb450cf856abd8261680dac74f72165bd2.
+//
+// Solidity: e Paused(status bool)
+func (_RootChain *RootChainFilterer) FilterPaused(opts *bind.FilterOpts) (*RootChainPausedIterator, error) {
+
+	logs, sub, err := _RootChain.contract.FilterLogs(opts, "Paused")
+	if err != nil {
+		return nil, err
+	}
+	return &RootChainPausedIterator{contract: _RootChain.contract, event: "Paused", logs: logs, sub: sub}, nil
+}
+
+// WatchPaused is a free log subscription operation binding the contract event 0x0e2fb031ee032dc02d8011dc50b816eb450cf856abd8261680dac74f72165bd2.
+//
+// Solidity: e Paused(status bool)
+func (_RootChain *RootChainFilterer) WatchPaused(opts *bind.WatchOpts, sink chan<- *RootChainPaused) (event.Subscription, error) {
+
+	logs, sub, err := _RootChain.contract.WatchLogs(opts, "Paused")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(RootChainPaused)
+				if err := _RootChain.contract.UnpackLog(event, "Paused", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -1875,7 +2275,8 @@ func (it *RootChainWithdrewIterator) Close() error {
 
 // RootChainWithdrew represents a Withdrew event raised by the RootChain contract.
 type RootChainWithdrew struct {
-	From            common.Address
+	Owner           common.Address
+	Slot            uint64
 	Mode            uint8
 	ContractAddress common.Address
 	Uid             *big.Int
@@ -1883,34 +2284,42 @@ type RootChainWithdrew struct {
 	Raw             types.Log // Blockchain specific contextual infos
 }
 
-// FilterWithdrew is a free log retrieval operation binding the contract event 0xdf9b1156d45cedd38f6d4f4d1b7358b242045d6a14b7d94b87eaa231317870e8.
+// FilterWithdrew is a free log retrieval operation binding the contract event 0xc753e3ccb1413ef7152e8d33fd0abfb140e236ce17bf9ae40a2a6940bcb7ed7b.
 //
-// Solidity: e Withdrew(from indexed address, mode uint8, contractAddress address, uid uint256, denomination uint256)
-func (_RootChain *RootChainFilterer) FilterWithdrew(opts *bind.FilterOpts, from []common.Address) (*RootChainWithdrewIterator, error) {
+// Solidity: e Withdrew(owner indexed address, slot indexed uint64, mode uint8, contractAddress address, uid uint256, denomination uint256)
+func (_RootChain *RootChainFilterer) FilterWithdrew(opts *bind.FilterOpts, owner []common.Address, slot []uint64) (*RootChainWithdrewIterator, error) {
 
-	var fromRule []interface{}
-	for _, fromItem := range from {
-		fromRule = append(fromRule, fromItem)
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
+	}
+	var slotRule []interface{}
+	for _, slotItem := range slot {
+		slotRule = append(slotRule, slotItem)
 	}
 
-	logs, sub, err := _RootChain.contract.FilterLogs(opts, "Withdrew", fromRule)
+	logs, sub, err := _RootChain.contract.FilterLogs(opts, "Withdrew", ownerRule, slotRule)
 	if err != nil {
 		return nil, err
 	}
 	return &RootChainWithdrewIterator{contract: _RootChain.contract, event: "Withdrew", logs: logs, sub: sub}, nil
 }
 
-// WatchWithdrew is a free log subscription operation binding the contract event 0xdf9b1156d45cedd38f6d4f4d1b7358b242045d6a14b7d94b87eaa231317870e8.
+// WatchWithdrew is a free log subscription operation binding the contract event 0xc753e3ccb1413ef7152e8d33fd0abfb140e236ce17bf9ae40a2a6940bcb7ed7b.
 //
-// Solidity: e Withdrew(from indexed address, mode uint8, contractAddress address, uid uint256, denomination uint256)
-func (_RootChain *RootChainFilterer) WatchWithdrew(opts *bind.WatchOpts, sink chan<- *RootChainWithdrew, from []common.Address) (event.Subscription, error) {
+// Solidity: e Withdrew(owner indexed address, slot indexed uint64, mode uint8, contractAddress address, uid uint256, denomination uint256)
+func (_RootChain *RootChainFilterer) WatchWithdrew(opts *bind.WatchOpts, sink chan<- *RootChainWithdrew, owner []common.Address, slot []uint64) (event.Subscription, error) {
 
-	var fromRule []interface{}
-	for _, fromItem := range from {
-		fromRule = append(fromRule, fromItem)
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
+	}
+	var slotRule []interface{}
+	for _, slotItem := range slot {
+		slotRule = append(slotRule, slotItem)
 	}
 
-	logs, sub, err := _RootChain.contract.WatchLogs(opts, "Withdrew", fromRule)
+	logs, sub, err := _RootChain.contract.WatchLogs(opts, "Withdrew", ownerRule, slotRule)
 	if err != nil {
 		return nil, err
 	}

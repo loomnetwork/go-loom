@@ -59,7 +59,13 @@ func (s *EncodingTestSuite) TestTxHash(c *C) {
 		Denomination: big.NewInt(1),
 		Owner:        ownerAddr,
 	}
-	hexStr := common.Bytes2Hex(tx.Hash())
+
+	hash, err := tx.Hash()
+	if err != nil {
+		c.Fatal(err)
+	}
+
+	hexStr := common.Bytes2Hex(hash)
 	c.Assert(hexStr, Equals, "b10da41825f94bd447ebce74913e82ceae90c6ba27aa6781d611f8530f78ec4c")
 }
 
@@ -83,7 +89,12 @@ func (s *EncodingTestSuite) TestTxSignature(c *C) {
 	hexStr := common.Bytes2Hex(sig)
 	c.Assert(hexStr, Equals, "00b0e4901dc74b9851dba3c52406e1325c2ac9c4fe9f4d0379099a3357b763c96c104d3fffb78e99515db2e583568588d740b743ad3105d63fb252014f806fd06b1b")
 
-	signer, err := evmcompat.SolidityRecover(tx.Hash(), sig[1:])
+	hash, err := tx.Hash()
+	if err != nil {
+		c.Fatal(err)
+	}
+
+	signer, err := evmcompat.SolidityRecover(hash, sig[1:])
 	if err != nil {
 		c.Fatal(err)
 	}

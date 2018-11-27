@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+package karma;
+
+message KarmaInitRequest {
+    Address Oracle = 1;
+    repeated KarmaSourceReward sources = 2;
+    repeated KarmaAddressSource users = 3;
+}
+
+message KarmaSources {
+    repeated KarmaSourceReward sources = 1;
+}
+
+message KarmaSourcesValidator {
+    repeated KarmaSourceReward sources = 1;
+    Address oracle = 2;
+}
+
+message KarmaNewOracleValidator {
+    Address new_oracle = 1;
+    Address old_oracle = 2;
+}
+
+message KarmaSourceReward {
+    string name = 1;
+    int64 reward = 2;
+}
+
+message KarmaSource {
+    string name = 1;
+    int64 count = 2;
+}
+
+message KarmaAddressSource {
+    Address user = 1;
+    repeated KarmaSource sources = 2;
+}
+
+message KarmaState {
+    repeated KarmaSource source_states = 1;
+    int64 last_update_time = 2;
+}
+
+message KarmaStateUser {
+    repeated KarmaSource source_states = 1;
+    Address User = 2;
+    Address Oracle = 3;
+}
+
+message KarmaStateKeyUser {
+    repeated string state_keys = 1;
+    Address User = 2;
+    Address Oracle = 3;
+}
+
+message KarmaTotal{
+    int64 count = 1;
+}

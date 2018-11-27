@@ -13,7 +13,7 @@ enum PlasmaCashCoinState {
 // Plasma Cash coin holds a single ERC721 token
 message PlasmaCashCoin {
     // Unique ID
-    uint64 slot = 1;
+    uint64 slot = 1 [jstype = JS_STRING];
     PlasmaCashCoinState state = 2;
     // ERC721 token ID
     BigUInt token = 3;
@@ -23,10 +23,8 @@ message PlasmaCashCoin {
 
 message PlasmaCashAccount {
     Address owner = 1;
-    // Address of ERC721 contract the tokens in the Plasma coins originated from
-    Address contract = 2;
     // Plasma coins in this account, identified by their slot number.
-    repeated uint64 slots = 3;
+    repeated uint64 slots = 3 [jstype = JS_STRING];
 }
 
 message PlasmaBlock {
@@ -35,11 +33,11 @@ message PlasmaBlock {
     bytes signature = 3; // Signature on the block’s hash
     bytes merkle_hash = 4; // The block's merkle root from its included transactions
     bytes hash = 5; // The hash of the RLP encoded unsigned block’s bytes.
-    bytes proof = 6; 
+    bytes proof = 6;
 }
 
-message PlasmaTx { 
-    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
+message PlasmaTx {
+    uint64 slot = 1 [jstype = JS_STRING]; // The slot of the UTXO - Currently uint64, subject to change.
     BigUInt previous_block = 2 [(gogoproto.customname)="PreviousBlock"]; //Each time a transaction is created, it MUST refer to a previous block which also included that transaction. A transaction is considered a “deposit transaction”, if it’s the first UTXO after a user deposits their coin in the Plasma Chain. This transaction mints coins from nowhere in the Plasma Chain and as a result its previous block is 0.
     BigUInt denomination = 3; // How many coins are included in that UTXO. Currently this is always 1 since we’re using ERC721 tokens which are unique, however in future iterations this can be any number.
     Address new_owner = 4 [(gogoproto.customname)="NewOwner"]; //  The new owner of the transaction.
@@ -55,16 +53,16 @@ message PlasmaBookKeeping {
     BigUInt current_height = 1  [(gogoproto.customname)="CurrentHeight"]; // Height of all the plasma blocks
 }
 
-message GetCurrentBlockRequest { 
+message GetCurrentBlockRequest {
 }
 
 message GetCurrentBlockResponse {
-    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
+    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"];
 }
 
 
 message GetBlockRequest {
-    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"]; 
+    BigUInt block_height = 1 [(gogoproto.customname)="BlockHeight"];
 }
 
 message GetBlockResponse {
@@ -86,9 +84,26 @@ message PlasmaTxRequest {
 message PlasmaTxResponse {
 }
 
+message GetPlasmaTxRequest {
+    uint64 slot = 1 [jstype = JS_STRING]; // The slot of the UTXO - Currently uint64, subject to change.
+    BigUInt block_height = 2 [(gogoproto.customname)="BlockHeight"];
+}
+
+message GetPlasmaTxResponse {
+    PlasmaTx plasmatx = 1;
+}
+
+message GetUserSlotsRequest {
+    Address from = 1;
+}
+
+message GetUserSlotsResponse {
+    repeated uint64 slots = 1 [jstype = JS_STRING];
+}
+
 // This only originates from the validator
 message DepositRequest {
-    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    uint64 slot = 1 [jstype = JS_STRING]; // The slot of the UTXO - Currently uint64, subject to change.
     BigUInt deposit_block = 2;
     // For ERC20 this is the number of coins deposited, for ERC721 this is a token ID.
     BigUInt denomination = 3;
@@ -101,17 +116,39 @@ message DepositRequest {
 message DepositResponse {
 }
 
+message PlasmaCashCoinResetRequest {
+    Address owner = 1;
+    uint64 slot = 2 [jstype = JS_STRING];
+}
+
 message PlasmaCashExitCoinRequest {
     Address owner = 1;
-    uint64 slot = 2;
+    uint64 slot = 2 [jstype = JS_STRING];
 }
 
 message PlasmaCashWithdrawCoinRequest {
     Address owner = 1;
-    uint64 slot = 2;
+    uint64 slot = 2 [jstype = JS_STRING];
 }
 
-message Pending {
+message PlasmaCashRequest {
+    oneof data {
+        DepositRequest deposit = 1;
+        PlasmaCashCoinResetRequest coin_reset = 2;
+        PlasmaCashExitCoinRequest started_exit = 3;
+        PlasmaCashWithdrawCoinRequest withdraw = 4;
+    }
+    PlasmaCashEventMeta meta = 5;
+}
+
+message PlasmaCashRequestBatch {
+    repeated PlasmaCashRequest requests = 1;
+}
+
+message GetPendingTxsRequest{
+}
+
+message PendingTxs {
    repeated PlasmaTx transactions  = 1;
 }
 
@@ -123,6 +160,7 @@ message PlasmaCashParams {
 
 message PlasmaCashInitRequest {
     PlasmaCashParams params = 1;
+    Address oracle = 2;
 }
 
 // Static Calls
@@ -134,4 +172,100 @@ message PlasmaCashBalanceOfRequest {
 
 message PlasmaCashBalanceOfResponse {
     repeated PlasmaCashCoin coins = 1;
+}
+
+message PlasmaCashUpdateOracleRequest {
+    Address new_oracle = 1;
+}
+
+// Event structures
+
+message PlasmaCashRequestBatchTally {
+    uint64 last_seen_block_number = 1;
+    uint64 last_seen_tx_index = 2;
+    uint64 last_seen_log_index = 3;
+}
+
+message PlasmaCashGetRequestBatchTallyRequest {
+}
+
+message PlasmaCashEventMeta {
+    uint64 block_number = 1;
+    uint64 tx_index = 2;
+    uint64 log_index = 3;
+}
+
+message PlasmaDepositEvent {
+    uint64 slot = 1; // The slot of the UTXO - Currently uint64, subject to change.
+    BigUInt deposit_block = 2;
+    // For ERC20 this is the number of coins deposited, for ERC721 this is a token ID.
+    BigUInt denomination = 3;
+    // Entity that made the deposit
+    Address from = 4;
+    // Contract from which the coins originated (i.e. the currency of the coins)
+    Address contract = 5;
+    PlasmaCashEventMeta meta = 6;
+}
+
+message PlasmaCashCoinResetEvent {
+    Address owner = 1;
+    uint64 slot = 2 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 3;
+}
+
+message PlasmaCashStartedExitEvent {
+    Address owner = 1;
+    uint64 slot = 2 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 3;
+}
+
+message PlasmaCashFinalizedExitEvent {
+    Address owner = 1;
+    uint64 slot = 2 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 3;
+}
+
+message PlasmaCashWithdrewEvent {
+    Address owner = 1;
+    uint32 mode = 2;
+    Address contract = 3;
+    BigUInt uid = 4;
+    BigUInt denomination = 5;
+    uint64 slot = 6 [jstype = JS_STRING];
+    PlasmaCashEventMeta meta = 7;
+}
+
+// Events emitted by the contract
+
+message PlasmaCashTransferConfirmed {
+    Address from = 1;
+    Address to = 2;
+    uint64 slot = 3 [jstype = JS_STRING];
+}
+
+message PlasmaCashExitConfirmedEvent {
+    Address owner = 1;
+    uint64 slot = 2 [jstype = JS_STRING];
+}
+
+message PlasmaCashResetConfirmedEvent {
+    Address owner = 1;
+    uint64 slot = 2 [jstype = JS_STRING];
+}
+
+message PlasmaCashWithdrawConfirmedEvent {
+    PlasmaCashCoin coin = 1;
+    Address owner = 2;
+    uint64 slot = 3 [jstype = JS_STRING];
+}
+
+message PlasmaCashDepositConfirmedEvent {
+    PlasmaCashCoin coin = 1;
+    Address owner = 2;
+}
+
+message PlasmaCashSubmitBlockConfirmedEvent {
+    uint64 number_of_pending_transactions = 1;
+    BigUInt current_block_height = 2;
+    bytes merkle_hash = 3;
 }

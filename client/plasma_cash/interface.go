@@ -21,6 +21,7 @@ type Block interface {
 type Tx interface {
 	RlpEncode() ([]byte, error)
 	Sign(key *ecdsa.PrivateKey) ([]byte, error)
+	Hash() ([]byte, error)
 	Sig() []byte
 	NewOwner() common.Address
 	Proof() Proof
@@ -34,7 +35,7 @@ type ChainServiceClient interface {
 	BlockNumber() (*big.Int, error)
 
 	Block(blknum *big.Int) (Block, error)
-	//Proof(blknum int64, slot uint64) (Proof, error)
+	PlasmaTx(blknum *big.Int, slot uint64) (Tx, error)
 
 	SubmitBlock() error
 	Deposit(deposit *pctypes.DepositRequest) error
@@ -93,19 +94,23 @@ type ChallengedExitEventData struct {
 	Slot uint64
 	// Hash of the transaction used for the response to a challenge.
 	TxHash [32]byte
+	// Index of the Plasma block in which the challenge happened.
+	ChallengingBlockNumber *big.Int
 }
 
 type RootChainClient interface {
-	FinalizeExits() error
+	CancelExits(slots []uint64) error
+	CancelExit(slot uint64) error
+	FinalizeExits(slots []uint64) error
+	FinalizeExit(slot uint64) error
 	Withdraw(slot uint64) error
 	WithdrawBonds() error
 	PlasmaCoin(slot uint64) (*PlasmaCoin, error)
 	StartExit(slot uint64, prevTx Tx, exitingTx Tx, prevTxProof Proof,
 		exitingTxProof Proof, sigs []byte, prevTxBlkNum *big.Int, txBlkNum *big.Int) ([]byte, error)
 
-	ChallengeBefore(slot uint64, prevTx Tx, exitingTx Tx,
-		prevTxInclusionProof Proof, exitingTxInclusionProof Proof,
-		sig []byte, prevTxBlockNum *big.Int, exitingTxBlockNum *big.Int) ([]byte, error)
+	ChallengeBefore(slot uint64, exitingTx Tx, exitingTxInclusionProof Proof,
+		sig []byte, exitingTxBlockNum *big.Int) ([]byte, error)
 
 	RespondChallengeBefore(slot uint64, challengingTxHash [32]byte, respondingBlockNumber *big.Int,
 		respondingTransaction Tx, proof Proof, sig []byte) ([]byte, error)

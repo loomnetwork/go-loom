@@ -41,7 +41,12 @@ type EthPlasmaClient interface {
 	// SubmitPlasmaBlock will submit a Plasma block to Ethereum and wait until the tx is confirmed.
 	// The maximum wait time can be specified via the TxTimeout option in the client config.
 	SubmitPlasmaBlock(plasmaBlockNum *big.Int, merkleRoot [32]byte) error
-	FetchDeposits(startBlock, endBlock uint64) ([]*pctypes.DepositRequest, error)
+
+	FetchDeposits(startBlock, endBlock uint64) ([]*pctypes.PlasmaDepositEvent, error)
+	FetchCoinReset(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashCoinResetEvent, error)
+	FetchWithdrews(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashWithdrewEvent, error)
+	FetchFinalizedExit(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashFinalizedExitEvent, error)
+	FetchStartedExit(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashStartedExitEvent, error)
 }
 
 type EthPlasmaClientImpl struct {
@@ -88,7 +93,7 @@ func (c *EthPlasmaClientImpl) SubmitPlasmaBlock(blockNum *big.Int, merkleRoot [3
 		auth.GasPrice = big.NewInt(20000)
 		auth.GasLimit = uint64(3141592)
 	}
-	tx, err := c.plasmaContract.SubmitBlock(auth, merkleRoot)
+	tx, err := c.plasmaContract.SubmitBlock(auth, blockNum, merkleRoot)
 	if err != nil {
 		return errors.Wrap(err, failMsg)
 	}
@@ -102,50 +107,217 @@ func (c *EthPlasmaClientImpl) SubmitPlasmaBlock(blockNum *big.Int, merkleRoot [3
 	return nil
 }
 
+func (c *EthPlasmaClientImpl) FetchWithdrews(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashWithdrewEvent, error) {
+	filterOpts := &bind.FilterOpts{
+		Start: startBlock,
+		End:   &endBlock,
+	}
+
+	withdrawCoinEvents := []*pctypes.PlasmaCashWithdrewEvent{}
+
+	iterator, err := c.plasmaContract.FilterWithdrew(filterOpts, nil, nil)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get Plasma coin withdraw logs")
+	}
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+
+		localOwnerAddress, err := loom.LocalAddressFromHexString(event.Owner.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse plasma coin withdraw owner's address")
+		}
+		localContractAddr, err := loom.LocalAddressFromHexString(event.ContractAddress.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse Plasma deposit contract address")
+		}
+
+		withdrawCoinEvents = append(withdrawCoinEvents, &pctypes.PlasmaCashWithdrewEvent{
+			Slot:         event.Slot,
+			Owner:        loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
+			Mode:         uint32(event.Mode),
+			Uid:          &ltypes.BigUInt{Value: *loom.NewBigUInt(event.Uid)},
+			Denomination: &ltypes.BigUInt{Value: *loom.NewBigUInt(event.Denomination)},
+			Contract:     loom.Address{ChainID: "eth", Local: localContractAddr}.MarshalPB(),
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
+				LogIndex:    uint64(event.Raw.Index),
+			},
+		})
+	}
+
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrapf(err, "failed to iterate event data for plasma coin withdraw")
+	}
+
+	return withdrawCoinEvents, nil
+}
+
+func (c *EthPlasmaClientImpl) FetchFinalizedExit(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashFinalizedExitEvent, error) {
+	filterOpts := &bind.FilterOpts{
+		Start: startBlock,
+		End:   &endBlock,
+	}
+
+	finalizedExitEvents := []*pctypes.PlasmaCashFinalizedExitEvent{}
+
+	iterator, err := c.plasmaContract.FilterFinalizedExit(filterOpts, nil)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get Plasma finalized exit logs")
+	}
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+		localOwnerAddress, err := loom.LocalAddressFromHexString(event.Owner.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse plasma finalized exit owner's address")
+		}
+
+		finalizedExitEvents = append(finalizedExitEvents, &pctypes.PlasmaCashFinalizedExitEvent{
+			Owner: loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
+			Slot:  event.Slot,
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
+				LogIndex:    uint64(event.Raw.Index),
+			},
+		})
+	}
+
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrapf(err, "failed to iterate event data for plasma finalized exit")
+	}
+
+	return finalizedExitEvents, nil
+}
+
+func (c *EthPlasmaClientImpl) FetchCoinReset(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashCoinResetEvent, error) {
+	filterOpts := &bind.FilterOpts{
+		Start: startBlock,
+		End:   &endBlock,
+	}
+
+	coinResetEvents := []*pctypes.PlasmaCashCoinResetEvent{}
+
+	iterator, err := c.plasmaContract.FilterCoinReset(filterOpts, nil, nil)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get Plasma start exit logs")
+	}
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+		localOwnerAddress, err := loom.LocalAddressFromHexString(event.Owner.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse plasma start exit owner's address")
+		}
+
+		coinResetEvents = append(coinResetEvents, &pctypes.PlasmaCashCoinResetEvent{
+			Owner: loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
+			Slot:  event.Slot,
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
+				LogIndex:    uint64(event.Raw.Index),
+			},
+		})
+	}
+
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrapf(err, "failed to iterate event data for plasma start exit")
+	}
+
+	return coinResetEvents, nil
+}
+
+func (c *EthPlasmaClientImpl) FetchStartedExit(startBlock, endBlock uint64) ([]*pctypes.PlasmaCashStartedExitEvent, error) {
+	filterOpts := &bind.FilterOpts{
+		Start: startBlock,
+		End:   &endBlock,
+	}
+
+	startedExitEvents := []*pctypes.PlasmaCashStartedExitEvent{}
+
+	iterator, err := c.plasmaContract.FilterStartedExit(filterOpts, nil, nil)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get Plasma start exit logs")
+	}
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+		localOwnerAddress, err := loom.LocalAddressFromHexString(event.Owner.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse plasma start exit owner's address")
+		}
+
+		startedExitEvents = append(startedExitEvents, &pctypes.PlasmaCashStartedExitEvent{
+			Owner: loom.Address{ChainID: "eth", Local: localOwnerAddress}.MarshalPB(),
+			Slot:  event.Slot,
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
+				LogIndex:    uint64(event.Raw.Index),
+			},
+		})
+	}
+
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrapf(err, "failed to iterate event data for plasma start exit")
+	}
+
+	return startedExitEvents, nil
+}
+
 // FetchDeposits fetches all deposit events from an Ethereum node from startBlock to endBlock (inclusive).
-func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pctypes.DepositRequest, error) {
+func (c *EthPlasmaClientImpl) FetchDeposits(startBlock, endBlock uint64) ([]*pctypes.PlasmaDepositEvent, error) {
 	// NOTE: Currently either all blocks from w.StartBlock are processed successfully or none are.
 	filterOpts := &bind.FilterOpts{
 		Start: startBlock,
 		End:   &endBlock,
 	}
-	deposits := []*pctypes.DepositRequest{}
+	depositEvents := []*pctypes.PlasmaDepositEvent{}
 
-	it, err := c.plasmaContract.FilterDeposit(filterOpts, nil, nil, nil)
+	iterator, err := c.plasmaContract.FilterDeposit(filterOpts, nil, nil, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get Plasma deposit logs")
 	}
-	for {
-		ok := it.Next()
-		if ok {
-			ev := it.Event
-			fromAddr, err := loom.LocalAddressFromHexString(ev.From.Hex())
-			if err != nil {
-				return nil, errors.Wrap(err, "failed to parse Plasma deposit 'from' address")
-			}
-			contractAddr, err := loom.LocalAddressFromHexString(ev.ContractAddress.Hex())
-			if err != nil {
-				return nil, errors.Wrap(err, "failed to parse Plasma deposit contract address")
-			}
-			deposits = append(deposits, &pctypes.DepositRequest{
-				Slot:         ev.Slot,
-				DepositBlock: &ltypes.BigUInt{Value: *loom.NewBigUInt(ev.BlockNumber)},
-				Denomination: &ltypes.BigUInt{Value: *loom.NewBigUIntFromInt(1)}, // TODO: ev.Denomination
-				From:         loom.Address{ChainID: "eth", Local: fromAddr}.MarshalPB(),
-				Contract:     loom.Address{ChainID: "eth", Local: contractAddr}.MarshalPB(),
-				// TODO: store ev.Hash... it's always a hash of ev.Slot, so a bit redundant
-			})
-		} else {
-			err := it.Error()
-			if err != nil {
-				return nil, errors.Wrap(err, "failed to get event data for Plasma deposit")
-			}
-			it.Close()
-			break
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+		localFromAddr, err := loom.LocalAddressFromHexString(event.From.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse Plasma deposit 'from' address")
 		}
+		localContractAddr, err := loom.LocalAddressFromHexString(event.ContractAddress.Hex())
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse Plasma deposit contract address")
+		}
+
+		depositEvents = append(depositEvents, &pctypes.PlasmaDepositEvent{
+			Slot:         event.Slot,
+			DepositBlock: &ltypes.BigUInt{Value: *loom.NewBigUInt(event.BlockNumber)},
+			Denomination: &ltypes.BigUInt{Value: *loom.NewBigUIntFromInt(1)}, // TODO: ev.Denomination
+			From:         loom.Address{ChainID: "eth", Local: localFromAddr}.MarshalPB(),
+			Contract:     loom.Address{ChainID: "eth", Local: localContractAddr}.MarshalPB(),
+			Meta: &pctypes.PlasmaCashEventMeta{
+				BlockNumber: event.Raw.BlockNumber,
+				TxIndex:     uint64(event.Raw.TxIndex),
+				LogIndex:    uint64(event.Raw.Index),
+			},
+			// TODO: store ev.Hash... it's always a hash of ev.Slot, so a bit redundant
+		})
 	}
 
-	return deposits, nil
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrap(err, "failed to iterate event data for Plasma deposit")
+	}
+
+	return depositEvents, nil
 }
 
 // waitForTxReceipt waits for a tx to be confirmed.

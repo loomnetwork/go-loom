@@ -21,15 +21,38 @@ It has these top-level messages:
 	SubmitBlockToMainnetResponse
 	PlasmaTxRequest
 	PlasmaTxResponse
+	GetPlasmaTxRequest
+	GetPlasmaTxResponse
+	GetUserSlotsRequest
+	GetUserSlotsResponse
 	DepositRequest
 	DepositResponse
+	PlasmaCashCoinResetRequest
 	PlasmaCashExitCoinRequest
 	PlasmaCashWithdrawCoinRequest
-	Pending
+	PlasmaCashRequest
+	PlasmaCashRequestBatch
+	GetPendingTxsRequest
+	PendingTxs
 	PlasmaCashParams
 	PlasmaCashInitRequest
 	PlasmaCashBalanceOfRequest
 	PlasmaCashBalanceOfResponse
+	PlasmaCashUpdateOracleRequest
+	PlasmaCashRequestBatchTally
+	PlasmaCashGetRequestBatchTallyRequest
+	PlasmaCashEventMeta
+	PlasmaDepositEvent
+	PlasmaCashCoinResetEvent
+	PlasmaCashStartedExitEvent
+	PlasmaCashFinalizedExitEvent
+	PlasmaCashWithdrewEvent
+	PlasmaCashTransferConfirmed
+	PlasmaCashExitConfirmedEvent
+	PlasmaCashResetConfirmedEvent
+	PlasmaCashWithdrawConfirmedEvent
+	PlasmaCashDepositConfirmedEvent
+	PlasmaCashSubmitBlockConfirmedEvent
 */
 package plasma_cash
 
@@ -123,8 +146,6 @@ func (m *PlasmaCashCoin) GetContract() *types.Address {
 
 type PlasmaCashAccount struct {
 	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
-	// Address of ERC721 contract the tokens in the Plasma coins originated from
-	Contract *types.Address `protobuf:"bytes,2,opt,name=contract" json:"contract,omitempty"`
 	// Plasma coins in this account, identified by their slot number.
 	Slots []uint64 `protobuf:"varint,3,rep,packed,name=slots" json:"slots,omitempty"`
 }
@@ -137,13 +158,6 @@ func (*PlasmaCashAccount) Descriptor() ([]byte, []int) { return fileDescriptorPl
 func (m *PlasmaCashAccount) GetOwner() *types.Address {
 	if m != nil {
 		return m.Owner
-	}
-	return nil
-}
-
-func (m *PlasmaCashAccount) GetContract() *types.Address {
-	if m != nil {
-		return m.Contract
 	}
 	return nil
 }
@@ -418,6 +432,78 @@ func (m *PlasmaTxResponse) String() string            { return proto.CompactText
 func (*PlasmaTxResponse) ProtoMessage()               {}
 func (*PlasmaTxResponse) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{12} }
 
+type GetPlasmaTxRequest struct {
+	Slot        uint64         `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
+	BlockHeight *types.BigUInt `protobuf:"bytes,2,opt,name=block_height,json=blockHeight" json:"block_height,omitempty"`
+}
+
+func (m *GetPlasmaTxRequest) Reset()                    { *m = GetPlasmaTxRequest{} }
+func (m *GetPlasmaTxRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetPlasmaTxRequest) ProtoMessage()               {}
+func (*GetPlasmaTxRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{13} }
+
+func (m *GetPlasmaTxRequest) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+func (m *GetPlasmaTxRequest) GetBlockHeight() *types.BigUInt {
+	if m != nil {
+		return m.BlockHeight
+	}
+	return nil
+}
+
+type GetPlasmaTxResponse struct {
+	Plasmatx *PlasmaTx `protobuf:"bytes,1,opt,name=plasmatx" json:"plasmatx,omitempty"`
+}
+
+func (m *GetPlasmaTxResponse) Reset()                    { *m = GetPlasmaTxResponse{} }
+func (m *GetPlasmaTxResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetPlasmaTxResponse) ProtoMessage()               {}
+func (*GetPlasmaTxResponse) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{14} }
+
+func (m *GetPlasmaTxResponse) GetPlasmatx() *PlasmaTx {
+	if m != nil {
+		return m.Plasmatx
+	}
+	return nil
+}
+
+type GetUserSlotsRequest struct {
+	From *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
+}
+
+func (m *GetUserSlotsRequest) Reset()                    { *m = GetUserSlotsRequest{} }
+func (m *GetUserSlotsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetUserSlotsRequest) ProtoMessage()               {}
+func (*GetUserSlotsRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{15} }
+
+func (m *GetUserSlotsRequest) GetFrom() *types.Address {
+	if m != nil {
+		return m.From
+	}
+	return nil
+}
+
+type GetUserSlotsResponse struct {
+	Slots []uint64 `protobuf:"varint,1,rep,packed,name=slots" json:"slots,omitempty"`
+}
+
+func (m *GetUserSlotsResponse) Reset()                    { *m = GetUserSlotsResponse{} }
+func (m *GetUserSlotsResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetUserSlotsResponse) ProtoMessage()               {}
+func (*GetUserSlotsResponse) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{16} }
+
+func (m *GetUserSlotsResponse) GetSlots() []uint64 {
+	if m != nil {
+		return m.Slots
+	}
+	return nil
+}
+
 // This only originates from the validator
 type DepositRequest struct {
 	Slot         uint64         `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
@@ -433,7 +519,7 @@ type DepositRequest struct {
 func (m *DepositRequest) Reset()                    { *m = DepositRequest{} }
 func (m *DepositRequest) String() string            { return proto.CompactTextString(m) }
 func (*DepositRequest) ProtoMessage()               {}
-func (*DepositRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{13} }
+func (*DepositRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{17} }
 
 func (m *DepositRequest) GetSlot() uint64 {
 	if m != nil {
@@ -476,7 +562,33 @@ type DepositResponse struct {
 func (m *DepositResponse) Reset()                    { *m = DepositResponse{} }
 func (m *DepositResponse) String() string            { return proto.CompactTextString(m) }
 func (*DepositResponse) ProtoMessage()               {}
-func (*DepositResponse) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{14} }
+func (*DepositResponse) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{18} }
+
+type PlasmaCashCoinResetRequest struct {
+	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Slot  uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
+}
+
+func (m *PlasmaCashCoinResetRequest) Reset()         { *m = PlasmaCashCoinResetRequest{} }
+func (m *PlasmaCashCoinResetRequest) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashCoinResetRequest) ProtoMessage()    {}
+func (*PlasmaCashCoinResetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{19}
+}
+
+func (m *PlasmaCashCoinResetRequest) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashCoinResetRequest) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
 
 type PlasmaCashExitCoinRequest struct {
 	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
@@ -487,7 +599,7 @@ func (m *PlasmaCashExitCoinRequest) Reset()         { *m = PlasmaCashExitCoinReq
 func (m *PlasmaCashExitCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashExitCoinRequest) ProtoMessage()    {}
 func (*PlasmaCashExitCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorPlasmaCash, []int{15}
+	return fileDescriptorPlasmaCash, []int{20}
 }
 
 func (m *PlasmaCashExitCoinRequest) GetOwner() *types.Address {
@@ -513,7 +625,7 @@ func (m *PlasmaCashWithdrawCoinRequest) Reset()         { *m = PlasmaCashWithdra
 func (m *PlasmaCashWithdrawCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashWithdrawCoinRequest) ProtoMessage()    {}
 func (*PlasmaCashWithdrawCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorPlasmaCash, []int{16}
+	return fileDescriptorPlasmaCash, []int{21}
 }
 
 func (m *PlasmaCashWithdrawCoinRequest) GetOwner() *types.Address {
@@ -530,16 +642,233 @@ func (m *PlasmaCashWithdrawCoinRequest) GetSlot() uint64 {
 	return 0
 }
 
-type Pending struct {
+type PlasmaCashRequest struct {
+	// Types that are valid to be assigned to Data:
+	//	*PlasmaCashRequest_Deposit
+	//	*PlasmaCashRequest_CoinReset
+	//	*PlasmaCashRequest_StartedExit
+	//	*PlasmaCashRequest_Withdraw
+	Data isPlasmaCashRequest_Data `protobuf_oneof:"data"`
+	Meta *PlasmaCashEventMeta     `protobuf:"bytes,5,opt,name=meta" json:"meta,omitempty"`
+}
+
+func (m *PlasmaCashRequest) Reset()                    { *m = PlasmaCashRequest{} }
+func (m *PlasmaCashRequest) String() string            { return proto.CompactTextString(m) }
+func (*PlasmaCashRequest) ProtoMessage()               {}
+func (*PlasmaCashRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{22} }
+
+type isPlasmaCashRequest_Data interface {
+	isPlasmaCashRequest_Data()
+}
+
+type PlasmaCashRequest_Deposit struct {
+	Deposit *DepositRequest `protobuf:"bytes,1,opt,name=deposit,oneof"`
+}
+type PlasmaCashRequest_CoinReset struct {
+	CoinReset *PlasmaCashCoinResetRequest `protobuf:"bytes,2,opt,name=coin_reset,json=coinReset,oneof"`
+}
+type PlasmaCashRequest_StartedExit struct {
+	StartedExit *PlasmaCashExitCoinRequest `protobuf:"bytes,3,opt,name=started_exit,json=startedExit,oneof"`
+}
+type PlasmaCashRequest_Withdraw struct {
+	Withdraw *PlasmaCashWithdrawCoinRequest `protobuf:"bytes,4,opt,name=withdraw,oneof"`
+}
+
+func (*PlasmaCashRequest_Deposit) isPlasmaCashRequest_Data()     {}
+func (*PlasmaCashRequest_CoinReset) isPlasmaCashRequest_Data()   {}
+func (*PlasmaCashRequest_StartedExit) isPlasmaCashRequest_Data() {}
+func (*PlasmaCashRequest_Withdraw) isPlasmaCashRequest_Data()    {}
+
+func (m *PlasmaCashRequest) GetData() isPlasmaCashRequest_Data {
+	if m != nil {
+		return m.Data
+	}
+	return nil
+}
+
+func (m *PlasmaCashRequest) GetDeposit() *DepositRequest {
+	if x, ok := m.GetData().(*PlasmaCashRequest_Deposit); ok {
+		return x.Deposit
+	}
+	return nil
+}
+
+func (m *PlasmaCashRequest) GetCoinReset() *PlasmaCashCoinResetRequest {
+	if x, ok := m.GetData().(*PlasmaCashRequest_CoinReset); ok {
+		return x.CoinReset
+	}
+	return nil
+}
+
+func (m *PlasmaCashRequest) GetStartedExit() *PlasmaCashExitCoinRequest {
+	if x, ok := m.GetData().(*PlasmaCashRequest_StartedExit); ok {
+		return x.StartedExit
+	}
+	return nil
+}
+
+func (m *PlasmaCashRequest) GetWithdraw() *PlasmaCashWithdrawCoinRequest {
+	if x, ok := m.GetData().(*PlasmaCashRequest_Withdraw); ok {
+		return x.Withdraw
+	}
+	return nil
+}
+
+func (m *PlasmaCashRequest) GetMeta() *PlasmaCashEventMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*PlasmaCashRequest) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _PlasmaCashRequest_OneofMarshaler, _PlasmaCashRequest_OneofUnmarshaler, _PlasmaCashRequest_OneofSizer, []interface{}{
+		(*PlasmaCashRequest_Deposit)(nil),
+		(*PlasmaCashRequest_CoinReset)(nil),
+		(*PlasmaCashRequest_StartedExit)(nil),
+		(*PlasmaCashRequest_Withdraw)(nil),
+	}
+}
+
+func _PlasmaCashRequest_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*PlasmaCashRequest)
+	// data
+	switch x := m.Data.(type) {
+	case *PlasmaCashRequest_Deposit:
+		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Deposit); err != nil {
+			return err
+		}
+	case *PlasmaCashRequest_CoinReset:
+		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.CoinReset); err != nil {
+			return err
+		}
+	case *PlasmaCashRequest_StartedExit:
+		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.StartedExit); err != nil {
+			return err
+		}
+	case *PlasmaCashRequest_Withdraw:
+		_ = b.EncodeVarint(4<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Withdraw); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("PlasmaCashRequest.Data has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _PlasmaCashRequest_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*PlasmaCashRequest)
+	switch tag {
+	case 1: // data.deposit
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(DepositRequest)
+		err := b.DecodeMessage(msg)
+		m.Data = &PlasmaCashRequest_Deposit{msg}
+		return true, err
+	case 2: // data.coin_reset
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(PlasmaCashCoinResetRequest)
+		err := b.DecodeMessage(msg)
+		m.Data = &PlasmaCashRequest_CoinReset{msg}
+		return true, err
+	case 3: // data.started_exit
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(PlasmaCashExitCoinRequest)
+		err := b.DecodeMessage(msg)
+		m.Data = &PlasmaCashRequest_StartedExit{msg}
+		return true, err
+	case 4: // data.withdraw
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(PlasmaCashWithdrawCoinRequest)
+		err := b.DecodeMessage(msg)
+		m.Data = &PlasmaCashRequest_Withdraw{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _PlasmaCashRequest_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*PlasmaCashRequest)
+	// data
+	switch x := m.Data.(type) {
+	case *PlasmaCashRequest_Deposit:
+		s := proto.Size(x.Deposit)
+		n += proto.SizeVarint(1<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *PlasmaCashRequest_CoinReset:
+		s := proto.Size(x.CoinReset)
+		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *PlasmaCashRequest_StartedExit:
+		s := proto.Size(x.StartedExit)
+		n += proto.SizeVarint(3<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *PlasmaCashRequest_Withdraw:
+		s := proto.Size(x.Withdraw)
+		n += proto.SizeVarint(4<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type PlasmaCashRequestBatch struct {
+	Requests []*PlasmaCashRequest `protobuf:"bytes,1,rep,name=requests" json:"requests,omitempty"`
+}
+
+func (m *PlasmaCashRequestBatch) Reset()         { *m = PlasmaCashRequestBatch{} }
+func (m *PlasmaCashRequestBatch) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashRequestBatch) ProtoMessage()    {}
+func (*PlasmaCashRequestBatch) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{23}
+}
+
+func (m *PlasmaCashRequestBatch) GetRequests() []*PlasmaCashRequest {
+	if m != nil {
+		return m.Requests
+	}
+	return nil
+}
+
+type GetPendingTxsRequest struct {
+}
+
+func (m *GetPendingTxsRequest) Reset()                    { *m = GetPendingTxsRequest{} }
+func (m *GetPendingTxsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetPendingTxsRequest) ProtoMessage()               {}
+func (*GetPendingTxsRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{24} }
+
+type PendingTxs struct {
 	Transactions []*PlasmaTx `protobuf:"bytes,1,rep,name=transactions" json:"transactions,omitempty"`
 }
 
-func (m *Pending) Reset()                    { *m = Pending{} }
-func (m *Pending) String() string            { return proto.CompactTextString(m) }
-func (*Pending) ProtoMessage()               {}
-func (*Pending) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{17} }
+func (m *PendingTxs) Reset()                    { *m = PendingTxs{} }
+func (m *PendingTxs) String() string            { return proto.CompactTextString(m) }
+func (*PendingTxs) ProtoMessage()               {}
+func (*PendingTxs) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{25} }
 
-func (m *Pending) GetTransactions() []*PlasmaTx {
+func (m *PendingTxs) GetTransactions() []*PlasmaTx {
 	if m != nil {
 		return m.Transactions
 	}
@@ -554,7 +883,7 @@ type PlasmaCashParams struct {
 func (m *PlasmaCashParams) Reset()                    { *m = PlasmaCashParams{} }
 func (m *PlasmaCashParams) String() string            { return proto.CompactTextString(m) }
 func (*PlasmaCashParams) ProtoMessage()               {}
-func (*PlasmaCashParams) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{18} }
+func (*PlasmaCashParams) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{26} }
 
 func (m *PlasmaCashParams) GetBlockInterval() uint64 {
 	if m != nil {
@@ -565,16 +894,24 @@ func (m *PlasmaCashParams) GetBlockInterval() uint64 {
 
 type PlasmaCashInitRequest struct {
 	Params *PlasmaCashParams `protobuf:"bytes,1,opt,name=params" json:"params,omitempty"`
+	Oracle *types.Address    `protobuf:"bytes,2,opt,name=oracle" json:"oracle,omitempty"`
 }
 
 func (m *PlasmaCashInitRequest) Reset()                    { *m = PlasmaCashInitRequest{} }
 func (m *PlasmaCashInitRequest) String() string            { return proto.CompactTextString(m) }
 func (*PlasmaCashInitRequest) ProtoMessage()               {}
-func (*PlasmaCashInitRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{19} }
+func (*PlasmaCashInitRequest) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{27} }
 
 func (m *PlasmaCashInitRequest) GetParams() *PlasmaCashParams {
 	if m != nil {
 		return m.Params
+	}
+	return nil
+}
+
+func (m *PlasmaCashInitRequest) GetOracle() *types.Address {
+	if m != nil {
+		return m.Oracle
 	}
 	return nil
 }
@@ -588,7 +925,7 @@ func (m *PlasmaCashBalanceOfRequest) Reset()         { *m = PlasmaCashBalanceOfR
 func (m *PlasmaCashBalanceOfRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashBalanceOfRequest) ProtoMessage()    {}
 func (*PlasmaCashBalanceOfRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptorPlasmaCash, []int{20}
+	return fileDescriptorPlasmaCash, []int{28}
 }
 
 func (m *PlasmaCashBalanceOfRequest) GetOwner() *types.Address {
@@ -613,12 +950,513 @@ func (m *PlasmaCashBalanceOfResponse) Reset()         { *m = PlasmaCashBalanceOf
 func (m *PlasmaCashBalanceOfResponse) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashBalanceOfResponse) ProtoMessage()    {}
 func (*PlasmaCashBalanceOfResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptorPlasmaCash, []int{21}
+	return fileDescriptorPlasmaCash, []int{29}
 }
 
 func (m *PlasmaCashBalanceOfResponse) GetCoins() []*PlasmaCashCoin {
 	if m != nil {
 		return m.Coins
+	}
+	return nil
+}
+
+type PlasmaCashUpdateOracleRequest struct {
+	NewOracle *types.Address `protobuf:"bytes,1,opt,name=new_oracle,json=newOracle" json:"new_oracle,omitempty"`
+}
+
+func (m *PlasmaCashUpdateOracleRequest) Reset()         { *m = PlasmaCashUpdateOracleRequest{} }
+func (m *PlasmaCashUpdateOracleRequest) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashUpdateOracleRequest) ProtoMessage()    {}
+func (*PlasmaCashUpdateOracleRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{30}
+}
+
+func (m *PlasmaCashUpdateOracleRequest) GetNewOracle() *types.Address {
+	if m != nil {
+		return m.NewOracle
+	}
+	return nil
+}
+
+type PlasmaCashRequestBatchTally struct {
+	LastSeenBlockNumber uint64 `protobuf:"varint,1,opt,name=last_seen_block_number,json=lastSeenBlockNumber,proto3" json:"last_seen_block_number,omitempty"`
+	LastSeenTxIndex     uint64 `protobuf:"varint,2,opt,name=last_seen_tx_index,json=lastSeenTxIndex,proto3" json:"last_seen_tx_index,omitempty"`
+	LastSeenLogIndex    uint64 `protobuf:"varint,3,opt,name=last_seen_log_index,json=lastSeenLogIndex,proto3" json:"last_seen_log_index,omitempty"`
+}
+
+func (m *PlasmaCashRequestBatchTally) Reset()         { *m = PlasmaCashRequestBatchTally{} }
+func (m *PlasmaCashRequestBatchTally) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashRequestBatchTally) ProtoMessage()    {}
+func (*PlasmaCashRequestBatchTally) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{31}
+}
+
+func (m *PlasmaCashRequestBatchTally) GetLastSeenBlockNumber() uint64 {
+	if m != nil {
+		return m.LastSeenBlockNumber
+	}
+	return 0
+}
+
+func (m *PlasmaCashRequestBatchTally) GetLastSeenTxIndex() uint64 {
+	if m != nil {
+		return m.LastSeenTxIndex
+	}
+	return 0
+}
+
+func (m *PlasmaCashRequestBatchTally) GetLastSeenLogIndex() uint64 {
+	if m != nil {
+		return m.LastSeenLogIndex
+	}
+	return 0
+}
+
+type PlasmaCashGetRequestBatchTallyRequest struct {
+}
+
+func (m *PlasmaCashGetRequestBatchTallyRequest) Reset()         { *m = PlasmaCashGetRequestBatchTallyRequest{} }
+func (m *PlasmaCashGetRequestBatchTallyRequest) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashGetRequestBatchTallyRequest) ProtoMessage()    {}
+func (*PlasmaCashGetRequestBatchTallyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{32}
+}
+
+type PlasmaCashEventMeta struct {
+	BlockNumber uint64 `protobuf:"varint,1,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
+	TxIndex     uint64 `protobuf:"varint,2,opt,name=tx_index,json=txIndex,proto3" json:"tx_index,omitempty"`
+	LogIndex    uint64 `protobuf:"varint,3,opt,name=log_index,json=logIndex,proto3" json:"log_index,omitempty"`
+}
+
+func (m *PlasmaCashEventMeta) Reset()                    { *m = PlasmaCashEventMeta{} }
+func (m *PlasmaCashEventMeta) String() string            { return proto.CompactTextString(m) }
+func (*PlasmaCashEventMeta) ProtoMessage()               {}
+func (*PlasmaCashEventMeta) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{33} }
+
+func (m *PlasmaCashEventMeta) GetBlockNumber() uint64 {
+	if m != nil {
+		return m.BlockNumber
+	}
+	return 0
+}
+
+func (m *PlasmaCashEventMeta) GetTxIndex() uint64 {
+	if m != nil {
+		return m.TxIndex
+	}
+	return 0
+}
+
+func (m *PlasmaCashEventMeta) GetLogIndex() uint64 {
+	if m != nil {
+		return m.LogIndex
+	}
+	return 0
+}
+
+type PlasmaDepositEvent struct {
+	Slot         uint64         `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
+	DepositBlock *types.BigUInt `protobuf:"bytes,2,opt,name=deposit_block,json=depositBlock" json:"deposit_block,omitempty"`
+	// For ERC20 this is the number of coins deposited, for ERC721 this is a token ID.
+	Denomination *types.BigUInt `protobuf:"bytes,3,opt,name=denomination" json:"denomination,omitempty"`
+	// Entity that made the deposit
+	From *types.Address `protobuf:"bytes,4,opt,name=from" json:"from,omitempty"`
+	// Contract from which the coins originated (i.e. the currency of the coins)
+	Contract *types.Address       `protobuf:"bytes,5,opt,name=contract" json:"contract,omitempty"`
+	Meta     *PlasmaCashEventMeta `protobuf:"bytes,6,opt,name=meta" json:"meta,omitempty"`
+}
+
+func (m *PlasmaDepositEvent) Reset()                    { *m = PlasmaDepositEvent{} }
+func (m *PlasmaDepositEvent) String() string            { return proto.CompactTextString(m) }
+func (*PlasmaDepositEvent) ProtoMessage()               {}
+func (*PlasmaDepositEvent) Descriptor() ([]byte, []int) { return fileDescriptorPlasmaCash, []int{34} }
+
+func (m *PlasmaDepositEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+func (m *PlasmaDepositEvent) GetDepositBlock() *types.BigUInt {
+	if m != nil {
+		return m.DepositBlock
+	}
+	return nil
+}
+
+func (m *PlasmaDepositEvent) GetDenomination() *types.BigUInt {
+	if m != nil {
+		return m.Denomination
+	}
+	return nil
+}
+
+func (m *PlasmaDepositEvent) GetFrom() *types.Address {
+	if m != nil {
+		return m.From
+	}
+	return nil
+}
+
+func (m *PlasmaDepositEvent) GetContract() *types.Address {
+	if m != nil {
+		return m.Contract
+	}
+	return nil
+}
+
+func (m *PlasmaDepositEvent) GetMeta() *PlasmaCashEventMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+type PlasmaCashCoinResetEvent struct {
+	Owner *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Slot  uint64               `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
+	Meta  *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta" json:"meta,omitempty"`
+}
+
+func (m *PlasmaCashCoinResetEvent) Reset()         { *m = PlasmaCashCoinResetEvent{} }
+func (m *PlasmaCashCoinResetEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashCoinResetEvent) ProtoMessage()    {}
+func (*PlasmaCashCoinResetEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{35}
+}
+
+func (m *PlasmaCashCoinResetEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashCoinResetEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+func (m *PlasmaCashCoinResetEvent) GetMeta() *PlasmaCashEventMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+type PlasmaCashStartedExitEvent struct {
+	Owner *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Slot  uint64               `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
+	Meta  *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta" json:"meta,omitempty"`
+}
+
+func (m *PlasmaCashStartedExitEvent) Reset()         { *m = PlasmaCashStartedExitEvent{} }
+func (m *PlasmaCashStartedExitEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashStartedExitEvent) ProtoMessage()    {}
+func (*PlasmaCashStartedExitEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{36}
+}
+
+func (m *PlasmaCashStartedExitEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashStartedExitEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+func (m *PlasmaCashStartedExitEvent) GetMeta() *PlasmaCashEventMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+type PlasmaCashFinalizedExitEvent struct {
+	Owner *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Slot  uint64               `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
+	Meta  *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta" json:"meta,omitempty"`
+}
+
+func (m *PlasmaCashFinalizedExitEvent) Reset()         { *m = PlasmaCashFinalizedExitEvent{} }
+func (m *PlasmaCashFinalizedExitEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashFinalizedExitEvent) ProtoMessage()    {}
+func (*PlasmaCashFinalizedExitEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{37}
+}
+
+func (m *PlasmaCashFinalizedExitEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashFinalizedExitEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+func (m *PlasmaCashFinalizedExitEvent) GetMeta() *PlasmaCashEventMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+type PlasmaCashWithdrewEvent struct {
+	Owner        *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Mode         uint32               `protobuf:"varint,2,opt,name=mode,proto3" json:"mode,omitempty"`
+	Contract     *types.Address       `protobuf:"bytes,3,opt,name=contract" json:"contract,omitempty"`
+	Uid          *types.BigUInt       `protobuf:"bytes,4,opt,name=uid" json:"uid,omitempty"`
+	Denomination *types.BigUInt       `protobuf:"bytes,5,opt,name=denomination" json:"denomination,omitempty"`
+	Slot         uint64               `protobuf:"varint,6,opt,name=slot,proto3" json:"slot,omitempty"`
+	Meta         *PlasmaCashEventMeta `protobuf:"bytes,7,opt,name=meta" json:"meta,omitempty"`
+}
+
+func (m *PlasmaCashWithdrewEvent) Reset()         { *m = PlasmaCashWithdrewEvent{} }
+func (m *PlasmaCashWithdrewEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashWithdrewEvent) ProtoMessage()    {}
+func (*PlasmaCashWithdrewEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{38}
+}
+
+func (m *PlasmaCashWithdrewEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashWithdrewEvent) GetMode() uint32 {
+	if m != nil {
+		return m.Mode
+	}
+	return 0
+}
+
+func (m *PlasmaCashWithdrewEvent) GetContract() *types.Address {
+	if m != nil {
+		return m.Contract
+	}
+	return nil
+}
+
+func (m *PlasmaCashWithdrewEvent) GetUid() *types.BigUInt {
+	if m != nil {
+		return m.Uid
+	}
+	return nil
+}
+
+func (m *PlasmaCashWithdrewEvent) GetDenomination() *types.BigUInt {
+	if m != nil {
+		return m.Denomination
+	}
+	return nil
+}
+
+func (m *PlasmaCashWithdrewEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+func (m *PlasmaCashWithdrewEvent) GetMeta() *PlasmaCashEventMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+type PlasmaCashTransferConfirmed struct {
+	From *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
+	To   *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
+	Slot uint64         `protobuf:"varint,3,opt,name=slot,proto3" json:"slot,omitempty"`
+}
+
+func (m *PlasmaCashTransferConfirmed) Reset()         { *m = PlasmaCashTransferConfirmed{} }
+func (m *PlasmaCashTransferConfirmed) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashTransferConfirmed) ProtoMessage()    {}
+func (*PlasmaCashTransferConfirmed) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{39}
+}
+
+func (m *PlasmaCashTransferConfirmed) GetFrom() *types.Address {
+	if m != nil {
+		return m.From
+	}
+	return nil
+}
+
+func (m *PlasmaCashTransferConfirmed) GetTo() *types.Address {
+	if m != nil {
+		return m.To
+	}
+	return nil
+}
+
+func (m *PlasmaCashTransferConfirmed) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+type PlasmaCashExitConfirmedEvent struct {
+	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Slot  uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
+}
+
+func (m *PlasmaCashExitConfirmedEvent) Reset()         { *m = PlasmaCashExitConfirmedEvent{} }
+func (m *PlasmaCashExitConfirmedEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashExitConfirmedEvent) ProtoMessage()    {}
+func (*PlasmaCashExitConfirmedEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{40}
+}
+
+func (m *PlasmaCashExitConfirmedEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashExitConfirmedEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+type PlasmaCashResetConfirmedEvent struct {
+	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Slot  uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
+}
+
+func (m *PlasmaCashResetConfirmedEvent) Reset()         { *m = PlasmaCashResetConfirmedEvent{} }
+func (m *PlasmaCashResetConfirmedEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashResetConfirmedEvent) ProtoMessage()    {}
+func (*PlasmaCashResetConfirmedEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{41}
+}
+
+func (m *PlasmaCashResetConfirmedEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashResetConfirmedEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+type PlasmaCashWithdrawConfirmedEvent struct {
+	Coin  *PlasmaCashCoin `protobuf:"bytes,1,opt,name=coin" json:"coin,omitempty"`
+	Owner *types.Address  `protobuf:"bytes,2,opt,name=owner" json:"owner,omitempty"`
+	Slot  uint64          `protobuf:"varint,3,opt,name=slot,proto3" json:"slot,omitempty"`
+}
+
+func (m *PlasmaCashWithdrawConfirmedEvent) Reset()         { *m = PlasmaCashWithdrawConfirmedEvent{} }
+func (m *PlasmaCashWithdrawConfirmedEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashWithdrawConfirmedEvent) ProtoMessage()    {}
+func (*PlasmaCashWithdrawConfirmedEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{42}
+}
+
+func (m *PlasmaCashWithdrawConfirmedEvent) GetCoin() *PlasmaCashCoin {
+	if m != nil {
+		return m.Coin
+	}
+	return nil
+}
+
+func (m *PlasmaCashWithdrawConfirmedEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *PlasmaCashWithdrawConfirmedEvent) GetSlot() uint64 {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+type PlasmaCashDepositConfirmedEvent struct {
+	Coin  *PlasmaCashCoin `protobuf:"bytes,1,opt,name=coin" json:"coin,omitempty"`
+	Owner *types.Address  `protobuf:"bytes,2,opt,name=owner" json:"owner,omitempty"`
+}
+
+func (m *PlasmaCashDepositConfirmedEvent) Reset()         { *m = PlasmaCashDepositConfirmedEvent{} }
+func (m *PlasmaCashDepositConfirmedEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashDepositConfirmedEvent) ProtoMessage()    {}
+func (*PlasmaCashDepositConfirmedEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{43}
+}
+
+func (m *PlasmaCashDepositConfirmedEvent) GetCoin() *PlasmaCashCoin {
+	if m != nil {
+		return m.Coin
+	}
+	return nil
+}
+
+func (m *PlasmaCashDepositConfirmedEvent) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+type PlasmaCashSubmitBlockConfirmedEvent struct {
+	NumberOfPendingTransactions uint64         `protobuf:"varint,1,opt,name=number_of_pending_transactions,json=numberOfPendingTransactions,proto3" json:"number_of_pending_transactions,omitempty"`
+	CurrentBlockHeight          *types.BigUInt `protobuf:"bytes,2,opt,name=current_block_height,json=currentBlockHeight" json:"current_block_height,omitempty"`
+	MerkleHash                  []byte         `protobuf:"bytes,3,opt,name=merkle_hash,json=merkleHash,proto3" json:"merkle_hash,omitempty"`
+}
+
+func (m *PlasmaCashSubmitBlockConfirmedEvent) Reset()         { *m = PlasmaCashSubmitBlockConfirmedEvent{} }
+func (m *PlasmaCashSubmitBlockConfirmedEvent) String() string { return proto.CompactTextString(m) }
+func (*PlasmaCashSubmitBlockConfirmedEvent) ProtoMessage()    {}
+func (*PlasmaCashSubmitBlockConfirmedEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptorPlasmaCash, []int{44}
+}
+
+func (m *PlasmaCashSubmitBlockConfirmedEvent) GetNumberOfPendingTransactions() uint64 {
+	if m != nil {
+		return m.NumberOfPendingTransactions
+	}
+	return 0
+}
+
+func (m *PlasmaCashSubmitBlockConfirmedEvent) GetCurrentBlockHeight() *types.BigUInt {
+	if m != nil {
+		return m.CurrentBlockHeight
+	}
+	return nil
+}
+
+func (m *PlasmaCashSubmitBlockConfirmedEvent) GetMerkleHash() []byte {
+	if m != nil {
+		return m.MerkleHash
 	}
 	return nil
 }
@@ -637,15 +1475,38 @@ func init() {
 	proto.RegisterType((*SubmitBlockToMainnetResponse)(nil), "SubmitBlockToMainnetResponse")
 	proto.RegisterType((*PlasmaTxRequest)(nil), "PlasmaTxRequest")
 	proto.RegisterType((*PlasmaTxResponse)(nil), "PlasmaTxResponse")
+	proto.RegisterType((*GetPlasmaTxRequest)(nil), "GetPlasmaTxRequest")
+	proto.RegisterType((*GetPlasmaTxResponse)(nil), "GetPlasmaTxResponse")
+	proto.RegisterType((*GetUserSlotsRequest)(nil), "GetUserSlotsRequest")
+	proto.RegisterType((*GetUserSlotsResponse)(nil), "GetUserSlotsResponse")
 	proto.RegisterType((*DepositRequest)(nil), "DepositRequest")
 	proto.RegisterType((*DepositResponse)(nil), "DepositResponse")
+	proto.RegisterType((*PlasmaCashCoinResetRequest)(nil), "PlasmaCashCoinResetRequest")
 	proto.RegisterType((*PlasmaCashExitCoinRequest)(nil), "PlasmaCashExitCoinRequest")
 	proto.RegisterType((*PlasmaCashWithdrawCoinRequest)(nil), "PlasmaCashWithdrawCoinRequest")
-	proto.RegisterType((*Pending)(nil), "Pending")
+	proto.RegisterType((*PlasmaCashRequest)(nil), "PlasmaCashRequest")
+	proto.RegisterType((*PlasmaCashRequestBatch)(nil), "PlasmaCashRequestBatch")
+	proto.RegisterType((*GetPendingTxsRequest)(nil), "GetPendingTxsRequest")
+	proto.RegisterType((*PendingTxs)(nil), "PendingTxs")
 	proto.RegisterType((*PlasmaCashParams)(nil), "PlasmaCashParams")
 	proto.RegisterType((*PlasmaCashInitRequest)(nil), "PlasmaCashInitRequest")
 	proto.RegisterType((*PlasmaCashBalanceOfRequest)(nil), "PlasmaCashBalanceOfRequest")
 	proto.RegisterType((*PlasmaCashBalanceOfResponse)(nil), "PlasmaCashBalanceOfResponse")
+	proto.RegisterType((*PlasmaCashUpdateOracleRequest)(nil), "PlasmaCashUpdateOracleRequest")
+	proto.RegisterType((*PlasmaCashRequestBatchTally)(nil), "PlasmaCashRequestBatchTally")
+	proto.RegisterType((*PlasmaCashGetRequestBatchTallyRequest)(nil), "PlasmaCashGetRequestBatchTallyRequest")
+	proto.RegisterType((*PlasmaCashEventMeta)(nil), "PlasmaCashEventMeta")
+	proto.RegisterType((*PlasmaDepositEvent)(nil), "PlasmaDepositEvent")
+	proto.RegisterType((*PlasmaCashCoinResetEvent)(nil), "PlasmaCashCoinResetEvent")
+	proto.RegisterType((*PlasmaCashStartedExitEvent)(nil), "PlasmaCashStartedExitEvent")
+	proto.RegisterType((*PlasmaCashFinalizedExitEvent)(nil), "PlasmaCashFinalizedExitEvent")
+	proto.RegisterType((*PlasmaCashWithdrewEvent)(nil), "PlasmaCashWithdrewEvent")
+	proto.RegisterType((*PlasmaCashTransferConfirmed)(nil), "PlasmaCashTransferConfirmed")
+	proto.RegisterType((*PlasmaCashExitConfirmedEvent)(nil), "PlasmaCashExitConfirmedEvent")
+	proto.RegisterType((*PlasmaCashResetConfirmedEvent)(nil), "PlasmaCashResetConfirmedEvent")
+	proto.RegisterType((*PlasmaCashWithdrawConfirmedEvent)(nil), "PlasmaCashWithdrawConfirmedEvent")
+	proto.RegisterType((*PlasmaCashDepositConfirmedEvent)(nil), "PlasmaCashDepositConfirmedEvent")
+	proto.RegisterType((*PlasmaCashSubmitBlockConfirmedEvent)(nil), "PlasmaCashSubmitBlockConfirmedEvent")
 	proto.RegisterEnum("PlasmaCashCoinState", PlasmaCashCoinState_name, PlasmaCashCoinState_value)
 }
 
@@ -654,63 +1515,104 @@ func init() {
 }
 
 var fileDescriptorPlasmaCash = []byte{
-	// 926 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x56, 0x5f, 0x6f, 0x22, 0x37,
-	0x10, 0xef, 0x42, 0x20, 0x30, 0xfc, 0x8d, 0x7b, 0x6d, 0x69, 0x2e, 0xd7, 0xa0, 0x55, 0x23, 0xd1,
-	0x53, 0x03, 0x55, 0x4e, 0xaa, 0xae, 0x52, 0xa5, 0x2a, 0x04, 0x94, 0xd0, 0xde, 0x05, 0xb4, 0x49,
-	0x95, 0xbe, 0x21, 0xb3, 0x38, 0x60, 0x01, 0xf6, 0x76, 0xed, 0x3d, 0xd2, 0x2f, 0xd2, 0xef, 0xd3,
-	0x87, 0xbe, 0xf7, 0x13, 0xe4, 0x21, 0x9f, 0xa4, 0x5a, 0xdb, 0xb0, 0xcb, 0x86, 0xf4, 0x4e, 0xbd,
-	0x17, 0xe4, 0x99, 0xdf, 0xfc, 0xf1, 0xfc, 0xc6, 0x33, 0x0b, 0xfc, 0x3c, 0xa1, 0x72, 0x1a, 0x8c,
-	0x9a, 0x2e, 0x5f, 0xb4, 0xe6, 0x9c, 0x2f, 0x18, 0x91, 0x4b, 0xee, 0xcf, 0x5a, 0x13, 0x7e, 0x1c,
-	0x8a, 0xad, 0x51, 0x40, 0xe7, 0x92, 0xb2, 0x96, 0xfc, 0xc3, 0x23, 0xa2, 0xe5, 0xcd, 0xb1, 0x58,
-	0xe0, 0xa1, 0x8b, 0xc5, 0x34, 0x7e, 0x6e, 0x7a, 0x3e, 0x97, 0x7c, 0xff, 0x38, 0x16, 0x6b, 0xc2,
-	0x27, 0xbc, 0xa5, 0xd4, 0xa3, 0xe0, 0x56, 0x49, 0x4a, 0x50, 0x27, 0x63, 0xfe, 0xdd, 0x7b, 0x52,
-	0xeb, 0x94, 0xea, 0x57, 0x7b, 0xd8, 0x7f, 0x5a, 0x50, 0x1e, 0xa8, 0xb4, 0x67, 0x58, 0x4c, 0xcf,
-	0x38, 0x65, 0x08, 0xc1, 0x8e, 0x98, 0x73, 0x59, 0xb3, 0xea, 0x56, 0x63, 0xc7, 0x51, 0x67, 0xf4,
-	0x12, 0x32, 0x42, 0x62, 0x49, 0x6a, 0xa9, 0xba, 0xd5, 0x28, 0x9f, 0x3c, 0x6b, 0x6e, 0xfa, 0x5c,
-	0x85, 0x98, 0xa3, 0x4d, 0xd0, 0x57, 0x90, 0x91, 0x7c, 0x46, 0x58, 0x2d, 0x5d, 0xb7, 0x1a, 0x85,
-	0x93, 0x5c, 0xb3, 0x4d, 0x27, 0xbf, 0xf6, 0x98, 0x74, 0xb4, 0x1a, 0x7d, 0x0d, 0x39, 0x97, 0x33,
-	0xe9, 0x63, 0x57, 0xd6, 0x76, 0x8c, 0xc9, 0xe9, 0x78, 0xec, 0x13, 0x21, 0x9c, 0x35, 0x62, 0x73,
-	0xd8, 0x8b, 0x72, 0x9c, 0xba, 0x2e, 0x0f, 0x98, 0x0c, 0x43, 0xf3, 0x25, 0x23, 0xbe, 0xba, 0x5b,
-	0xdc, 0x4f, 0xab, 0x37, 0x42, 0xa7, 0x9e, 0x0a, 0x8d, 0x9e, 0x41, 0x26, 0x2c, 0x4a, 0xd4, 0xd2,
-	0xf5, 0x74, 0x63, 0xc7, 0xd1, 0x82, 0xfd, 0x97, 0x05, 0x05, 0x9d, 0xb1, 0x3d, 0xe7, 0xee, 0x0c,
-	0xed, 0x43, 0x3a, 0xa0, 0xe3, 0x75, 0xa6, 0x55, 0x11, 0xa1, 0x12, 0x1d, 0x43, 0x51, 0xfa, 0x98,
-	0x09, 0xec, 0x4a, 0xca, 0x99, 0xa8, 0xa5, 0xea, 0xe9, 0x46, 0xe1, 0x24, 0x6f, 0x58, 0xb9, 0xbe,
-	0x73, 0x36, 0x60, 0x74, 0x00, 0x79, 0x41, 0x27, 0x0c, 0xcb, 0xc0, 0x27, 0x8a, 0x95, 0xa2, 0x13,
-	0x29, 0xd0, 0x21, 0x14, 0x16, 0xc4, 0x9f, 0xcd, 0xc9, 0x70, 0x8a, 0xc5, 0x54, 0x51, 0x52, 0x74,
-	0x40, 0xab, 0x2e, 0xb0, 0x98, 0x86, 0x0d, 0x51, 0x48, 0x46, 0x21, 0xea, 0x1c, 0xd6, 0xe0, 0xf9,
-	0x9c, 0xdf, 0xd6, 0xb2, 0x4a, 0xa9, 0x05, 0xfb, 0x9f, 0x14, 0xe4, 0x56, 0x77, 0xd8, 0xda, 0xc7,
-	0x36, 0x94, 0x3d, 0x9f, 0xbc, 0xa3, 0x3c, 0x10, 0xc3, 0x51, 0x58, 0xe6, 0x9a, 0x26, 0x53, 0x5f,
-	0x7b, 0xef, 0xe1, 0xfe, 0xb0, 0x34, 0x30, 0x36, 0x8a, 0x09, 0xa7, 0xe4, 0xc5, 0x45, 0xf4, 0x2d,
-	0x14, 0xc7, 0x84, 0xf1, 0x05, 0x65, 0x38, 0x2c, 0xef, 0x51, 0x9b, 0x37, 0x50, 0xf4, 0x0a, 0xf2,
-	0x8c, 0x2c, 0x87, 0xba, 0x6d, 0x89, 0x76, 0xb7, 0x8b, 0x0f, 0xf7, 0x87, 0xb9, 0x4b, 0xb2, 0xec,
-	0x87, 0xa8, 0x93, 0x63, 0xe6, 0xb4, 0x49, 0x58, 0x26, 0x49, 0xd8, 0x8a, 0x8f, 0x6c, 0x8c, 0x8f,
-	0x04, 0x89, 0xbb, 0x8f, 0x48, 0xac, 0x43, 0x56, 0x10, 0x36, 0x26, 0x7e, 0x2d, 0x97, 0x78, 0x18,
-	0x46, 0x1f, 0x51, 0x9a, 0x8f, 0x53, 0x7a, 0xb3, 0x7a, 0x87, 0x6d, 0xce, 0x67, 0xbf, 0x10, 0xe2,
-	0x51, 0x36, 0x09, 0x69, 0x74, 0x03, 0xdf, 0x27, 0x4c, 0x0e, 0xa7, 0x84, 0x4e, 0xa6, 0x32, 0xf9,
-	0x4c, 0x34, 0x8d, 0x67, 0xda, 0xe6, 0x42, 0x99, 0x38, 0x25, 0x37, 0x2e, 0xda, 0x35, 0xf8, 0xfc,
-	0x9c, 0x48, 0x63, 0xa2, 0x89, 0x26, 0xbf, 0x07, 0x44, 0x48, 0xfb, 0x06, 0xbe, 0x78, 0x84, 0x08,
-	0x8f, 0x33, 0x41, 0xd0, 0x8f, 0x50, 0x54, 0x6d, 0x7b, 0x2a, 0x6d, 0xe5, 0xe1, 0xfe, 0xb0, 0xa0,
-	0x5c, 0x4c, 0xd2, 0xc2, 0x28, 0x12, 0xec, 0x3e, 0x54, 0xce, 0xc9, 0x46, 0xae, 0x8f, 0x0c, 0xf8,
-	0x3d, 0x54, 0xa3, 0x80, 0xe6, 0x8a, 0x36, 0x64, 0xf4, 0xcb, 0xd2, 0xa1, 0x8a, 0xcd, 0xd8, 0x50,
-	0x39, 0x1a, 0xb2, 0x5f, 0xc0, 0xf3, 0xab, 0x60, 0xb4, 0xa0, 0xda, 0xf5, 0x9a, 0xbf, 0xc5, 0x94,
-	0x31, 0x22, 0x57, 0x04, 0xfc, 0x04, 0x07, 0xdb, 0x61, 0x93, 0x22, 0xd1, 0x6c, 0x2b, 0xd9, 0x6c,
-	0xfb, 0x35, 0x54, 0xd6, 0xa3, 0x68, 0x0a, 0x3d, 0x82, 0x9c, 0x5e, 0xaf, 0xf2, 0xce, 0xdc, 0x2c,
-	0x36, 0xae, 0x6b, 0xc8, 0x46, 0x50, 0x8d, 0x3c, 0x75, 0x3a, 0xfb, 0x6f, 0x0b, 0xca, 0x1d, 0xe2,
-	0x71, 0x41, 0x57, 0x37, 0xdc, 0x3a, 0x5b, 0xc7, 0x50, 0x1a, 0x6b, 0xab, 0xed, 0xa3, 0x15, 0x0e,
-	0x86, 0x82, 0xff, 0xcf, 0x18, 0x1d, 0xc0, 0xce, 0xad, 0xcf, 0x17, 0x8f, 0x16, 0xa6, 0xd2, 0x6e,
-	0xec, 0xbd, 0xcc, 0x93, 0x2b, 0x75, 0x0f, 0x2a, 0xeb, 0x32, 0x4c, 0x69, 0x7d, 0xf8, 0x32, 0xda,
-	0xb2, 0xdd, 0x3b, 0x2a, 0xc3, 0x6d, 0xbe, 0x2a, 0xf2, 0x7d, 0xdb, 0x76, 0x45, 0x42, 0x2a, 0x22,
-	0xc1, 0xbe, 0x82, 0x17, 0x51, 0xc0, 0x1b, 0x2a, 0xa7, 0x63, 0x1f, 0x2f, 0x3f, 0x36, 0xe8, 0x6b,
-	0xd8, 0x1d, 0x10, 0x36, 0x0e, 0x27, 0x2f, 0xb9, 0x79, 0xad, 0xff, 0xdc, 0xbc, 0xf6, 0x0f, 0xab,
-	0x76, 0x86, 0xd7, 0x19, 0x60, 0x1f, 0x2f, 0x04, 0x3a, 0x82, 0xb2, 0x7e, 0xf2, 0x94, 0x49, 0xe2,
-	0xbf, 0xc3, 0x73, 0xd3, 0xc5, 0x92, 0xd2, 0xf6, 0x8c, 0xd2, 0x6e, 0xc3, 0x67, 0x91, 0x6b, 0x8f,
-	0x45, 0xbd, 0xff, 0x06, 0xb2, 0x9e, 0x8a, 0x64, 0x4a, 0xd8, 0x6b, 0x26, 0x53, 0x38, 0xc6, 0xc0,
-	0x1e, 0xc1, 0x7e, 0x84, 0xb5, 0xf1, 0x1c, 0x33, 0x97, 0xf4, 0x6f, 0x3f, 0x94, 0x8a, 0x0f, 0xfa,
-	0x9a, 0xd9, 0x1d, 0x78, 0xbe, 0x35, 0x87, 0x99, 0x95, 0x23, 0xc8, 0xb8, 0x9c, 0xae, 0x99, 0xaa,
-	0x24, 0xbe, 0xdc, 0x8e, 0x46, 0x5f, 0xbe, 0x85, 0x4f, 0xb7, 0x7c, 0xd2, 0x51, 0x09, 0xf2, 0x9d,
-	0xee, 0xa0, 0x7f, 0xd5, 0xbb, 0xee, 0x76, 0xaa, 0x9f, 0xa0, 0x02, 0xec, 0x76, 0x7f, 0xeb, 0x5d,
-	0xf7, 0x2e, 0xcf, 0xab, 0x16, 0x2a, 0x03, 0x9c, 0x5d, 0x9c, 0xbe, 0x79, 0xd3, 0xbd, 0x3c, 0xef,
-	0x76, 0xaa, 0x29, 0x04, 0x90, 0x0d, 0xc1, 0x6e, 0xa7, 0x9a, 0x1e, 0x65, 0xd5, 0xbf, 0x8b, 0x57,
-	0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0x4e, 0x62, 0x59, 0x00, 0x0c, 0x09, 0x00, 0x00,
+	// 1583 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x58, 0x5b, 0x6f, 0x1b, 0xc5,
+	0x17, 0xcf, 0xfa, 0x16, 0xe7, 0xd8, 0xb9, 0x4d, 0xf2, 0x4f, 0xdd, 0x24, 0x6d, 0xf2, 0xdf, 0x52,
+	0x35, 0xb4, 0xc4, 0xa9, 0x12, 0x09, 0x71, 0x89, 0x54, 0xd5, 0x89, 0x89, 0x03, 0xcd, 0x45, 0x1b,
+	0x97, 0xf0, 0x66, 0x8d, 0xd7, 0x63, 0x7b, 0x89, 0x3d, 0x63, 0x76, 0xc7, 0x8d, 0x8b, 0x10, 0xf0,
+	0x39, 0xf8, 0x10, 0xf0, 0x19, 0x78, 0x42, 0xbc, 0xf3, 0xdc, 0x87, 0x7e, 0x05, 0x3e, 0x00, 0x68,
+	0x67, 0x66, 0xaf, 0xb6, 0x93, 0xd2, 0x96, 0x4a, 0xbc, 0x58, 0x3b, 0xe7, 0x9c, 0x39, 0xe7, 0xcc,
+	0x6f, 0xce, 0x6d, 0x0c, 0x9f, 0xb7, 0x2c, 0xde, 0xee, 0xd7, 0x8b, 0x26, 0xeb, 0x6e, 0x75, 0x18,
+	0xeb, 0x52, 0xc2, 0x2f, 0x99, 0x7d, 0xb1, 0xd5, 0x62, 0x9b, 0xee, 0x72, 0xab, 0xde, 0xb7, 0x3a,
+	0xdc, 0xa2, 0x5b, 0xfc, 0x79, 0x8f, 0x38, 0x5b, 0xbd, 0x0e, 0x76, 0xba, 0xb8, 0x66, 0x62, 0xa7,
+	0x1d, 0xfe, 0x2e, 0xf6, 0x6c, 0xc6, 0xd9, 0xf2, 0x66, 0x48, 0x57, 0x8b, 0xb5, 0xd8, 0x96, 0x20,
+	0xd7, 0xfb, 0x4d, 0xb1, 0x12, 0x0b, 0xf1, 0xa5, 0xc4, 0x1f, 0x5e, 0x63, 0x5a, 0x9a, 0x14, 0xbf,
+	0x72, 0x87, 0xfe, 0x93, 0x06, 0x33, 0xa7, 0xc2, 0xec, 0x1e, 0x76, 0xda, 0x7b, 0xcc, 0xa2, 0x68,
+	0x09, 0x52, 0x4e, 0x87, 0xf1, 0x82, 0xb6, 0xae, 0x6d, 0xa4, 0x4a, 0x89, 0x87, 0x9a, 0x21, 0xd6,
+	0xe8, 0x3e, 0xa4, 0x1d, 0x8e, 0x39, 0x29, 0x24, 0xd6, 0xb5, 0x8d, 0x99, 0xed, 0xc5, 0x62, 0x74,
+	0xdf, 0x99, 0xcb, 0x33, 0xa4, 0x08, 0xba, 0x0d, 0x69, 0xce, 0x2e, 0x08, 0x2d, 0x24, 0xd7, 0xb5,
+	0x8d, 0xdc, 0x76, 0xb6, 0x58, 0xb2, 0x5a, 0x4f, 0x0f, 0x29, 0x37, 0x24, 0x19, 0xbd, 0x07, 0x59,
+	0x93, 0x51, 0x6e, 0x63, 0x93, 0x17, 0x52, 0x4a, 0xe4, 0x71, 0xa3, 0x61, 0x13, 0xc7, 0x31, 0x7c,
+	0x8e, 0x7e, 0x04, 0xf3, 0x81, 0x8d, 0xc7, 0xa6, 0xc9, 0xfa, 0x94, 0xbb, 0xaa, 0xd9, 0x25, 0x25,
+	0xb6, 0xf0, 0x2f, 0xbc, 0x4f, 0x92, 0x51, 0x01, 0xd2, 0xae, 0xbb, 0x4e, 0x21, 0xb9, 0x9e, 0x54,
+	0xfe, 0x4b, 0x82, 0xfe, 0xab, 0x06, 0x39, 0xa9, 0xaf, 0xd4, 0x61, 0xe6, 0x05, 0x5a, 0x86, 0x64,
+	0xdf, 0x6a, 0xf8, 0x7a, 0x3c, 0x17, 0x5d, 0x22, 0xda, 0x84, 0x3c, 0xb7, 0x31, 0x75, 0xb0, 0xc9,
+	0x2d, 0x46, 0x9d, 0x42, 0x62, 0x3d, 0xb9, 0x91, 0xdb, 0x9e, 0x52, 0x67, 0xae, 0x0e, 0x8c, 0x08,
+	0x1b, 0xad, 0xc2, 0x94, 0x63, 0xb5, 0x28, 0xe6, 0x7d, 0x9b, 0x88, 0x33, 0xe7, 0x8d, 0x80, 0x80,
+	0xd6, 0x20, 0xd7, 0x25, 0xf6, 0x45, 0x87, 0xd4, 0xda, 0xd8, 0x69, 0x8b, 0x03, 0xe7, 0x0d, 0x90,
+	0xa4, 0x0a, 0x76, 0xda, 0x08, 0x41, 0x4a, 0x70, 0xd2, 0x82, 0x23, 0xbe, 0xd1, 0x22, 0xa4, 0x7b,
+	0x36, 0x63, 0xcd, 0x42, 0x46, 0x10, 0xe5, 0x42, 0xff, 0x23, 0x01, 0x59, 0xcf, 0x87, 0xb1, 0x37,
+	0x55, 0x82, 0x99, 0x9e, 0x4d, 0x9e, 0x59, 0xac, 0xef, 0xd4, 0xea, 0xee, 0x51, 0xc5, 0x95, 0x85,
+	0xce, 0x58, 0x9a, 0x7f, 0xf9, 0x62, 0x6d, 0xfa, 0x54, 0xc9, 0x08, 0x34, 0x8c, 0xe9, 0x5e, 0x78,
+	0x89, 0x3e, 0x80, 0x7c, 0x83, 0x50, 0xd6, 0xb5, 0x28, 0x76, 0x8f, 0x38, 0x74, 0x91, 0x11, 0x2e,
+	0xda, 0x81, 0x29, 0x4a, 0x2e, 0x6b, 0xf2, 0x62, 0x62, 0x17, 0x5a, 0xca, 0xbf, 0x7c, 0xb1, 0x96,
+	0x3d, 0x26, 0x97, 0x27, 0x2e, 0xd7, 0xc8, 0x52, 0xf5, 0x15, 0x05, 0x2d, 0x1d, 0x07, 0xcd, 0xc3,
+	0x24, 0x13, 0xc2, 0x24, 0x06, 0xe4, 0xe4, 0x10, 0x90, 0xeb, 0x90, 0x71, 0x08, 0x6d, 0x10, 0xbb,
+	0x90, 0x8d, 0x45, 0x87, 0xa2, 0x07, 0xb0, 0x4e, 0x85, 0x61, 0x3d, 0xf7, 0x22, 0xad, 0xc4, 0xd8,
+	0xc5, 0x17, 0x84, 0xf4, 0x2c, 0xda, 0x72, 0x61, 0x34, 0xfb, 0xb6, 0x4d, 0x28, 0xaf, 0xb5, 0x89,
+	0xd5, 0x6a, 0xf3, 0x78, 0xa8, 0x48, 0x18, 0xf7, 0xa4, 0x4c, 0x45, 0x88, 0x18, 0xd3, 0x66, 0x78,
+	0xa9, 0x17, 0x60, 0xe9, 0x80, 0x70, 0x25, 0x22, 0x81, 0x26, 0xdf, 0xf4, 0x89, 0xc3, 0xf5, 0x73,
+	0xb8, 0x31, 0xc4, 0x71, 0x7a, 0x8c, 0x3a, 0x04, 0xed, 0x42, 0x5e, 0x5c, 0xdb, 0x38, 0xb3, 0xb3,
+	0x2f, 0x5f, 0xac, 0xe5, 0xc4, 0x16, 0x65, 0x34, 0x57, 0x0f, 0x16, 0xfa, 0x09, 0xcc, 0x1e, 0x90,
+	0x88, 0xad, 0x37, 0x54, 0xf8, 0x21, 0xcc, 0x05, 0x0a, 0x95, 0x8b, 0x3a, 0xa4, 0x65, 0x64, 0x49,
+	0x55, 0xf9, 0x62, 0x28, 0xb1, 0x0c, 0xc9, 0xd2, 0x6f, 0xc1, 0xca, 0x59, 0xbf, 0xde, 0xb5, 0xe4,
+	0xd6, 0x2a, 0x3b, 0xc2, 0x16, 0xa5, 0x84, 0x7b, 0x00, 0x3c, 0x82, 0xd5, 0xd1, 0x6c, 0x65, 0x22,
+	0x76, 0xd9, 0x5a, 0xfc, 0xb2, 0xf5, 0x8f, 0x60, 0xd6, 0x4f, 0x47, 0x75, 0xd0, 0xbb, 0x90, 0x95,
+	0x45, 0x94, 0x0f, 0x94, 0x67, 0xa1, 0x94, 0xf5, 0x59, 0x3a, 0x82, 0xb9, 0x60, 0xa7, 0x34, 0xa7,
+	0x7f, 0x0d, 0xe8, 0x80, 0xf0, 0xb8, 0xc2, 0x71, 0x29, 0x16, 0x47, 0x34, 0xf1, 0x8f, 0x10, 0xdd,
+	0x85, 0x85, 0x88, 0x2d, 0x75, 0xe2, 0x57, 0xf4, 0x7e, 0x47, 0xec, 0x7e, 0xea, 0x10, 0xfb, 0xcc,
+	0xad, 0x6b, 0x9e, 0xab, 0xab, 0x90, 0x6a, 0xda, 0xac, 0x3b, 0x54, 0x17, 0x05, 0x55, 0x7f, 0x08,
+	0x8b, 0xd1, 0x4d, 0xca, 0xa6, 0x5f, 0x2e, 0xb5, 0x78, 0xb9, 0xfc, 0x5d, 0x83, 0x99, 0x7d, 0xd2,
+	0x63, 0x8e, 0xc5, 0xaf, 0x43, 0x63, 0x13, 0xa6, 0x1b, 0x52, 0x72, 0x74, 0xbd, 0x71, 0xab, 0x85,
+	0x60, 0xbf, 0x4e, 0x6d, 0xf1, 0xce, 0x95, 0x1a, 0x75, 0xae, 0x48, 0x27, 0x49, 0x8f, 0xed, 0x24,
+	0xf3, 0x30, 0xeb, 0x1f, 0x45, 0xdd, 0x77, 0x15, 0x96, 0xa3, 0x0d, 0xcc, 0x20, 0x8e, 0x1f, 0x9c,
+	0xd7, 0x76, 0x19, 0x0f, 0x89, 0x44, 0x14, 0x09, 0xfd, 0x0c, 0x6e, 0x06, 0x5a, 0xcb, 0x03, 0x8b,
+	0x4b, 0xcd, 0x6f, 0xa6, 0xf4, 0x1c, 0x6e, 0x05, 0x4a, 0xcf, 0x2d, 0xde, 0x6e, 0xd8, 0xf8, 0xf2,
+	0x6d, 0x28, 0xfe, 0x25, 0x11, 0xee, 0xb0, 0x9e, 0xb6, 0x07, 0x30, 0xa9, 0xae, 0x4b, 0xe9, 0x9b,
+	0x2d, 0x46, 0xe3, 0xa0, 0x32, 0x61, 0x78, 0x12, 0x68, 0x17, 0xc0, 0x64, 0x16, 0xad, 0xd9, 0x2e,
+	0x7a, 0xea, 0xde, 0x57, 0x8a, 0xe3, 0x91, 0xad, 0x4c, 0x18, 0x53, 0xa6, 0x47, 0x43, 0x8f, 0x20,
+	0xef, 0x70, 0x6c, 0x73, 0xd2, 0xa8, 0x91, 0x81, 0xc5, 0x55, 0x24, 0x2c, 0x17, 0xc7, 0x62, 0x58,
+	0x99, 0x30, 0x72, 0x6a, 0x87, 0xcb, 0x41, 0xbb, 0x90, 0xbd, 0x54, 0x80, 0xa8, 0x00, 0xb9, 0x5d,
+	0xbc, 0x12, 0xab, 0xca, 0x84, 0xe1, 0xef, 0x40, 0x1b, 0x90, 0xea, 0x12, 0x8e, 0x55, 0xe0, 0x84,
+	0x27, 0x9a, 0xf2, 0x33, 0x42, 0xf9, 0x11, 0xe1, 0xd8, 0x10, 0x12, 0xa5, 0x0c, 0xa4, 0x1a, 0x98,
+	0x63, 0xbd, 0x02, 0x4b, 0x43, 0x80, 0x95, 0x30, 0x37, 0xdb, 0xa8, 0x08, 0x59, 0x5b, 0xae, 0x65,
+	0x2e, 0xe5, 0xb6, 0x51, 0x71, 0x48, 0xd4, 0xf0, 0x65, 0xf4, 0x25, 0x91, 0x90, 0xa7, 0x84, 0x36,
+	0x2c, 0xda, 0xaa, 0x0e, 0xbc, 0x34, 0xd6, 0x3f, 0x05, 0x08, 0x88, 0x43, 0x73, 0x88, 0x76, 0xe5,
+	0x1c, 0xa2, 0x7f, 0xec, 0x15, 0x36, 0xd7, 0xe6, 0x29, 0xb6, 0x71, 0xd7, 0x41, 0x77, 0x61, 0x46,
+	0x96, 0x2a, 0x8b, 0x72, 0x62, 0x3f, 0xc3, 0x1d, 0x99, 0xbe, 0xc6, 0xb4, 0xa0, 0x1e, 0x2a, 0xa2,
+	0xde, 0x80, 0xff, 0x05, 0x5b, 0x0f, 0x69, 0x90, 0xf4, 0xef, 0x43, 0xa6, 0x27, 0x34, 0xa9, 0x68,
+	0x98, 0x2f, 0xc6, 0x4d, 0x18, 0x4a, 0xc0, 0x6d, 0xbf, 0xcc, 0xc6, 0x66, 0x87, 0xf8, 0x05, 0xc0,
+	0x6f, 0xbf, 0x92, 0xae, 0xd7, 0xc3, 0x59, 0x57, 0xc2, 0x1d, 0x4c, 0x4d, 0x72, 0xd2, 0x7c, 0xd5,
+	0x38, 0x0e, 0x27, 0x7b, 0x62, 0x6c, 0xb2, 0xef, 0xc3, 0xca, 0x48, 0x1b, 0x7e, 0x95, 0x4d, 0xbb,
+	0x01, 0xe8, 0x61, 0x39, 0x1b, 0x0f, 0x56, 0xc9, 0xd5, 0x2b, 0xe1, 0xa4, 0x7b, 0xda, 0x6b, 0x60,
+	0x4e, 0x4e, 0xc4, 0x19, 0x3c, 0x67, 0xef, 0x01, 0x88, 0x99, 0x47, 0x1e, 0x38, 0xee, 0xb1, 0x3b,
+	0x0f, 0x49, 0x79, 0xfd, 0x67, 0x2d, 0xec, 0x50, 0x38, 0x68, 0xaa, 0xb8, 0xd3, 0x79, 0x8e, 0x76,
+	0x60, 0xa9, 0x83, 0x1d, 0x5e, 0x73, 0x08, 0xa1, 0xb2, 0x7e, 0xd6, 0x68, 0xbf, 0x5b, 0x57, 0x30,
+	0xa4, 0x8c, 0x05, 0x97, 0x7b, 0x46, 0x08, 0x15, 0xd5, 0xf3, 0x58, 0xb0, 0xd0, 0x03, 0x40, 0xc1,
+	0x26, 0x3e, 0xa8, 0x59, 0xb4, 0x41, 0x06, 0x32, 0xc1, 0x8d, 0x59, 0x6f, 0x43, 0x75, 0x70, 0xe8,
+	0x92, 0xd1, 0x26, 0x2c, 0x04, 0xc2, 0x1d, 0xd6, 0x52, 0xd2, 0x49, 0x21, 0x3d, 0xe7, 0x49, 0x3f,
+	0x61, 0x2d, 0x21, 0xae, 0xdf, 0x83, 0xbb, 0x81, 0xbf, 0x07, 0x7e, 0xea, 0x06, 0x2e, 0x7b, 0xb1,
+	0xda, 0x83, 0x85, 0x11, 0x29, 0x83, 0xfe, 0xef, 0x35, 0xc7, 0xc8, 0x31, 0x64, 0x07, 0x54, 0xee,
+	0xdf, 0x84, 0x6c, 0xcc, 0xe9, 0x49, 0xae, 0x9c, 0x5d, 0x81, 0xa9, 0xb8, 0x8b, 0xd9, 0x8e, 0xe7,
+	0xda, 0x9f, 0x1a, 0x20, 0x69, 0x52, 0x95, 0x24, 0x61, 0xd5, 0x1d, 0x16, 0x83, 0xc6, 0xf4, 0x1f,
+	0x69, 0x4a, 0x7e, 0xf5, 0xc9, 0x5c, 0x57, 0x7d, 0xf4, 0xef, 0xa0, 0x30, 0xa2, 0xa2, 0xca, 0xa3,
+	0xbf, 0x66, 0xed, 0xf7, 0xad, 0x27, 0xaf, 0xb5, 0xfe, 0x7d, 0x38, 0x67, 0xcf, 0x82, 0xe2, 0xfb,
+	0xae, 0xec, 0xff, 0xa8, 0xc1, 0x6a, 0xc0, 0xfd, 0xcc, 0xa2, 0xb8, 0x63, 0x7d, 0xfb, 0x6e, 0x5d,
+	0xf8, 0x4b, 0x83, 0x1b, 0xf1, 0xb6, 0x42, 0x2e, 0x5f, 0xcd, 0x3a, 0x82, 0x54, 0x97, 0x35, 0x64,
+	0x49, 0x9c, 0x36, 0xc4, 0x77, 0x24, 0x40, 0x92, 0x63, 0x03, 0x44, 0x3d, 0x50, 0x53, 0xa3, 0x1e,
+	0xa8, 0xf1, 0x70, 0x4d, 0x5f, 0x19, 0xae, 0x1e, 0x02, 0x99, 0x31, 0x08, 0x4c, 0x5e, 0x8b, 0x40,
+	0x37, 0x5c, 0xc3, 0xaa, 0x6e, 0xcf, 0x69, 0x12, 0x7b, 0x8f, 0xd1, 0xa6, 0x65, 0x77, 0x49, 0xe3,
+	0xea, 0xe1, 0x13, 0x15, 0x20, 0xc1, 0xd9, 0x50, 0xc5, 0x4e, 0x70, 0xe6, 0x3b, 0x96, 0x8c, 0x4d,
+	0x26, 0x5f, 0x86, 0xaf, 0x5c, 0xce, 0x00, 0xca, 0xd4, 0x1b, 0x5d, 0x79, 0x74, 0x94, 0x12, 0x59,
+	0xf4, 0x96, 0x14, 0xff, 0x00, 0xeb, 0xa3, 0xe6, 0x8e, 0x88, 0xee, 0x3b, 0x90, 0x72, 0x7b, 0x8b,
+	0x3f, 0x55, 0xc5, 0x72, 0x5a, 0x30, 0x03, 0x07, 0x12, 0x57, 0x3b, 0x10, 0x47, 0xac, 0x09, 0x6b,
+	0x81, 0x3e, 0x55, 0x1c, 0xff, 0x05, 0xfb, 0xfa, 0x6f, 0x1a, 0xdc, 0x09, 0x95, 0x83, 0xe0, 0x05,
+	0x17, 0x33, 0xb6, 0x07, 0xb7, 0x65, 0xf9, 0xaf, 0xb1, 0x66, 0xad, 0x27, 0x27, 0x9a, 0x5a, 0x6c,
+	0x96, 0x71, 0x8b, 0xf5, 0x8a, 0x94, 0x3a, 0x69, 0x7a, 0x53, 0x4f, 0xf8, 0x7f, 0x95, 0x4f, 0x60,
+	0xd1, 0x7b, 0x82, 0x5f, 0xf5, 0xdc, 0x32, 0x90, 0x19, 0x7a, 0x47, 0xcb, 0x47, 0x56, 0xfc, 0xfd,
+	0x98, 0x8c, 0xbf, 0x1f, 0xef, 0x1f, 0x85, 0xbb, 0x97, 0xff, 0x17, 0x16, 0x9a, 0x86, 0xa9, 0xfd,
+	0xf2, 0xe9, 0xc9, 0xd9, 0x61, 0xb5, 0xbc, 0x3f, 0x37, 0x81, 0x72, 0x30, 0x59, 0xfe, 0xea, 0xb0,
+	0x7a, 0x78, 0x7c, 0x30, 0xa7, 0xa1, 0x19, 0x80, 0xbd, 0xca, 0xe3, 0x27, 0x4f, 0xca, 0xc7, 0x07,
+	0xe5, 0xfd, 0xb9, 0x04, 0x02, 0xc8, 0xb8, 0xcc, 0xf2, 0xfe, 0x5c, 0xb2, 0x9e, 0x11, 0xff, 0xa8,
+	0xed, 0xfc, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x9e, 0x51, 0x06, 0x90, 0x00, 0x14, 0x00, 0x00,
 }

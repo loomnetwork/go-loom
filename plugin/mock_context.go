@@ -9,6 +9,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
+	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
 	"github.com/pkg/errors"
@@ -110,7 +111,7 @@ func (c *FakeContext) RegisterContract(contractName string, contractAddr, creato
 func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 	contract := c.contracts[addr.String()]
 
-	ctx := c.WithAddress(addr)
+	ctx := c.WithSender(c.address).WithAddress(addr)
 
 	var req Request
 	err := proto.Unmarshal(input, &req)
@@ -129,7 +130,7 @@ func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
 func (c *FakeContext) StaticCall(addr loom.Address, input []byte) ([]byte, error) {
 	contract := c.contracts[addr.String()]
 
-	ctx := c.WithAddress(addr)
+	ctx := c.WithSender(c.address).WithAddress(addr)
 
 	var req Request
 	err := proto.Unmarshal(input, &req)
@@ -182,6 +183,14 @@ func (c *FakeContext) Block() types.BlockHeader {
 
 func (c *FakeContext) ContractAddress() loom.Address {
 	return c.address
+}
+
+func (c *FakeContext) GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error) {
+	return ptypes.EvmTxReceipt{}, nil
+}
+
+func (c *FakeContext) SetTime(t time.Time) {
+	c.block.Time = t.Unix()
 }
 
 func (c *FakeContext) Now() time.Time {

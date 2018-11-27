@@ -13,7 +13,7 @@ import (
 	"github.com/loomnetwork/go-loom/client"
 )
 
-var txFlags struct {
+var TxFlags struct {
 	WriteURI     string
 	ReadURI      string
 	ContractAddr string
@@ -27,16 +27,30 @@ func ContractCallCommand() *cobra.Command {
 		Short: "call a contract method",
 	}
 	pflags := cmd.PersistentFlags()
-	pflags.StringVarP(&txFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
-	pflags.StringVarP(&txFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
-	pflags.StringVarP(&txFlags.ContractAddr, "contract", "", "", "contract address")
-	pflags.StringVarP(&txFlags.ChainID, "chain", "", "default", "chain ID")
-	pflags.StringVarP(&txFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
+	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
+	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
+	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
+	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	return cmd
+}
+
+func ContractResolveCommand() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "resolve",
+		Short: "resolve a contract method",
+	}
+	pflags := cmd.PersistentFlags()
+	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
+	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
+	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
+	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
+	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
 	return cmd
 }
 
 func contract(defaultAddr string) (*client.Contract, error) {
-	contractAddrStr := txFlags.ContractAddr
+	contractAddrStr := TxFlags.ContractAddr
 	if contractAddrStr == "" {
 		contractAddrStr = defaultAddr
 	}
@@ -51,18 +65,18 @@ func contract(defaultAddr string) (*client.Contract, error) {
 	}
 
 	// create rpc client
-	rpcClient := client.NewDAppChainRPCClient(txFlags.ChainID, txFlags.WriteURI, txFlags.ReadURI)
+	rpcClient := client.NewDAppChainRPCClient(TxFlags.ChainID, TxFlags.WriteURI, TxFlags.ReadURI)
 	// create contract
 	contract := client.NewContract(rpcClient, contractAddr.Local)
 	return contract, nil
 }
 
 func CallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
-	if txFlags.PrivFile == "" {
+	if TxFlags.PrivFile == "" {
 		return errors.New("private key required to call contract")
 	}
 
-	privKeyB64, err := ioutil.ReadFile(txFlags.PrivFile)
+	privKeyB64, err := ioutil.ReadFile(TxFlags.PrivFile)
 	if err != nil {
 		return err
 	}
@@ -88,6 +102,6 @@ func StaticCallContract(defaultAddr string, method string, params proto.Message,
 		return err
 	}
 
-	_, err = contract.StaticCall(method, params, loom.RootAddress(txFlags.ChainID), result)
+	_, err = contract.StaticCall(method, params, loom.RootAddress(TxFlags.ChainID), result)
 	return err
 }

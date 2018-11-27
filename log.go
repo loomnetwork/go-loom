@@ -92,6 +92,9 @@ func NewLoomLogger(loomLogLevel, dest string) *Logger {
 
 func MakeLoomLogger(logLevel string, w io.Writer, tr func(w io.Writer) kitlog.Logger) *Logger {
 	loggerFunc := func(w io.Writer) *Logger {
+		if len(logLevel) == 0 {
+			logLevel = "info"
+		}
 		baseLogger := kitlog.With(tr(w), "module", "loom")
 		return &Logger{
 			NewFilter(baseLogger, Allow(logLevel)),

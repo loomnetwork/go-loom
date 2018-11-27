@@ -3,6 +3,8 @@ syntax = "proto3";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 import "github.com/loomnetwork/go-loom/vm/vm.proto";
 
+option csharp_namespace = "Loom.Client.Internal.Protobuf";
+
 // Contract specific data structures
 
 enum EncodingType {
@@ -79,10 +81,17 @@ message EventData {
     bytes encoded_body = 6;
     bytes original_request = 7;
     bytes tx_hash = 8;
+    uint64 transaction_index = 9;
+    bytes block_hash = 10;
 }
 
 message EvmTxReceiptList {
     repeated EvmTxReceipt tx_receipts = 1;
+}
+
+message EvmTxReceiptListItem {
+    EvmTxReceipt receipt = 1;
+    bytes nextTxHash = 2;
 }
 
 message EvmTxReceipt {
@@ -97,6 +106,7 @@ message EvmTxReceipt {
     int32 status = 9;
     bytes tx_hash = 10;
     Address caller_address = 11;
+    int64 nonce = 12;
 }
 
 message EvmTxObject {
@@ -182,7 +192,9 @@ message GetResponse {
     bytes value = 1;
 }
 
-
+message EvmTxReceiptRequest{
+    bytes value = 1;
+}
 
 message RangeRequest {
     bytes prefix = 1;
@@ -190,7 +202,7 @@ message RangeRequest {
 
 message RangeEntry {
     bytes key = 1;
-    bytes value = 2;      
+    bytes value = 2;
 }
 
 message RangeResponse {
@@ -282,7 +294,7 @@ service API {
     rpc StaticCall(CallRequest) returns (CallResponse);
     rpc Resolve(ResolveRequest) returns (ResolveResponse);
     rpc Emit(EmitRequest) returns (EmitResponse);
-
+    rpc GetEvmTxReceipt(EvmTxReceiptRequest) returns (EvmTxReceipt);
     rpc Set(SetRequest) returns (SetResponse);
     rpc Delete(DeleteRequest) returns (DeleteResponse);
     rpc Call(CallRequest) returns (CallResponse);
