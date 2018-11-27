@@ -205,8 +205,14 @@ func (c *FakeContext) EmitTopics(event []byte, topics ...string) {
 func (c *FakeContext) Emit(event []byte) {
 }
 
+// Prefix the given key with the contract address
 func (c *FakeContext) makeKey(key []byte) string {
 	return string(util.PrefixKey(c.address.Bytes(), key))
+}
+
+// Strip the contract address from the given key (i.e. inverse of makeKey)
+func (c *FakeContext) recoverKey(key string) []byte {
+	return []byte(key)[len(c.address.Bytes())+1:]
 }
 
 func (c *FakeContext) Range(prefix []byte) RangeData {
@@ -216,7 +222,7 @@ func (c *FakeContext) Range(prefix []byte) RangeData {
 	for key, value := range c.data {
 		if strings.HasPrefix(key, keyedPrefix) == true {
 			r := &RangeEntry{
-				Key:   []byte(key),
+				Key:   c.recoverKey(key),
 				Value: value,
 			}
 

@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"bytes"
 	"testing"
 
 	loom "github.com/loomnetwork/go-loom"
@@ -25,4 +26,12 @@ func TestRange(t *testing.T) {
 
 	//The mock context uses map underneath and the real context does not so ordering will be different then real server!
 	//	assert.Equal(t, string(s.makeKey([]byte("bob5"))), string(data[0].Key))
+}
+
+func TestPrefixedKeys(t *testing.T) {
+	addr1 := loom.MustParseAddress("chain:0xb16a379ec18d4093666f8f38b11a3071c920207d")
+
+	c := CreateFakeContext(addr1, addr1)
+	unprefixedKey := []byte("placeholder")
+	assert.Equal(t, 0, bytes.Compare(c.recoverKey(c.makeKey(unprefixedKey)), unprefixedKey))
 }
