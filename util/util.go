@@ -21,6 +21,14 @@ func PrefixKey(keys ...[]byte) []byte {
 	return buf
 }
 
+func UnPrefixKey(prefix, key []byte) []byte {
+	if len(prefix)+1 > len(key) {
+		// maybe should panic, should not happen
+		return []byte{}
+	}
+	return key[len(prefix)+1:]
+}
+
 func FileExists(filePath string) bool {
 	_, err := os.Stat(filePath)
 	return !os.IsNotExist(err)
