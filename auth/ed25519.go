@@ -1,5 +1,3 @@
-// +build evm
-
 package auth
 
 import "golang.org/x/crypto/ed25519"
