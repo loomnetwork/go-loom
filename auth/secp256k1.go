@@ -14,7 +14,7 @@ import (
 const (
 	Secp256k1PubKeyBytes  = 33
 	Secp256k1PrivKeyBytes = 32
-	Secp256k1SigBytes     = 64
+	Secp256k1SigBytes     = 65
 )
 
 // Secp256k1Signer implements the Signer interface using secp256k1 keys
@@ -65,21 +65,26 @@ func GenSecp256k1Key() ([]byte, []byte) {
 }
 
 func VerifyBytes(pubKey []byte, msg []byte, sig []byte) bool {
+	var sigBytes [Secp256k1SigBytes - 1]byte
+
+	if len(sig) != Secp256k1SigBytes {
+		panic("Invalid signature length")
+	}
+
+	copy(sigBytes[:], sig[:])
 	hash := sha256.Sum256(msg)
 
-	return secp256k1.VerifySignature(pubKey, hash[:], sig)
+	return secp256k1.VerifySignature(pubKey, hash[:], sigBytes[:])
 }
 
 func (s *Secp256k1Signer) Sign(msg []byte) []byte {
-	var sig [Secp256k1SigBytes]byte
-
 	hash := sha256.Sum256(msg)
 	sigBytes, err := secp256k1.Sign(hash[:], s.privateKey[:])
 	if err != nil {
 		panic(err)
 	}
-	copy(sig[:], sigBytes[:])
-	return sig[:]
+
+	return sigBytes
 }
 
 func (s *Secp256k1Signer) PublicKey() []byte {

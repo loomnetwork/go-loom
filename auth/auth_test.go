@@ -3,29 +3,83 @@
 package auth
 
 import (
+	"bytes"
 	"crypto/sha256"
+	"encoding/hex"
+	"errors"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/crypto/secp256k1"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func TestSecp256k1Sign(t *testing.T) {
+var (
+	TestEthereumPrivKey = "b04df8f5492ef497f6202a34669a6ebbd8340c7a3f02f7f921c1b98d538e7947"
+)
+
+func testSign(privKey []byte, t *testing.T) ([]byte, error) {
 	testMsg := []byte{'t', 'e', 's', 't'}
 
-	signer := NewSecp256k1Signer(nil)
+	signer := NewSecp256k1Signer(privKey)
 	if len(signer.privateKey) != 32 {
-		t.Fatalf("Invalid private key length:%d", len(signer.privateKey))
+		return nil, errors.New("Invalid private key length")
 	}
 
 	sig := signer.Sign(testMsg)
 
-	msg := sha256.Sum256(testMsg)
-	if len(msg) != 32 || len(sig) != 64 || len(signer.publicKey) == 0 {
-		t.Fatalf("Invalid params(msg_len:%d, sig_len:%d, pubkey_len:%d) for VerifySignature",
-			len(msg), len(sig), len(signer.publicKey))
+	if len(sig) != Secp256k1SigBytes || len(signer.publicKey) != Secp256k1PubKeyBytes {
+		return nil, errors.New("Invalid params for VerifySignature")
 	}
 
-	if secp256k1.VerifySignature(signer.publicKey[:], msg[:], sig) == false {
-		t.Fatal("Signature is invalid")
+	if VerifyBytes(signer.publicKey[:], testMsg, sig) == false {
+		return nil, errors.New("Signature is invalid")
+	}
+
+	return sig, nil
+}
+
+func TestSecp256k1Sign(t *testing.T) {
+	if _, err := testSign(nil, t); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestImportEthereumKey(t *testing.T) {
+	key, _ := hex.DecodeString(TestEthereumPrivKey)
+	if _, err := testSign(key, t); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestImportSecp256k1Key(t *testing.T) {
+	signer := NewSecp256k1Signer(nil)
+
+	hexKey := hex.EncodeToString(signer.privateKey[:])
+	_, err := crypto.HexToECDSA(hexKey)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCompareSig(t *testing.T) {
+	var sig2 [Secp256k1SigBytes]byte
+	testMsg := []byte{'t', 'e', 's', 't'}
+
+	key, _ := hex.DecodeString(TestEthereumPrivKey)
+	sig1, _ := testSign(key, t)
+
+	privKey, err := crypto.HexToECDSA(TestEthereumPrivKey)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	hash := sha256.Sum256(testMsg)
+	sig2Bytes, err := crypto.Sign(hash[:], privKey)
+	if err != nil {
+		t.Fatal(err)
+	}
+	copy(sig2[:], sig2Bytes[:])
+
+	if !bytes.Equal(sig1, sig2[:]) {
+		t.Fatal("the signature is mismatched")
 	}
 }
