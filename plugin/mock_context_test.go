@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/util"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -32,6 +33,10 @@ func TestPrefixedKeys(t *testing.T) {
 	addr1 := loom.MustParseAddress("chain:0xb16a379ec18d4093666f8f38b11a3071c920207d")
 
 	c := CreateFakeContext(addr1, addr1)
+	prefix := []byte("my prefix")
 	unprefixedKey := []byte("placeholder")
-	assert.Equal(t, 0, bytes.Compare(c.recoverKey(c.makeKey(unprefixedKey)), unprefixedKey))
+	noContextKey := util.PrefixKey(prefix, unprefixedKey)
+
+	// key is c.address + prefix + unprefixedKey
+	assert.Equal(t, 0, bytes.Compare(c.recoverKey(c.makeKey(noContextKey), prefix), unprefixedKey))
 }
