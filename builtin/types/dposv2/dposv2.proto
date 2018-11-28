@@ -44,8 +44,9 @@ message CandidateListV2 {
 message DelegationV2 {
     Address validator = 1;
     Address delegator = 2;
-    uint64 height = 3;
-    BigUInt amount = 4;
+    BigUInt amount = 3;
+    uint64 height = 4;
+    uint64 lock_time = 5;
 }
 
 message DelegationListV2 {
