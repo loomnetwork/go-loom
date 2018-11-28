@@ -20,17 +20,13 @@ func testSign(privKey []byte, t *testing.T) ([]byte, error) {
 	testMsg := []byte{'t', 'e', 's', 't'}
 
 	signer := NewSecp256k1Signer(privKey)
-	if len(signer.privateKey) != 32 {
-		return nil, errors.New("Invalid private key length")
-	}
 
 	sig := signer.Sign(testMsg)
-
-	if len(sig) != Secp256k1SigBytes || len(signer.publicKey) != Secp256k1PubKeyBytes {
+	if len(sig) != Secp256k1SigBytes {
 		return nil, errors.New("Invalid params for VerifySignature")
 	}
 
-	if VerifyBytes(signer.publicKey[:], testMsg, sig) == false {
+	if signer.verifyBytes(testMsg, sig) == false {
 		return nil, errors.New("Signature is invalid")
 	}
 
@@ -46,16 +42,6 @@ func TestSecp256k1Sign(t *testing.T) {
 func TestImportEthereumKey(t *testing.T) {
 	key, _ := hex.DecodeString(TestEthereumPrivKey)
 	if _, err := testSign(key, t); err != nil {
-		t.Fatal(err)
-	}
-}
-
-func TestImportSecp256k1Key(t *testing.T) {
-	signer := NewSecp256k1Signer(nil)
-
-	hexKey := hex.EncodeToString(signer.privateKey[:])
-	_, err := crypto.HexToECDSA(hexKey)
-	if err != nil {
 		t.Fatal(err)
 	}
 }
@@ -81,5 +67,23 @@ func TestCompareSig(t *testing.T) {
 
 	if !bytes.Equal(sig1, sig2[:]) {
 		t.Fatal("the signature is mismatched")
+	}
+}
+
+func TestCompareAddress(t *testing.T) {
+	// get ethereum address
+	privKey, err := crypto.HexToECDSA(TestEthereumPrivKey)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ethAddr1 := crypto.PubkeyToAddress(privKey.PublicKey)
+
+	// get pubkey address by secp256k1 signer
+	key, _ := hex.DecodeString(TestEthereumPrivKey)
+	signer := NewSecp256k1Signer(key)
+	ethAddr2 := crypto.PubkeyToAddress(signer.privateKey.PublicKey)
+
+	if !bytes.Equal(ethAddr1.Bytes(), ethAddr2.Bytes()) {
+		t.Fatal("public key address isn't mismatched")
 	}
 }

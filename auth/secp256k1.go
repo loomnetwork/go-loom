@@ -6,8 +6,10 @@ import (
 	"crypto/ecdsa"
 	"crypto/rand"
 	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 )
 
@@ -19,29 +21,28 @@ const (
 
 // Secp256k1Signer implements the Signer interface using secp256k1 keys
 type Secp256k1Signer struct {
-	privateKey [Secp256k1PrivKeyBytes]byte
-	publicKey  [Secp256k1PubKeyBytes]byte
+	privateKey *ecdsa.PrivateKey
 }
 
 func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
+	var err error
+
 	secp256k1Signer := &Secp256k1Signer{}
 	if privateKey == nil {
-		pubKeyBytes, privKeyBytes := GenSecp256k1Key()
-
-		copy(secp256k1Signer.publicKey[:], pubKeyBytes[:])
-		copy(secp256k1Signer.privateKey[:], privKeyBytes[:])
+		secp256k1Signer.privateKey, err = ecdsa.GenerateKey(secp256k1.S256(), rand.Reader)
+		if err != nil {
+			panic(err)
+		}
 	} else {
 		if len(privateKey) != Secp256k1PrivKeyBytes {
 			panic(errors.New("Invalid private key length"))
 		}
 
-		copy(secp256k1Signer.privateKey[:], privateKey[:])
-
-		bitCurve := secp256k1.S256()
-		x, y := bitCurve.ScalarBaseMult(privateKey)
-
-		pubKeyBytes := secp256k1.CompressPubkey(x, y)
-		copy(secp256k1Signer.publicKey[:], pubKeyBytes[:])
+		hexPrivKey := hex.EncodeToString(privateKey)
+		secp256k1Signer.privateKey, err = crypto.HexToECDSA(hexPrivKey)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	return secp256k1Signer
@@ -55,16 +56,29 @@ func GenSecp256k1Key() ([]byte, []byte) {
 		panic(err)
 	}
 
+	privKeyBytes := ecdsaToBytes(key)
 	pubKey = secp256k1.CompressPubkey(key.X, key.Y)
-
-	privKeyBytes := make([]byte, Secp256k1PrivKeyBytes)
-	blob := key.D.Bytes()
-	copy(privKeyBytes[Secp256k1PrivKeyBytes-len(blob):], blob)
 
 	return pubKey, privKeyBytes[:]
 }
 
-func VerifyBytes(pubKey []byte, msg []byte, sig []byte) bool {
+func (s *Secp256k1Signer) Sign(msg []byte) []byte {
+	privKeyBytes := ecdsaToBytes(s.privateKey)
+
+	hash := sha256.Sum256(msg)
+	sigBytes, err := secp256k1.Sign(hash[:], privKeyBytes[:])
+	if err != nil {
+		panic(err)
+	}
+
+	return sigBytes
+}
+
+func (s *Secp256k1Signer) PublicKey() []byte {
+	return secp256k1.CompressPubkey(s.privateKey.X, s.privateKey.Y)
+}
+
+func (s *Secp256k1Signer) verifyBytes(msg []byte, sig []byte) bool {
 	var sigBytes [Secp256k1SigBytes - 1]byte
 
 	if len(sig) != Secp256k1SigBytes {
@@ -74,19 +88,14 @@ func VerifyBytes(pubKey []byte, msg []byte, sig []byte) bool {
 	copy(sigBytes[:], sig[:])
 	hash := sha256.Sum256(msg)
 
-	return secp256k1.VerifySignature(pubKey, hash[:], sigBytes[:])
+	return secp256k1.VerifySignature(s.PublicKey(), hash[:], sigBytes[:])
 }
 
-func (s *Secp256k1Signer) Sign(msg []byte) []byte {
-	hash := sha256.Sum256(msg)
-	sigBytes, err := secp256k1.Sign(hash[:], s.privateKey[:])
-	if err != nil {
-		panic(err)
-	}
+func ecdsaToBytes(privKey *ecdsa.PrivateKey) [Secp256k1PrivKeyBytes]byte {
+	var privKeyBytes [Secp256k1PrivKeyBytes]byte
 
-	return sigBytes
-}
+	blob := privKey.D.Bytes()
+	copy(privKeyBytes[Secp256k1PrivKeyBytes-len(blob):], blob)
 
-func (s *Secp256k1Signer) PublicKey() []byte {
-	return s.publicKey[:]
+	return privKeyBytes
 }
