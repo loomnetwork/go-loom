@@ -26,6 +26,11 @@ message InitRequest {
     repeated InitialAccount accounts = 1;
 }
 
+message MintToGatewayRequest {
+    BigUInt amount = 1;
+}
+
+
 // ERC20 messages
 // See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
 
