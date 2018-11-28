@@ -222,7 +222,7 @@ func (c *FakeContext) Range(prefix []byte) RangeData {
 	for key, value := range c.data {
 		if strings.HasPrefix(key, keyedPrefix) == true {
 			r := &RangeEntry{
-				Key:   c.recoverKey(key),
+				Key:   c.recoverKey(key, prefix),
 				Value: value,
 			}
 
