@@ -229,7 +229,6 @@ func (c *FakeContext) Range(prefix []byte) RangeData {
 			ret = append(ret, r)
 		}
 	}
-
 	return ret
 }
 
