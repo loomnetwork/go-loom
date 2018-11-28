@@ -15,6 +15,12 @@ import (
 
 const DPOSV2ContractName = "dposV2"
 
+var (
+    candidateName string
+    candidateDescription string
+    candidateWebsite string
+)
+
 func ListValidatorsCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "list_validatorsV2",
@@ -59,7 +65,7 @@ func RegisterCandidateCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "register_candidateV2 [public key] [validator fee (in basis points)]",
 		Short: "Register a candidate for validator",
-		Args:  cobra.MinimumNArgs(1),
+		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			pubKey, err := base64.StdEncoding.DecodeString(args[0])
 			candidateFee, err := strconv.ParseUint(args[1], 10, 64)
@@ -72,6 +78,9 @@ func RegisterCandidateCmdV2() *cobra.Command {
 			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate", &dposv2.RegisterCandidateRequestV2{
 				PubKey: pubKey,
 				Fee: candidateFee,
+				Name: candidateName,
+				Description: candidateDescription,
+				Website: candidateWebsite,
 			}, nil)
 		},
 	}
@@ -185,9 +194,13 @@ func ClaimDistributionCmdV2() *cobra.Command {
 }
 
 func AddDPOSV2(root *cobra.Command) {
+	registercmd := RegisterCandidateCmdV2()
+	registercmd.Flags().StringVarP(&candidateName, "name", "", "", "candidate name")
+	registercmd.Flags().StringVarP(&candidateDescription, "description", "", "", "candidate description")
+	registercmd.Flags().StringVarP(&candidateWebsite, "website", "", "", "candidate website")
 	root.AddCommand(
 		ListValidatorsCmdV2(),
-		RegisterCandidateCmdV2(),
+		registercmd,
 		ListCandidatesCmdV2(),
 		DelegateCmdV2(),
 		CheckDelegationCmdV2(),

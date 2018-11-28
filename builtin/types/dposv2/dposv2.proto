@@ -32,6 +32,9 @@ message CandidateV2 {
     Address address = 1;
     bytes pub_key = 2;
     uint64 fee = 3;
+    string name = 4;
+    string description = 5;
+    string website = 6;
 }
 
 message CandidateListV2 {
@@ -98,6 +101,9 @@ message UnbondRequestV2 {
 message RegisterCandidateRequestV2 {
     bytes pub_key = 1;
     uint64 fee = 2;
+    string name = 3;
+    string description = 4;
+    string website = 5;
 }
 
 message UnregisterCandidateRequestV2 {
