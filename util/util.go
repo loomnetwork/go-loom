@@ -26,7 +26,7 @@ func UnPrefixKey(prefix, key []byte) []byte {
 		// maybe should panic, should not happen
 		return []byte{}
 	}
-	return key[len(prefix):]
+	return key[len(prefix)+1:]
 }
 
 func FileExists(filePath string) bool {
