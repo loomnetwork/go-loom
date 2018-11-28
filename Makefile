@@ -86,8 +86,7 @@ deps:
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log \
 		github.com/pkg/errors \
-		github.com/miguelmota/go-solidity-sha3 \
-		github.com/ethereum/go-ethereum/crypto/secp256k1
+		github.com/miguelmota/go-solidity-sha3
 	dep ensure -vendor-only
 	cd $(GOGO_PROTOBUF_DIR) && git checkout 1ef32a8b9fc3f8ec940126907cedb5998f6318e4
 
