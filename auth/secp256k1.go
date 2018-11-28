@@ -62,6 +62,19 @@ func GenSecp256k1Key() ([]byte, []byte) {
 	return pubKey, privKeyBytes[:]
 }
 
+func VerifyBytes(pubKey []byte, msg []byte, sig []byte) bool {
+	var sigBytes [Secp256k1SigBytes - 1]byte
+
+	if len(sig) != Secp256k1SigBytes {
+		panic("Invalid signature length")
+	}
+
+	copy(sigBytes[:], sig[:])
+	hash := sha256.Sum256(msg)
+
+	return secp256k1.VerifySignature(pubKey, hash[:], sigBytes[:])
+}
+
 func (s *Secp256k1Signer) Sign(msg []byte) []byte {
 	privKeyBytes := ecdsaToBytes(s.privateKey)
 
@@ -79,16 +92,7 @@ func (s *Secp256k1Signer) PublicKey() []byte {
 }
 
 func (s *Secp256k1Signer) verifyBytes(msg []byte, sig []byte) bool {
-	var sigBytes [Secp256k1SigBytes - 1]byte
-
-	if len(sig) != Secp256k1SigBytes {
-		panic("Invalid signature length")
-	}
-
-	copy(sigBytes[:], sig[:])
-	hash := sha256.Sum256(msg)
-
-	return secp256k1.VerifySignature(s.PublicKey(), hash[:], sigBytes[:])
+	return VerifyBytes(s.PublicKey(), msg, sig)
 }
 
 func ecdsaToBytes(privKey *ecdsa.PrivateKey) [Secp256k1PrivKeyBytes]byte {
