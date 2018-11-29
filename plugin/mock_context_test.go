@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"bytes"
+	"github.com/stretchr/testify/require"
 	"testing"
 
 	loom "github.com/loomnetwork/go-loom"
@@ -14,11 +15,11 @@ func TestRange(t *testing.T) {
 
 	s := CreateFakeContext(addr1, addr1)
 
-	s.Set([]byte("bob1"), []byte("asasdfasdf"))
+	s.Set(append([]byte("bob"), byte(0), byte(int('1'))), []byte("asasdfasdf"))
 	s.Set([]byte("123321123"), []byte("asasdfasdf"))
-	s.Set([]byte("bob4"), []byte("asasdfasdf"))
-	s.Set([]byte("bob5"), []byte("asasdfasdf"))
-	s.Set([]byte("bob6"), []byte("asasdfasdf"))
+	s.Set(util.PrefixKey([]byte("bob"), []byte("4")), []byte("asasdfasdf"))
+	s.Set(util.PrefixKey([]byte("bob"), []byte("5")), []byte("asasdfasdf"))
+	s.Set(util.PrefixKey([]byte("bob"), []byte("6")), []byte("asasdfasdf"))
 	s.Set([]byte("afsddsf"), []byte("asasdfasdf"))
 
 	data := s.Range([]byte("bob"))
@@ -38,5 +39,7 @@ func TestPrefixedKeys(t *testing.T) {
 	noContextKey := util.PrefixKey(prefix, unprefixedKey)
 
 	// key is c.address + prefix + unprefixedKey
-	assert.Equal(t, 0, bytes.Compare(c.recoverKey(c.makeKey(noContextKey), prefix), unprefixedKey))
+	newKey, err := c.recoverKey(c.makeKey(noContextKey), prefix)
+	require.NoError(t, err)
+	assert.Equal(t, 0, bytes.Compare(newKey, unprefixedKey))
 }
