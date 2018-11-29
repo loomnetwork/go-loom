@@ -211,8 +211,8 @@ func (c *FakeContext) makeKey(key []byte) string {
 }
 
 // Strip the contract address from the given key (i.e. inverse of makeKey)
-func (c *FakeContext) recoverKey(key string, prefix []byte) []byte {
-	return []byte(key)[len(c.address.Bytes())+1+len(prefix)+1:]
+func (c *FakeContext) recoverKey(key string, prefix []byte) ([]byte, error) {
+	return util.UnprefixKey([]byte(key), c.address.Bytes(), prefix)
 }
 
 func (c *FakeContext) Range(prefix []byte) RangeData {
@@ -221,8 +221,12 @@ func (c *FakeContext) Range(prefix []byte) RangeData {
 	keyedPrefix := c.makeKey(prefix)
 	for key, value := range c.data {
 		if strings.HasPrefix(key, keyedPrefix) == true {
+			k, err := c.recoverKey(key, prefix)
+			if err != nil {
+				k = nil
+			}
 			r := &RangeEntry{
-				Key:   c.recoverKey(key, prefix),
+				Key:   k,
 				Value: value,
 			}
 

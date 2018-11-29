@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"os"
 	"syscall"
 )
@@ -21,12 +22,14 @@ func PrefixKey(keys ...[]byte) []byte {
 	return buf
 }
 
-func UnPrefixKey(prefix, key []byte) []byte {
-	if len(prefix)+1 > len(key) {
-		// maybe should panic, should not happen
-		return []byte{}
+func UnprefixKey(key []byte, prefixes ...[]byte) ([]byte, error) {
+	for _, prefix := range prefixes {
+		if len(prefix)+1 > len(key) {
+			return []byte{}, fmt.Errorf("prefix %s longer than key %s", string(prefix), string(key))
+		}
+		key = key[len(prefix)+1:]
 	}
-	return key[len(prefix)+1:]
+	return key, nil
 }
 
 func FileExists(filePath string) bool {
