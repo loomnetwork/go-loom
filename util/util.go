@@ -22,13 +22,11 @@ func PrefixKey(keys ...[]byte) []byte {
 	return buf
 }
 
-func UnprefixKey(key []byte, prefixes ...[]byte) ([]byte, error) {
-	for _, prefix := range prefixes {
-		if len(prefix)+1 > len(key) {
-			return []byte{}, fmt.Errorf("prefix %s longer than key %s", string(prefix), string(key))
-		}
-		key = key[len(prefix)+1:]
+func UnprefixKey(key, prefix []byte) ([]byte, error) {
+	if len(prefix)+1 > len(key) {
+		return []byte{}, fmt.Errorf("prefix %s longer than key %s", string(prefix), string(key))
 	}
+	key = key[len(prefix)+1:]
 	return key, nil
 }
 
