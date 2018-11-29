@@ -1,6 +1,6 @@
 // +build evm
 
-package auth
+package secp256k1
 
 import (
 	"crypto/ecdsa"
@@ -19,12 +19,7 @@ const (
 	Secp256k1SigBytes     = 65
 )
 
-// Secp256k1Signer implements the Signer interface using secp256k1 keys
-type Secp256k1Signer struct {
-	privateKey *ecdsa.PrivateKey
-}
-
-func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
+func NewSigner(privateKey []byte) *Secp256k1Signer {
 	var err error
 
 	secp256k1Signer := &Secp256k1Signer{}

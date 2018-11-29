@@ -109,7 +109,7 @@ func deployTx(chainId, writeUri, readUri, binFile, name string) (*client.EvmCont
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	signer := auth.NewSecp256k1Signer(nil)
+	signer := auth.NewSigner(auth.SignerTypeSecp256k1, nil)
 
 	rpcClient := client.NewDAppChainRPCClient(chainId, writeUri, readUri)
 	return client.DeployContract(rpcClient, bytecode, signer, name)
@@ -140,7 +140,7 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string) (int6
 	dummy := &types.Dummy{}
 	result := &types.WrapValue{}
 	// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
-	signer := auth.NewSecp256k1Signer(nil)
+	signer := auth.NewSigner(auth.SignerTypeSecp256k1, nil)
 	_, err = contract.Call("GetValue", dummy, signer, result)
 
 	return result.Value, err
@@ -169,7 +169,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string, value
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	signer := auth.NewSecp256k1Signer(nil)
+	signer := auth.NewSigner(auth.SignerTypeSecp256k1, nil)
 
 	payload := &types.WrapValue{
 		Value: int64(value),
