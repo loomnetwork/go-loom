@@ -14,7 +14,7 @@ message KarmaInitRequest {
     Address oracle = 1;
     repeated KarmaSourceReward sources = 2;
     repeated KarmaAddressSource users = 3;
-    KarmaUpkeepParmas upkeep = 4;
+    KarmaUpkeepParams upkeep = 4;
 }
 
 message KarmaSources {
@@ -36,7 +36,7 @@ message KarmaUserTarget {
     KarmaSourceTarget target = 2;
 }
 
-message KarmaUserAmmount {
+message KarmaUserAmount {
     Address user = 1;
     BigUInt amount = 2;
 }
@@ -52,7 +52,7 @@ message KarmaSource {
     int64 count = 2;
 }
 
-message KarmaUpkeepParmas {
+message KarmaUpkeepParams {
     int64 cost = 1;
     string source = 2;
     int64 period = 3;
