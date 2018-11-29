@@ -4,7 +4,7 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 package karma;
 
-enum SourceTarget {
+enum KarmaSourceTarget {
     CALL = 0;
     DEPLOY = 1;
     ALL = 2;
@@ -33,7 +33,7 @@ message KarmaNewOracleValidator {
 
 message KarmaUserTarget {
     Address user = 1;
-    SourceTarget target = 2;
+    KarmaSourceTarget target = 2;
 }
 
 message KarmaUserAmmount {
@@ -44,7 +44,7 @@ message KarmaUserAmmount {
 message KarmaSourceReward {
     string name = 1;
     int64 reward = 2;
-    SourceTarget target = 3;
+    KarmaSourceTarget target = 3;
 }
 
 message KarmaSource {
