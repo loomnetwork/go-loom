@@ -111,6 +111,41 @@ func DelegateCmdV2() *cobra.Command {
 	}
 }
 
+func DelegationOverrideCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use: "delegation_override [validator address] [delegator address] [amount] [lock time]",
+		Short: "Manually edit delegation entry",
+		Args: cobra.MinimumNArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			validatorAddress, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+			candidateAddress, err := cli.ResolveAddress(args[1])
+			if err != nil {
+				return err
+			}
+			amount, err := cli.ParseAmount(args[2])
+			if err != nil {
+				return err
+			}
+			locktime, err := strconv.ParseUint(args[3], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			return cli.CallContract(DPOSV2ContractName, "DelegationOverride", &dposv2.DelegationOverrideRequestV2{
+				ValidatorAddress: validatorAddress.MarshalPB(),
+				DelegatorAddress: candidateAddress.MarshalPB(),
+				Amount: &types.BigUInt{
+					Value: *amount,
+				},
+				LockTime: locktime,
+			}, nil)
+		},
+	}
+}
+
 func CheckDelegationCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "check_delegationV2 [validator address]",
@@ -203,6 +238,7 @@ func AddDPOSV2(root *cobra.Command) {
 		registercmd,
 		ListCandidatesCmdV2(),
 		DelegateCmdV2(),
+		DelegationOverrideCmdV2(),
 		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),

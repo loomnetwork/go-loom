@@ -72,6 +72,13 @@ message DelegateRequestV2 {
     BigUInt amount = 2;
 }
 
+message DelegationOverrideRequestV2 {
+    Address validator_address = 1;
+    Address delegator_address = 2;
+    BigUInt amount = 3;
+    uint64 lock_time = 4;
+}
+
 message RedelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
