@@ -223,7 +223,7 @@ func (c *FakeContext) Range(prefix []byte) RangeData {
 		if strings.HasPrefix(key, keyedPrefix) == true {
 			k, err := c.recoverKey(key, prefix)
 			if err != nil {
-				panic("recover key. " + err.Error())
+				panic(err)
 			}
 			r := &RangeEntry{
 				Key:   k,
