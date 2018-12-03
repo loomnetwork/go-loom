@@ -45,14 +45,15 @@ message DelegationV2 {
     Address validator = 1;
     Address delegator = 2;
     BigUInt amount = 3;
-    uint64 height = 4;
-    uint64 lock_time = 5;
+    BigUInt update_amount = 4;
+    uint64 height = 5;
+    uint64 lock_time = 6;
     enum DelegationState {
         BONDING = 0;
         BONDED = 1;
         UNBONDING = 2;
     }
-    DelegationState state = 6;
+    DelegationState state = 7;
 }
 
 message DelegationListV2 {
