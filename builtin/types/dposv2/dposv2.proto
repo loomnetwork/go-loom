@@ -19,7 +19,7 @@ message ValidatorStatisticV2 {
     bytes pub_key = 2;
     uint64 upblock_count = 3;
     uint64 block_count = 4;
-    BigUInt slash_total = 5;
+    BigUInt slash_percentage = 5;
     BigUInt distribution_total = 6;
     BigUInt delegation_total = 7;
 }
