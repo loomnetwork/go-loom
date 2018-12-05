@@ -23,12 +23,10 @@ message KarmaSources {
 
 message KarmaSourcesValidator {
     repeated KarmaSourceReward sources = 1;
-    Address oracle = 2;
 }
 
 message KarmaNewOracleValidator {
     Address new_oracle = 1;
-    Address old_oracle = 2;
 }
 
 message KarmaUserTarget {
@@ -74,13 +72,11 @@ message KarmaState {
 message KarmaStateUser {
     repeated KarmaSource source_states = 1;
     Address user = 2;
-    Address oracle = 3;
 }
 
 message KarmaStateKeyUser {
     repeated string state_keys = 1;
     Address user = 2;
-    Address oracle = 3;
 }
 
 message KarmaTotal{
