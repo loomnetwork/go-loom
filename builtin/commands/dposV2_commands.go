@@ -148,7 +148,7 @@ func DelegationOverrideCmdV2() *cobra.Command {
 
 func CheckDelegationCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "check_delegationV2 [validator address]",
+		Use:   "check_delegationV2 [validator address] [delegator address]",
 		Short: "check delegation to a particular validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
