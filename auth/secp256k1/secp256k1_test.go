@@ -19,7 +19,7 @@ var (
 func testSign(privKey []byte, t *testing.T) ([]byte, error) {
 	testMsg := []byte{'t', 'e', 's', 't'}
 
-	signer := NewSigner(privKey)
+	signer := NewSecp256k1Signer(privKey)
 
 	sig := signer.Sign(testMsg)
 	if len(sig) != Secp256k1SigBytes {
@@ -80,7 +80,7 @@ func TestCompareAddress(t *testing.T) {
 
 	// get pubkey address by secp256k1 signer
 	key, _ := hex.DecodeString(TestEthereumPrivKey)
-	signer := NewSigner(key)
+	signer := NewSecp256k1Signer(key)
 	ethAddr2 := crypto.PubkeyToAddress(signer.privateKey.PublicKey)
 
 	if !bytes.Equal(ethAddr1.Bytes(), ethAddr2.Bytes()) {

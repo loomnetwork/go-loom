@@ -19,7 +19,7 @@ const (
 	Secp256k1SigBytes     = 65
 )
 
-func NewSigner(privateKey []byte) *Secp256k1Signer {
+func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
 	var err error
 
 	secp256k1Signer := &Secp256k1Signer{}

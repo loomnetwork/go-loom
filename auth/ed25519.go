@@ -1,4 +1,4 @@
-package ed25519
+package auth
 
 import "golang.org/x/crypto/ed25519"
 
@@ -7,7 +7,7 @@ type Ed25519Signer struct {
 	privateKey ed25519.PrivateKey
 }
 
-func NewSigner(privateKey []byte) *Ed25519Signer {
+func NewEd25519Signer(privateKey []byte) *Ed25519Signer {
 	var err error
 	if privateKey == nil {
 		_, privateKey, err = ed25519.GenerateKey(nil)

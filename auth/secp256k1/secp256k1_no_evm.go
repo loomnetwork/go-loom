@@ -2,7 +2,7 @@
 
 package secp256k1
 
-func NewSigner(privateKey []byte) *Secp256k1Signer {
+func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
 	panic("EVM build isn't activated")
 }
 
