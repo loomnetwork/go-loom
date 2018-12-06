@@ -16,19 +16,19 @@ import (
 const DPOSV2ContractName = "dposV2"
 
 var (
-    candidateName string
-    candidateDescription string
-    candidateWebsite string
+	candidateName        string
+	candidateDescription string
+	candidateWebsite     string
 )
 
 func UnregisterCandidateCmdV2() *cobra.Command {
-    return &cobra.Command{
-        Use:   "unregister_candidateV2",
-        Short: "Unregisters the candidate (only called if previously registered)",
-        RunE: func(cmd *cobra.Command, args []string) error {
-            return cli.CallContract(DPOSV2ContractName, "UnregisterCandidate", &dposv2.UnregisterCandidateRequestV2{}, nil)
-        },
-    }
+	return &cobra.Command{
+		Use:   "unregister_candidateV2",
+		Short: "Unregisters the candidate (only called if previously registered)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return cli.CallContract(DPOSV2ContractName, "UnregisterCandidate", &dposv2.UnregisterCandidateRequestV2{}, nil)
+		},
+	}
 }
 
 func ListValidatorsCmdV2() *cobra.Command {
@@ -86,11 +86,11 @@ func RegisterCandidateCmdV2() *cobra.Command {
 				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
 			}
 			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate", &dposv2.RegisterCandidateRequestV2{
-				PubKey: pubKey,
-				Fee: candidateFee,
-				Name: candidateName,
+				PubKey:      pubKey,
+				Fee:         candidateFee,
+				Name:        candidateName,
 				Description: candidateDescription,
-				Website: candidateWebsite,
+				Website:     candidateWebsite,
 			}, nil)
 		},
 	}
@@ -123,9 +123,9 @@ func DelegateCmdV2() *cobra.Command {
 
 func DelegationOverrideCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use: "delegation_override [validator address] [delegator address] [amount] [lock time]",
+		Use:   "delegation_override [validator address] [delegator address] [amount] [lock time]",
 		Short: "Manually edit delegation entry",
-		Args: cobra.MinimumNArgs(4),
+		Args:  cobra.MinimumNArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			validatorAddress, err := cli.ResolveAddress(args[0])
 			if err != nil {
@@ -247,7 +247,7 @@ func AddDPOSV2(root *cobra.Command) {
 		ListValidatorsCmdV2(),
 		registercmd,
 		ListCandidatesCmdV2(),
-        UnregisterCandidateCmdV2(),
+		UnregisterCandidateCmdV2(),
 		DelegateCmdV2(),
 		DelegationOverrideCmdV2(),
 		CheckDelegationCmdV2(),
