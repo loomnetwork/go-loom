@@ -11,7 +11,7 @@ enum KarmaSourceTarget {
 }
 
 message KarmaInitRequest {
-    Address oracle = 1;
+    Address Oracle = 1;
     repeated KarmaSourceReward sources = 2;
     repeated KarmaAddressSource users = 3;
     KarmaUpkeepParams upkeep = 4;
