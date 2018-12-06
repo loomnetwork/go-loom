@@ -2,6 +2,8 @@ package auth
 
 import (
 	"fmt"
+
+	"github.com/loomnetwork/go-loom/auth/secp256k1"
 )
 
 const (
@@ -20,7 +22,7 @@ func NewSigner(signerType string, privKey []byte) Signer {
 	case SignerTypeEd25519:
 		return NewEd25519Signer(privKey)
 	case SignerTypeSecp256k1:
-		return NewSecp256k1Signer(privKey)
+		return secp256k1.NewSecp256k1Signer(privKey)
 	default:
 		panic(fmt.Errorf("Unknown signer type %s", signerType))
 	}
