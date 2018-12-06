@@ -30,6 +30,11 @@ message MintToGatewayRequest {
     BigUInt amount = 1;
 }
 
+message BurnRequest {
+    Address owner = 1;
+    BigUInt amount = 2;
+}
+
 
 // ERC20 messages
 // See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
