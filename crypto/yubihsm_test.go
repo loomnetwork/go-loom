@@ -56,4 +56,6 @@ func TestSignYubiSecp256k1(t *testing.T) {
 	if !secp256k1.VerifySignature(yubiPrivKey.pubKeyBytes[:], hash[:], sig) {
 		t.Fatalf("Verification of signature has failed")
 	}
+
+	t.Logf("Sign/Verify using YubiHSM has been succeeded")
 }
