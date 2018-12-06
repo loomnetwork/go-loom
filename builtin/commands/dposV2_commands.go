@@ -21,6 +21,16 @@ var (
     candidateWebsite string
 )
 
+func UnregisterCandidateCmdV2() *cobra.Command {
+    return &cobra.Command{
+        Use:   "unregister_candidateV2",
+        Short: "Unregisters the candidate (only called if previously registered)",
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return cli.CallContract(DPOSV2ContractName, "UnregisterCandidate", &dposv2.UnregisterCandidateRequestV2{}, nil)
+        },
+    }
+}
+
 func ListValidatorsCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "list_validatorsV2",
@@ -237,6 +247,7 @@ func AddDPOSV2(root *cobra.Command) {
 		ListValidatorsCmdV2(),
 		registercmd,
 		ListCandidatesCmdV2(),
+        UnregisterCandidateCmdV2(),
 		DelegateCmdV2(),
 		DelegationOverrideCmdV2(),
 		CheckDelegationCmdV2(),
