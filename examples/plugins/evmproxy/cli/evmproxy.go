@@ -12,7 +12,6 @@ import (
 	"github.com/loomnetwork/go-loom/client"
 	"github.com/loomnetwork/go-loom/examples/plugins/evmproxy/types"
 	"github.com/spf13/cobra"
-	"golang.org/x/crypto/ed25519"
 )
 
 var RootCmd = &cobra.Command{
@@ -81,12 +80,7 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr string) (string, er
 
 	ethCallResult := &types.EthCallResult{}
 	// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
-	_, priv, err := ed25519.GenerateKey(nil)
-	if err != nil {
-		return "", err
-	}
-
-	signer := auth.NewEd25519Signer(priv)
+	signer := auth.NewSecp256k1Signer(nil)
 	_, err = contract.Call("EthCall", ethCall, signer, ethCallResult)
 
 	return ethCallResult.GetData(), err
@@ -102,12 +96,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr string, value int) 
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	_, priv, err := ed25519.GenerateKey(nil)
-	if err != nil {
-		return err
-	}
-
-	signer := auth.NewEd25519Signer(priv)
+	signer := auth.NewSecp256k1Signer(nil)
 
 	// set(uint256) = 60fe47b1 (4 bytes)
 	// 0000000000000000000000000000000000000000000000000000000000000001 = 1 (64 bytes)
