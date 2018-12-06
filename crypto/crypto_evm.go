@@ -8,15 +8,12 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func LoadECDSA(privKeyType string, filePath string) (PrivateKey, error) {
-	switch privKeyType {
-	case PrivKeyTypeFile:
+func LoadECDSA(hsmEnabled bool, filePath string) (PrivateKey, error) {
+	if hsmEnabled {
 		return LoadSecp256k1PrivKey(filePath)
-	case PrivKeyTypeYubiHsm:
-		return LoadYubiHsmPrivKey(filePath)
-	default:
-		panic("Unknow ECDSA private key type")
 	}
+
+	return LoadYubiHsmPrivKey(filePath)
 }
 
 func SoliditySign(hash []byte, prv PrivateKey) (sig []byte, err error) {
