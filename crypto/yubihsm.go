@@ -268,3 +268,8 @@ func YubiHsmSign(hash []byte, privKey *YubiHsmPrivateKey) (sig []byte, err error
 
 	return sig, nil
 }
+
+// get pubkey bytes
+func (privKey *YubiHsmPrivateKey) GetPubKeyBytes() []byte {
+	return privKey.pubKeyBytes[:]
+}

@@ -24,5 +24,6 @@ evmexample-cli
 examples/plugins/evmproxy/cli/evmproxy
 loom.log
 contract.log
+*pb.go
 
 .DS_Store
