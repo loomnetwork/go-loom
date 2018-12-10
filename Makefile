@@ -91,7 +91,9 @@ deps:
 	cd $(GOGO_PROTOBUF_DIR) && git checkout 1ef32a8b9fc3f8ec940126907cedb5998f6318e4
 
 deps-evm:
-	go get github.com/ethereum/go-ethereum \
+	go get \
+		github.com/ethereum/go-ethereum \
+		github.com/loomnetwork/yubihsm-go \
 		gopkg.in/check.v1
 
 clean:
