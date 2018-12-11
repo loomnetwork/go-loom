@@ -172,7 +172,6 @@ func LoadYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
 	// try to export secp256k1 public key
 	err = yubiHsmPrivKey.exportPubKey()
 	if err != nil {
-		yubiHsmPrivKey.deletePrivKey()
 		yubiHsmPrivKey.UnloadYubiHsmPrivKey()
 		return nil, err
 	}
@@ -235,7 +234,7 @@ func (privKey *YubiHsmPrivateKey) exportSecp256k1Pubkey(keyData []byte) error {
 // export ed25519 public key
 func (privKey *YubiHsmPrivateKey) exportEd25519Pubkey(keyData []byte) error {
 	if len(keyData) != YubiEd25519PubKeySize {
-		return errors.New("Invalid Secp256k1 public key data size")
+		return errors.New("Invalid ed25519 public key data size")
 	}
 
 	privKey.pubKeyBytes = make([]byte, YubiEd25519PubKeySize)
