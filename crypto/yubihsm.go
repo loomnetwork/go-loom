@@ -82,7 +82,6 @@ func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) erro
 	privKey.yubiHsmParams = yubiHsmParams
 	privKey.sessionMgr = sessionMgr
 	privKey.privKeyID = yubiHsmParams.PrivKeyID
-	privKey.privKeyType = yubiHsmParams.PrivKeyType
 
 	return nil
 }

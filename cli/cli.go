@@ -37,7 +37,7 @@ func ContractCallCommand(name string) *cobra.Command {
 	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
-	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "k", "", "private key file")
 	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
 	pflags.StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo Ed25519 or Secp256k1")
 	return cmd
@@ -53,7 +53,7 @@ func ContractResolveCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
-	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "k", "", "private key file")
 	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
 	pflags.StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
 
