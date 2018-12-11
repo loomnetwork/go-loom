@@ -68,6 +68,9 @@ func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) erro
 	if err != nil {
 		return err
 	}
+	if yubiHsmParams.PrivKeyType == "" {
+		yubiHsmParams.PrivKeyType = algo
+	}
 
 	httpConnector := connector.NewHTTPConnector(yubiHsmParams.HsmConnURL)
 	sessionMgr, err := yubihsm.NewSessionManager(httpConnector, yubiHsmParams.AuthKeyID, yubiHsmParams.AuthPasswd)
@@ -78,6 +81,7 @@ func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) erro
 	privKey.yubiHsmParams = yubiHsmParams
 	privKey.sessionMgr = sessionMgr
 	privKey.privKeyID = yubiHsmParams.PrivKeyID
+	privKey.privKeyType = yubiHsmParams.PrivKeyType
 
 	return nil
 }
