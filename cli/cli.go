@@ -83,7 +83,7 @@ func contract(defaultAddr string) (*client.Contract, error) {
 }
 
 func CallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
-	signer, err := GetSignerFromCli()
+	signer, err := GetSigner(TxFlags.PrivFile, TxFlags.HsmConfigFile, TxFlags.Algo)
 	if err != nil {
 		return err
 	}

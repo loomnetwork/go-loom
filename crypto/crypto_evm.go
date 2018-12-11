@@ -6,15 +6,12 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func LoadECDSA(filePath string) (PrivateKey, error) {
-	return LoadSecp256k1PrivKey(filePath)
-}
-
 func SoliditySign(hash []byte, prv PrivateKey) (sig []byte, err error) {
 	switch prv.(type) {
 	case Secp256k1PrivateKey:
 		sig, err = crypto.Sign(hash, prv.(*Secp256k1PrivateKey).ToECDSAPrivKey())
 	case YubiHsmPrivateKey:
+		//TODO this feels out of place
 		sig, err = YubiHsmSign(hash, prv.(*YubiHsmPrivateKey))
 	}
 
