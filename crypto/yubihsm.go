@@ -307,7 +307,7 @@ func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) (sig []byte,
 	sig = append(sig, ecdsaSig.S.Bytes()...)
 
 	if len(sig) != YubiSecp256k1SignDataLen {
-		return nil, errors.New("Invalid signature length")
+		return nil, errors.New("Invalid signature YubiSecp256k1SignDataLen length")
 	}
 
 	return sig, nil
