@@ -2,10 +2,14 @@
 
 package crypto
 
-func LoadECDSA(privKeyType string, filePath string) (*PrivateKey, error) {
+func Sign(hash []byte, prv PrivateKey) (sig []byte, err error) {
 	panic("EVM build isn't activated")
 }
 
-func Sign(hash []byte, prv PrivateKey) (sig []byte, err error) {
+func LoadSecp256k1PrivKey(filePath string) (interface{}, error) {
+	panic("EVM build isn't activated")
+}
+
+func LoadYubiHsmPrivKey(algo, filePath string) (interface{}, error) {
 	panic("EVM build isn't activated")
 }
