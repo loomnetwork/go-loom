@@ -6,12 +6,8 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func LoadECDSA(hsmEnabled bool, filePath string) (PrivateKey, error) {
-	if hsmEnabled {
-		return LoadSecp256k1PrivKey(filePath)
-	}
-
-	return LoadYubiHsmPrivKey(filePath)
+func LoadECDSA(filePath string) (PrivateKey, error) {
+	return LoadSecp256k1PrivKey(filePath)
 }
 
 func SoliditySign(hash []byte, prv PrivateKey) (sig []byte, err error) {

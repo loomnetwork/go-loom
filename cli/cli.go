@@ -11,12 +11,12 @@ import (
 )
 
 var TxFlags struct {
-	WriteURI     string
-	ReadURI      string
-	ContractAddr string
-	ChainID      string
-	PrivFile     string
-	HsmEnabled   bool
+	WriteURI      string
+	ReadURI       string
+	ContractAddr  string
+	ChainID       string
+	PrivFile      string
+	HsmConfigFile string
 }
 
 func ContractCallCommand() *cobra.Command {
@@ -30,6 +30,7 @@ func ContractCallCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "h", "", "hsm config file")
 	return cmd
 }
 

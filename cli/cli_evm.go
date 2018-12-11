@@ -14,19 +14,19 @@ import (
 func CallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
 	var signerType string
 
-	if TxFlags.PrivFile == "" {
+	if TxFlags.PrivFile == "" && TxFlags.HsmConfigFile != "" {
 		return errors.New("private key required to call contract")
 	}
 
-	privKey, err := crypto.LoadECDSA(TxFlags.HsmEnabled, TxFlags.PrivFile)
-	if err != nil {
-		return err
-	}
-
-	if TxFlags.HsmEnabled {
+	var privKey crypto.PrivateKey
+	if TxFlags.HsmConfigFile != "" {
+		privateKey := crypto.LoadYubiHsmPrivKey(filePath)
 		signerType = auth.SignerTypeYubiHsm
 	} else {
-		signerType = auth.SignerTypeSecp256k1
+		privKey, err := crypto.LoadECDSA(TxFlags.HsmEnabled, TxFlags.PrivFile)
+		if err != nil {
+			return err
+		}
 	}
 
 	signer := auth.NewSigner(signerType, privKey)
