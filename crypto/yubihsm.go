@@ -50,14 +50,16 @@ type YubiHsmPrivateKey struct {
 	pubKeyBytes   []byte
 }
 
-func (privKey *YubiHsmPrivateKey) initYubiHsmSession(filePath string) error {
+func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) error {
 	yubiHsmParams := &YubiHsmParams{
 		HsmConnURL:  YubiDefConnURL,
 		AuthKeyID:   YubiDefAuthKeyID,
 		AuthPasswd:  YubiDefPassword,
 		PrivKeyType: YubiHsmPrivKeyTypeEd25519,
 	}
-
+	if algo == "secp256k1" {
+		yubiHsmParams.PrivKeyType = YubiHsmPrivKeyTypeSecp256k1
+	}
 	jsonParams, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -80,13 +82,13 @@ func (privKey *YubiHsmPrivateKey) initYubiHsmSession(filePath string) error {
 	return nil
 }
 
-func GenYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
+func GenYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
 	var err error
 
 	yubiHsmPrivKey := &YubiHsmPrivateKey{}
 
 	// init YubiHSM session
-	err = yubiHsmPrivKey.initYubiHsmSession(filePath)
+	err = yubiHsmPrivKey.initYubiHsmSession(algo, filePath)
 	if err != nil {
 		return nil, err
 	}
@@ -154,13 +156,13 @@ func (privKey *YubiHsmPrivateKey) deletePrivKey() {
 	privKey.privKeyID = 0
 }
 
-func LoadYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
+func LoadYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
 	var err error
 
 	yubiHsmPrivKey := &YubiHsmPrivateKey{}
 
 	// init YubiHSM session
-	err = yubiHsmPrivKey.initYubiHsmSession(filePath)
+	err = yubiHsmPrivKey.initYubiHsmSession(algo, filePath)
 	if err != nil {
 		return nil, err
 	}

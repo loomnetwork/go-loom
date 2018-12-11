@@ -10,6 +10,6 @@ func LoadSecp256k1PrivKey(filePath string) (interface{}, error) {
 	panic("EVM build isn't activated")
 }
 
-func LoadYubiHsmPrivKey(filePath string) (interface{}, error) {
+func LoadYubiHsmPrivKey(algo, filePath string) (interface{}, error) {
 	panic("EVM build isn't activated")
 }
