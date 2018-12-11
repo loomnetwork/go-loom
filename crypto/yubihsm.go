@@ -69,6 +69,9 @@ func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) erro
 	if err != nil {
 		return err
 	}
+	if yubiHsmParams.PrivKeyType == "" {
+		yubiHsmParams.PrivKeyType = algo
+	}
 
 	httpConnector := connector.NewHTTPConnector(yubiHsmParams.HsmConnURL)
 	sessionMgr, err := yubihsm.NewSessionManager(httpConnector, yubiHsmParams.AuthKeyID, yubiHsmParams.AuthPasswd)
@@ -79,6 +82,7 @@ func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) erro
 	privKey.yubiHsmParams = yubiHsmParams
 	privKey.sessionMgr = sessionMgr
 	privKey.privKeyID = yubiHsmParams.PrivKeyID
+	privKey.privKeyType = yubiHsmParams.PrivKeyType
 
 	return nil
 }
@@ -304,7 +308,7 @@ func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) (sig []byte,
 	sig = append(sig, ecdsaSig.S.Bytes()...)
 
 	if len(sig) != YubiSecp256k1SignDataLen {
-		return nil, errors.New("Invalid signature length")
+		return nil, errors.New("Invalid signature YubiSecp256k1SignDataLen length")
 	}
 
 	return sig, nil

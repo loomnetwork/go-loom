@@ -61,7 +61,7 @@ func VerifyBytes(pubKey []byte, msg []byte, sig []byte) bool {
 	var sigBytes [Secp256k1SigBytes - 1]byte
 
 	if len(sig) != Secp256k1SigBytes {
-		panic("Invalid signature length")
+		panic("Invalid signature Secp256k1SigBytes length")
 	}
 
 	copy(sigBytes[:], sig[:])
