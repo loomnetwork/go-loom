@@ -20,11 +20,18 @@ var TxFlags struct {
 	Algo          string
 }
 
-func ContractCallCommand() *cobra.Command {
+func ContractCallCommand(name string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "call",
 		Short: "call a contract method",
 	}
+	if name != "" {
+		cmd = &cobra.Command{
+			Use:   name,
+			Short: "call a method of the " + name + " contract",
+		}
+	}
+
 	pflags := cmd.PersistentFlags()
 	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
 	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
