@@ -19,11 +19,15 @@ func CallContract(defaultAddr string, method string, params proto.Message, resul
 	}
 
 	var privKey crypto.PrivateKey
+	var err error
 	if TxFlags.HsmConfigFile != "" {
-		privateKey := crypto.LoadYubiHsmPrivKey(filePath)
+		privKey, err = crypto.LoadYubiHsmPrivKey(TxFlags.HsmConfigFile)
+		if err != nil {
+			return err
+		}
 		signerType = auth.SignerTypeYubiHsm
 	} else {
-		privKey, err := crypto.LoadECDSA(TxFlags.HsmEnabled, TxFlags.PrivFile)
+		privKey, err = crypto.LoadECDSA(TxFlags.PrivFile)
 		if err != nil {
 			return err
 		}
