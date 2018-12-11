@@ -31,8 +31,8 @@ func ContractCallCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
-	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "h", "", "hsm config file")
-	pflags.StringVarP(&TxFlags.Algo, "algo", "a", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
+	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
+	pflags.StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo Ed25519 or Secp256k1")
 	return cmd
 }
 
@@ -47,8 +47,8 @@ func ContractResolveCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
-	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "h", "", "hsm config file")
-	pflags.StringVarP(&TxFlags.Algo, "algo", "a", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
+	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
+	pflags.StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
 
 	return cmd
 }
