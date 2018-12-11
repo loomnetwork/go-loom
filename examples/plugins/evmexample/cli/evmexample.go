@@ -36,8 +36,6 @@ func main() {
 	RootCmd.PersistentFlags().StringVarP(&flags.ContractHexAddr, "contract", "c", "", "contract address")
 	RootCmd.PersistentFlags().StringVarP(&flags.ChainId, "chainId", "i", "default", "chain ID")
 	RootCmd.PersistentFlags().StringVarP(&flags.ContractName, "contract-name", "n", "evmexample", "contract name")
-	RootCmd.PersistentFlags().StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
-	RootCmd.PersistentFlags().StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
 
 	var binFile string
 	deployCmd := &cobra.Command{

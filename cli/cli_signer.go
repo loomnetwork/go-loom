@@ -3,7 +3,6 @@ package cli
 import (
 	"encoding/base64"
 	"errors"
-	"fmt"
 	"io/ioutil"
 
 	"github.com/loomnetwork/go-loom/crypto"
@@ -29,7 +28,6 @@ func GetSigner(privFile, hsmConfigFile, algo string) (auth.Signer, error) {
 		signerType = auth.SignerTypeYubiHsm
 		signer = auth.NewSigner(signerType, privKey)
 	} else {
-		fmt.Printf("trying to load -%s\n", privFile)
 		if algo == "secp256k1" {
 			privKey, err = crypto.LoadSecp256k1PrivKey(privFile)
 			if err != nil {
