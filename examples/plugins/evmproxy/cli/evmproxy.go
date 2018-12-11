@@ -32,7 +32,6 @@ func main() {
 	RootCmd.PersistentFlags().StringVarP(&flags.ReadUri, "read", "r", "http://localhost:9999", "URI for quering app state")
 	RootCmd.PersistentFlags().StringVarP(&flags.ContractHexAddr, "contract", "c", "0x005B17864f3adbF53b1384F2E6f2120c6652F779", "contract address")
 	RootCmd.PersistentFlags().StringVarP(&flags.ChainId, "chainId", "i", "default", "chain ID")
-
 	getCmd := &cobra.Command{
 		Use:   "get",
 		Short: "get the value from the store",

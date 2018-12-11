@@ -17,6 +17,7 @@ var TxFlags struct {
 	ChainID       string
 	PrivFile      string
 	HsmConfigFile string
+	Algo          string
 }
 
 func ContractCallCommand() *cobra.Command {
@@ -31,6 +32,7 @@ func ContractCallCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
 	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "h", "", "hsm config file")
+	pflags.StringVarP(&TxFlags.Algo, "algo", "a", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
 	return cmd
 }
 
@@ -45,6 +47,9 @@ func ContractResolveCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "h", "", "hsm config file")
+	pflags.StringVarP(&TxFlags.Algo, "algo", "a", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
+
 	return cmd
 }
 
@@ -68,6 +73,19 @@ func contract(defaultAddr string) (*client.Contract, error) {
 	// create contract
 	contract := client.NewContract(rpcClient, contractAddr.Local)
 	return contract, nil
+}
+
+func CallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
+	signer, err := GetSignerFromCli()
+	if err != nil {
+		return err
+	}
+	contract, err := contract(defaultAddr)
+	if err != nil {
+		return err
+	}
+	_, err = contract.Call(method, params, signer, result)
+	return err
 }
 
 func StaticCallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
