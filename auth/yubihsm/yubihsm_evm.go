@@ -3,7 +3,6 @@
 package yubihsm
 
 import (
-	"crypto/sha256"
 	"errors"
 
 	"github.com/loomnetwork/go-loom/crypto"
@@ -24,8 +23,7 @@ func (s *YubiHsmSigner) PublicKey() []byte {
 }
 
 func (s *YubiHsmSigner) Sign(msg []byte) []byte {
-	hash := sha256.Sum256(msg)
-	sigBytes, err := crypto.YubiHsmSign(hash[:], s.PrivateKey.(*crypto.YubiHsmPrivateKey))
+	sigBytes, err := crypto.YubiHsmSign(msg, s.PrivateKey.(*crypto.YubiHsmPrivateKey))
 	if err != nil {
 		panic(err)
 	}

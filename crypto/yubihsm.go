@@ -3,6 +3,7 @@
 package crypto
 
 import (
+	"crypto/sha256"
 	"encoding/asn1"
 	"encoding/json"
 	"errors"
@@ -45,7 +46,6 @@ type YubiHsmParams struct {
 type YubiHsmPrivateKey struct {
 	yubiHsmParams *YubiHsmParams
 	sessionMgr    *yubihsm.SessionManager
-	privKeyType   string
 	privKeyID     uint16
 	pubKeyBytes   []byte
 }
@@ -60,6 +60,7 @@ func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) erro
 	if algo == "secp256k1" {
 		yubiHsmParams.PrivKeyType = YubiHsmPrivKeyTypeSecp256k1
 	}
+
 	jsonParams, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -119,7 +120,7 @@ func (privKey *YubiHsmPrivateKey) genPrivKey() error {
 	rand.Seed(time.Now().UnixNano())
 	keyID := uint16(rand.Intn(0xFFFF))
 
-	if privKey.privKeyType == YubiHsmPrivKeyTypeEd25519 {
+	if privKey.yubiHsmParams.PrivKeyType == YubiHsmPrivKeyTypeEd25519 {
 		cap = commands.CapabilityAsymmetricSignEddsa
 		algo = commands.AlgorighmED25519
 	} else {
@@ -264,7 +265,7 @@ func (privKey *YubiHsmPrivateKey) exportPubKey() error {
 		return errors.New("Invalid response for exporting public key")
 	}
 
-	if privKey.privKeyType == YubiHsmPrivKeyTypeEd25519 {
+	if privKey.yubiHsmParams.PrivKeyType == YubiHsmPrivKeyTypeEd25519 {
 		err = privKey.exportEd25519Pubkey(parsedResp.KeyData)
 	} else {
 		err = privKey.exportSecp256k1Pubkey(parsedResp.KeyData)
@@ -309,9 +310,9 @@ func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) (sig []byte,
 	return sig, nil
 }
 
-func (privKey *YubiHsmPrivateKey) yubiHsmEd25519Sign(hash []byte) (sig []byte, err error) {
+func (privKey *YubiHsmPrivateKey) yubiHsmEd25519Sign(msg []byte) (sig []byte, err error) {
 	// send command to sign data
-	command, err := commands.CreateSignDataEddsaCommand(privKey.privKeyID, hash)
+	command, err := commands.CreateSignDataEddsaCommand(privKey.privKeyID, msg)
 	if err != nil {
 		return nil, err
 	}
@@ -333,11 +334,12 @@ func (privKey *YubiHsmPrivateKey) yubiHsmEd25519Sign(hash []byte) (sig []byte, e
 }
 
 // YubiHsmSign signs using private key in YubiHSM token
-func YubiHsmSign(hash []byte, privKey *YubiHsmPrivateKey) (sig []byte, err error) {
-	if privKey.privKeyType == YubiHsmPrivKeyTypeEd25519 {
-		sig, err = privKey.yubiHsmEd25519Sign(hash)
+func YubiHsmSign(msg []byte, privKey *YubiHsmPrivateKey) (sig []byte, err error) {
+	if privKey.yubiHsmParams.PrivKeyType == YubiHsmPrivKeyTypeEd25519 {
+		sig, err = privKey.yubiHsmEd25519Sign(msg)
 	} else {
-		sig, err = privKey.yubiHsmSecp256k1Sign(hash)
+		hash := sha256.Sum256(msg)
+		sig, err = privKey.yubiHsmSecp256k1Sign(hash[:])
 	}
 
 	return sig, err
