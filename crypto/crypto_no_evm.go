@@ -2,7 +2,7 @@
 
 package crypto
 
-func LoadECDSA(privKeyType string, filePath string) (*PrivateKey, error) {
+func LoadECDSA(filePath string) (*PrivateKey, error) {
 	panic("EVM build isn't activated")
 }
 
