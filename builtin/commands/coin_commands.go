@@ -58,7 +58,7 @@ func TransferFromCmd() *cobra.Command {
 
 			return cli.CallContract(CoinContractName, "TransferFrom", &coin.TransferFromRequest{
 				From: fromAddress.MarshalPB(),
-				To: toAddress.MarshalPB(),
+				To:   toAddress.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
 				},
@@ -91,7 +91,6 @@ func ApproveCmd() *cobra.Command {
 		},
 	}
 }
-
 
 func BalanceCmd() *cobra.Command {
 	return &cobra.Command{

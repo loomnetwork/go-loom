@@ -1,37 +1,45 @@
 package cli
 
 import (
-	"encoding/base64"
 	"errors"
-	"io/ioutil"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/spf13/cobra"
 
 	"github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/auth"
 	"github.com/loomnetwork/go-loom/client"
 )
 
 var TxFlags struct {
-	WriteURI     string
-	ReadURI      string
-	ContractAddr string
-	ChainID      string
-	PrivFile     string
+	WriteURI      string
+	ReadURI       string
+	ContractAddr  string
+	ChainID       string
+	PrivFile      string
+	HsmConfigFile string
+	Algo          string
 }
 
-func ContractCallCommand() *cobra.Command {
+func ContractCallCommand(name string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "call",
 		Short: "call a contract method",
 	}
+	if name != "" {
+		cmd = &cobra.Command{
+			Use:   name,
+			Short: "call a method of the " + name + " contract",
+		}
+	}
+
 	pflags := cmd.PersistentFlags()
 	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
 	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
-	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "k", "", "private key file")
+	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
+	pflags.StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo Ed25519 or Secp256k1")
 	return cmd
 }
 
@@ -45,7 +53,10 @@ func ContractResolveCommand() *cobra.Command {
 	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
-	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "p", "", "private key file")
+	pflags.StringVarP(&TxFlags.PrivFile, "private-key", "k", "", "private key file")
+	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
+	pflags.StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo for the key- default is Ed25519 or Secp256k1")
+
 	return cmd
 }
 
@@ -72,22 +83,10 @@ func contract(defaultAddr string) (*client.Contract, error) {
 }
 
 func CallContract(defaultAddr string, method string, params proto.Message, result interface{}) error {
-	if TxFlags.PrivFile == "" {
-		return errors.New("private key required to call contract")
-	}
-
-	privKeyB64, err := ioutil.ReadFile(TxFlags.PrivFile)
+	signer, err := GetSigner(TxFlags.PrivFile, TxFlags.HsmConfigFile, TxFlags.Algo)
 	if err != nil {
 		return err
 	}
-
-	privKey, err := base64.StdEncoding.DecodeString(string(privKeyB64))
-	if err != nil {
-		return err
-	}
-
-	signer := auth.NewSigner(auth.SignerTypeEd25519, privKey)
-
 	contract, err := contract(defaultAddr)
 	if err != nil {
 		return err
