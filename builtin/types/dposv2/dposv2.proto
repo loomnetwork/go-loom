@@ -6,6 +6,7 @@ message ParamsV2 {
     uint64 validator_count = 1;
     int64 election_cycle_length = 2;
     Address coin_contract_address = 3;
+    Address oracle_address = 4;
 }
 
 message StateV2 {
