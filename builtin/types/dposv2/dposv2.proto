@@ -10,22 +10,18 @@ message ParamsV2 {
 
 message StateV2 {
     ParamsV2 params = 1;
-    repeated DposValidator validators = 2;
+    repeated Validator validators = 2;
     int64 last_election_time = 3;
-}
-
-message DposValidator {
-    bytes pub_key = 1;
-    int64 power = 2;
-    BigUInt delegation_total = 3;
 }
 
 message ValidatorStatisticV2 {
     Address address = 1;
-    uint64 upblock_count = 2;
-    uint64 block_count = 3;
-    BigUInt slash_total = 4;
-    BigUInt distribution_total = 5;
+    bytes pub_key = 2;
+    uint64 upblock_count = 3;
+    uint64 block_count = 4;
+    BigUInt slash_percentage = 5;
+    BigUInt distribution_total = 6;
+    BigUInt delegation_total = 7;
 }
 
 message ValidatorStatisticListV2 {
@@ -36,6 +32,9 @@ message CandidateV2 {
     Address address = 1;
     bytes pub_key = 2;
     uint64 fee = 3;
+    string name = 4;
+    string description = 5;
+    string website = 6;
 }
 
 message CandidateListV2 {
@@ -45,8 +44,16 @@ message CandidateListV2 {
 message DelegationV2 {
     Address validator = 1;
     Address delegator = 2;
-    uint64 height = 3;
-    BigUInt amount = 4;
+    BigUInt amount = 3;
+    BigUInt update_amount = 4;
+    uint64 height = 5;
+    uint64 lock_time = 6;
+    enum DelegationState {
+        BONDING = 0;
+        BONDED = 1;
+        UNBONDING = 2;
+    }
+    DelegationState state = 7;
 }
 
 message DelegationListV2 {
@@ -70,6 +77,13 @@ message DPOSInitRequestV2 {
 message DelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
+}
+
+message DelegationOverrideRequestV2 {
+    Address validator_address = 1;
+    Address delegator_address = 2;
+    BigUInt amount = 3;
+    uint64 lock_time = 4;
 }
 
 message RedelegateRequestV2 {
@@ -102,6 +116,9 @@ message UnbondRequestV2 {
 message RegisterCandidateRequestV2 {
     bytes pub_key = 1;
     uint64 fee = 2;
+    string name = 3;
+    string description = 4;
+    string website = 5;
 }
 
 message UnregisterCandidateRequestV2 {
@@ -114,7 +131,7 @@ message ListValidatorsRequestV2 {
 }
 
 message ListValidatorsResponseV2 {
-    repeated DposValidator validators = 1;
+    repeated Validator validators = 1;
 }
 
 message ListCandidateRequestV2 {

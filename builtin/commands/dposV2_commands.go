@@ -15,6 +15,22 @@ import (
 
 const DPOSV2ContractName = "dposV2"
 
+var (
+	candidateName        string
+	candidateDescription string
+	candidateWebsite     string
+)
+
+func UnregisterCandidateCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "unregister_candidateV2",
+		Short: "Unregisters the candidate (only called if previously registered)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return cli.CallContract(DPOSV2ContractName, "UnregisterCandidate", &dposv2.UnregisterCandidateRequestV2{}, nil)
+		},
+	}
+}
+
 func ListValidatorsCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "list_validatorsV2",
@@ -59,7 +75,7 @@ func RegisterCandidateCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "register_candidateV2 [public key] [validator fee (in basis points)]",
 		Short: "Register a candidate for validator",
-		Args:  cobra.MinimumNArgs(1),
+		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			pubKey, err := base64.StdEncoding.DecodeString(args[0])
 			candidateFee, err := strconv.ParseUint(args[1], 10, 64)
@@ -70,8 +86,11 @@ func RegisterCandidateCmdV2() *cobra.Command {
 				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
 			}
 			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate", &dposv2.RegisterCandidateRequestV2{
-				PubKey: pubKey,
-				Fee: candidateFee,
+				PubKey:      pubKey,
+				Fee:         candidateFee,
+				Name:        candidateName,
+				Description: candidateDescription,
+				Website:     candidateWebsite,
 			}, nil)
 		},
 	}
@@ -102,9 +121,44 @@ func DelegateCmdV2() *cobra.Command {
 	}
 }
 
+func DelegationOverrideCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "delegation_override [validator address] [delegator address] [amount] [lock time]",
+		Short: "Manually edit delegation entry",
+		Args:  cobra.MinimumNArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			validatorAddress, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+			candidateAddress, err := cli.ResolveAddress(args[1])
+			if err != nil {
+				return err
+			}
+			amount, err := cli.ParseAmount(args[2])
+			if err != nil {
+				return err
+			}
+			locktime, err := strconv.ParseUint(args[3], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			return cli.CallContract(DPOSV2ContractName, "DelegationOverride", &dposv2.DelegationOverrideRequestV2{
+				ValidatorAddress: validatorAddress.MarshalPB(),
+				DelegatorAddress: candidateAddress.MarshalPB(),
+				Amount: &types.BigUInt{
+					Value: *amount,
+				},
+				LockTime: locktime,
+			}, nil)
+		},
+	}
+}
+
 func CheckDelegationCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "check_delegationV2 [validator address]",
+		Use:   "check_delegationV2 [validator address] [delegator address]",
 		Short: "check delegation to a particular validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -184,24 +238,18 @@ func ClaimDistributionCmdV2() *cobra.Command {
 	}
 }
 
-
-func ElectDelegationCmdV2() *cobra.Command {
-	return &cobra.Command{
-		Use:   "elect_delegationV2",
-		Short: "Run an election based on delegations",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return cli.CallContract(DPOSV2ContractName, "ElectByDelegation", &dposv2.ElectDelegationRequestV2{}, nil)
-		},
-	}
-}
-
 func AddDPOSV2(root *cobra.Command) {
+	registercmd := RegisterCandidateCmdV2()
+	registercmd.Flags().StringVarP(&candidateName, "name", "", "", "candidate name")
+	registercmd.Flags().StringVarP(&candidateDescription, "description", "", "", "candidate description")
+	registercmd.Flags().StringVarP(&candidateWebsite, "website", "", "", "candidate website")
 	root.AddCommand(
 		ListValidatorsCmdV2(),
-		RegisterCandidateCmdV2(),
-		ElectDelegationCmdV2(),
+		registercmd,
 		ListCandidatesCmdV2(),
+		UnregisterCandidateCmdV2(),
 		DelegateCmdV2(),
+		DelegationOverrideCmdV2(),
 		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),

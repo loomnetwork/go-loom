@@ -5,15 +5,15 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	"github.com/loomnetwork/go-loom/client"
 	"github.com/loomnetwork/go-loom/examples/plugins/evmexample/types"
 	"github.com/spf13/cobra"
-	"golang.org/x/crypto/ed25519"
-	"io/ioutil"
-	"log"
-	"os"
 )
 
 var RootCmd = &cobra.Command{
@@ -109,11 +109,7 @@ func deployTx(chainId, writeUri, readUri, binFile, name string) (*client.EvmCont
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	_, priv, err := ed25519.GenerateKey(nil)
-	if err != nil {
-		return nil, nil, err
-	}
-	signer := auth.NewEd25519Signer(priv)
+	signer := auth.NewSigner(auth.SignerTypeSecp256k1, nil)
 
 	rpcClient := client.NewDAppChainRPCClient(chainId, writeUri, readUri)
 	return client.DeployContract(rpcClient, bytecode, signer, name)
@@ -144,11 +140,7 @@ func GetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string) (int6
 	dummy := &types.Dummy{}
 	result := &types.WrapValue{}
 	// NOTE: usually you shouldn't generate a new key pair for every tx, but this is just an example...
-	_, priv, err := ed25519.GenerateKey(nil)
-	if err != nil {
-		return 0, err
-	}
-	signer := auth.NewEd25519Signer(priv)
+	signer := auth.NewSigner(auth.SignerTypeSecp256k1, nil)
 	_, err = contract.Call("GetValue", dummy, signer, result)
 
 	return result.Value, err
@@ -177,11 +169,7 @@ func SetValueCmd(chainId, writeUri, readUri, contractHexAddr, name string, value
 
 	// NOTE: usually you shouldn't generate a new key pair for every tx,
 	// but this is just an example...
-	_, priv, err := ed25519.GenerateKey(nil)
-	if err != nil {
-		return err
-	}
-	signer := auth.NewEd25519Signer(priv)
+	signer := auth.NewSigner(auth.SignerTypeSecp256k1, nil)
 
 	payload := &types.WrapValue{
 		Value: int64(value),

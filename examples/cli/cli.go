@@ -17,9 +17,13 @@ func main() {
 		Use:   "example-cli",
 		Short: "CLI example",
 	}
-	callCmd := cli.ContractCallCommand()
+	callCmd := cli.ContractCallCommand("")
 	rootCmd.AddCommand(callCmd)
 	commands.Add(callCmd)
+
+	dposCommand := cli.ContractCallCommand("dpos")
+	rootCmd.AddCommand(dposCommand)
+	commands.Add(dposCommand)
 
 	defaultContract := "helloworld"
 	var key, value string
