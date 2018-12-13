@@ -1,6 +1,7 @@
 PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -I$(GOPATH)/src -I/usr/local/include
 GOGO_PROTOBUF_DIR = $(GOPATH)/src/github.com/gogo/protobuf
+HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
 
 .PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
 
@@ -89,6 +90,7 @@ deps:
 		github.com/miguelmota/go-solidity-sha3
 	dep ensure -vendor-only
 	cd $(GOGO_PROTOBUF_DIR) && git checkout 1ef32a8b9fc3f8ec940126907cedb5998f6318e4
+	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 
 deps-evm:
 	go get \
