@@ -121,32 +121,27 @@ func DelegateCmdV2() *cobra.Command {
 	}
 }
 
-func DelegationOverrideCmdV2() *cobra.Command {
+func WhitelistCandidateCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "delegation_override [validator address] [delegator address] [amount] [lock time]",
-		Short: "Manually edit delegation entry",
-		Args:  cobra.MinimumNArgs(4),
+		Use:   "whitelist_candidate [candidate address] [amount] [lock time]",
+		Short: "Whitelist candidate & credit candidate's self delegation without token deposit",
+		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			validatorAddress, err := cli.ResolveAddress(args[0])
+			candidateAddress, err := cli.ResolveAddress(args[0])
 			if err != nil {
 				return err
 			}
-			candidateAddress, err := cli.ResolveAddress(args[1])
+			amount, err := cli.ParseAmount(args[1])
 			if err != nil {
 				return err
 			}
-			amount, err := cli.ParseAmount(args[2])
-			if err != nil {
-				return err
-			}
-			locktime, err := strconv.ParseUint(args[3], 10, 64)
+			locktime, err := strconv.ParseUint(args[2], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "DelegationOverride", &dposv2.DelegationOverrideRequestV2{
-				ValidatorAddress: validatorAddress.MarshalPB(),
-				DelegatorAddress: candidateAddress.MarshalPB(),
+			return cli.CallContract(DPOSV2ContractName, "WhitelistCandidate", &dposv2.WhitelistCandidateRequestV2{
+				CandidateAddress: candidateAddress.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
 				},
@@ -249,7 +244,7 @@ func AddDPOSV2(root *cobra.Command) {
 		ListCandidatesCmdV2(),
 		UnregisterCandidateCmdV2(),
 		DelegateCmdV2(),
-		DelegationOverrideCmdV2(),
+		WhitelistCandidateCmdV2(),
 		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),
