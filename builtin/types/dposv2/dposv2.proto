@@ -86,6 +86,10 @@ message WhitelistCandidateRequestV2 {
     uint64 lock_time = 3;
 }
 
+message RemoveWhitelistedCandidateRequestV2 {
+    Address candidate_address = 1;
+}
+
 message RedelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
