@@ -23,6 +23,8 @@ message ValidatorStatisticV2 {
     BigUInt slash_percentage = 5;
     BigUInt distribution_total = 6;
     BigUInt delegation_total = 7;
+    BigUInt whitelist_amount = 8;
+    uint64 whitelist_locktime = 9;
 }
 
 message ValidatorStatisticListV2 {
