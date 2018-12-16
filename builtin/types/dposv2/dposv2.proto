@@ -23,8 +23,6 @@ message ValidatorStatisticV2 {
     BigUInt slash_percentage = 5;
     BigUInt distribution_total = 6;
     BigUInt delegation_total = 7;
-    BigUInt whitelist_amount = 8;
-    uint64 whitelist_locktime = 9;
 }
 
 message ValidatorStatisticListV2 {
@@ -82,14 +80,11 @@ message DelegateRequestV2 {
     BigUInt amount = 2;
 }
 
-message WhitelistCandidateRequestV2 {
-    Address candidate_address = 1;
-    BigUInt amount = 2;
-    uint64 lock_time = 3;
-}
-
-message RemoveWhitelistedCandidateRequestV2 {
-    Address candidate_address = 1;
+message DelegationOverrideRequestV2 {
+    Address validator_address = 1;
+    Address delegator_address = 2;
+    BigUInt amount = 3;
+    uint64 lock_time = 4;
 }
 
 message RedelegateRequestV2 {
