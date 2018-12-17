@@ -46,7 +46,7 @@ func (x PlasmaCashCoinState) String() string {
 	return proto.EnumName(PlasmaCashCoinState_name, int32(x))
 }
 func (PlasmaCashCoinState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{0}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{0}
 }
 
 // Plasma Cash coin holds a single ERC721 token
@@ -67,7 +67,7 @@ func (m *PlasmaCashCoin) Reset()         { *m = PlasmaCashCoin{} }
 func (m *PlasmaCashCoin) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashCoin) ProtoMessage()    {}
 func (*PlasmaCashCoin) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{0}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{0}
 }
 func (m *PlasmaCashCoin) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashCoin.Unmarshal(m, b)
@@ -128,7 +128,7 @@ func (m *PlasmaCashAccount) Reset()         { *m = PlasmaCashAccount{} }
 func (m *PlasmaCashAccount) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashAccount) ProtoMessage()    {}
 func (*PlasmaCashAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{1}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{1}
 }
 func (m *PlasmaCashAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashAccount.Unmarshal(m, b)
@@ -178,7 +178,7 @@ func (m *PlasmaBlock) Reset()         { *m = PlasmaBlock{} }
 func (m *PlasmaBlock) String() string { return proto.CompactTextString(m) }
 func (*PlasmaBlock) ProtoMessage()    {}
 func (*PlasmaBlock) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{2}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{2}
 }
 func (m *PlasmaBlock) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaBlock.Unmarshal(m, b)
@@ -259,7 +259,7 @@ func (m *PlasmaTx) Reset()         { *m = PlasmaTx{} }
 func (m *PlasmaTx) String() string { return proto.CompactTextString(m) }
 func (*PlasmaTx) ProtoMessage()    {}
 func (*PlasmaTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{3}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{3}
 }
 func (m *PlasmaTx) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaTx.Unmarshal(m, b)
@@ -353,7 +353,7 @@ func (m *PlasmaBookKeeping) Reset()         { *m = PlasmaBookKeeping{} }
 func (m *PlasmaBookKeeping) String() string { return proto.CompactTextString(m) }
 func (*PlasmaBookKeeping) ProtoMessage()    {}
 func (*PlasmaBookKeeping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{4}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{4}
 }
 func (m *PlasmaBookKeeping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaBookKeeping.Unmarshal(m, b)
@@ -390,7 +390,7 @@ func (m *GetCurrentBlockRequest) Reset()         { *m = GetCurrentBlockRequest{}
 func (m *GetCurrentBlockRequest) String() string { return proto.CompactTextString(m) }
 func (*GetCurrentBlockRequest) ProtoMessage()    {}
 func (*GetCurrentBlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{5}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{5}
 }
 func (m *GetCurrentBlockRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetCurrentBlockRequest.Unmarshal(m, b)
@@ -421,7 +421,7 @@ func (m *GetCurrentBlockResponse) Reset()         { *m = GetCurrentBlockResponse
 func (m *GetCurrentBlockResponse) String() string { return proto.CompactTextString(m) }
 func (*GetCurrentBlockResponse) ProtoMessage()    {}
 func (*GetCurrentBlockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{6}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{6}
 }
 func (m *GetCurrentBlockResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetCurrentBlockResponse.Unmarshal(m, b)
@@ -459,7 +459,7 @@ func (m *GetBlockRequest) Reset()         { *m = GetBlockRequest{} }
 func (m *GetBlockRequest) String() string { return proto.CompactTextString(m) }
 func (*GetBlockRequest) ProtoMessage()    {}
 func (*GetBlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{7}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{7}
 }
 func (m *GetBlockRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetBlockRequest.Unmarshal(m, b)
@@ -497,7 +497,7 @@ func (m *GetBlockResponse) Reset()         { *m = GetBlockResponse{} }
 func (m *GetBlockResponse) String() string { return proto.CompactTextString(m) }
 func (*GetBlockResponse) ProtoMessage()    {}
 func (*GetBlockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{8}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{8}
 }
 func (m *GetBlockResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetBlockResponse.Unmarshal(m, b)
@@ -535,7 +535,7 @@ func (m *SubmitBlockToMainnetRequest) Reset()         { *m = SubmitBlockToMainne
 func (m *SubmitBlockToMainnetRequest) String() string { return proto.CompactTextString(m) }
 func (*SubmitBlockToMainnetRequest) ProtoMessage()    {}
 func (*SubmitBlockToMainnetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{9}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{9}
 }
 func (m *SubmitBlockToMainnetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SubmitBlockToMainnetRequest.Unmarshal(m, b)
@@ -566,7 +566,7 @@ func (m *SubmitBlockToMainnetResponse) Reset()         { *m = SubmitBlockToMainn
 func (m *SubmitBlockToMainnetResponse) String() string { return proto.CompactTextString(m) }
 func (*SubmitBlockToMainnetResponse) ProtoMessage()    {}
 func (*SubmitBlockToMainnetResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{10}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{10}
 }
 func (m *SubmitBlockToMainnetResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SubmitBlockToMainnetResponse.Unmarshal(m, b)
@@ -604,7 +604,7 @@ func (m *PlasmaTxRequest) Reset()         { *m = PlasmaTxRequest{} }
 func (m *PlasmaTxRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaTxRequest) ProtoMessage()    {}
 func (*PlasmaTxRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{11}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{11}
 }
 func (m *PlasmaTxRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaTxRequest.Unmarshal(m, b)
@@ -641,7 +641,7 @@ func (m *PlasmaTxResponse) Reset()         { *m = PlasmaTxResponse{} }
 func (m *PlasmaTxResponse) String() string { return proto.CompactTextString(m) }
 func (*PlasmaTxResponse) ProtoMessage()    {}
 func (*PlasmaTxResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{12}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{12}
 }
 func (m *PlasmaTxResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaTxResponse.Unmarshal(m, b)
@@ -673,7 +673,7 @@ func (m *GetPlasmaTxRequest) Reset()         { *m = GetPlasmaTxRequest{} }
 func (m *GetPlasmaTxRequest) String() string { return proto.CompactTextString(m) }
 func (*GetPlasmaTxRequest) ProtoMessage()    {}
 func (*GetPlasmaTxRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{13}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{13}
 }
 func (m *GetPlasmaTxRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPlasmaTxRequest.Unmarshal(m, b)
@@ -718,7 +718,7 @@ func (m *GetPlasmaTxResponse) Reset()         { *m = GetPlasmaTxResponse{} }
 func (m *GetPlasmaTxResponse) String() string { return proto.CompactTextString(m) }
 func (*GetPlasmaTxResponse) ProtoMessage()    {}
 func (*GetPlasmaTxResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{14}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{14}
 }
 func (m *GetPlasmaTxResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPlasmaTxResponse.Unmarshal(m, b)
@@ -756,7 +756,7 @@ func (m *GetUserSlotsRequest) Reset()         { *m = GetUserSlotsRequest{} }
 func (m *GetUserSlotsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetUserSlotsRequest) ProtoMessage()    {}
 func (*GetUserSlotsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{15}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{15}
 }
 func (m *GetUserSlotsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetUserSlotsRequest.Unmarshal(m, b)
@@ -794,7 +794,7 @@ func (m *GetUserSlotsResponse) Reset()         { *m = GetUserSlotsResponse{} }
 func (m *GetUserSlotsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetUserSlotsResponse) ProtoMessage()    {}
 func (*GetUserSlotsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{16}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{16}
 }
 func (m *GetUserSlotsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetUserSlotsResponse.Unmarshal(m, b)
@@ -840,7 +840,7 @@ func (m *DepositRequest) Reset()         { *m = DepositRequest{} }
 func (m *DepositRequest) String() string { return proto.CompactTextString(m) }
 func (*DepositRequest) ProtoMessage()    {}
 func (*DepositRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{17}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{17}
 }
 func (m *DepositRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DepositRequest.Unmarshal(m, b)
@@ -905,7 +905,7 @@ func (m *DepositResponse) Reset()         { *m = DepositResponse{} }
 func (m *DepositResponse) String() string { return proto.CompactTextString(m) }
 func (*DepositResponse) ProtoMessage()    {}
 func (*DepositResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{18}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{18}
 }
 func (m *DepositResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DepositResponse.Unmarshal(m, b)
@@ -937,7 +937,7 @@ func (m *PlasmaCashCoinResetRequest) Reset()         { *m = PlasmaCashCoinResetR
 func (m *PlasmaCashCoinResetRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashCoinResetRequest) ProtoMessage()    {}
 func (*PlasmaCashCoinResetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{19}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{19}
 }
 func (m *PlasmaCashCoinResetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashCoinResetRequest.Unmarshal(m, b)
@@ -983,7 +983,7 @@ func (m *PlasmaCashExitCoinRequest) Reset()         { *m = PlasmaCashExitCoinReq
 func (m *PlasmaCashExitCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashExitCoinRequest) ProtoMessage()    {}
 func (*PlasmaCashExitCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{20}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{20}
 }
 func (m *PlasmaCashExitCoinRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashExitCoinRequest.Unmarshal(m, b)
@@ -1029,7 +1029,7 @@ func (m *PlasmaCashWithdrawCoinRequest) Reset()         { *m = PlasmaCashWithdra
 func (m *PlasmaCashWithdrawCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashWithdrawCoinRequest) ProtoMessage()    {}
 func (*PlasmaCashWithdrawCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{21}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{21}
 }
 func (m *PlasmaCashWithdrawCoinRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashWithdrawCoinRequest.Unmarshal(m, b)
@@ -1080,7 +1080,7 @@ func (m *PlasmaCashRequest) Reset()         { *m = PlasmaCashRequest{} }
 func (m *PlasmaCashRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashRequest) ProtoMessage()    {}
 func (*PlasmaCashRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{22}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{22}
 }
 func (m *PlasmaCashRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashRequest.Unmarshal(m, b)
@@ -1287,7 +1287,7 @@ func (m *PlasmaCashRequestBatch) Reset()         { *m = PlasmaCashRequestBatch{}
 func (m *PlasmaCashRequestBatch) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashRequestBatch) ProtoMessage()    {}
 func (*PlasmaCashRequestBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{23}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{23}
 }
 func (m *PlasmaCashRequestBatch) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashRequestBatch.Unmarshal(m, b)
@@ -1324,7 +1324,7 @@ func (m *GetPendingTxsRequest) Reset()         { *m = GetPendingTxsRequest{} }
 func (m *GetPendingTxsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetPendingTxsRequest) ProtoMessage()    {}
 func (*GetPendingTxsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{24}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{24}
 }
 func (m *GetPendingTxsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPendingTxsRequest.Unmarshal(m, b)
@@ -1355,7 +1355,7 @@ func (m *PendingTxs) Reset()         { *m = PendingTxs{} }
 func (m *PendingTxs) String() string { return proto.CompactTextString(m) }
 func (*PendingTxs) ProtoMessage()    {}
 func (*PendingTxs) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{25}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{25}
 }
 func (m *PendingTxs) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PendingTxs.Unmarshal(m, b)
@@ -1394,7 +1394,7 @@ func (m *PlasmaCashParams) Reset()         { *m = PlasmaCashParams{} }
 func (m *PlasmaCashParams) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashParams) ProtoMessage()    {}
 func (*PlasmaCashParams) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{26}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{26}
 }
 func (m *PlasmaCashParams) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashParams.Unmarshal(m, b)
@@ -1433,7 +1433,7 @@ func (m *PlasmaCashInitRequest) Reset()         { *m = PlasmaCashInitRequest{} }
 func (m *PlasmaCashInitRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashInitRequest) ProtoMessage()    {}
 func (*PlasmaCashInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{27}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{27}
 }
 func (m *PlasmaCashInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashInitRequest.Unmarshal(m, b)
@@ -1479,7 +1479,7 @@ func (m *PlasmaCashBalanceOfRequest) Reset()         { *m = PlasmaCashBalanceOfR
 func (m *PlasmaCashBalanceOfRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashBalanceOfRequest) ProtoMessage()    {}
 func (*PlasmaCashBalanceOfRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{28}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{28}
 }
 func (m *PlasmaCashBalanceOfRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashBalanceOfRequest.Unmarshal(m, b)
@@ -1524,7 +1524,7 @@ func (m *PlasmaCashBalanceOfResponse) Reset()         { *m = PlasmaCashBalanceOf
 func (m *PlasmaCashBalanceOfResponse) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashBalanceOfResponse) ProtoMessage()    {}
 func (*PlasmaCashBalanceOfResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{29}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{29}
 }
 func (m *PlasmaCashBalanceOfResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashBalanceOfResponse.Unmarshal(m, b)
@@ -1562,7 +1562,7 @@ func (m *PlasmaCashUpdateOracleRequest) Reset()         { *m = PlasmaCashUpdateO
 func (m *PlasmaCashUpdateOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashUpdateOracleRequest) ProtoMessage()    {}
 func (*PlasmaCashUpdateOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{30}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{30}
 }
 func (m *PlasmaCashUpdateOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashUpdateOracleRequest.Unmarshal(m, b)
@@ -1602,7 +1602,7 @@ func (m *PlasmaCashRequestBatchTally) Reset()         { *m = PlasmaCashRequestBa
 func (m *PlasmaCashRequestBatchTally) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashRequestBatchTally) ProtoMessage()    {}
 func (*PlasmaCashRequestBatchTally) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{31}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{31}
 }
 func (m *PlasmaCashRequestBatchTally) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashRequestBatchTally.Unmarshal(m, b)
@@ -1653,7 +1653,7 @@ func (m *PlasmaCashGetRequestBatchTallyRequest) Reset()         { *m = PlasmaCas
 func (m *PlasmaCashGetRequestBatchTallyRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashGetRequestBatchTallyRequest) ProtoMessage()    {}
 func (*PlasmaCashGetRequestBatchTallyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{32}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{32}
 }
 func (m *PlasmaCashGetRequestBatchTallyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashGetRequestBatchTallyRequest.Unmarshal(m, b)
@@ -1686,7 +1686,7 @@ func (m *PlasmaCashEventMeta) Reset()         { *m = PlasmaCashEventMeta{} }
 func (m *PlasmaCashEventMeta) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashEventMeta) ProtoMessage()    {}
 func (*PlasmaCashEventMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{33}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{33}
 }
 func (m *PlasmaCashEventMeta) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashEventMeta.Unmarshal(m, b)
@@ -1746,7 +1746,7 @@ func (m *PlasmaDepositEvent) Reset()         { *m = PlasmaDepositEvent{} }
 func (m *PlasmaDepositEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaDepositEvent) ProtoMessage()    {}
 func (*PlasmaDepositEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{34}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{34}
 }
 func (m *PlasmaDepositEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaDepositEvent.Unmarshal(m, b)
@@ -1821,7 +1821,7 @@ func (m *PlasmaCashCoinResetEvent) Reset()         { *m = PlasmaCashCoinResetEve
 func (m *PlasmaCashCoinResetEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashCoinResetEvent) ProtoMessage()    {}
 func (*PlasmaCashCoinResetEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{35}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{35}
 }
 func (m *PlasmaCashCoinResetEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashCoinResetEvent.Unmarshal(m, b)
@@ -1875,7 +1875,7 @@ func (m *PlasmaCashStartedExitEvent) Reset()         { *m = PlasmaCashStartedExi
 func (m *PlasmaCashStartedExitEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashStartedExitEvent) ProtoMessage()    {}
 func (*PlasmaCashStartedExitEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{36}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{36}
 }
 func (m *PlasmaCashStartedExitEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashStartedExitEvent.Unmarshal(m, b)
@@ -1929,7 +1929,7 @@ func (m *PlasmaCashFinalizedExitEvent) Reset()         { *m = PlasmaCashFinalize
 func (m *PlasmaCashFinalizedExitEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashFinalizedExitEvent) ProtoMessage()    {}
 func (*PlasmaCashFinalizedExitEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{37}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{37}
 }
 func (m *PlasmaCashFinalizedExitEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashFinalizedExitEvent.Unmarshal(m, b)
@@ -1987,7 +1987,7 @@ func (m *PlasmaCashWithdrewEvent) Reset()         { *m = PlasmaCashWithdrewEvent
 func (m *PlasmaCashWithdrewEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashWithdrewEvent) ProtoMessage()    {}
 func (*PlasmaCashWithdrewEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{38}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{38}
 }
 func (m *PlasmaCashWithdrewEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashWithdrewEvent.Unmarshal(m, b)
@@ -2069,7 +2069,7 @@ func (m *PlasmaCashTransferConfirmed) Reset()         { *m = PlasmaCashTransferC
 func (m *PlasmaCashTransferConfirmed) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashTransferConfirmed) ProtoMessage()    {}
 func (*PlasmaCashTransferConfirmed) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{39}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{39}
 }
 func (m *PlasmaCashTransferConfirmed) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashTransferConfirmed.Unmarshal(m, b)
@@ -2122,7 +2122,7 @@ func (m *PlasmaCashExitConfirmedEvent) Reset()         { *m = PlasmaCashExitConf
 func (m *PlasmaCashExitConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashExitConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashExitConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{40}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{40}
 }
 func (m *PlasmaCashExitConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashExitConfirmedEvent.Unmarshal(m, b)
@@ -2168,7 +2168,7 @@ func (m *PlasmaCashResetConfirmedEvent) Reset()         { *m = PlasmaCashResetCo
 func (m *PlasmaCashResetConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashResetConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashResetConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{41}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{41}
 }
 func (m *PlasmaCashResetConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashResetConfirmedEvent.Unmarshal(m, b)
@@ -2215,7 +2215,7 @@ func (m *PlasmaCashWithdrawConfirmedEvent) Reset()         { *m = PlasmaCashWith
 func (m *PlasmaCashWithdrawConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashWithdrawConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashWithdrawConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{42}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{42}
 }
 func (m *PlasmaCashWithdrawConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashWithdrawConfirmedEvent.Unmarshal(m, b)
@@ -2268,7 +2268,7 @@ func (m *PlasmaCashDepositConfirmedEvent) Reset()         { *m = PlasmaCashDepos
 func (m *PlasmaCashDepositConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashDepositConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashDepositConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{43}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{43}
 }
 func (m *PlasmaCashDepositConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashDepositConfirmedEvent.Unmarshal(m, b)
@@ -2315,7 +2315,7 @@ func (m *PlasmaCashSubmitBlockConfirmedEvent) Reset()         { *m = PlasmaCashS
 func (m *PlasmaCashSubmitBlockConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashSubmitBlockConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashSubmitBlockConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_ffe79086fcbceec5, []int{44}
+	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{44}
 }
 func (m *PlasmaCashSubmitBlockConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashSubmitBlockConfirmedEvent.Unmarshal(m, b)
@@ -2406,10 +2406,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/plasma_cash/plasma_cash.proto", fileDescriptor_plasma_cash_ffe79086fcbceec5)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/plasma_cash/plasma_cash.proto", fileDescriptor_plasma_cash_842bda1f571177cf)
 }
 
-var fileDescriptor_plasma_cash_ffe79086fcbceec5 = []byte{
+var fileDescriptor_plasma_cash_842bda1f571177cf = []byte{
 	// 1583 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x58, 0x5b, 0x6f, 0x1b, 0xc5,
 	0x17, 0xcf, 0xfa, 0x16, 0xe7, 0xd8, 0xb9, 0x4d, 0xf2, 0x4f, 0xdd, 0x24, 0x6d, 0xf2, 0xdf, 0x52,
