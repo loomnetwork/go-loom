@@ -4,6 +4,10 @@ import (
 	"math/big"
 )
 
+var (
+	zeroInt = big.NewInt(0)
+)
+
 // BigUInt is a simple wrapper on bigint to support marshaling to protobufs
 type BigUInt struct {
 	*big.Int
@@ -76,4 +80,8 @@ func (b *BigUInt) Exp(x, y, m *BigUInt) *BigUInt {
 
 func (b *BigUInt) Uint64() uint64 {
 	return b.Int.Uint64()
+}
+
+func ZeroBigUInt() *BigUInt {
+	return &BigUInt{new(big.Int).Set(zeroInt)}
 }
