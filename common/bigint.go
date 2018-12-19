@@ -82,6 +82,6 @@ func (b *BigUInt) Uint64() uint64 {
 	return b.Int.Uint64()
 }
 
-func ZeroBigUInt() *BigUInt {
+func BigZero() *BigUInt {
 	return &BigUInt{new(big.Int).Set(zeroInt)}
 }
