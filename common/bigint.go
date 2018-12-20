@@ -85,3 +85,7 @@ func (b *BigUInt) Uint64() uint64 {
 func BigZero() *BigUInt {
 	return &BigUInt{new(big.Int).Set(zeroInt)}
 }
+
+func IsZero(b BigUInt) bool {
+	return b.Int.Cmp(zeroInt) == 0
+}
