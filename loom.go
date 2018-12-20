@@ -21,3 +21,7 @@ func NewBigUInt(i *big.Int) *BigUInt {
 func NewBigUIntFromInt(i int64) *BigUInt {
 	return &BigUInt{big.NewInt(i)}
 }
+
+func BigZeroPB() *types.BigUInt {
+	return &types.BigUInt{Value: *common.BigZero()}
+}
