@@ -66,7 +66,7 @@ proto: \
 	examples/plugins/evmproxy/types/types.pb.go
 
 test: proto
-	go test -v $(PKG)/...
+	go test -v -tags "evm" $(PKG)/...
 
 test-evm: proto
 	go test -tags "evm" -v $(PKG)/...
@@ -82,6 +82,8 @@ deps:
 		golang.org/x/crypto/sha3 \
 		github.com/gogo/protobuf/jsonpb \
 		github.com/gogo/protobuf/proto \
+		github.com/gorilla/websocket \
+		github.com/phonkee/go-pubsub \
 		google.golang.org/grpc \
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
