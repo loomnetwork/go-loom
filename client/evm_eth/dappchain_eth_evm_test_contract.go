@@ -1,4 +1,4 @@
-package client
+package evm_eth
 
 import (
 	"math/big"
@@ -7,7 +7,6 @@ import (
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	"github.com/loomnetwork/go-loom/client"
-	"github.com/loomnetwork/go-loom/client/utils"
 	"strings"
 )
 
@@ -54,11 +53,11 @@ func DeployEthEvmTestContractToDAppChain(
 ) (*DAppChainEthEvmTestContract, error) {
 	contractName := "EthCoinIntegrationTest"
 	contractPath := strings.Join([]string{"evm_eth", contractName}, "/")
-	contractABI, err := utils.LoadDAppChainContractABI(contractPath)
+	contractABI, err := client.LoadDAppChainContractABI(contractPath)
 	if err != nil {
 		return nil, err
 	}
-	byteCode, err := utils.LoadDAppChainContractCode(contractPath)
+	byteCode, err := client.LoadDAppChainContractCode(contractPath)
 	if err != nil {
 		return nil, err
 	}
