@@ -1,4 +1,4 @@
-package utils
+package client
 
 import (
 	"io/ioutil"
@@ -6,13 +6,11 @@ import (
 	"runtime"
 	"strings"
 
-	"fmt"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
 
 func LoadDAppChainContractABI(contractName string) (*abi.ABI, error) {
-	fmt.Println("GETTING ABI FOR", contractName)
 	_, filename, _, _ := runtime.Caller(0)
 	abiPath := filepath.Join(filepath.Dir(filename), contractName+".abi")
 	abiBytes, err := ioutil.ReadFile(abiPath)

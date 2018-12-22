@@ -5,7 +5,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
-	"github.com/loomnetwork/go-loom/client/utils"
 	"strings"
 )
 
@@ -20,11 +19,11 @@ type MirroredTokenContract struct {
 func DeployTokenToDAppChain(loomClient *DAppChainRPCClient, contractName string, directory string,
 	gatewayAddr loom.Address, creator auth.Signer) (*MirroredTokenContract, error) {
 	contractPath := strings.Join([]string{directory, contractName}, "/")
-	ContractABI, err := utils.LoadDAppChainContractABI(contractPath)
+	ContractABI, err := LoadDAppChainContractABI(contractPath)
 	if err != nil {
 		return nil, err
 	}
-	byteCode, err := utils.LoadDAppChainContractCode(contractPath)
+	byteCode, err := LoadDAppChainContractCode(contractPath)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +50,7 @@ func ConnectToMirroredTokenContract(
 	loomClient *DAppChainRPCClient, contractName string, directory string,
 ) (*MirroredTokenContract, error) {
 	contractPath := strings.Join([]string{directory, contractName}, "/")
-	ContractABI, err := utils.LoadDAppChainContractABI(contractPath)
+	ContractABI, err := LoadDAppChainContractABI(contractPath)
 	if err != nil {
 		return nil, err
 	}
