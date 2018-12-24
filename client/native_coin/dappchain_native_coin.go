@@ -1,3 +1,5 @@
+// +build evm
+
 package native_coin
 
 import (

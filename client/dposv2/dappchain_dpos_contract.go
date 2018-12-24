@@ -1,3 +1,5 @@
+// +build evm
+
 package dposv2
 
 import (

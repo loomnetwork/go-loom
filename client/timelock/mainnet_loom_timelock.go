@@ -1,12 +1,14 @@
+// +build evm
+
 package timelock
 
 import (
 	"context"
 	"time"
 
+    "github.com/ethereum/go-ethereum/common"
+    "github.com/ethereum/go-ethereum/ethclient"
     "github.com/loomnetwork/go-loom/client"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 type MainnetTokenTimelockClient struct {

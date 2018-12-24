@@ -1,3 +1,5 @@
+// +build evm
+
 package evm_eth
 
 import (

@@ -1,3 +1,5 @@
+// +build evm
+
 package timelock
 
 import (
@@ -8,7 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-    "github.com/loomnetwork/go-loom/client"
+	"github.com/loomnetwork/go-loom/client"
 )
 
 type MainnetTimelockFactoryClient struct {
