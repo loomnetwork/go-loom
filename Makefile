@@ -82,6 +82,8 @@ deps:
 		golang.org/x/crypto/sha3 \
 		github.com/gogo/protobuf/jsonpb \
 		github.com/gogo/protobuf/proto \
+		github.com/gorilla/websocket \
+		github.com/phonkee/go-pubsub \
 		google.golang.org/grpc \
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
