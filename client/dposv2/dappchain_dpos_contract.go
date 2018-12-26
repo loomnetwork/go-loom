@@ -85,6 +85,6 @@ func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, 
 		Description: candidateDescription,
 		Website:     candidateWebsite,
 	}
-	_, err := dpos.contract.Call("ListValidators", req, identity.LoomSigner, nil)
+	_, err := dpos.contract.Call("RegisterCandidate", req, identity.LoomSigner, nil)
 	return err
 }
