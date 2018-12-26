@@ -6,6 +6,7 @@ import (
 	"github.com/loomnetwork/go-loom"
 	dpostypes "github.com/loomnetwork/go-loom/builtin/types/dposv2"
 	"github.com/loomnetwork/go-loom/client"
+	"github.com/pkg/errors"
 )
 
 // DAppChainDPOSContract is a client-side binding for the builtin coin Go contract.
@@ -57,6 +58,25 @@ func (dpos *DAppChainDPOSContract) ListValidators(identity *client.Identity) ([]
 	return resp.Statistics, err
 }
 
+func (dpos *DAppChainDPOSContract) ProcessRequestBatch(identity *client.Identity, req *dpostypes.RequestBatchV2) error {
+	_, err := dpos.contract.Call("ProcessRequestBatch", req, identity.LoomSigner, nil)
+	return err
+}
+
+func (dpos *DAppChainDPOSContract) GetRequestBatchTally(identity *client.Identity) (*dpostypes.RequestBatchTallyV2, error) {
+	caller := loom.Address{
+		ChainID: dpos.chainID,
+		Local:   identity.LoomAddr.Local,
+	}
+	req := &dpostypes.GetRequestBatchTallyRequestV2{}
+	resp := &dpostypes.RequestBatchTallyV2{}
+	if _, err := dpos.contract.StaticCall("GetRequestBatchTally", req, caller, resp); err != nil {
+		return nil, errors.Wrap(err, "failed to get request batch tally")
+	}
+
+	return resp, nil
+}
+
 func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, pubKey []byte, candidateFee uint64, candidateName string, candidateDescription string, candidateWebsite string) error {
 	req := &dpostypes.RegisterCandidateRequestV2{
 		PubKey:      pubKey,
@@ -65,6 +85,6 @@ func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, 
 		Description: candidateDescription,
 		Website:     candidateWebsite,
 	}
-	_, err := dpos.contract.Call("ListValidators", req, identity.LoomSigner, nil)
+	_, err := dpos.contract.Call("RegisterCandidate", req, identity.LoomSigner, nil)
 	return err
 }

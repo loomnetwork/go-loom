@@ -11,6 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/loomnetwork/go-loom/client"
+	"github.com/pkg/errors"
 )
 
 type MainnetTimelockFactoryClient struct {
@@ -19,6 +20,31 @@ type MainnetTimelockFactoryClient struct {
 	// Mainnet TimelockFactory contract address
 	Address   common.Address
 	TxTimeout time.Duration
+}
+
+func (c *MainnetTimelockFactoryClient) FetchTokenTimeLockCreationEvent(caller *client.Identity, startBlock, endBlock uint64) ([]*LoomTimelockFactoryLoomTimeLockCreated, error) {
+	filterOpts := &bind.FilterOpts{
+		Start: startBlock,
+		End:   &endBlock,
+	}
+
+	var tokenTimeLockCreationEvents []*LoomTimelockFactoryLoomTimeLockCreated
+
+	iterator, err := c.contract.FilterLoomTimeLockCreated(filterOpts)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get timelock creation event")
+	}
+	defer iterator.Close()
+
+	for iterator.Next() {
+		tokenTimeLockCreationEvents = append(tokenTimeLockCreationEvents, iterator.Event)
+	}
+
+	if err := iterator.Error(); err != nil {
+		return nil, errors.Wrapf(err, "failed to iterate event data for token timelock creation")
+	}
+
+	return tokenTimeLockCreationEvents, nil
 }
 
 func (c *MainnetTimelockFactoryClient) DeployTimelock(caller *client.Identity, beneficiary common.Address, validatorName string, pubKey string, amount *big.Int, duration *big.Int) (common.Address, error) {

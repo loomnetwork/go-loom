@@ -146,3 +146,32 @@ message ListCandidateRequestV2 {
 message ListCandidateResponseV2 {
     repeated CandidateV2 candidates = 1;
 }
+
+// Oracle request batch
+message BatchRequestV2 {
+    oneof payload {
+        WhitelistCandidateRequestV2 whitelist_candidate = 1;
+    }
+    BatchRequestMetaV2 meta = 2;
+}
+
+message BatchRequestMetaV2 {
+    uint64 block_number = 1;
+    uint64 tx_index = 2;
+    uint64 log_index = 3;
+}
+
+message RequestBatchTallyV2 {
+    uint64 last_seen_block_number = 1;
+    uint64 last_seen_tx_index = 2;
+    uint64 last_seen_log_index = 3;
+}
+
+message RequestBatchV2 {
+    repeated BatchRequestV2 batch = 1;
+}
+
+message GetRequestBatchTallyRequestV2 {
+}
+
+
