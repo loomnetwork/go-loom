@@ -122,6 +122,7 @@ func DelegateCmdV2() *cobra.Command {
 }
 
 func WhitelistCandidateCmdV2() *cobra.Command {
+	var currentBlockNumber uint64 = 0
 	return &cobra.Command{
 		Use:   "whitelist_candidate [candidate address] [amount] [lock time]",
 		Short: "Whitelist candidate & credit candidate's self delegation without token deposit",
@@ -140,6 +141,8 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
+			currentBlockNumber++
+
 			return cli.CallContract(DPOSV2ContractName, "ProcessRequestBatch", &dposv2.RequestBatchV2{
 				Batch: []*dposv2.BatchRequestV2{
 					&dposv2.BatchRequestV2{
@@ -151,6 +154,11 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 								},
 								LockTime: locktime,
 							},
+						},
+						Meta: &dposv2.BatchRequestMetaV2{
+							BlockNumber: currentBlockNumber,
+							LogIndex:    0,
+							TxIndex:     0,
 						},
 					},
 				},
