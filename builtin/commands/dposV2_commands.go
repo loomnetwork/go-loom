@@ -140,7 +140,8 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
-			// WARNING: This is an emulation of mainnet oracle call, do not run into a live chain
+			// WARNING: This is an emulation of oracle only call and stores mainnet's block number, do not run in a live chain, as
+			// we could lose ability to register genuine events, if tally gets ahead.
 			tally := dposv2.RequestBatchTallyV2{}
 
 			err = cli.StaticCallContract(DPOSV2ContractName, "GetRequestBatchTally", &dposv2.GetRequestBatchTallyRequestV2{}, &tally)
