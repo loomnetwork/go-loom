@@ -140,12 +140,20 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "WhitelistCandidate", &dposv2.WhitelistCandidateRequestV2{
-				CandidateAddress: candidateAddress.MarshalPB(),
-				Amount: &types.BigUInt{
-					Value: *amount,
+			return cli.CallContract(DPOSV2ContractName, "ProcessRequestBatch", &dposv2.RequestBatchV2{
+				Batch: []*dposv2.BatchRequestV2{
+					&dposv2.BatchRequestV2{
+						Payload: &dposv2.BatchRequestV2_WhitelistCandidate{
+							&dposv2.WhitelistCandidateRequestV2{
+								CandidateAddress: candidateAddress.MarshalPB(),
+								Amount: &types.BigUInt{
+									Value: *amount,
+								},
+								LockTime: locktime,
+							},
+						},
+					},
 				},
-				LockTime: locktime,
 			}, nil)
 		},
 	}
