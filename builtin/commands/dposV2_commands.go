@@ -122,8 +122,6 @@ func DelegateCmdV2() *cobra.Command {
 }
 
 func WhitelistCandidateCmdV2() *cobra.Command {
-	// Keep increamenting blocknumber to make sure ProcessRequestBatch is successful
-	var currentBlockNumber uint64
 	return &cobra.Command{
 		Use:   "whitelist_candidate [candidate address] [amount] [lock time]",
 		Short: "Whitelist candidate & credit candidate's self delegation without token deposit",
@@ -142,7 +140,12 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
-			currentBlockNumber++
+			tally := dposv2.RequestBatchTallyV2{}
+
+			err = cli.StaticCallContract(DPOSV2ContractName, "GetRequestBatchTally", &dposv2.GetRequestBatchTallyRequestV2{}, &tally)
+			if err != nil {
+				return err
+			}
 
 			return cli.CallContract(DPOSV2ContractName, "ProcessRequestBatch", &dposv2.RequestBatchV2{
 				Batch: []*dposv2.BatchRequestV2{
@@ -157,7 +160,7 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 							},
 						},
 						Meta: &dposv2.BatchRequestMetaV2{
-							BlockNumber: currentBlockNumber,
+							BlockNumber: tally.LastSeenBlockNumber + 1,
 							LogIndex:    0,
 							TxIndex:     0,
 						},
