@@ -122,7 +122,8 @@ func DelegateCmdV2() *cobra.Command {
 }
 
 func WhitelistCandidateCmdV2() *cobra.Command {
-	var currentBlockNumber uint64 = 0
+	// Keep increamenting blocknumber to make sure ProcessRequestBatch is successful
+	var currentBlockNumber uint64
 	return &cobra.Command{
 		Use:   "whitelist_candidate [candidate address] [amount] [lock time]",
 		Short: "Whitelist candidate & credit candidate's self delegation without token deposit",
