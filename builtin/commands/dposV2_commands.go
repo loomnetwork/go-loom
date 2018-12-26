@@ -140,6 +140,7 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
+			// WARNING: This is an emulation of mainnet oracle call, do not run into a live chain
 			tally := dposv2.RequestBatchTallyV2{}
 
 			err = cli.StaticCallContract(DPOSV2ContractName, "GetRequestBatchTally", &dposv2.GetRequestBatchTallyRequestV2{}, &tally)
