@@ -140,34 +140,12 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
-			// WARNING: This is an emulation of oracle only call and stores mainnet's block number, do not run in a live chain, as
-			// we could lose ability to register genuine events, if tally gets ahead.
-			tally := dposv2.RequestBatchTallyV2{}
-
-			err = cli.StaticCallContract(DPOSV2ContractName, "GetRequestBatchTally", &dposv2.GetRequestBatchTallyRequestV2{}, &tally)
-			if err != nil {
-				return err
-			}
-
-			return cli.CallContract(DPOSV2ContractName, "ProcessRequestBatch", &dposv2.RequestBatchV2{
-				Batch: []*dposv2.BatchRequestV2{
-					&dposv2.BatchRequestV2{
-						Payload: &dposv2.BatchRequestV2_WhitelistCandidate{
-							&dposv2.WhitelistCandidateRequestV2{
-								CandidateAddress: candidateAddress.MarshalPB(),
-								Amount: &types.BigUInt{
-									Value: *amount,
-								},
-								LockTime: locktime,
-							},
-						},
-						Meta: &dposv2.BatchRequestMetaV2{
-							BlockNumber: tally.LastSeenBlockNumber + 1,
-							LogIndex:    0,
-							TxIndex:     0,
-						},
-					},
+			return cli.CallContract(DPOSV2ContractName, "WhitelistCandidate", &dposv2.WhitelistCandidateRequestV2{
+				CandidateAddress: candidateAddress.MarshalPB(),
+				Amount: &types.BigUInt{
+					Value: *amount,
 				},
+				LockTime: locktime,
 			}, nil)
 		},
 	}
