@@ -23,6 +23,10 @@ type MainnetGatewayClient struct {
 	TxTimeout time.Duration
 }
 
+func (c *MainnetGatewayClient) Contract() *MainnetGatewayContract {
+    return c.contract
+}
+
 func (c *MainnetGatewayClient) DepositERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address) error {
 	tx, err := c.contract.DepositERC20(client.DefaultTransactOptsForIdentity(caller), amount, tokenAddr)
 	if err != nil {

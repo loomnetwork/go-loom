@@ -13,6 +13,7 @@ import (
 var TxFlags struct {
 	WriteURI      string
 	ReadURI       string
+	MainnetURI    string
 	ContractAddr  string
 	ChainID       string
 	PrivFile      string
@@ -35,6 +36,7 @@ func ContractCallCommand(name string) *cobra.Command {
 	pflags := cmd.PersistentFlags()
 	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
 	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
+	pflags.StringVarP(&TxFlags.MainnetURI, "ethereum", "e", "http://localhost:8545", "URI for talking to Ethereum")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "key", "k", "", "private key file")
@@ -51,6 +53,7 @@ func ContractResolveCommand() *cobra.Command {
 	pflags := cmd.PersistentFlags()
 	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
 	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
+	pflags.StringVarP(&TxFlags.MainnetURI, "ethereum", "e", "http://localhost:8545", "URI for talking to Ethereum")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "key", "k", "", "private key file")
