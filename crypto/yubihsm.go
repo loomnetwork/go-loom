@@ -63,7 +63,7 @@ func InitYubiHsmPrivKey(hsmConfig *YubiHsmConfig) (*YubiHsmPrivateKey, error) {
 	return privKey, nil
 }
 
-func loadYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
+func loadYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
 	yubiHsmConfig := &YubiHsmConfig{
 		HsmConnURL:    YubiDefConnURL,
 		AuthKeyID:     YubiDefAuthKeyID,
@@ -87,7 +87,7 @@ func loadYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
 
 func GenYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
 	// init YubiHSM session
-	yubiHsmPrivKey, err := loadYubiHsmPrivKey(algo, filePath)
+	yubiHsmPrivKey, err := loadYubiHsmPrivKey(filePath)
 	if err != nil {
 		return nil, err
 	}
@@ -159,9 +159,9 @@ func (privKey *YubiHsmPrivateKey) deletePrivKey() {
 	privKey.privKeyID = 0
 }
 
-func LoadYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
+func LoadYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
 	// init YubiHSM session
-	yubiHsmPrivKey, err := loadYubiHsmPrivKey(algo, filePath)
+	yubiHsmPrivKey, err := loadYubiHsmPrivKey(filePath)
 	if err != nil {
 		return nil, err
 	}
