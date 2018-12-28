@@ -19,4 +19,5 @@ func Add(cmd *cobra.Command) {
 	AddDPOSV2(cmd)
 	AddCoin(cmd)
 	AddGeneralCommands(cmd)
+    AddValidatorCommands(cmd)
 }
