@@ -3,13 +3,11 @@
 
 package v1
 
-import (
-	fmt "fmt"
-	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/gogo/protobuf/proto"
-	types "github.com/loomnetwork/go-loom/types"
-	math "math"
-)
+import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
+import math "math"
+import _ "github.com/gogo/protobuf/gogoproto"
+import types "github.com/loomnetwork/go-loom/types"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -35,7 +33,6 @@ var TransferGatewayTokenKind_name = map[int32]string{
 	1: "ERC20",
 	2: "ERC721",
 }
-
 var TransferGatewayTokenKind_value = map[string]int32{
 	"ETH":    0,
 	"ERC20":  1,
@@ -45,19 +42,18 @@ var TransferGatewayTokenKind_value = map[string]int32{
 func (x TransferGatewayTokenKind) String() string {
 	return proto.EnumName(TransferGatewayTokenKind_name, int32(x))
 }
-
 func (TransferGatewayTokenKind) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{0}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{0}
 }
 
 type TransferGatewayState struct {
-	Owner *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
 	// Last Mainnet block processed by the Transfer Gateway contract
 	LastMainnetBlockNum uint64 `protobuf:"varint,2,opt,name=last_mainnet_block_num,json=lastMainnetBlockNum,proto3" json:"last_mainnet_block_num,omitempty"`
 	// ID that should be used for the next pending contract mapping
 	NextContractMappingID uint64 `protobuf:"varint,3,opt,name=next_contract_mapping_id,json=nextContractMappingId,proto3" json:"next_contract_mapping_id,omitempty"`
 	// Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
-	TokenWithdrawers     []*types.Address `protobuf:"bytes,4,rep,name=token_withdrawers,json=tokenWithdrawers,proto3" json:"token_withdrawers,omitempty"`
+	TokenWithdrawers     []*types.Address `protobuf:"bytes,4,rep,name=token_withdrawers,json=tokenWithdrawers" json:"token_withdrawers,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -67,7 +63,7 @@ func (m *TransferGatewayState) Reset()         { *m = TransferGatewayState{} }
 func (m *TransferGatewayState) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayState) ProtoMessage()    {}
 func (*TransferGatewayState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{0}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{0}
 }
 func (m *TransferGatewayState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayState.Unmarshal(m, b)
@@ -75,8 +71,8 @@ func (m *TransferGatewayState) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayState.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayState.Merge(m, src)
+func (dst *TransferGatewayState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayState.Merge(dst, src)
 }
 func (m *TransferGatewayState) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayState.Size(m)
@@ -117,7 +113,7 @@ func (m *TransferGatewayState) GetTokenWithdrawers() []*types.Address {
 
 type TransferGatewayOracleState struct {
 	// DAppChain address of the Oracle
-	Address              *types.Address `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -127,7 +123,7 @@ func (m *TransferGatewayOracleState) Reset()         { *m = TransferGatewayOracl
 func (m *TransferGatewayOracleState) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayOracleState) ProtoMessage()    {}
 func (*TransferGatewayOracleState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{1}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{1}
 }
 func (m *TransferGatewayOracleState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayOracleState.Unmarshal(m, b)
@@ -135,8 +131,8 @@ func (m *TransferGatewayOracleState) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayOracleState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayOracleState.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayOracleState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayOracleState.Merge(m, src)
+func (dst *TransferGatewayOracleState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayOracleState.Merge(dst, src)
 }
 func (m *TransferGatewayOracleState) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayOracleState.Size(m)
@@ -156,12 +152,12 @@ func (m *TransferGatewayOracleState) GetAddress() *types.Address {
 
 type TransferGatewayWithdrawalReceipt struct {
 	// Mainnet address of token owner
-	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner,proto3" json:"token_owner,omitempty"`
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
 	// Mainnet address of token contract
-	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	TokenKind     TransferGatewayTokenKind `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=transfer_gateway.v1.TransferGatewayTokenKind" json:"token_kind,omitempty"`
 	// ERC721 token ID, or amount of ERC20/ETH
-	Value           *types.BigUInt `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
+	Value           *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
 	WithdrawalNonce uint64         `protobuf:"varint,5,opt,name=withdrawal_nonce,json=withdrawalNonce,proto3" json:"withdrawal_nonce,omitempty"`
 	// Signature generated by the Oracle that confirmed the withdrawal
 	OracleSignature      []byte   `protobuf:"bytes,6,opt,name=oracle_signature,json=oracleSignature,proto3" json:"oracle_signature,omitempty"`
@@ -174,7 +170,7 @@ func (m *TransferGatewayWithdrawalReceipt) Reset()         { *m = TransferGatewa
 func (m *TransferGatewayWithdrawalReceipt) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceipt) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceipt) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{2}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{2}
 }
 func (m *TransferGatewayWithdrawalReceipt) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceipt.Unmarshal(m, b)
@@ -182,8 +178,8 @@ func (m *TransferGatewayWithdrawalReceipt) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayWithdrawalReceipt) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceipt.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayWithdrawalReceipt) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayWithdrawalReceipt.Merge(m, src)
+func (dst *TransferGatewayWithdrawalReceipt) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayWithdrawalReceipt.Merge(dst, src)
 }
 func (m *TransferGatewayWithdrawalReceipt) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceipt.Size(m)
@@ -238,7 +234,7 @@ func (m *TransferGatewayWithdrawalReceipt) GetOracleSignature() []byte {
 
 type TransferGatewayPendingWithdrawalSummary struct {
 	// DAppChain address of token owner
-	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner,proto3" json:"token_owner,omitempty"`
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
 	// Hash of the unsigned withdrawal receipt
 	Hash                 []byte   `protobuf:"bytes,2,opt,name=hash,proto3" json:"hash,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -252,7 +248,7 @@ func (m *TransferGatewayPendingWithdrawalSummary) Reset() {
 func (m *TransferGatewayPendingWithdrawalSummary) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalSummary) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalSummary) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{3}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{3}
 }
 func (m *TransferGatewayPendingWithdrawalSummary) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalSummary.Unmarshal(m, b)
@@ -260,8 +256,8 @@ func (m *TransferGatewayPendingWithdrawalSummary) XXX_Unmarshal(b []byte) error 
 func (m *TransferGatewayPendingWithdrawalSummary) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalSummary.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayPendingWithdrawalSummary) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayPendingWithdrawalSummary.Merge(m, src)
+func (dst *TransferGatewayPendingWithdrawalSummary) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayPendingWithdrawalSummary.Merge(dst, src)
 }
 func (m *TransferGatewayPendingWithdrawalSummary) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalSummary.Size(m)
@@ -287,9 +283,9 @@ func (m *TransferGatewayPendingWithdrawalSummary) GetHash() []byte {
 }
 
 type TransferGatewayAccount struct {
-	Owner                *types.Address                    `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner                *types.Address                    `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
 	WithdrawalNonce      uint64                            `protobuf:"varint,2,opt,name=withdrawal_nonce,json=withdrawalNonce,proto3" json:"withdrawal_nonce,omitempty"`
-	WithdrawalReceipt    *TransferGatewayWithdrawalReceipt `protobuf:"bytes,3,opt,name=withdrawal_receipt,json=withdrawalReceipt,proto3" json:"withdrawal_receipt,omitempty"`
+	WithdrawalReceipt    *TransferGatewayWithdrawalReceipt `protobuf:"bytes,3,opt,name=withdrawal_receipt,json=withdrawalReceipt" json:"withdrawal_receipt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
 	XXX_unrecognized     []byte                            `json:"-"`
 	XXX_sizecache        int32                             `json:"-"`
@@ -299,7 +295,7 @@ func (m *TransferGatewayAccount) Reset()         { *m = TransferGatewayAccount{}
 func (m *TransferGatewayAccount) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayAccount) ProtoMessage()    {}
 func (*TransferGatewayAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{4}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{4}
 }
 func (m *TransferGatewayAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayAccount.Unmarshal(m, b)
@@ -307,8 +303,8 @@ func (m *TransferGatewayAccount) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayAccount.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayAccount) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayAccount.Merge(m, src)
+func (dst *TransferGatewayAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayAccount.Merge(dst, src)
 }
 func (m *TransferGatewayAccount) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayAccount.Size(m)
@@ -343,11 +339,11 @@ func (m *TransferGatewayAccount) GetWithdrawalReceipt() *TransferGatewayWithdraw
 // Stores all unclaimed tokens of a depositor for a single contract.
 type TransferGatewayUnclaimedToken struct {
 	// Foreign address of token contract
-	TokenContract *types.Address           `protobuf:"bytes,1,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract *types.Address           `protobuf:"bytes,1,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	TokenKind     TransferGatewayTokenKind `protobuf:"varint,2,opt,name=token_kind,json=tokenKind,proto3,enum=transfer_gateway.v1.TransferGatewayTokenKind" json:"token_kind,omitempty"`
 	// For an ERC721 contract this is a list of token IDs, for ERC20/ETH there will be a single
 	// value in the list containing the total unclaimed ERC20/ETH amount
-	Values               []*types.BigUInt `protobuf:"bytes,3,rep,name=values,proto3" json:"values,omitempty"`
+	Values               []*types.BigUInt `protobuf:"bytes,3,rep,name=values" json:"values,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -357,7 +353,7 @@ func (m *TransferGatewayUnclaimedToken) Reset()         { *m = TransferGatewayUn
 func (m *TransferGatewayUnclaimedToken) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayUnclaimedToken) ProtoMessage()    {}
 func (*TransferGatewayUnclaimedToken) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{5}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{5}
 }
 func (m *TransferGatewayUnclaimedToken) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnclaimedToken.Unmarshal(m, b)
@@ -365,8 +361,8 @@ func (m *TransferGatewayUnclaimedToken) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayUnclaimedToken) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayUnclaimedToken.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayUnclaimedToken) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayUnclaimedToken.Merge(m, src)
+func (dst *TransferGatewayUnclaimedToken) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayUnclaimedToken.Merge(dst, src)
 }
 func (m *TransferGatewayUnclaimedToken) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayUnclaimedToken.Size(m)
@@ -401,12 +397,12 @@ func (m *TransferGatewayUnclaimedToken) GetValues() []*types.BigUInt {
 // Token Deposit (ETH/ERC20/ERC721) made into the Mainnet Gateway
 type TransferGatewayTokenDeposited struct {
 	// Mainnet address of token owner
-	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner,proto3" json:"token_owner,omitempty"`
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
 	// Mainnet address of token contract, blank if ETH was deposited
-	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	TokenKind     TransferGatewayTokenKind `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=transfer_gateway.v1.TransferGatewayTokenKind" json:"token_kind,omitempty"`
 	// ERC721 token ID, or amount of ERC20/ETH
-	Value                *types.BigUInt `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
+	Value                *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -416,7 +412,7 @@ func (m *TransferGatewayTokenDeposited) Reset()         { *m = TransferGatewayTo
 func (m *TransferGatewayTokenDeposited) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenDeposited) ProtoMessage()    {}
 func (*TransferGatewayTokenDeposited) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{6}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{6}
 }
 func (m *TransferGatewayTokenDeposited) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenDeposited.Unmarshal(m, b)
@@ -424,8 +420,8 @@ func (m *TransferGatewayTokenDeposited) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayTokenDeposited) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayTokenDeposited.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayTokenDeposited) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayTokenDeposited.Merge(m, src)
+func (dst *TransferGatewayTokenDeposited) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayTokenDeposited.Merge(dst, src)
 }
 func (m *TransferGatewayTokenDeposited) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayTokenDeposited.Size(m)
@@ -467,12 +463,12 @@ func (m *TransferGatewayTokenDeposited) GetValue() *types.BigUInt {
 // Withdrawal from Mainnet Transfer Gateway
 type TransferGatewayTokenWithdrawn struct {
 	// Mainnet address of token owner
-	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner,proto3" json:"token_owner,omitempty"`
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
 	// Mainnet address of token contract, blank if ETH was withdrawn
-	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	TokenKind     TransferGatewayTokenKind `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=transfer_gateway.v1.TransferGatewayTokenKind" json:"token_kind,omitempty"`
 	// ERC721 token ID, or amount of ERC20/ETH
-	Value                *types.BigUInt `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
+	Value                *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -482,7 +478,7 @@ func (m *TransferGatewayTokenWithdrawn) Reset()         { *m = TransferGatewayTo
 func (m *TransferGatewayTokenWithdrawn) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenWithdrawn) ProtoMessage()    {}
 func (*TransferGatewayTokenWithdrawn) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{7}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{7}
 }
 func (m *TransferGatewayTokenWithdrawn) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawn.Unmarshal(m, b)
@@ -490,8 +486,8 @@ func (m *TransferGatewayTokenWithdrawn) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayTokenWithdrawn) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawn.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayTokenWithdrawn) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayTokenWithdrawn.Merge(m, src)
+func (dst *TransferGatewayTokenWithdrawn) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayTokenWithdrawn.Merge(dst, src)
 }
 func (m *TransferGatewayTokenWithdrawn) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawn.Size(m)
@@ -545,7 +541,7 @@ func (m *TransferGatewayMainnetEvent) Reset()         { *m = TransferGatewayMain
 func (m *TransferGatewayMainnetEvent) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayMainnetEvent) ProtoMessage()    {}
 func (*TransferGatewayMainnetEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{8}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{8}
 }
 func (m *TransferGatewayMainnetEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayMainnetEvent.Unmarshal(m, b)
@@ -553,8 +549,8 @@ func (m *TransferGatewayMainnetEvent) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayMainnetEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayMainnetEvent.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayMainnetEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayMainnetEvent.Merge(m, src)
+func (dst *TransferGatewayMainnetEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayMainnetEvent.Merge(dst, src)
 }
 func (m *TransferGatewayMainnetEvent) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayMainnetEvent.Size(m)
@@ -570,10 +566,10 @@ type isTransferGatewayMainnetEvent_Payload interface {
 }
 
 type TransferGatewayMainnetEvent_Deposit struct {
-	Deposit *TransferGatewayTokenDeposited `protobuf:"bytes,2,opt,name=deposit,proto3,oneof"`
+	Deposit *TransferGatewayTokenDeposited `protobuf:"bytes,2,opt,name=deposit,oneof"`
 }
 type TransferGatewayMainnetEvent_Withdrawal struct {
-	Withdrawal *TransferGatewayTokenWithdrawn `protobuf:"bytes,3,opt,name=withdrawal,proto3,oneof"`
+	Withdrawal *TransferGatewayTokenWithdrawn `protobuf:"bytes,3,opt,name=withdrawal,oneof"`
 }
 
 func (*TransferGatewayMainnetEvent_Deposit) isTransferGatewayMainnetEvent_Payload()    {}
@@ -684,11 +680,11 @@ func _TransferGatewayMainnetEvent_OneofSizer(msg proto.Message) (n int) {
 type TransferGatewayPendingContractMapping struct {
 	ID uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Address on foreign blockchain
-	ForeignContract *types.Address `protobuf:"bytes,2,opt,name=foreign_contract,json=foreignContract,proto3" json:"foreign_contract,omitempty"`
+	ForeignContract *types.Address `protobuf:"bytes,2,opt,name=foreign_contract,json=foreignContract" json:"foreign_contract,omitempty"`
 	// Corresponding address on local blockchain
-	LocalContract *types.Address `protobuf:"bytes,3,opt,name=local_contract,json=localContract,proto3" json:"local_contract,omitempty"`
+	LocalContract *types.Address `protobuf:"bytes,3,opt,name=local_contract,json=localContract" json:"local_contract,omitempty"`
 	// Foreign address of the creator of the foreign contract
-	ForeignContractCreator *types.Address `protobuf:"bytes,4,opt,name=foreign_contract_creator,json=foreignContractCreator,proto3" json:"foreign_contract_creator,omitempty"`
+	ForeignContractCreator *types.Address `protobuf:"bytes,4,opt,name=foreign_contract_creator,json=foreignContractCreator" json:"foreign_contract_creator,omitempty"`
 	// Hash of the transaction which created the foreign contract
 	ForeignContractTxHash []byte   `protobuf:"bytes,5,opt,name=foreign_contract_tx_hash,json=foreignContractTxHash,proto3" json:"foreign_contract_tx_hash,omitempty"`
 	XXX_NoUnkeyedLiteral  struct{} `json:"-"`
@@ -700,7 +696,7 @@ func (m *TransferGatewayPendingContractMapping) Reset()         { *m = TransferG
 func (m *TransferGatewayPendingContractMapping) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingContractMapping) ProtoMessage()    {}
 func (*TransferGatewayPendingContractMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{9}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{9}
 }
 func (m *TransferGatewayPendingContractMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingContractMapping.Unmarshal(m, b)
@@ -708,8 +704,8 @@ func (m *TransferGatewayPendingContractMapping) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayPendingContractMapping) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayPendingContractMapping.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayPendingContractMapping) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayPendingContractMapping.Merge(m, src)
+func (dst *TransferGatewayPendingContractMapping) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayPendingContractMapping.Merge(dst, src)
 }
 func (m *TransferGatewayPendingContractMapping) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayPendingContractMapping.Size(m)
@@ -757,9 +753,9 @@ func (m *TransferGatewayPendingContractMapping) GetForeignContractTxHash() []byt
 
 type TransferGatewayContractAddressMapping struct {
 	// Address on a blockchain
-	From *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	From *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
 	// Corresponding address on another blockchain
-	To                   *types.Address `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	To                   *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -769,7 +765,7 @@ func (m *TransferGatewayContractAddressMapping) Reset()         { *m = TransferG
 func (m *TransferGatewayContractAddressMapping) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayContractAddressMapping) ProtoMessage()    {}
 func (*TransferGatewayContractAddressMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{10}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{10}
 }
 func (m *TransferGatewayContractAddressMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayContractAddressMapping.Unmarshal(m, b)
@@ -777,8 +773,8 @@ func (m *TransferGatewayContractAddressMapping) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayContractAddressMapping) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayContractAddressMapping.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayContractAddressMapping) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayContractAddressMapping.Merge(m, src)
+func (dst *TransferGatewayContractAddressMapping) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayContractAddressMapping.Merge(dst, src)
 }
 func (m *TransferGatewayContractAddressMapping) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayContractAddressMapping.Size(m)
@@ -818,7 +814,7 @@ func (m *TransferGatewayUnverifiedContractCreator) Reset() {
 func (m *TransferGatewayUnverifiedContractCreator) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayUnverifiedContractCreator) ProtoMessage()    {}
 func (*TransferGatewayUnverifiedContractCreator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{11}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{11}
 }
 func (m *TransferGatewayUnverifiedContractCreator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreator.Unmarshal(m, b)
@@ -826,8 +822,8 @@ func (m *TransferGatewayUnverifiedContractCreator) XXX_Unmarshal(b []byte) error
 func (m *TransferGatewayUnverifiedContractCreator) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreator.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayUnverifiedContractCreator) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayUnverifiedContractCreator.Merge(m, src)
+func (dst *TransferGatewayUnverifiedContractCreator) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayUnverifiedContractCreator.Merge(dst, src)
 }
 func (m *TransferGatewayUnverifiedContractCreator) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreator.Size(m)
@@ -854,8 +850,8 @@ func (m *TransferGatewayUnverifiedContractCreator) GetContractTxHash() []byte {
 
 type TransferGatewayVerifiedContractCreator struct {
 	ContractMappingID    uint64         `protobuf:"varint,1,opt,name=contract_mapping_id,json=contractMappingId,proto3" json:"contract_mapping_id,omitempty"`
-	Creator              *types.Address `protobuf:"bytes,2,opt,name=creator,proto3" json:"creator,omitempty"`
-	Contract             *types.Address `protobuf:"bytes,3,opt,name=contract,proto3" json:"contract,omitempty"`
+	Creator              *types.Address `protobuf:"bytes,2,opt,name=creator" json:"creator,omitempty"`
+	Contract             *types.Address `protobuf:"bytes,3,opt,name=contract" json:"contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -867,7 +863,7 @@ func (m *TransferGatewayVerifiedContractCreator) Reset() {
 func (m *TransferGatewayVerifiedContractCreator) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayVerifiedContractCreator) ProtoMessage()    {}
 func (*TransferGatewayVerifiedContractCreator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{12}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{12}
 }
 func (m *TransferGatewayVerifiedContractCreator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayVerifiedContractCreator.Unmarshal(m, b)
@@ -875,8 +871,8 @@ func (m *TransferGatewayVerifiedContractCreator) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayVerifiedContractCreator) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayVerifiedContractCreator.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayVerifiedContractCreator) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayVerifiedContractCreator.Merge(m, src)
+func (dst *TransferGatewayVerifiedContractCreator) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayVerifiedContractCreator.Merge(dst, src)
 }
 func (m *TransferGatewayVerifiedContractCreator) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayVerifiedContractCreator.Size(m)
@@ -910,9 +906,9 @@ func (m *TransferGatewayVerifiedContractCreator) GetContract() *types.Address {
 
 type TransferGatewayContractMappingConfirmed struct {
 	// Address of a contract on a foreign blockchain
-	ForeignContract *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract,proto3" json:"foreign_contract,omitempty"`
+	ForeignContract *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract" json:"foreign_contract,omitempty"`
 	// Address of corresponding contract on the local blockchain
-	LocalContract        *types.Address `protobuf:"bytes,2,opt,name=local_contract,json=localContract,proto3" json:"local_contract,omitempty"`
+	LocalContract        *types.Address `protobuf:"bytes,2,opt,name=local_contract,json=localContract" json:"local_contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -924,7 +920,7 @@ func (m *TransferGatewayContractMappingConfirmed) Reset() {
 func (m *TransferGatewayContractMappingConfirmed) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayContractMappingConfirmed) ProtoMessage()    {}
 func (*TransferGatewayContractMappingConfirmed) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{13}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{13}
 }
 func (m *TransferGatewayContractMappingConfirmed) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayContractMappingConfirmed.Unmarshal(m, b)
@@ -932,8 +928,8 @@ func (m *TransferGatewayContractMappingConfirmed) XXX_Unmarshal(b []byte) error 
 func (m *TransferGatewayContractMappingConfirmed) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayContractMappingConfirmed.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayContractMappingConfirmed) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayContractMappingConfirmed.Merge(m, src)
+func (dst *TransferGatewayContractMappingConfirmed) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayContractMappingConfirmed.Merge(dst, src)
 }
 func (m *TransferGatewayContractMappingConfirmed) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayContractMappingConfirmed.Size(m)
@@ -962,12 +958,12 @@ func (m *TransferGatewayContractMappingConfirmed) GetLocalContract() *types.Addr
 // This event contains all the required data to complete a toke withdrawal via the Mainnet Gateway.
 type TransferGatewayTokenWithdrawalSigned struct {
 	// Mainnet address of token owner
-	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner,proto3" json:"token_owner,omitempty"`
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
 	// Mainnet address of token contract, blank if ETH
-	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract *types.Address           `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	TokenKind     TransferGatewayTokenKind `protobuf:"varint,3,opt,name=token_kind,json=tokenKind,proto3,enum=transfer_gateway.v1.TransferGatewayTokenKind" json:"token_kind,omitempty"`
 	// ERC721 token ID, or amount of ERC20/ETH
-	Value *types.BigUInt `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
+	Value *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
 	// Oracle signature
 	Sig                  []byte   `protobuf:"bytes,5,opt,name=sig,proto3" json:"sig,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -979,7 +975,7 @@ func (m *TransferGatewayTokenWithdrawalSigned) Reset()         { *m = TransferGa
 func (m *TransferGatewayTokenWithdrawalSigned) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenWithdrawalSigned) ProtoMessage()    {}
 func (*TransferGatewayTokenWithdrawalSigned) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{14}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{14}
 }
 func (m *TransferGatewayTokenWithdrawalSigned) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawalSigned.Unmarshal(m, b)
@@ -987,8 +983,8 @@ func (m *TransferGatewayTokenWithdrawalSigned) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayTokenWithdrawalSigned) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawalSigned.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayTokenWithdrawalSigned) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayTokenWithdrawalSigned.Merge(m, src)
+func (dst *TransferGatewayTokenWithdrawalSigned) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayTokenWithdrawalSigned.Merge(dst, src)
 }
 func (m *TransferGatewayTokenWithdrawalSigned) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawalSigned.Size(m)
@@ -1036,9 +1032,9 @@ func (m *TransferGatewayTokenWithdrawalSigned) GetSig() []byte {
 
 type TransferGatewayInitRequest struct {
 	// Only the owner will be allowed to add/remove oracles
-	Owner *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
 	// List of oracles that the Gateway should accept data from
-	Oracles []*types.Address `protobuf:"bytes,2,rep,name=oracles,proto3" json:"oracles,omitempty"`
+	Oracles []*types.Address `protobuf:"bytes,2,rep,name=oracles" json:"oracles,omitempty"`
 	// Initial value for TransferGatewayState.last_mainnet_block_num,
 	// Oracles will start looking for relevant Mainnet events from this block onwards.
 	// Should be set to the Mainnet block number that immediately preceeded the block containing
@@ -1053,7 +1049,7 @@ func (m *TransferGatewayInitRequest) Reset()         { *m = TransferGatewayInitR
 func (m *TransferGatewayInitRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayInitRequest) ProtoMessage()    {}
 func (*TransferGatewayInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{15}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{15}
 }
 func (m *TransferGatewayInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayInitRequest.Unmarshal(m, b)
@@ -1061,8 +1057,8 @@ func (m *TransferGatewayInitRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayInitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayInitRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayInitRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayInitRequest.Merge(m, src)
+func (dst *TransferGatewayInitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayInitRequest.Merge(dst, src)
 }
 func (m *TransferGatewayInitRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayInitRequest.Size(m)
@@ -1095,7 +1091,7 @@ func (m *TransferGatewayInitRequest) GetFirstMainnetBlockNum() uint64 {
 }
 
 type TransferGatewayAddOracleRequest struct {
-	Oracle               *types.Address `protobuf:"bytes,1,opt,name=oracle,proto3" json:"oracle,omitempty"`
+	Oracle               *types.Address `protobuf:"bytes,1,opt,name=oracle" json:"oracle,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1105,7 +1101,7 @@ func (m *TransferGatewayAddOracleRequest) Reset()         { *m = TransferGateway
 func (m *TransferGatewayAddOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayAddOracleRequest) ProtoMessage()    {}
 func (*TransferGatewayAddOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{16}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{16}
 }
 func (m *TransferGatewayAddOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayAddOracleRequest.Unmarshal(m, b)
@@ -1113,8 +1109,8 @@ func (m *TransferGatewayAddOracleRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayAddOracleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayAddOracleRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayAddOracleRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayAddOracleRequest.Merge(m, src)
+func (dst *TransferGatewayAddOracleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayAddOracleRequest.Merge(dst, src)
 }
 func (m *TransferGatewayAddOracleRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayAddOracleRequest.Size(m)
@@ -1133,7 +1129,7 @@ func (m *TransferGatewayAddOracleRequest) GetOracle() *types.Address {
 }
 
 type TransferGatewayRemoveOracleRequest struct {
-	Oracle               *types.Address `protobuf:"bytes,1,opt,name=oracle,proto3" json:"oracle,omitempty"`
+	Oracle               *types.Address `protobuf:"bytes,1,opt,name=oracle" json:"oracle,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1143,7 +1139,7 @@ func (m *TransferGatewayRemoveOracleRequest) Reset()         { *m = TransferGate
 func (m *TransferGatewayRemoveOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayRemoveOracleRequest) ProtoMessage()    {}
 func (*TransferGatewayRemoveOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{17}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{17}
 }
 func (m *TransferGatewayRemoveOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayRemoveOracleRequest.Unmarshal(m, b)
@@ -1151,8 +1147,8 @@ func (m *TransferGatewayRemoveOracleRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayRemoveOracleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayRemoveOracleRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayRemoveOracleRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayRemoveOracleRequest.Merge(m, src)
+func (dst *TransferGatewayRemoveOracleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayRemoveOracleRequest.Merge(dst, src)
 }
 func (m *TransferGatewayRemoveOracleRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayRemoveOracleRequest.Size(m)
@@ -1180,7 +1176,7 @@ func (m *TransferGatewayGetOraclesRequest) Reset()         { *m = TransferGatewa
 func (m *TransferGatewayGetOraclesRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetOraclesRequest) ProtoMessage()    {}
 func (*TransferGatewayGetOraclesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{18}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{18}
 }
 func (m *TransferGatewayGetOraclesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetOraclesRequest.Unmarshal(m, b)
@@ -1188,8 +1184,8 @@ func (m *TransferGatewayGetOraclesRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayGetOraclesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayGetOraclesRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayGetOraclesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayGetOraclesRequest.Merge(m, src)
+func (dst *TransferGatewayGetOraclesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayGetOraclesRequest.Merge(dst, src)
 }
 func (m *TransferGatewayGetOraclesRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayGetOraclesRequest.Size(m)
@@ -1201,7 +1197,7 @@ func (m *TransferGatewayGetOraclesRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_TransferGatewayGetOraclesRequest proto.InternalMessageInfo
 
 type TransferGatewayGetOraclesResponse struct {
-	Oracles              []*TransferGatewayOracleState `protobuf:"bytes,1,rep,name=oracles,proto3" json:"oracles,omitempty"`
+	Oracles              []*TransferGatewayOracleState `protobuf:"bytes,1,rep,name=oracles" json:"oracles,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
 	XXX_unrecognized     []byte                        `json:"-"`
 	XXX_sizecache        int32                         `json:"-"`
@@ -1211,7 +1207,7 @@ func (m *TransferGatewayGetOraclesResponse) Reset()         { *m = TransferGatew
 func (m *TransferGatewayGetOraclesResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetOraclesResponse) ProtoMessage()    {}
 func (*TransferGatewayGetOraclesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{19}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{19}
 }
 func (m *TransferGatewayGetOraclesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetOraclesResponse.Unmarshal(m, b)
@@ -1219,8 +1215,8 @@ func (m *TransferGatewayGetOraclesResponse) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayGetOraclesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayGetOraclesResponse.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayGetOraclesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayGetOraclesResponse.Merge(m, src)
+func (dst *TransferGatewayGetOraclesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayGetOraclesResponse.Merge(dst, src)
 }
 func (m *TransferGatewayGetOraclesResponse) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayGetOraclesResponse.Size(m)
@@ -1240,9 +1236,9 @@ func (m *TransferGatewayGetOraclesResponse) GetOracles() []*TransferGatewayOracl
 
 type TransferGatewayAddContractMappingRequest struct {
 	// Address on foreign blockchain
-	ForeignContract *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract,proto3" json:"foreign_contract,omitempty"`
+	ForeignContract *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract" json:"foreign_contract,omitempty"`
 	// Corresponding address on local blockchain
-	LocalContract *types.Address `protobuf:"bytes,2,opt,name=local_contract,json=localContract,proto3" json:"local_contract,omitempty"`
+	LocalContract *types.Address `protobuf:"bytes,2,opt,name=local_contract,json=localContract" json:"local_contract,omitempty"`
 	// Signature of the creator of the foreign contract
 	ForeignContractCreatorSig []byte `protobuf:"bytes,3,opt,name=foreign_contract_creator_sig,json=foreignContractCreatorSig,proto3" json:"foreign_contract_creator_sig,omitempty"`
 	// Hash of the transaction which created the foreign contract
@@ -1258,7 +1254,7 @@ func (m *TransferGatewayAddContractMappingRequest) Reset() {
 func (m *TransferGatewayAddContractMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayAddContractMappingRequest) ProtoMessage()    {}
 func (*TransferGatewayAddContractMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{20}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{20}
 }
 func (m *TransferGatewayAddContractMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayAddContractMappingRequest.Unmarshal(m, b)
@@ -1266,8 +1262,8 @@ func (m *TransferGatewayAddContractMappingRequest) XXX_Unmarshal(b []byte) error
 func (m *TransferGatewayAddContractMappingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayAddContractMappingRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayAddContractMappingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayAddContractMappingRequest.Merge(m, src)
+func (dst *TransferGatewayAddContractMappingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayAddContractMappingRequest.Merge(dst, src)
 }
 func (m *TransferGatewayAddContractMappingRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayAddContractMappingRequest.Size(m)
@@ -1320,7 +1316,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsRequest) String() string {
 }
 func (*TransferGatewayUnverifiedContractCreatorsRequest) ProtoMessage() {}
 func (*TransferGatewayUnverifiedContractCreatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{21}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{21}
 }
 func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest.Unmarshal(m, b)
@@ -1328,8 +1324,8 @@ func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Unmarshal(b []byt
 func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest.Merge(m, src)
+func (dst *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest.Merge(dst, src)
 }
 func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest.Size(m)
@@ -1341,7 +1337,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_DiscardUnknown() 
 var xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest proto.InternalMessageInfo
 
 type TransferGatewayUnverifiedContractCreatorsResponse struct {
-	Creators             []*TransferGatewayUnverifiedContractCreator `protobuf:"bytes,1,rep,name=creators,proto3" json:"creators,omitempty"`
+	Creators             []*TransferGatewayUnverifiedContractCreator `protobuf:"bytes,1,rep,name=creators" json:"creators,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                                    `json:"-"`
 	XXX_unrecognized     []byte                                      `json:"-"`
 	XXX_sizecache        int32                                       `json:"-"`
@@ -1355,7 +1351,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsResponse) String() string {
 }
 func (*TransferGatewayUnverifiedContractCreatorsResponse) ProtoMessage() {}
 func (*TransferGatewayUnverifiedContractCreatorsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{22}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{22}
 }
 func (m *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsResponse.Unmarshal(m, b)
@@ -1363,8 +1359,8 @@ func (m *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Unmarshal(b []by
 func (m *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsResponse.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsResponse.Merge(m, src)
+func (dst *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsResponse.Merge(dst, src)
 }
 func (m *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsResponse.Size(m)
@@ -1383,7 +1379,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsResponse) GetCreators() []*Tra
 }
 
 type TransferGatewayVerifyContractCreatorsRequest struct {
-	Creators             []*TransferGatewayVerifiedContractCreator `protobuf:"bytes,1,rep,name=creators,proto3" json:"creators,omitempty"`
+	Creators             []*TransferGatewayVerifiedContractCreator `protobuf:"bytes,1,rep,name=creators" json:"creators,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                                  `json:"-"`
 	XXX_unrecognized     []byte                                    `json:"-"`
 	XXX_sizecache        int32                                     `json:"-"`
@@ -1397,7 +1393,7 @@ func (m *TransferGatewayVerifyContractCreatorsRequest) String() string {
 }
 func (*TransferGatewayVerifyContractCreatorsRequest) ProtoMessage() {}
 func (*TransferGatewayVerifyContractCreatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{23}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{23}
 }
 func (m *TransferGatewayVerifyContractCreatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayVerifyContractCreatorsRequest.Unmarshal(m, b)
@@ -1405,8 +1401,8 @@ func (m *TransferGatewayVerifyContractCreatorsRequest) XXX_Unmarshal(b []byte) e
 func (m *TransferGatewayVerifyContractCreatorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayVerifyContractCreatorsRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayVerifyContractCreatorsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayVerifyContractCreatorsRequest.Merge(m, src)
+func (dst *TransferGatewayVerifyContractCreatorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayVerifyContractCreatorsRequest.Merge(dst, src)
 }
 func (m *TransferGatewayVerifyContractCreatorsRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayVerifyContractCreatorsRequest.Size(m)
@@ -1426,7 +1422,7 @@ func (m *TransferGatewayVerifyContractCreatorsRequest) GetCreators() []*Transfer
 
 // Batch of events from the Gateway on Ethereum mainnet
 type TransferGatewayProcessEventBatchRequest struct {
-	Events               []*TransferGatewayMainnetEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	Events               []*TransferGatewayMainnetEvent `protobuf:"bytes,1,rep,name=events" json:"events,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
 	XXX_unrecognized     []byte                         `json:"-"`
 	XXX_sizecache        int32                          `json:"-"`
@@ -1438,7 +1434,7 @@ func (m *TransferGatewayProcessEventBatchRequest) Reset() {
 func (m *TransferGatewayProcessEventBatchRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayProcessEventBatchRequest) ProtoMessage()    {}
 func (*TransferGatewayProcessEventBatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{24}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{24}
 }
 func (m *TransferGatewayProcessEventBatchRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayProcessEventBatchRequest.Unmarshal(m, b)
@@ -1446,8 +1442,8 @@ func (m *TransferGatewayProcessEventBatchRequest) XXX_Unmarshal(b []byte) error 
 func (m *TransferGatewayProcessEventBatchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayProcessEventBatchRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayProcessEventBatchRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayProcessEventBatchRequest.Merge(m, src)
+func (dst *TransferGatewayProcessEventBatchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayProcessEventBatchRequest.Merge(dst, src)
 }
 func (m *TransferGatewayProcessEventBatchRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayProcessEventBatchRequest.Size(m)
@@ -1475,7 +1471,7 @@ func (m *TransferGatewayStateRequest) Reset()         { *m = TransferGatewayStat
 func (m *TransferGatewayStateRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateRequest) ProtoMessage()    {}
 func (*TransferGatewayStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{25}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{25}
 }
 func (m *TransferGatewayStateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayStateRequest.Unmarshal(m, b)
@@ -1483,8 +1479,8 @@ func (m *TransferGatewayStateRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayStateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayStateRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayStateRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayStateRequest.Merge(m, src)
+func (dst *TransferGatewayStateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayStateRequest.Merge(dst, src)
 }
 func (m *TransferGatewayStateRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayStateRequest.Size(m)
@@ -1496,7 +1492,7 @@ func (m *TransferGatewayStateRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_TransferGatewayStateRequest proto.InternalMessageInfo
 
 type TransferGatewayStateResponse struct {
-	State                *TransferGatewayState `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	State                *TransferGatewayState `protobuf:"bytes,1,opt,name=state" json:"state,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
 	XXX_sizecache        int32                 `json:"-"`
@@ -1506,7 +1502,7 @@ func (m *TransferGatewayStateResponse) Reset()         { *m = TransferGatewaySta
 func (m *TransferGatewayStateResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateResponse) ProtoMessage()    {}
 func (*TransferGatewayStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{26}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{26}
 }
 func (m *TransferGatewayStateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayStateResponse.Unmarshal(m, b)
@@ -1514,8 +1510,8 @@ func (m *TransferGatewayStateResponse) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayStateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayStateResponse.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayStateResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayStateResponse.Merge(m, src)
+func (dst *TransferGatewayStateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayStateResponse.Merge(dst, src)
 }
 func (m *TransferGatewayStateResponse) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayStateResponse.Size(m)
@@ -1536,7 +1532,7 @@ func (m *TransferGatewayStateResponse) GetState() *TransferGatewayState {
 // Transfer unclaimed tokens to the sender, or to the specified depositors
 type TransferGatewayReclaimDepositorTokensRequest struct {
 	// Foreign address of depositors
-	Depositors           []*types.Address `protobuf:"bytes,1,rep,name=depositors,proto3" json:"depositors,omitempty"`
+	Depositors           []*types.Address `protobuf:"bytes,1,rep,name=depositors" json:"depositors,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -1550,7 +1546,7 @@ func (m *TransferGatewayReclaimDepositorTokensRequest) String() string {
 }
 func (*TransferGatewayReclaimDepositorTokensRequest) ProtoMessage() {}
 func (*TransferGatewayReclaimDepositorTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{27}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{27}
 }
 func (m *TransferGatewayReclaimDepositorTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimDepositorTokensRequest.Unmarshal(m, b)
@@ -1558,8 +1554,8 @@ func (m *TransferGatewayReclaimDepositorTokensRequest) XXX_Unmarshal(b []byte) e
 func (m *TransferGatewayReclaimDepositorTokensRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayReclaimDepositorTokensRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayReclaimDepositorTokensRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayReclaimDepositorTokensRequest.Merge(m, src)
+func (dst *TransferGatewayReclaimDepositorTokensRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayReclaimDepositorTokensRequest.Merge(dst, src)
 }
 func (m *TransferGatewayReclaimDepositorTokensRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayReclaimDepositorTokensRequest.Size(m)
@@ -1580,7 +1576,7 @@ func (m *TransferGatewayReclaimDepositorTokensRequest) GetDepositors() []*types.
 // Transfer any unclaimed tokens originating from a specific contract to their depositors
 type TransferGatewayReclaimContractTokensRequest struct {
 	// Foreign address of token contract
-	TokenContract        *types.Address `protobuf:"bytes,1,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract        *types.Address `protobuf:"bytes,1,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1594,7 +1590,7 @@ func (m *TransferGatewayReclaimContractTokensRequest) String() string {
 }
 func (*TransferGatewayReclaimContractTokensRequest) ProtoMessage() {}
 func (*TransferGatewayReclaimContractTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{28}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{28}
 }
 func (m *TransferGatewayReclaimContractTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimContractTokensRequest.Unmarshal(m, b)
@@ -1602,8 +1598,8 @@ func (m *TransferGatewayReclaimContractTokensRequest) XXX_Unmarshal(b []byte) er
 func (m *TransferGatewayReclaimContractTokensRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayReclaimContractTokensRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayReclaimContractTokensRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayReclaimContractTokensRequest.Merge(m, src)
+func (dst *TransferGatewayReclaimContractTokensRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayReclaimContractTokensRequest.Merge(dst, src)
 }
 func (m *TransferGatewayReclaimContractTokensRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayReclaimContractTokensRequest.Size(m)
@@ -1623,9 +1619,9 @@ func (m *TransferGatewayReclaimContractTokensRequest) GetTokenContract() *types.
 
 type TransferGatewayWithdrawERC721Request struct {
 	// ID of ERC721 token
-	TokenId *types.BigUInt `protobuf:"bytes,1,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
+	TokenId *types.BigUInt `protobuf:"bytes,1,opt,name=token_id,json=tokenId" json:"token_id,omitempty"`
 	// DAppChain address of ERC721 contract token belongs to
-	TokenContract        *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract        *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1635,7 +1631,7 @@ func (m *TransferGatewayWithdrawERC721Request) Reset()         { *m = TransferGa
 func (m *TransferGatewayWithdrawERC721Request) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawERC721Request) ProtoMessage()    {}
 func (*TransferGatewayWithdrawERC721Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{29}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{29}
 }
 func (m *TransferGatewayWithdrawERC721Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawERC721Request.Unmarshal(m, b)
@@ -1643,8 +1639,8 @@ func (m *TransferGatewayWithdrawERC721Request) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayWithdrawERC721Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayWithdrawERC721Request.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayWithdrawERC721Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayWithdrawERC721Request.Merge(m, src)
+func (dst *TransferGatewayWithdrawERC721Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayWithdrawERC721Request.Merge(dst, src)
 }
 func (m *TransferGatewayWithdrawERC721Request) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayWithdrawERC721Request.Size(m)
@@ -1671,9 +1667,9 @@ func (m *TransferGatewayWithdrawERC721Request) GetTokenContract() *types.Address
 
 type TransferGatewayWithdrawERC20Request struct {
 	// Amount of tokens to withdraw
-	Amount *types.BigUInt `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
 	// DAppChain address of ERC20 contract tokens belongs to
-	TokenContract        *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract,proto3" json:"token_contract,omitempty"`
+	TokenContract        *types.Address `protobuf:"bytes,2,opt,name=token_contract,json=tokenContract" json:"token_contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1683,7 +1679,7 @@ func (m *TransferGatewayWithdrawERC20Request) Reset()         { *m = TransferGat
 func (m *TransferGatewayWithdrawERC20Request) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawERC20Request) ProtoMessage()    {}
 func (*TransferGatewayWithdrawERC20Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{30}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{30}
 }
 func (m *TransferGatewayWithdrawERC20Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawERC20Request.Unmarshal(m, b)
@@ -1691,8 +1687,8 @@ func (m *TransferGatewayWithdrawERC20Request) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayWithdrawERC20Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayWithdrawERC20Request.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayWithdrawERC20Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayWithdrawERC20Request.Merge(m, src)
+func (dst *TransferGatewayWithdrawERC20Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayWithdrawERC20Request.Merge(dst, src)
 }
 func (m *TransferGatewayWithdrawERC20Request) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayWithdrawERC20Request.Size(m)
@@ -1719,9 +1715,9 @@ func (m *TransferGatewayWithdrawERC20Request) GetTokenContract() *types.Address 
 
 type TransferGatewayWithdrawETHRequest struct {
 	// Amount of ETH to withdraw
-	Amount *types.BigUInt `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
 	// Address of Mainnet Gateway contract
-	MainnetGateway       *types.Address `protobuf:"bytes,2,opt,name=mainnet_gateway,json=mainnetGateway,proto3" json:"mainnet_gateway,omitempty"`
+	MainnetGateway       *types.Address `protobuf:"bytes,2,opt,name=mainnet_gateway,json=mainnetGateway" json:"mainnet_gateway,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1731,7 +1727,7 @@ func (m *TransferGatewayWithdrawETHRequest) Reset()         { *m = TransferGatew
 func (m *TransferGatewayWithdrawETHRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawETHRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawETHRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{31}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{31}
 }
 func (m *TransferGatewayWithdrawETHRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawETHRequest.Unmarshal(m, b)
@@ -1739,8 +1735,8 @@ func (m *TransferGatewayWithdrawETHRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferGatewayWithdrawETHRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayWithdrawETHRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayWithdrawETHRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayWithdrawETHRequest.Merge(m, src)
+func (dst *TransferGatewayWithdrawETHRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayWithdrawETHRequest.Merge(dst, src)
 }
 func (m *TransferGatewayWithdrawETHRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayWithdrawETHRequest.Size(m)
@@ -1766,7 +1762,7 @@ func (m *TransferGatewayWithdrawETHRequest) GetMainnetGateway() *types.Address {
 }
 
 type TransferGatewayWithdrawalReceiptRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1778,7 +1774,7 @@ func (m *TransferGatewayWithdrawalReceiptRequest) Reset() {
 func (m *TransferGatewayWithdrawalReceiptRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{32}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{32}
 }
 func (m *TransferGatewayWithdrawalReceiptRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptRequest.Unmarshal(m, b)
@@ -1786,8 +1782,8 @@ func (m *TransferGatewayWithdrawalReceiptRequest) XXX_Unmarshal(b []byte) error 
 func (m *TransferGatewayWithdrawalReceiptRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayWithdrawalReceiptRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayWithdrawalReceiptRequest.Merge(m, src)
+func (dst *TransferGatewayWithdrawalReceiptRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayWithdrawalReceiptRequest.Merge(dst, src)
 }
 func (m *TransferGatewayWithdrawalReceiptRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptRequest.Size(m)
@@ -1806,7 +1802,7 @@ func (m *TransferGatewayWithdrawalReceiptRequest) GetOwner() *types.Address {
 }
 
 type TransferGatewayWithdrawalReceiptResponse struct {
-	Receipt              *TransferGatewayWithdrawalReceipt `protobuf:"bytes,1,opt,name=receipt,proto3" json:"receipt,omitempty"`
+	Receipt              *TransferGatewayWithdrawalReceipt `protobuf:"bytes,1,opt,name=receipt" json:"receipt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
 	XXX_unrecognized     []byte                            `json:"-"`
 	XXX_sizecache        int32                             `json:"-"`
@@ -1818,7 +1814,7 @@ func (m *TransferGatewayWithdrawalReceiptResponse) Reset() {
 func (m *TransferGatewayWithdrawalReceiptResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptResponse) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{33}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{33}
 }
 func (m *TransferGatewayWithdrawalReceiptResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptResponse.Unmarshal(m, b)
@@ -1826,8 +1822,8 @@ func (m *TransferGatewayWithdrawalReceiptResponse) XXX_Unmarshal(b []byte) error
 func (m *TransferGatewayWithdrawalReceiptResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptResponse.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayWithdrawalReceiptResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayWithdrawalReceiptResponse.Merge(m, src)
+func (dst *TransferGatewayWithdrawalReceiptResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayWithdrawalReceiptResponse.Merge(dst, src)
 }
 func (m *TransferGatewayWithdrawalReceiptResponse) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptResponse.Size(m)
@@ -1847,7 +1843,7 @@ func (m *TransferGatewayWithdrawalReceiptResponse) GetReceipt() *TransferGateway
 
 type TransferGatewayConfirmWithdrawalReceiptRequest struct {
 	// DAppChain address of the entity attempting to make the withdrawal
-	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner,proto3" json:"token_owner,omitempty"`
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
 	// 66-byte hash of the withdrawal hash
 	OracleSignature []byte `protobuf:"bytes,2,opt,name=oracle_signature,json=oracleSignature,proto3" json:"oracle_signature,omitempty"`
 	// 32-byte hash of the withdrawal details
@@ -1865,7 +1861,7 @@ func (m *TransferGatewayConfirmWithdrawalReceiptRequest) String() string {
 }
 func (*TransferGatewayConfirmWithdrawalReceiptRequest) ProtoMessage() {}
 func (*TransferGatewayConfirmWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{34}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{34}
 }
 func (m *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequest.Unmarshal(m, b)
@@ -1873,8 +1869,8 @@ func (m *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Unmarshal(b []byte)
 func (m *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequest.Merge(m, src)
+func (dst *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequest.Merge(dst, src)
 }
 func (m *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequest.Size(m)
@@ -1908,7 +1904,7 @@ func (m *TransferGatewayConfirmWithdrawalReceiptRequest) GetWithdrawalHash() []b
 
 type TransferGatewayPendingWithdrawalsRequest struct {
 	// Address of Mainnet Gateway contract
-	MainnetGateway       *types.Address `protobuf:"bytes,1,opt,name=mainnet_gateway,json=mainnetGateway,proto3" json:"mainnet_gateway,omitempty"`
+	MainnetGateway       *types.Address `protobuf:"bytes,1,opt,name=mainnet_gateway,json=mainnetGateway" json:"mainnet_gateway,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1920,7 +1916,7 @@ func (m *TransferGatewayPendingWithdrawalsRequest) Reset() {
 func (m *TransferGatewayPendingWithdrawalsRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalsRequest) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{35}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{35}
 }
 func (m *TransferGatewayPendingWithdrawalsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsRequest.Unmarshal(m, b)
@@ -1928,8 +1924,8 @@ func (m *TransferGatewayPendingWithdrawalsRequest) XXX_Unmarshal(b []byte) error
 func (m *TransferGatewayPendingWithdrawalsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayPendingWithdrawalsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayPendingWithdrawalsRequest.Merge(m, src)
+func (dst *TransferGatewayPendingWithdrawalsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayPendingWithdrawalsRequest.Merge(dst, src)
 }
 func (m *TransferGatewayPendingWithdrawalsRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsRequest.Size(m)
@@ -1948,7 +1944,7 @@ func (m *TransferGatewayPendingWithdrawalsRequest) GetMainnetGateway() *types.Ad
 }
 
 type TransferGatewayPendingWithdrawalsResponse struct {
-	Withdrawals          []*TransferGatewayPendingWithdrawalSummary `protobuf:"bytes,1,rep,name=withdrawals,proto3" json:"withdrawals,omitempty"`
+	Withdrawals          []*TransferGatewayPendingWithdrawalSummary `protobuf:"bytes,1,rep,name=withdrawals" json:"withdrawals,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                                   `json:"-"`
 	XXX_unrecognized     []byte                                     `json:"-"`
 	XXX_sizecache        int32                                      `json:"-"`
@@ -1960,7 +1956,7 @@ func (m *TransferGatewayPendingWithdrawalsResponse) Reset() {
 func (m *TransferGatewayPendingWithdrawalsResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalsResponse) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5333cd0596131d96, []int{36}
+	return fileDescriptor_transfer_gateway_267530d656ab7285, []int{36}
 }
 func (m *TransferGatewayPendingWithdrawalsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsResponse.Unmarshal(m, b)
@@ -1968,8 +1964,8 @@ func (m *TransferGatewayPendingWithdrawalsResponse) XXX_Unmarshal(b []byte) erro
 func (m *TransferGatewayPendingWithdrawalsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsResponse.Marshal(b, m, deterministic)
 }
-func (m *TransferGatewayPendingWithdrawalsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayPendingWithdrawalsResponse.Merge(m, src)
+func (dst *TransferGatewayPendingWithdrawalsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayPendingWithdrawalsResponse.Merge(dst, src)
 }
 func (m *TransferGatewayPendingWithdrawalsResponse) XXX_Size() int {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsResponse.Size(m)
@@ -1988,7 +1984,6 @@ func (m *TransferGatewayPendingWithdrawalsResponse) GetWithdrawals() []*Transfer
 }
 
 func init() {
-	proto.RegisterEnum("transfer_gateway.v1.TransferGatewayTokenKind", TransferGatewayTokenKind_name, TransferGatewayTokenKind_value)
 	proto.RegisterType((*TransferGatewayState)(nil), "transfer_gateway.v1.TransferGatewayState")
 	proto.RegisterType((*TransferGatewayOracleState)(nil), "transfer_gateway.v1.TransferGatewayOracleState")
 	proto.RegisterType((*TransferGatewayWithdrawalReceipt)(nil), "transfer_gateway.v1.TransferGatewayWithdrawalReceipt")
@@ -2026,13 +2021,14 @@ func init() {
 	proto.RegisterType((*TransferGatewayConfirmWithdrawalReceiptRequest)(nil), "transfer_gateway.v1.TransferGatewayConfirmWithdrawalReceiptRequest")
 	proto.RegisterType((*TransferGatewayPendingWithdrawalsRequest)(nil), "transfer_gateway.v1.TransferGatewayPendingWithdrawalsRequest")
 	proto.RegisterType((*TransferGatewayPendingWithdrawalsResponse)(nil), "transfer_gateway.v1.TransferGatewayPendingWithdrawalsResponse")
+	proto.RegisterEnum("transfer_gateway.v1.TransferGatewayTokenKind", TransferGatewayTokenKind_name, TransferGatewayTokenKind_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/transfer_gateway/v1/transfer_gateway.proto", fileDescriptor_5333cd0596131d96)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/transfer_gateway/v1/transfer_gateway.proto", fileDescriptor_transfer_gateway_267530d656ab7285)
 }
 
-var fileDescriptor_5333cd0596131d96 = []byte{
+var fileDescriptor_transfer_gateway_267530d656ab7285 = []byte{
 	// 1472 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xdc, 0x18, 0xcb, 0x6f, 0x1b, 0xc5,
 	0xbb, 0xbb, 0x71, 0xe2, 0xe4, 0x4b, 0x7f, 0x89, 0xb3, 0x6d, 0xf2, 0x73, 0x5f, 0xc4, 0x9d, 0x16,

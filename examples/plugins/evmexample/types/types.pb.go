@@ -3,11 +3,9 @@
 
 package types
 
-import (
-	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	math "math"
-)
+import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -30,7 +28,7 @@ func (m *Dummy) Reset()         { *m = Dummy{} }
 func (m *Dummy) String() string { return proto.CompactTextString(m) }
 func (*Dummy) ProtoMessage()    {}
 func (*Dummy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_258d414bd1120aea, []int{0}
+	return fileDescriptor_types_e9b78ee4c573f60e, []int{0}
 }
 func (m *Dummy) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Dummy.Unmarshal(m, b)
@@ -38,8 +36,8 @@ func (m *Dummy) XXX_Unmarshal(b []byte) error {
 func (m *Dummy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Dummy.Marshal(b, m, deterministic)
 }
-func (m *Dummy) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Dummy.Merge(m, src)
+func (dst *Dummy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Dummy.Merge(dst, src)
 }
 func (m *Dummy) XXX_Size() int {
 	return xxx_messageInfo_Dummy.Size(m)
@@ -61,7 +59,7 @@ func (m *WrapValue) Reset()         { *m = WrapValue{} }
 func (m *WrapValue) String() string { return proto.CompactTextString(m) }
 func (*WrapValue) ProtoMessage()    {}
 func (*WrapValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_258d414bd1120aea, []int{1}
+	return fileDescriptor_types_e9b78ee4c573f60e, []int{1}
 }
 func (m *WrapValue) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WrapValue.Unmarshal(m, b)
@@ -69,8 +67,8 @@ func (m *WrapValue) XXX_Unmarshal(b []byte) error {
 func (m *WrapValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WrapValue.Marshal(b, m, deterministic)
 }
-func (m *WrapValue) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WrapValue.Merge(m, src)
+func (dst *WrapValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WrapValue.Merge(dst, src)
 }
 func (m *WrapValue) XXX_Size() int {
 	return xxx_messageInfo_WrapValue.Size(m)
@@ -94,10 +92,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/plugins/evmexample/types/types.proto", fileDescriptor_258d414bd1120aea)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/plugins/evmexample/types/types.proto", fileDescriptor_types_e9b78ee4c573f60e)
 }
 
-var fileDescriptor_258d414bd1120aea = []byte{
+var fileDescriptor_types_e9b78ee4c573f60e = []byte{
 	// 133 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xf2, 0x49, 0xcf, 0x2c, 0xc9,
 	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,

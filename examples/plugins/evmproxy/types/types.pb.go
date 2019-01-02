@@ -3,11 +3,9 @@
 
 package types
 
-import (
-	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	math "math"
-)
+import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -32,7 +30,7 @@ func (m *EthTransaction) Reset()         { *m = EthTransaction{} }
 func (m *EthTransaction) String() string { return proto.CompactTextString(m) }
 func (*EthTransaction) ProtoMessage()    {}
 func (*EthTransaction) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4da78adce6159fee, []int{0}
+	return fileDescriptor_types_d7c6a2e89cbc3ccf, []int{0}
 }
 func (m *EthTransaction) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EthTransaction.Unmarshal(m, b)
@@ -40,8 +38,8 @@ func (m *EthTransaction) XXX_Unmarshal(b []byte) error {
 func (m *EthTransaction) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EthTransaction.Marshal(b, m, deterministic)
 }
-func (m *EthTransaction) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EthTransaction.Merge(m, src)
+func (dst *EthTransaction) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EthTransaction.Merge(dst, src)
 }
 func (m *EthTransaction) XXX_Size() int {
 	return xxx_messageInfo_EthTransaction.Size(m)
@@ -78,7 +76,7 @@ func (m *EthCall) Reset()         { *m = EthCall{} }
 func (m *EthCall) String() string { return proto.CompactTextString(m) }
 func (*EthCall) ProtoMessage()    {}
 func (*EthCall) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4da78adce6159fee, []int{1}
+	return fileDescriptor_types_d7c6a2e89cbc3ccf, []int{1}
 }
 func (m *EthCall) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EthCall.Unmarshal(m, b)
@@ -86,8 +84,8 @@ func (m *EthCall) XXX_Unmarshal(b []byte) error {
 func (m *EthCall) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EthCall.Marshal(b, m, deterministic)
 }
-func (m *EthCall) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EthCall.Merge(m, src)
+func (dst *EthCall) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EthCall.Merge(dst, src)
 }
 func (m *EthCall) XXX_Size() int {
 	return xxx_messageInfo_EthCall.Size(m)
@@ -124,7 +122,7 @@ func (m *EthCallResult) Reset()         { *m = EthCallResult{} }
 func (m *EthCallResult) String() string { return proto.CompactTextString(m) }
 func (*EthCallResult) ProtoMessage()    {}
 func (*EthCallResult) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4da78adce6159fee, []int{2}
+	return fileDescriptor_types_d7c6a2e89cbc3ccf, []int{2}
 }
 func (m *EthCallResult) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EthCallResult.Unmarshal(m, b)
@@ -132,8 +130,8 @@ func (m *EthCallResult) XXX_Unmarshal(b []byte) error {
 func (m *EthCallResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EthCallResult.Marshal(b, m, deterministic)
 }
-func (m *EthCallResult) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EthCallResult.Merge(m, src)
+func (dst *EthCallResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EthCallResult.Merge(dst, src)
 }
 func (m *EthCallResult) XXX_Size() int {
 	return xxx_messageInfo_EthCallResult.Size(m)
@@ -165,10 +163,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/plugins/evmproxy/types/types.proto", fileDescriptor_4da78adce6159fee)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/plugins/evmproxy/types/types.proto", fileDescriptor_types_d7c6a2e89cbc3ccf)
 }
 
-var fileDescriptor_4da78adce6159fee = []byte{
+var fileDescriptor_types_d7c6a2e89cbc3ccf = []byte{
 	// 180 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xf2, 0x4a, 0xcf, 0x2c, 0xc9,
 	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,

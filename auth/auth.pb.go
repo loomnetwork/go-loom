@@ -3,11 +3,9 @@
 
 package auth
 
-import (
-	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	math "math"
-)
+import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -33,7 +31,7 @@ func (m *SignedTx) Reset()         { *m = SignedTx{} }
 func (m *SignedTx) String() string { return proto.CompactTextString(m) }
 func (*SignedTx) ProtoMessage()    {}
 func (*SignedTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e1c90cf69fe0c13c, []int{0}
+	return fileDescriptor_auth_9032d2dcf64d0fc8, []int{0}
 }
 func (m *SignedTx) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SignedTx.Unmarshal(m, b)
@@ -41,8 +39,8 @@ func (m *SignedTx) XXX_Unmarshal(b []byte) error {
 func (m *SignedTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SignedTx.Marshal(b, m, deterministic)
 }
-func (m *SignedTx) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SignedTx.Merge(m, src)
+func (dst *SignedTx) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SignedTx.Merge(dst, src)
 }
 func (m *SignedTx) XXX_Size() int {
 	return xxx_messageInfo_SignedTx.Size(m)
@@ -86,7 +84,7 @@ func (m *NonceTx) Reset()         { *m = NonceTx{} }
 func (m *NonceTx) String() string { return proto.CompactTextString(m) }
 func (*NonceTx) ProtoMessage()    {}
 func (*NonceTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e1c90cf69fe0c13c, []int{1}
+	return fileDescriptor_auth_9032d2dcf64d0fc8, []int{1}
 }
 func (m *NonceTx) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_NonceTx.Unmarshal(m, b)
@@ -94,8 +92,8 @@ func (m *NonceTx) XXX_Unmarshal(b []byte) error {
 func (m *NonceTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_NonceTx.Marshal(b, m, deterministic)
 }
-func (m *NonceTx) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NonceTx.Merge(m, src)
+func (dst *NonceTx) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NonceTx.Merge(dst, src)
 }
 func (m *NonceTx) XXX_Size() int {
 	return xxx_messageInfo_NonceTx.Size(m)
@@ -126,10 +124,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/auth/auth.proto", fileDescriptor_e1c90cf69fe0c13c)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/auth/auth.proto", fileDescriptor_auth_9032d2dcf64d0fc8)
 }
 
-var fileDescriptor_e1c90cf69fe0c13c = []byte{
+var fileDescriptor_auth_9032d2dcf64d0fc8 = []byte{
 	// 170 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xd2, 0x4b, 0xcf, 0x2c, 0xc9,
 	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,

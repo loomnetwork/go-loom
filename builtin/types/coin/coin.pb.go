@@ -3,12 +3,10 @@
 
 package coin
 
-import (
-	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	types "github.com/loomnetwork/go-loom/types"
-	math "math"
-)
+import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
+import math "math"
+import types "github.com/loomnetwork/go-loom/types"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -22,7 +20,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 type Economy struct {
-	TotalSupply          *types.BigUInt `protobuf:"bytes,1,opt,name=total_supply,json=totalSupply,proto3" json:"total_supply,omitempty"`
+	TotalSupply          *types.BigUInt `protobuf:"bytes,1,opt,name=total_supply,json=totalSupply" json:"total_supply,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -32,7 +30,7 @@ func (m *Economy) Reset()         { *m = Economy{} }
 func (m *Economy) String() string { return proto.CompactTextString(m) }
 func (*Economy) ProtoMessage()    {}
 func (*Economy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{0}
+	return fileDescriptor_coin_65ec88b24c600753, []int{0}
 }
 func (m *Economy) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Economy.Unmarshal(m, b)
@@ -40,8 +38,8 @@ func (m *Economy) XXX_Unmarshal(b []byte) error {
 func (m *Economy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Economy.Marshal(b, m, deterministic)
 }
-func (m *Economy) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Economy.Merge(m, src)
+func (dst *Economy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Economy.Merge(dst, src)
 }
 func (m *Economy) XXX_Size() int {
 	return xxx_messageInfo_Economy.Size(m)
@@ -60,8 +58,8 @@ func (m *Economy) GetTotalSupply() *types.BigUInt {
 }
 
 type Account struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
-	Balance              *types.BigUInt `protobuf:"bytes,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Balance              *types.BigUInt `protobuf:"bytes,2,opt,name=balance" json:"balance,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -71,7 +69,7 @@ func (m *Account) Reset()         { *m = Account{} }
 func (m *Account) String() string { return proto.CompactTextString(m) }
 func (*Account) ProtoMessage()    {}
 func (*Account) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{1}
+	return fileDescriptor_coin_65ec88b24c600753, []int{1}
 }
 func (m *Account) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Account.Unmarshal(m, b)
@@ -79,8 +77,8 @@ func (m *Account) XXX_Unmarshal(b []byte) error {
 func (m *Account) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Account.Marshal(b, m, deterministic)
 }
-func (m *Account) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Account.Merge(m, src)
+func (dst *Account) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Account.Merge(dst, src)
 }
 func (m *Account) XXX_Size() int {
 	return xxx_messageInfo_Account.Size(m)
@@ -106,9 +104,9 @@ func (m *Account) GetBalance() *types.BigUInt {
 }
 
 type Allowance struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
-	Spender              *types.Address `protobuf:"bytes,2,opt,name=spender,proto3" json:"spender,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Spender              *types.Address `protobuf:"bytes,2,opt,name=spender" json:"spender,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,3,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -118,7 +116,7 @@ func (m *Allowance) Reset()         { *m = Allowance{} }
 func (m *Allowance) String() string { return proto.CompactTextString(m) }
 func (*Allowance) ProtoMessage()    {}
 func (*Allowance) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{2}
+	return fileDescriptor_coin_65ec88b24c600753, []int{2}
 }
 func (m *Allowance) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Allowance.Unmarshal(m, b)
@@ -126,8 +124,8 @@ func (m *Allowance) XXX_Unmarshal(b []byte) error {
 func (m *Allowance) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Allowance.Marshal(b, m, deterministic)
 }
-func (m *Allowance) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Allowance.Merge(m, src)
+func (dst *Allowance) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Allowance.Merge(dst, src)
 }
 func (m *Allowance) XXX_Size() int {
 	return xxx_messageInfo_Allowance.Size(m)
@@ -160,7 +158,7 @@ func (m *Allowance) GetAmount() *types.BigUInt {
 }
 
 type InitialAccount struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
 	Balance              uint64         `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -171,7 +169,7 @@ func (m *InitialAccount) Reset()         { *m = InitialAccount{} }
 func (m *InitialAccount) String() string { return proto.CompactTextString(m) }
 func (*InitialAccount) ProtoMessage()    {}
 func (*InitialAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{3}
+	return fileDescriptor_coin_65ec88b24c600753, []int{3}
 }
 func (m *InitialAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_InitialAccount.Unmarshal(m, b)
@@ -179,8 +177,8 @@ func (m *InitialAccount) XXX_Unmarshal(b []byte) error {
 func (m *InitialAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_InitialAccount.Marshal(b, m, deterministic)
 }
-func (m *InitialAccount) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_InitialAccount.Merge(m, src)
+func (dst *InitialAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InitialAccount.Merge(dst, src)
 }
 func (m *InitialAccount) XXX_Size() int {
 	return xxx_messageInfo_InitialAccount.Size(m)
@@ -206,7 +204,7 @@ func (m *InitialAccount) GetBalance() uint64 {
 }
 
 type InitRequest struct {
-	Accounts             []*InitialAccount `protobuf:"bytes,1,rep,name=accounts,proto3" json:"accounts,omitempty"`
+	Accounts             []*InitialAccount `protobuf:"bytes,1,rep,name=accounts" json:"accounts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -216,7 +214,7 @@ func (m *InitRequest) Reset()         { *m = InitRequest{} }
 func (m *InitRequest) String() string { return proto.CompactTextString(m) }
 func (*InitRequest) ProtoMessage()    {}
 func (*InitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{4}
+	return fileDescriptor_coin_65ec88b24c600753, []int{4}
 }
 func (m *InitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_InitRequest.Unmarshal(m, b)
@@ -224,8 +222,8 @@ func (m *InitRequest) XXX_Unmarshal(b []byte) error {
 func (m *InitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_InitRequest.Marshal(b, m, deterministic)
 }
-func (m *InitRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_InitRequest.Merge(m, src)
+func (dst *InitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InitRequest.Merge(dst, src)
 }
 func (m *InitRequest) XXX_Size() int {
 	return xxx_messageInfo_InitRequest.Size(m)
@@ -244,7 +242,7 @@ func (m *InitRequest) GetAccounts() []*InitialAccount {
 }
 
 type MintToGatewayRequest struct {
-	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -254,7 +252,7 @@ func (m *MintToGatewayRequest) Reset()         { *m = MintToGatewayRequest{} }
 func (m *MintToGatewayRequest) String() string { return proto.CompactTextString(m) }
 func (*MintToGatewayRequest) ProtoMessage()    {}
 func (*MintToGatewayRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{5}
+	return fileDescriptor_coin_65ec88b24c600753, []int{5}
 }
 func (m *MintToGatewayRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_MintToGatewayRequest.Unmarshal(m, b)
@@ -262,8 +260,8 @@ func (m *MintToGatewayRequest) XXX_Unmarshal(b []byte) error {
 func (m *MintToGatewayRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_MintToGatewayRequest.Marshal(b, m, deterministic)
 }
-func (m *MintToGatewayRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MintToGatewayRequest.Merge(m, src)
+func (dst *MintToGatewayRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MintToGatewayRequest.Merge(dst, src)
 }
 func (m *MintToGatewayRequest) XXX_Size() int {
 	return xxx_messageInfo_MintToGatewayRequest.Size(m)
@@ -282,8 +280,8 @@ func (m *MintToGatewayRequest) GetAmount() *types.BigUInt {
 }
 
 type BurnRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -293,7 +291,7 @@ func (m *BurnRequest) Reset()         { *m = BurnRequest{} }
 func (m *BurnRequest) String() string { return proto.CompactTextString(m) }
 func (*BurnRequest) ProtoMessage()    {}
 func (*BurnRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{6}
+	return fileDescriptor_coin_65ec88b24c600753, []int{6}
 }
 func (m *BurnRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BurnRequest.Unmarshal(m, b)
@@ -301,8 +299,8 @@ func (m *BurnRequest) XXX_Unmarshal(b []byte) error {
 func (m *BurnRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_BurnRequest.Marshal(b, m, deterministic)
 }
-func (m *BurnRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BurnRequest.Merge(m, src)
+func (dst *BurnRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BurnRequest.Merge(dst, src)
 }
 func (m *BurnRequest) XXX_Size() int {
 	return xxx_messageInfo_BurnRequest.Size(m)
@@ -338,7 +336,7 @@ func (m *TotalSupplyRequest) Reset()         { *m = TotalSupplyRequest{} }
 func (m *TotalSupplyRequest) String() string { return proto.CompactTextString(m) }
 func (*TotalSupplyRequest) ProtoMessage()    {}
 func (*TotalSupplyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{7}
+	return fileDescriptor_coin_65ec88b24c600753, []int{7}
 }
 func (m *TotalSupplyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TotalSupplyRequest.Unmarshal(m, b)
@@ -346,8 +344,8 @@ func (m *TotalSupplyRequest) XXX_Unmarshal(b []byte) error {
 func (m *TotalSupplyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TotalSupplyRequest.Marshal(b, m, deterministic)
 }
-func (m *TotalSupplyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TotalSupplyRequest.Merge(m, src)
+func (dst *TotalSupplyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TotalSupplyRequest.Merge(dst, src)
 }
 func (m *TotalSupplyRequest) XXX_Size() int {
 	return xxx_messageInfo_TotalSupplyRequest.Size(m)
@@ -359,7 +357,7 @@ func (m *TotalSupplyRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_TotalSupplyRequest proto.InternalMessageInfo
 
 type TotalSupplyResponse struct {
-	TotalSupply          *types.BigUInt `protobuf:"bytes,1,opt,name=total_supply,json=totalSupply,proto3" json:"total_supply,omitempty"`
+	TotalSupply          *types.BigUInt `protobuf:"bytes,1,opt,name=total_supply,json=totalSupply" json:"total_supply,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -369,7 +367,7 @@ func (m *TotalSupplyResponse) Reset()         { *m = TotalSupplyResponse{} }
 func (m *TotalSupplyResponse) String() string { return proto.CompactTextString(m) }
 func (*TotalSupplyResponse) ProtoMessage()    {}
 func (*TotalSupplyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{8}
+	return fileDescriptor_coin_65ec88b24c600753, []int{8}
 }
 func (m *TotalSupplyResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TotalSupplyResponse.Unmarshal(m, b)
@@ -377,8 +375,8 @@ func (m *TotalSupplyResponse) XXX_Unmarshal(b []byte) error {
 func (m *TotalSupplyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TotalSupplyResponse.Marshal(b, m, deterministic)
 }
-func (m *TotalSupplyResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TotalSupplyResponse.Merge(m, src)
+func (dst *TotalSupplyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TotalSupplyResponse.Merge(dst, src)
 }
 func (m *TotalSupplyResponse) XXX_Size() int {
 	return xxx_messageInfo_TotalSupplyResponse.Size(m)
@@ -397,7 +395,7 @@ func (m *TotalSupplyResponse) GetTotalSupply() *types.BigUInt {
 }
 
 type BalanceOfRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -407,7 +405,7 @@ func (m *BalanceOfRequest) Reset()         { *m = BalanceOfRequest{} }
 func (m *BalanceOfRequest) String() string { return proto.CompactTextString(m) }
 func (*BalanceOfRequest) ProtoMessage()    {}
 func (*BalanceOfRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{9}
+	return fileDescriptor_coin_65ec88b24c600753, []int{9}
 }
 func (m *BalanceOfRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BalanceOfRequest.Unmarshal(m, b)
@@ -415,8 +413,8 @@ func (m *BalanceOfRequest) XXX_Unmarshal(b []byte) error {
 func (m *BalanceOfRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_BalanceOfRequest.Marshal(b, m, deterministic)
 }
-func (m *BalanceOfRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BalanceOfRequest.Merge(m, src)
+func (dst *BalanceOfRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BalanceOfRequest.Merge(dst, src)
 }
 func (m *BalanceOfRequest) XXX_Size() int {
 	return xxx_messageInfo_BalanceOfRequest.Size(m)
@@ -435,7 +433,7 @@ func (m *BalanceOfRequest) GetOwner() *types.Address {
 }
 
 type BalanceOfResponse struct {
-	Balance              *types.BigUInt `protobuf:"bytes,1,opt,name=balance,proto3" json:"balance,omitempty"`
+	Balance              *types.BigUInt `protobuf:"bytes,1,opt,name=balance" json:"balance,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -445,7 +443,7 @@ func (m *BalanceOfResponse) Reset()         { *m = BalanceOfResponse{} }
 func (m *BalanceOfResponse) String() string { return proto.CompactTextString(m) }
 func (*BalanceOfResponse) ProtoMessage()    {}
 func (*BalanceOfResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{10}
+	return fileDescriptor_coin_65ec88b24c600753, []int{10}
 }
 func (m *BalanceOfResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BalanceOfResponse.Unmarshal(m, b)
@@ -453,8 +451,8 @@ func (m *BalanceOfResponse) XXX_Unmarshal(b []byte) error {
 func (m *BalanceOfResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_BalanceOfResponse.Marshal(b, m, deterministic)
 }
-func (m *BalanceOfResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BalanceOfResponse.Merge(m, src)
+func (dst *BalanceOfResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BalanceOfResponse.Merge(dst, src)
 }
 func (m *BalanceOfResponse) XXX_Size() int {
 	return xxx_messageInfo_BalanceOfResponse.Size(m)
@@ -473,8 +471,8 @@ func (m *BalanceOfResponse) GetBalance() *types.BigUInt {
 }
 
 type AllowanceRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
-	Spender              *types.Address `protobuf:"bytes,2,opt,name=spender,proto3" json:"spender,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Spender              *types.Address `protobuf:"bytes,2,opt,name=spender" json:"spender,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -484,7 +482,7 @@ func (m *AllowanceRequest) Reset()         { *m = AllowanceRequest{} }
 func (m *AllowanceRequest) String() string { return proto.CompactTextString(m) }
 func (*AllowanceRequest) ProtoMessage()    {}
 func (*AllowanceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{11}
+	return fileDescriptor_coin_65ec88b24c600753, []int{11}
 }
 func (m *AllowanceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AllowanceRequest.Unmarshal(m, b)
@@ -492,8 +490,8 @@ func (m *AllowanceRequest) XXX_Unmarshal(b []byte) error {
 func (m *AllowanceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AllowanceRequest.Marshal(b, m, deterministic)
 }
-func (m *AllowanceRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AllowanceRequest.Merge(m, src)
+func (dst *AllowanceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AllowanceRequest.Merge(dst, src)
 }
 func (m *AllowanceRequest) XXX_Size() int {
 	return xxx_messageInfo_AllowanceRequest.Size(m)
@@ -519,7 +517,7 @@ func (m *AllowanceRequest) GetSpender() *types.Address {
 }
 
 type AllowanceResponse struct {
-	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -529,7 +527,7 @@ func (m *AllowanceResponse) Reset()         { *m = AllowanceResponse{} }
 func (m *AllowanceResponse) String() string { return proto.CompactTextString(m) }
 func (*AllowanceResponse) ProtoMessage()    {}
 func (*AllowanceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{12}
+	return fileDescriptor_coin_65ec88b24c600753, []int{12}
 }
 func (m *AllowanceResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AllowanceResponse.Unmarshal(m, b)
@@ -537,8 +535,8 @@ func (m *AllowanceResponse) XXX_Unmarshal(b []byte) error {
 func (m *AllowanceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AllowanceResponse.Marshal(b, m, deterministic)
 }
-func (m *AllowanceResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AllowanceResponse.Merge(m, src)
+func (dst *AllowanceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AllowanceResponse.Merge(dst, src)
 }
 func (m *AllowanceResponse) XXX_Size() int {
 	return xxx_messageInfo_AllowanceResponse.Size(m)
@@ -558,8 +556,8 @@ func (m *AllowanceResponse) GetAmount() *types.BigUInt {
 
 // volatile
 type ApproveRequest struct {
-	Spender              *types.Address `protobuf:"bytes,1,opt,name=spender,proto3" json:"spender,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Spender              *types.Address `protobuf:"bytes,1,opt,name=spender" json:"spender,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -569,7 +567,7 @@ func (m *ApproveRequest) Reset()         { *m = ApproveRequest{} }
 func (m *ApproveRequest) String() string { return proto.CompactTextString(m) }
 func (*ApproveRequest) ProtoMessage()    {}
 func (*ApproveRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{13}
+	return fileDescriptor_coin_65ec88b24c600753, []int{13}
 }
 func (m *ApproveRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ApproveRequest.Unmarshal(m, b)
@@ -577,8 +575,8 @@ func (m *ApproveRequest) XXX_Unmarshal(b []byte) error {
 func (m *ApproveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ApproveRequest.Marshal(b, m, deterministic)
 }
-func (m *ApproveRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ApproveRequest.Merge(m, src)
+func (dst *ApproveRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ApproveRequest.Merge(dst, src)
 }
 func (m *ApproveRequest) XXX_Size() int {
 	return xxx_messageInfo_ApproveRequest.Size(m)
@@ -613,7 +611,7 @@ func (m *ApproveResponse) Reset()         { *m = ApproveResponse{} }
 func (m *ApproveResponse) String() string { return proto.CompactTextString(m) }
 func (*ApproveResponse) ProtoMessage()    {}
 func (*ApproveResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{14}
+	return fileDescriptor_coin_65ec88b24c600753, []int{14}
 }
 func (m *ApproveResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ApproveResponse.Unmarshal(m, b)
@@ -621,8 +619,8 @@ func (m *ApproveResponse) XXX_Unmarshal(b []byte) error {
 func (m *ApproveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ApproveResponse.Marshal(b, m, deterministic)
 }
-func (m *ApproveResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ApproveResponse.Merge(m, src)
+func (dst *ApproveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ApproveResponse.Merge(dst, src)
 }
 func (m *ApproveResponse) XXX_Size() int {
 	return xxx_messageInfo_ApproveResponse.Size(m)
@@ -634,8 +632,8 @@ func (m *ApproveResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_ApproveResponse proto.InternalMessageInfo
 
 type TransferRequest struct {
-	To                   *types.Address `protobuf:"bytes,1,opt,name=to,proto3" json:"to,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	To                   *types.Address `protobuf:"bytes,1,opt,name=to" json:"to,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -645,7 +643,7 @@ func (m *TransferRequest) Reset()         { *m = TransferRequest{} }
 func (m *TransferRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferRequest) ProtoMessage()    {}
 func (*TransferRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{15}
+	return fileDescriptor_coin_65ec88b24c600753, []int{15}
 }
 func (m *TransferRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferRequest.Unmarshal(m, b)
@@ -653,8 +651,8 @@ func (m *TransferRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferRequest.Merge(m, src)
+func (dst *TransferRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferRequest.Merge(dst, src)
 }
 func (m *TransferRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferRequest.Size(m)
@@ -689,7 +687,7 @@ func (m *TransferResponse) Reset()         { *m = TransferResponse{} }
 func (m *TransferResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferResponse) ProtoMessage()    {}
 func (*TransferResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{16}
+	return fileDescriptor_coin_65ec88b24c600753, []int{16}
 }
 func (m *TransferResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferResponse.Unmarshal(m, b)
@@ -697,8 +695,8 @@ func (m *TransferResponse) XXX_Unmarshal(b []byte) error {
 func (m *TransferResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferResponse.Marshal(b, m, deterministic)
 }
-func (m *TransferResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferResponse.Merge(m, src)
+func (dst *TransferResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferResponse.Merge(dst, src)
 }
 func (m *TransferResponse) XXX_Size() int {
 	return xxx_messageInfo_TransferResponse.Size(m)
@@ -710,9 +708,9 @@ func (m *TransferResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_TransferResponse proto.InternalMessageInfo
 
 type TransferFromRequest struct {
-	From                 *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
-	To                   *types.Address `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	From                 *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
+	To                   *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,3,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -722,7 +720,7 @@ func (m *TransferFromRequest) Reset()         { *m = TransferFromRequest{} }
 func (m *TransferFromRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferFromRequest) ProtoMessage()    {}
 func (*TransferFromRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{17}
+	return fileDescriptor_coin_65ec88b24c600753, []int{17}
 }
 func (m *TransferFromRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferFromRequest.Unmarshal(m, b)
@@ -730,8 +728,8 @@ func (m *TransferFromRequest) XXX_Unmarshal(b []byte) error {
 func (m *TransferFromRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferFromRequest.Marshal(b, m, deterministic)
 }
-func (m *TransferFromRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferFromRequest.Merge(m, src)
+func (dst *TransferFromRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferFromRequest.Merge(dst, src)
 }
 func (m *TransferFromRequest) XXX_Size() int {
 	return xxx_messageInfo_TransferFromRequest.Size(m)
@@ -773,7 +771,7 @@ func (m *TransferFromResponse) Reset()         { *m = TransferFromResponse{} }
 func (m *TransferFromResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferFromResponse) ProtoMessage()    {}
 func (*TransferFromResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_aba904f4b5dd951f, []int{18}
+	return fileDescriptor_coin_65ec88b24c600753, []int{18}
 }
 func (m *TransferFromResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferFromResponse.Unmarshal(m, b)
@@ -781,8 +779,8 @@ func (m *TransferFromResponse) XXX_Unmarshal(b []byte) error {
 func (m *TransferFromResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TransferFromResponse.Marshal(b, m, deterministic)
 }
-func (m *TransferFromResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferFromResponse.Merge(m, src)
+func (dst *TransferFromResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferFromResponse.Merge(dst, src)
 }
 func (m *TransferFromResponse) XXX_Size() int {
 	return xxx_messageInfo_TransferFromResponse.Size(m)
@@ -816,10 +814,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/coin/coin.proto", fileDescriptor_aba904f4b5dd951f)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/coin/coin.proto", fileDescriptor_coin_65ec88b24c600753)
 }
 
-var fileDescriptor_aba904f4b5dd951f = []byte{
+var fileDescriptor_coin_65ec88b24c600753 = []byte{
 	// 468 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0xdf, 0x6b, 0xdb, 0x30,
 	0x10, 0xc7, 0xb1, 0xdb, 0x35, 0xdd, 0x79, 0x34, 0x89, 0x1b, 0x86, 0x19, 0x63, 0x04, 0x3d, 0x15,
