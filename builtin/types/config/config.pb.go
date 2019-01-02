@@ -3,10 +3,12 @@
 
 package config
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import types "github.com/loomnetwork/go-loom/types"
+import (
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	types "github.com/loomnetwork/go-loom/types"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -32,6 +34,7 @@ var ReceiptStorage_name = map[int32]string{
 	1: "CHAIN",
 	2: "LEVELDB",
 }
+
 var ReceiptStorage_value = map[string]int32{
 	"UNKNOWN": 0,
 	"CHAIN":   1,
@@ -41,13 +44,14 @@ var ReceiptStorage_value = map[string]int32{
 func (x ReceiptStorage) String() string {
 	return proto.EnumName(ReceiptStorage_name, int32(x))
 }
+
 func (ReceiptStorage) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_config_ea1af30909efb49e, []int{0}
+	return fileDescriptor_8d61cdffe37b7da1, []int{0}
 }
 
 type ConfigInitRequest struct {
-	Oracle               *types.Address   `protobuf:"bytes,1,opt,name=oracle" json:"oracle,omitempty"`
-	Settings             []*UpdateSetting `protobuf:"bytes,2,rep,name=settings" json:"settings,omitempty"`
+	Oracle               *types.Address   `protobuf:"bytes,1,opt,name=oracle,proto3" json:"oracle,omitempty"`
+	Settings             []*UpdateSetting `protobuf:"bytes,2,rep,name=settings,proto3" json:"settings,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -57,7 +61,7 @@ func (m *ConfigInitRequest) Reset()         { *m = ConfigInitRequest{} }
 func (m *ConfigInitRequest) String() string { return proto.CompactTextString(m) }
 func (*ConfigInitRequest) ProtoMessage()    {}
 func (*ConfigInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_config_ea1af30909efb49e, []int{0}
+	return fileDescriptor_8d61cdffe37b7da1, []int{0}
 }
 func (m *ConfigInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConfigInitRequest.Unmarshal(m, b)
@@ -65,8 +69,8 @@ func (m *ConfigInitRequest) XXX_Unmarshal(b []byte) error {
 func (m *ConfigInitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ConfigInitRequest.Marshal(b, m, deterministic)
 }
-func (dst *ConfigInitRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ConfigInitRequest.Merge(dst, src)
+func (m *ConfigInitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ConfigInitRequest.Merge(m, src)
 }
 func (m *ConfigInitRequest) XXX_Size() int {
 	return xxx_messageInfo_ConfigInitRequest.Size(m)
@@ -102,7 +106,7 @@ func (m *GetSetting) Reset()         { *m = GetSetting{} }
 func (m *GetSetting) String() string { return proto.CompactTextString(m) }
 func (*GetSetting) ProtoMessage()    {}
 func (*GetSetting) Descriptor() ([]byte, []int) {
-	return fileDescriptor_config_ea1af30909efb49e, []int{1}
+	return fileDescriptor_8d61cdffe37b7da1, []int{1}
 }
 func (m *GetSetting) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetSetting.Unmarshal(m, b)
@@ -110,8 +114,8 @@ func (m *GetSetting) XXX_Unmarshal(b []byte) error {
 func (m *GetSetting) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetSetting.Marshal(b, m, deterministic)
 }
-func (dst *GetSetting) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetSetting.Merge(dst, src)
+func (m *GetSetting) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetSetting.Merge(m, src)
 }
 func (m *GetSetting) XXX_Size() int {
 	return xxx_messageInfo_GetSetting.Size(m)
@@ -131,7 +135,7 @@ func (m *GetSetting) GetKey() string {
 
 type UpdateSetting struct {
 	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Value                *Value   `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	Value                *Value   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -141,7 +145,7 @@ func (m *UpdateSetting) Reset()         { *m = UpdateSetting{} }
 func (m *UpdateSetting) String() string { return proto.CompactTextString(m) }
 func (*UpdateSetting) ProtoMessage()    {}
 func (*UpdateSetting) Descriptor() ([]byte, []int) {
-	return fileDescriptor_config_ea1af30909efb49e, []int{2}
+	return fileDescriptor_8d61cdffe37b7da1, []int{2}
 }
 func (m *UpdateSetting) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateSetting.Unmarshal(m, b)
@@ -149,8 +153,8 @@ func (m *UpdateSetting) XXX_Unmarshal(b []byte) error {
 func (m *UpdateSetting) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpdateSetting.Marshal(b, m, deterministic)
 }
-func (dst *UpdateSetting) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateSetting.Merge(dst, src)
+func (m *UpdateSetting) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateSetting.Merge(m, src)
 }
 func (m *UpdateSetting) XXX_Size() int {
 	return xxx_messageInfo_UpdateSetting.Size(m)
@@ -190,7 +194,7 @@ func (m *Value) Reset()         { *m = Value{} }
 func (m *Value) String() string { return proto.CompactTextString(m) }
 func (*Value) ProtoMessage()    {}
 func (*Value) Descriptor() ([]byte, []int) {
-	return fileDescriptor_config_ea1af30909efb49e, []int{3}
+	return fileDescriptor_8d61cdffe37b7da1, []int{3}
 }
 func (m *Value) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Value.Unmarshal(m, b)
@@ -198,8 +202,8 @@ func (m *Value) XXX_Unmarshal(b []byte) error {
 func (m *Value) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Value.Marshal(b, m, deterministic)
 }
-func (dst *Value) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Value.Merge(dst, src)
+func (m *Value) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Value.Merge(m, src)
 }
 func (m *Value) XXX_Size() int {
 	return xxx_messageInfo_Value.Size(m)
@@ -221,7 +225,7 @@ type Value_ReceiptStorage struct {
 	ReceiptStorage ReceiptStorage `protobuf:"varint,2,opt,name=receipt_storage,json=receiptStorage,proto3,enum=ReceiptStorage,oneof"`
 }
 type Value_Address struct {
-	Address *types.Address `protobuf:"bytes,3,opt,name=address,oneof"`
+	Address *types.Address `protobuf:"bytes,3,opt,name=address,proto3,oneof"`
 }
 
 func (*Value_Uint64Val) isValue_Data()      {}
@@ -340,18 +344,18 @@ func _Value_OneofSizer(msg proto.Message) (n int) {
 }
 
 func init() {
+	proto.RegisterEnum("ReceiptStorage", ReceiptStorage_name, ReceiptStorage_value)
 	proto.RegisterType((*ConfigInitRequest)(nil), "ConfigInitRequest")
 	proto.RegisterType((*GetSetting)(nil), "GetSetting")
 	proto.RegisterType((*UpdateSetting)(nil), "UpdateSetting")
 	proto.RegisterType((*Value)(nil), "Value")
-	proto.RegisterEnum("ReceiptStorage", ReceiptStorage_name, ReceiptStorage_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/config/config.proto", fileDescriptor_config_ea1af30909efb49e)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/config/config.proto", fileDescriptor_8d61cdffe37b7da1)
 }
 
-var fileDescriptor_config_ea1af30909efb49e = []byte{
+var fileDescriptor_8d61cdffe37b7da1 = []byte{
 	// 351 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x91, 0xcf, 0x6b, 0xe2, 0x40,
 	0x14, 0xc7, 0x13, 0x7f, 0x44, 0x7d, 0xb2, 0x31, 0x3b, 0xa7, 0xb0, 0x2c, 0xbb, 0x12, 0xf6, 0x20,

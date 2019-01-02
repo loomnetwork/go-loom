@@ -3,10 +3,12 @@
 
 package vm
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import types "github.com/loomnetwork/go-loom/types"
+import (
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	types "github.com/loomnetwork/go-loom/types"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -30,6 +32,7 @@ var VMType_name = map[int32]string{
 	0: "PLUGIN",
 	1: "EVM",
 }
+
 var VMType_value = map[string]int32{
 	"PLUGIN": 0,
 	"EVM":    1,
@@ -38,13 +41,14 @@ var VMType_value = map[string]int32{
 func (x VMType) String() string {
 	return proto.EnumName(VMType_name, int32(x))
 }
+
 func (VMType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_vm_bcdc7a57d7080a9e, []int{0}
+	return fileDescriptor_5564ba9c3ff3a05e, []int{0}
 }
 
 type MessageTx struct {
-	To                   *types.Address `protobuf:"bytes,1,opt,name=to" json:"to,omitempty"`
-	From                 *types.Address `protobuf:"bytes,2,opt,name=from" json:"from,omitempty"`
+	To                   *types.Address `protobuf:"bytes,1,opt,name=to,proto3" json:"to,omitempty"`
+	From                 *types.Address `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
 	Data                 []byte         `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -55,7 +59,7 @@ func (m *MessageTx) Reset()         { *m = MessageTx{} }
 func (m *MessageTx) String() string { return proto.CompactTextString(m) }
 func (*MessageTx) ProtoMessage()    {}
 func (*MessageTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_vm_bcdc7a57d7080a9e, []int{0}
+	return fileDescriptor_5564ba9c3ff3a05e, []int{0}
 }
 func (m *MessageTx) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_MessageTx.Unmarshal(m, b)
@@ -63,8 +67,8 @@ func (m *MessageTx) XXX_Unmarshal(b []byte) error {
 func (m *MessageTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_MessageTx.Marshal(b, m, deterministic)
 }
-func (dst *MessageTx) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MessageTx.Merge(dst, src)
+func (m *MessageTx) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MessageTx.Merge(m, src)
 }
 func (m *MessageTx) XXX_Size() int {
 	return xxx_messageInfo_MessageTx.Size(m)
@@ -100,7 +104,7 @@ type DeployTx struct {
 	VmType               VMType         `protobuf:"varint,1,opt,name=vm_type,json=vmType,proto3,enum=VMType" json:"vm_type,omitempty"`
 	Code                 []byte         `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
 	Name                 string         `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Value                *types.BigUInt `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
+	Value                *types.BigUInt `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
 	ContractVersion      string         `protobuf:"bytes,5,opt,name=contract_version,json=contractVersion,proto3" json:"contract_version,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -111,7 +115,7 @@ func (m *DeployTx) Reset()         { *m = DeployTx{} }
 func (m *DeployTx) String() string { return proto.CompactTextString(m) }
 func (*DeployTx) ProtoMessage()    {}
 func (*DeployTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_vm_bcdc7a57d7080a9e, []int{1}
+	return fileDescriptor_5564ba9c3ff3a05e, []int{1}
 }
 func (m *DeployTx) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeployTx.Unmarshal(m, b)
@@ -119,8 +123,8 @@ func (m *DeployTx) XXX_Unmarshal(b []byte) error {
 func (m *DeployTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeployTx.Marshal(b, m, deterministic)
 }
-func (dst *DeployTx) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeployTx.Merge(dst, src)
+func (m *DeployTx) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeployTx.Merge(m, src)
 }
 func (m *DeployTx) XXX_Size() int {
 	return xxx_messageInfo_DeployTx.Size(m)
@@ -169,7 +173,7 @@ func (m *DeployTx) GetContractVersion() string {
 type CallTx struct {
 	VmType               VMType         `protobuf:"varint,1,opt,name=vm_type,json=vmType,proto3,enum=VMType" json:"vm_type,omitempty"`
 	Input                []byte         `protobuf:"bytes,2,opt,name=input,proto3" json:"input,omitempty"`
-	Value                *types.BigUInt `protobuf:"bytes,3,opt,name=value" json:"value,omitempty"`
+	Value                *types.BigUInt `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 	ContractVersion      string         `protobuf:"bytes,4,opt,name=contract_version,json=contractVersion,proto3" json:"contract_version,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -180,7 +184,7 @@ func (m *CallTx) Reset()         { *m = CallTx{} }
 func (m *CallTx) String() string { return proto.CompactTextString(m) }
 func (*CallTx) ProtoMessage()    {}
 func (*CallTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_vm_bcdc7a57d7080a9e, []int{2}
+	return fileDescriptor_5564ba9c3ff3a05e, []int{2}
 }
 func (m *CallTx) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CallTx.Unmarshal(m, b)
@@ -188,8 +192,8 @@ func (m *CallTx) XXX_Unmarshal(b []byte) error {
 func (m *CallTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CallTx.Marshal(b, m, deterministic)
 }
-func (dst *CallTx) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CallTx.Merge(dst, src)
+func (m *CallTx) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CallTx.Merge(m, src)
 }
 func (m *CallTx) XXX_Size() int {
 	return xxx_messageInfo_CallTx.Size(m)
@@ -229,7 +233,7 @@ func (m *CallTx) GetContractVersion() string {
 }
 
 type DeployResponse struct {
-	Contract             *types.Address `protobuf:"bytes,1,opt,name=contract" json:"contract,omitempty"`
+	Contract             *types.Address `protobuf:"bytes,1,opt,name=contract,proto3" json:"contract,omitempty"`
 	Output               []byte         `protobuf:"bytes,2,opt,name=output,proto3" json:"output,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -240,7 +244,7 @@ func (m *DeployResponse) Reset()         { *m = DeployResponse{} }
 func (m *DeployResponse) String() string { return proto.CompactTextString(m) }
 func (*DeployResponse) ProtoMessage()    {}
 func (*DeployResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_vm_bcdc7a57d7080a9e, []int{3}
+	return fileDescriptor_5564ba9c3ff3a05e, []int{3}
 }
 func (m *DeployResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeployResponse.Unmarshal(m, b)
@@ -248,8 +252,8 @@ func (m *DeployResponse) XXX_Unmarshal(b []byte) error {
 func (m *DeployResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeployResponse.Marshal(b, m, deterministic)
 }
-func (dst *DeployResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeployResponse.Merge(dst, src)
+func (m *DeployResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeployResponse.Merge(m, src)
 }
 func (m *DeployResponse) XXX_Size() int {
 	return xxx_messageInfo_DeployResponse.Size(m)
@@ -286,7 +290,7 @@ func (m *DeployResponseData) Reset()         { *m = DeployResponseData{} }
 func (m *DeployResponseData) String() string { return proto.CompactTextString(m) }
 func (*DeployResponseData) ProtoMessage()    {}
 func (*DeployResponseData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_vm_bcdc7a57d7080a9e, []int{4}
+	return fileDescriptor_5564ba9c3ff3a05e, []int{4}
 }
 func (m *DeployResponseData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeployResponseData.Unmarshal(m, b)
@@ -294,8 +298,8 @@ func (m *DeployResponseData) XXX_Unmarshal(b []byte) error {
 func (m *DeployResponseData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeployResponseData.Marshal(b, m, deterministic)
 }
-func (dst *DeployResponseData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeployResponseData.Merge(dst, src)
+func (m *DeployResponseData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeployResponseData.Merge(m, src)
 }
 func (m *DeployResponseData) XXX_Size() int {
 	return xxx_messageInfo_DeployResponseData.Size(m)
@@ -321,7 +325,7 @@ func (m *DeployResponseData) GetBytecode() []byte {
 }
 
 type TxHashList struct {
-	TxHash               [][]byte `protobuf:"bytes,1,rep,name=tx_hash,json=txHash" json:"tx_hash,omitempty"`
+	TxHash               [][]byte `protobuf:"bytes,1,rep,name=tx_hash,json=txHash,proto3" json:"tx_hash,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -331,7 +335,7 @@ func (m *TxHashList) Reset()         { *m = TxHashList{} }
 func (m *TxHashList) String() string { return proto.CompactTextString(m) }
 func (*TxHashList) ProtoMessage()    {}
 func (*TxHashList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_vm_bcdc7a57d7080a9e, []int{5}
+	return fileDescriptor_5564ba9c3ff3a05e, []int{5}
 }
 func (m *TxHashList) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TxHashList.Unmarshal(m, b)
@@ -339,8 +343,8 @@ func (m *TxHashList) XXX_Unmarshal(b []byte) error {
 func (m *TxHashList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TxHashList.Marshal(b, m, deterministic)
 }
-func (dst *TxHashList) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TxHashList.Merge(dst, src)
+func (m *TxHashList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TxHashList.Merge(m, src)
 }
 func (m *TxHashList) XXX_Size() int {
 	return xxx_messageInfo_TxHashList.Size(m)
@@ -359,20 +363,20 @@ func (m *TxHashList) GetTxHash() [][]byte {
 }
 
 func init() {
+	proto.RegisterEnum("VMType", VMType_name, VMType_value)
 	proto.RegisterType((*MessageTx)(nil), "MessageTx")
 	proto.RegisterType((*DeployTx)(nil), "DeployTx")
 	proto.RegisterType((*CallTx)(nil), "CallTx")
 	proto.RegisterType((*DeployResponse)(nil), "DeployResponse")
 	proto.RegisterType((*DeployResponseData)(nil), "DeployResponseData")
 	proto.RegisterType((*TxHashList)(nil), "TxHashList")
-	proto.RegisterEnum("VMType", VMType_name, VMType_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/vm/vm.proto", fileDescriptor_vm_bcdc7a57d7080a9e)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/vm/vm.proto", fileDescriptor_5564ba9c3ff3a05e)
 }
 
-var fileDescriptor_vm_bcdc7a57d7080a9e = []byte{
+var fileDescriptor_5564ba9c3ff3a05e = []byte{
 	// 400 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0xe1, 0x8a, 0xd3, 0x40,
 	0x10, 0x36, 0x6d, 0x9a, 0xe4, 0xc6, 0x72, 0x96, 0x45, 0x34, 0x1c, 0x2a, 0x25, 0x28, 0x9c, 0x07,

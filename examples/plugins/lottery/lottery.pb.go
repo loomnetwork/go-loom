@@ -3,10 +3,12 @@
 
 package lottery
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import types "github.com/loomnetwork/go-loom/types"
+import (
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	types "github.com/loomnetwork/go-loom/types"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -20,7 +22,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 type LotteryInit struct {
-	Winner               *types.Address `protobuf:"bytes,2,opt,name=winner" json:"winner,omitempty"`
+	Winner               *types.Address `protobuf:"bytes,2,opt,name=winner,proto3" json:"winner,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -30,7 +32,7 @@ func (m *LotteryInit) Reset()         { *m = LotteryInit{} }
 func (m *LotteryInit) String() string { return proto.CompactTextString(m) }
 func (*LotteryInit) ProtoMessage()    {}
 func (*LotteryInit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_lottery_b72aae2d87dd032f, []int{0}
+	return fileDescriptor_3f99c6f3e9056e12, []int{0}
 }
 func (m *LotteryInit) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LotteryInit.Unmarshal(m, b)
@@ -38,8 +40,8 @@ func (m *LotteryInit) XXX_Unmarshal(b []byte) error {
 func (m *LotteryInit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LotteryInit.Marshal(b, m, deterministic)
 }
-func (dst *LotteryInit) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LotteryInit.Merge(dst, src)
+func (m *LotteryInit) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LotteryInit.Merge(m, src)
 }
 func (m *LotteryInit) XXX_Size() int {
 	return xxx_messageInfo_LotteryInit.Size(m)
@@ -62,10 +64,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/plugins/lottery/lottery.proto", fileDescriptor_lottery_b72aae2d87dd032f)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/plugins/lottery/lottery.proto", fileDescriptor_3f99c6f3e9056e12)
 }
 
-var fileDescriptor_lottery_b72aae2d87dd032f = []byte{
+var fileDescriptor_3f99c6f3e9056e12 = []byte{
 	// 144 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x72, 0x4d, 0xcf, 0x2c, 0xc9,
 	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,

@@ -3,9 +3,11 @@
 
 package types
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -30,7 +32,7 @@ func (m *MapEntry) Reset()         { *m = MapEntry{} }
 func (m *MapEntry) String() string { return proto.CompactTextString(m) }
 func (*MapEntry) ProtoMessage()    {}
 func (*MapEntry) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_9f4cdff418172726, []int{0}
+	return fileDescriptor_1e9e65f4a41745f6, []int{0}
 }
 func (m *MapEntry) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_MapEntry.Unmarshal(m, b)
@@ -38,8 +40,8 @@ func (m *MapEntry) XXX_Unmarshal(b []byte) error {
 func (m *MapEntry) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_MapEntry.Marshal(b, m, deterministic)
 }
-func (dst *MapEntry) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MapEntry.Merge(dst, src)
+func (m *MapEntry) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MapEntry.Merge(m, src)
 }
 func (m *MapEntry) XXX_Size() int {
 	return xxx_messageInfo_MapEntry.Size(m)
@@ -75,7 +77,7 @@ func (m *HelloRequest) Reset()         { *m = HelloRequest{} }
 func (m *HelloRequest) String() string { return proto.CompactTextString(m) }
 func (*HelloRequest) ProtoMessage()    {}
 func (*HelloRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_9f4cdff418172726, []int{1}
+	return fileDescriptor_1e9e65f4a41745f6, []int{1}
 }
 func (m *HelloRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_HelloRequest.Unmarshal(m, b)
@@ -83,8 +85,8 @@ func (m *HelloRequest) XXX_Unmarshal(b []byte) error {
 func (m *HelloRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_HelloRequest.Marshal(b, m, deterministic)
 }
-func (dst *HelloRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_HelloRequest.Merge(dst, src)
+func (m *HelloRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HelloRequest.Merge(m, src)
 }
 func (m *HelloRequest) XXX_Size() int {
 	return xxx_messageInfo_HelloRequest.Size(m)
@@ -113,7 +115,7 @@ func (m *HelloResponse) Reset()         { *m = HelloResponse{} }
 func (m *HelloResponse) String() string { return proto.CompactTextString(m) }
 func (*HelloResponse) ProtoMessage()    {}
 func (*HelloResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_9f4cdff418172726, []int{2}
+	return fileDescriptor_1e9e65f4a41745f6, []int{2}
 }
 func (m *HelloResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_HelloResponse.Unmarshal(m, b)
@@ -121,8 +123,8 @@ func (m *HelloResponse) XXX_Unmarshal(b []byte) error {
 func (m *HelloResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_HelloResponse.Marshal(b, m, deterministic)
 }
-func (dst *HelloResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_HelloResponse.Merge(dst, src)
+func (m *HelloResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HelloResponse.Merge(m, src)
 }
 func (m *HelloResponse) XXX_Size() int {
 	return xxx_messageInfo_HelloResponse.Size(m)
@@ -147,10 +149,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/types/types.proto", fileDescriptor_types_9f4cdff418172726)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/examples/types/types.proto", fileDescriptor_1e9e65f4a41745f6)
 }
 
-var fileDescriptor_types_9f4cdff418172726 = []byte{
+var fileDescriptor_1e9e65f4a41745f6 = []byte{
 	// 171 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xb2, 0x4c, 0xcf, 0x2c, 0xc9,
 	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,

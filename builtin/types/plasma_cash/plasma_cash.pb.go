@@ -3,11 +3,13 @@
 
 package plasma_cash
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import _ "github.com/gogo/protobuf/gogoproto"
-import types "github.com/loomnetwork/go-loom/types"
+import (
+	fmt "fmt"
+	_ "github.com/gogo/protobuf/gogoproto"
+	proto "github.com/gogo/protobuf/proto"
+	types "github.com/loomnetwork/go-loom/types"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -35,6 +37,7 @@ var PlasmaCashCoinState_name = map[int32]string{
 	2: "CHALLENGED",
 	3: "EXITED",
 }
+
 var PlasmaCashCoinState_value = map[string]int32{
 	"DEPOSITED":  0,
 	"EXITING":    1,
@@ -45,8 +48,9 @@ var PlasmaCashCoinState_value = map[string]int32{
 func (x PlasmaCashCoinState) String() string {
 	return proto.EnumName(PlasmaCashCoinState_name, int32(x))
 }
+
 func (PlasmaCashCoinState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{0}
+	return fileDescriptor_02303bd883d195ed, []int{0}
 }
 
 // Plasma Cash coin holds a single ERC721 token
@@ -55,9 +59,9 @@ type PlasmaCashCoin struct {
 	Slot  uint64              `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
 	State PlasmaCashCoinState `protobuf:"varint,2,opt,name=state,proto3,enum=PlasmaCashCoinState" json:"state,omitempty"`
 	// ERC721 token ID
-	Token *types.BigUInt `protobuf:"bytes,3,opt,name=token" json:"token,omitempty"`
+	Token *types.BigUInt `protobuf:"bytes,3,opt,name=token,proto3" json:"token,omitempty"`
 	// ERC721 token contract address
-	Contract             *types.Address `protobuf:"bytes,4,opt,name=contract" json:"contract,omitempty"`
+	Contract             *types.Address `protobuf:"bytes,4,opt,name=contract,proto3" json:"contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -67,7 +71,7 @@ func (m *PlasmaCashCoin) Reset()         { *m = PlasmaCashCoin{} }
 func (m *PlasmaCashCoin) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashCoin) ProtoMessage()    {}
 func (*PlasmaCashCoin) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{0}
+	return fileDescriptor_02303bd883d195ed, []int{0}
 }
 func (m *PlasmaCashCoin) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashCoin.Unmarshal(m, b)
@@ -75,8 +79,8 @@ func (m *PlasmaCashCoin) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashCoin) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashCoin.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashCoin) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashCoin.Merge(dst, src)
+func (m *PlasmaCashCoin) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashCoin.Merge(m, src)
 }
 func (m *PlasmaCashCoin) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashCoin.Size(m)
@@ -116,9 +120,9 @@ func (m *PlasmaCashCoin) GetContract() *types.Address {
 }
 
 type PlasmaCashAccount struct {
-	Owner *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	// Plasma coins in this account, identified by their slot number.
-	Slots                []uint64 `protobuf:"varint,3,rep,packed,name=slots" json:"slots,omitempty"`
+	Slots                []uint64 `protobuf:"varint,3,rep,packed,name=slots,proto3" json:"slots,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -128,7 +132,7 @@ func (m *PlasmaCashAccount) Reset()         { *m = PlasmaCashAccount{} }
 func (m *PlasmaCashAccount) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashAccount) ProtoMessage()    {}
 func (*PlasmaCashAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{1}
+	return fileDescriptor_02303bd883d195ed, []int{1}
 }
 func (m *PlasmaCashAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashAccount.Unmarshal(m, b)
@@ -136,8 +140,8 @@ func (m *PlasmaCashAccount) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashAccount.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashAccount) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashAccount.Merge(dst, src)
+func (m *PlasmaCashAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashAccount.Merge(m, src)
 }
 func (m *PlasmaCashAccount) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashAccount.Size(m)
@@ -163,8 +167,8 @@ func (m *PlasmaCashAccount) GetSlots() []uint64 {
 }
 
 type PlasmaBlock struct {
-	Uid                  *types.BigUInt `protobuf:"bytes,1,opt,name=uid" json:"uid,omitempty"`
-	Transactions         []*PlasmaTx    `protobuf:"bytes,2,rep,name=transactions" json:"transactions,omitempty"`
+	Uid                  *types.BigUInt `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Transactions         []*PlasmaTx    `protobuf:"bytes,2,rep,name=transactions,proto3" json:"transactions,omitempty"`
 	Signature            []byte         `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
 	MerkleHash           []byte         `protobuf:"bytes,4,opt,name=merkle_hash,json=merkleHash,proto3" json:"merkle_hash,omitempty"`
 	Hash                 []byte         `protobuf:"bytes,5,opt,name=hash,proto3" json:"hash,omitempty"`
@@ -178,7 +182,7 @@ func (m *PlasmaBlock) Reset()         { *m = PlasmaBlock{} }
 func (m *PlasmaBlock) String() string { return proto.CompactTextString(m) }
 func (*PlasmaBlock) ProtoMessage()    {}
 func (*PlasmaBlock) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{2}
+	return fileDescriptor_02303bd883d195ed, []int{2}
 }
 func (m *PlasmaBlock) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaBlock.Unmarshal(m, b)
@@ -186,8 +190,8 @@ func (m *PlasmaBlock) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaBlock) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaBlock.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaBlock) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaBlock.Merge(dst, src)
+func (m *PlasmaBlock) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaBlock.Merge(m, src)
 }
 func (m *PlasmaBlock) XXX_Size() int {
 	return xxx_messageInfo_PlasmaBlock.Size(m)
@@ -242,13 +246,13 @@ func (m *PlasmaBlock) GetProof() []byte {
 
 type PlasmaTx struct {
 	Slot                 uint64         `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
-	PreviousBlock        *types.BigUInt `protobuf:"bytes,2,opt,name=previous_block,json=previousBlock" json:"previous_block,omitempty"`
-	Denomination         *types.BigUInt `protobuf:"bytes,3,opt,name=denomination" json:"denomination,omitempty"`
-	NewOwner             *types.Address `protobuf:"bytes,4,opt,name=new_owner,json=newOwner" json:"new_owner,omitempty"`
+	PreviousBlock        *types.BigUInt `protobuf:"bytes,2,opt,name=previous_block,json=previousBlock,proto3" json:"previous_block,omitempty"`
+	Denomination         *types.BigUInt `protobuf:"bytes,3,opt,name=denomination,proto3" json:"denomination,omitempty"`
+	NewOwner             *types.Address `protobuf:"bytes,4,opt,name=new_owner,json=newOwner,proto3" json:"new_owner,omitempty"`
 	Signature            []byte         `protobuf:"bytes,5,opt,name=signature,proto3" json:"signature,omitempty"`
 	Hash                 []byte         `protobuf:"bytes,6,opt,name=hash,proto3" json:"hash,omitempty"`
 	MerkleHash           []byte         `protobuf:"bytes,7,opt,name=merkle_hash,json=merkleHash,proto3" json:"merkle_hash,omitempty"`
-	Sender               *types.Address `protobuf:"bytes,8,opt,name=sender" json:"sender,omitempty"`
+	Sender               *types.Address `protobuf:"bytes,8,opt,name=sender,proto3" json:"sender,omitempty"`
 	Proof                []byte         `protobuf:"bytes,9,opt,name=proof,proto3" json:"proof,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -259,7 +263,7 @@ func (m *PlasmaTx) Reset()         { *m = PlasmaTx{} }
 func (m *PlasmaTx) String() string { return proto.CompactTextString(m) }
 func (*PlasmaTx) ProtoMessage()    {}
 func (*PlasmaTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{3}
+	return fileDescriptor_02303bd883d195ed, []int{3}
 }
 func (m *PlasmaTx) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaTx.Unmarshal(m, b)
@@ -267,8 +271,8 @@ func (m *PlasmaTx) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaTx.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaTx) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaTx.Merge(dst, src)
+func (m *PlasmaTx) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaTx.Merge(m, src)
 }
 func (m *PlasmaTx) XXX_Size() int {
 	return xxx_messageInfo_PlasmaTx.Size(m)
@@ -343,7 +347,7 @@ func (m *PlasmaTx) GetProof() []byte {
 }
 
 type PlasmaBookKeeping struct {
-	CurrentHeight        *types.BigUInt `protobuf:"bytes,1,opt,name=current_height,json=currentHeight" json:"current_height,omitempty"`
+	CurrentHeight        *types.BigUInt `protobuf:"bytes,1,opt,name=current_height,json=currentHeight,proto3" json:"current_height,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -353,7 +357,7 @@ func (m *PlasmaBookKeeping) Reset()         { *m = PlasmaBookKeeping{} }
 func (m *PlasmaBookKeeping) String() string { return proto.CompactTextString(m) }
 func (*PlasmaBookKeeping) ProtoMessage()    {}
 func (*PlasmaBookKeeping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{4}
+	return fileDescriptor_02303bd883d195ed, []int{4}
 }
 func (m *PlasmaBookKeeping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaBookKeeping.Unmarshal(m, b)
@@ -361,8 +365,8 @@ func (m *PlasmaBookKeeping) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaBookKeeping) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaBookKeeping.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaBookKeeping) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaBookKeeping.Merge(dst, src)
+func (m *PlasmaBookKeeping) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaBookKeeping.Merge(m, src)
 }
 func (m *PlasmaBookKeeping) XXX_Size() int {
 	return xxx_messageInfo_PlasmaBookKeeping.Size(m)
@@ -390,7 +394,7 @@ func (m *GetCurrentBlockRequest) Reset()         { *m = GetCurrentBlockRequest{}
 func (m *GetCurrentBlockRequest) String() string { return proto.CompactTextString(m) }
 func (*GetCurrentBlockRequest) ProtoMessage()    {}
 func (*GetCurrentBlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{5}
+	return fileDescriptor_02303bd883d195ed, []int{5}
 }
 func (m *GetCurrentBlockRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetCurrentBlockRequest.Unmarshal(m, b)
@@ -398,8 +402,8 @@ func (m *GetCurrentBlockRequest) XXX_Unmarshal(b []byte) error {
 func (m *GetCurrentBlockRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetCurrentBlockRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetCurrentBlockRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetCurrentBlockRequest.Merge(dst, src)
+func (m *GetCurrentBlockRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCurrentBlockRequest.Merge(m, src)
 }
 func (m *GetCurrentBlockRequest) XXX_Size() int {
 	return xxx_messageInfo_GetCurrentBlockRequest.Size(m)
@@ -411,7 +415,7 @@ func (m *GetCurrentBlockRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetCurrentBlockRequest proto.InternalMessageInfo
 
 type GetCurrentBlockResponse struct {
-	BlockHeight          *types.BigUInt `protobuf:"bytes,1,opt,name=block_height,json=blockHeight" json:"block_height,omitempty"`
+	BlockHeight          *types.BigUInt `protobuf:"bytes,1,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -421,7 +425,7 @@ func (m *GetCurrentBlockResponse) Reset()         { *m = GetCurrentBlockResponse
 func (m *GetCurrentBlockResponse) String() string { return proto.CompactTextString(m) }
 func (*GetCurrentBlockResponse) ProtoMessage()    {}
 func (*GetCurrentBlockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{6}
+	return fileDescriptor_02303bd883d195ed, []int{6}
 }
 func (m *GetCurrentBlockResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetCurrentBlockResponse.Unmarshal(m, b)
@@ -429,8 +433,8 @@ func (m *GetCurrentBlockResponse) XXX_Unmarshal(b []byte) error {
 func (m *GetCurrentBlockResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetCurrentBlockResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetCurrentBlockResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetCurrentBlockResponse.Merge(dst, src)
+func (m *GetCurrentBlockResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCurrentBlockResponse.Merge(m, src)
 }
 func (m *GetCurrentBlockResponse) XXX_Size() int {
 	return xxx_messageInfo_GetCurrentBlockResponse.Size(m)
@@ -449,7 +453,7 @@ func (m *GetCurrentBlockResponse) GetBlockHeight() *types.BigUInt {
 }
 
 type GetBlockRequest struct {
-	BlockHeight          *types.BigUInt `protobuf:"bytes,1,opt,name=block_height,json=blockHeight" json:"block_height,omitempty"`
+	BlockHeight          *types.BigUInt `protobuf:"bytes,1,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -459,7 +463,7 @@ func (m *GetBlockRequest) Reset()         { *m = GetBlockRequest{} }
 func (m *GetBlockRequest) String() string { return proto.CompactTextString(m) }
 func (*GetBlockRequest) ProtoMessage()    {}
 func (*GetBlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{7}
+	return fileDescriptor_02303bd883d195ed, []int{7}
 }
 func (m *GetBlockRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetBlockRequest.Unmarshal(m, b)
@@ -467,8 +471,8 @@ func (m *GetBlockRequest) XXX_Unmarshal(b []byte) error {
 func (m *GetBlockRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetBlockRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetBlockRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetBlockRequest.Merge(dst, src)
+func (m *GetBlockRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetBlockRequest.Merge(m, src)
 }
 func (m *GetBlockRequest) XXX_Size() int {
 	return xxx_messageInfo_GetBlockRequest.Size(m)
@@ -487,7 +491,7 @@ func (m *GetBlockRequest) GetBlockHeight() *types.BigUInt {
 }
 
 type GetBlockResponse struct {
-	Block                *PlasmaBlock `protobuf:"bytes,1,opt,name=block" json:"block,omitempty"`
+	Block                *PlasmaBlock `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
 	XXX_sizecache        int32        `json:"-"`
@@ -497,7 +501,7 @@ func (m *GetBlockResponse) Reset()         { *m = GetBlockResponse{} }
 func (m *GetBlockResponse) String() string { return proto.CompactTextString(m) }
 func (*GetBlockResponse) ProtoMessage()    {}
 func (*GetBlockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{8}
+	return fileDescriptor_02303bd883d195ed, []int{8}
 }
 func (m *GetBlockResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetBlockResponse.Unmarshal(m, b)
@@ -505,8 +509,8 @@ func (m *GetBlockResponse) XXX_Unmarshal(b []byte) error {
 func (m *GetBlockResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetBlockResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetBlockResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetBlockResponse.Merge(dst, src)
+func (m *GetBlockResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetBlockResponse.Merge(m, src)
 }
 func (m *GetBlockResponse) XXX_Size() int {
 	return xxx_messageInfo_GetBlockResponse.Size(m)
@@ -535,7 +539,7 @@ func (m *SubmitBlockToMainnetRequest) Reset()         { *m = SubmitBlockToMainne
 func (m *SubmitBlockToMainnetRequest) String() string { return proto.CompactTextString(m) }
 func (*SubmitBlockToMainnetRequest) ProtoMessage()    {}
 func (*SubmitBlockToMainnetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{9}
+	return fileDescriptor_02303bd883d195ed, []int{9}
 }
 func (m *SubmitBlockToMainnetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SubmitBlockToMainnetRequest.Unmarshal(m, b)
@@ -543,8 +547,8 @@ func (m *SubmitBlockToMainnetRequest) XXX_Unmarshal(b []byte) error {
 func (m *SubmitBlockToMainnetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SubmitBlockToMainnetRequest.Marshal(b, m, deterministic)
 }
-func (dst *SubmitBlockToMainnetRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SubmitBlockToMainnetRequest.Merge(dst, src)
+func (m *SubmitBlockToMainnetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SubmitBlockToMainnetRequest.Merge(m, src)
 }
 func (m *SubmitBlockToMainnetRequest) XXX_Size() int {
 	return xxx_messageInfo_SubmitBlockToMainnetRequest.Size(m)
@@ -566,7 +570,7 @@ func (m *SubmitBlockToMainnetResponse) Reset()         { *m = SubmitBlockToMainn
 func (m *SubmitBlockToMainnetResponse) String() string { return proto.CompactTextString(m) }
 func (*SubmitBlockToMainnetResponse) ProtoMessage()    {}
 func (*SubmitBlockToMainnetResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{10}
+	return fileDescriptor_02303bd883d195ed, []int{10}
 }
 func (m *SubmitBlockToMainnetResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SubmitBlockToMainnetResponse.Unmarshal(m, b)
@@ -574,8 +578,8 @@ func (m *SubmitBlockToMainnetResponse) XXX_Unmarshal(b []byte) error {
 func (m *SubmitBlockToMainnetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SubmitBlockToMainnetResponse.Marshal(b, m, deterministic)
 }
-func (dst *SubmitBlockToMainnetResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SubmitBlockToMainnetResponse.Merge(dst, src)
+func (m *SubmitBlockToMainnetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SubmitBlockToMainnetResponse.Merge(m, src)
 }
 func (m *SubmitBlockToMainnetResponse) XXX_Size() int {
 	return xxx_messageInfo_SubmitBlockToMainnetResponse.Size(m)
@@ -594,7 +598,7 @@ func (m *SubmitBlockToMainnetResponse) GetMerkleHash() []byte {
 }
 
 type PlasmaTxRequest struct {
-	Plasmatx             *PlasmaTx `protobuf:"bytes,1,opt,name=plasmatx" json:"plasmatx,omitempty"`
+	Plasmatx             *PlasmaTx `protobuf:"bytes,1,opt,name=plasmatx,proto3" json:"plasmatx,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -604,7 +608,7 @@ func (m *PlasmaTxRequest) Reset()         { *m = PlasmaTxRequest{} }
 func (m *PlasmaTxRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaTxRequest) ProtoMessage()    {}
 func (*PlasmaTxRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{11}
+	return fileDescriptor_02303bd883d195ed, []int{11}
 }
 func (m *PlasmaTxRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaTxRequest.Unmarshal(m, b)
@@ -612,8 +616,8 @@ func (m *PlasmaTxRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaTxRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaTxRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaTxRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaTxRequest.Merge(dst, src)
+func (m *PlasmaTxRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaTxRequest.Merge(m, src)
 }
 func (m *PlasmaTxRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaTxRequest.Size(m)
@@ -641,7 +645,7 @@ func (m *PlasmaTxResponse) Reset()         { *m = PlasmaTxResponse{} }
 func (m *PlasmaTxResponse) String() string { return proto.CompactTextString(m) }
 func (*PlasmaTxResponse) ProtoMessage()    {}
 func (*PlasmaTxResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{12}
+	return fileDescriptor_02303bd883d195ed, []int{12}
 }
 func (m *PlasmaTxResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaTxResponse.Unmarshal(m, b)
@@ -649,8 +653,8 @@ func (m *PlasmaTxResponse) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaTxResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaTxResponse.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaTxResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaTxResponse.Merge(dst, src)
+func (m *PlasmaTxResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaTxResponse.Merge(m, src)
 }
 func (m *PlasmaTxResponse) XXX_Size() int {
 	return xxx_messageInfo_PlasmaTxResponse.Size(m)
@@ -663,7 +667,7 @@ var xxx_messageInfo_PlasmaTxResponse proto.InternalMessageInfo
 
 type GetPlasmaTxRequest struct {
 	Slot                 uint64         `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
-	BlockHeight          *types.BigUInt `protobuf:"bytes,2,opt,name=block_height,json=blockHeight" json:"block_height,omitempty"`
+	BlockHeight          *types.BigUInt `protobuf:"bytes,2,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -673,7 +677,7 @@ func (m *GetPlasmaTxRequest) Reset()         { *m = GetPlasmaTxRequest{} }
 func (m *GetPlasmaTxRequest) String() string { return proto.CompactTextString(m) }
 func (*GetPlasmaTxRequest) ProtoMessage()    {}
 func (*GetPlasmaTxRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{13}
+	return fileDescriptor_02303bd883d195ed, []int{13}
 }
 func (m *GetPlasmaTxRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPlasmaTxRequest.Unmarshal(m, b)
@@ -681,8 +685,8 @@ func (m *GetPlasmaTxRequest) XXX_Unmarshal(b []byte) error {
 func (m *GetPlasmaTxRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetPlasmaTxRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetPlasmaTxRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetPlasmaTxRequest.Merge(dst, src)
+func (m *GetPlasmaTxRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetPlasmaTxRequest.Merge(m, src)
 }
 func (m *GetPlasmaTxRequest) XXX_Size() int {
 	return xxx_messageInfo_GetPlasmaTxRequest.Size(m)
@@ -708,7 +712,7 @@ func (m *GetPlasmaTxRequest) GetBlockHeight() *types.BigUInt {
 }
 
 type GetPlasmaTxResponse struct {
-	Plasmatx             *PlasmaTx `protobuf:"bytes,1,opt,name=plasmatx" json:"plasmatx,omitempty"`
+	Plasmatx             *PlasmaTx `protobuf:"bytes,1,opt,name=plasmatx,proto3" json:"plasmatx,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -718,7 +722,7 @@ func (m *GetPlasmaTxResponse) Reset()         { *m = GetPlasmaTxResponse{} }
 func (m *GetPlasmaTxResponse) String() string { return proto.CompactTextString(m) }
 func (*GetPlasmaTxResponse) ProtoMessage()    {}
 func (*GetPlasmaTxResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{14}
+	return fileDescriptor_02303bd883d195ed, []int{14}
 }
 func (m *GetPlasmaTxResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPlasmaTxResponse.Unmarshal(m, b)
@@ -726,8 +730,8 @@ func (m *GetPlasmaTxResponse) XXX_Unmarshal(b []byte) error {
 func (m *GetPlasmaTxResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetPlasmaTxResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetPlasmaTxResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetPlasmaTxResponse.Merge(dst, src)
+func (m *GetPlasmaTxResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetPlasmaTxResponse.Merge(m, src)
 }
 func (m *GetPlasmaTxResponse) XXX_Size() int {
 	return xxx_messageInfo_GetPlasmaTxResponse.Size(m)
@@ -746,7 +750,7 @@ func (m *GetPlasmaTxResponse) GetPlasmatx() *PlasmaTx {
 }
 
 type GetUserSlotsRequest struct {
-	From                 *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
+	From                 *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -756,7 +760,7 @@ func (m *GetUserSlotsRequest) Reset()         { *m = GetUserSlotsRequest{} }
 func (m *GetUserSlotsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetUserSlotsRequest) ProtoMessage()    {}
 func (*GetUserSlotsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{15}
+	return fileDescriptor_02303bd883d195ed, []int{15}
 }
 func (m *GetUserSlotsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetUserSlotsRequest.Unmarshal(m, b)
@@ -764,8 +768,8 @@ func (m *GetUserSlotsRequest) XXX_Unmarshal(b []byte) error {
 func (m *GetUserSlotsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetUserSlotsRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetUserSlotsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetUserSlotsRequest.Merge(dst, src)
+func (m *GetUserSlotsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetUserSlotsRequest.Merge(m, src)
 }
 func (m *GetUserSlotsRequest) XXX_Size() int {
 	return xxx_messageInfo_GetUserSlotsRequest.Size(m)
@@ -784,7 +788,7 @@ func (m *GetUserSlotsRequest) GetFrom() *types.Address {
 }
 
 type GetUserSlotsResponse struct {
-	Slots                []uint64 `protobuf:"varint,1,rep,packed,name=slots" json:"slots,omitempty"`
+	Slots                []uint64 `protobuf:"varint,1,rep,packed,name=slots,proto3" json:"slots,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -794,7 +798,7 @@ func (m *GetUserSlotsResponse) Reset()         { *m = GetUserSlotsResponse{} }
 func (m *GetUserSlotsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetUserSlotsResponse) ProtoMessage()    {}
 func (*GetUserSlotsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{16}
+	return fileDescriptor_02303bd883d195ed, []int{16}
 }
 func (m *GetUserSlotsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetUserSlotsResponse.Unmarshal(m, b)
@@ -802,8 +806,8 @@ func (m *GetUserSlotsResponse) XXX_Unmarshal(b []byte) error {
 func (m *GetUserSlotsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetUserSlotsResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetUserSlotsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetUserSlotsResponse.Merge(dst, src)
+func (m *GetUserSlotsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetUserSlotsResponse.Merge(m, src)
 }
 func (m *GetUserSlotsResponse) XXX_Size() int {
 	return xxx_messageInfo_GetUserSlotsResponse.Size(m)
@@ -824,13 +828,13 @@ func (m *GetUserSlotsResponse) GetSlots() []uint64 {
 // This only originates from the validator
 type DepositRequest struct {
 	Slot         uint64         `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
-	DepositBlock *types.BigUInt `protobuf:"bytes,2,opt,name=deposit_block,json=depositBlock" json:"deposit_block,omitempty"`
+	DepositBlock *types.BigUInt `protobuf:"bytes,2,opt,name=deposit_block,json=depositBlock,proto3" json:"deposit_block,omitempty"`
 	// For ERC20 this is the number of coins deposited, for ERC721 this is a token ID.
-	Denomination *types.BigUInt `protobuf:"bytes,3,opt,name=denomination" json:"denomination,omitempty"`
+	Denomination *types.BigUInt `protobuf:"bytes,3,opt,name=denomination,proto3" json:"denomination,omitempty"`
 	// Entity that made the deposit
-	From *types.Address `protobuf:"bytes,4,opt,name=from" json:"from,omitempty"`
+	From *types.Address `protobuf:"bytes,4,opt,name=from,proto3" json:"from,omitempty"`
 	// Contract from which the coins originated (i.e. the currency of the coins)
-	Contract             *types.Address `protobuf:"bytes,5,opt,name=contract" json:"contract,omitempty"`
+	Contract             *types.Address `protobuf:"bytes,5,opt,name=contract,proto3" json:"contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -840,7 +844,7 @@ func (m *DepositRequest) Reset()         { *m = DepositRequest{} }
 func (m *DepositRequest) String() string { return proto.CompactTextString(m) }
 func (*DepositRequest) ProtoMessage()    {}
 func (*DepositRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{17}
+	return fileDescriptor_02303bd883d195ed, []int{17}
 }
 func (m *DepositRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DepositRequest.Unmarshal(m, b)
@@ -848,8 +852,8 @@ func (m *DepositRequest) XXX_Unmarshal(b []byte) error {
 func (m *DepositRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DepositRequest.Marshal(b, m, deterministic)
 }
-func (dst *DepositRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DepositRequest.Merge(dst, src)
+func (m *DepositRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DepositRequest.Merge(m, src)
 }
 func (m *DepositRequest) XXX_Size() int {
 	return xxx_messageInfo_DepositRequest.Size(m)
@@ -905,7 +909,7 @@ func (m *DepositResponse) Reset()         { *m = DepositResponse{} }
 func (m *DepositResponse) String() string { return proto.CompactTextString(m) }
 func (*DepositResponse) ProtoMessage()    {}
 func (*DepositResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{18}
+	return fileDescriptor_02303bd883d195ed, []int{18}
 }
 func (m *DepositResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DepositResponse.Unmarshal(m, b)
@@ -913,8 +917,8 @@ func (m *DepositResponse) XXX_Unmarshal(b []byte) error {
 func (m *DepositResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DepositResponse.Marshal(b, m, deterministic)
 }
-func (dst *DepositResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DepositResponse.Merge(dst, src)
+func (m *DepositResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DepositResponse.Merge(m, src)
 }
 func (m *DepositResponse) XXX_Size() int {
 	return xxx_messageInfo_DepositResponse.Size(m)
@@ -926,7 +930,7 @@ func (m *DepositResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_DepositResponse proto.InternalMessageInfo
 
 type PlasmaCashCoinResetRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -937,7 +941,7 @@ func (m *PlasmaCashCoinResetRequest) Reset()         { *m = PlasmaCashCoinResetR
 func (m *PlasmaCashCoinResetRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashCoinResetRequest) ProtoMessage()    {}
 func (*PlasmaCashCoinResetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{19}
+	return fileDescriptor_02303bd883d195ed, []int{19}
 }
 func (m *PlasmaCashCoinResetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashCoinResetRequest.Unmarshal(m, b)
@@ -945,8 +949,8 @@ func (m *PlasmaCashCoinResetRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashCoinResetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashCoinResetRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashCoinResetRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashCoinResetRequest.Merge(dst, src)
+func (m *PlasmaCashCoinResetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashCoinResetRequest.Merge(m, src)
 }
 func (m *PlasmaCashCoinResetRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashCoinResetRequest.Size(m)
@@ -972,7 +976,7 @@ func (m *PlasmaCashCoinResetRequest) GetSlot() uint64 {
 }
 
 type PlasmaCashExitCoinRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -983,7 +987,7 @@ func (m *PlasmaCashExitCoinRequest) Reset()         { *m = PlasmaCashExitCoinReq
 func (m *PlasmaCashExitCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashExitCoinRequest) ProtoMessage()    {}
 func (*PlasmaCashExitCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{20}
+	return fileDescriptor_02303bd883d195ed, []int{20}
 }
 func (m *PlasmaCashExitCoinRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashExitCoinRequest.Unmarshal(m, b)
@@ -991,8 +995,8 @@ func (m *PlasmaCashExitCoinRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashExitCoinRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashExitCoinRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashExitCoinRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashExitCoinRequest.Merge(dst, src)
+func (m *PlasmaCashExitCoinRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashExitCoinRequest.Merge(m, src)
 }
 func (m *PlasmaCashExitCoinRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashExitCoinRequest.Size(m)
@@ -1018,7 +1022,7 @@ func (m *PlasmaCashExitCoinRequest) GetSlot() uint64 {
 }
 
 type PlasmaCashWithdrawCoinRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -1029,7 +1033,7 @@ func (m *PlasmaCashWithdrawCoinRequest) Reset()         { *m = PlasmaCashWithdra
 func (m *PlasmaCashWithdrawCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashWithdrawCoinRequest) ProtoMessage()    {}
 func (*PlasmaCashWithdrawCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{21}
+	return fileDescriptor_02303bd883d195ed, []int{21}
 }
 func (m *PlasmaCashWithdrawCoinRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashWithdrawCoinRequest.Unmarshal(m, b)
@@ -1037,8 +1041,8 @@ func (m *PlasmaCashWithdrawCoinRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashWithdrawCoinRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashWithdrawCoinRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashWithdrawCoinRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashWithdrawCoinRequest.Merge(dst, src)
+func (m *PlasmaCashWithdrawCoinRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashWithdrawCoinRequest.Merge(m, src)
 }
 func (m *PlasmaCashWithdrawCoinRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashWithdrawCoinRequest.Size(m)
@@ -1070,7 +1074,7 @@ type PlasmaCashRequest struct {
 	//	*PlasmaCashRequest_StartedExit
 	//	*PlasmaCashRequest_Withdraw
 	Data                 isPlasmaCashRequest_Data `protobuf_oneof:"data"`
-	Meta                 *PlasmaCashEventMeta     `protobuf:"bytes,5,opt,name=meta" json:"meta,omitempty"`
+	Meta                 *PlasmaCashEventMeta     `protobuf:"bytes,5,opt,name=meta,proto3" json:"meta,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
 	XXX_unrecognized     []byte                   `json:"-"`
 	XXX_sizecache        int32                    `json:"-"`
@@ -1080,7 +1084,7 @@ func (m *PlasmaCashRequest) Reset()         { *m = PlasmaCashRequest{} }
 func (m *PlasmaCashRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashRequest) ProtoMessage()    {}
 func (*PlasmaCashRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{22}
+	return fileDescriptor_02303bd883d195ed, []int{22}
 }
 func (m *PlasmaCashRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashRequest.Unmarshal(m, b)
@@ -1088,8 +1092,8 @@ func (m *PlasmaCashRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashRequest.Merge(dst, src)
+func (m *PlasmaCashRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashRequest.Merge(m, src)
 }
 func (m *PlasmaCashRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashRequest.Size(m)
@@ -1105,16 +1109,16 @@ type isPlasmaCashRequest_Data interface {
 }
 
 type PlasmaCashRequest_Deposit struct {
-	Deposit *DepositRequest `protobuf:"bytes,1,opt,name=deposit,oneof"`
+	Deposit *DepositRequest `protobuf:"bytes,1,opt,name=deposit,proto3,oneof"`
 }
 type PlasmaCashRequest_CoinReset struct {
-	CoinReset *PlasmaCashCoinResetRequest `protobuf:"bytes,2,opt,name=coin_reset,json=coinReset,oneof"`
+	CoinReset *PlasmaCashCoinResetRequest `protobuf:"bytes,2,opt,name=coin_reset,json=coinReset,proto3,oneof"`
 }
 type PlasmaCashRequest_StartedExit struct {
-	StartedExit *PlasmaCashExitCoinRequest `protobuf:"bytes,3,opt,name=started_exit,json=startedExit,oneof"`
+	StartedExit *PlasmaCashExitCoinRequest `protobuf:"bytes,3,opt,name=started_exit,json=startedExit,proto3,oneof"`
 }
 type PlasmaCashRequest_Withdraw struct {
-	Withdraw *PlasmaCashWithdrawCoinRequest `protobuf:"bytes,4,opt,name=withdraw,oneof"`
+	Withdraw *PlasmaCashWithdrawCoinRequest `protobuf:"bytes,4,opt,name=withdraw,proto3,oneof"`
 }
 
 func (*PlasmaCashRequest_Deposit) isPlasmaCashRequest_Data()     {}
@@ -1277,7 +1281,7 @@ func _PlasmaCashRequest_OneofSizer(msg proto.Message) (n int) {
 }
 
 type PlasmaCashRequestBatch struct {
-	Requests             []*PlasmaCashRequest `protobuf:"bytes,1,rep,name=requests" json:"requests,omitempty"`
+	Requests             []*PlasmaCashRequest `protobuf:"bytes,1,rep,name=requests,proto3" json:"requests,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -1287,7 +1291,7 @@ func (m *PlasmaCashRequestBatch) Reset()         { *m = PlasmaCashRequestBatch{}
 func (m *PlasmaCashRequestBatch) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashRequestBatch) ProtoMessage()    {}
 func (*PlasmaCashRequestBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{23}
+	return fileDescriptor_02303bd883d195ed, []int{23}
 }
 func (m *PlasmaCashRequestBatch) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashRequestBatch.Unmarshal(m, b)
@@ -1295,8 +1299,8 @@ func (m *PlasmaCashRequestBatch) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashRequestBatch) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashRequestBatch.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashRequestBatch) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashRequestBatch.Merge(dst, src)
+func (m *PlasmaCashRequestBatch) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashRequestBatch.Merge(m, src)
 }
 func (m *PlasmaCashRequestBatch) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashRequestBatch.Size(m)
@@ -1324,7 +1328,7 @@ func (m *GetPendingTxsRequest) Reset()         { *m = GetPendingTxsRequest{} }
 func (m *GetPendingTxsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetPendingTxsRequest) ProtoMessage()    {}
 func (*GetPendingTxsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{24}
+	return fileDescriptor_02303bd883d195ed, []int{24}
 }
 func (m *GetPendingTxsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPendingTxsRequest.Unmarshal(m, b)
@@ -1332,8 +1336,8 @@ func (m *GetPendingTxsRequest) XXX_Unmarshal(b []byte) error {
 func (m *GetPendingTxsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetPendingTxsRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetPendingTxsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetPendingTxsRequest.Merge(dst, src)
+func (m *GetPendingTxsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetPendingTxsRequest.Merge(m, src)
 }
 func (m *GetPendingTxsRequest) XXX_Size() int {
 	return xxx_messageInfo_GetPendingTxsRequest.Size(m)
@@ -1345,7 +1349,7 @@ func (m *GetPendingTxsRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetPendingTxsRequest proto.InternalMessageInfo
 
 type PendingTxs struct {
-	Transactions         []*PlasmaTx `protobuf:"bytes,1,rep,name=transactions" json:"transactions,omitempty"`
+	Transactions         []*PlasmaTx `protobuf:"bytes,1,rep,name=transactions,proto3" json:"transactions,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
 	XXX_unrecognized     []byte      `json:"-"`
 	XXX_sizecache        int32       `json:"-"`
@@ -1355,7 +1359,7 @@ func (m *PendingTxs) Reset()         { *m = PendingTxs{} }
 func (m *PendingTxs) String() string { return proto.CompactTextString(m) }
 func (*PendingTxs) ProtoMessage()    {}
 func (*PendingTxs) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{25}
+	return fileDescriptor_02303bd883d195ed, []int{25}
 }
 func (m *PendingTxs) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PendingTxs.Unmarshal(m, b)
@@ -1363,8 +1367,8 @@ func (m *PendingTxs) XXX_Unmarshal(b []byte) error {
 func (m *PendingTxs) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PendingTxs.Marshal(b, m, deterministic)
 }
-func (dst *PendingTxs) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PendingTxs.Merge(dst, src)
+func (m *PendingTxs) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PendingTxs.Merge(m, src)
 }
 func (m *PendingTxs) XXX_Size() int {
 	return xxx_messageInfo_PendingTxs.Size(m)
@@ -1394,7 +1398,7 @@ func (m *PlasmaCashParams) Reset()         { *m = PlasmaCashParams{} }
 func (m *PlasmaCashParams) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashParams) ProtoMessage()    {}
 func (*PlasmaCashParams) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{26}
+	return fileDescriptor_02303bd883d195ed, []int{26}
 }
 func (m *PlasmaCashParams) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashParams.Unmarshal(m, b)
@@ -1402,8 +1406,8 @@ func (m *PlasmaCashParams) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashParams) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashParams.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashParams) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashParams.Merge(dst, src)
+func (m *PlasmaCashParams) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashParams.Merge(m, src)
 }
 func (m *PlasmaCashParams) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashParams.Size(m)
@@ -1422,8 +1426,8 @@ func (m *PlasmaCashParams) GetBlockInterval() uint64 {
 }
 
 type PlasmaCashInitRequest struct {
-	Params               *PlasmaCashParams `protobuf:"bytes,1,opt,name=params" json:"params,omitempty"`
-	Oracle               *types.Address    `protobuf:"bytes,2,opt,name=oracle" json:"oracle,omitempty"`
+	Params               *PlasmaCashParams `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
+	Oracle               *types.Address    `protobuf:"bytes,2,opt,name=oracle,proto3" json:"oracle,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -1433,7 +1437,7 @@ func (m *PlasmaCashInitRequest) Reset()         { *m = PlasmaCashInitRequest{} }
 func (m *PlasmaCashInitRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashInitRequest) ProtoMessage()    {}
 func (*PlasmaCashInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{27}
+	return fileDescriptor_02303bd883d195ed, []int{27}
 }
 func (m *PlasmaCashInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashInitRequest.Unmarshal(m, b)
@@ -1441,8 +1445,8 @@ func (m *PlasmaCashInitRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashInitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashInitRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashInitRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashInitRequest.Merge(dst, src)
+func (m *PlasmaCashInitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashInitRequest.Merge(m, src)
 }
 func (m *PlasmaCashInitRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashInitRequest.Size(m)
@@ -1468,8 +1472,8 @@ func (m *PlasmaCashInitRequest) GetOracle() *types.Address {
 }
 
 type PlasmaCashBalanceOfRequest struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
-	Contract             *types.Address `protobuf:"bytes,2,opt,name=contract" json:"contract,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Contract             *types.Address `protobuf:"bytes,2,opt,name=contract,proto3" json:"contract,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1479,7 +1483,7 @@ func (m *PlasmaCashBalanceOfRequest) Reset()         { *m = PlasmaCashBalanceOfR
 func (m *PlasmaCashBalanceOfRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashBalanceOfRequest) ProtoMessage()    {}
 func (*PlasmaCashBalanceOfRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{28}
+	return fileDescriptor_02303bd883d195ed, []int{28}
 }
 func (m *PlasmaCashBalanceOfRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashBalanceOfRequest.Unmarshal(m, b)
@@ -1487,8 +1491,8 @@ func (m *PlasmaCashBalanceOfRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashBalanceOfRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashBalanceOfRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashBalanceOfRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashBalanceOfRequest.Merge(dst, src)
+func (m *PlasmaCashBalanceOfRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashBalanceOfRequest.Merge(m, src)
 }
 func (m *PlasmaCashBalanceOfRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashBalanceOfRequest.Size(m)
@@ -1514,7 +1518,7 @@ func (m *PlasmaCashBalanceOfRequest) GetContract() *types.Address {
 }
 
 type PlasmaCashBalanceOfResponse struct {
-	Coins                []*PlasmaCashCoin `protobuf:"bytes,1,rep,name=coins" json:"coins,omitempty"`
+	Coins                []*PlasmaCashCoin `protobuf:"bytes,1,rep,name=coins,proto3" json:"coins,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -1524,7 +1528,7 @@ func (m *PlasmaCashBalanceOfResponse) Reset()         { *m = PlasmaCashBalanceOf
 func (m *PlasmaCashBalanceOfResponse) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashBalanceOfResponse) ProtoMessage()    {}
 func (*PlasmaCashBalanceOfResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{29}
+	return fileDescriptor_02303bd883d195ed, []int{29}
 }
 func (m *PlasmaCashBalanceOfResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashBalanceOfResponse.Unmarshal(m, b)
@@ -1532,8 +1536,8 @@ func (m *PlasmaCashBalanceOfResponse) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashBalanceOfResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashBalanceOfResponse.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashBalanceOfResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashBalanceOfResponse.Merge(dst, src)
+func (m *PlasmaCashBalanceOfResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashBalanceOfResponse.Merge(m, src)
 }
 func (m *PlasmaCashBalanceOfResponse) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashBalanceOfResponse.Size(m)
@@ -1552,7 +1556,7 @@ func (m *PlasmaCashBalanceOfResponse) GetCoins() []*PlasmaCashCoin {
 }
 
 type PlasmaCashUpdateOracleRequest struct {
-	NewOracle            *types.Address `protobuf:"bytes,1,opt,name=new_oracle,json=newOracle" json:"new_oracle,omitempty"`
+	NewOracle            *types.Address `protobuf:"bytes,1,opt,name=new_oracle,json=newOracle,proto3" json:"new_oracle,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -1562,7 +1566,7 @@ func (m *PlasmaCashUpdateOracleRequest) Reset()         { *m = PlasmaCashUpdateO
 func (m *PlasmaCashUpdateOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashUpdateOracleRequest) ProtoMessage()    {}
 func (*PlasmaCashUpdateOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{30}
+	return fileDescriptor_02303bd883d195ed, []int{30}
 }
 func (m *PlasmaCashUpdateOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashUpdateOracleRequest.Unmarshal(m, b)
@@ -1570,8 +1574,8 @@ func (m *PlasmaCashUpdateOracleRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashUpdateOracleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashUpdateOracleRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashUpdateOracleRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashUpdateOracleRequest.Merge(dst, src)
+func (m *PlasmaCashUpdateOracleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashUpdateOracleRequest.Merge(m, src)
 }
 func (m *PlasmaCashUpdateOracleRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashUpdateOracleRequest.Size(m)
@@ -1602,7 +1606,7 @@ func (m *PlasmaCashRequestBatchTally) Reset()         { *m = PlasmaCashRequestBa
 func (m *PlasmaCashRequestBatchTally) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashRequestBatchTally) ProtoMessage()    {}
 func (*PlasmaCashRequestBatchTally) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{31}
+	return fileDescriptor_02303bd883d195ed, []int{31}
 }
 func (m *PlasmaCashRequestBatchTally) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashRequestBatchTally.Unmarshal(m, b)
@@ -1610,8 +1614,8 @@ func (m *PlasmaCashRequestBatchTally) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashRequestBatchTally) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashRequestBatchTally.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashRequestBatchTally) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashRequestBatchTally.Merge(dst, src)
+func (m *PlasmaCashRequestBatchTally) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashRequestBatchTally.Merge(m, src)
 }
 func (m *PlasmaCashRequestBatchTally) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashRequestBatchTally.Size(m)
@@ -1653,7 +1657,7 @@ func (m *PlasmaCashGetRequestBatchTallyRequest) Reset()         { *m = PlasmaCas
 func (m *PlasmaCashGetRequestBatchTallyRequest) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashGetRequestBatchTallyRequest) ProtoMessage()    {}
 func (*PlasmaCashGetRequestBatchTallyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{32}
+	return fileDescriptor_02303bd883d195ed, []int{32}
 }
 func (m *PlasmaCashGetRequestBatchTallyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashGetRequestBatchTallyRequest.Unmarshal(m, b)
@@ -1661,8 +1665,8 @@ func (m *PlasmaCashGetRequestBatchTallyRequest) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashGetRequestBatchTallyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashGetRequestBatchTallyRequest.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashGetRequestBatchTallyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashGetRequestBatchTallyRequest.Merge(dst, src)
+func (m *PlasmaCashGetRequestBatchTallyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashGetRequestBatchTallyRequest.Merge(m, src)
 }
 func (m *PlasmaCashGetRequestBatchTallyRequest) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashGetRequestBatchTallyRequest.Size(m)
@@ -1686,7 +1690,7 @@ func (m *PlasmaCashEventMeta) Reset()         { *m = PlasmaCashEventMeta{} }
 func (m *PlasmaCashEventMeta) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashEventMeta) ProtoMessage()    {}
 func (*PlasmaCashEventMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{33}
+	return fileDescriptor_02303bd883d195ed, []int{33}
 }
 func (m *PlasmaCashEventMeta) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashEventMeta.Unmarshal(m, b)
@@ -1694,8 +1698,8 @@ func (m *PlasmaCashEventMeta) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashEventMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashEventMeta.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashEventMeta) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashEventMeta.Merge(dst, src)
+func (m *PlasmaCashEventMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashEventMeta.Merge(m, src)
 }
 func (m *PlasmaCashEventMeta) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashEventMeta.Size(m)
@@ -1729,14 +1733,14 @@ func (m *PlasmaCashEventMeta) GetLogIndex() uint64 {
 
 type PlasmaDepositEvent struct {
 	Slot         uint64         `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
-	DepositBlock *types.BigUInt `protobuf:"bytes,2,opt,name=deposit_block,json=depositBlock" json:"deposit_block,omitempty"`
+	DepositBlock *types.BigUInt `protobuf:"bytes,2,opt,name=deposit_block,json=depositBlock,proto3" json:"deposit_block,omitempty"`
 	// For ERC20 this is the number of coins deposited, for ERC721 this is a token ID.
-	Denomination *types.BigUInt `protobuf:"bytes,3,opt,name=denomination" json:"denomination,omitempty"`
+	Denomination *types.BigUInt `protobuf:"bytes,3,opt,name=denomination,proto3" json:"denomination,omitempty"`
 	// Entity that made the deposit
-	From *types.Address `protobuf:"bytes,4,opt,name=from" json:"from,omitempty"`
+	From *types.Address `protobuf:"bytes,4,opt,name=from,proto3" json:"from,omitempty"`
 	// Contract from which the coins originated (i.e. the currency of the coins)
-	Contract             *types.Address       `protobuf:"bytes,5,opt,name=contract" json:"contract,omitempty"`
-	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,6,opt,name=meta" json:"meta,omitempty"`
+	Contract             *types.Address       `protobuf:"bytes,5,opt,name=contract,proto3" json:"contract,omitempty"`
+	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,6,opt,name=meta,proto3" json:"meta,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -1746,7 +1750,7 @@ func (m *PlasmaDepositEvent) Reset()         { *m = PlasmaDepositEvent{} }
 func (m *PlasmaDepositEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaDepositEvent) ProtoMessage()    {}
 func (*PlasmaDepositEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{34}
+	return fileDescriptor_02303bd883d195ed, []int{34}
 }
 func (m *PlasmaDepositEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaDepositEvent.Unmarshal(m, b)
@@ -1754,8 +1758,8 @@ func (m *PlasmaDepositEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaDepositEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaDepositEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaDepositEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaDepositEvent.Merge(dst, src)
+func (m *PlasmaDepositEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaDepositEvent.Merge(m, src)
 }
 func (m *PlasmaDepositEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaDepositEvent.Size(m)
@@ -1809,9 +1813,9 @@ func (m *PlasmaDepositEvent) GetMeta() *PlasmaCashEventMeta {
 }
 
 type PlasmaCashCoinResetEvent struct {
-	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64               `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
-	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta" json:"meta,omitempty"`
+	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta,proto3" json:"meta,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -1821,7 +1825,7 @@ func (m *PlasmaCashCoinResetEvent) Reset()         { *m = PlasmaCashCoinResetEve
 func (m *PlasmaCashCoinResetEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashCoinResetEvent) ProtoMessage()    {}
 func (*PlasmaCashCoinResetEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{35}
+	return fileDescriptor_02303bd883d195ed, []int{35}
 }
 func (m *PlasmaCashCoinResetEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashCoinResetEvent.Unmarshal(m, b)
@@ -1829,8 +1833,8 @@ func (m *PlasmaCashCoinResetEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashCoinResetEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashCoinResetEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashCoinResetEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashCoinResetEvent.Merge(dst, src)
+func (m *PlasmaCashCoinResetEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashCoinResetEvent.Merge(m, src)
 }
 func (m *PlasmaCashCoinResetEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashCoinResetEvent.Size(m)
@@ -1863,9 +1867,9 @@ func (m *PlasmaCashCoinResetEvent) GetMeta() *PlasmaCashEventMeta {
 }
 
 type PlasmaCashStartedExitEvent struct {
-	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64               `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
-	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta" json:"meta,omitempty"`
+	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta,proto3" json:"meta,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -1875,7 +1879,7 @@ func (m *PlasmaCashStartedExitEvent) Reset()         { *m = PlasmaCashStartedExi
 func (m *PlasmaCashStartedExitEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashStartedExitEvent) ProtoMessage()    {}
 func (*PlasmaCashStartedExitEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{36}
+	return fileDescriptor_02303bd883d195ed, []int{36}
 }
 func (m *PlasmaCashStartedExitEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashStartedExitEvent.Unmarshal(m, b)
@@ -1883,8 +1887,8 @@ func (m *PlasmaCashStartedExitEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashStartedExitEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashStartedExitEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashStartedExitEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashStartedExitEvent.Merge(dst, src)
+func (m *PlasmaCashStartedExitEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashStartedExitEvent.Merge(m, src)
 }
 func (m *PlasmaCashStartedExitEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashStartedExitEvent.Size(m)
@@ -1917,9 +1921,9 @@ func (m *PlasmaCashStartedExitEvent) GetMeta() *PlasmaCashEventMeta {
 }
 
 type PlasmaCashFinalizedExitEvent struct {
-	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64               `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
-	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta" json:"meta,omitempty"`
+	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,3,opt,name=meta,proto3" json:"meta,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -1929,7 +1933,7 @@ func (m *PlasmaCashFinalizedExitEvent) Reset()         { *m = PlasmaCashFinalize
 func (m *PlasmaCashFinalizedExitEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashFinalizedExitEvent) ProtoMessage()    {}
 func (*PlasmaCashFinalizedExitEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{37}
+	return fileDescriptor_02303bd883d195ed, []int{37}
 }
 func (m *PlasmaCashFinalizedExitEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashFinalizedExitEvent.Unmarshal(m, b)
@@ -1937,8 +1941,8 @@ func (m *PlasmaCashFinalizedExitEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashFinalizedExitEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashFinalizedExitEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashFinalizedExitEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashFinalizedExitEvent.Merge(dst, src)
+func (m *PlasmaCashFinalizedExitEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashFinalizedExitEvent.Merge(m, src)
 }
 func (m *PlasmaCashFinalizedExitEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashFinalizedExitEvent.Size(m)
@@ -1971,13 +1975,13 @@ func (m *PlasmaCashFinalizedExitEvent) GetMeta() *PlasmaCashEventMeta {
 }
 
 type PlasmaCashWithdrewEvent struct {
-	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address       `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Mode                 uint32               `protobuf:"varint,2,opt,name=mode,proto3" json:"mode,omitempty"`
-	Contract             *types.Address       `protobuf:"bytes,3,opt,name=contract" json:"contract,omitempty"`
-	Uid                  *types.BigUInt       `protobuf:"bytes,4,opt,name=uid" json:"uid,omitempty"`
-	Denomination         *types.BigUInt       `protobuf:"bytes,5,opt,name=denomination" json:"denomination,omitempty"`
+	Contract             *types.Address       `protobuf:"bytes,3,opt,name=contract,proto3" json:"contract,omitempty"`
+	Uid                  *types.BigUInt       `protobuf:"bytes,4,opt,name=uid,proto3" json:"uid,omitempty"`
+	Denomination         *types.BigUInt       `protobuf:"bytes,5,opt,name=denomination,proto3" json:"denomination,omitempty"`
 	Slot                 uint64               `protobuf:"varint,6,opt,name=slot,proto3" json:"slot,omitempty"`
-	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,7,opt,name=meta" json:"meta,omitempty"`
+	Meta                 *PlasmaCashEventMeta `protobuf:"bytes,7,opt,name=meta,proto3" json:"meta,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -1987,7 +1991,7 @@ func (m *PlasmaCashWithdrewEvent) Reset()         { *m = PlasmaCashWithdrewEvent
 func (m *PlasmaCashWithdrewEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashWithdrewEvent) ProtoMessage()    {}
 func (*PlasmaCashWithdrewEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{38}
+	return fileDescriptor_02303bd883d195ed, []int{38}
 }
 func (m *PlasmaCashWithdrewEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashWithdrewEvent.Unmarshal(m, b)
@@ -1995,8 +1999,8 @@ func (m *PlasmaCashWithdrewEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashWithdrewEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashWithdrewEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashWithdrewEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashWithdrewEvent.Merge(dst, src)
+func (m *PlasmaCashWithdrewEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashWithdrewEvent.Merge(m, src)
 }
 func (m *PlasmaCashWithdrewEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashWithdrewEvent.Size(m)
@@ -2057,8 +2061,8 @@ func (m *PlasmaCashWithdrewEvent) GetMeta() *PlasmaCashEventMeta {
 }
 
 type PlasmaCashTransferConfirmed struct {
-	From                 *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
-	To                   *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
+	From                 *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To                   *types.Address `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
 	Slot                 uint64         `protobuf:"varint,3,opt,name=slot,proto3" json:"slot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -2069,7 +2073,7 @@ func (m *PlasmaCashTransferConfirmed) Reset()         { *m = PlasmaCashTransferC
 func (m *PlasmaCashTransferConfirmed) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashTransferConfirmed) ProtoMessage()    {}
 func (*PlasmaCashTransferConfirmed) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{39}
+	return fileDescriptor_02303bd883d195ed, []int{39}
 }
 func (m *PlasmaCashTransferConfirmed) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashTransferConfirmed.Unmarshal(m, b)
@@ -2077,8 +2081,8 @@ func (m *PlasmaCashTransferConfirmed) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashTransferConfirmed) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashTransferConfirmed.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashTransferConfirmed) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashTransferConfirmed.Merge(dst, src)
+func (m *PlasmaCashTransferConfirmed) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashTransferConfirmed.Merge(m, src)
 }
 func (m *PlasmaCashTransferConfirmed) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashTransferConfirmed.Size(m)
@@ -2111,7 +2115,7 @@ func (m *PlasmaCashTransferConfirmed) GetSlot() uint64 {
 }
 
 type PlasmaCashExitConfirmedEvent struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -2122,7 +2126,7 @@ func (m *PlasmaCashExitConfirmedEvent) Reset()         { *m = PlasmaCashExitConf
 func (m *PlasmaCashExitConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashExitConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashExitConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{40}
+	return fileDescriptor_02303bd883d195ed, []int{40}
 }
 func (m *PlasmaCashExitConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashExitConfirmedEvent.Unmarshal(m, b)
@@ -2130,8 +2134,8 @@ func (m *PlasmaCashExitConfirmedEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashExitConfirmedEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashExitConfirmedEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashExitConfirmedEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashExitConfirmedEvent.Merge(dst, src)
+func (m *PlasmaCashExitConfirmedEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashExitConfirmedEvent.Merge(m, src)
 }
 func (m *PlasmaCashExitConfirmedEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashExitConfirmedEvent.Size(m)
@@ -2157,7 +2161,7 @@ func (m *PlasmaCashExitConfirmedEvent) GetSlot() uint64 {
 }
 
 type PlasmaCashResetConfirmedEvent struct {
-	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64         `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -2168,7 +2172,7 @@ func (m *PlasmaCashResetConfirmedEvent) Reset()         { *m = PlasmaCashResetCo
 func (m *PlasmaCashResetConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashResetConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashResetConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{41}
+	return fileDescriptor_02303bd883d195ed, []int{41}
 }
 func (m *PlasmaCashResetConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashResetConfirmedEvent.Unmarshal(m, b)
@@ -2176,8 +2180,8 @@ func (m *PlasmaCashResetConfirmedEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashResetConfirmedEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashResetConfirmedEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashResetConfirmedEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashResetConfirmedEvent.Merge(dst, src)
+func (m *PlasmaCashResetConfirmedEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashResetConfirmedEvent.Merge(m, src)
 }
 func (m *PlasmaCashResetConfirmedEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashResetConfirmedEvent.Size(m)
@@ -2203,8 +2207,8 @@ func (m *PlasmaCashResetConfirmedEvent) GetSlot() uint64 {
 }
 
 type PlasmaCashWithdrawConfirmedEvent struct {
-	Coin                 *PlasmaCashCoin `protobuf:"bytes,1,opt,name=coin" json:"coin,omitempty"`
-	Owner                *types.Address  `protobuf:"bytes,2,opt,name=owner" json:"owner,omitempty"`
+	Coin                 *PlasmaCashCoin `protobuf:"bytes,1,opt,name=coin,proto3" json:"coin,omitempty"`
+	Owner                *types.Address  `protobuf:"bytes,2,opt,name=owner,proto3" json:"owner,omitempty"`
 	Slot                 uint64          `protobuf:"varint,3,opt,name=slot,proto3" json:"slot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
@@ -2215,7 +2219,7 @@ func (m *PlasmaCashWithdrawConfirmedEvent) Reset()         { *m = PlasmaCashWith
 func (m *PlasmaCashWithdrawConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashWithdrawConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashWithdrawConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{42}
+	return fileDescriptor_02303bd883d195ed, []int{42}
 }
 func (m *PlasmaCashWithdrawConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashWithdrawConfirmedEvent.Unmarshal(m, b)
@@ -2223,8 +2227,8 @@ func (m *PlasmaCashWithdrawConfirmedEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashWithdrawConfirmedEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashWithdrawConfirmedEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashWithdrawConfirmedEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashWithdrawConfirmedEvent.Merge(dst, src)
+func (m *PlasmaCashWithdrawConfirmedEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashWithdrawConfirmedEvent.Merge(m, src)
 }
 func (m *PlasmaCashWithdrawConfirmedEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashWithdrawConfirmedEvent.Size(m)
@@ -2257,8 +2261,8 @@ func (m *PlasmaCashWithdrawConfirmedEvent) GetSlot() uint64 {
 }
 
 type PlasmaCashDepositConfirmedEvent struct {
-	Coin                 *PlasmaCashCoin `protobuf:"bytes,1,opt,name=coin" json:"coin,omitempty"`
-	Owner                *types.Address  `protobuf:"bytes,2,opt,name=owner" json:"owner,omitempty"`
+	Coin                 *PlasmaCashCoin `protobuf:"bytes,1,opt,name=coin,proto3" json:"coin,omitempty"`
+	Owner                *types.Address  `protobuf:"bytes,2,opt,name=owner,proto3" json:"owner,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -2268,7 +2272,7 @@ func (m *PlasmaCashDepositConfirmedEvent) Reset()         { *m = PlasmaCashDepos
 func (m *PlasmaCashDepositConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashDepositConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashDepositConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{43}
+	return fileDescriptor_02303bd883d195ed, []int{43}
 }
 func (m *PlasmaCashDepositConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashDepositConfirmedEvent.Unmarshal(m, b)
@@ -2276,8 +2280,8 @@ func (m *PlasmaCashDepositConfirmedEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashDepositConfirmedEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashDepositConfirmedEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashDepositConfirmedEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashDepositConfirmedEvent.Merge(dst, src)
+func (m *PlasmaCashDepositConfirmedEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashDepositConfirmedEvent.Merge(m, src)
 }
 func (m *PlasmaCashDepositConfirmedEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashDepositConfirmedEvent.Size(m)
@@ -2304,7 +2308,7 @@ func (m *PlasmaCashDepositConfirmedEvent) GetOwner() *types.Address {
 
 type PlasmaCashSubmitBlockConfirmedEvent struct {
 	NumberOfPendingTransactions uint64         `protobuf:"varint,1,opt,name=number_of_pending_transactions,json=numberOfPendingTransactions,proto3" json:"number_of_pending_transactions,omitempty"`
-	CurrentBlockHeight          *types.BigUInt `protobuf:"bytes,2,opt,name=current_block_height,json=currentBlockHeight" json:"current_block_height,omitempty"`
+	CurrentBlockHeight          *types.BigUInt `protobuf:"bytes,2,opt,name=current_block_height,json=currentBlockHeight,proto3" json:"current_block_height,omitempty"`
 	MerkleHash                  []byte         `protobuf:"bytes,3,opt,name=merkle_hash,json=merkleHash,proto3" json:"merkle_hash,omitempty"`
 	XXX_NoUnkeyedLiteral        struct{}       `json:"-"`
 	XXX_unrecognized            []byte         `json:"-"`
@@ -2315,7 +2319,7 @@ func (m *PlasmaCashSubmitBlockConfirmedEvent) Reset()         { *m = PlasmaCashS
 func (m *PlasmaCashSubmitBlockConfirmedEvent) String() string { return proto.CompactTextString(m) }
 func (*PlasmaCashSubmitBlockConfirmedEvent) ProtoMessage()    {}
 func (*PlasmaCashSubmitBlockConfirmedEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plasma_cash_842bda1f571177cf, []int{44}
+	return fileDescriptor_02303bd883d195ed, []int{44}
 }
 func (m *PlasmaCashSubmitBlockConfirmedEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlasmaCashSubmitBlockConfirmedEvent.Unmarshal(m, b)
@@ -2323,8 +2327,8 @@ func (m *PlasmaCashSubmitBlockConfirmedEvent) XXX_Unmarshal(b []byte) error {
 func (m *PlasmaCashSubmitBlockConfirmedEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlasmaCashSubmitBlockConfirmedEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlasmaCashSubmitBlockConfirmedEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlasmaCashSubmitBlockConfirmedEvent.Merge(dst, src)
+func (m *PlasmaCashSubmitBlockConfirmedEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlasmaCashSubmitBlockConfirmedEvent.Merge(m, src)
 }
 func (m *PlasmaCashSubmitBlockConfirmedEvent) XXX_Size() int {
 	return xxx_messageInfo_PlasmaCashSubmitBlockConfirmedEvent.Size(m)
@@ -2357,6 +2361,7 @@ func (m *PlasmaCashSubmitBlockConfirmedEvent) GetMerkleHash() []byte {
 }
 
 func init() {
+	proto.RegisterEnum("PlasmaCashCoinState", PlasmaCashCoinState_name, PlasmaCashCoinState_value)
 	proto.RegisterType((*PlasmaCashCoin)(nil), "PlasmaCashCoin")
 	proto.RegisterType((*PlasmaCashAccount)(nil), "PlasmaCashAccount")
 	proto.RegisterType((*PlasmaBlock)(nil), "PlasmaBlock")
@@ -2402,14 +2407,13 @@ func init() {
 	proto.RegisterType((*PlasmaCashWithdrawConfirmedEvent)(nil), "PlasmaCashWithdrawConfirmedEvent")
 	proto.RegisterType((*PlasmaCashDepositConfirmedEvent)(nil), "PlasmaCashDepositConfirmedEvent")
 	proto.RegisterType((*PlasmaCashSubmitBlockConfirmedEvent)(nil), "PlasmaCashSubmitBlockConfirmedEvent")
-	proto.RegisterEnum("PlasmaCashCoinState", PlasmaCashCoinState_name, PlasmaCashCoinState_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/plasma_cash/plasma_cash.proto", fileDescriptor_plasma_cash_842bda1f571177cf)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/plasma_cash/plasma_cash.proto", fileDescriptor_02303bd883d195ed)
 }
 
-var fileDescriptor_plasma_cash_842bda1f571177cf = []byte{
+var fileDescriptor_02303bd883d195ed = []byte{
 	// 1583 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x58, 0x5b, 0x6f, 0x1b, 0xc5,
 	0x17, 0xcf, 0xfa, 0x16, 0xe7, 0xd8, 0xb9, 0x4d, 0xf2, 0x4f, 0xdd, 0x24, 0x6d, 0xf2, 0xdf, 0x52,

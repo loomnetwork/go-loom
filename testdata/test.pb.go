@@ -3,9 +3,11 @@
 
 package testdata
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -30,7 +32,7 @@ func (m *CallArgs) Reset()         { *m = CallArgs{} }
 func (m *CallArgs) String() string { return proto.CompactTextString(m) }
 func (*CallArgs) ProtoMessage()    {}
 func (*CallArgs) Descriptor() ([]byte, []int) {
-	return fileDescriptor_test_652711cb7db5e8b4, []int{0}
+	return fileDescriptor_37824d8a1be1aa3c, []int{0}
 }
 func (m *CallArgs) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CallArgs.Unmarshal(m, b)
@@ -38,8 +40,8 @@ func (m *CallArgs) XXX_Unmarshal(b []byte) error {
 func (m *CallArgs) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CallArgs.Marshal(b, m, deterministic)
 }
-func (dst *CallArgs) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CallArgs.Merge(dst, src)
+func (m *CallArgs) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CallArgs.Merge(m, src)
 }
 func (m *CallArgs) XXX_Size() int {
 	return xxx_messageInfo_CallArgs.Size(m)
@@ -76,7 +78,7 @@ func (m *StaticCallArgs) Reset()         { *m = StaticCallArgs{} }
 func (m *StaticCallArgs) String() string { return proto.CompactTextString(m) }
 func (*StaticCallArgs) ProtoMessage()    {}
 func (*StaticCallArgs) Descriptor() ([]byte, []int) {
-	return fileDescriptor_test_652711cb7db5e8b4, []int{1}
+	return fileDescriptor_37824d8a1be1aa3c, []int{1}
 }
 func (m *StaticCallArgs) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_StaticCallArgs.Unmarshal(m, b)
@@ -84,8 +86,8 @@ func (m *StaticCallArgs) XXX_Unmarshal(b []byte) error {
 func (m *StaticCallArgs) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_StaticCallArgs.Marshal(b, m, deterministic)
 }
-func (dst *StaticCallArgs) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StaticCallArgs.Merge(dst, src)
+func (m *StaticCallArgs) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StaticCallArgs.Merge(m, src)
 }
 func (m *StaticCallArgs) XXX_Size() int {
 	return xxx_messageInfo_StaticCallArgs.Size(m)
@@ -122,7 +124,7 @@ func (m *StaticCallResult) Reset()         { *m = StaticCallResult{} }
 func (m *StaticCallResult) String() string { return proto.CompactTextString(m) }
 func (*StaticCallResult) ProtoMessage()    {}
 func (*StaticCallResult) Descriptor() ([]byte, []int) {
-	return fileDescriptor_test_652711cb7db5e8b4, []int{2}
+	return fileDescriptor_37824d8a1be1aa3c, []int{2}
 }
 func (m *StaticCallResult) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_StaticCallResult.Unmarshal(m, b)
@@ -130,8 +132,8 @@ func (m *StaticCallResult) XXX_Unmarshal(b []byte) error {
 func (m *StaticCallResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_StaticCallResult.Marshal(b, m, deterministic)
 }
-func (dst *StaticCallResult) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StaticCallResult.Merge(dst, src)
+func (m *StaticCallResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StaticCallResult.Merge(m, src)
 }
 func (m *StaticCallResult) XXX_Size() int {
 	return xxx_messageInfo_StaticCallResult.Size(m)
@@ -167,7 +169,7 @@ func (m *CallResult) Reset()         { *m = CallResult{} }
 func (m *CallResult) String() string { return proto.CompactTextString(m) }
 func (*CallResult) ProtoMessage()    {}
 func (*CallResult) Descriptor() ([]byte, []int) {
-	return fileDescriptor_test_652711cb7db5e8b4, []int{3}
+	return fileDescriptor_37824d8a1be1aa3c, []int{3}
 }
 func (m *CallResult) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CallResult.Unmarshal(m, b)
@@ -175,8 +177,8 @@ func (m *CallResult) XXX_Unmarshal(b []byte) error {
 func (m *CallResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CallResult.Marshal(b, m, deterministic)
 }
-func (dst *CallResult) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CallResult.Merge(dst, src)
+func (m *CallResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CallResult.Merge(m, src)
 }
 func (m *CallResult) XXX_Size() int {
 	return xxx_messageInfo_CallResult.Size(m)
@@ -202,10 +204,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/testdata/test.proto", fileDescriptor_test_652711cb7db5e8b4)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/testdata/test.proto", fileDescriptor_37824d8a1be1aa3c)
 }
 
-var fileDescriptor_test_652711cb7db5e8b4 = []byte{
+var fileDescriptor_37824d8a1be1aa3c = []byte{
 	// 202 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x8f, 0xbf, 0x6a, 0x86, 0x30,
 	0x14, 0x47, 0x49, 0xdb, 0x88, 0xde, 0xa1, 0x48, 0x90, 0xe2, 0x28, 0xa1, 0x83, 0x4b, 0x15, 0xec,

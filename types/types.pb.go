@@ -3,12 +3,13 @@
 
 package types
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import _ "github.com/gogo/protobuf/gogoproto"
-
-import github_com_loomnetwork_go_loom_common "github.com/loomnetwork/go-loom/common"
+import (
+	fmt "fmt"
+	_ "github.com/gogo/protobuf/gogoproto"
+	proto "github.com/gogo/protobuf/proto"
+	github_com_loomnetwork_go_loom_common "github.com/loomnetwork/go-loom/common"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -26,7 +27,7 @@ type BlockHeader struct {
 	Height               int64    `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
 	Time                 int64    `protobuf:"varint,3,opt,name=time,proto3" json:"time,omitempty"`
 	NumTxs               int32    `protobuf:"varint,4,opt,name=num_txs,json=numTxs,proto3" json:"num_txs,omitempty"`
-	LastBlockID          BlockID  `protobuf:"bytes,5,opt,name=last_block_id,json=lastBlockId" json:"last_block_id"`
+	LastBlockID          BlockID  `protobuf:"bytes,5,opt,name=last_block_id,json=lastBlockId,proto3" json:"last_block_id"`
 	LastCommitHash       []byte   `protobuf:"bytes,6,opt,name=last_commit_hash,json=lastCommitHash,proto3" json:"last_commit_hash,omitempty"`
 	DataHash             []byte   `protobuf:"bytes,7,opt,name=data_hash,json=dataHash,proto3" json:"data_hash,omitempty"`
 	ValidatorsHash       []byte   `protobuf:"bytes,8,opt,name=validators_hash,json=validatorsHash,proto3" json:"validators_hash,omitempty"`
@@ -41,7 +42,7 @@ func (m *BlockHeader) Reset()         { *m = BlockHeader{} }
 func (m *BlockHeader) String() string { return proto.CompactTextString(m) }
 func (*BlockHeader) ProtoMessage()    {}
 func (*BlockHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{0}
+	return fileDescriptor_c03fa62ef2c093ad, []int{0}
 }
 func (m *BlockHeader) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BlockHeader.Unmarshal(m, b)
@@ -49,8 +50,8 @@ func (m *BlockHeader) XXX_Unmarshal(b []byte) error {
 func (m *BlockHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_BlockHeader.Marshal(b, m, deterministic)
 }
-func (dst *BlockHeader) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BlockHeader.Merge(dst, src)
+func (m *BlockHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BlockHeader.Merge(m, src)
 }
 func (m *BlockHeader) XXX_Size() int {
 	return xxx_messageInfo_BlockHeader.Size(m)
@@ -133,7 +134,7 @@ func (m *BlockHeader) GetCurrentHash() []byte {
 
 type BlockID struct {
 	Hash                 []byte        `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
-	Parts                PartSetHeader `protobuf:"bytes,2,opt,name=parts" json:"parts"`
+	Parts                PartSetHeader `protobuf:"bytes,2,opt,name=parts,proto3" json:"parts"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -143,7 +144,7 @@ func (m *BlockID) Reset()         { *m = BlockID{} }
 func (m *BlockID) String() string { return proto.CompactTextString(m) }
 func (*BlockID) ProtoMessage()    {}
 func (*BlockID) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{1}
+	return fileDescriptor_c03fa62ef2c093ad, []int{1}
 }
 func (m *BlockID) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BlockID.Unmarshal(m, b)
@@ -151,8 +152,8 @@ func (m *BlockID) XXX_Unmarshal(b []byte) error {
 func (m *BlockID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_BlockID.Marshal(b, m, deterministic)
 }
-func (dst *BlockID) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BlockID.Merge(dst, src)
+func (m *BlockID) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BlockID.Merge(m, src)
 }
 func (m *BlockID) XXX_Size() int {
 	return xxx_messageInfo_BlockID.Size(m)
@@ -189,7 +190,7 @@ func (m *PartSetHeader) Reset()         { *m = PartSetHeader{} }
 func (m *PartSetHeader) String() string { return proto.CompactTextString(m) }
 func (*PartSetHeader) ProtoMessage()    {}
 func (*PartSetHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{2}
+	return fileDescriptor_c03fa62ef2c093ad, []int{2}
 }
 func (m *PartSetHeader) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PartSetHeader.Unmarshal(m, b)
@@ -197,8 +198,8 @@ func (m *PartSetHeader) XXX_Unmarshal(b []byte) error {
 func (m *PartSetHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PartSetHeader.Marshal(b, m, deterministic)
 }
-func (dst *PartSetHeader) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PartSetHeader.Merge(dst, src)
+func (m *PartSetHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PartSetHeader.Merge(m, src)
 }
 func (m *PartSetHeader) XXX_Size() int {
 	return xxx_messageInfo_PartSetHeader.Size(m)
@@ -235,7 +236,7 @@ func (m *Validator) Reset()         { *m = Validator{} }
 func (m *Validator) String() string { return proto.CompactTextString(m) }
 func (*Validator) ProtoMessage()    {}
 func (*Validator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{3}
+	return fileDescriptor_c03fa62ef2c093ad, []int{3}
 }
 func (m *Validator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Validator.Unmarshal(m, b)
@@ -243,8 +244,8 @@ func (m *Validator) XXX_Unmarshal(b []byte) error {
 func (m *Validator) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Validator.Marshal(b, m, deterministic)
 }
-func (dst *Validator) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Validator.Merge(dst, src)
+func (m *Validator) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Validator.Merge(m, src)
 }
 func (m *Validator) XXX_Size() int {
 	return xxx_messageInfo_Validator.Size(m)
@@ -281,7 +282,7 @@ func (m *Evidence) Reset()         { *m = Evidence{} }
 func (m *Evidence) String() string { return proto.CompactTextString(m) }
 func (*Evidence) ProtoMessage()    {}
 func (*Evidence) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{4}
+	return fileDescriptor_c03fa62ef2c093ad, []int{4}
 }
 func (m *Evidence) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Evidence.Unmarshal(m, b)
@@ -289,8 +290,8 @@ func (m *Evidence) XXX_Unmarshal(b []byte) error {
 func (m *Evidence) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Evidence.Marshal(b, m, deterministic)
 }
-func (dst *Evidence) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Evidence.Merge(dst, src)
+func (m *Evidence) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Evidence.Merge(m, src)
 }
 func (m *Evidence) XXX_Size() int {
 	return xxx_messageInfo_Evidence.Size(m)
@@ -326,7 +327,7 @@ func (m *BigUInt) Reset()         { *m = BigUInt{} }
 func (m *BigUInt) String() string { return proto.CompactTextString(m) }
 func (*BigUInt) ProtoMessage()    {}
 func (*BigUInt) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{5}
+	return fileDescriptor_c03fa62ef2c093ad, []int{5}
 }
 func (m *BigUInt) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BigUInt.Unmarshal(m, b)
@@ -334,8 +335,8 @@ func (m *BigUInt) XXX_Unmarshal(b []byte) error {
 func (m *BigUInt) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_BigUInt.Marshal(b, m, deterministic)
 }
-func (dst *BigUInt) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BigUInt.Merge(dst, src)
+func (m *BigUInt) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BigUInt.Merge(m, src)
 }
 func (m *BigUInt) XXX_Size() int {
 	return xxx_messageInfo_BigUInt.Size(m)
@@ -358,7 +359,7 @@ func (m *Address) Reset()         { *m = Address{} }
 func (m *Address) String() string { return proto.CompactTextString(m) }
 func (*Address) ProtoMessage()    {}
 func (*Address) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{6}
+	return fileDescriptor_c03fa62ef2c093ad, []int{6}
 }
 func (m *Address) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Address.Unmarshal(m, b)
@@ -366,8 +367,8 @@ func (m *Address) XXX_Unmarshal(b []byte) error {
 func (m *Address) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Address.Marshal(b, m, deterministic)
 }
-func (dst *Address) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Address.Merge(dst, src)
+func (m *Address) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Address.Merge(m, src)
 }
 func (m *Address) XXX_Size() int {
 	return xxx_messageInfo_Address.Size(m)
@@ -397,7 +398,7 @@ func (m *Transaction) Reset()         { *m = Transaction{} }
 func (m *Transaction) String() string { return proto.CompactTextString(m) }
 func (*Transaction) ProtoMessage()    {}
 func (*Transaction) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{7}
+	return fileDescriptor_c03fa62ef2c093ad, []int{7}
 }
 func (m *Transaction) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Transaction.Unmarshal(m, b)
@@ -405,8 +406,8 @@ func (m *Transaction) XXX_Unmarshal(b []byte) error {
 func (m *Transaction) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Transaction.Marshal(b, m, deterministic)
 }
-func (dst *Transaction) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Transaction.Merge(dst, src)
+func (m *Transaction) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Transaction.Merge(m, src)
 }
 func (m *Transaction) XXX_Size() int {
 	return xxx_messageInfo_Transaction.Size(m)
@@ -443,10 +444,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/types/types.proto", fileDescriptor_types_83819d5bbd8c1723)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/types/types.proto", fileDescriptor_c03fa62ef2c093ad)
 }
 
-var fileDescriptor_types_83819d5bbd8c1723 = []byte{
+var fileDescriptor_c03fa62ef2c093ad = []byte{
 	// 578 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xbd, 0x6e, 0xd4, 0x40,
 	0x10, 0xc6, 0x4e, 0x7c, 0xf6, 0x8d, 0x93, 0x80, 0x96, 0x88, 0x1c, 0x50, 0xdc, 0xe1, 0x02, 0x2c,
