@@ -1,5 +1,3 @@
-// +build evm
-
 package crypto
 
 import (
@@ -10,7 +8,6 @@ import (
 	"io/ioutil"
 	"math/big"
 	"math/rand"
-	"os"
 	"time"
 
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
@@ -21,12 +18,11 @@ import (
 )
 
 const (
-	YubiHsmPrivKeyTypeSecp256k1 = "secp256k1"
-	YubiHsmPrivKeyTypeEd25519   = "ed25519"
-
-	YubiDefConnURL   = "127.0.0.1:12345"
-	YubiDefAuthKeyID = 1
-	YubiDefPassword  = "password"
+	YubiDefConnURL       = "127.0.0.1:12345"
+	YubiDefAuthKeyID     = 1
+	YubiDefPassword      = "password"
+	YubiDefPrivKeyDomain = 1
+	YubiDefPrivKeyType   = PrivateKeyTypeEd25519
 
 	YubiSecp256k1PubKeySize  = 33
 	YubiSecp256k1SignDataLen = 64
@@ -35,74 +31,76 @@ const (
 	YubiEd25519SignDataLen = 64
 )
 
-type YubiHsmParams struct {
-	HsmConnURL  string `json:"YubiHsmConnURL"`
-	AuthKeyID   uint16 `json:"AuthKeyID"`
-	AuthPasswd  string `json:"Password"`
-	PrivKeyID   uint16 `json:"PrivKeyID"`
-	PrivKeyType string `json:"PrivKeyType"`
+type YubiHsmConfig struct {
+	HsmConnURL    string `json:"YubiHsmConnURL"`
+	AuthKeyID     uint16 `json:"AuthKeyID"`
+	AuthPasswd    string `json:"Password"`
+	PrivKeyID     uint16 `json:"PrivKeyID"`
+	PrivKeyDomain uint16 `json:"PrivKeyDomain"`
+	PrivKeyType   string `json:"PrivKeyType"`
 }
 
 type YubiHsmPrivateKey struct {
-	yubiHsmParams *YubiHsmParams
-	sessionMgr    *yubihsm.SessionManager
-	privKeyID     uint16
-	pubKeyBytes   []byte
+	sessionMgr  *yubihsm.SessionManager
+	privKeyType string
+	privKeyID   uint16
+	pubKeyBytes []byte
 }
 
-func (privKey *YubiHsmPrivateKey) initYubiHsmSession(algo, filePath string) error {
-	yubiHsmParams := &YubiHsmParams{
-		HsmConnURL:  YubiDefConnURL,
-		AuthKeyID:   YubiDefAuthKeyID,
-		AuthPasswd:  YubiDefPassword,
-		PrivKeyType: YubiHsmPrivKeyTypeEd25519,
+func InitYubiHsmPrivKey(hsmConfig *YubiHsmConfig) (*YubiHsmPrivateKey, error) {
+	privKey := &YubiHsmPrivateKey{}
+
+	httpConnector := connector.NewHTTPConnector(hsmConfig.HsmConnURL)
+	sessionMgr, err := yubihsm.NewSessionManager(httpConnector, hsmConfig.AuthKeyID, hsmConfig.AuthPasswd)
+	if err != nil {
+		return nil, err
 	}
-	if algo == "secp256k1" {
-		yubiHsmParams.PrivKeyType = YubiHsmPrivKeyTypeSecp256k1
+
+	privKey.sessionMgr = sessionMgr
+	privKey.privKeyID = hsmConfig.PrivKeyID
+	privKey.privKeyType = hsmConfig.PrivKeyType
+
+	return privKey, nil
+}
+
+func loadYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
+	yubiHsmConfig := &YubiHsmConfig{
+		HsmConnURL:    YubiDefConnURL,
+		AuthKeyID:     YubiDefAuthKeyID,
+		AuthPasswd:    YubiDefPassword,
+		PrivKeyID:     0,
+		PrivKeyDomain: YubiDefPrivKeyDomain,
+		PrivKeyType:   YubiDefPrivKeyType,
 	}
 
 	jsonParams, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	err = json.Unmarshal(jsonParams, yubiHsmParams)
+	err = json.Unmarshal(jsonParams, yubiHsmConfig)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	httpConnector := connector.NewHTTPConnector(yubiHsmParams.HsmConnURL)
-	sessionMgr, err := yubihsm.NewSessionManager(httpConnector, yubiHsmParams.AuthKeyID, yubiHsmParams.AuthPasswd)
-	if err != nil {
-		return err
-	}
-
-	privKey.yubiHsmParams = yubiHsmParams
-	privKey.sessionMgr = sessionMgr
-	privKey.privKeyID = yubiHsmParams.PrivKeyID
-
-	return nil
+	return InitYubiHsmPrivKey(yubiHsmConfig)
 }
 
 func GenYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
-	var err error
-
-	yubiHsmPrivKey := &YubiHsmPrivateKey{}
-
 	// init YubiHSM session
-	err = yubiHsmPrivKey.initYubiHsmSession(algo, filePath)
+	yubiHsmPrivKey, err := loadYubiHsmPrivKey(filePath)
 	if err != nil {
 		return nil, err
 	}
 
 	// generate private key
-	err = yubiHsmPrivKey.genPrivKey()
+	err = yubiHsmPrivKey.GenPrivKey()
 	if err != nil {
 		yubiHsmPrivKey.UnloadYubiHsmPrivKey()
 		return nil, err
 	}
 
 	// export pubkey
-	err = yubiHsmPrivKey.exportPubKey()
+	err = yubiHsmPrivKey.ExportPubKey()
 	if err != nil {
 		yubiHsmPrivKey.deletePrivKey()
 		yubiHsmPrivKey.UnloadYubiHsmPrivKey()
@@ -112,7 +110,7 @@ func GenYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
 	return yubiHsmPrivKey, nil
 }
 
-func (privKey *YubiHsmPrivateKey) genPrivKey() error {
+func (privKey *YubiHsmPrivateKey) GenPrivKey() error {
 	var cap uint64
 	var algo commands.Algorithm
 
@@ -120,7 +118,7 @@ func (privKey *YubiHsmPrivateKey) genPrivKey() error {
 	rand.Seed(time.Now().UnixNano())
 	keyID := uint16(rand.Intn(0xFFFF))
 
-	if privKey.yubiHsmParams.PrivKeyType == YubiHsmPrivKeyTypeEd25519 {
+	if privKey.privKeyType == PrivateKeyTypeEd25519 {
 		cap = commands.CapabilityAsymmetricSignEddsa
 		algo = commands.AlgorighmED25519
 	} else {
@@ -144,6 +142,10 @@ func (privKey *YubiHsmPrivateKey) genPrivKey() error {
 	return nil
 }
 
+func (privKey *YubiHsmPrivateKey) GetPrivKeyID() uint16 {
+	return privKey.privKeyID
+}
+
 func (privKey *YubiHsmPrivateKey) deletePrivKey() {
 	// create command to delete secp256k1 key
 	command, err := commands.CreateDeleteObjectCommand(privKey.privKeyID, commands.ObjectTypeAsymmetricKey)
@@ -157,13 +159,9 @@ func (privKey *YubiHsmPrivateKey) deletePrivKey() {
 	privKey.privKeyID = 0
 }
 
-func LoadYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
-	var err error
-
-	yubiHsmPrivKey := &YubiHsmPrivateKey{}
-
+func LoadYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
 	// init YubiHSM session
-	err = yubiHsmPrivKey.initYubiHsmSession(algo, filePath)
+	yubiHsmPrivKey, err := loadYubiHsmPrivKey(filePath)
 	if err != nil {
 		return nil, err
 	}
@@ -173,35 +171,13 @@ func LoadYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
 	}
 
 	// try to export secp256k1 public key
-	err = yubiHsmPrivKey.exportPubKey()
+	err = yubiHsmPrivKey.ExportPubKey()
 	if err != nil {
 		yubiHsmPrivKey.UnloadYubiHsmPrivKey()
 		return nil, err
 	}
 
 	return yubiHsmPrivKey, nil
-}
-
-func (privKey *YubiHsmPrivateKey) SaveYubiHsmPrivKey(filePath string) {
-	privKey.yubiHsmParams.PrivKeyID = privKey.privKeyID
-
-	// convert to json
-	jsonBytes, err := json.Marshal(privKey.yubiHsmParams)
-	if err != nil {
-		panic(err)
-	}
-
-	// create file
-	file, err := os.Create(filePath)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	_, err = file.Write(jsonBytes)
-	if err != nil {
-		panic(err)
-	}
 }
 
 // unload YubiHsm private key
@@ -247,7 +223,7 @@ func (privKey *YubiHsmPrivateKey) exportEd25519Pubkey(keyData []byte) error {
 }
 
 // export YubiHsm public key by private key ID
-func (privKey *YubiHsmPrivateKey) exportPubKey() error {
+func (privKey *YubiHsmPrivateKey) ExportPubKey() error {
 	// send getpubkey command
 	cmd, err := commands.CreateGetPubKeyCommand(privKey.privKeyID)
 	if err != nil {
@@ -265,7 +241,7 @@ func (privKey *YubiHsmPrivateKey) exportPubKey() error {
 		return errors.New("Invalid response for exporting public key")
 	}
 
-	if privKey.yubiHsmParams.PrivKeyType == YubiHsmPrivKeyTypeEd25519 {
+	if privKey.privKeyType == PrivateKeyTypeEd25519 {
 		err = privKey.exportEd25519Pubkey(parsedResp.KeyData)
 	} else {
 		err = privKey.exportSecp256k1Pubkey(parsedResp.KeyData)
@@ -335,7 +311,7 @@ func (privKey *YubiHsmPrivateKey) yubiHsmEd25519Sign(msg []byte) (sig []byte, er
 
 // YubiHsmSign signs using private key in YubiHSM token
 func YubiHsmSign(msg []byte, privKey *YubiHsmPrivateKey) (sig []byte, err error) {
-	if privKey.yubiHsmParams.PrivKeyType == YubiHsmPrivKeyTypeEd25519 {
+	if privKey.privKeyType == PrivateKeyTypeEd25519 {
 		sig, err = privKey.yubiHsmEd25519Sign(msg)
 	} else {
 		hash := sha256.Sum256(msg)

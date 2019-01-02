@@ -42,13 +42,14 @@ func (x DelegationV2_DelegationState) String() string {
 	return proto.EnumName(DelegationV2_DelegationState_name, int32(x))
 }
 func (DelegationV2_DelegationState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{6, 0}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{6, 0}
 }
 
 type ParamsV2 struct {
 	ValidatorCount       uint64         `protobuf:"varint,1,opt,name=validator_count,json=validatorCount,proto3" json:"validator_count,omitempty"`
 	ElectionCycleLength  int64          `protobuf:"varint,2,opt,name=election_cycle_length,json=electionCycleLength,proto3" json:"election_cycle_length,omitempty"`
 	CoinContractAddress  *types.Address `protobuf:"bytes,3,opt,name=coin_contract_address,json=coinContractAddress" json:"coin_contract_address,omitempty"`
+	OracleAddress        *types.Address `protobuf:"bytes,4,opt,name=oracle_address,json=oracleAddress" json:"oracle_address,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -58,7 +59,7 @@ func (m *ParamsV2) Reset()         { *m = ParamsV2{} }
 func (m *ParamsV2) String() string { return proto.CompactTextString(m) }
 func (*ParamsV2) ProtoMessage()    {}
 func (*ParamsV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{0}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{0}
 }
 func (m *ParamsV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ParamsV2.Unmarshal(m, b)
@@ -99,6 +100,13 @@ func (m *ParamsV2) GetCoinContractAddress() *types.Address {
 	return nil
 }
 
+func (m *ParamsV2) GetOracleAddress() *types.Address {
+	if m != nil {
+		return m.OracleAddress
+	}
+	return nil
+}
+
 type StateV2 struct {
 	Params               *ParamsV2          `protobuf:"bytes,1,opt,name=params" json:"params,omitempty"`
 	Validators           []*types.Validator `protobuf:"bytes,2,rep,name=validators" json:"validators,omitempty"`
@@ -112,7 +120,7 @@ func (m *StateV2) Reset()         { *m = StateV2{} }
 func (m *StateV2) String() string { return proto.CompactTextString(m) }
 func (*StateV2) ProtoMessage()    {}
 func (*StateV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{1}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{1}
 }
 func (m *StateV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_StateV2.Unmarshal(m, b)
@@ -161,6 +169,8 @@ type ValidatorStatisticV2 struct {
 	SlashPercentage      *types.BigUInt `protobuf:"bytes,5,opt,name=slash_percentage,json=slashPercentage" json:"slash_percentage,omitempty"`
 	DistributionTotal    *types.BigUInt `protobuf:"bytes,6,opt,name=distribution_total,json=distributionTotal" json:"distribution_total,omitempty"`
 	DelegationTotal      *types.BigUInt `protobuf:"bytes,7,opt,name=delegation_total,json=delegationTotal" json:"delegation_total,omitempty"`
+	WhitelistAmount      *types.BigUInt `protobuf:"bytes,8,opt,name=whitelist_amount,json=whitelistAmount" json:"whitelist_amount,omitempty"`
+	WhitelistLocktime    uint64         `protobuf:"varint,9,opt,name=whitelist_locktime,json=whitelistLocktime,proto3" json:"whitelist_locktime,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -170,7 +180,7 @@ func (m *ValidatorStatisticV2) Reset()         { *m = ValidatorStatisticV2{} }
 func (m *ValidatorStatisticV2) String() string { return proto.CompactTextString(m) }
 func (*ValidatorStatisticV2) ProtoMessage()    {}
 func (*ValidatorStatisticV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{2}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{2}
 }
 func (m *ValidatorStatisticV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidatorStatisticV2.Unmarshal(m, b)
@@ -239,6 +249,20 @@ func (m *ValidatorStatisticV2) GetDelegationTotal() *types.BigUInt {
 	return nil
 }
 
+func (m *ValidatorStatisticV2) GetWhitelistAmount() *types.BigUInt {
+	if m != nil {
+		return m.WhitelistAmount
+	}
+	return nil
+}
+
+func (m *ValidatorStatisticV2) GetWhitelistLocktime() uint64 {
+	if m != nil {
+		return m.WhitelistLocktime
+	}
+	return 0
+}
+
 type ValidatorStatisticListV2 struct {
 	Statistics           []*ValidatorStatisticV2 `protobuf:"bytes,1,rep,name=statistics" json:"statistics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
@@ -250,7 +274,7 @@ func (m *ValidatorStatisticListV2) Reset()         { *m = ValidatorStatisticList
 func (m *ValidatorStatisticListV2) String() string { return proto.CompactTextString(m) }
 func (*ValidatorStatisticListV2) ProtoMessage()    {}
 func (*ValidatorStatisticListV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{3}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{3}
 }
 func (m *ValidatorStatisticListV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidatorStatisticListV2.Unmarshal(m, b)
@@ -293,7 +317,7 @@ func (m *CandidateV2) Reset()         { *m = CandidateV2{} }
 func (m *CandidateV2) String() string { return proto.CompactTextString(m) }
 func (*CandidateV2) ProtoMessage()    {}
 func (*CandidateV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{4}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{4}
 }
 func (m *CandidateV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CandidateV2.Unmarshal(m, b)
@@ -366,7 +390,7 @@ func (m *CandidateListV2) Reset()         { *m = CandidateListV2{} }
 func (m *CandidateListV2) String() string { return proto.CompactTextString(m) }
 func (*CandidateListV2) ProtoMessage()    {}
 func (*CandidateListV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{5}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{5}
 }
 func (m *CandidateListV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CandidateListV2.Unmarshal(m, b)
@@ -410,7 +434,7 @@ func (m *DelegationV2) Reset()         { *m = DelegationV2{} }
 func (m *DelegationV2) String() string { return proto.CompactTextString(m) }
 func (*DelegationV2) ProtoMessage()    {}
 func (*DelegationV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{6}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{6}
 }
 func (m *DelegationV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelegationV2.Unmarshal(m, b)
@@ -490,7 +514,7 @@ func (m *DelegationListV2) Reset()         { *m = DelegationListV2{} }
 func (m *DelegationListV2) String() string { return proto.CompactTextString(m) }
 func (*DelegationListV2) ProtoMessage()    {}
 func (*DelegationListV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{7}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{7}
 }
 func (m *DelegationListV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelegationListV2.Unmarshal(m, b)
@@ -529,7 +553,7 @@ func (m *DistributionV2) Reset()         { *m = DistributionV2{} }
 func (m *DistributionV2) String() string { return proto.CompactTextString(m) }
 func (*DistributionV2) ProtoMessage()    {}
 func (*DistributionV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{8}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{8}
 }
 func (m *DistributionV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DistributionV2.Unmarshal(m, b)
@@ -574,7 +598,7 @@ func (m *DistributionListV2) Reset()         { *m = DistributionListV2{} }
 func (m *DistributionListV2) String() string { return proto.CompactTextString(m) }
 func (*DistributionListV2) ProtoMessage()    {}
 func (*DistributionListV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{9}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{9}
 }
 func (m *DistributionListV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DistributionListV2.Unmarshal(m, b)
@@ -613,7 +637,7 @@ func (m *DPOSInitRequestV2) Reset()         { *m = DPOSInitRequestV2{} }
 func (m *DPOSInitRequestV2) String() string { return proto.CompactTextString(m) }
 func (*DPOSInitRequestV2) ProtoMessage()    {}
 func (*DPOSInitRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{10}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{10}
 }
 func (m *DPOSInitRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DPOSInitRequestV2.Unmarshal(m, b)
@@ -659,7 +683,7 @@ func (m *DelegateRequestV2) Reset()         { *m = DelegateRequestV2{} }
 func (m *DelegateRequestV2) String() string { return proto.CompactTextString(m) }
 func (*DelegateRequestV2) ProtoMessage()    {}
 func (*DelegateRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{11}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{11}
 }
 func (m *DelegateRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelegateRequestV2.Unmarshal(m, b)
@@ -693,66 +717,96 @@ func (m *DelegateRequestV2) GetAmount() *types.BigUInt {
 	return nil
 }
 
-type DelegationOverrideRequestV2 struct {
-	ValidatorAddress     *types.Address `protobuf:"bytes,1,opt,name=validator_address,json=validatorAddress" json:"validator_address,omitempty"`
-	DelegatorAddress     *types.Address `protobuf:"bytes,2,opt,name=delegator_address,json=delegatorAddress" json:"delegator_address,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,3,opt,name=amount" json:"amount,omitempty"`
-	LockTime             uint64         `protobuf:"varint,4,opt,name=lock_time,json=lockTime,proto3" json:"lock_time,omitempty"`
+type WhitelistCandidateRequestV2 struct {
+	CandidateAddress     *types.Address `protobuf:"bytes,1,opt,name=candidate_address,json=candidateAddress" json:"candidate_address,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
+	LockTime             uint64         `protobuf:"varint,3,opt,name=lock_time,json=lockTime,proto3" json:"lock_time,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *DelegationOverrideRequestV2) Reset()         { *m = DelegationOverrideRequestV2{} }
-func (m *DelegationOverrideRequestV2) String() string { return proto.CompactTextString(m) }
-func (*DelegationOverrideRequestV2) ProtoMessage()    {}
-func (*DelegationOverrideRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{12}
+func (m *WhitelistCandidateRequestV2) Reset()         { *m = WhitelistCandidateRequestV2{} }
+func (m *WhitelistCandidateRequestV2) String() string { return proto.CompactTextString(m) }
+func (*WhitelistCandidateRequestV2) ProtoMessage()    {}
+func (*WhitelistCandidateRequestV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{12}
 }
-func (m *DelegationOverrideRequestV2) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DelegationOverrideRequestV2.Unmarshal(m, b)
+func (m *WhitelistCandidateRequestV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WhitelistCandidateRequestV2.Unmarshal(m, b)
 }
-func (m *DelegationOverrideRequestV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DelegationOverrideRequestV2.Marshal(b, m, deterministic)
+func (m *WhitelistCandidateRequestV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WhitelistCandidateRequestV2.Marshal(b, m, deterministic)
 }
-func (dst *DelegationOverrideRequestV2) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DelegationOverrideRequestV2.Merge(dst, src)
+func (dst *WhitelistCandidateRequestV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WhitelistCandidateRequestV2.Merge(dst, src)
 }
-func (m *DelegationOverrideRequestV2) XXX_Size() int {
-	return xxx_messageInfo_DelegationOverrideRequestV2.Size(m)
+func (m *WhitelistCandidateRequestV2) XXX_Size() int {
+	return xxx_messageInfo_WhitelistCandidateRequestV2.Size(m)
 }
-func (m *DelegationOverrideRequestV2) XXX_DiscardUnknown() {
-	xxx_messageInfo_DelegationOverrideRequestV2.DiscardUnknown(m)
+func (m *WhitelistCandidateRequestV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_WhitelistCandidateRequestV2.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_DelegationOverrideRequestV2 proto.InternalMessageInfo
+var xxx_messageInfo_WhitelistCandidateRequestV2 proto.InternalMessageInfo
 
-func (m *DelegationOverrideRequestV2) GetValidatorAddress() *types.Address {
+func (m *WhitelistCandidateRequestV2) GetCandidateAddress() *types.Address {
 	if m != nil {
-		return m.ValidatorAddress
+		return m.CandidateAddress
 	}
 	return nil
 }
 
-func (m *DelegationOverrideRequestV2) GetDelegatorAddress() *types.Address {
-	if m != nil {
-		return m.DelegatorAddress
-	}
-	return nil
-}
-
-func (m *DelegationOverrideRequestV2) GetAmount() *types.BigUInt {
+func (m *WhitelistCandidateRequestV2) GetAmount() *types.BigUInt {
 	if m != nil {
 		return m.Amount
 	}
 	return nil
 }
 
-func (m *DelegationOverrideRequestV2) GetLockTime() uint64 {
+func (m *WhitelistCandidateRequestV2) GetLockTime() uint64 {
 	if m != nil {
 		return m.LockTime
 	}
 	return 0
+}
+
+type RemoveWhitelistedCandidateRequestV2 struct {
+	CandidateAddress     *types.Address `protobuf:"bytes,1,opt,name=candidate_address,json=candidateAddress" json:"candidate_address,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *RemoveWhitelistedCandidateRequestV2) Reset()         { *m = RemoveWhitelistedCandidateRequestV2{} }
+func (m *RemoveWhitelistedCandidateRequestV2) String() string { return proto.CompactTextString(m) }
+func (*RemoveWhitelistedCandidateRequestV2) ProtoMessage()    {}
+func (*RemoveWhitelistedCandidateRequestV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{13}
+}
+func (m *RemoveWhitelistedCandidateRequestV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RemoveWhitelistedCandidateRequestV2.Unmarshal(m, b)
+}
+func (m *RemoveWhitelistedCandidateRequestV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RemoveWhitelistedCandidateRequestV2.Marshal(b, m, deterministic)
+}
+func (dst *RemoveWhitelistedCandidateRequestV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RemoveWhitelistedCandidateRequestV2.Merge(dst, src)
+}
+func (m *RemoveWhitelistedCandidateRequestV2) XXX_Size() int {
+	return xxx_messageInfo_RemoveWhitelistedCandidateRequestV2.Size(m)
+}
+func (m *RemoveWhitelistedCandidateRequestV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_RemoveWhitelistedCandidateRequestV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RemoveWhitelistedCandidateRequestV2 proto.InternalMessageInfo
+
+func (m *RemoveWhitelistedCandidateRequestV2) GetCandidateAddress() *types.Address {
+	if m != nil {
+		return m.CandidateAddress
+	}
+	return nil
 }
 
 type RedelegateRequestV2 struct {
@@ -767,7 +821,7 @@ func (m *RedelegateRequestV2) Reset()         { *m = RedelegateRequestV2{} }
 func (m *RedelegateRequestV2) String() string { return proto.CompactTextString(m) }
 func (*RedelegateRequestV2) ProtoMessage()    {}
 func (*RedelegateRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{13}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{14}
 }
 func (m *RedelegateRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RedelegateRequestV2.Unmarshal(m, b)
@@ -813,7 +867,7 @@ func (m *CheckDelegationRequestV2) Reset()         { *m = CheckDelegationRequest
 func (m *CheckDelegationRequestV2) String() string { return proto.CompactTextString(m) }
 func (*CheckDelegationRequestV2) ProtoMessage()    {}
 func (*CheckDelegationRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{14}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{15}
 }
 func (m *CheckDelegationRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckDelegationRequestV2.Unmarshal(m, b)
@@ -858,7 +912,7 @@ func (m *CheckDelegationResponseV2) Reset()         { *m = CheckDelegationRespon
 func (m *CheckDelegationResponseV2) String() string { return proto.CompactTextString(m) }
 func (*CheckDelegationResponseV2) ProtoMessage()    {}
 func (*CheckDelegationResponseV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{15}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{16}
 }
 func (m *CheckDelegationResponseV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckDelegationResponseV2.Unmarshal(m, b)
@@ -896,7 +950,7 @@ func (m *ClaimDistributionRequestV2) Reset()         { *m = ClaimDistributionReq
 func (m *ClaimDistributionRequestV2) String() string { return proto.CompactTextString(m) }
 func (*ClaimDistributionRequestV2) ProtoMessage()    {}
 func (*ClaimDistributionRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{16}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{17}
 }
 func (m *ClaimDistributionRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ClaimDistributionRequestV2.Unmarshal(m, b)
@@ -934,7 +988,7 @@ func (m *ClaimDistributionResponseV2) Reset()         { *m = ClaimDistributionRe
 func (m *ClaimDistributionResponseV2) String() string { return proto.CompactTextString(m) }
 func (*ClaimDistributionResponseV2) ProtoMessage()    {}
 func (*ClaimDistributionResponseV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{17}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{18}
 }
 func (m *ClaimDistributionResponseV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ClaimDistributionResponseV2.Unmarshal(m, b)
@@ -973,7 +1027,7 @@ func (m *UnbondRequestV2) Reset()         { *m = UnbondRequestV2{} }
 func (m *UnbondRequestV2) String() string { return proto.CompactTextString(m) }
 func (*UnbondRequestV2) ProtoMessage()    {}
 func (*UnbondRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{18}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{19}
 }
 func (m *UnbondRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UnbondRequestV2.Unmarshal(m, b)
@@ -1022,7 +1076,7 @@ func (m *RegisterCandidateRequestV2) Reset()         { *m = RegisterCandidateReq
 func (m *RegisterCandidateRequestV2) String() string { return proto.CompactTextString(m) }
 func (*RegisterCandidateRequestV2) ProtoMessage()    {}
 func (*RegisterCandidateRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{19}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{20}
 }
 func (m *RegisterCandidateRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegisterCandidateRequestV2.Unmarshal(m, b)
@@ -1087,7 +1141,7 @@ func (m *UnregisterCandidateRequestV2) Reset()         { *m = UnregisterCandidat
 func (m *UnregisterCandidateRequestV2) String() string { return proto.CompactTextString(m) }
 func (*UnregisterCandidateRequestV2) ProtoMessage()    {}
 func (*UnregisterCandidateRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{20}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{21}
 }
 func (m *UnregisterCandidateRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UnregisterCandidateRequestV2.Unmarshal(m, b)
@@ -1117,7 +1171,7 @@ func (m *ElectDelegationRequestV2) Reset()         { *m = ElectDelegationRequest
 func (m *ElectDelegationRequestV2) String() string { return proto.CompactTextString(m) }
 func (*ElectDelegationRequestV2) ProtoMessage()    {}
 func (*ElectDelegationRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{21}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{22}
 }
 func (m *ElectDelegationRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ElectDelegationRequestV2.Unmarshal(m, b)
@@ -1147,7 +1201,7 @@ func (m *ListValidatorsRequestV2) Reset()         { *m = ListValidatorsRequestV2
 func (m *ListValidatorsRequestV2) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsRequestV2) ProtoMessage()    {}
 func (*ListValidatorsRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{22}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{23}
 }
 func (m *ListValidatorsRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsRequestV2.Unmarshal(m, b)
@@ -1168,17 +1222,17 @@ func (m *ListValidatorsRequestV2) XXX_DiscardUnknown() {
 var xxx_messageInfo_ListValidatorsRequestV2 proto.InternalMessageInfo
 
 type ListValidatorsResponseV2 struct {
-	Validators           []*types.Validator `protobuf:"bytes,1,rep,name=validators" json:"validators,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	Statistics           []*ValidatorStatisticV2 `protobuf:"bytes,1,rep,name=statistics" json:"statistics,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *ListValidatorsResponseV2) Reset()         { *m = ListValidatorsResponseV2{} }
 func (m *ListValidatorsResponseV2) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsResponseV2) ProtoMessage()    {}
 func (*ListValidatorsResponseV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{23}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{24}
 }
 func (m *ListValidatorsResponseV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsResponseV2.Unmarshal(m, b)
@@ -1198,9 +1252,9 @@ func (m *ListValidatorsResponseV2) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListValidatorsResponseV2 proto.InternalMessageInfo
 
-func (m *ListValidatorsResponseV2) GetValidators() []*types.Validator {
+func (m *ListValidatorsResponseV2) GetStatistics() []*ValidatorStatisticV2 {
 	if m != nil {
-		return m.Validators
+		return m.Statistics
 	}
 	return nil
 }
@@ -1215,7 +1269,7 @@ func (m *ListCandidateRequestV2) Reset()         { *m = ListCandidateRequestV2{}
 func (m *ListCandidateRequestV2) String() string { return proto.CompactTextString(m) }
 func (*ListCandidateRequestV2) ProtoMessage()    {}
 func (*ListCandidateRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{24}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{25}
 }
 func (m *ListCandidateRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListCandidateRequestV2.Unmarshal(m, b)
@@ -1246,7 +1300,7 @@ func (m *ListCandidateResponseV2) Reset()         { *m = ListCandidateResponseV2
 func (m *ListCandidateResponseV2) String() string { return proto.CompactTextString(m) }
 func (*ListCandidateResponseV2) ProtoMessage()    {}
 func (*ListCandidateResponseV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv2_424c52456611c731, []int{25}
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{26}
 }
 func (m *ListCandidateResponseV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListCandidateResponseV2.Unmarshal(m, b)
@@ -1273,6 +1327,303 @@ func (m *ListCandidateResponseV2) GetCandidates() []*CandidateV2 {
 	return nil
 }
 
+// Oracle request batch
+type BatchRequestV2 struct {
+	// Types that are valid to be assigned to Payload:
+	//	*BatchRequestV2_WhitelistCandidate
+	Payload              isBatchRequestV2_Payload `protobuf_oneof:"payload"`
+	Meta                 *BatchRequestMetaV2      `protobuf:"bytes,2,opt,name=meta" json:"meta,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
+}
+
+func (m *BatchRequestV2) Reset()         { *m = BatchRequestV2{} }
+func (m *BatchRequestV2) String() string { return proto.CompactTextString(m) }
+func (*BatchRequestV2) ProtoMessage()    {}
+func (*BatchRequestV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{27}
+}
+func (m *BatchRequestV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BatchRequestV2.Unmarshal(m, b)
+}
+func (m *BatchRequestV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BatchRequestV2.Marshal(b, m, deterministic)
+}
+func (dst *BatchRequestV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BatchRequestV2.Merge(dst, src)
+}
+func (m *BatchRequestV2) XXX_Size() int {
+	return xxx_messageInfo_BatchRequestV2.Size(m)
+}
+func (m *BatchRequestV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_BatchRequestV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BatchRequestV2 proto.InternalMessageInfo
+
+type isBatchRequestV2_Payload interface {
+	isBatchRequestV2_Payload()
+}
+
+type BatchRequestV2_WhitelistCandidate struct {
+	WhitelistCandidate *WhitelistCandidateRequestV2 `protobuf:"bytes,1,opt,name=whitelist_candidate,json=whitelistCandidate,oneof"`
+}
+
+func (*BatchRequestV2_WhitelistCandidate) isBatchRequestV2_Payload() {}
+
+func (m *BatchRequestV2) GetPayload() isBatchRequestV2_Payload {
+	if m != nil {
+		return m.Payload
+	}
+	return nil
+}
+
+func (m *BatchRequestV2) GetWhitelistCandidate() *WhitelistCandidateRequestV2 {
+	if x, ok := m.GetPayload().(*BatchRequestV2_WhitelistCandidate); ok {
+		return x.WhitelistCandidate
+	}
+	return nil
+}
+
+func (m *BatchRequestV2) GetMeta() *BatchRequestMetaV2 {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*BatchRequestV2) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _BatchRequestV2_OneofMarshaler, _BatchRequestV2_OneofUnmarshaler, _BatchRequestV2_OneofSizer, []interface{}{
+		(*BatchRequestV2_WhitelistCandidate)(nil),
+	}
+}
+
+func _BatchRequestV2_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*BatchRequestV2)
+	// payload
+	switch x := m.Payload.(type) {
+	case *BatchRequestV2_WhitelistCandidate:
+		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.WhitelistCandidate); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("BatchRequestV2.Payload has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _BatchRequestV2_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*BatchRequestV2)
+	switch tag {
+	case 1: // payload.whitelist_candidate
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(WhitelistCandidateRequestV2)
+		err := b.DecodeMessage(msg)
+		m.Payload = &BatchRequestV2_WhitelistCandidate{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _BatchRequestV2_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*BatchRequestV2)
+	// payload
+	switch x := m.Payload.(type) {
+	case *BatchRequestV2_WhitelistCandidate:
+		s := proto.Size(x.WhitelistCandidate)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type BatchRequestMetaV2 struct {
+	BlockNumber          uint64   `protobuf:"varint,1,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
+	TxIndex              uint64   `protobuf:"varint,2,opt,name=tx_index,json=txIndex,proto3" json:"tx_index,omitempty"`
+	LogIndex             uint64   `protobuf:"varint,3,opt,name=log_index,json=logIndex,proto3" json:"log_index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *BatchRequestMetaV2) Reset()         { *m = BatchRequestMetaV2{} }
+func (m *BatchRequestMetaV2) String() string { return proto.CompactTextString(m) }
+func (*BatchRequestMetaV2) ProtoMessage()    {}
+func (*BatchRequestMetaV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{28}
+}
+func (m *BatchRequestMetaV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BatchRequestMetaV2.Unmarshal(m, b)
+}
+func (m *BatchRequestMetaV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BatchRequestMetaV2.Marshal(b, m, deterministic)
+}
+func (dst *BatchRequestMetaV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BatchRequestMetaV2.Merge(dst, src)
+}
+func (m *BatchRequestMetaV2) XXX_Size() int {
+	return xxx_messageInfo_BatchRequestMetaV2.Size(m)
+}
+func (m *BatchRequestMetaV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_BatchRequestMetaV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BatchRequestMetaV2 proto.InternalMessageInfo
+
+func (m *BatchRequestMetaV2) GetBlockNumber() uint64 {
+	if m != nil {
+		return m.BlockNumber
+	}
+	return 0
+}
+
+func (m *BatchRequestMetaV2) GetTxIndex() uint64 {
+	if m != nil {
+		return m.TxIndex
+	}
+	return 0
+}
+
+func (m *BatchRequestMetaV2) GetLogIndex() uint64 {
+	if m != nil {
+		return m.LogIndex
+	}
+	return 0
+}
+
+type RequestBatchTallyV2 struct {
+	LastSeenBlockNumber  uint64   `protobuf:"varint,1,opt,name=last_seen_block_number,json=lastSeenBlockNumber,proto3" json:"last_seen_block_number,omitempty"`
+	LastSeenTxIndex      uint64   `protobuf:"varint,2,opt,name=last_seen_tx_index,json=lastSeenTxIndex,proto3" json:"last_seen_tx_index,omitempty"`
+	LastSeenLogIndex     uint64   `protobuf:"varint,3,opt,name=last_seen_log_index,json=lastSeenLogIndex,proto3" json:"last_seen_log_index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestBatchTallyV2) Reset()         { *m = RequestBatchTallyV2{} }
+func (m *RequestBatchTallyV2) String() string { return proto.CompactTextString(m) }
+func (*RequestBatchTallyV2) ProtoMessage()    {}
+func (*RequestBatchTallyV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{29}
+}
+func (m *RequestBatchTallyV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestBatchTallyV2.Unmarshal(m, b)
+}
+func (m *RequestBatchTallyV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestBatchTallyV2.Marshal(b, m, deterministic)
+}
+func (dst *RequestBatchTallyV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestBatchTallyV2.Merge(dst, src)
+}
+func (m *RequestBatchTallyV2) XXX_Size() int {
+	return xxx_messageInfo_RequestBatchTallyV2.Size(m)
+}
+func (m *RequestBatchTallyV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestBatchTallyV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestBatchTallyV2 proto.InternalMessageInfo
+
+func (m *RequestBatchTallyV2) GetLastSeenBlockNumber() uint64 {
+	if m != nil {
+		return m.LastSeenBlockNumber
+	}
+	return 0
+}
+
+func (m *RequestBatchTallyV2) GetLastSeenTxIndex() uint64 {
+	if m != nil {
+		return m.LastSeenTxIndex
+	}
+	return 0
+}
+
+func (m *RequestBatchTallyV2) GetLastSeenLogIndex() uint64 {
+	if m != nil {
+		return m.LastSeenLogIndex
+	}
+	return 0
+}
+
+type RequestBatchV2 struct {
+	Batch                []*BatchRequestV2 `protobuf:"bytes,1,rep,name=batch" json:"batch,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *RequestBatchV2) Reset()         { *m = RequestBatchV2{} }
+func (m *RequestBatchV2) String() string { return proto.CompactTextString(m) }
+func (*RequestBatchV2) ProtoMessage()    {}
+func (*RequestBatchV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{30}
+}
+func (m *RequestBatchV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestBatchV2.Unmarshal(m, b)
+}
+func (m *RequestBatchV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestBatchV2.Marshal(b, m, deterministic)
+}
+func (dst *RequestBatchV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestBatchV2.Merge(dst, src)
+}
+func (m *RequestBatchV2) XXX_Size() int {
+	return xxx_messageInfo_RequestBatchV2.Size(m)
+}
+func (m *RequestBatchV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestBatchV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestBatchV2 proto.InternalMessageInfo
+
+func (m *RequestBatchV2) GetBatch() []*BatchRequestV2 {
+	if m != nil {
+		return m.Batch
+	}
+	return nil
+}
+
+type GetRequestBatchTallyRequestV2 struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetRequestBatchTallyRequestV2) Reset()         { *m = GetRequestBatchTallyRequestV2{} }
+func (m *GetRequestBatchTallyRequestV2) String() string { return proto.CompactTextString(m) }
+func (*GetRequestBatchTallyRequestV2) ProtoMessage()    {}
+func (*GetRequestBatchTallyRequestV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv2_f145394e0055d13b, []int{31}
+}
+func (m *GetRequestBatchTallyRequestV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetRequestBatchTallyRequestV2.Unmarshal(m, b)
+}
+func (m *GetRequestBatchTallyRequestV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetRequestBatchTallyRequestV2.Marshal(b, m, deterministic)
+}
+func (dst *GetRequestBatchTallyRequestV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRequestBatchTallyRequestV2.Merge(dst, src)
+}
+func (m *GetRequestBatchTallyRequestV2) XXX_Size() int {
+	return xxx_messageInfo_GetRequestBatchTallyRequestV2.Size(m)
+}
+func (m *GetRequestBatchTallyRequestV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetRequestBatchTallyRequestV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetRequestBatchTallyRequestV2 proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*ParamsV2)(nil), "ParamsV2")
 	proto.RegisterType((*StateV2)(nil), "StateV2")
@@ -1286,7 +1637,8 @@ func init() {
 	proto.RegisterType((*DistributionListV2)(nil), "DistributionListV2")
 	proto.RegisterType((*DPOSInitRequestV2)(nil), "DPOSInitRequestV2")
 	proto.RegisterType((*DelegateRequestV2)(nil), "DelegateRequestV2")
-	proto.RegisterType((*DelegationOverrideRequestV2)(nil), "DelegationOverrideRequestV2")
+	proto.RegisterType((*WhitelistCandidateRequestV2)(nil), "WhitelistCandidateRequestV2")
+	proto.RegisterType((*RemoveWhitelistedCandidateRequestV2)(nil), "RemoveWhitelistedCandidateRequestV2")
 	proto.RegisterType((*RedelegateRequestV2)(nil), "RedelegateRequestV2")
 	proto.RegisterType((*CheckDelegationRequestV2)(nil), "CheckDelegationRequestV2")
 	proto.RegisterType((*CheckDelegationResponseV2)(nil), "CheckDelegationResponseV2")
@@ -1300,77 +1652,99 @@ func init() {
 	proto.RegisterType((*ListValidatorsResponseV2)(nil), "ListValidatorsResponseV2")
 	proto.RegisterType((*ListCandidateRequestV2)(nil), "ListCandidateRequestV2")
 	proto.RegisterType((*ListCandidateResponseV2)(nil), "ListCandidateResponseV2")
+	proto.RegisterType((*BatchRequestV2)(nil), "BatchRequestV2")
+	proto.RegisterType((*BatchRequestMetaV2)(nil), "BatchRequestMetaV2")
+	proto.RegisterType((*RequestBatchTallyV2)(nil), "RequestBatchTallyV2")
+	proto.RegisterType((*RequestBatchV2)(nil), "RequestBatchV2")
+	proto.RegisterType((*GetRequestBatchTallyRequestV2)(nil), "GetRequestBatchTallyRequestV2")
 	proto.RegisterEnum("DelegationV2_DelegationState", DelegationV2_DelegationState_name, DelegationV2_DelegationState_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/dposv2/dposv2.proto", fileDescriptor_dposv2_424c52456611c731)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/dposv2/dposv2.proto", fileDescriptor_dposv2_f145394e0055d13b)
 }
 
-var fileDescriptor_dposv2_424c52456611c731 = []byte{
-	// 1020 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x56, 0xdd, 0x6e, 0x1b, 0x45,
-	0x14, 0x66, 0x6d, 0xc7, 0x8e, 0x8f, 0x9d, 0xd8, 0x9e, 0x90, 0x76, 0x9b, 0xf0, 0x63, 0x06, 0x09,
-	0x22, 0xd4, 0xd8, 0x68, 0xa3, 0xa8, 0x42, 0x42, 0x2a, 0xa9, 0x5d, 0xaa, 0xd0, 0x2a, 0x09, 0xd3,
-	0xda, 0xb7, 0xd6, 0xfe, 0x0c, 0xf6, 0x90, 0xf5, 0xee, 0xb2, 0x3b, 0x4e, 0x94, 0x17, 0x40, 0xbc,
-	0x01, 0x4f, 0xc0, 0x1d, 0x8f, 0xc0, 0x13, 0x70, 0xcd, 0x03, 0xa1, 0x19, 0xef, 0xce, 0x8e, 0xff,
-	0x4a, 0x51, 0x51, 0xb9, 0x49, 0x3c, 0xe7, 0xfb, 0x66, 0xe6, 0x3b, 0xdf, 0x99, 0x33, 0xb3, 0xf0,
-	0xcd, 0x98, 0xf1, 0xc9, 0xcc, 0xe9, 0xb8, 0xe1, 0xb4, 0xeb, 0x87, 0xe1, 0x34, 0xa0, 0xfc, 0x36,
-	0x8c, 0xaf, 0xbb, 0xe3, 0xf0, 0x58, 0x0c, 0xbb, 0xce, 0x8c, 0xf9, 0x9c, 0x05, 0x5d, 0x7e, 0x17,
-	0xd1, 0xa4, 0xeb, 0x45, 0x61, 0x72, 0x63, 0xa5, 0xff, 0x3a, 0x51, 0x1c, 0xf2, 0xf0, 0xe0, 0xcb,
-	0x7f, 0x58, 0x61, 0x3e, 0x53, 0xfe, 0x9d, 0xcf, 0xc0, 0xbf, 0x19, 0xb0, 0x7d, 0x65, 0xc7, 0xf6,
-	0x34, 0x19, 0x5a, 0xe8, 0x73, 0x68, 0xdc, 0xd8, 0x3e, 0xf3, 0x6c, 0x1e, 0xc6, 0x23, 0x37, 0x9c,
-	0x05, 0xdc, 0x34, 0xda, 0xc6, 0x51, 0x89, 0xec, 0xaa, 0x70, 0x4f, 0x44, 0x91, 0x05, 0xfb, 0xd4,
-	0xa7, 0x2e, 0x67, 0x61, 0x30, 0x72, 0xef, 0x5c, 0x9f, 0x8e, 0x7c, 0x1a, 0x8c, 0xf9, 0xc4, 0x2c,
-	0xb4, 0x8d, 0xa3, 0x22, 0xd9, 0xcb, 0xc0, 0x9e, 0xc0, 0x5e, 0x48, 0x08, 0x7d, 0x0d, 0xfb, 0x6e,
-	0xc8, 0x82, 0x91, 0x1b, 0x06, 0x3c, 0xb6, 0x5d, 0x3e, 0xb2, 0x3d, 0x2f, 0xa6, 0x49, 0x62, 0x16,
-	0xdb, 0xc6, 0x51, 0xcd, 0xda, 0xee, 0x9c, 0xcd, 0xc7, 0x64, 0x4f, 0xd0, 0x7a, 0x29, 0x2b, 0x0d,
-	0xe2, 0x9f, 0x0d, 0xa8, 0xbc, 0xe4, 0x36, 0xa7, 0x43, 0x0b, 0x7d, 0x02, 0xe5, 0x48, 0x4a, 0x96,
-	0xea, 0x6a, 0x56, 0xb5, 0x93, 0x65, 0x40, 0x52, 0x00, 0x7d, 0x01, 0xa0, 0x24, 0x27, 0x66, 0xa1,
-	0x5d, 0x3c, 0xaa, 0x59, 0xd0, 0x19, 0x66, 0x21, 0xa2, 0xa1, 0xe8, 0x21, 0x20, 0xdf, 0x4e, 0xf8,
-	0x48, 0x65, 0xc4, 0xd9, 0x94, 0x4a, 0x55, 0x45, 0xd2, 0x14, 0xc8, 0xd3, 0x14, 0x78, 0xc5, 0xa6,
-	0x14, 0xff, 0x51, 0x80, 0xf7, 0xd5, 0x3a, 0x42, 0x11, 0x4b, 0x38, 0x73, 0x87, 0x16, 0xc2, 0x50,
-	0xc9, 0x32, 0x32, 0x96, 0x32, 0xca, 0x00, 0x74, 0x1f, 0x2a, 0xd1, 0xcc, 0x19, 0x5d, 0xd3, 0x3b,
-	0xe9, 0x54, 0x9d, 0x94, 0xa3, 0x99, 0xf3, 0x9c, 0xde, 0xa1, 0x4f, 0x61, 0x67, 0x16, 0x39, 0x7e,
-	0xe8, 0x5e, 0xa7, 0xbe, 0x17, 0xa5, 0xef, 0xf5, 0x34, 0x38, 0x77, 0xfd, 0x63, 0xa8, 0xe9, 0x94,
-	0x92, 0xa4, 0x80, 0x46, 0x38, 0x81, 0x66, 0xe2, 0xdb, 0xc9, 0x64, 0x14, 0xd1, 0xd8, 0xa5, 0x01,
-	0xb7, 0xc7, 0xd4, 0xdc, 0x4a, 0xb5, 0x3c, 0x61, 0xe3, 0xc1, 0x79, 0xc0, 0x49, 0x43, 0x32, 0xae,
-	0x14, 0x01, 0x3d, 0x02, 0xe4, 0xb1, 0x84, 0xc7, 0xcc, 0x99, 0xcd, 0xb3, 0x0f, 0xb9, 0xed, 0x9b,
-	0xe5, 0xa5, 0x69, 0x2d, 0x9d, 0xf3, 0x4a, 0x50, 0xc4, 0x6e, 0x1e, 0xf5, 0xe9, 0xd8, 0xd6, 0xa6,
-	0x55, 0x96, 0x77, 0xcb, 0x19, 0x72, 0x12, 0xfe, 0x1e, 0xcc, 0x55, 0xf7, 0x5e, 0xb0, 0x84, 0x0f,
-	0x2d, 0x74, 0x0a, 0x90, 0x64, 0x21, 0x61, 0xa2, 0x28, 0xda, 0x7e, 0x67, 0x9d, 0xd9, 0x44, 0x23,
-	0xe2, 0xdf, 0x0d, 0xa8, 0xf5, 0xec, 0xc0, 0x13, 0x2c, 0xfa, 0xb6, 0x85, 0x68, 0x42, 0xf1, 0x07,
-	0x4a, 0x53, 0xfb, 0xc5, 0x4f, 0x84, 0xa0, 0x14, 0xd8, 0x53, 0x2a, 0xed, 0xae, 0x12, 0xf9, 0x1b,
-	0xb5, 0xa1, 0xe6, 0xd1, 0xc4, 0x8d, 0x59, 0x24, 0x32, 0x93, 0x1e, 0x57, 0x89, 0x1e, 0x42, 0x26,
-	0x54, 0x6e, 0xa9, 0x93, 0x30, 0x4e, 0xa5, 0x95, 0x55, 0x92, 0x0d, 0xf1, 0x63, 0x68, 0x28, 0xb5,
-	0x69, 0xe2, 0x0f, 0x01, 0xdc, 0x2c, 0x94, 0x25, 0x5e, 0xef, 0x68, 0x39, 0x11, 0x0d, 0xc7, 0x7f,
-	0x15, 0xa0, 0xde, 0x57, 0xb6, 0x0e, 0x2d, 0xf4, 0x19, 0x54, 0xd5, 0x71, 0x5e, 0x49, 0x39, 0x87,
-	0x04, 0x2f, 0x2d, 0x47, 0x18, 0xcb, 0xb4, 0x17, 0x78, 0x0a, 0x42, 0x6d, 0x28, 0xdb, 0x53, 0x75,
-	0x0a, 0xf5, 0x72, 0xa6, 0x71, 0x74, 0x2c, 0x8e, 0xab, 0x50, 0x33, 0x4a, 0x89, 0xa5, 0x25, 0x62,
-	0x7d, 0x0e, 0x9f, 0xcd, 0xe9, 0xf7, 0xa0, 0x3c, 0xa1, 0x6c, 0x3c, 0xe1, 0xd2, 0xa9, 0x12, 0x49,
-	0x47, 0xe8, 0x10, 0xaa, 0xf2, 0x3c, 0xcb, 0x86, 0x2b, 0x4b, 0x68, 0x5b, 0x04, 0x44, 0xa3, 0xa1,
-	0x13, 0xd8, 0x12, 0x45, 0xa6, 0xf2, 0x4c, 0xed, 0x5a, 0x1f, 0x76, 0xf4, 0x9c, 0xb5, 0x81, 0xbc,
-	0x15, 0xc8, 0x9c, 0x8b, 0xbf, 0x82, 0xc6, 0x12, 0x82, 0x6a, 0x50, 0x79, 0x72, 0x79, 0xd1, 0x3f,
-	0xbf, 0x78, 0xd6, 0x7c, 0x0f, 0x01, 0x94, 0xc5, 0xe0, 0x69, 0xbf, 0x69, 0xa0, 0x1d, 0xa8, 0x0e,
-	0x2e, 0x32, 0xa8, 0x80, 0x7b, 0xd0, 0xcc, 0xa7, 0xa6, 0x85, 0xe9, 0x8a, 0x3a, 0x67, 0xb1, 0xac,
-	0x32, 0x3b, 0x0b, 0x4a, 0x88, 0xce, 0xc0, 0x43, 0xd8, 0xed, 0x6b, 0x8d, 0xf2, 0x86, 0xa7, 0x31,
-	0x37, 0xbc, 0xb0, 0xde, 0x70, 0xfc, 0x1c, 0x90, 0xbe, 0xae, 0x6a, 0x98, 0x1d, 0xbd, 0x2d, 0x33,
-	0x81, 0x8d, 0xce, 0xa2, 0x06, 0xb2, 0xc8, 0xc2, 0x0e, 0xb4, 0xfa, 0x57, 0x97, 0x2f, 0xcf, 0x03,
-	0xc6, 0x09, 0xfd, 0x69, 0x46, 0xe5, 0x5a, 0xff, 0xed, 0xa5, 0x8a, 0x7d, 0x68, 0xa5, 0x2e, 0xd1,
-	0x7c, 0x8f, 0x53, 0x68, 0xe5, 0xef, 0xcb, 0x26, 0x57, 0x9a, 0x8a, 0x72, 0xf6, 0xc6, 0xf6, 0xfc,
-	0x69, 0xc0, 0x61, 0x5e, 0x94, 0xcb, 0x1b, 0x1a, 0xc7, 0xcc, 0x7b, 0xfb, 0x8d, 0x4f, 0xa1, 0xa5,
-	0xba, 0x42, 0x4d, 0x5b, 0x6e, 0x9c, 0xa6, 0xa2, 0xac, 0xea, 0xdd, 0xd4, 0x3f, 0x0b, 0x07, 0xbf,
-	0xb4, 0x78, 0xf0, 0x71, 0x00, 0x7b, 0x84, 0x7a, 0xef, 0xce, 0xbc, 0x5f, 0x0c, 0x30, 0x7b, 0x13,
-	0xea, 0x5e, 0xe7, 0x0e, 0xfe, 0x4f, 0xce, 0xe1, 0xef, 0xe0, 0xc1, 0x8a, 0x92, 0x24, 0x0a, 0x83,
-	0x44, 0xdc, 0xeb, 0xc7, 0x00, 0x79, 0xab, 0xa5, 0x1a, 0x96, 0x7a, 0x51, 0x23, 0xe0, 0x01, 0x1c,
-	0xf4, 0x7c, 0x9b, 0x4d, 0xf5, 0x5e, 0xc8, 0xf3, 0x7a, 0x04, 0xe8, 0x96, 0xf1, 0x89, 0x17, 0xdb,
-	0xb7, 0xb6, 0xbf, 0x31, 0xb1, 0x56, 0xce, 0xc9, 0x24, 0x3e, 0x86, 0xc3, 0x35, 0xcb, 0x2a, 0x91,
-	0xb9, 0xdd, 0xc6, 0x06, 0xbb, 0x7f, 0x84, 0xc6, 0x20, 0x70, 0xc2, 0xc0, 0x7b, 0x07, 0xa5, 0xfd,
-	0xd5, 0x80, 0x03, 0x42, 0xc7, 0x2c, 0xe1, 0x34, 0x56, 0xcf, 0x49, 0xbe, 0xaf, 0xf6, 0x0a, 0x1a,
-	0xeb, 0x5e, 0xc1, 0xc2, 0xea, 0x2b, 0x58, 0xdc, 0xfc, 0x0a, 0x96, 0x5e, 0xfb, 0x0a, 0x6e, 0x2d,
-	0xbe, 0x82, 0x1f, 0xc1, 0x07, 0x83, 0x20, 0xde, 0x28, 0x0d, 0x1f, 0x80, 0x29, 0x3f, 0xbb, 0xd6,
-	0x9c, 0x49, 0xfc, 0x00, 0xee, 0xcb, 0x0b, 0x50, 0xdd, 0x36, 0x39, 0xf4, 0x2d, 0x98, 0xcb, 0x90,
-	0x2a, 0xcd, 0xe2, 0xf5, 0x65, 0xbc, 0xf6, 0xfa, 0x32, 0xe1, 0x9e, 0x58, 0x67, 0x8d, 0xb0, 0x67,
-	0xf3, 0xcd, 0x35, 0x44, 0x6d, 0xf0, 0xaf, 0x9e, 0x71, 0xa7, 0x2c, 0x3f, 0xc0, 0x4f, 0xfe, 0x0e,
-	0x00, 0x00, 0xff, 0xff, 0xd7, 0x1e, 0x3b, 0x46, 0xf6, 0x0b, 0x00, 0x00,
+var fileDescriptor_dposv2_f145394e0055d13b = []byte{
+	// 1282 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x57, 0x5f, 0x6f, 0xdb, 0x36,
+	0x10, 0xaf, 0x62, 0xc7, 0x8e, 0xcf, 0x89, 0xff, 0xd0, 0x6b, 0xab, 0xa6, 0xed, 0xea, 0xaa, 0xd8,
+	0x1a, 0x6c, 0x8d, 0x3d, 0x28, 0x28, 0x8a, 0x01, 0x03, 0xba, 0xc6, 0x29, 0xba, 0xac, 0x59, 0xda,
+	0xb2, 0x89, 0xf7, 0x32, 0xc0, 0xa0, 0x24, 0xce, 0xd6, 0x22, 0x4b, 0x9e, 0x44, 0x37, 0xf5, 0x17,
+	0x18, 0xf6, 0x3e, 0x0c, 0x7b, 0xdd, 0xd3, 0x9e, 0xf6, 0x71, 0x86, 0x7d, 0x9e, 0x81, 0x14, 0x45,
+	0xc9, 0xb2, 0xdd, 0x65, 0x6b, 0xd1, 0x97, 0xc4, 0xe4, 0xef, 0x77, 0xba, 0x3b, 0xfe, 0xee, 0x8e,
+	0x12, 0x7c, 0x39, 0x74, 0xd9, 0x68, 0x6a, 0x75, 0xec, 0x60, 0xdc, 0xf5, 0x82, 0x60, 0xec, 0x53,
+	0x76, 0x1e, 0x84, 0x67, 0xdd, 0x61, 0xb0, 0xcb, 0x97, 0x5d, 0x6b, 0xea, 0x7a, 0xcc, 0xf5, 0xbb,
+	0x6c, 0x36, 0xa1, 0x51, 0xd7, 0x99, 0x04, 0xd1, 0x2b, 0x53, 0xfe, 0xeb, 0x4c, 0xc2, 0x80, 0x05,
+	0xdb, 0x9f, 0xfd, 0xcb, 0x13, 0x62, 0x4b, 0xf1, 0x37, 0xb6, 0x30, 0xfe, 0xd6, 0x60, 0xe3, 0x39,
+	0x09, 0xc9, 0x38, 0xea, 0x9b, 0xe8, 0x2e, 0xd4, 0x5f, 0x11, 0xcf, 0x75, 0x08, 0x0b, 0xc2, 0x81,
+	0x1d, 0x4c, 0x7d, 0xa6, 0x6b, 0x6d, 0x6d, 0xa7, 0x88, 0x6b, 0x6a, 0xbb, 0xc7, 0x77, 0x91, 0x09,
+	0x97, 0xa9, 0x47, 0x6d, 0xe6, 0x06, 0xfe, 0xc0, 0x9e, 0xd9, 0x1e, 0x1d, 0x78, 0xd4, 0x1f, 0xb2,
+	0x91, 0xbe, 0xd6, 0xd6, 0x76, 0x0a, 0xb8, 0x95, 0x80, 0x3d, 0x8e, 0x1d, 0x09, 0x08, 0x7d, 0x01,
+	0x97, 0xed, 0xc0, 0xf5, 0x07, 0x76, 0xe0, 0xb3, 0x90, 0xd8, 0x6c, 0x40, 0x1c, 0x27, 0xa4, 0x51,
+	0xa4, 0x17, 0xda, 0xda, 0x4e, 0xd5, 0xdc, 0xe8, 0x3c, 0x8a, 0xd7, 0xb8, 0xc5, 0x69, 0x3d, 0xc9,
+	0x92, 0x9b, 0xa8, 0x0b, 0xb5, 0x20, 0x24, 0xdc, 0x53, 0x62, 0x56, 0xcc, 0x99, 0x6d, 0xc5, 0xb8,
+	0x5c, 0x1a, 0x3f, 0x69, 0x50, 0x7e, 0xc9, 0x08, 0xa3, 0x7d, 0x13, 0xdd, 0x86, 0xd2, 0x44, 0xe4,
+	0x28, 0xd2, 0xa9, 0x9a, 0x95, 0x4e, 0x92, 0x32, 0x96, 0x00, 0xfa, 0x04, 0x40, 0xe5, 0x18, 0xe9,
+	0x6b, 0xed, 0xc2, 0x4e, 0xd5, 0x84, 0x4e, 0x3f, 0xd9, 0xc2, 0x19, 0x14, 0xdd, 0x03, 0xe4, 0x91,
+	0x88, 0x0d, 0xd4, 0x11, 0x30, 0x77, 0x4c, 0x45, 0x1a, 0x05, 0xdc, 0xe0, 0xc8, 0x63, 0x09, 0x9c,
+	0xb8, 0x63, 0x6a, 0xfc, 0x5e, 0x80, 0x0f, 0xd4, 0x73, 0x78, 0x44, 0x6e, 0xc4, 0x5c, 0xbb, 0x6f,
+	0x22, 0x03, 0xca, 0x49, 0x2e, 0x5a, 0x2e, 0x97, 0x04, 0x40, 0x57, 0xa1, 0x3c, 0x99, 0x5a, 0x83,
+	0x33, 0x3a, 0x13, 0x47, 0xbb, 0x89, 0x4b, 0x93, 0xa9, 0xf5, 0x94, 0xce, 0xd0, 0x1d, 0xd8, 0x9a,
+	0x4e, 0x2c, 0x2f, 0xb0, 0xcf, 0xa4, 0x50, 0x05, 0x21, 0xd4, 0xa6, 0xdc, 0x8c, 0x65, 0xba, 0x05,
+	0xd5, 0x2c, 0xa5, 0x28, 0x28, 0x90, 0x21, 0xec, 0x41, 0x23, 0xf2, 0x48, 0x34, 0x1a, 0x4c, 0x68,
+	0x68, 0x53, 0x9f, 0x91, 0x21, 0xd5, 0xd7, 0x65, 0x2c, 0xfb, 0xee, 0xf0, 0xf4, 0xd0, 0x67, 0xb8,
+	0x2e, 0x18, 0xcf, 0x15, 0x01, 0x3d, 0x00, 0xe4, 0xb8, 0x11, 0x0b, 0x5d, 0x6b, 0x1a, 0x67, 0x1f,
+	0x30, 0xe2, 0xe9, 0xa5, 0x9c, 0x59, 0x33, 0xcb, 0x39, 0xe1, 0x14, 0xee, 0xcd, 0xa1, 0x1e, 0x1d,
+	0x92, 0x8c, 0x59, 0x39, 0xef, 0x2d, 0x65, 0x28, 0xa3, 0xf3, 0x91, 0xcb, 0xa8, 0xe7, 0x46, 0x6c,
+	0x40, 0xc6, 0x22, 0x91, 0x8d, 0xbc, 0x91, 0x62, 0x3c, 0x12, 0x04, 0xb4, 0x0b, 0x28, 0x35, 0xe2,
+	0xe9, 0x0a, 0x85, 0x2a, 0x22, 0xff, 0xa6, 0x42, 0x8e, 0x24, 0x60, 0xbc, 0x00, 0x7d, 0x51, 0xa1,
+	0x23, 0x37, 0x62, 0x7d, 0x13, 0xdd, 0x07, 0x88, 0x92, 0x2d, 0x2e, 0x14, 0x2f, 0x8c, 0xcb, 0x9d,
+	0x65, 0x82, 0xe2, 0x0c, 0xd1, 0xf8, 0x53, 0x83, 0x6a, 0x8f, 0xf8, 0x0e, 0x67, 0xd1, 0xb7, 0x15,
+	0xbb, 0x01, 0x85, 0xef, 0x29, 0x95, 0x12, 0xf3, 0x9f, 0x08, 0x41, 0xd1, 0x27, 0x63, 0x2a, 0x24,
+	0xad, 0x60, 0xf1, 0x1b, 0xb5, 0xa1, 0xea, 0xd0, 0xc8, 0x0e, 0xdd, 0x09, 0x3f, 0x3d, 0xa1, 0x63,
+	0x05, 0x67, 0xb7, 0x90, 0x0e, 0xe5, 0x73, 0x6a, 0x45, 0x2e, 0xa3, 0x42, 0xae, 0x0a, 0x4e, 0x96,
+	0xc6, 0x43, 0xa8, 0xab, 0x68, 0x65, 0xe2, 0xf7, 0x00, 0xec, 0x64, 0x2b, 0x49, 0x7c, 0xb3, 0x93,
+	0xc9, 0x09, 0x67, 0x70, 0xe3, 0xaf, 0x35, 0xd8, 0x3c, 0x50, 0xd2, 0xf5, 0x4d, 0xf4, 0x31, 0x54,
+	0x54, 0xcb, 0x2c, 0xa4, 0x9c, 0x42, 0x9c, 0x27, 0x25, 0x0f, 0x42, 0x91, 0xf6, 0x1c, 0x4f, 0x41,
+	0xa8, 0x0d, 0x25, 0xa9, 0x7e, 0x21, 0xa7, 0xbe, 0xdc, 0x47, 0xbb, 0xbc, 0x25, 0x78, 0x34, 0x49,
+	0x99, 0x14, 0x73, 0xc4, 0xcd, 0x18, 0x96, 0x35, 0x72, 0x05, 0x4a, 0x23, 0xea, 0x0e, 0x47, 0x4c,
+	0x9c, 0x54, 0x11, 0xcb, 0x15, 0xba, 0x0e, 0x15, 0xd1, 0x33, 0xa2, 0x64, 0x4a, 0x02, 0xda, 0xe0,
+	0x1b, 0xbc, 0x99, 0xd1, 0x1e, 0xac, 0x73, 0x91, 0xa9, 0xa8, 0xdb, 0x9a, 0x79, 0xb3, 0x93, 0xcd,
+	0x39, 0xb3, 0x10, 0x93, 0x07, 0xc7, 0x5c, 0xe3, 0x73, 0xa8, 0xe7, 0x10, 0x54, 0x85, 0xf2, 0xfe,
+	0xb3, 0xe3, 0x83, 0xc3, 0xe3, 0x27, 0x8d, 0x4b, 0x08, 0xa0, 0xc4, 0x17, 0x8f, 0x0f, 0x1a, 0x1a,
+	0xda, 0x82, 0xca, 0xe9, 0x71, 0x02, 0xad, 0x19, 0x3d, 0x68, 0xa4, 0xa6, 0x52, 0x98, 0x2e, 0xd7,
+	0x39, 0xd9, 0x4b, 0x94, 0xd9, 0x9a, 0x8b, 0x04, 0x67, 0x19, 0x46, 0x1f, 0x6a, 0x07, 0x99, 0x66,
+	0xbc, 0x60, 0x35, 0xa6, 0x07, 0xbe, 0xb6, 0xfc, 0xc0, 0x8d, 0xa7, 0x80, 0xb2, 0xcf, 0x55, 0x0d,
+	0xb3, 0x95, 0x6d, 0xfd, 0x24, 0xc0, 0x7a, 0x67, 0x3e, 0x06, 0x3c, 0xcf, 0x32, 0x2c, 0x68, 0x1e,
+	0x3c, 0x7f, 0xf6, 0xf2, 0xd0, 0x77, 0x19, 0xa6, 0x3f, 0x4e, 0xa9, 0x78, 0xd6, 0xbb, 0x1d, 0xdc,
+	0x86, 0x07, 0x4d, 0x79, 0x4a, 0x34, 0xf5, 0x71, 0x1f, 0x9a, 0xe9, 0xa5, 0xb7, 0xea, 0x54, 0x1a,
+	0x8a, 0xf2, 0xe8, 0xc2, 0xc7, 0xf3, 0x8b, 0x06, 0xd7, 0xbf, 0x4d, 0x66, 0x8d, 0xea, 0x9b, 0x39,
+	0xc7, 0xaa, 0x81, 0x56, 0x3b, 0x56, 0x94, 0x0b, 0x3b, 0x9e, 0xaf, 0xe0, 0xc2, 0x7c, 0x05, 0x1b,
+	0xdf, 0xc1, 0x1d, 0x4c, 0xc7, 0xc1, 0x2b, 0xaa, 0x42, 0xa3, 0xce, 0x3b, 0x0b, 0xce, 0xf0, 0xa1,
+	0x85, 0xa9, 0xf3, 0xfe, 0xce, 0xf8, 0x67, 0x0d, 0xf4, 0xde, 0x88, 0xda, 0x67, 0x69, 0xf5, 0xbf,
+	0xb5, 0xd7, 0xfb, 0xd0, 0x54, 0x63, 0x47, 0x99, 0xe5, 0x27, 0x53, 0x43, 0x51, 0x92, 0xd4, 0xbf,
+	0x86, 0x6b, 0x0b, 0x91, 0x44, 0x93, 0xc0, 0x8f, 0xf8, 0xf8, 0xdf, 0x05, 0x48, 0x3b, 0x52, 0xc6,
+	0x90, 0x6b, 0xd9, 0x0c, 0xc1, 0x38, 0x85, 0xed, 0x9e, 0x47, 0xdc, 0x71, 0xb6, 0x65, 0xd2, 0xbc,
+	0x1e, 0x00, 0x3a, 0x77, 0xd9, 0xc8, 0x09, 0xc9, 0x39, 0xf1, 0x56, 0x26, 0xd6, 0x4c, 0x39, 0x49,
+	0x88, 0x0f, 0xe1, 0xfa, 0x92, 0xc7, 0xaa, 0x20, 0xd3, 0xe3, 0xd6, 0x56, 0x1c, 0xf7, 0x0f, 0x50,
+	0x3f, 0xf5, 0xad, 0xc0, 0x77, 0xde, 0x83, 0xb4, 0xbf, 0x69, 0xb0, 0x8d, 0xe9, 0x90, 0x17, 0x68,
+	0xb8, 0xa4, 0x40, 0x33, 0x97, 0xa5, 0xb6, 0xec, 0xb2, 0x5c, 0x5b, 0xbc, 0x2c, 0x0b, 0xab, 0x2f,
+	0xcb, 0xe2, 0x1b, 0x2f, 0xcb, 0xf5, 0xf9, 0xcb, 0xf2, 0x43, 0xb8, 0x71, 0xea, 0x87, 0x2b, 0x43,
+	0x33, 0xb6, 0x41, 0x17, 0x6f, 0x80, 0x4b, 0x6a, 0xd2, 0xb8, 0x06, 0x57, 0xc5, 0x9c, 0x54, 0x43,
+	0x29, 0x85, 0x5e, 0x80, 0x9e, 0x87, 0x94, 0x34, 0xff, 0xf3, 0x2d, 0x44, 0x87, 0x2b, 0x47, 0x4b,
+	0x87, 0x8f, 0xf1, 0x24, 0x8e, 0x23, 0x83, 0x28, 0x5f, 0xff, 0xed, 0xe2, 0xff, 0x55, 0x83, 0xda,
+	0x3e, 0x61, 0xf6, 0x28, 0x95, 0xe6, 0x19, 0xb4, 0xd2, 0xb7, 0x2f, 0x45, 0x95, 0x45, 0x71, 0xa3,
+	0xf3, 0x86, 0x99, 0xf8, 0xd5, 0x25, 0x9c, 0xbe, 0xb8, 0x29, 0x18, 0xdd, 0x85, 0xe2, 0x98, 0x32,
+	0x22, 0x4b, 0xa5, 0xd5, 0xc9, 0xfa, 0xfb, 0x86, 0x32, 0xd2, 0x37, 0xb1, 0x20, 0xec, 0x57, 0xa0,
+	0x3c, 0x21, 0x33, 0x2f, 0x20, 0x8e, 0x11, 0x00, 0x5a, 0xa4, 0xa1, 0xdb, 0xb0, 0x19, 0xbf, 0x11,
+	0xfb, 0xd3, 0xb1, 0x45, 0x43, 0xf9, 0x79, 0x13, 0xbf, 0x25, 0x1f, 0x8b, 0x2d, 0x74, 0x0d, 0x36,
+	0xd8, 0xeb, 0x81, 0xeb, 0x3b, 0xf4, 0xb5, 0x2c, 0xa2, 0x32, 0x7b, 0x7d, 0xc8, 0x97, 0xf1, 0x60,
+	0x1d, 0x4a, 0x4c, 0x0d, 0xd6, 0xa1, 0x00, 0x8d, 0x3f, 0x34, 0x3e, 0xfb, 0x84, 0x33, 0xe1, 0xf8,
+	0x84, 0x78, 0xde, 0xac, 0x6f, 0xa2, 0x3d, 0xb8, 0x22, 0xbe, 0x16, 0x22, 0x4a, 0xfd, 0xc1, 0x12,
+	0xe7, 0x2d, 0x8e, 0xbe, 0xa4, 0xd4, 0xdf, 0xcf, 0x04, 0xf1, 0xa9, 0xfc, 0xc4, 0x10, 0x46, 0xb9,
+	0x70, 0xea, 0x89, 0xc1, 0x89, 0x0c, 0x6b, 0x17, 0x5a, 0x29, 0x39, 0x1f, 0x60, 0x23, 0x61, 0x1f,
+	0x25, 0x81, 0x3e, 0x80, 0x5a, 0x36, 0xce, 0xbe, 0x89, 0x3e, 0x82, 0x75, 0x8b, 0xff, 0x54, 0x57,
+	0xf5, 0xbc, 0xa0, 0x38, 0x46, 0x8d, 0x5b, 0x70, 0xf3, 0x09, 0x65, 0x0b, 0x39, 0x2a, 0x9e, 0x55,
+	0x12, 0xdf, 0x94, 0x7b, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0xd1, 0x8a, 0x02, 0x7a, 0xc9, 0x0e,
+	0x00, 0x00,
 }

@@ -21,7 +21,7 @@ func GetSigner(privFile, hsmConfigFile, algo string) (auth.Signer, error) {
 	var signer auth.Signer
 	var err error
 	if hsmConfigFile != "" {
-		privKey, err = crypto.LoadYubiHsmPrivKey(algo, hsmConfigFile)
+		privKey, err = crypto.LoadYubiHsmPrivKey(hsmConfigFile)
 		if err != nil {
 			return nil, err
 		}

@@ -24,8 +24,6 @@ func TestGenYubiSecp256k1Key(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer yubiPrivKey.UnloadYubiHsmPrivKey()
-
-	yubiPrivKey.SaveYubiHsmPrivKey(cfg)
 }
 
 func TestSignYubiSecp256k1(t *testing.T) {
@@ -37,7 +35,7 @@ func TestSignYubiSecp256k1(t *testing.T) {
 	}
 
 	t.Log("Loading YubiHSM private key")
-	yubiPrivKey, err := LoadYubiHsmPrivKey("ed25519", cfg)
+	yubiPrivKey, err := LoadYubiHsmPrivKey(cfg)
 	if err != nil {
 		t.Fatal(err)
 	}
