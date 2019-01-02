@@ -89,18 +89,18 @@ func (c *wrappedPluginStaticContext) HasPermissionFor(addr loom.Address, token [
 }
 
 // Implements the Context interface for Go contract methods.
-type WrappedPluginContext struct {
+type wrappedPluginContext struct {
 	plugin.Context
 	wrappedPluginStaticContext
 }
 
-var _ Context = &WrappedPluginContext{}
+var _ Context = &wrappedPluginContext{}
 
-func (c *WrappedPluginContext) Get(key []byte, pb proto.Message) error {
+func (c *wrappedPluginContext) Get(key []byte, pb proto.Message) error {
 	return c.wrappedPluginStaticContext.Get(key, pb)
 }
 
-func (c *WrappedPluginContext) Set(key []byte, pb proto.Message) error {
+func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
 	enc, err := proto.Marshal(pb)
 	if err != nil {
 		return err
@@ -110,18 +110,18 @@ func (c *WrappedPluginContext) Set(key []byte, pb proto.Message) error {
 }
 
 // HasPermission checks whether the sender of the tx has any of the permission given in `roles` on `token`
-func (c *WrappedPluginContext) HasPermission(token []byte, roles []string) (bool, []string) {
+func (c *wrappedPluginContext) HasPermission(token []byte, roles []string) (bool, []string) {
 	addr := c.Message().Sender
 	return c.HasPermissionFor(addr, token, roles)
 }
 
 // GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
-func (c *WrappedPluginContext) GrantPermissionTo(addr loom.Address, token []byte, role string) {
+func (c *wrappedPluginContext) GrantPermissionTo(addr loom.Address, token []byte, role string) {
 	c.Context.Set(rolePermKey(addr, token, role), []byte("true"))
 }
 
 // RevokePermissionFrom removes a permission previously granted by GrantPermissionTo
-func (c *WrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []byte, role string) {
+func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []byte, role string) {
 	c.Context.Delete(rolePermKey(addr, token, role))
 }
 
@@ -130,7 +130,7 @@ func rolePermKey(addr loom.Address, token []byte, role string) []byte {
 }
 
 // GrantPermission sets a given `role` permission on `token` for the sender of the tx
-func (c *WrappedPluginContext) GrantPermission(token []byte, roles []string) {
+func (c *wrappedPluginContext) GrantPermission(token []byte, roles []string) {
 	for _, r := range roles {
 		c.GrantPermissionTo(c.Message().Sender, token, r)
 	}
@@ -260,7 +260,7 @@ func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[
 }
 
 func WrapPluginContext(ctx plugin.Context) Context {
-	return &WrappedPluginContext{ctx, wrappedPluginStaticContext{ctx, logger}}
+	return &wrappedPluginContext{ctx, wrappedPluginStaticContext{ctx, logger}}
 }
 
 func WrapPluginStaticContext(ctx plugin.StaticContext) StaticContext {
