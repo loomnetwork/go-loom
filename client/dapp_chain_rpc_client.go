@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	ShortPollLimit = 10
+	ShortPollLimit = 5
 	ShortPollDelay = 1 * time.Second
 )
 
