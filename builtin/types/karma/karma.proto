@@ -82,3 +82,9 @@ message KarmaStateKeyUser {
 message KarmaTotal{
     int64 count = 1;
 }
+
+message ContractRecord{
+    Address owner = 1;
+    Address address = 2;
+    int64 creation_block = 3;
+}
