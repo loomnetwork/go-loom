@@ -2,7 +2,8 @@ package client
 
 import (
 	"encoding/hex"
-	"errors"
+	"strings"
+	"time"
 
 	"net/http"
 	"strconv"
@@ -15,10 +16,26 @@ import (
 	"github.com/loomnetwork/go-loom/vm"
 )
 
+const (
+	MaxRetries = 10
+	RetryDelay = 1 * time.Second
+)
+
 type TxHandlerResult struct {
 	Code  int32  `json:"code"`
 	Error string `json:"log"`
 	Data  []byte `json:"data"`
+}
+
+type BoradcastTxSyncResult struct {
+	Code int32  `json:"code"`
+	Data []byte `json:"data"`
+	Hash string `json:"hash"`
+	Log  string `json:"log"`
+}
+
+type TxQueryResult struct {
+	TxResult TxHandlerResult `json:"tx_result"`
 }
 
 type BroadcastTxCommitResult struct {
@@ -117,24 +134,45 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	params := map[string]interface{}{
 		"tx": signedTxBytes,
 	}
-	var r BroadcastTxCommitResult
-	if err = c.txClient.Call("broadcast_tx_commit", params, c.getNextRequestID(), &r); err != nil {
+
+	var r BoradcastTxSyncResult
+	if err = c.txClient.Call("broadcast_tx_sync", params, c.getNextRequestID(), &r); err != nil {
 		return nil, err
 	}
-	if r.CheckTx.Code != 0 {
-		if len(r.CheckTx.Error) != 0 {
-			return nil, errors.New(r.CheckTx.Error)
-		}
-		return nil, errors.New("CheckTx failed")
-	}
-	if r.DeliverTx.Code != 0 {
-		if len(r.DeliverTx.Error) != 0 {
-			return nil, errors.New(r.DeliverTx.Error)
-		}
-		return nil, errors.New("DeliverTx failed")
+
+	txResult, err := c.pollTx(r.Hash, MaxRetries, RetryDelay)
+	if err != nil {
+		return nil, err
 	}
 
-	return r.DeliverTx.Data, nil
+	return txResult.Data, nil
+}
+
+func (c *DAppChainRPCClient) pollTx(hash string, maxRetries int, retryDelay time.Duration) (*TxHandlerResult, error) {
+	var result TxQueryResult
+
+	decodedHash, err := hex.DecodeString(hash)
+	if err != nil {
+		return nil, err
+	}
+	params := map[string]interface{}{
+		"hash": decodedHash,
+	}
+
+	for i := 0; i < maxRetries; i++ {
+		// Sleeping in the beginning of loop, as not to waste one http call
+		time.Sleep(retryDelay)
+
+		if err := c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
+			if !strings.Contains(err.Error(), "not found") {
+				return nil, err
+			}
+		} else {
+			break
+		}
+	}
+
+	return &result.TxResult, nil
 }
 
 func (c *DAppChainRPCClient) Query(caller loom.Address, contractAddr loom.LocalAddress, query proto.Message) ([]byte, error) {
