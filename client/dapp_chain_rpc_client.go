@@ -155,7 +155,7 @@ func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDe
 
 	decodedHash, err := hex.DecodeString(hash)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(err, "error while polling for tx")
 	}
 	params := map[string]interface{}{
 		"hash": decodedHash,
@@ -168,7 +168,7 @@ func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDe
 		if err = c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
 			if !strings.Contains(err.Error(), "not found") {
 				// Bailing early if error is due to something other than pending tx
-				return nil, errors.Wrap(err, "[pollTx] error while calling tx endpoint")
+				return nil, errors.Wrap(err, "error while polling for tx")
 			}
 		} else {
 			break
@@ -176,7 +176,7 @@ func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDe
 	}
 
 	if err != nil {
-		return nil, errors.Wrap(err, "[pollTx] max retry exceeded")
+		return nil, errors.Wrap(err, "max retry exceeded while polling for tx")
 	}
 
 	return &result.TxResult, nil
