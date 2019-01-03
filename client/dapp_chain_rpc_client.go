@@ -14,11 +14,12 @@ import (
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
+	"github.com/pkg/errors"
 )
 
 const (
-	MaxRetries = 10
-	RetryDelay = 1 * time.Second
+	ShortPollLimit = 10
+	ShortPollDelay = 1 * time.Second
 )
 
 type TxHandlerResult struct {
@@ -140,7 +141,7 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 		return nil, err
 	}
 
-	txResult, err := c.pollTx(r.Hash, MaxRetries, RetryDelay)
+	txResult, err := c.pollTx(r.Hash, ShortPollLimit, ShortPollDelay)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	return txResult.Data, nil
 }
 
-func (c *DAppChainRPCClient) pollTx(hash string, maxRetries int, retryDelay time.Duration) (*TxHandlerResult, error) {
+func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDelay time.Duration) (*TxHandlerResult, error) {
 	var result TxQueryResult
 	var err error
 
@@ -160,14 +161,14 @@ func (c *DAppChainRPCClient) pollTx(hash string, maxRetries int, retryDelay time
 		"hash": decodedHash,
 	}
 
-	for i := 0; i < maxRetries; i++ {
+	for i := 0; i < shortPollLimit; i++ {
 		// Sleeping in the beginning of loop, as not to waste one http call
-		time.Sleep(retryDelay)
+		time.Sleep(shortPollDelay)
 
 		if err = c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
 			if !strings.Contains(err.Error(), "not found") {
 				// Bailing early if error is due to something other than pending tx
-				return nil, err
+				return nil, errors.Wrap(err, "[pollTx] error while calling tx endpoint")
 			}
 		} else {
 			break
@@ -175,7 +176,7 @@ func (c *DAppChainRPCClient) pollTx(hash string, maxRetries int, retryDelay time
 	}
 
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "[pollTx] max retry exceeded")
 	}
 
 	return &result.TxResult, nil
