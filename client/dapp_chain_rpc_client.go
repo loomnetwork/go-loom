@@ -150,6 +150,7 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 
 func (c *DAppChainRPCClient) pollTx(hash string, maxRetries int, retryDelay time.Duration) (*TxHandlerResult, error) {
 	var result TxQueryResult
+	var err error
 
 	decodedHash, err := hex.DecodeString(hash)
 	if err != nil {
@@ -163,13 +164,18 @@ func (c *DAppChainRPCClient) pollTx(hash string, maxRetries int, retryDelay time
 		// Sleeping in the beginning of loop, as not to waste one http call
 		time.Sleep(retryDelay)
 
-		if err := c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
+		if err = c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
 			if !strings.Contains(err.Error(), "not found") {
+				// Bailing early if error is due to something other than pending tx
 				return nil, err
 			}
 		} else {
 			break
 		}
+	}
+
+	if err != nil {
+		return nil, err
 	}
 
 	return &result.TxResult, nil
