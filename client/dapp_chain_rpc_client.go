@@ -2,6 +2,7 @@ package client
 
 import (
 	"encoding/hex"
+	"fmt"
 	"strings"
 	"time"
 
@@ -18,8 +19,10 @@ import (
 )
 
 const (
-	ShortPollLimit = 5
+	ShortPollLimit = 10
 	ShortPollDelay = 1 * time.Second
+
+	CodeTypeOK = 0
 )
 
 type TxHandlerResult struct {
@@ -140,6 +143,9 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	if err = c.txClient.Call("broadcast_tx_sync", params, c.getNextRequestID(), &r); err != nil {
 		return nil, err
 	}
+	if r.Code != CodeTypeOK {
+		return nil, fmt.Errorf("CheckTx failed")
+	}
 
 	txResult, err := c.pollTx(r.Hash, ShortPollLimit, ShortPollDelay)
 	if err != nil {
@@ -171,6 +177,9 @@ func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDe
 				return nil, errors.Wrap(err, "error while polling for tx")
 			}
 		} else {
+			if result.TxResult.Code != CodeTypeOK {
+				return nil, fmt.Errorf("DeliverTx failed")
+			}
 			break
 		}
 	}
