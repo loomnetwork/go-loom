@@ -32,10 +32,10 @@ type TxHandlerResult struct {
 }
 
 type BoradcastTxSyncResult struct {
-	Code int32  `json:"code"`
-	Data []byte `json:"data"`
-	Hash string `json:"hash"`
-	Log  string `json:"log"`
+	Code  int32  `json:"code"`
+	Data  []byte `json:"data"`
+	Hash  string `json:"hash"`
+	Error string `json:"log"`
 }
 
 type TxQueryResult struct {
@@ -144,6 +144,9 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 		return nil, err
 	}
 	if r.Code != CodeTypeOK {
+		if len(r.Error) != 0 {
+			return nil, errors.New(r.Error)
+		}
 		return nil, fmt.Errorf("CheckTx failed")
 	}
 
@@ -178,6 +181,9 @@ func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDe
 			}
 		} else {
 			if result.TxResult.Code != CodeTypeOK {
+				if len(result.TxResult.Error) != 0 {
+					return nil, errors.New(result.TxResult.Error)
+				}
 				return nil, fmt.Errorf("DeliverTx failed")
 			}
 			break
