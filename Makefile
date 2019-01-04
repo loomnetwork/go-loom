@@ -98,7 +98,7 @@ deps:
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 
 deps-evm:
-	git clone -q git@github.com:loomnetwork/go-ethereum.git $(GETH_DIR)
+	git clone -q https://github.com/loomnetwork/go-ethereum.git $(GETH_DIR)
 	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
 	go get \
 		github.com/miguelmota/go-solidity-sha3 \
