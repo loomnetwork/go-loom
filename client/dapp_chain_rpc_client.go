@@ -171,7 +171,7 @@ func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDe
 	}
 
 	for i := 0; i < shortPollLimit; i++ {
-		// Sleeping in the beginning of loop, as not to waste one http call
+		// Delaying in beginning of the loop, as immediate poll will likely result in "not found"
 		time.Sleep(shortPollDelay)
 
 		if err = c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
