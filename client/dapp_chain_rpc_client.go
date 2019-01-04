@@ -176,7 +176,7 @@ func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDe
 
 		if err = c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
 			if !strings.Contains(err.Error(), "not found") {
-				// Bailing early if error is due to something other than pending tx
+				// Bailing early if error is due to something other than pending tx.
 				return nil, errors.Wrap(err, "error while polling for tx")
 			}
 		} else {
