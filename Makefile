@@ -2,6 +2,9 @@ PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -I$(GOPATH)/src -I/usr/local/include
 GOGO_PROTOBUF_DIR = $(GOPATH)/src/github.com/gogo/protobuf
 HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
+GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
+# This commit sha should match the one in loomchain repo
+GETH_GIT_REV = c4f3537b02811a7487655c02e6685195dff46b0a
 
 .PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
 
@@ -89,17 +92,19 @@ deps:
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log \
-		github.com/pkg/errors \
-		github.com/miguelmota/go-solidity-sha3
+		github.com/pkg/errors
 	dep ensure -vendor-only
 	cd $(GOGO_PROTOBUF_DIR) && git checkout 1ef32a8b9fc3f8ec940126907cedb5998f6318e4
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 
 deps-evm:
+	git clone -q https://github.com/loomnetwork/go-ethereum.git $(GETH_DIR)
+	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
 	go get \
-		github.com/ethereum/go-ethereum \
+		github.com/miguelmota/go-solidity-sha3 \
 		github.com/loomnetwork/yubihsm-go \
 		gopkg.in/check.v1
+
 
 clean:
 	go clean

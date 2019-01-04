@@ -2,7 +2,9 @@ package client
 
 import (
 	"encoding/hex"
-	"errors"
+	"fmt"
+	"strings"
+	"time"
 
 	"net/http"
 	"strconv"
@@ -13,12 +15,31 @@ import (
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
+	"github.com/pkg/errors"
+)
+
+const (
+	ShortPollLimit = 10
+	ShortPollDelay = 1 * time.Second
+
+	CodeTypeOK = 0
 )
 
 type TxHandlerResult struct {
 	Code  int32  `json:"code"`
 	Error string `json:"log"`
 	Data  []byte `json:"data"`
+}
+
+type BoradcastTxSyncResult struct {
+	Code  int32  `json:"code"`
+	Data  []byte `json:"data"`
+	Hash  string `json:"hash"`
+	Error string `json:"log"`
+}
+
+type TxQueryResult struct {
+	TxResult TxHandlerResult `json:"tx_result"`
 }
 
 type BroadcastTxCommitResult struct {
@@ -117,24 +138,63 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	params := map[string]interface{}{
 		"tx": signedTxBytes,
 	}
-	var r BroadcastTxCommitResult
-	if err = c.txClient.Call("broadcast_tx_commit", params, c.getNextRequestID(), &r); err != nil {
+
+	var r BoradcastTxSyncResult
+	if err = c.txClient.Call("broadcast_tx_sync", params, c.getNextRequestID(), &r); err != nil {
 		return nil, err
 	}
-	if r.CheckTx.Code != 0 {
-		if len(r.CheckTx.Error) != 0 {
-			return nil, errors.New(r.CheckTx.Error)
+	if r.Code != CodeTypeOK {
+		if len(r.Error) != 0 {
+			return nil, errors.New(r.Error)
 		}
-		return nil, errors.New("CheckTx failed")
-	}
-	if r.DeliverTx.Code != 0 {
-		if len(r.DeliverTx.Error) != 0 {
-			return nil, errors.New(r.DeliverTx.Error)
-		}
-		return nil, errors.New("DeliverTx failed")
+		return nil, fmt.Errorf("CheckTx failed")
 	}
 
-	return r.DeliverTx.Data, nil
+	txResult, err := c.pollTx(r.Hash, ShortPollLimit, ShortPollDelay)
+	if err != nil {
+		return nil, err
+	}
+
+	return txResult.Data, nil
+}
+
+func (c *DAppChainRPCClient) pollTx(hash string, shortPollLimit int, shortPollDelay time.Duration) (*TxHandlerResult, error) {
+	var result TxQueryResult
+	var err error
+
+	decodedHash, err := hex.DecodeString(hash)
+	if err != nil {
+		return nil, errors.Wrapf(err, "error while polling for tx")
+	}
+	params := map[string]interface{}{
+		"hash": decodedHash,
+	}
+
+	for i := 0; i < shortPollLimit; i++ {
+		// Delaying in beginning of the loop, as immediate poll will likely result in "not found"
+		time.Sleep(shortPollDelay)
+
+		if err = c.txClient.Call("tx", params, c.getNextRequestID(), &result); err != nil {
+			if !strings.Contains(err.Error(), "not found") {
+				// Bailing early if error is due to something other than pending tx.
+				return nil, errors.Wrap(err, "error while polling for tx")
+			}
+		} else {
+			if result.TxResult.Code != CodeTypeOK {
+				if len(result.TxResult.Error) != 0 {
+					return nil, errors.New(result.TxResult.Error)
+				}
+				return nil, fmt.Errorf("DeliverTx failed")
+			}
+			break
+		}
+	}
+
+	if err != nil {
+		return nil, errors.Wrap(err, "max retry exceeded while polling for tx")
+	}
+
+	return &result.TxResult, nil
 }
 
 func (c *DAppChainRPCClient) Query(caller loom.Address, contractAddr loom.LocalAddress, query proto.Message) ([]byte, error) {
