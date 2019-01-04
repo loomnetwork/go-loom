@@ -86,6 +86,6 @@ message KarmaTotal{
 message ContractRecord{
     Address owner = 1;
     Address address = 2;
-    int64 creation_block = 3;
-    int64 nonce = 4;
+    int64   creation_block = 3;
+    int64   nonce = 4;
 }
