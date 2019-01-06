@@ -7,6 +7,10 @@ message ParamsV2 {
     int64 election_cycle_length = 2;
     Address coin_contract_address = 3;
     Address oracle_address = 4;
+    BigUInt max_yearly_reward = 5;
+    BigUInt registration_requirement = 6;
+    uint64 crash_slashing_percentage = 7;
+    uint64 byzantine_slashing_percentage = 8;
 }
 
 message StateV2 {
