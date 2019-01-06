@@ -179,7 +179,7 @@ message GetRequestBatchTallyRequestV2 {
 }
 
 message SetElectionCycleRequestV2 {
-    int64 election_clycle = 1;
+    int64 election_cycle = 1;
 }
 
 message SetYearlyRewardRequestV2 {
