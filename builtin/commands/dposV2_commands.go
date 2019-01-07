@@ -251,6 +251,143 @@ func ClaimDistributionCmdV2() *cobra.Command {
 	}
 }
 
+// Oracle Commands for setting parameters
+
+func SetElectionCycleCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "set_election_cycleV2 [eleciton duration]",
+		Short: "Set election cycle duration (in seconds)",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			electionCycleDuration, err := strconv.ParseUint(args[0], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			err = cli.CallContract(DPOSV2ContractName, "SetElectionCycle", &dposv2.SetElectionCycleRequestV2{
+				ElectionCycle: int64(electionCycleDuration),
+			}, nil)
+			if err != nil {
+				return err
+			}
+			return nil
+		},
+	}
+}
+
+func SetValidatorCountCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "set_validator_countV2 [validator count]",
+		Short: "Set maximum number of validators",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			validatorCount, err := strconv.ParseUint(args[0], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			err = cli.CallContract(DPOSV2ContractName, "SetValidatorCount", &dposv2.SetValidatorCountRequestV2{
+				ValidatorCount: int64(validatorCount),
+			}, nil)
+			if err != nil {
+				return err
+			}
+			return nil
+		},
+	}
+}
+
+func SetMaxYearlyRewardCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "set_max_yearly_rewardV2 [max yearly rewward amount]",
+		Short: "Set maximum yearly reward",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			maxYearlyReward, err := cli.ParseAmount(args[0])
+			if err != nil {
+				return err
+			}
+
+			err = cli.CallContract(DPOSV2ContractName, "SetMaxYearlyReward", &dposv2.SetMaxYearlyRewardRequestV2{
+				MaxYearlyReward: &types.BigUInt{
+					Value: *maxYearlyReward,
+				},
+			}, nil)
+			if err != nil {
+				return err
+			}
+			return nil
+		},
+	}
+}
+
+func SetRegistrationRequirementCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "set_registration_requirementV2 [registration_requirement]",
+		Short: "Set minimum self-delegation required of a new Candidate",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			registrationRequirement, err := cli.ParseAmount(args[0])
+			if err != nil {
+				return err
+			}
+
+			err = cli.CallContract(DPOSV2ContractName, "SetRegistrationRequirement", &dposv2.SetRegistrationRequirementRequestV2{
+				RegistrationRequirement: &types.BigUInt{
+					Value: *registrationRequirement,
+				},
+			}, nil)
+			if err != nil {
+				return err
+			}
+			return nil
+		},
+	}
+}
+
+func SetOracleAddressCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "set_oracle_addressV2 [oracle address]",
+		Short: "Set oracle address",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			oracleAddress, err := cli.ParseAddress(args[0])
+			if err != nil {
+				return err
+			}
+			err = cli.StaticCallContract(DPOSV2ContractName, "SetOracleAddress", &dposv2.SetOracleAddressRequestV2{OracleAddress: oracleAddress.MarshalPB()}, nil)
+			if err != nil {
+				return err
+			}
+			return nil
+		},
+	}
+}
+
+func SetSlashingPercentagesCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "set_slashing_percentagesV2 [crash fault slashing percentage] [byzantine fault slashing percentage",
+		Short: "Set crash and byzantine fualt slashing percentages expressed in basis points",
+		Args:  cobra.MinimumNArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			registrationRequirement, err := cli.ParseAmount(args[1])
+			if err != nil {
+				return err
+			}
+
+			err = cli.CallContract(DPOSV2ContractName, "SetRegistrationRequirement", &dposv2.SetRegistrationRequirementRequestV2{
+				RegistrationRequirement: &types.BigUInt{
+					Value: *registrationRequirement,
+				},
+			}, nil)
+			if err != nil {
+				return err
+			}
+			return nil
+		},
+	}
+}
+
 func AddDPOSV2(root *cobra.Command) {
 	registercmd := RegisterCandidateCmdV2()
 	registercmd.Flags().StringVarP(&candidateName, "name", "", "", "candidate name")
@@ -267,5 +404,11 @@ func AddDPOSV2(root *cobra.Command) {
 		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),
+		SetElectionCycleCmdV2(),
+		SetValidatorCountCmdV2(),
+		SetMaxYearlyRewardCmdV2(),
+		SetRegistrationRequirementCmdV2(),
+		SetOracleAddressCmdV2(),
+		SetSlashingPercentagesCmdV2(),
 	)
 }

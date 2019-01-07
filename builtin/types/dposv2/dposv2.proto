@@ -182,8 +182,8 @@ message SetElectionCycleRequestV2 {
     int64 election_cycle = 1;
 }
 
-message SetYearlyRewardRequestV2 {
-    BigUInt yearly_reward = 1;
+message SetMaxYearlyRewardRequestV2 {
+    BigUInt max_yearly_reward = 1;
 }
 
 message SetRegistrationRequirementRequestV2 {
