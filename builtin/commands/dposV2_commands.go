@@ -71,6 +71,26 @@ func ListCandidatesCmdV2() *cobra.Command {
 	}
 }
 
+func ChangeFee() *cobra.Command {
+	return &cobra.Command{
+		Use:   "change_fee [new validator fee (in basis points)]",
+		Short: "Changes a validator's fee after (with a 2 election delay)",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateFee, err := strconv.ParseUint(args[0], 10, 64)
+			if err != nil {
+				return err
+			}
+			if candidateFee > 10000 {
+				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
+			}
+			return cli.CallContract(DPOSV2ContractName, "ChangeFee", &dposv2.ChangeCandidateFeeRequest{
+				Fee: candidateFee,
+			}, nil)
+		},
+	}
+}
+
 func RegisterCandidateCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "register_candidateV2 [public key] [validator fee (in basis points)]",
@@ -98,7 +118,7 @@ func RegisterCandidateCmdV2() *cobra.Command {
 
 func DelegateCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "delegateV2 [validator address] [amount]",
+		Use:   "delegateV2 [validator address] [amount] [locktime]",
 		Short: "delegate tokens to a validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -111,12 +131,19 @@ func DelegateCmdV2() *cobra.Command {
 				return err
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "Delegate", &dposv2.DelegateRequestV2{
-				ValidatorAddress: addr.MarshalPB(),
-				Amount: &types.BigUInt{
-					Value: *amount,
-				},
-			}, nil)
+			var req dposv2.DelegateRequestV2
+			req.Amount = &types.BigUInt{Value: *amount}
+			req.ValidatorAddress = addr.MarshalPB()
+
+			if len(args) == 3 {
+				lockTime, err := strconv.ParseInt(args[2], 10, 64)
+				if err != nil {
+					return err
+				}
+				req.LockTime = uint64(lockTime)
+			}
+
+			return cli.CallContract(DPOSV2ContractName, "Delegate", &req, nil)
 		},
 	}
 }
@@ -410,5 +437,6 @@ func AddDPOSV2(root *cobra.Command) {
 		SetRegistrationRequirementCmdV2(),
 		SetOracleAddressCmdV2(),
 		SetSlashingPercentagesCmdV2(),
+		ChangeFee(),
 	)
 }
