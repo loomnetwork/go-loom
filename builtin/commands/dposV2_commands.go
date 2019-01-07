@@ -118,7 +118,7 @@ func RegisterCandidateCmdV2() *cobra.Command {
 
 func DelegateCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "delegateV2 [validator address] [amount]",
+		Use:   "delegateV2 [validator address] [amount] [locktime]",
 		Short: "delegate tokens to a validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -131,12 +131,19 @@ func DelegateCmdV2() *cobra.Command {
 				return err
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "Delegate", &dposv2.DelegateRequestV2{
-				ValidatorAddress: addr.MarshalPB(),
-				Amount: &types.BigUInt{
-					Value: *amount,
-				},
-			}, nil)
+			var req dposv2.DelegateRequestV2
+			req.Amount = &types.BigUInt{Value: *amount}
+			req.ValidatorAddress = addr.MarshalPB()
+
+			if len(args) == 3 {
+				lockTime, err := strconv.ParseInt(args[2], 10, 64)
+				if err != nil {
+					return err
+				}
+				req.LockTime = uint64(lockTime)
+			}
+
+			return cli.CallContract(DPOSV2ContractName, "Delegate", &req, nil)
 		},
 	}
 }
