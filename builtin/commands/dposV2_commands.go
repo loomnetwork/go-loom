@@ -85,7 +85,7 @@ func ChangeFee() *cobra.Command {
 				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
 			}
 			return cli.CallContract(DPOSV2ContractName, "ChangeFee", &dposv2.RegisterCandidateRequestV2{
-				Fee:         candidateFee,
+				Fee: candidateFee,
 			}, nil)
 		},
 	}
@@ -287,6 +287,6 @@ func AddDPOSV2(root *cobra.Command) {
 		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),
-        ChangeFee(),
+		ChangeFee(),
 	)
 }
