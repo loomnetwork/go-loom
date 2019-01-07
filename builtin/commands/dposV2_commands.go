@@ -111,17 +111,17 @@ func DelegateCmdV2() *cobra.Command {
 				return err
 			}
 
-            var req dposv2.DelegateRequestV2
-            req.Amount = &types.BigUInt{Value: *amount}
-	        req.ValidatorAddress = addr.MarshalPB()
+			var req dposv2.DelegateRequestV2
+			req.Amount = &types.BigUInt{Value: *amount}
+			req.ValidatorAddress = addr.MarshalPB()
 
-            if len(args) == 3 {
-			    lockTime, err := strconv.ParseInt(args[2], 10, 64)
-			    if err != nil {
-                    return err
-			    }
-                req.LockTime = uint64(lockTime)
-            }
+			if len(args) == 3 {
+				lockTime, err := strconv.ParseInt(args[2], 10, 64)
+				if err != nil {
+					return err
+				}
+				req.LockTime = uint64(lockTime)
+			}
 
 			return cli.CallContract(DPOSV2ContractName, "Delegate", &req, nil)
 		},
