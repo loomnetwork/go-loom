@@ -382,7 +382,7 @@ func SetOracleAddressCmdV2() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			err = cli.StaticCallContract(DPOSV2ContractName, "SetOracleAddress", &dposv2.SetOracleAddressRequestV2{OracleAddress: oracleAddress.MarshalPB()}, nil)
+			err = cli.CallContract(DPOSV2ContractName, "SetOracleAddress", &dposv2.SetOracleAddressRequestV2{OracleAddress: oracleAddress.MarshalPB()}, nil)
 			if err != nil {
 				return err
 			}
