@@ -35,9 +35,11 @@ message CandidateV2 {
     Address address = 1;
     bytes pub_key = 2;
     uint64 fee = 3;
-    string name = 4;
-    string description = 5;
-    string website = 6;
+    uint64 newFee = 4;
+    uint64 feeDelayCounter = 5;
+    string name = 6;
+    string description = 7;
+    string website = 8;
 }
 
 message CandidateListV2 {
@@ -128,6 +130,10 @@ message RegisterCandidateRequestV2 {
     string description = 4;
     string website = 5;
     uint64 lock_time = 6;
+}
+
+message ChangeCandidateFeeRequest {
+    uint64 fee = 1;
 }
 
 message UnregisterCandidateRequestV2 {

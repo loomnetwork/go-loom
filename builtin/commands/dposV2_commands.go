@@ -71,6 +71,26 @@ func ListCandidatesCmdV2() *cobra.Command {
 	}
 }
 
+func ChangeFee() *cobra.Command {
+	return &cobra.Command{
+		Use:   "change_fee [new validator fee (in basis points)]",
+		Short: "Changes a validator's fee after (with a 2 election delay)",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateFee, err := strconv.ParseUint(args[0], 10, 64)
+			if err != nil {
+				return err
+			}
+			if candidateFee > 10000 {
+				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
+			}
+			return cli.CallContract(DPOSV2ContractName, "ChangeFee", &dposv2.ChangeCandidateFeeRequest{
+				Fee: candidateFee,
+			}, nil)
+		},
+	}
+}
+
 func RegisterCandidateCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "register_candidateV2 [public key] [validator fee (in basis points)]",
@@ -274,5 +294,6 @@ func AddDPOSV2(root *cobra.Command) {
 		CheckDelegationCmdV2(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),
+		ChangeFee(),
 	)
 }
