@@ -7,6 +7,10 @@ message ParamsV2 {
     int64 election_cycle_length = 2;
     Address coin_contract_address = 3;
     Address oracle_address = 4;
+    BigUInt max_yearly_reward = 5;
+    BigUInt registration_requirement = 6;
+    BigUInt crash_slashing_percentage = 7;
+    BigUInt byzantine_slashing_percentage = 8;
 }
 
 message StateV2 {
@@ -183,4 +187,27 @@ message RequestBatchV2 {
 message GetRequestBatchTallyRequestV2 {
 }
 
+message SetElectionCycleRequestV2 {
+    int64 election_cycle = 1;
+}
 
+message SetMaxYearlyRewardRequestV2 {
+    BigUInt max_yearly_reward = 1;
+}
+
+message SetRegistrationRequirementRequestV2 {
+    BigUInt registration_requirement = 1;
+}
+
+message SetValidatorCountRequestV2 {
+    int64 validator_count = 1;
+}
+
+message SetOracleAddressRequestV2 {
+    Address oracle_address = 1;
+}
+
+message SetSlashingPercentagesRequestV2 {
+    BigUInt crash_slashing_percentage = 1;
+    BigUInt byzantine_slashing_percentage = 2;
+}
