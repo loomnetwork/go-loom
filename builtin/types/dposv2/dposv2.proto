@@ -51,12 +51,14 @@ message DelegationV2 {
     BigUInt update_amount = 4;
     uint64 height = 5;
     uint64 lock_time = 6;
+    uint64 lock_duration = 7;
     enum DelegationState {
         BONDING = 0;
         BONDED = 1;
         UNBONDING = 2;
     }
-    DelegationState state = 7;
+    DelegationState state = 8;
+
 }
 
 message DelegationListV2 {
@@ -126,6 +128,7 @@ message RegisterCandidateRequestV2 {
     string name = 3;
     string description = 4;
     string website = 5;
+    uint64 lock_time = 6;
 }
 
 message UnregisterCandidateRequestV2 {
