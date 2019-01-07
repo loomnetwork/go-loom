@@ -282,7 +282,7 @@ func ClaimDistributionCmdV2() *cobra.Command {
 
 func SetElectionCycleCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "set_election_cycle [eleciton duration]",
+		Use:   "set_election_cycle [election duration]",
 		Short: "Set election cycle duration (in seconds)",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
