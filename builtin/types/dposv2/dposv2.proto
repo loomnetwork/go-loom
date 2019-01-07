@@ -80,6 +80,7 @@ message DPOSInitRequestV2 {
 message DelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
+    uint64 lock_time = 3;
 }
 
 message WhitelistCandidateRequestV2 {
