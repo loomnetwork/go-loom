@@ -6,13 +6,13 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/loomnetwork/go-loom/client/gateway"
 	"github.com/loomnetwork/go-loom/cli"
+	"github.com/loomnetwork/go-loom/client/gateway"
 
 	ssha "github.com/miguelmota/go-solidity-sha3"
 
-    "github.com/ethereum/go-ethereum/crypto"
-    ethclient "github.com/ethereum/go-ethereum/ethclient"
+	"github.com/ethereum/go-ethereum/crypto"
+	ethclient "github.com/ethereum/go-ethereum/ethclient"
 	"github.com/spf13/cobra"
 )
 
@@ -27,8 +27,8 @@ func SignRemoveValidator() *cobra.Command {
 			gatewayAddr := cli.TxFlags.ContractAddr
 			ethUri := cli.TxFlags.MainnetURI
 
-            // Get the nonce
-            ethClient, err := ethclient.Dial(ethUri)
+			// Get the nonce
+			ethClient, err := ethclient.Dial(ethUri)
 			gatewayClient, err := gateway.ConnectToMainnetGateway(ethClient, gatewayAddr)
 			nonce, err := gatewayClient.Contract().Nonce(nil)
 			if err != nil {
@@ -45,7 +45,7 @@ func SignRemoveValidator() *cobra.Command {
 				),
 			)
 
-            // TODO: Check if hsmconfigfile flag is given-> use that, otherwise privfile
+			// TODO: Check if hsmconfigfile flag is given-> use that, otherwise privfile
 			key, err := crypto.LoadECDSA(privateKeyPath)
 			if err != nil {
 				fmt.Println(err)
@@ -78,8 +78,8 @@ func SignAddValidator() *cobra.Command {
 			gatewayAddr := cli.TxFlags.ContractAddr
 			ethUri := cli.TxFlags.MainnetURI
 
-            // Get the nonce
-            ethClient, err := ethclient.Dial(ethUri)
+			// Get the nonce
+			ethClient, err := ethclient.Dial(ethUri)
 			gatewayClient, err := gateway.ConnectToMainnetGateway(ethClient, gatewayAddr)
 			nonce, err := gatewayClient.Contract().Nonce(nil)
 			if err != nil {
