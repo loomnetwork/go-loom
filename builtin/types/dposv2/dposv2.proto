@@ -127,6 +127,10 @@ message RegisterCandidateRequestV2 {
     string website = 5;
 }
 
+message ChangeCandidateFeeRequest {
+    uint64 fee = 1;
+}
+
 message UnregisterCandidateRequestV2 {
 }
 
