@@ -5,11 +5,13 @@ import (
 	"encoding/asn1"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"math/big"
 	"math/rand"
 	"time"
 
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 
 	"github.com/loomnetwork/yubihsm-go"
@@ -41,14 +43,19 @@ type YubiHsmConfig struct {
 }
 
 type YubiHsmPrivateKey struct {
-	sessionMgr  *yubihsm.SessionManager
-	privKeyType string
-	privKeyID   uint16
-	pubKeyBytes []byte
+	sessionMgr         *yubihsm.SessionManager
+	privKeyType        string
+	privKeyID          uint16
+	pubKeyBytes        []byte
+	pubKeyUncompressed []byte
 }
 
 func InitYubiHsmPrivKey(hsmConfig *YubiHsmConfig) (*YubiHsmPrivateKey, error) {
 	privKey := &YubiHsmPrivateKey{}
+
+	if hsmConfig.PrivKeyType != PrivateKeyTypeEd25519 && hsmConfig.PrivKeyType != PrivateKeyTypeSecp256k1 {
+		return nil, fmt.Errorf("Invalid YubiHSM private key type '%s'", hsmConfig.PrivKeyType)
+	}
 
 	httpConnector := connector.NewHTTPConnector(hsmConfig.HsmConnURL)
 	sessionMgr, err := yubihsm.NewSessionManager(httpConnector, hsmConfig.AuthKeyID, hsmConfig.AuthPasswd)
@@ -85,7 +92,7 @@ func loadYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
 	return InitYubiHsmPrivKey(yubiHsmConfig)
 }
 
-func GenYubiHsmPrivKey(algo, filePath string) (*YubiHsmPrivateKey, error) {
+func GenYubiHsmPrivKey(filePath string) (*YubiHsmPrivateKey, error) {
 	// init YubiHSM session
 	yubiHsmPrivKey, err := loadYubiHsmPrivKey(filePath)
 	if err != nil {
@@ -200,9 +207,11 @@ func (privKey *YubiHsmPrivateKey) exportSecp256k1Pubkey(keyData []byte) error {
 	x.SetBytes(keyData[0:32])
 	y.SetBytes(keyData[31:])
 
+	privKey.pubKeyUncompressed = make([]byte, 64)
+	copy(privKey.pubKeyUncompressed[:], keyData[:])
+
 	privKey.pubKeyBytes = make([]byte, YubiSecp256k1PubKeySize)
 	copy(privKey.pubKeyBytes[:], secp256k1.CompressPubkey(x, y))
-
 	if len(privKey.pubKeyBytes) != YubiSecp256k1PubKeySize {
 		return errors.New("Invalid Secp256k1 public key size")
 	}
@@ -324,4 +333,18 @@ func YubiHsmSign(msg []byte, privKey *YubiHsmPrivateKey) (sig []byte, err error)
 // get pubkey bytes
 func (privKey *YubiHsmPrivateKey) GetPubKeyBytes() []byte {
 	return privKey.pubKeyBytes[:]
+}
+
+// get pubkey address
+func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
+	b := append([]byte{0x4}, privKey.pubKeyUncompressed...)
+
+	ecdsaPubKey, err := crypto.UnmarshalPubkey(b)
+	if err != nil {
+		privKey.deletePrivKey()
+		panic(err)
+	}
+	pubKeyAddr := crypto.PubkeyToAddress(*ecdsaPubKey)
+
+	return pubKeyAddr.Hex()
 }
