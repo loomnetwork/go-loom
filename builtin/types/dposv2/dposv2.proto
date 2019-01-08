@@ -57,7 +57,13 @@ message DelegationV2 {
     BigUInt update_amount = 4;
     uint64 height = 5;
     uint64 lock_time = 6;
-    uint64 lock_duration = 7;
+    enum LocktimeTier {
+        TIER_ZERO = 0;
+        TIER_ONE = 1;
+        TIER_TWO = 2;
+        TIER_THREE = 3;
+    }
+    LocktimeTier locktime_tier = 7;
     enum DelegationState {
         BONDING = 0;
         BONDED = 1;
@@ -87,7 +93,7 @@ message DPOSInitRequestV2 {
 message DelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
-    uint64 lock_time = 3;
+    uint64 locktime_tier = 3;
 }
 
 message WhitelistCandidateRequestV2 {
@@ -133,7 +139,7 @@ message RegisterCandidateRequestV2 {
     string name = 3;
     string description = 4;
     string website = 5;
-    uint64 lock_time = 6;
+    uint64 locktime_tier = 6;
 }
 
 message ChangeCandidateFeeRequest {
