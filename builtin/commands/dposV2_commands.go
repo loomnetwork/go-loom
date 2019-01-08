@@ -120,7 +120,7 @@ func DelegateCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "delegateV2 [validator address] [amount] [locktime tier]",
 		Short: "delegate tokens to a validator",
-		Args:  cobra.MinimumNArgs(3),
+		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			addr, err := cli.ResolveAddress(args[0])
 			if err != nil {
