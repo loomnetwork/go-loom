@@ -16,7 +16,7 @@ import (
 )
 
 // LoomTimelockFactoryABI is the input ABI used to generate the binding from.
-const LoomTimelockFactoryABI = "[{\"inputs\":[{\"name\":\"_loom\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\",\"signature\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"validatorEthAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"timelockContractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"validatorName\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"validatorPublicKey\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"_amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_releaseTime\",\"type\":\"uint256\"}],\"name\":\"LoomTimeLockCreated\",\"type\":\"event\",\"signature\":\"0xc54292f6524435faba788a1c757e3ced79c3a3a6e1d2bee3b13ee8d12d686123\"},{\"constant\":false,\"inputs\":[{\"name\":\"validatorEthAddress\",\"type\":\"address\"},{\"name\":\"validatorName\",\"type\":\"string\"},{\"name\":\"validatorPublicKey\",\"type\":\"string\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"duration\",\"type\":\"uint256\"}],\"name\":\"deployTimeLock\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xee66ca2b\"}]"
+const LoomTimelockFactoryABI = "[{\"inputs\":[{\"name\":\"_loom\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"validatorEthAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"timelockContractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"validatorName\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"validatorPublicKey\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"_amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_duration\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_releaseTime\",\"type\":\"uint256\"}],\"name\":\"LoomTimeLockCreated\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"validatorEthAddress\",\"type\":\"address\"},{\"name\":\"validatorName\",\"type\":\"string\"},{\"name\":\"validatorPublicKey\",\"type\":\"string\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"duration\",\"type\":\"uint256\"}],\"name\":\"deployTimeLock\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // LoomTimelockFactory is an auto generated Go binding around an Ethereum contract.
 type LoomTimelockFactory struct {
@@ -255,13 +255,14 @@ type LoomTimelockFactoryLoomTimeLockCreated struct {
 	ValidatorName           string
 	ValidatorPublicKey      string
 	Amount                  *big.Int
+	Duration                *big.Int
 	ReleaseTime             *big.Int
 	Raw                     types.Log // Blockchain specific contextual infos
 }
 
-// FilterLoomTimeLockCreated is a free log retrieval operation binding the contract event 0xc54292f6524435faba788a1c757e3ced79c3a3a6e1d2bee3b13ee8d12d686123.
+// FilterLoomTimeLockCreated is a free log retrieval operation binding the contract event 0x920eb344f07704601d8be5e215805a8f8bf98fd7b7c0b73d48a0f61ac61bffd6.
 //
-// Solidity: e LoomTimeLockCreated(validatorEthAddress address, timelockContractAddress address, validatorName string, validatorPublicKey string, _amount uint256, _releaseTime uint256)
+// Solidity: e LoomTimeLockCreated(validatorEthAddress address, timelockContractAddress address, validatorName string, validatorPublicKey string, _amount uint256, _duration uint256, _releaseTime uint256)
 func (_LoomTimelockFactory *LoomTimelockFactoryFilterer) FilterLoomTimeLockCreated(opts *bind.FilterOpts) (*LoomTimelockFactoryLoomTimeLockCreatedIterator, error) {
 
 	logs, sub, err := _LoomTimelockFactory.contract.FilterLogs(opts, "LoomTimeLockCreated")
@@ -271,9 +272,9 @@ func (_LoomTimelockFactory *LoomTimelockFactoryFilterer) FilterLoomTimeLockCreat
 	return &LoomTimelockFactoryLoomTimeLockCreatedIterator{contract: _LoomTimelockFactory.contract, event: "LoomTimeLockCreated", logs: logs, sub: sub}, nil
 }
 
-// WatchLoomTimeLockCreated is a free log subscription operation binding the contract event 0xc54292f6524435faba788a1c757e3ced79c3a3a6e1d2bee3b13ee8d12d686123.
+// WatchLoomTimeLockCreated is a free log subscription operation binding the contract event 0x920eb344f07704601d8be5e215805a8f8bf98fd7b7c0b73d48a0f61ac61bffd6.
 //
-// Solidity: e LoomTimeLockCreated(validatorEthAddress address, timelockContractAddress address, validatorName string, validatorPublicKey string, _amount uint256, _releaseTime uint256)
+// Solidity: e LoomTimeLockCreated(validatorEthAddress address, timelockContractAddress address, validatorName string, validatorPublicKey string, _amount uint256, _duration uint256, _releaseTime uint256)
 func (_LoomTimelockFactory *LoomTimelockFactoryFilterer) WatchLoomTimeLockCreated(opts *bind.WatchOpts, sink chan<- *LoomTimelockFactoryLoomTimeLockCreated) (event.Subscription, error) {
 
 	logs, sub, err := _LoomTimelockFactory.contract.WatchLogs(opts, "LoomTimeLockCreated")
