@@ -118,9 +118,9 @@ func RegisterCandidateCmdV2() *cobra.Command {
 
 func DelegateCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "delegateV2 [validator address] [amount] [locktime]",
+		Use:   "delegateV2 [validator address] [amount] [locktime tier]",
 		Short: "delegate tokens to a validator",
-		Args:  cobra.MinimumNArgs(2),
+		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			addr, err := cli.ResolveAddress(args[0])
 			if err != nil {
@@ -136,11 +136,16 @@ func DelegateCmdV2() *cobra.Command {
 			req.ValidatorAddress = addr.MarshalPB()
 
 			if len(args) == 3 {
-				lockTime, err := strconv.ParseInt(args[2], 10, 64)
+				tier, err := strconv.ParseUint(args[2], 10, 64)
 				if err != nil {
 					return err
 				}
-				req.LockTime = uint64(lockTime)
+
+				if tier < 0 || tier > 3 {
+					errors.New("Tier value must be integer 0 - 4")
+				}
+
+				req.LocktimeTier = tier
 			}
 
 			return cli.CallContract(DPOSV2ContractName, "Delegate", &req, nil)
