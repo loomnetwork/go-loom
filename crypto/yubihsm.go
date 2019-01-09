@@ -348,3 +348,8 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
 
 	return pubKeyAddr.Hex()
 }
+
+// get key type
+func (privKey *YubiHsmPrivateKey) GetKeyType() string {
+	return privKey.privKeyType
+}
