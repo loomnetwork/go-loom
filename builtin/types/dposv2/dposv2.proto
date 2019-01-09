@@ -68,8 +68,10 @@ message DelegationV2 {
         BONDING = 0;
         BONDED = 1;
         UNBONDING = 2;
+        REDELEGATING = 3;
     }
     DelegationState state = 8;
+    Address update_validator = 9;
 }
 
 message DelegationListV2 {
