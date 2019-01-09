@@ -1,10 +1,10 @@
 package crypto
 
 import (
-	"crypto/sha256"
 	"encoding/asn1"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"math/big"
 	"math/rand"
@@ -314,8 +314,11 @@ func YubiHsmSign(msg []byte, privKey *YubiHsmPrivateKey) (sig []byte, err error)
 	if privKey.privKeyType == PrivateKeyTypeEd25519 {
 		sig, err = privKey.yubiHsmEd25519Sign(msg)
 	} else {
-		hash := sha256.Sum256(msg)
-		sig, err = privKey.yubiHsmSecp256k1Sign(hash[:])
+		// check if msg is sha hash
+		if len(msg) != 32 {
+			return nil, fmt.Errorf("hash is required to be exactly 32 bytes (%d)", len(msg))
+		}
+		sig, err = privKey.yubiHsmSecp256k1Sign(msg)
 	}
 
 	return sig, err
@@ -324,4 +327,9 @@ func YubiHsmSign(msg []byte, privKey *YubiHsmPrivateKey) (sig []byte, err error)
 // get pubkey bytes
 func (privKey *YubiHsmPrivateKey) GetPubKeyBytes() []byte {
 	return privKey.pubKeyBytes[:]
+}
+
+// get key type
+func (privKey *YubiHsmPrivateKey) GetKeyType() string {
+	return privKey.privKeyType
 }
