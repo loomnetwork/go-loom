@@ -99,6 +99,7 @@ message DelegateRequestV2 {
 message RedelegateRequestV2 {
     Address validator_address = 1;
     Address former_validator_address = 2;
+    BigUInt amount = 3;
 }
 
 message UnbondRequestV2 {

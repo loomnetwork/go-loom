@@ -155,7 +155,7 @@ func DelegateCmdV2() *cobra.Command {
 
 func RedelegateCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "redelegateV2 [new validator address] [former validator address]",
+		Use:   "redelegateV2 [new validator address] [former validator address] [amount]",
 		Short: "Redelegate tokens from one validator to another",
 		Args:  cobra.MinimumNArgs(2),
 		RunE:  func(cmd *cobra.Command, args []string) error {
@@ -171,6 +171,14 @@ func RedelegateCmdV2() *cobra.Command {
 			var req dposv2.RedelegateRequestV2
 			req.ValidatorAddress = validatorAddress.MarshalPB()
 			req.FormerValidatorAddress = formerValidatorAddress.MarshalPB()
+
+			if len(args) == 3 {
+				amount, err := cli.ParseAmount(args[2])
+				if err != nil {
+					return err
+				}
+				req.Amount = &types.BigUInt{Value: *amount}
+			}
 
 			return cli.CallContract(DPOSV2ContractName, "Redelegate", &req, nil)
 		},
