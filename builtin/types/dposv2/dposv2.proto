@@ -96,6 +96,16 @@ message DelegateRequestV2 {
     uint64 locktime_tier = 3;
 }
 
+message RedelegateRequestV2 {
+    Address validator_address = 1;
+    Address former_validator_address = 2;
+}
+
+message UnbondRequestV2 {
+    Address validator_address = 1;
+    BigUInt amount = 2;
+}
+
 message WhitelistCandidateRequestV2 {
     Address candidate_address = 1;
     BigUInt amount = 2;
@@ -104,11 +114,6 @@ message WhitelistCandidateRequestV2 {
 
 message RemoveWhitelistedCandidateRequestV2 {
     Address candidate_address = 1;
-}
-
-message RedelegateRequestV2 {
-    Address validator_address = 1;
-    BigUInt amount = 2;
 }
 
 message CheckDelegationRequestV2 {
@@ -126,11 +131,6 @@ message ClaimDistributionRequestV2 {
 
 message ClaimDistributionResponseV2 {
 	BigUInt amount = 1;
-}
-
-message UnbondRequestV2 {
-    Address validator_address = 1;
-    BigUInt amount = 2;
 }
 
 message RegisterCandidateRequestV2 {
