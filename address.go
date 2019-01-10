@@ -1,11 +1,11 @@
 package loom
 
 import (
+	"crypto/sha256"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"strings"
-	"crypto/sha256"
 
 	"golang.org/x/crypto/ripemd160"
 
