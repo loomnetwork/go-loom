@@ -89,3 +89,7 @@ func BigZero() *BigUInt {
 func IsZero(b BigUInt) bool {
 	return b.Int.Cmp(zeroInt) == 0
 }
+
+func IsPositive(b BigUInt) bool {
+	return b.Int.Cmp(zeroInt) > 0
+}
