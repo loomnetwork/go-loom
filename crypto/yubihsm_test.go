@@ -19,7 +19,7 @@ func TestGenYubiSecp256k1Key(t *testing.T) {
 	}
 
 	t.Log("Generating YubiHSM private key")
-	yubiPrivKey, err := GenYubiHsmPrivKey("ed25519", cfg)
+	yubiPrivKey, err := GenYubiHsmPrivKey(cfg)
 	if err != nil {
 		t.Fatal(err)
 	}
