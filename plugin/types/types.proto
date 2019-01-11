@@ -83,6 +83,7 @@ message EventData {
     bytes tx_hash = 8;
     uint64 transaction_index = 9;
     bytes block_hash = 10;
+    int64 timestamp = 11;
 }
 
 message EvmTxReceiptList {
