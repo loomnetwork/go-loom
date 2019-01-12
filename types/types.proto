@@ -54,3 +54,9 @@ message Transaction {
     uint32 id = 1;
     bytes data = 2;
 }
+
+message Record {
+    string name = 1;
+    Address address = 2;
+    Address owner = 3;
+}
