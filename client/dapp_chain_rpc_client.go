@@ -13,7 +13,6 @@ import (
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
-	rtypes "github.com/loomnetwork/loomchain/registry"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
 	"github.com/pkg/errors"
@@ -243,28 +242,18 @@ func (c *DAppChainRPCClient) GetEvmCode(contract string) ([]byte, error) {
 	return bytecode, nil
 }
 
-
-
-
-func (c *DAppChainRPCClient) GetContractRecord(address string) (rtypes.Record, error) {
+func (c *DAppChainRPCClient) GetContractRecord(address string) (types.Record, error) {
 	params := map[string]interface{}{
 		"contract": address,
 	}
 
-	var r rtypes.Record
+	var r types.Record
 	if err := c.queryClient.Call("getcontractrecord", params, c.getNextRequestID(), &r); err != nil {
-		return rtypes.Record{}, err
+		return types.Record{}, err
 	}
 
 	return r, nil
 }
-
-
-
-
-
-
-
 
 func (c *DAppChainRPCClient) GetEvmLogs(filter string) (ptypes.EthFilterLogList, error) {
 	params := map[string]interface{}{
