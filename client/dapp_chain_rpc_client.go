@@ -58,6 +58,16 @@ type DAppChainRPCClient struct {
 	queryClient   *JSONRPCClient
 	nextRequestID uint64
 }
+type Record struct {
+	Name                 string         `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Address              *types.Address `protobuf:"bytes,2,opt,name=address" json:"address,omitempty"`
+	Owner                *types.Address `protobuf:"bytes,3,opt,name=owner" json:"owner,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+
 
 // NewDAppChainRPCClient creates a new dumb client that can be used to commit txs and query contract
 // state via RPC.
