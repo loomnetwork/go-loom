@@ -134,7 +134,7 @@ message CheckRewardsRequest {
 }
 
 message CheckRewardsResponse {
-    BigUInt TotalRewardDistribution = 1;
+    BigUInt total_reward_distribution = 1;
 }
 
 
