@@ -18,6 +18,7 @@ message StateV2 {
     repeated Validator validators = 2;
     int64 last_election_time = 3;
     BigUInt total_validator_delegations = 4;
+    BigUInt total_reward_distribution = 5;
 }
 
 message ValidatorStatisticV2 {
