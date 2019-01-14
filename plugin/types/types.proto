@@ -134,6 +134,8 @@ message EthFilterLog {
     bytes address = 7;
     bytes data = 8;
     repeated bytes topics = 9;
+    int64 timestamp = 10;
+
 }
 
 message EthBlockInfo {
