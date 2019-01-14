@@ -18,6 +18,7 @@ message StateV2 {
     repeated Validator validators = 2;
     int64 last_election_time = 3;
     BigUInt total_validator_delegations = 4;
+    BigUInt total_reward_distribution = 5;
 }
 
 message ValidatorStatisticV2 {
@@ -128,6 +129,14 @@ message CheckDelegationRequestV2 {
 message CheckDelegationResponseV2 {
 	DelegationV2 delegation = 1;
 }
+
+message CheckRewardsRequest {
+}
+
+message CheckRewardsResponse {
+    BigUInt total_reward_distribution = 1;
+}
+
 
 message ClaimDistributionRequestV2 {
     Address withdrawal_address = 1;

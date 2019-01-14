@@ -71,7 +71,7 @@ func ListCandidatesCmdV2() *cobra.Command {
 	}
 }
 
-func ChangeFee() *cobra.Command {
+func ChangeFeeCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "change_fee [new validator fee (in basis points)]",
 		Short: "Changes a validator's fee after (with a 2 election delay)",
@@ -329,6 +329,27 @@ func ClaimDistributionCmdV2() *cobra.Command {
 	}
 }
 
+func CheckRewardsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "check_rewards",
+		Short: "check rewards statistics",
+		Args:  cobra.MinimumNArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.CheckRewardsResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "CheckRewards", &dposv2.CheckRewardsRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 // Oracle Commands for setting parameters
 
 func SetElectionCycleCmdV2() *cobra.Command {
@@ -481,6 +502,7 @@ func AddDPOSV2(root *cobra.Command) {
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
 		CheckDelegationCmdV2(),
+		CheckRewardsCmd(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),
 		SetElectionCycleCmdV2(),
@@ -489,6 +511,6 @@ func AddDPOSV2(root *cobra.Command) {
 		SetRegistrationRequirementCmdV2(),
 		SetOracleAddressCmdV2(),
 		SetSlashingPercentagesCmdV2(),
-		ChangeFee(),
+		ChangeFeeCmd(),
 	)
 }
