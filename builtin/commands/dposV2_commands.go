@@ -93,7 +93,7 @@ func ChangeFee() *cobra.Command {
 
 func RegisterCandidateCmdV2() *cobra.Command {
 	return &cobra.Command{
-		Use:   "register_candidateV2 [public key] [validator fee (in basis points)]",
+		Use:   "register_candidateV2 [public key] [validator fee (in basis points)] [locktime tier]",
 		Short: "Register a candidate for validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -105,12 +105,26 @@ func RegisterCandidateCmdV2() *cobra.Command {
 			if candidateFee > 10000 {
 				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
 			}
+
+			tier := uint64(0)
+			if len(args) == 3 {
+				tier, err = strconv.ParseUint(args[2], 10, 64)
+				if err != nil {
+					return err
+				}
+
+				if tier > 3 {
+					errors.New("Tier value must be integer 0 - 4")
+				}
+			}
+
 			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate", &dposv2.RegisterCandidateRequestV2{
-				PubKey:      pubKey,
-				Fee:         candidateFee,
-				Name:        candidateName,
-				Description: candidateDescription,
-				Website:     candidateWebsite,
+				PubKey:       pubKey,
+				Fee:          candidateFee,
+				Name:         candidateName,
+				Description:  candidateDescription,
+				Website:      candidateWebsite,
+				LocktimeTier: tier,
 			}, nil)
 		},
 	}
@@ -141,7 +155,7 @@ func DelegateCmdV2() *cobra.Command {
 					return err
 				}
 
-				if tier < 0 || tier > 3 {
+				if tier > 3 {
 					errors.New("Tier value must be integer 0 - 4")
 				}
 
