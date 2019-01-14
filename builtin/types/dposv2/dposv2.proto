@@ -7,6 +7,10 @@ message ParamsV2 {
     int64 election_cycle_length = 2;
     Address coin_contract_address = 3;
     Address oracle_address = 4;
+    BigUInt max_yearly_reward = 5;
+    BigUInt registration_requirement = 6;
+    BigUInt crash_slashing_percentage = 7;
+    BigUInt byzantine_slashing_percentage = 8;
 }
 
 message StateV2 {
@@ -35,9 +39,11 @@ message CandidateV2 {
     Address address = 1;
     bytes pub_key = 2;
     uint64 fee = 3;
-    string name = 4;
-    string description = 5;
-    string website = 6;
+    uint64 newFee = 4;
+    uint64 feeDelayCounter = 5;
+    string name = 6;
+    string description = 7;
+    string website = 8;
 }
 
 message CandidateListV2 {
@@ -51,12 +57,21 @@ message DelegationV2 {
     BigUInt update_amount = 4;
     uint64 height = 5;
     uint64 lock_time = 6;
+    enum LocktimeTier {
+        TIER_ZERO = 0;
+        TIER_ONE = 1;
+        TIER_TWO = 2;
+        TIER_THREE = 3;
+    }
+    LocktimeTier locktime_tier = 7;
     enum DelegationState {
         BONDING = 0;
         BONDED = 1;
         UNBONDING = 2;
+        REDELEGATING = 3;
     }
-    DelegationState state = 7;
+    DelegationState state = 8;
+    Address update_validator = 9;
 }
 
 message DelegationListV2 {
@@ -80,6 +95,18 @@ message DPOSInitRequestV2 {
 message DelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
+    uint64 locktime_tier = 3;
+}
+
+message RedelegateRequestV2 {
+    Address validator_address = 1;
+    Address former_validator_address = 2;
+    BigUInt amount = 3;
+}
+
+message UnbondRequestV2 {
+    Address validator_address = 1;
+    BigUInt amount = 2;
 }
 
 message WhitelistCandidateRequestV2 {
@@ -90,11 +117,6 @@ message WhitelistCandidateRequestV2 {
 
 message RemoveWhitelistedCandidateRequestV2 {
     Address candidate_address = 1;
-}
-
-message RedelegateRequestV2 {
-    Address validator_address = 1;
-    BigUInt amount = 2;
 }
 
 message CheckDelegationRequestV2 {
@@ -114,17 +136,17 @@ message ClaimDistributionResponseV2 {
 	BigUInt amount = 1;
 }
 
-message UnbondRequestV2 {
-    Address validator_address = 1;
-    BigUInt amount = 2;
-}
-
 message RegisterCandidateRequestV2 {
     bytes pub_key = 1;
     uint64 fee = 2;
     string name = 3;
     string description = 4;
     string website = 5;
+    uint64 locktime_tier = 6;
+}
+
+message ChangeCandidateFeeRequest {
+    uint64 fee = 1;
 }
 
 message UnregisterCandidateRequestV2 {
@@ -174,4 +196,27 @@ message RequestBatchV2 {
 message GetRequestBatchTallyRequestV2 {
 }
 
+message SetElectionCycleRequestV2 {
+    int64 election_cycle = 1;
+}
 
+message SetMaxYearlyRewardRequestV2 {
+    BigUInt max_yearly_reward = 1;
+}
+
+message SetRegistrationRequirementRequestV2 {
+    BigUInt registration_requirement = 1;
+}
+
+message SetValidatorCountRequestV2 {
+    int64 validator_count = 1;
+}
+
+message SetOracleAddressRequestV2 {
+    Address oracle_address = 1;
+}
+
+message SetSlashingPercentagesRequestV2 {
+    BigUInt crash_slashing_percentage = 1;
+    BigUInt byzantine_slashing_percentage = 2;
+}

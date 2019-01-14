@@ -77,6 +77,14 @@ func (dpos *DAppChainDPOSContract) GetRequestBatchTally(identity *client.Identit
 	return resp, nil
 }
 
+func (dpos *DAppChainDPOSContract) ChangeFee(identity *client.Identity, candidateFee uint64) error {
+	req := &dpostypes.ChangeCandidateFeeRequest{
+		Fee:         candidateFee,
+	}
+	_, err := dpos.contract.Call("ChangeFee", req, identity.LoomSigner, nil)
+	return err
+}
+
 func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, pubKey []byte, candidateFee uint64, candidateName string, candidateDescription string, candidateWebsite string) error {
 	req := &dpostypes.RegisterCandidateRequestV2{
 		PubKey:      pubKey,
@@ -86,5 +94,12 @@ func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, 
 		Website:     candidateWebsite,
 	}
 	_, err := dpos.contract.Call("RegisterCandidate", req, identity.LoomSigner, nil)
+	return err
+}
+
+
+func (dpos *DAppChainDPOSContract) UnregisterCandidate(identity *client.Identity) error {
+	req := &dpostypes.UnregisterCandidateRequestV2{}
+	_, err := dpos.contract.Call("UnregisterCandidate", req, identity.LoomSigner, nil)
 	return err
 }
