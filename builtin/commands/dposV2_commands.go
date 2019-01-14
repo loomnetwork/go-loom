@@ -71,7 +71,7 @@ func ListCandidatesCmdV2() *cobra.Command {
 	}
 }
 
-func ChangeFee() *cobra.Command {
+func ChangeFeeCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "change_fee [new validator fee (in basis points)]",
 		Short: "Changes a validator's fee after (with a 2 election delay)",
@@ -329,7 +329,7 @@ func ClaimDistributionCmdV2() *cobra.Command {
 	}
 }
 
-func CheckRewardsCmdV2() *cobra.Command {
+func CheckRewardsCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "check_rewards",
 		Short: "check rewards statistics",
@@ -502,6 +502,7 @@ func AddDPOSV2(root *cobra.Command) {
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
 		CheckDelegationCmdV2(),
+		CheckRewardsCmd(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),
 		SetElectionCycleCmdV2(),
@@ -510,6 +511,6 @@ func AddDPOSV2(root *cobra.Command) {
 		SetRegistrationRequirementCmdV2(),
 		SetOracleAddressCmdV2(),
 		SetSlashingPercentagesCmdV2(),
-		ChangeFee(),
+		ChangeFeeCmd(),
 	)
 }
