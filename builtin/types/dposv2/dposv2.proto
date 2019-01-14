@@ -130,6 +130,14 @@ message CheckDelegationResponseV2 {
 	DelegationV2 delegation = 1;
 }
 
+message CheckRewardsRequest {
+}
+
+message CheckRewardsResponse {
+    BigUInt TotalRewardDistribution = 1;
+}
+
+
 message ClaimDistributionRequestV2 {
     Address withdrawal_address = 1;
 }

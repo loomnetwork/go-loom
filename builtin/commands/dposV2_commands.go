@@ -329,6 +329,27 @@ func ClaimDistributionCmdV2() *cobra.Command {
 	}
 }
 
+func CheckRewardsCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "check_rewards",
+		Short: "check rewards statistics",
+		Args:  cobra.MinimumNArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.CheckRewardsResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "CheckRewards", &dposv2.CheckRewardsRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 // Oracle Commands for setting parameters
 
 func SetElectionCycleCmdV2() *cobra.Command {
