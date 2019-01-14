@@ -252,14 +252,14 @@ func (c *DAppChainRPCClient) GetEvmCode(contract string) ([]byte, error) {
 	return bytecode, nil
 }
 
-func (c *DAppChainRPCClient) GetContractRecord(address string) (types.Record, error) {
+func (c *DAppChainRPCClient) GetContractRecord(address string) (Record, error) {
 	params := map[string]interface{}{
 		"contract": address,
 	}
 
-	var r types.Record
+	var r Record
 	if err := c.queryClient.Call("getcontractrecord", params, c.getNextRequestID(), &r); err != nil {
-		return types.Record{}, err
+		return Record{}, err
 	}
 
 	return r, nil
