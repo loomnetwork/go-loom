@@ -362,9 +362,7 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyBytes() []byte {
 
 // get pubkey address
 func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
-	b := append([]byte{0x4}, privKey.pubKeyUncompressed...)
-
-	ecdsaPubKey, err := crypto.UnmarshalPubkey(b)
+	ecdsaPubKey, err := crypto.UnmarshalPubkey(privKey.pubKeyUncompressed)
 	if err != nil {
 		privKey.deletePrivKey()
 		panic(err)
