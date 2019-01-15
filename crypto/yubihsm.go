@@ -1,6 +1,7 @@
 package crypto
 
 import (
+	"bytes"
 	"encoding/asn1"
 	"encoding/json"
 	"errors"
@@ -26,7 +27,7 @@ const (
 	YubiDefPrivKeyType   = PrivateKeyTypeEd25519
 
 	YubiSecp256k1PubKeySize  = 33
-	YubiSecp256k1SignDataLen = 64
+	YubiSecp256k1SignDataLen = 65
 
 	YubiEd25519PubKeySize  = 32
 	YubiEd25519SignDataLen = 64
@@ -46,7 +47,7 @@ type YubiHsmPrivateKey struct {
 	privKeyType        string
 	privKeyID          uint16
 	pubKeyBytes        []byte
-	pubKeyUncompressed []byte
+	pubKeyUncompressed []byte // this field is available only for secp256k1
 }
 
 func InitYubiHsmPrivKey(hsmConfig *YubiHsmConfig) (*YubiHsmPrivateKey, error) {
@@ -206,8 +207,9 @@ func (privKey *YubiHsmPrivateKey) exportSecp256k1Pubkey(keyData []byte) error {
 	x.SetBytes(keyData[0:32])
 	y.SetBytes(keyData[31:])
 
-	privKey.pubKeyUncompressed = make([]byte, 64)
-	copy(privKey.pubKeyUncompressed[:], keyData[:])
+	privKey.pubKeyUncompressed = make([]byte, 65)
+	privKey.pubKeyUncompressed[0] = 0x04
+	copy(privKey.pubKeyUncompressed[1:], keyData[:])
 
 	privKey.pubKeyBytes = make([]byte, YubiSecp256k1PubKeySize)
 	copy(privKey.pubKeyBytes[:], secp256k1.CompressPubkey(x, y))
@@ -258,7 +260,26 @@ func (privKey *YubiHsmPrivateKey) ExportPubKey() error {
 	return err
 }
 
-func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) (sig []byte, err error) {
+func (privKey *YubiHsmPrivateKey) getSigRecID(hash []byte, sig []byte) (byte, error) {
+	recIds := []byte{0x00, 0x01, 0x02, 0x03}
+
+	for i := 0; i < len(recIds); i++ {
+		tmpSig := make([]byte, 65)
+		copy(tmpSig[:], sig)
+		tmpSig[64] = recIds[i]
+		pubKeyBytes, err := secp256k1.RecoverPubkey(hash, tmpSig[:])
+		if err == nil && bytes.Equal(pubKeyBytes, privKey.pubKeyUncompressed) {
+			return recIds[i], nil
+		}
+	}
+
+	return 0x04, fmt.Errorf("Unable to get recovery public key from signature")
+}
+
+func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) ([]byte, error) {
+	var sig [YubiSecp256k1SignDataLen]byte
+	var err error
+
 	var ecdsaSig struct {
 		R, S *big.Int
 	}
@@ -284,14 +305,16 @@ func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) (sig []byte,
 		return nil, err
 	}
 
-	sig = ecdsaSig.R.Bytes()
-	sig = append(sig, ecdsaSig.S.Bytes()...)
+	copy(sig[:], ecdsaSig.R.Bytes())
+	copy(sig[32:], ecdsaSig.S.Bytes())
 
-	if len(sig) != YubiSecp256k1SignDataLen {
-		return nil, errors.New("Invalid signature YubiSecp256k1SignDataLen length")
+	recID, err := privKey.getSigRecID(hash, sig[:64])
+	if err != nil {
+		return nil, err
 	}
+	sig[64] = recID
 
-	return sig, nil
+	return sig[:], nil
 }
 
 func (privKey *YubiHsmPrivateKey) yubiHsmEd25519Sign(msg []byte) (sig []byte, err error) {
