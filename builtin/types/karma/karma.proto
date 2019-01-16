@@ -21,11 +21,7 @@ message KarmaSources {
     repeated KarmaSourceReward sources = 1;
 }
 
-message KarmaSourcesValidator {
-    repeated KarmaSourceReward sources = 1;
-}
-
-message KarmaNewOracleValidator {
+message KarmaNewOracle {
     Address new_oracle = 1;
 }
 
