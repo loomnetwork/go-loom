@@ -43,7 +43,7 @@ message KarmaSourceReward {
 
 message KarmaSource {
     string name = 1;
-    int64 count = 2;
+    BigUInt count = 2;
 }
 
 message KarmaUpkeepParams {
