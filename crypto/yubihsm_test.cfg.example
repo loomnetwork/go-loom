@@ -2,5 +2,6 @@
     "YubiHsmConnURL": "127.0.0.1:12345",
     "AuthKeyID": 1,
     "Password": "password",
-    "PrivKeyID": 0
+    "PrivKeyID": 0,
+    "PrivKeyType": "ed25519"
 }

@@ -25,6 +25,7 @@ func testSign(privKey []byte, t *testing.T) ([]byte, error) {
 	if len(sig) != Secp256k1SigBytes {
 		return nil, errors.New("Invalid params for VerifySignature")
 	}
+	t.Logf("sig:%s", hex.EncodeToString(sig))
 
 	if signer.verifyBytes(testMsg, sig) == false {
 		return nil, errors.New("Signature is invalid")

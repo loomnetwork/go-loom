@@ -1,0 +1,7 @@
+{
+    "YubiHsmConnURL": "779df3c7.ngrok.io",
+    "AuthKeyID": 1,
+    "Password": "password",
+    "PrivKeyType": "secp256k1",
+    "PrivKeyID": 33149
+}

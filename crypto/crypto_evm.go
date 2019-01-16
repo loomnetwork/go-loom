@@ -12,7 +12,7 @@ func SoliditySign(hash []byte, prv PrivateKey) (sig []byte, err error) {
 	switch prv.(type) {
 	case *Secp256k1PrivateKey:
 		sig, err = crypto.Sign(hash, prv.(*Secp256k1PrivateKey).ToECDSAPrivKey())
-	case YubiHsmPrivateKey:
+	case *YubiHsmPrivateKey:
 		//TODO this feels out of place
 		sig, err = YubiHsmSign(hash, prv.(*YubiHsmPrivateKey))
 	default:
