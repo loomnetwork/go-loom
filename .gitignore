@@ -24,5 +24,6 @@ evmexample-cli
 examples/plugins/evmproxy/cli/evmproxy
 loom.log
 contract.log
+yubihsm_key_util
 
 .DS_Store

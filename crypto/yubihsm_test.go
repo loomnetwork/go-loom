@@ -3,7 +3,9 @@
 package crypto
 
 import (
+	"bytes"
 	"crypto/sha256"
+	"encoding/hex"
 	"os"
 	"testing"
 
@@ -14,12 +16,12 @@ func TestGenYubiSecp256k1Key(t *testing.T) {
 	// check if yubiHsm config is given
 	cfg := os.Getenv("YUBIHSM_CFG_FILE")
 	if len(cfg) == 0 {
-		t.Log("YubiHsm crypto testing disabled")
+		t.Log("YUBIHSM_CFG_FILE is not set")
 		return
 	}
 
 	t.Log("Generating YubiHSM private key")
-	yubiPrivKey, err := GenYubiHsmPrivKey("ed25519", cfg)
+	yubiPrivKey, err := GenYubiHsmPrivKey(cfg)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -30,7 +32,7 @@ func TestSignYubiSecp256k1(t *testing.T) {
 	// check if yubiHsm config is given
 	cfg := os.Getenv("YUBIHSM_CFG_FILE")
 	if len(cfg) == 0 {
-		t.Log("YubiHsm crypto testing disabled")
+		t.Log("YUBIHSM_CFG_FILE is not set")
 		return
 	}
 
@@ -50,10 +52,24 @@ func TestSignYubiSecp256k1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	t.Logf("Hash length is %d", len(hash))
-	if !secp256k1.VerifySignature(yubiPrivKey.pubKeyBytes[:], hash[:], sig) {
-		t.Fatalf("Verification of signature has failed")
+	t.Logf("hash:%s, len:%d", hex.EncodeToString(hash[:]), len(hash))
+	t.Logf("sig:%s, len:%d", hex.EncodeToString(sig), len(sig))
+	t.Logf("pubkey: %s, len:%d", hex.EncodeToString(yubiPrivKey.GetPubKeyBytes()), len(yubiPrivKey.GetPubKeyBytes()))
+	t.Logf("pubkey uncompressed: %s, len:%d", hex.EncodeToString(yubiPrivKey.pubKeyUncompressed), len(yubiPrivKey.pubKeyUncompressed))
+
+	// try to recover pubkey
+	recPubKeyBytes, err := secp256k1.RecoverPubkey(hash[:], sig)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("recovered pubkey:%s, len:%d", hex.EncodeToString(recPubKeyBytes), len(recPubKeyBytes))
+
+	if !bytes.Equal(yubiPrivKey.pubKeyUncompressed, recPubKeyBytes) {
+		t.Fatal("pubkey is mismatch")
 	}
 
-	t.Logf("Sign/Verify using YubiHSM has been succeeded")
+	sig1 := sig[:len(sig)-1]
+	if !secp256k1.VerifySignature(yubiPrivKey.pubKeyBytes, hash[:], sig1) {
+		t.Fatal("Verification of signature has failed")
+	}
 }
