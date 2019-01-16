@@ -76,7 +76,7 @@ message KarmaStateKeyUser {
 }
 
 message KarmaTotal{
-    int64 count = 1;
+    BigUInt count = 1;
 }
 
 message ContractRecord{
