@@ -350,6 +350,27 @@ func CheckRewardsCmd() *cobra.Command {
 	}
 }
 
+func CheckDistributionCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "check_distribution",
+		Short: "check rewards distribution",
+		Args:  cobra.MinimumNArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.CheckDistributionResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "CheckRewards", &dposv2.CheckDistributionRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 // Oracle Commands for setting parameters
 
 func SetElectionCycleCmdV2() *cobra.Command {
@@ -502,6 +523,7 @@ func AddDPOSV2(root *cobra.Command) {
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
 		CheckDelegationCmdV2(),
+		CheckDistributionCmd(),
 		CheckRewardsCmd(),
 		UnbondCmdV2(),
 		ClaimDistributionCmdV2(),
