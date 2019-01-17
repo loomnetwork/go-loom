@@ -357,7 +357,7 @@ func CheckDistributionCmd() *cobra.Command {
 		Args:  cobra.MinimumNArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp dposv2.CheckDistributionResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "CheckRewards", &dposv2.CheckDistributionRequest{}, &resp)
+			err := cli.StaticCallContract(DPOSV2ContractName, "CheckDistribution", &dposv2.CheckDistributionRequest{}, &resp)
 			if err != nil {
 				return err
 			}
