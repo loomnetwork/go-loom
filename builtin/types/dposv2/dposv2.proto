@@ -137,6 +137,12 @@ message CheckRewardsResponse {
     BigUInt total_reward_distribution = 1;
 }
 
+message CheckDistributionRequest {
+}
+
+message CheckDistributionResponse {
+    BigUInt amount = 1;
+}
 
 message ClaimDistributionRequestV2 {
     Address withdrawal_address = 1;
