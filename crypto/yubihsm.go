@@ -13,8 +13,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
-
-	"github.com/loomnetwork/yubihsm-go"
+	loom "github.com/loomnetwork/go-loom"
+	yubihsm "github.com/loomnetwork/yubihsm-go"
 	"github.com/loomnetwork/yubihsm-go/commands"
 	"github.com/loomnetwork/yubihsm-go/connector"
 )
@@ -362,14 +362,16 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyBytes() []byte {
 
 // get pubkey address
 func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
-	ecdsaPubKey, err := crypto.UnmarshalPubkey(privKey.pubKeyUncompressed)
-	if err != nil {
-		privKey.deletePrivKey()
-		panic(err)
+	if privKey.privKeyType == PrivateKeyTypeSecp256k1 {
+		ecdsaPubKey, err := crypto.UnmarshalPubkey(privKey.pubKeyUncompressed)
+		if err != nil {
+			privKey.deletePrivKey()
+			panic(err)
+		}
+		pubKeyAddr := crypto.PubkeyToAddress(*ecdsaPubKey)
+		return pubKeyAddr.Hex()
 	}
-	pubKeyAddr := crypto.PubkeyToAddress(*ecdsaPubKey)
-
-	return pubKeyAddr.Hex()
+	return loom.LocalAddressFromPublicKey(privKey.pubKeyBytes).String()
 }
 
 // get key type
