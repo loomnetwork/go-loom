@@ -7,7 +7,6 @@ package karma;
 enum KarmaSourceTarget {
     CALL = 0;
     DEPLOY = 1;
-    ALL = 2;
 }
 
 message KarmaInitRequest {
@@ -48,7 +47,6 @@ message KarmaSource {
 
 message KarmaUpkeepParams {
     int64 cost = 1;
-    string source = 2;
     int64 period = 3;
 }
 
