@@ -14,6 +14,11 @@ message KarmaInitRequest {
     repeated KarmaSourceReward sources = 2;
     repeated KarmaAddressSource users = 3;
     KarmaUpkeepParams upkeep = 4;
+    KarmaConfig config = 5;
+}
+
+message KarmaConfig {
+    int64 min_karma_to_deploy =1;
 }
 
 message KarmaSources {
@@ -82,4 +87,10 @@ message ContractRecord{
     Address address = 2;
     int64   creation_block = 3;
     int64   nonce = 4;
+}
+
+message GetConfigRequest {
+}
+
+message GetSourceRequest {
 }
