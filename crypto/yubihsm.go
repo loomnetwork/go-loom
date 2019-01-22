@@ -3,6 +3,7 @@ package crypto
 import (
 	"bytes"
 	"encoding/asn1"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -372,6 +373,15 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
 		return pubKeyAddr.Hex()
 	}
 	return loom.LocalAddressFromPublicKey(privKey.pubKeyBytes).String()
+}
+
+// get base64 encoded pubkey address
+func (privKey *YubiHsmPrivateKey) GetPubKeyAddrB64Encoded() string {
+	if privKey.privKeyType == PrivateKeyTypeEd25519 {
+		return base64.StdEncoding.EncodeToString(loom.LocalAddressFromPublicKey(privKey.pubKeyBytes))
+	}
+
+	return "Not supported"
 }
 
 // get key type
