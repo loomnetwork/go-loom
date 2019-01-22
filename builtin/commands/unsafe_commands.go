@@ -16,8 +16,8 @@ const LoomGatewayName = "loomcoin-gateway"
 
 func UnsafeResetBlockCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "unsafe_reset_block [blockNumber] [gatewayType]",
-		Short: "Resets the block mainnet",
+		Use:   "unsafe-reset-last-eth-block <blockNumber> <gatewayType>",
+		Short: "WARNING: Resets the Ethereum block number used by the Gateway to sync with Ethereum",
 		Args:  cobra.MinimumNArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var block uint64
