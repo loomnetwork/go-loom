@@ -168,7 +168,11 @@ message ChangeCandidateFeeRequest {
 message UnregisterCandidateRequestV2 {
 }
 
-message ElectDelegationRequestV2 {
+message TimeUntilElectionRequest {
+}
+
+message TimeUntilElectionResponse {
+    int64 time_until_election = 1;
 }
 
 message ListValidatorsRequestV2 {

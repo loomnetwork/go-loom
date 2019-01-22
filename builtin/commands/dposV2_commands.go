@@ -371,6 +371,27 @@ func CheckDistributionCmd() *cobra.Command {
 	}
 }
 
+func TimeUntilElectionCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "time_until_election",
+		Short: "check how many seconds remain until the next election",
+		Args:  cobra.MinimumNArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.TimeUntilElectionResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "TimeUntilElection", &dposv2.TimeUntilElectionRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 // Oracle Commands for setting parameters
 
 func SetElectionCycleCmdV2() *cobra.Command {
@@ -514,9 +535,9 @@ func AddDPOSV2(root *cobra.Command) {
 	registercmd.Flags().StringVarP(&candidateDescription, "description", "", "", "candidate description")
 	registercmd.Flags().StringVarP(&candidateWebsite, "website", "", "", "candidate website")
 	root.AddCommand(
-		ListValidatorsCmdV2(),
 		registercmd,
 		ListCandidatesCmdV2(),
+		ListValidatorsCmdV2(),
 		UnregisterCandidateCmdV2(),
 		DelegateCmdV2(),
 		RedelegateCmdV2(),
@@ -534,5 +555,6 @@ func AddDPOSV2(root *cobra.Command) {
 		SetOracleAddressCmdV2(),
 		SetSlashingPercentagesCmdV2(),
 		ChangeFeeCmd(),
+		TimeUntilElectionCmd(),
 	)
 }
