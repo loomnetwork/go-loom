@@ -13,10 +13,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
-	"golang.org/x/crypto/ripemd160"
-
-	"github.com/loomnetwork/go-loom/common"
-	"github.com/loomnetwork/yubihsm-go"
+	loom "github.com/loomnetwork/go-loom"
+	yubihsm "github.com/loomnetwork/yubihsm-go"
 	"github.com/loomnetwork/yubihsm-go/commands"
 	"github.com/loomnetwork/yubihsm-go/connector"
 )
@@ -51,8 +49,6 @@ type YubiHsmPrivateKey struct {
 	pubKeyBytes        []byte
 	pubKeyUncompressed []byte // this field is available only for secp256k1
 }
-
-type LocalAddress = common.LocalAddress
 
 func InitYubiHsmPrivKey(hsmConfig *YubiHsmConfig) (*YubiHsmPrivateKey, error) {
 	privKey := &YubiHsmPrivateKey{}
@@ -374,11 +370,8 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
 		}
 		pubKeyAddr := crypto.PubkeyToAddress(*ecdsaPubKey)
 		return pubKeyAddr.Hex()
-	} else {
-		hasher := ripemd160.New()
-		hasher.Write(privKey.pubKeyBytes) // does not error
-		return LocalAddress(hasher.Sum(nil)).String()
 	}
+	return loom.LocalAddressFromPublicKey(privKey.pubKeyBytes).String()
 }
 
 // get key type
