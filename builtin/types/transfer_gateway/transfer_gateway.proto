@@ -321,3 +321,7 @@ message TransferGatewayPendingWithdrawalsRequest {
 message TransferGatewayPendingWithdrawalsResponse {
     repeated TransferGatewayPendingWithdrawalSummary withdrawals = 1;
 }
+
+message TransferGatewayResetMainnetBlockRequest {
+    uint64 last_mainnet_block_num = 1;
+}

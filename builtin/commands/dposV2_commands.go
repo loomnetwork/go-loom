@@ -172,7 +172,7 @@ func RedelegateCmdV2() *cobra.Command {
 		Use:   "redelegateV2 [new validator address] [former validator address] [amount]",
 		Short: "Redelegate tokens from one validator to another",
 		Args:  cobra.MinimumNArgs(2),
-		RunE:  func(cmd *cobra.Command, args []string) error {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			validatorAddress, err := cli.ResolveAddress(args[0])
 			if err != nil {
 				return err
