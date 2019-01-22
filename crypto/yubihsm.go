@@ -376,12 +376,12 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
 }
 
 // get base64 encoded pubkey address
-func (privKey *YubiHsmPrivateKey) GetPubKeyAddrB64Encoded() string {
+func (privKey *YubiHsmPrivateKey) GetPubKeyAddrB64Encoded() (string, error) {
 	if privKey.privKeyType == PrivateKeyTypeEd25519 {
-		return base64.StdEncoding.EncodeToString(loom.LocalAddressFromPublicKey(privKey.pubKeyBytes))
+		return base64.StdEncoding.EncodeToString(loom.LocalAddressFromPublicKey(privKey.pubKeyBytes)), nil
 	}
 
-	return "Not supported"
+	return "", fmt.Errorf("Not suported")
 }
 
 // get key type
