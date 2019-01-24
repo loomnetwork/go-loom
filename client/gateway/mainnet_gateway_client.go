@@ -24,7 +24,7 @@ type MainnetGatewayClient struct {
 }
 
 func (c *MainnetGatewayClient) Contract() *MainnetGatewayContract {
-    return c.contract
+	return c.contract
 }
 
 func (c *MainnetGatewayClient) DepositERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address) error {

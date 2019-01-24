@@ -3,6 +3,7 @@ package crypto
 import (
 	"bytes"
 	"encoding/asn1"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -13,8 +14,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
-
-	"github.com/loomnetwork/yubihsm-go"
+	loom "github.com/loomnetwork/go-loom"
+	yubihsm "github.com/loomnetwork/yubihsm-go"
 	"github.com/loomnetwork/yubihsm-go/commands"
 	"github.com/loomnetwork/yubihsm-go/connector"
 )
@@ -362,14 +363,25 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyBytes() []byte {
 
 // get pubkey address
 func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
-	ecdsaPubKey, err := crypto.UnmarshalPubkey(privKey.pubKeyUncompressed)
-	if err != nil {
-		privKey.deletePrivKey()
-		panic(err)
+	if privKey.privKeyType == PrivateKeyTypeSecp256k1 {
+		ecdsaPubKey, err := crypto.UnmarshalPubkey(privKey.pubKeyUncompressed)
+		if err != nil {
+			privKey.deletePrivKey()
+			panic(err)
+		}
+		pubKeyAddr := crypto.PubkeyToAddress(*ecdsaPubKey)
+		return pubKeyAddr.Hex()
 	}
-	pubKeyAddr := crypto.PubkeyToAddress(*ecdsaPubKey)
+	return loom.LocalAddressFromPublicKey(privKey.pubKeyBytes).String()
+}
 
-	return pubKeyAddr.Hex()
+// get base64 encoded pubkey address
+func (privKey *YubiHsmPrivateKey) GetPubKeyAddrB64Encoded() (string, error) {
+	if privKey.privKeyType == PrivateKeyTypeEd25519 {
+		return base64.StdEncoding.EncodeToString(loom.LocalAddressFromPublicKey(privKey.pubKeyBytes)), nil
+	}
+
+	return "", fmt.Errorf("Not suported")
 }
 
 // get key type
