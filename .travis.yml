@@ -9,7 +9,11 @@ addons:
     - curl
 before_install:
 - "./.travis_before_install.sh"
+install:
+- go get -u golang.org/x/tools/cmd/goimports
+- go get -u github.com/sqs/goreturns
 script:
+- goreturns -l . | (! grep .) || (echo "Code not formatted correctly" && false)
 - make deps-all
 - make
 - make test
