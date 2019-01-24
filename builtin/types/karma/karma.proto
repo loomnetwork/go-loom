@@ -55,7 +55,6 @@ message KarmaUpkeepParams {
     int64 period = 3;
 }
 
-
 message KarmaAddressSource {
     Address user = 1;
     repeated KarmaSource sources = 2;
@@ -66,11 +65,6 @@ message KarmaState {
     BigUInt deploy_karma_total = 2;
     BigUInt call_karma_total = 3;
     int64 last_update_time = 4;
-}
-
-message KarmaStateUser {
-    repeated KarmaSource source_states = 1;
-    Address user = 2;
 }
 
 message KarmaStateKeyUser {
@@ -93,4 +87,9 @@ message GetConfigRequest {
 }
 
 message GetSourceRequest {
+}
+
+message AddKarmaRequest {
+    Address user = 1;
+    repeated KarmaSource karma_sources = 2;
 }
