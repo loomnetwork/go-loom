@@ -137,6 +137,15 @@ message CheckRewardsResponse {
     BigUInt total_reward_distribution = 1;
 }
 
+message TotalDelegationRequest {
+    Address delegator_address = 1;
+}
+
+message TotalDelegationResponse {
+    BigUInt amount = 1;
+    BigUInt weighted_amount = 2;
+}
+
 message CheckDistributionRequest {
 }
 
@@ -149,7 +158,7 @@ message ClaimDistributionRequestV2 {
 }
 
 message ClaimDistributionResponseV2 {
-	BigUInt amount = 1;
+    BigUInt amount = 1;
 }
 
 message RegisterCandidateRequestV2 {
