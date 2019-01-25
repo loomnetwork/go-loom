@@ -371,6 +371,32 @@ func CheckDistributionCmd() *cobra.Command {
 	}
 }
 
+func TotalDelegationCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "total_delegation",
+		Short: "check how much a delegator has delegated in total (to all validators)",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+
+			var resp dposv2.TotalDelegationResponse
+			err = cli.StaticCallContract(DPOSV2ContractName, "TotalDelegation", &dposv2.TotalDelegationRequest{DelegatorAddress: addr.MarshalPB()}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 func TimeUntilElectionCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "time_until_election",
@@ -556,5 +582,6 @@ func AddDPOSV2(root *cobra.Command) {
 		SetSlashingPercentagesCmdV2(),
 		ChangeFeeCmd(),
 		TimeUntilElectionCmd(),
+		TotalDelegationCmd(),
 	)
 }
