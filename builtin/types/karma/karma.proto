@@ -4,34 +4,55 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 package karma;
 
+enum KarmaSourceTarget {
+    CALL = 0;
+    DEPLOY = 1;
+}
+
 message KarmaInitRequest {
     Address Oracle = 1;
     repeated KarmaSourceReward sources = 2;
     repeated KarmaAddressSource users = 3;
+    KarmaUpkeepParams upkeep = 4;
+    KarmaConfig config = 5;
+}
+
+message KarmaConfig {
+    int64 min_karma_to_deploy =1;
 }
 
 message KarmaSources {
     repeated KarmaSourceReward sources = 1;
 }
 
-message KarmaSourcesValidator {
-    repeated KarmaSourceReward sources = 1;
-    Address oracle = 2;
+message KarmaNewOracle {
+    Address new_oracle = 1;
 }
 
-message KarmaNewOracleValidator {
-    Address new_oracle = 1;
-    Address old_oracle = 2;
+message KarmaUserTarget {
+    Address user = 1;
+    KarmaSourceTarget target = 2;
+}
+
+message KarmaUserAmount {
+    Address user = 1;
+    BigUInt amount = 2;
 }
 
 message KarmaSourceReward {
     string name = 1;
     int64 reward = 2;
+    KarmaSourceTarget target = 3;
 }
 
 message KarmaSource {
     string name = 1;
-    int64 count = 2;
+    BigUInt count = 2;
+}
+
+message KarmaUpkeepParams {
+    int64 cost = 1;
+    int64 period = 3;
 }
 
 message KarmaAddressSource {
@@ -41,21 +62,34 @@ message KarmaAddressSource {
 
 message KarmaState {
     repeated KarmaSource source_states = 1;
-    int64 last_update_time = 2;
-}
-
-message KarmaStateUser {
-    repeated KarmaSource source_states = 1;
-    Address User = 2;
-    Address Oracle = 3;
+    BigUInt deploy_karma_total = 2;
+    BigUInt call_karma_total = 3;
+    int64 last_update_time = 4;
 }
 
 message KarmaStateKeyUser {
     repeated string state_keys = 1;
-    Address User = 2;
-    Address Oracle = 3;
+    Address user = 2;
 }
 
 message KarmaTotal{
-    int64 count = 1;
+    BigUInt count = 1;
+}
+
+message ContractRecord{
+    Address owner = 1;
+    Address address = 2;
+    int64   creation_block = 3;
+    int64   nonce = 4;
+}
+
+message GetConfigRequest {
+}
+
+message GetSourceRequest {
+}
+
+message AddKarmaRequest {
+    Address user = 1;
+    repeated KarmaSource karma_sources = 2;
 }
