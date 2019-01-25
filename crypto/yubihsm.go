@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/asn1"
 	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -279,6 +280,8 @@ func (privKey *YubiHsmPrivateKey) getSigRecID(hash []byte, sig []byte) (byte, er
 
 func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) ([]byte, error) {
 	var sig [YubiSecp256k1SignDataLen]byte
+
+	var sigR, sigS [32]byte
 	var err error
 
 	var ecdsaSig struct {
@@ -306,8 +309,22 @@ func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) ([]byte, err
 		return nil, err
 	}
 
-	copy(sig[:], ecdsaSig.R.Bytes())
-	copy(sig[32:], ecdsaSig.S.Bytes())
+	copy(sigR[:], ecdsaSig.R.Bytes())
+	copy(sigS[:], ecdsaSig.S.Bytes())
+
+	sig1FieldVal := new(fieldVal).SetByteSlice(sigR[:])
+	sig2FieldVal := new(fieldVal).SetByteSlice(sigS[:])
+
+	sigR1 := sig1FieldVal.Normalize().Bytes()
+	sigS1 := sig2FieldVal.Normalize().Bytes()
+
+	fmt.Printf("sigR before normalizing is %v\n", hex.EncodeToString(sigR[:]))
+	fmt.Printf("sigR after normalizing is  %v\n", hex.EncodeToString(sigR1[:]))
+	fmt.Printf("sigS before normalizing is %v\n", hex.EncodeToString(sigS[:]))
+	fmt.Printf("sigS after normalizing is  %v\n", hex.EncodeToString(sigS1[:]))
+
+	copy(sig[:], sigR1[:])
+	copy(sig[32:], sigS1[:])
 
 	recID, err := privKey.getSigRecID(hash, sig[:64])
 	if err != nil {
