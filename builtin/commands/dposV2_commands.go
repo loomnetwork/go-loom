@@ -270,7 +270,7 @@ func ChangeWhitelistAmountCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "change_whitelist_amount [candidate address] [amount]",
 		Short: "Changes a whitelisted candidate's whitelist amount",
-		Args:  cobra.MinimumNArgs(3),
+		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			candidateAddress, err := cli.ResolveAddress(args[0])
 			if err != nil {
@@ -612,7 +612,7 @@ func AddDPOSV2(root *cobra.Command) {
 		RedelegateCmdV2(),
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
-        ChangeWhitelistAmountCmdV2(),
+		ChangeWhitelistAmountCmdV2(),
 		CheckDelegationCmdV2(),
 		CheckDistributionCmd(),
 		CheckRewardsCmd(),
@@ -627,6 +627,6 @@ func AddDPOSV2(root *cobra.Command) {
 		ChangeFeeCmd(),
 		TimeUntilElectionCmd(),
 		TotalDelegationCmd(),
-        GetStateCmd(),
+		GetStateCmd(),
 	)
 }
