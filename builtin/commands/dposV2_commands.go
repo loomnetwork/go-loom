@@ -31,6 +31,25 @@ func UnregisterCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func GetStateCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "get_dpos_state",
+		Short: "Gets dpos state",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.GetStateResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "GetState", &dposv2.GetStateRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
 func ListValidatorsCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "list_validatorsV2",
@@ -608,5 +627,6 @@ func AddDPOSV2(root *cobra.Command) {
 		ChangeFeeCmd(),
 		TimeUntilElectionCmd(),
 		TotalDelegationCmd(),
+        GetStateCmd()
 	)
 }
