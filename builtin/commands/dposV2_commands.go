@@ -247,6 +247,30 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func ChangeWhitelistAmountCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "change_whitelist_amount [candidate address] [amount]",
+		Short: "Changes a whitelisted candidate's whitelist amount",
+		Args:  cobra.MinimumNArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateAddress, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+			amount, err := cli.ParseAmount(args[1])
+			if err != nil {
+				return err
+			}
+			return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistAmount", &dposv2.ChangeWhitelistAmountRequestV2{
+				CandidateAddress: candidateAddress.MarshalPB(),
+				Amount: &types.BigUInt{
+					Value: *amount,
+				},
+			}, nil)
+		},
+	}
+}
+
 func CheckDelegationCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "check_delegationV2 [validator address] [delegator address]",
@@ -569,6 +593,7 @@ func AddDPOSV2(root *cobra.Command) {
 		RedelegateCmdV2(),
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
+        ChangeWhitelistAmountCmdV2(),
 		CheckDelegationCmdV2(),
 		CheckDistributionCmd(),
 		CheckRewardsCmd(),
