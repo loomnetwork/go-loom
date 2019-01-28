@@ -121,6 +121,11 @@ message RemoveWhitelistedCandidateRequestV2 {
     Address candidate_address = 1;
 }
 
+message ChangeWhitelistAmountRequestV2 {
+    Address candidate_address = 1;
+    BigUInt amount = 2;
+}
+
 message CheckDelegationRequestV2 {
     Address validator_address = 1;
     Address delegator_address = 2;
@@ -248,4 +253,11 @@ message SetOracleAddressRequestV2 {
 message SetSlashingPercentagesRequestV2 {
     BigUInt crash_slashing_percentage = 1;
     BigUInt byzantine_slashing_percentage = 2;
+}
+
+message GetStateRequest {
+}
+
+message GetStateResponse {
+    StateV2 state = 1;
 }
