@@ -627,6 +627,6 @@ func AddDPOSV2(root *cobra.Command) {
 		ChangeFeeCmd(),
 		TimeUntilElectionCmd(),
 		TotalDelegationCmd(),
-        GetStateCmd()
+        GetStateCmd(),
 	)
 }
