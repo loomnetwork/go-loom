@@ -121,6 +121,11 @@ message RemoveWhitelistedCandidateRequestV2 {
     Address candidate_address = 1;
 }
 
+message ChangeWhitelistAmountRequestV2 {
+    Address candidate_address = 1;
+    BigUInt amount = 2;
+}
+
 message CheckDelegationRequestV2 {
     Address validator_address = 1;
     Address delegator_address = 2;
