@@ -64,7 +64,6 @@ message KarmaState {
     repeated KarmaSource source_states = 1;
     BigUInt deploy_karma_total = 2;
     BigUInt call_karma_total = 3;
-    int64 last_update_time = 4;
 }
 
 message KarmaStateKeyUser {
