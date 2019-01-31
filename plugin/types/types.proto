@@ -98,6 +98,7 @@ message ContractEventsRequest {
     uint64 from_block = 1;
     uint64 to_block = 2;
     string contract = 3;
+    uint64 max_range = 4;
 }
 
 message ContractEventsResult {
