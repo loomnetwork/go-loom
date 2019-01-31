@@ -95,15 +95,15 @@ message EventFilter {
 }
 
 message ContractEventsRequest {
-    uint64 fromBlock = 1;
-    uint64 toBlock = 2;
+    uint64 from_block = 1;
+    uint64 to_block = 2;
     string contract = 3;
 }
 
 message ContractEventsResult {
     repeated EventData events = 1;
-    uint64 fromBlock = 2;
-    uint64 toBlock = 3; 
+    uint64 from_block = 2;
+    uint64 to_block = 3; 
 }
 
 message EvmTxReceiptList {
