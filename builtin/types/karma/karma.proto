@@ -64,6 +64,7 @@ message KarmaState {
     repeated KarmaSource source_states = 1;
     BigUInt deploy_karma_total = 2;
     BigUInt call_karma_total = 3;
+    int64 num_owned_contracts = 4;
 }
 
 message KarmaStateKeyUser {
@@ -78,7 +79,7 @@ message KarmaTotal{
 message KarmaContractRecord{
     Address owner = 1;
     Address address = 2;
-    uint64   contract_id = 3;
+    uint64 contract_id = 3;
 }
 
 message GetConfigRequest {
