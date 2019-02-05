@@ -4,7 +4,7 @@ GOGO_PROTOBUF_DIR = $(GOPATH)/src/github.com/gogo/protobuf
 HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
 GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
 # This commit sha should match the one in loomchain repo
-GETH_GIT_REV = c4f3537b02811a7487655c02e6685195dff46b0a
+GETH_GIT_REV = 4aa880dc62134a54b0e0d0f4dac760ff19972965
 
 .PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
 
