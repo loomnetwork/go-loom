@@ -86,6 +86,12 @@ message EventData {
     int64 block_time = 11;
 }
 
+message ContractEventsResult {
+    repeated EventData events = 1;
+    uint64 from_block = 2;
+    uint64 to_block = 3; 
+}
+
 message EvmTxReceiptList {
     repeated EvmTxReceipt tx_receipts = 1;
 }
@@ -287,6 +293,8 @@ message ContractRecordResponse {
     Address contract_address = 2;
     Address creator_address = 3;
 }
+
+
 
 service API {
     rpc Get(GetRequest) returns (GetResponse);
