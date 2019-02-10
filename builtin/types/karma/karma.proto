@@ -96,3 +96,8 @@ message AddKarmaRequest {
 message KarmaContractId {
     uint64 contract_id = 1;
 }
+
+message UpkeepState {
+    bool upkeep_enabled = 1;
+    uint64 last_upkeep_height = 2;
+}
