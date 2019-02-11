@@ -179,6 +179,12 @@ message ChangeCandidateFeeRequest {
     uint64 fee = 1;
 }
 
+message UpdateCandidateInfoRequest {
+    string name = 1;
+    string description = 2;
+    string website = 3;
+}
+
 message UnregisterCandidateRequestV2 {
 }
 
@@ -285,6 +291,10 @@ message DposCandidateUnregistersEvent {
 message DposCandidateFeeChangeEvent {
     Address address = 1;
     uint64 new_fee = 2;
+}
+
+message DposUpdateCandidateInfoEvent {
+    Address address = 1;
 }
 
 message DposDelegatorDelegatesEvent {

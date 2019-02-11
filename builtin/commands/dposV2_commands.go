@@ -149,6 +149,26 @@ func RegisterCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func UpdateCandidateInfoCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "update_candidate_info [name] [description] [website]",
+		Short: "Update candidate information for a validator",
+		Args:  cobra.MinimumNArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateName := args[0]
+			candidateDescription := args[1]
+			candidateWebsite := args[2]
+
+			return cli.CallContract(DPOSV2ContractName, "UpdateCandidateInfo", &dposv2.UpdateCandidateInfoRequest{
+				Name:         candidateName,
+				Description:  candidateDescription,
+				Website:      candidateWebsite,
+			}, nil)
+		},
+	}
+}
+
+
 func DelegateCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "delegateV2 [validator address] [amount] [locktime tier]",
@@ -608,6 +628,7 @@ func AddDPOSV2(root *cobra.Command) {
 		ListCandidatesCmdV2(),
 		ListValidatorsCmdV2(),
 		UnregisterCandidateCmdV2(),
+		UpdateCandidateInfoCmd(),
 		DelegateCmdV2(),
 		RedelegateCmdV2(),
 		WhitelistCandidateCmdV2(),
