@@ -9,6 +9,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"log"
 	"math/big"
 	"strconv"
 	"strings"
@@ -190,4 +191,37 @@ func SolidityPackedBytes(pairs []*Pair) ([]byte, error) {
 	}
 
 	return b.Bytes(), nil
+}
+
+// func main() {
+// 	sum := 0
+// 	for i := 0; i < 10; ixb++ {
+// 		sum += i
+// 	}
+// 	fmt.Println(sum)
+// }
+
+func SolidityUnpackBytes(data string) {
+	types := [5]string{"uint256", "string", "string", "address", "uint256"}
+	data = "0x0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000c48cf958324a23f77044b63949df104cca6fce2000000000000000000000000000000000000000000000000010f15cb27f673d5c00000000000000000000000000000000000000000000000000000000000000033078300000000000000000000000000000000000000000000000000000000000"
+	log.Println(data[0:2])
+	if data[0:2] == "0x" {
+		data = data[2:]
+	}
+	for i := 0; i < len(types); i++ {
+		partialData := data[i*64 : (i+1)*64]
+		log.Println("partialData", partialData)
+		TypeConverter(partialData, types[i])
+
+	}
+
+}
+
+func TypeConverter(partialData, typeString string) {
+	switch typeString {
+	case "uint256":
+		i := new(big.Int)
+		theInt, _ := i.SetString(partialData, 10)
+		log.Println("theInt", theInt)
+	}
 }
