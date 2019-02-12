@@ -192,7 +192,7 @@ func SolidityPackedBytes(pairs []*Pair) ([]byte, error) {
 	return b.Bytes(), nil
 }
 
-func SolidityUnpackString(data string, types []string) []interface{} {
+func SolidityUnpackString(data string, types []string) ([]interface{}, error) {
 
 	if data[0:2] == "0x" {
 		data = data[2:]
@@ -202,33 +202,71 @@ func SolidityUnpackString(data string, types []string) []interface{} {
 	var stringCount = 0
 	for i := 0; i < len(types); i++ {
 		partialData := data[i*64 : (i+1)*64]
-		convertedData, isString := TypeConverter(partialData, types[i], data[i*64:], len(types)-i, stringCount)
+		convertedData, isString, err := TypeConverter(partialData, types[i], data[i*64:], len(types)-i, stringCount)
+		if err != nil {
+			return nil, err
+		}
 		if isString {
 			stringCount += 1
 		}
 		resp[i] = convertedData
 	}
-	return resp
+	return resp, nil
 }
 
-func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCount int) (interface{}, bool) {
+func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCount int) (interface{}, bool, error) {
 	switch typeString {
+	case "uint8":
+		theInt, err := strconv.ParseInt(partialData, 10, 8)
+		if err != nil {
+			return nil, false, err
+		}
+		return uint8(theInt), false, nil
+
+	case "uint32":
+		theInt, err := strconv.ParseInt(partialData, 10, 32)
+		if err != nil {
+			return nil, false, err
+		}
+		return uint32(theInt), false, nil
+
 	case "uint256":
 		i := new(big.Int)
-		theInt, _ := i.SetString(partialData, 16)
-		return theInt, false
+		theInt, ok := i.SetString(partialData, 16)
+		if !ok {
+			return nil, false, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
+		}
+		return theInt, false, nil
 
 	case "address":
 		sliced := "0x" + partialData[24:]
 		strings.ToLower(sliced)
-		return sliced, false
+		return sliced, false, nil
 
 	case "string":
+		//find len of string
+		dataLenIndex := chunkLeft * 64
+		lenChunk := dataLeft[dataLenIndex : dataLenIndex+64]
+		i := new(big.Int)
+		stringLen, ok := i.SetString(lenChunk, 16)
+		if !ok {
+			return nil, false, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
+		}
+
+		// find chunk of string
 		dataChunkIndex := chunkLeft*64 + stringCount*2*64
 		stringChunk := dataLeft[dataChunkIndex+64 : dataChunkIndex+128]
-		byteString, _ := hex.DecodeString(stringChunk)
+
+		//decode strind
+		byteString, err := hex.DecodeString(stringChunk)
+		if err != nil {
+			return nil, false, err
+		}
+
+		//sub string equal to len
+		byteString = byteString[:stringLen.Int64()]
 		stringConverted := string(byteString)
-		return stringConverted, true
+		return stringConverted, true, nil
 	}
-	return typeString, false
+	return typeString, false, nil
 }
