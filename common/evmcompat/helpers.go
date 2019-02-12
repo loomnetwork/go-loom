@@ -192,6 +192,8 @@ func SolidityPackedBytes(pairs []*Pair) ([]byte, error) {
 	return b.Bytes(), nil
 }
 
+// SolidityUnpackString is a function to decode data string from solidity encoded event data into given types.
+// Currently this function supports uint8, uint32, uint256, address, string data types.
 func SolidityUnpackString(data string, types []string) ([]interface{}, error) {
 
 	if data[0:2] == "0x" {
@@ -201,7 +203,7 @@ func SolidityUnpackString(data string, types []string) ([]interface{}, error) {
 	var stringCount = 0
 	for i := 0; i < len(types); i++ {
 		partialData := data[i*64 : (i+1)*64]
-		convertedData, isString, err := TypeConverter(partialData, types[i], data[i*64:], len(types)-i, stringCount)
+		convertedData, isString, err := parseNextValueFromSolidityHexStr(partialData, types[i], data[i*64:], len(types)-i, stringCount)
 		if err != nil {
 			return nil, err
 		}
@@ -213,17 +215,18 @@ func SolidityUnpackString(data string, types []string) ([]interface{}, error) {
 	return resp, nil
 }
 
-func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCount int) (interface{}, bool, error) {
+// This internal function parses hexstring into given data types.
+func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, chunkLeft, stringCount int) (interface{}, bool, error) {
 	switch typeString {
 	case "uint8":
-		theInt, err := strconv.ParseInt(partialData, 10, 8)
+		theInt, err := strconv.ParseUint(partialData, 10, 8)
 		if err != nil {
 			return nil, false, err
 		}
 		return uint8(theInt), false, nil
 
 	case "uint32":
-		theInt, err := strconv.ParseInt(partialData, 10, 32)
+		theInt, err := strconv.ParseUint(partialData, 10, 32)
 		if err != nil {
 			return nil, false, err
 		}
