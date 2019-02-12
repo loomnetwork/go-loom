@@ -331,7 +331,7 @@ func TestSolidityUnpackString(t *testing.T) {
 		log.Println(err)
 	}
 
-	type Recipt struct {
+	type Receipt struct {
 		TradeId  uint8
 		UserId   uint32
 		LoomAddr string
@@ -341,7 +341,7 @@ func TestSolidityUnpackString(t *testing.T) {
 		Price    *big.Int
 	}
 
-	var receipt Recipt
+	var receipt Receipt
 	receipt.TradeId = uint8(1)
 	receipt.UserId = uint32(3)
 	receipt.LoomAddr = "0x989b462ebdda5e6ee4e05dd2884932ef44f920c3"
