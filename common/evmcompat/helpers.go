@@ -192,7 +192,7 @@ func SolidityPackedBytes(pairs []*Pair) ([]byte, error) {
 	return b.Bytes(), nil
 }
 
-func SolidityUnpackBytes(data string, types []string) []interface{} {
+func SolidityUnpackString(data string, types []string) []interface{} {
 
 	if data[0:2] == "0x" {
 		data = data[2:]
