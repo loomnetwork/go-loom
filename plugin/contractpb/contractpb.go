@@ -126,6 +126,10 @@ func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []b
 }
 
 func rolePermKey(addr loom.Address, token []byte, role string) []byte {
+	// TODO: This generates an overly long key, the key generated here is prefixed by the contract
+	//       address, but the wrappedPluginContext only has access to the state prefixed by the
+	//       contract address, so all the permission keys are effectively prefixed by the contract
+	//       address twice!
 	return []byte(fmt.Sprintf("%stoken:%s:role:%s", loom.PermPrefix(addr), token, []byte(role)))
 }
 
