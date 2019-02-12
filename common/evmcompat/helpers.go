@@ -9,6 +9,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"log"
 	"math/big"
 	"strconv"
 	"strings"
@@ -197,7 +198,7 @@ func SolidityUnpackString(data string, types []string) ([]interface{}, error) {
 	if data[0:2] == "0x" {
 		data = data[2:]
 	}
-
+	chunksLen := len(data) / 64
 	var resp = make([]interface{}, len(types))
 	var stringCount = 0
 	for i := 0; i < len(types); i++ {
@@ -244,9 +245,13 @@ func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCo
 		return sliced, false, nil
 
 	case "string":
-		//find len of string
-		dataLenIndex := chunkLeft * 64
-		lenChunk := dataLeft[dataLenIndex : dataLenIndex+64]
+		// find len of string
+		// chunkLeft*64 : have to skip all chunk left chunk
+		// stringCount*64*2 : have to skip all string chunk passed
+
+		dataChunkIndex := chunkLeft*64 + stringCount*64*2
+		lenChunk := dataLeft[dataChunkIndex : dataChunkIndex+64]
+
 		i := new(big.Int)
 		stringLen, ok := i.SetString(lenChunk, 16)
 		if !ok {
@@ -254,19 +259,19 @@ func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCo
 		}
 
 		// find chunk of string
-		dataChunkIndex := chunkLeft*64 + stringCount*2*64
-		stringChunk := dataLeft[dataChunkIndex+64 : dataChunkIndex+128]
+		// +64 for skip len chunk
+		stringChunk := dataLeft[dataChunkIndex+64 : dataChunkIndex+64*2]
 
-		//decode strind
+		//decode string
 		byteString, err := hex.DecodeString(stringChunk)
 		if err != nil {
 			return nil, false, err
 		}
-
-		//sub string equal to len
+		//substring equal to len
 		byteString = byteString[:stringLen.Int64()]
 		stringConverted := string(byteString)
-		return stringConverted, true, nil
+
+		return strings.ToLower(stringConverted), true, nil
 	}
 	return typeString, false, nil
 }
