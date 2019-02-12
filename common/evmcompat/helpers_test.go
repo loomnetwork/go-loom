@@ -3,6 +3,8 @@
 package evmcompat
 
 import (
+	"math/big"
+	"strings"
 	"testing"
 )
 
@@ -318,5 +320,40 @@ describe('solidity tight packing multiple arguments', function () {
 // }
 
 func TestSolidityUnpackBytes(t *testing.T) {
-	SolidityUnpackBytes("nope")
+
+	types := []string{"uint256", "uint256", "address", "address", "uint256"}
+	data := "0x000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000000000000000000000000007894c25242de46701f54599922086591cc714c0c000000000000000000000000c48cf958324a23f77044b63949df104cca6fce2000000000000000000000000000000000000000000000000010f15cb27f673d5c000000000000000000000000000000000000000000000000000000000000002a30783738393463323532343264653436373031663534353939393232303836353931636337313463306300000000000000000000000000000000000000000000"
+	res := SolidityUnpackBytes(data, types)
+
+	type Recipt struct {
+		TradeId   *big.Int
+		UserId    *big.Int
+		LoomAddr  string
+		ETHAddr   string
+		BNBAmount *big.Int
+	}
+
+	var receipt Recipt
+	receipt.TradeId = big.NewInt(6)
+	receipt.UserId = big.NewInt(0)
+	receipt.LoomAddr = "0x7894c25242de46701f54599922086591cc714c0c"
+	receipt.ETHAddr = "0xc48cF958324a23f77044B63949dF104ccA6FCe20"
+	receipt.BNBAmount = big.NewInt(1220858895705521500)
+
+	if receipt.TradeId.Cmp(res[0].(*big.Int)) != 0 {
+		t.Errorf("convert uint256 failed -\n%s\n%s", receipt.TradeId, res[0])
+	}
+	if receipt.UserId.Cmp(res[1].(*big.Int)) != 0 {
+		t.Errorf("convert uint256 failed -\n%s\n%s", receipt.UserId, res[1])
+	}
+	if strings.ToLower(receipt.LoomAddr) != res[2] {
+		t.Errorf("convert address failed -\n%s\n%s", receipt.LoomAddr, res[2])
+	}
+	if strings.ToLower(receipt.ETHAddr) != res[3] {
+		t.Errorf("convert address failed -\n%s\n%s", receipt.ETHAddr, res[3])
+	}
+	if receipt.BNBAmount.Cmp(res[4].(*big.Int)) != 0 {
+		t.Errorf("convert uint256 failed -\n%s\n%s", receipt.BNBAmount, res[4])
+	}
+
 }
