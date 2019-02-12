@@ -9,7 +9,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"log"
 	"math/big"
 	"strconv"
 	"strings"
@@ -198,7 +197,6 @@ func SolidityUnpackString(data string, types []string) ([]interface{}, error) {
 	if data[0:2] == "0x" {
 		data = data[2:]
 	}
-	chunksLen := len(data) / 64
 	var resp = make([]interface{}, len(types))
 	var stringCount = 0
 	for i := 0; i < len(types); i++ {
@@ -252,12 +250,6 @@ func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCo
 		dataChunkIndex := chunkLeft*64 + stringCount*64*2
 		lenChunk := dataLeft[dataChunkIndex : dataChunkIndex+64]
 
-		i := new(big.Int)
-		stringLen, ok := i.SetString(lenChunk, 16)
-		if !ok {
-			return nil, false, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
-		}
-
 		// find chunk of string
 		// +64 for skip len chunk
 		stringChunk := dataLeft[dataChunkIndex+64 : dataChunkIndex+64*2]
@@ -267,7 +259,13 @@ func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCo
 		if err != nil {
 			return nil, false, err
 		}
+
 		//substring equal to len
+		i := new(big.Int)
+		stringLen, ok := i.SetString(lenChunk, 16)
+		if !ok {
+			return nil, false, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
+		}
 		byteString = byteString[:stringLen.Int64()]
 		stringConverted := string(byteString)
 
