@@ -199,26 +199,36 @@ func SolidityUnpackString(data string, types []string) []interface{} {
 	}
 
 	var resp = make([]interface{}, len(types))
-
+	var stringCount = 0
 	for i := 0; i < len(types); i++ {
 		partialData := data[i*64 : (i+1)*64]
-		convertedData := TypeConverter(partialData, types[i])
+		convertedData, isString := TypeConverter(partialData, types[i], data[i*64:], len(types)-i, stringCount)
+		if isString {
+			stringCount += 1
+		}
 		resp[i] = convertedData
 	}
 	return resp
 }
 
-func TypeConverter(partialData, typeString string) interface{} {
+func TypeConverter(partialData, typeString, dataLeft string, chunkLeft, stringCount int) (interface{}, bool) {
 	switch typeString {
 	case "uint256":
 		i := new(big.Int)
 		theInt, _ := i.SetString(partialData, 16)
-		return theInt
+		return theInt, false
 
 	case "address":
 		sliced := "0x" + partialData[24:]
 		strings.ToLower(sliced)
-		return sliced
+		return sliced, false
+
+	case "string":
+		dataChunkIndex := chunkLeft*64 + stringCount*2*64
+		stringChunk := dataLeft[dataChunkIndex+64 : dataChunkIndex+128]
+		byteString, _ := hex.DecodeString(stringChunk)
+		stringConverted := string(byteString)
+		return stringConverted, true
 	}
-	return typeString
+	return typeString, false
 }
