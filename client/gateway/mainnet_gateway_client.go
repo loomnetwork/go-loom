@@ -95,20 +95,6 @@ func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.
 	return client.WaitForTxConfirmationAndFee(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) ToggleToken(validatorKey *ecdsa.PrivateKey, tokenContract common.Address) error {
-	opts := bind.NewKeyedTransactor(validatorKey)
-	ethNet := os.Getenv("ETHEREUM_NETWORK")
-	if ethNet == "" || ethNet == "ganache" {
-		// hack to get around Ganache hex-encoding bug, see client.DefaultTransactOptsForIdentity for info
-		opts.GasPrice = big.NewInt(20000)
-		opts.GasLimit = uint64(3141592)
-	}
-	tx, err := c.contract.ToggleToken(opts, tokenContract)
-	if err != nil {
-		return err
-	}
-	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
-}
 
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {
 	contractAddr := common.HexToAddress(gatewayAddr)

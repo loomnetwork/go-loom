@@ -1,7 +1,7 @@
 // Code generated - DO NOT EDIT.
 // This file is a generated binding and any manual changes will be lost.
 
-package gateway
+package ethcontract
 
 import (
 	"math/big"
@@ -15,20 +15,8 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
-// Reference imports to suppress errors if they are not otherwise used.
-var (
-	_ = big.NewInt
-	_ = strings.NewReader
-	_ = ethereum.NotFound
-	_ = abi.U256
-	_ = bind.Bind
-	_ = common.Big1
-	_ = types.BloomLookup
-	_ = event.NewSubscription
-)
-
 // MainnetGatewayContractABI is the input ABI used to generate the binding from.
-const MainnetGatewayContractABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"toggleToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x15c75f89\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"sig\",\"type\":\"bytes\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"withdrawERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x2cd2e930\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x37179db8\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x392d661c\"},{\"constant\":true,\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x4e0dc557\"},{\"constant\":true,\"inputs\":[],\"name\":\"numValidators\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x5d593f8d\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x715018a6\"},{\"constant\":true,\"inputs\":[{\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"checkValidator\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x797327ae\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x7ecebe00\"},{\"constant\":true,\"inputs\":[],\"name\":\"allowAnyToken\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x8025d570\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x8da5cb5b\"},{\"constant\":false,\"inputs\":[{\"name\":\"_validator\",\"type\":\"address\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"addValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x90b616c8\"},{\"constant\":false,\"inputs\":[{\"name\":\"_loomAddress\",\"type\":\"address\"},{\"name\":\"sig\",\"type\":\"bytes\"}],\"name\":\"setLoomAddress\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x94005ac3\"},{\"constant\":true,\"inputs\":[],\"name\":\"nonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xaffed0e0\"},{\"constant\":false,\"inputs\":[{\"name\":\"_validator\",\"type\":\"address\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"removeValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xc7e7f6f6\"},{\"constant\":false,\"inputs\":[{\"name\":\"_allow\",\"type\":\"bool\"}],\"name\":\"toggleAllowAnyToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xe402fbc8\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xe744092e\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xf2fde38b\"},{\"inputs\":[{\"name\":\"loomToken\",\"type\":\"address\"},{\"name\":\"_validators\",\"type\":\"address[]\"},{\"name\":\"_threshold_num\",\"type\":\"uint8\"},{\"name\":\"_threshold_denom\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\",\"signature\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ETHReceived\",\"type\":\"event\",\"signature\":\"0xbfe611b001dfcd411432f7bf0d79b82b4b2ee81511edac123a3403c357fb972a\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721Received\",\"type\":\"event\",\"signature\":\"0x691f4eac2b8850491851c72f70a121d76b20836d776658438f5b13dd9f8dbc6e\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XReceived\",\"type\":\"event\",\"signature\":\"0xc341982fb8843f55f2f7aae4eb89231a4ef94a199f370debe7bc5c07c2de2bab\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenTypes\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XBatchReceived\",\"type\":\"event\",\"signature\":\"0x48d67933be7b1e6d77d914145d793b5c9ced38156f34ebab23216e085435ac55\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"ERC20Received\",\"type\":\"event\",\"signature\":\"0xa13cf347fb36122550e414f6fd1a0c2e490cff76331c4dcc20f760891ecca12a\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"kind\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"TokenWithdrawn\",\"type\":\"event\",\"signature\":\"0x591f2d33d85291e32c4067b5a497caf3ddb5b1830eba9909e66006ec3a0051b4\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loomCoinAddress\",\"type\":\"address\"}],\"name\":\"LoomCoinReceived\",\"type\":\"event\",\"signature\":\"0x91557346f7592c9279b67cc52709a00442f0597658ec38a5fe84568c016331d7\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"AddedValidator\",\"type\":\"event\",\"signature\":\"0x8e15bf46bd11add443414ada75aa9592a4af68f3f2ec02ae3d49572f9843c2a8\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"RemovedValidator\",\"type\":\"event\",\"signature\":\"0xb625c55cf7e37b54fcd18bc4edafdf3f4f9acd59a5ec824c77c795dcb2d65070\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"}],\"name\":\"OwnershipRenounced\",\"type\":\"event\",\"signature\":\"0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\",\"signature\":\"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"sig\",\"type\":\"bytes\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"withdrawERC721X\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xe246e933\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"sig\",\"type\":\"bytes\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"withdrawERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xc899a86b\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"sig\",\"type\":\"bytes\"}],\"name\":\"withdrawETH\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x3ef32986\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x93ba7daa\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_types\",\"type\":\"uint256[]\"},{\"name\":\"_amounts\",\"type\":\"uint256[]\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XBatchReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xb3b0f4c7\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x150b7a02\"},{\"constant\":true,\"inputs\":[],\"name\":\"getETH\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x14f6c3be\"},{\"constant\":true,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x4e56ef52\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721X\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xb4c60342\"}]"
+const MainnetGatewayContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ETHReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721Received\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenTypes\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XBatchReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"ERC20Received\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"kind\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"TokenWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loomCoinAddress\",\"type\":\"address\"}],\"name\":\"LoomCoinReceived\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721X\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawETH\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_types\",\"type\":\"uint256[]\"},{\"name\":\"_amounts\",\"type\":\"uint256[]\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XBatchReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getETH\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721X\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // MainnetGatewayContract is an auto generated Go binding around an Ethereum contract.
 type MainnetGatewayContract struct {
@@ -172,84 +160,6 @@ func (_MainnetGatewayContract *MainnetGatewayContractTransactorRaw) Transact(opt
 	return _MainnetGatewayContract.Contract.contract.Transact(opts, method, params...)
 }
 
-// AllowAnyToken is a free data retrieval call binding the contract method 0x8025d570.
-//
-// Solidity: function allowAnyToken() constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractCaller) AllowAnyToken(opts *bind.CallOpts) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _MainnetGatewayContract.contract.Call(opts, out, "allowAnyToken")
-	return *ret0, err
-}
-
-// AllowAnyToken is a free data retrieval call binding the contract method 0x8025d570.
-//
-// Solidity: function allowAnyToken() constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractSession) AllowAnyToken() (bool, error) {
-	return _MainnetGatewayContract.Contract.AllowAnyToken(&_MainnetGatewayContract.CallOpts)
-}
-
-// AllowAnyToken is a free data retrieval call binding the contract method 0x8025d570.
-//
-// Solidity: function allowAnyToken() constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) AllowAnyToken() (bool, error) {
-	return _MainnetGatewayContract.Contract.AllowAnyToken(&_MainnetGatewayContract.CallOpts)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractCaller) AllowedTokens(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _MainnetGatewayContract.contract.Call(opts, out, "allowedTokens", arg0)
-	return *ret0, err
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractSession) AllowedTokens(arg0 common.Address) (bool, error) {
-	return _MainnetGatewayContract.Contract.AllowedTokens(&_MainnetGatewayContract.CallOpts, arg0)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) AllowedTokens(arg0 common.Address) (bool, error) {
-	return _MainnetGatewayContract.Contract.AllowedTokens(&_MainnetGatewayContract.CallOpts, arg0)
-}
-
-// CheckValidator is a free data retrieval call binding the contract method 0x797327ae.
-//
-// Solidity: function checkValidator(_address address) constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractCaller) CheckValidator(opts *bind.CallOpts, _address common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _MainnetGatewayContract.contract.Call(opts, out, "checkValidator", _address)
-	return *ret0, err
-}
-
-// CheckValidator is a free data retrieval call binding the contract method 0x797327ae.
-//
-// Solidity: function checkValidator(_address address) constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractSession) CheckValidator(_address common.Address) (bool, error) {
-	return _MainnetGatewayContract.Contract.CheckValidator(&_MainnetGatewayContract.CallOpts, _address)
-}
-
-// CheckValidator is a free data retrieval call binding the contract method 0x797327ae.
-//
-// Solidity: function checkValidator(_address address) constant returns(bool)
-func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) CheckValidator(_address common.Address) (bool, error) {
-	return _MainnetGatewayContract.Contract.CheckValidator(&_MainnetGatewayContract.CallOpts, _address)
-}
-
 // GetERC20 is a free data retrieval call binding the contract method 0x4e0dc557.
 //
 // Solidity: function getERC20(contractAddress address) constant returns(uint256)
@@ -380,32 +290,6 @@ func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) LoomAddress(
 	return _MainnetGatewayContract.Contract.LoomAddress(&_MainnetGatewayContract.CallOpts)
 }
 
-// Nonce is a free data retrieval call binding the contract method 0xaffed0e0.
-//
-// Solidity: function nonce() constant returns(uint256)
-func (_MainnetGatewayContract *MainnetGatewayContractCaller) Nonce(opts *bind.CallOpts) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
-	err := _MainnetGatewayContract.contract.Call(opts, out, "nonce")
-	return *ret0, err
-}
-
-// Nonce is a free data retrieval call binding the contract method 0xaffed0e0.
-//
-// Solidity: function nonce() constant returns(uint256)
-func (_MainnetGatewayContract *MainnetGatewayContractSession) Nonce() (*big.Int, error) {
-	return _MainnetGatewayContract.Contract.Nonce(&_MainnetGatewayContract.CallOpts)
-}
-
-// Nonce is a free data retrieval call binding the contract method 0xaffed0e0.
-//
-// Solidity: function nonce() constant returns(uint256)
-func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) Nonce() (*big.Int, error) {
-	return _MainnetGatewayContract.Contract.Nonce(&_MainnetGatewayContract.CallOpts)
-}
-
 // Nonces is a free data retrieval call binding the contract method 0x7ecebe00.
 //
 // Solidity: function nonces( address) constant returns(uint256)
@@ -430,79 +314,6 @@ func (_MainnetGatewayContract *MainnetGatewayContractSession) Nonces(arg0 common
 // Solidity: function nonces( address) constant returns(uint256)
 func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) Nonces(arg0 common.Address) (*big.Int, error) {
 	return _MainnetGatewayContract.Contract.Nonces(&_MainnetGatewayContract.CallOpts, arg0)
-}
-
-// NumValidators is a free data retrieval call binding the contract method 0x5d593f8d.
-//
-// Solidity: function numValidators() constant returns(uint256)
-func (_MainnetGatewayContract *MainnetGatewayContractCaller) NumValidators(opts *bind.CallOpts) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
-	err := _MainnetGatewayContract.contract.Call(opts, out, "numValidators")
-	return *ret0, err
-}
-
-// NumValidators is a free data retrieval call binding the contract method 0x5d593f8d.
-//
-// Solidity: function numValidators() constant returns(uint256)
-func (_MainnetGatewayContract *MainnetGatewayContractSession) NumValidators() (*big.Int, error) {
-	return _MainnetGatewayContract.Contract.NumValidators(&_MainnetGatewayContract.CallOpts)
-}
-
-// NumValidators is a free data retrieval call binding the contract method 0x5d593f8d.
-//
-// Solidity: function numValidators() constant returns(uint256)
-func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) NumValidators() (*big.Int, error) {
-	return _MainnetGatewayContract.Contract.NumValidators(&_MainnetGatewayContract.CallOpts)
-}
-
-// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
-//
-// Solidity: function owner() constant returns(address)
-func (_MainnetGatewayContract *MainnetGatewayContractCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _MainnetGatewayContract.contract.Call(opts, out, "owner")
-	return *ret0, err
-}
-
-// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
-//
-// Solidity: function owner() constant returns(address)
-func (_MainnetGatewayContract *MainnetGatewayContractSession) Owner() (common.Address, error) {
-	return _MainnetGatewayContract.Contract.Owner(&_MainnetGatewayContract.CallOpts)
-}
-
-// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
-//
-// Solidity: function owner() constant returns(address)
-func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) Owner() (common.Address, error) {
-	return _MainnetGatewayContract.Contract.Owner(&_MainnetGatewayContract.CallOpts)
-}
-
-// AddValidator is a paid mutator transaction binding the contract method 0x90b616c8.
-//
-// Solidity: function addValidator(_validator address, _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) AddValidator(opts *bind.TransactOpts, _validator common.Address, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "addValidator", _validator, _v, _r, _s)
-}
-
-// AddValidator is a paid mutator transaction binding the contract method 0x90b616c8.
-//
-// Solidity: function addValidator(_validator address, _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) AddValidator(_validator common.Address, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.AddValidator(&_MainnetGatewayContract.TransactOpts, _validator, _v, _r, _s)
-}
-
-// AddValidator is a paid mutator transaction binding the contract method 0x90b616c8.
-//
-// Solidity: function addValidator(_validator address, _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) AddValidator(_validator common.Address, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.AddValidator(&_MainnetGatewayContract.TransactOpts, _validator, _v, _r, _s)
 }
 
 // DepositERC20 is a paid mutator transaction binding the contract method 0x392d661c.
@@ -589,336 +400,88 @@ func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) OnERC721
 	return _MainnetGatewayContract.Contract.OnERC721XReceived(&_MainnetGatewayContract.TransactOpts, _operator, _from, _tokenId, _amount, _data)
 }
 
-// RemoveValidator is a paid mutator transaction binding the contract method 0xc7e7f6f6.
+// WithdrawERC20 is a paid mutator transaction binding the contract method 0xb0116dc7.
 //
-// Solidity: function removeValidator(_validator address, _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) RemoveValidator(opts *bind.TransactOpts, _validator common.Address, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "removeValidator", _validator, _v, _r, _s)
+// Solidity: function withdrawERC20(amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC20(opts *bind.TransactOpts, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC20", amount, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// RemoveValidator is a paid mutator transaction binding the contract method 0xc7e7f6f6.
+// WithdrawERC20 is a paid mutator transaction binding the contract method 0xb0116dc7.
 //
-// Solidity: function removeValidator(_validator address, _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) RemoveValidator(_validator common.Address, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.RemoveValidator(&_MainnetGatewayContract.TransactOpts, _validator, _v, _r, _s)
+// Solidity: function withdrawERC20(amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC20(amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// RemoveValidator is a paid mutator transaction binding the contract method 0xc7e7f6f6.
+// WithdrawERC20 is a paid mutator transaction binding the contract method 0xb0116dc7.
 //
-// Solidity: function removeValidator(_validator address, _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) RemoveValidator(_validator common.Address, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.RemoveValidator(&_MainnetGatewayContract.TransactOpts, _validator, _v, _r, _s)
+// Solidity: function withdrawERC20(amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC20(amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+// WithdrawERC721 is a paid mutator transaction binding the contract method 0x03c0fe3a.
 //
-// Solidity: function renounceOwnership() returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) RenounceOwnership(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "renounceOwnership")
+// Solidity: function withdrawERC721(uid uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721(opts *bind.TransactOpts, uid *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721", uid, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+// WithdrawERC721 is a paid mutator transaction binding the contract method 0x03c0fe3a.
 //
-// Solidity: function renounceOwnership() returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) RenounceOwnership() (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.RenounceOwnership(&_MainnetGatewayContract.TransactOpts)
+// Solidity: function withdrawERC721(uid uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721(uid *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+// WithdrawERC721 is a paid mutator transaction binding the contract method 0x03c0fe3a.
 //
-// Solidity: function renounceOwnership() returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) RenounceOwnership() (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.RenounceOwnership(&_MainnetGatewayContract.TransactOpts)
+// Solidity: function withdrawERC721(uid uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721(uid *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// SetLoomAddress is a paid mutator transaction binding the contract method 0x94005ac3.
+// WithdrawERC721X is a paid mutator transaction binding the contract method 0xced7c92a.
 //
-// Solidity: function setLoomAddress(_loomAddress address, sig bytes) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) SetLoomAddress(opts *bind.TransactOpts, _loomAddress common.Address, sig []byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "setLoomAddress", _loomAddress, sig)
+// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721X(opts *bind.TransactOpts, tokenId *big.Int, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721X", tokenId, amount, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// SetLoomAddress is a paid mutator transaction binding the contract method 0x94005ac3.
+// WithdrawERC721X is a paid mutator transaction binding the contract method 0xced7c92a.
 //
-// Solidity: function setLoomAddress(_loomAddress address, sig bytes) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) SetLoomAddress(_loomAddress common.Address, sig []byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.SetLoomAddress(&_MainnetGatewayContract.TransactOpts, _loomAddress, sig)
+// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// SetLoomAddress is a paid mutator transaction binding the contract method 0x94005ac3.
+// WithdrawERC721X is a paid mutator transaction binding the contract method 0xced7c92a.
 //
-// Solidity: function setLoomAddress(_loomAddress address, sig bytes) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) SetLoomAddress(_loomAddress common.Address, sig []byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.SetLoomAddress(&_MainnetGatewayContract.TransactOpts, _loomAddress, sig)
+// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, contractAddress, _valIndexes, _v, _r, _s)
 }
 
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
+// WithdrawETH is a paid mutator transaction binding the contract method 0xda293eb3.
 //
-// Solidity: function toggleAllowAnyToken(_allow bool) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) ToggleAllowAnyToken(opts *bind.TransactOpts, _allow bool) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "toggleAllowAnyToken", _allow)
+// Solidity: function withdrawETH(amount uint256, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawETH(opts *bind.TransactOpts, amount *big.Int, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawETH", amount, _valIndexes, _v, _r, _s)
 }
 
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
+// WithdrawETH is a paid mutator transaction binding the contract method 0xda293eb3.
 //
-// Solidity: function toggleAllowAnyToken(_allow bool) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) ToggleAllowAnyToken(_allow bool) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.ToggleAllowAnyToken(&_MainnetGatewayContract.TransactOpts, _allow)
+// Solidity: function withdrawETH(amount uint256, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawETH(amount *big.Int, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, _valIndexes, _v, _r, _s)
 }
 
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
+// WithdrawETH is a paid mutator transaction binding the contract method 0xda293eb3.
 //
-// Solidity: function toggleAllowAnyToken(_allow bool) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) ToggleAllowAnyToken(_allow bool) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.ToggleAllowAnyToken(&_MainnetGatewayContract.TransactOpts, _allow)
-}
-
-// ToggleToken is a paid mutator transaction binding the contract method 0x15c75f89.
-//
-// Solidity: function toggleToken(_token address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) ToggleToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "toggleToken", _token)
-}
-
-// ToggleToken is a paid mutator transaction binding the contract method 0x15c75f89.
-//
-// Solidity: function toggleToken(_token address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) ToggleToken(_token common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.ToggleToken(&_MainnetGatewayContract.TransactOpts, _token)
-}
-
-// ToggleToken is a paid mutator transaction binding the contract method 0x15c75f89.
-//
-// Solidity: function toggleToken(_token address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) ToggleToken(_token common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.ToggleToken(&_MainnetGatewayContract.TransactOpts, _token)
-}
-
-// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
-//
-// Solidity: function transferOwnership(_newOwner address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) TransferOwnership(opts *bind.TransactOpts, _newOwner common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "transferOwnership", _newOwner)
-}
-
-// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
-//
-// Solidity: function transferOwnership(_newOwner address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.TransferOwnership(&_MainnetGatewayContract.TransactOpts, _newOwner)
-}
-
-// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
-//
-// Solidity: function transferOwnership(_newOwner address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.TransferOwnership(&_MainnetGatewayContract.TransactOpts, _newOwner)
-}
-
-// WithdrawERC20 is a paid mutator transaction binding the contract method 0x2cd2e930.
-//
-// Solidity: function withdrawERC20(amount uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC20(opts *bind.TransactOpts, amount *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC20", amount, sig, contractAddress)
-}
-
-// WithdrawERC20 is a paid mutator transaction binding the contract method 0x2cd2e930.
-//
-// Solidity: function withdrawERC20(amount uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC20(amount *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, sig, contractAddress)
-}
-
-// WithdrawERC20 is a paid mutator transaction binding the contract method 0x2cd2e930.
-//
-// Solidity: function withdrawERC20(amount uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC20(amount *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, sig, contractAddress)
-}
-
-// WithdrawERC721 is a paid mutator transaction binding the contract method 0xc899a86b.
-//
-// Solidity: function withdrawERC721(uid uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721(opts *bind.TransactOpts, uid *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721", uid, sig, contractAddress)
-}
-
-// WithdrawERC721 is a paid mutator transaction binding the contract method 0xc899a86b.
-//
-// Solidity: function withdrawERC721(uid uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721(uid *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, sig, contractAddress)
-}
-
-// WithdrawERC721 is a paid mutator transaction binding the contract method 0xc899a86b.
-//
-// Solidity: function withdrawERC721(uid uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721(uid *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, sig, contractAddress)
-}
-
-// WithdrawERC721X is a paid mutator transaction binding the contract method 0xe246e933.
-//
-// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721X(opts *bind.TransactOpts, tokenId *big.Int, amount *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721X", tokenId, amount, sig, contractAddress)
-}
-
-// WithdrawERC721X is a paid mutator transaction binding the contract method 0xe246e933.
-//
-// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, sig, contractAddress)
-}
-
-// WithdrawERC721X is a paid mutator transaction binding the contract method 0xe246e933.
-//
-// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, sig bytes, contractAddress address) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, sig []byte, contractAddress common.Address) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, sig, contractAddress)
-}
-
-// WithdrawETH is a paid mutator transaction binding the contract method 0x3ef32986.
-//
-// Solidity: function withdrawETH(amount uint256, sig bytes) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawETH(opts *bind.TransactOpts, amount *big.Int, sig []byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawETH", amount, sig)
-}
-
-// WithdrawETH is a paid mutator transaction binding the contract method 0x3ef32986.
-//
-// Solidity: function withdrawETH(amount uint256, sig bytes) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawETH(amount *big.Int, sig []byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, sig)
-}
-
-// WithdrawETH is a paid mutator transaction binding the contract method 0x3ef32986.
-//
-// Solidity: function withdrawETH(amount uint256, sig bytes) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawETH(amount *big.Int, sig []byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, sig)
-}
-
-// MainnetGatewayContractAddedValidatorIterator is returned from FilterAddedValidator and is used to iterate over the raw logs and unpacked data for AddedValidator events raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractAddedValidatorIterator struct {
-	Event *MainnetGatewayContractAddedValidator // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *MainnetGatewayContractAddedValidatorIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(MainnetGatewayContractAddedValidator)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(MainnetGatewayContractAddedValidator)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *MainnetGatewayContractAddedValidatorIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *MainnetGatewayContractAddedValidatorIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// MainnetGatewayContractAddedValidator represents a AddedValidator event raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractAddedValidator struct {
-	Validator common.Address
-	Raw       types.Log // Blockchain specific contextual infos
-}
-
-// FilterAddedValidator is a free log retrieval operation binding the contract event 0x8e15bf46bd11add443414ada75aa9592a4af68f3f2ec02ae3d49572f9843c2a8.
-//
-// Solidity: e AddedValidator(validator address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) FilterAddedValidator(opts *bind.FilterOpts) (*MainnetGatewayContractAddedValidatorIterator, error) {
-
-	logs, sub, err := _MainnetGatewayContract.contract.FilterLogs(opts, "AddedValidator")
-	if err != nil {
-		return nil, err
-	}
-	return &MainnetGatewayContractAddedValidatorIterator{contract: _MainnetGatewayContract.contract, event: "AddedValidator", logs: logs, sub: sub}, nil
-}
-
-// WatchAddedValidator is a free log subscription operation binding the contract event 0x8e15bf46bd11add443414ada75aa9592a4af68f3f2ec02ae3d49572f9843c2a8.
-//
-// Solidity: e AddedValidator(validator address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) WatchAddedValidator(opts *bind.WatchOpts, sink chan<- *MainnetGatewayContractAddedValidator) (event.Subscription, error) {
-
-	logs, sub, err := _MainnetGatewayContract.contract.WatchLogs(opts, "AddedValidator")
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(MainnetGatewayContractAddedValidator)
-				if err := _MainnetGatewayContract.contract.UnpackLog(event, "AddedValidator", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
+// Solidity: function withdrawETH(amount uint256, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawETH(amount *big.Int, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, _valIndexes, _v, _r, _s)
 }
 
 // MainnetGatewayContractERC20ReceivedIterator is returned from FilterERC20Received and is used to iterate over the raw logs and unpacked data for ERC20Received events raised by the MainnetGatewayContract contract.
@@ -1662,401 +1225,6 @@ func (_MainnetGatewayContract *MainnetGatewayContractFilterer) WatchLoomCoinRece
 				// New log arrived, parse the event and forward to the user
 				event := new(MainnetGatewayContractLoomCoinReceived)
 				if err := _MainnetGatewayContract.contract.UnpackLog(event, "LoomCoinReceived", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// MainnetGatewayContractOwnershipRenouncedIterator is returned from FilterOwnershipRenounced and is used to iterate over the raw logs and unpacked data for OwnershipRenounced events raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractOwnershipRenouncedIterator struct {
-	Event *MainnetGatewayContractOwnershipRenounced // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *MainnetGatewayContractOwnershipRenouncedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(MainnetGatewayContractOwnershipRenounced)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(MainnetGatewayContractOwnershipRenounced)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *MainnetGatewayContractOwnershipRenouncedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *MainnetGatewayContractOwnershipRenouncedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// MainnetGatewayContractOwnershipRenounced represents a OwnershipRenounced event raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractOwnershipRenounced struct {
-	PreviousOwner common.Address
-	Raw           types.Log // Blockchain specific contextual infos
-}
-
-// FilterOwnershipRenounced is a free log retrieval operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
-//
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) FilterOwnershipRenounced(opts *bind.FilterOpts, previousOwner []common.Address) (*MainnetGatewayContractOwnershipRenouncedIterator, error) {
-
-	var previousOwnerRule []interface{}
-	for _, previousOwnerItem := range previousOwner {
-		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
-	}
-
-	logs, sub, err := _MainnetGatewayContract.contract.FilterLogs(opts, "OwnershipRenounced", previousOwnerRule)
-	if err != nil {
-		return nil, err
-	}
-	return &MainnetGatewayContractOwnershipRenouncedIterator{contract: _MainnetGatewayContract.contract, event: "OwnershipRenounced", logs: logs, sub: sub}, nil
-}
-
-// WatchOwnershipRenounced is a free log subscription operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
-//
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) WatchOwnershipRenounced(opts *bind.WatchOpts, sink chan<- *MainnetGatewayContractOwnershipRenounced, previousOwner []common.Address) (event.Subscription, error) {
-
-	var previousOwnerRule []interface{}
-	for _, previousOwnerItem := range previousOwner {
-		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
-	}
-
-	logs, sub, err := _MainnetGatewayContract.contract.WatchLogs(opts, "OwnershipRenounced", previousOwnerRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(MainnetGatewayContractOwnershipRenounced)
-				if err := _MainnetGatewayContract.contract.UnpackLog(event, "OwnershipRenounced", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// MainnetGatewayContractOwnershipTransferredIterator is returned from FilterOwnershipTransferred and is used to iterate over the raw logs and unpacked data for OwnershipTransferred events raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractOwnershipTransferredIterator struct {
-	Event *MainnetGatewayContractOwnershipTransferred // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *MainnetGatewayContractOwnershipTransferredIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(MainnetGatewayContractOwnershipTransferred)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(MainnetGatewayContractOwnershipTransferred)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *MainnetGatewayContractOwnershipTransferredIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *MainnetGatewayContractOwnershipTransferredIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// MainnetGatewayContractOwnershipTransferred represents a OwnershipTransferred event raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractOwnershipTransferred struct {
-	PreviousOwner common.Address
-	NewOwner      common.Address
-	Raw           types.Log // Blockchain specific contextual infos
-}
-
-// FilterOwnershipTransferred is a free log retrieval operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
-//
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) FilterOwnershipTransferred(opts *bind.FilterOpts, previousOwner []common.Address, newOwner []common.Address) (*MainnetGatewayContractOwnershipTransferredIterator, error) {
-
-	var previousOwnerRule []interface{}
-	for _, previousOwnerItem := range previousOwner {
-		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
-	}
-	var newOwnerRule []interface{}
-	for _, newOwnerItem := range newOwner {
-		newOwnerRule = append(newOwnerRule, newOwnerItem)
-	}
-
-	logs, sub, err := _MainnetGatewayContract.contract.FilterLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
-	if err != nil {
-		return nil, err
-	}
-	return &MainnetGatewayContractOwnershipTransferredIterator{contract: _MainnetGatewayContract.contract, event: "OwnershipTransferred", logs: logs, sub: sub}, nil
-}
-
-// WatchOwnershipTransferred is a free log subscription operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
-//
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) WatchOwnershipTransferred(opts *bind.WatchOpts, sink chan<- *MainnetGatewayContractOwnershipTransferred, previousOwner []common.Address, newOwner []common.Address) (event.Subscription, error) {
-
-	var previousOwnerRule []interface{}
-	for _, previousOwnerItem := range previousOwner {
-		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
-	}
-	var newOwnerRule []interface{}
-	for _, newOwnerItem := range newOwner {
-		newOwnerRule = append(newOwnerRule, newOwnerItem)
-	}
-
-	logs, sub, err := _MainnetGatewayContract.contract.WatchLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(MainnetGatewayContractOwnershipTransferred)
-				if err := _MainnetGatewayContract.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// MainnetGatewayContractRemovedValidatorIterator is returned from FilterRemovedValidator and is used to iterate over the raw logs and unpacked data for RemovedValidator events raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractRemovedValidatorIterator struct {
-	Event *MainnetGatewayContractRemovedValidator // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *MainnetGatewayContractRemovedValidatorIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(MainnetGatewayContractRemovedValidator)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(MainnetGatewayContractRemovedValidator)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *MainnetGatewayContractRemovedValidatorIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *MainnetGatewayContractRemovedValidatorIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// MainnetGatewayContractRemovedValidator represents a RemovedValidator event raised by the MainnetGatewayContract contract.
-type MainnetGatewayContractRemovedValidator struct {
-	Validator common.Address
-	Raw       types.Log // Blockchain specific contextual infos
-}
-
-// FilterRemovedValidator is a free log retrieval operation binding the contract event 0xb625c55cf7e37b54fcd18bc4edafdf3f4f9acd59a5ec824c77c795dcb2d65070.
-//
-// Solidity: e RemovedValidator(validator address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) FilterRemovedValidator(opts *bind.FilterOpts) (*MainnetGatewayContractRemovedValidatorIterator, error) {
-
-	logs, sub, err := _MainnetGatewayContract.contract.FilterLogs(opts, "RemovedValidator")
-	if err != nil {
-		return nil, err
-	}
-	return &MainnetGatewayContractRemovedValidatorIterator{contract: _MainnetGatewayContract.contract, event: "RemovedValidator", logs: logs, sub: sub}, nil
-}
-
-// WatchRemovedValidator is a free log subscription operation binding the contract event 0xb625c55cf7e37b54fcd18bc4edafdf3f4f9acd59a5ec824c77c795dcb2d65070.
-//
-// Solidity: e RemovedValidator(validator address)
-func (_MainnetGatewayContract *MainnetGatewayContractFilterer) WatchRemovedValidator(opts *bind.WatchOpts, sink chan<- *MainnetGatewayContractRemovedValidator) (event.Subscription, error) {
-
-	logs, sub, err := _MainnetGatewayContract.contract.WatchLogs(opts, "RemovedValidator")
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(MainnetGatewayContractRemovedValidator)
-				if err := _MainnetGatewayContract.contract.UnpackLog(event, "RemovedValidator", log); err != nil {
 					return err
 				}
 				event.Raw = log
