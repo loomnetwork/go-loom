@@ -4,7 +4,9 @@ package evmcompat
 
 import (
 	"encoding/hex"
+	"log"
 	"math/big"
+	"strings"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/crypto/sha3"
@@ -23,6 +25,7 @@ describe('solidity tight packing multiple arguments', function () {
   })
 })
 */
+
 func TestSolidityPackedBytes(t *testing.T) {
 	want := "0000000843989fb883ba8111221e8912389753847589383700000007"
 
@@ -317,4 +320,118 @@ func TestAnotherSoliditySha3WithUnit64(t *testing.T) {
 	if want2 != got2 {
 		t.Errorf("hashes don't match -\n%s\n%s", want2, got2)
 	}
+}
+
+func TestSolidityUnpackString(t *testing.T) {
+
+	types := []string{"uint8", "uint32", "address", "string", "string", "string", "uint256"}
+	data := "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000989b462ebdda5e6ee4e05dd2884932ef44f920c300000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000010f15cb27f673d5c0000000000000000000000000000000000000000000000000000000000000004616161610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000046d696d690000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000046465657000000000000000000000000000000000000000000000000000000000"
+	res, err := SolidityUnpackString(data, types)
+	if err != nil {
+		log.Println(err)
+	}
+
+	type Receipt struct {
+		TradeId  uint8
+		UserId   uint32
+		LoomAddr string
+		Name     string
+		Desc     string
+		Detail   string
+		Price    *big.Int
+	}
+
+	var receipt Receipt
+	receipt.TradeId = uint8(1)
+	receipt.UserId = uint32(3)
+	receipt.LoomAddr = "0x989b462ebdda5e6ee4e05dd2884932ef44f920c3"
+	receipt.Name = "aaaa"
+	receipt.Desc = "mimi"
+	receipt.Detail = "deep"
+	receipt.Price = big.NewInt(1220858895705521500)
+
+	if receipt.TradeId != res[0].(uint8) {
+		t.Errorf("convert uint8 failed -\n%d\n%d", receipt.TradeId, res[0])
+	}
+	if receipt.UserId != res[1].(uint32) {
+		t.Errorf("convert uint32 failed -\n%d\n%d", receipt.UserId, res[1])
+	}
+	if strings.ToLower(receipt.LoomAddr) != res[2] {
+		t.Errorf("convert address failed -\n%s\n%s", receipt.LoomAddr, res[2])
+	}
+	if strings.Compare(strings.ToLower(receipt.Name), res[3].(string)) != 0 {
+		t.Errorf("convert string failed -\n%s\n%s", receipt.Name, res[3])
+	}
+	if strings.ToLower(receipt.Desc) != res[4] {
+		t.Errorf("convert string failed -\n%s\n%s", receipt.Desc, res[4])
+	}
+	if strings.ToLower(receipt.Detail) != res[5] {
+		t.Errorf("convert string failed -\n%s\n%s", receipt.Detail, res[5])
+	}
+	if receipt.Price.Cmp(res[6].(*big.Int)) != 0 {
+		t.Errorf("convert uint256 failed -\n%s\n%s", receipt.Price, res[6])
+	}
+
+}
+
+func TestSolidityUnpackString2(t *testing.T) {
+
+	types := []string{"uint256", "uint8", "address", "string", "string", "string", "uint256", "string", "address"}
+	data := "0x00000000000000000000000000000000000000000000000000000000000004d60000000000000000000000000000000000000000000000000000000000000002000000000000000000000000989b462ebdda5e6ee4e05dd2884932ef44f920c30000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000000000000000000000000000000000000012d68700000000000000000000000000000000000000000000000000000000000001e0000000000000000000000000c48cf958324a23f77044b63949df104cca6fce200000000000000000000000000000000000000000000000000000000000000005416d69746100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000044d706368000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009646576656c6f70657200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010546869732073686f756c64207061737300000000000000000000000000000000"
+	res, err := SolidityUnpackString(data, types)
+	if err != nil {
+		log.Println(err)
+	}
+
+	type TestObj struct {
+		TradeId  *big.Int
+		UserId   uint8
+		LoomAddr string
+		Name     string
+		Desc     string
+		Detail   string
+		Price    *big.Int
+		Text     string
+		UserAddr string
+	}
+
+	var testObj TestObj
+	testObj.TradeId = big.NewInt(1238)
+	testObj.UserId = uint8(2)
+	testObj.LoomAddr = "0x989b462ebdda5e6ee4e05dd2884932ef44f920c3"
+	testObj.Name = "Amita"
+	testObj.Desc = "Mpch"
+	testObj.Detail = "developer"
+	testObj.Price = big.NewInt(1234567)
+	testObj.Text = "This should pass"
+	testObj.UserAddr = "0xc48cF958324a23f77044B63949dF104ccA6FCe20"
+
+	if testObj.TradeId.Cmp(res[0].(*big.Int)) != 0 {
+		t.Errorf("convert uint256 failed -\n%d\n%d", testObj.TradeId, res[0])
+	}
+	if testObj.UserId != res[1].(uint8) {
+		t.Errorf("convert uint8 failed -\n%d\n%d", testObj.UserId, res[1])
+	}
+	if strings.ToLower(testObj.LoomAddr) != res[2] {
+		t.Errorf("convert address failed -\n%s\n%s", testObj.LoomAddr, res[2])
+	}
+	if strings.Compare(strings.ToLower(testObj.Name), res[3].(string)) != 0 {
+		t.Errorf("convert string failed -\n%s\n%s", strings.ToLower(testObj.Name), res[3])
+	}
+	if strings.ToLower(testObj.Desc) != res[4] {
+		t.Errorf("convert string failed -\n%s\n%s", strings.ToLower(testObj.Desc), res[4])
+	}
+	if strings.ToLower(testObj.Detail) != res[5] {
+		t.Errorf("convert string failed -\n%s\n%s", strings.ToLower(testObj.Detail), res[5])
+	}
+	if testObj.Price.Cmp(res[6].(*big.Int)) != 0 {
+		t.Errorf("convert uint256 failed -\n%s\n%s", testObj.Price, res[6])
+	}
+	if strings.ToLower(testObj.Text) != res[7] {
+		t.Errorf("convert string failed -\n%s\n%s", strings.ToLower(testObj.Text), res[7])
+	}
+	if strings.ToLower(testObj.UserAddr) != res[8] {
+		t.Errorf("convert address failed -\n%s\n%s", testObj.UserAddr, res[8])
+	}
+
 }
