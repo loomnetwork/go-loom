@@ -203,51 +203,49 @@ func SolidityUnpackString(data string, types []string) ([]interface{}, error) {
 	var stringCount = 0
 	for i := 0; i < len(types); i++ {
 		partialData := data[i*64 : (i+1)*64]
-		convertedData, isString, err := parseNextValueFromSolidityHexStr(partialData, types[i], data[i*64:], len(types)-i, stringCount)
+		convertedData, count, err := parseNextValueFromSolidityHexStr(partialData, types[i], data[i*64:], len(types)-i, stringCount)
 		if err != nil {
 			return nil, err
 		}
-		if isString {
-			stringCount += 1
-		}
+		stringCount = count
 		resp[i] = convertedData
 	}
 	return resp, nil
 }
 
 // This internal function parses hexstring into given data types.
-func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, chunkLeft, stringCount int) (interface{}, bool, error) {
+func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, chunkLeft, stringCount int) (interface{}, int, error) {
 	switch typeString {
 	case "uint8":
 		theInt, err := strconv.ParseUint(partialData, 10, 8)
 		if err != nil {
-			return nil, false, err
+			return nil, stringCount, err
 		}
-		return uint8(theInt), false, nil
+		return uint8(theInt), stringCount, nil
 
 	case "uint32":
 		theInt, err := strconv.ParseUint(partialData, 10, 32)
 		if err != nil {
-			return nil, false, err
+			return nil, stringCount, err
 		}
-		return uint32(theInt), false, nil
+		return uint32(theInt), stringCount, nil
 
 	case "uint256":
 		i := new(big.Int)
 		theInt, ok := i.SetString(partialData, 16)
 		if !ok {
-			return nil, false, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
+			return nil, stringCount, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
 		}
-		return theInt, false, nil
+		return theInt, stringCount, nil
 
 	case "address":
 		sliced := "0x" + partialData[24:]
 		strings.ToLower(sliced)
-		return sliced, false, nil
+		return sliced, stringCount, nil
 
 	case "string":
 		// find len of string
-		// chunkLeft*64 : have to skip all chunk left chunk
+		// chunkLeft*64 : have to skip all chunk left
 		// stringCount*64*2 : have to skip all string chunk passed
 
 		dataChunkIndex := chunkLeft*64 + stringCount*64*2
@@ -260,19 +258,19 @@ func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, 
 		//decode string
 		byteString, err := hex.DecodeString(stringChunk)
 		if err != nil {
-			return nil, false, err
+			return nil, stringCount, err
 		}
 
 		//substring equal to len
 		i := new(big.Int)
 		stringLen, ok := i.SetString(lenChunk, 16)
 		if !ok {
-			return nil, false, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
+			return nil, stringCount, errors.New(fmt.Sprintf("Error parsing big.Int from %s", partialData))
 		}
 		byteString = byteString[:stringLen.Int64()]
 		stringConverted := string(byteString)
 
-		return strings.ToLower(stringConverted), true, nil
+		return strings.ToLower(stringConverted), stringCount + 1, nil
 	}
-	return typeString, false, nil
+	return typeString, stringCount, nil
 }
