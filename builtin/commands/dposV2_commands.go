@@ -201,7 +201,7 @@ func DelegateCmdV2() *cobra.Command {
 				req.LocktimeTier = tier
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "Delegate", &req, nil)
+			return cli.CallContract(DPOSV2ContractName, "Delegate2", &req, nil)
 		},
 	}
 }
