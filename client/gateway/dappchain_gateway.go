@@ -44,7 +44,7 @@ type DAppChainGateway struct {
 }
 
 // AddAuthorisedContractMapping creates a bi-directional mapping between a Mainnet & DAppChain contract without creating a pending mapping
-func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to loom.Address, creator *client.Identity, contractTxHash string) error {
+func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
 	fromAddr, err := client.LoomAddressFromEthereumAddress(from)
 	if err != nil {
 		return err
@@ -54,7 +54,7 @@ func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to
 		ForeignContract: fromAddr.MarshalPB(),
 		LocalContract:   to.MarshalPB(),
 	}
-	_, err = tg.contract.Call("AddAuthorizedContractMapping", req, creator.LoomSigner, nil)
+	_, err = tg.contract.Call("AddAuthorizedContractMapping", req, gatewayOwner.LoomSigner, nil)
 	return err
 }
 
