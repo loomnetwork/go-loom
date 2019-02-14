@@ -10,53 +10,60 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/loomnetwork/go-loom/client"
+	ssha "github.com/miguelmota/go-solidity-sha3"
 )
 
 type MainnetVMCClient struct {
-	contract  *VMC
+	contract  *ValidatorManagerContract
 	ethClient *ethclient.Client
 
 	TxTimeout time.Duration
 	Address   common.Address
 }
 
-func (c *MainnetVMCClient) BalanceOf(owner common.Address) (*big.Int, error) {
-	bal, err := c.contract.BalanceOf(nil, owner)
-	if err != nil {
-		return nil, err
-	}
-	return bal, nil
+func (c *MainnetVMCClient) Contract() *ValidatorManagerContract {
+	return c.contract
 }
 
-func (c *MainnetVMCClient) TokenOfOwnerByIndex(owner common.Address, index int) (*big.Int, error) {
-	tokenID, err := c.contract.TokenOfOwnerByIndex(nil, owner, new(big.Int).SetInt64(int64(index)))
-	if err != nil {
-		return nil, err
-	}
-	return tokenID, nil
+func (c *MainnetVMCClient) GetValidators() ([]common.Address, error) {
+	return c.contract.GetValidators(nil)
 }
 
-func (c *MainnetVMCClient) OwnerOf(tokenID *big.Int) (common.Address, error) {
-	return c.contract.OwnerOf(nil, tokenID)
-}
-
-func (c *MainnetVMCClient) SafeTransferFrom(caller *client.Identity, from common.Address, to common.Address, tokenId *big.Int, amount *big.Int, data []byte) error {
-	tx, err := c.contract.SafeTransferFrom(client.DefaultTransactOptsForIdentity(caller), from, to, tokenId, amount, data)
+func (c *MainnetVMCClient) ToggleAllowToken(caller *client.Identity, tokenContract common.Address, allow bool, validatorIndex *big.Int) error {
+	tx, err := c.contract.ToggleAllowToken(client.DefaultTransactOptsForIdentity(caller), tokenContract, allow, validatorIndex)
 	if err != nil {
 		return err
 	}
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetVMCClient) ToggleToken(caller *client.Identity, tokenContract common.Address) error {
-	opts := bind.NewKeyedTransactor(validatorKey)
-	ethNet := os.Getenv("ETHEREUM_NETWORK")
-	if ethNet == "" || ethNet == "ganache" {
-		// hack to get around Ganache hex-encoding bug, see client.DefaultTransactOptsForIdentity for info
-		opts.GasPrice = big.NewInt(20000)
-		opts.GasLimit = uint64(3141592)
+func (c *MainnetVMCClient) ToggleAllowAnyToken(caller *client.Identity, allow bool, validatorIndex *big.Int) error {
+	tx, err := c.contract.ToggleAllowAnyToken(client.DefaultTransactOptsForIdentity(caller), allow, validatorIndex)
+	if err != nil {
+		return err
 	}
-	tx, err := c.contract.ToggleToken(opts, tokenContract)
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
+func (c *MainnetVMCClient) RotateValidators(caller *client.Identity, newValidators []common.Address, newPowers []uint64, sigs [][]byte) error {
+	// Calculate the msg hash
+	hash, err := c.calculateHash(newValidators, newPowers)
+	if err != nil {
+		return err
+	}
+
+	// Get validator list to sort the sigs properly
+	validators, err := c.GetValidators()
+	if err != nil {
+		return err
+	}
+	// Break down sigs
+	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
+	if err != nil {
+		return err
+	}
+
+	tx, err := c.contract.RotateValidators(client.DefaultTransactOptsForIdentity(caller), newValidators, newPowers, valIndexes, v, r, s)
 	if err != nil {
 		return err
 	}
@@ -65,7 +72,7 @@ func (c *MainnetVMCClient) ToggleToken(caller *client.Identity, tokenContract co
 
 func ConnectToMainnetVMCClient(ethClient *ethclient.Client, contractAddr string) (*MainnetVMCClient, error) {
 	contractAddress := common.HexToAddress(contractAddr)
-	contract, err := NewVMC(contractAddress, ethClient)
+	contract, err := NewValidatorManagerContract(contractAddress, ethClient)
 	if err != nil {
 		return nil, err
 	}
@@ -74,4 +81,22 @@ func ConnectToMainnetVMCClient(ethClient *ethclient.Client, contractAddr string)
 		ethClient: ethClient,
 		Address:   contractAddress,
 	}, nil
+}
+
+func (c *MainnetVMCClient) calculateHash(newValidators []common.Address, newPowers []uint64) ([]byte, error) {
+	nonce, err := c.contract.Nonce(nil)
+	if err != nil {
+		return nil, err
+	}
+
+	hash := ssha.SoliditySHA3(
+		ssha.AddressArray(newValidators),
+		ssha.Uint8Array(newPowers),
+	)
+
+	return ssha.SoliditySHA3(
+		ssha.Address(c.Address),
+		ssha.Uint256(nonce),
+		hash,
+	), nil
 }
