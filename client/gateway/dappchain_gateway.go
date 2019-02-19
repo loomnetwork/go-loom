@@ -14,14 +14,14 @@ import (
 	"github.com/gogo/protobuf/jsonpb"
 	"github.com/gogo/protobuf/proto"
 	"github.com/gorilla/websocket"
-	"github.com/loomnetwork/go-loom"
+	loom "github.com/loomnetwork/go-loom"
 	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/client"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
 	lptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	ssha "github.com/miguelmota/go-solidity-sha3"
-	"github.com/phonkee/go-pubsub"
+	pubsub "github.com/phonkee/go-pubsub"
 	"github.com/pkg/errors"
 )
 
@@ -41,6 +41,21 @@ type DAppChainGateway struct {
 	chainEventHub      pubsub.Hub
 
 	Address loom.Address
+}
+
+// AddAuthorisedContractMapping creates a bi-directional mapping between a Mainnet & DAppChain contract without creating a pending mapping
+func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
+	fromAddr, err := client.LoomAddressFromEthereumAddress(from)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
+	req := &tgtypes.TransferGatewayAddContractMappingRequest{
+		ForeignContract: fromAddr.MarshalPB(),
+		LocalContract:   to.MarshalPB(),
+	}
+	_, err = tg.contract.Call("AddAuthorizedContractMapping", req, gatewayOwner.LoomSigner, nil)
+	return err
 }
 
 // AddContractMapping creates a bi-directional mapping between a Mainnet & DAppChain contract.
