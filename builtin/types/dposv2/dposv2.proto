@@ -213,7 +213,7 @@ message ListDelegationsRequest {
     Address candidate = 1;
 }
 
-message ListDelegatorsResponse {
+message ListDelegationsResponse {
     repeated DelegationV2 delegations = 1;
     BigUInt delegation_total = 2;
 }
@@ -222,7 +222,7 @@ message ListAllDelegationsRequest {
 }
 
 message ListAllDelegationsResponse {
-    repeated ListDelegationsRequest listResponses = 1;
+    repeated ListDelegationsResponse listResponses = 1;
 }
 
 // Oracle request batch
