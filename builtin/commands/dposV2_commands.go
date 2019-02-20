@@ -514,7 +514,7 @@ func ListAllDelegationsCmd() *cobra.Command {
 		Args:  cobra.MinimumNArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp dposv2.ListAllDelegationsResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "ListAllDelegators", &dposv2.ListAllDelegationsRequest{}, &resp)
+			err := cli.StaticCallContract(DPOSV2ContractName, "ListAllDelegations", &dposv2.ListAllDelegationsRequest{}, &resp)
 			if err != nil {
 				return err
 			}
