@@ -209,6 +209,21 @@ message ListCandidateResponseV2 {
     repeated CandidateV2 candidates = 1;
 }
 
+message ListDelegatorsRequest {
+}
+
+message ListDelegatorsResponse {
+    repeated Address delegators = 1;
+    BigUInt delegation_total = 2;
+}
+
+message ListAllDelegatorsRequest {
+}
+
+message ListAllDelegatorsResponse {
+    repeated ListDelegatorsRequest listResponses = 1;
+}
+
 // Oracle request batch
 message BatchRequestV2 {
     oneof payload {
