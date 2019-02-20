@@ -137,7 +137,7 @@ func RegisterCandidateCmdV2() *cobra.Command {
 				}
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate", &dposv2.RegisterCandidateRequestV2{
+			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate2", &dposv2.RegisterCandidateRequestV2{
 				PubKey:       pubKey,
 				Fee:          candidateFee,
 				Name:         candidateName,
