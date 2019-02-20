@@ -481,6 +481,53 @@ func TimeUntilElectionCmd() *cobra.Command {
 	}
 }
 
+func ListDelegationsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "list_delegations",
+		Short: "list a candidate's delegations & delegation total",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+
+			var resp dposv2.ListDelegationsResponse
+			err = cli.StaticCallContract(DPOSV2ContractName, "ListDelegations", &dposv2.ListDelegationsRequest{Candidate: addr.MarshalPB()}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
+func ListAllDelegationsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "list_all_delegations",
+		Short: "display the results of calling list_delegations for all candidates",
+		Args:  cobra.MinimumNArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.ListAllDelegationsResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "ListAllDelegators", &dposv2.ListAllDelegationsRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 // Oracle Commands for setting parameters
 
 func SetElectionCycleCmdV2() *cobra.Command {
@@ -627,6 +674,8 @@ func AddDPOSV2(root *cobra.Command) {
 		registercmd,
 		ListCandidatesCmdV2(),
 		ListValidatorsCmdV2(),
+		ListDelegationsCmd(),
+		ListAllDelegationsCmd(),
 		UnregisterCandidateCmdV2(),
 		UpdateCandidateInfoCmd(),
 		DelegateCmdV2(),
