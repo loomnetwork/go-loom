@@ -151,6 +151,16 @@ message TotalDelegationResponse {
     BigUInt weighted_amount = 2;
 }
 
+message CheckAllDelegationsRequest {
+    Address delegator_address = 1;
+}
+
+message CheckAllDelegationsResponse {
+    BigUInt amount = 1;
+    BigUInt weighted_amount = 2;
+    repeated DelegationV2 delegations = 3;
+}
+
 message CheckDistributionRequest {
 }
 
