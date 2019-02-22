@@ -121,6 +121,11 @@ message RemoveWhitelistedCandidateRequestV2 {
     Address candidate_address = 1;
 }
 
+message ChangeWhitelistAmountRequestV2 {
+    Address candidate_address = 1;
+    BigUInt amount = 2;
+}
+
 message CheckDelegationRequestV2 {
     Address validator_address = 1;
     Address delegator_address = 2;
@@ -174,6 +179,12 @@ message ChangeCandidateFeeRequest {
     uint64 fee = 1;
 }
 
+message UpdateCandidateInfoRequest {
+    string name = 1;
+    string description = 2;
+    string website = 3;
+}
+
 message UnregisterCandidateRequestV2 {
 }
 
@@ -196,6 +207,22 @@ message ListCandidateRequestV2 {
 
 message ListCandidateResponseV2 {
     repeated CandidateV2 candidates = 1;
+}
+
+message ListDelegationsRequest {
+    Address candidate = 1;
+}
+
+message ListDelegationsResponse {
+    repeated DelegationV2 delegations = 1;
+    BigUInt delegation_total = 2;
+}
+
+message ListAllDelegationsRequest {
+}
+
+message ListAllDelegationsResponse {
+    repeated ListDelegationsResponse listResponses = 1;
 }
 
 // Oracle request batch
@@ -248,4 +275,55 @@ message SetOracleAddressRequestV2 {
 message SetSlashingPercentagesRequestV2 {
     BigUInt crash_slashing_percentage = 1;
     BigUInt byzantine_slashing_percentage = 2;
+}
+
+message GetStateRequest {
+}
+
+message GetStateResponse {
+    StateV2 state = 1;
+}
+
+// EVENTS
+
+message DposElectionEvent {
+    uint64 block_number = 1;
+}
+
+message DposSlashEvent {
+    Address validator = 1;
+    BigUInt slash_percentage = 2;
+}
+
+message DposCandidateRegistersEvent {
+    Address address = 1;
+    uint64 fee = 2;
+}
+
+message DposCandidateUnregistersEvent {
+    Address address = 1;
+}
+
+message DposCandidateFeeChangeEvent {
+    Address address = 1;
+    uint64 new_fee = 2;
+}
+
+message DposUpdateCandidateInfoEvent {
+    Address address = 1;
+}
+
+message DposDelegatorDelegatesEvent {
+    Address address = 1;
+    BigUInt amount = 2;
+}
+
+message DposDelegatorRedelegatesEvent {
+    Address address = 1;
+    BigUInt amount = 2;
+}
+
+message DposDelegatorUnbondsEvent {
+    Address address = 1;
+    BigUInt amount = 2;
 }

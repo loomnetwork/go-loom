@@ -31,6 +31,25 @@ func UnregisterCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func GetStateCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "get_dpos_state",
+		Short: "Gets dpos state",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.GetStateResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "GetState", &dposv2.GetStateRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
 func ListValidatorsCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "list_validatorsV2",
@@ -130,6 +149,26 @@ func RegisterCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func UpdateCandidateInfoCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "update_candidate_info [name] [description] [website]",
+		Short: "Update candidate information for a validator",
+		Args:  cobra.MinimumNArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateName := args[0]
+			candidateDescription := args[1]
+			candidateWebsite := args[2]
+
+			return cli.CallContract(DPOSV2ContractName, "UpdateCandidateInfo", &dposv2.UpdateCandidateInfoRequest{
+				Name:         candidateName,
+				Description:  candidateDescription,
+				Website:      candidateWebsite,
+			}, nil)
+		},
+	}
+}
+
+
 func DelegateCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "delegateV2 [validator address] [amount] [locktime tier]",
@@ -162,7 +201,7 @@ func DelegateCmdV2() *cobra.Command {
 				req.LocktimeTier = tier
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "Delegate", &req, nil)
+			return cli.CallContract(DPOSV2ContractName, "Delegate2", &req, nil)
 		},
 	}
 }
@@ -242,6 +281,30 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 
 			return cli.CallContract(DPOSV2ContractName, "RemoveWhitelistedCandidate", &dposv2.RemoveWhitelistedCandidateRequestV2{
 				CandidateAddress: candidateAddress.MarshalPB(),
+			}, nil)
+		},
+	}
+}
+
+func ChangeWhitelistAmountCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "change_whitelist_amount [candidate address] [amount]",
+		Short: "Changes a whitelisted candidate's whitelist amount",
+		Args:  cobra.MinimumNArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateAddress, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+			amount, err := cli.ParseAmount(args[1])
+			if err != nil {
+				return err
+			}
+			return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistAmount", &dposv2.ChangeWhitelistAmountRequestV2{
+				CandidateAddress: candidateAddress.MarshalPB(),
+				Amount: &types.BigUInt{
+					Value: *amount,
+				},
 			}, nil)
 		},
 	}
@@ -418,6 +481,53 @@ func TimeUntilElectionCmd() *cobra.Command {
 	}
 }
 
+func ListDelegationsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "list_delegations",
+		Short: "list a candidate's delegations & delegation total",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+
+			var resp dposv2.ListDelegationsResponse
+			err = cli.StaticCallContract(DPOSV2ContractName, "ListDelegations", &dposv2.ListDelegationsRequest{Candidate: addr.MarshalPB()}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
+func ListAllDelegationsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "list_all_delegations",
+		Short: "display the results of calling list_delegations for all candidates",
+		Args:  cobra.MinimumNArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.ListAllDelegationsResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "ListAllDelegations", &dposv2.ListAllDelegationsRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 // Oracle Commands for setting parameters
 
 func SetElectionCycleCmdV2() *cobra.Command {
@@ -564,11 +674,15 @@ func AddDPOSV2(root *cobra.Command) {
 		registercmd,
 		ListCandidatesCmdV2(),
 		ListValidatorsCmdV2(),
+		ListDelegationsCmd(),
+		ListAllDelegationsCmd(),
 		UnregisterCandidateCmdV2(),
+		UpdateCandidateInfoCmd(),
 		DelegateCmdV2(),
 		RedelegateCmdV2(),
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
+		ChangeWhitelistAmountCmdV2(),
 		CheckDelegationCmdV2(),
 		CheckDistributionCmd(),
 		CheckRewardsCmd(),
@@ -583,5 +697,6 @@ func AddDPOSV2(root *cobra.Command) {
 		ChangeFeeCmd(),
 		TimeUntilElectionCmd(),
 		TotalDelegationCmd(),
+		GetStateCmd(),
 	)
 }
