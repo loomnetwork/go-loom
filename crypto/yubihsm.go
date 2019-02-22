@@ -313,11 +313,6 @@ func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) ([]byte, err
 		return nil, err
 	}
 
-	if bytes.Compare(sig[:64], normSig) != 0 {
-		fmt.Printf("sig before normalizing is %v\n", hex.EncodeToString(sig[:64]))
-		fmt.Printf("sig after normalizing is  %v\n", hex.EncodeToString(normSig))
-	}
-
 	recID, err := privKey.getSigRecID(hash, normSig)
 	if err != nil {
 		return nil, err
