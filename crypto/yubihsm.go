@@ -279,8 +279,6 @@ func (privKey *YubiHsmPrivateKey) getSigRecID(hash []byte, sig []byte) (byte, er
 
 func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) ([]byte, error) {
 	var sig [YubiSecp256k1SignDataLen]byte
-	var err error
-
 	var ecdsaSig struct {
 		R, S *big.Int
 	}
@@ -309,10 +307,16 @@ func (privKey *YubiHsmPrivateKey) yubiHsmSecp256k1Sign(hash []byte) ([]byte, err
 	copy(sig[:], ecdsaSig.R.Bytes())
 	copy(sig[32:], ecdsaSig.S.Bytes())
 
-	recID, err := privKey.getSigRecID(hash, sig[:64])
+	normSig, err := secp256k1.NormalizeLaxDERSignature(parsedResp.Signature)
 	if err != nil {
 		return nil, err
 	}
+
+	recID, err := privKey.getSigRecID(hash, normSig)
+	if err != nil {
+		return nil, err
+	}
+	copy(sig[:], normSig)
 	sig[64] = recID
 
 	return sig[:], nil
