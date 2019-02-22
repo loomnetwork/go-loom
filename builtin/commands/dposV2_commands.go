@@ -436,7 +436,7 @@ func CheckDistributionCmd() *cobra.Command {
 
 func TotalDelegationCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "total_delegation",
+		Use:   "total_delegation [delegator]",
 		Short: "check how much a delegator has delegated in total (to all validators)",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -447,6 +447,32 @@ func TotalDelegationCmd() *cobra.Command {
 
 			var resp dposv2.TotalDelegationResponse
 			err = cli.StaticCallContract(DPOSV2ContractName, "TotalDelegation", &dposv2.TotalDelegationRequest{DelegatorAddress: addr.MarshalPB()}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
+func CheckAllDelegationsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "check_all_delegations [delegator]",
+		Short: "display all of a particular delegator's delegations",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+
+			var resp dposv2.CheckAllDelegationsResponse
+			err = cli.StaticCallContract(DPOSV2ContractName, "CheckAllDelegations", &dposv2.CheckAllDelegationsRequest{DelegatorAddress: addr.MarshalPB()}, &resp)
 			if err != nil {
 				return err
 			}
@@ -684,6 +710,7 @@ func AddDPOSV2(root *cobra.Command) {
 		RemoveWhitelistedCandidateCmdV2(),
 		ChangeWhitelistAmountCmdV2(),
 		CheckDelegationCmdV2(),
+		CheckAllDelegationsCmd(),
 		CheckDistributionCmd(),
 		CheckRewardsCmd(),
 		UnbondCmdV2(),
