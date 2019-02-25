@@ -94,6 +94,7 @@ deps:
 		github.com/go-kit/kit/log \
 		github.com/pkg/errors
 	dep ensure -vendor-only
+	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 
 deps-evm:
