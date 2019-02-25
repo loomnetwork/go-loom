@@ -41,8 +41,8 @@ message CandidateV2 {
     Address address = 1;
     bytes pub_key = 2;
     uint64 fee = 3;
-    uint64 newFee = 4;
-    uint64 feeDelayCounter = 5;
+    uint64 new_fee = 4;
+    uint64 fee_delay_counter = 5;
     string name = 6;
     string description = 7;
     string website = 8;
