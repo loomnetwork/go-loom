@@ -20,4 +20,5 @@ func Add(cmd *cobra.Command) {
 	AddCoin(cmd)
 	AddGeneralCommands(cmd)
 	AddValidatorCommands(cmd)
+	AddAddressMapper(cmd)
 }
