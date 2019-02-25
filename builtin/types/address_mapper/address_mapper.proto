@@ -46,7 +46,7 @@ message AddressMapperListMappingRequest {
 }
 
 message AddressMapperListMappingResponse {
-    repeated AddressMapperMapping mappings = 1;
+    repeated AddressMapperMapping mappings = 1; // mapping address
 }
 
 

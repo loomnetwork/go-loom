@@ -36,7 +36,7 @@ func (m *AddressMapperMapping) Reset()         { *m = AddressMapperMapping{} }
 func (m *AddressMapperMapping) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperMapping) ProtoMessage()    {}
 func (*AddressMapperMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{0}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{0}
 }
 func (m *AddressMapperMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperMapping.Unmarshal(m, b)
@@ -80,7 +80,7 @@ func (m *AddressMapperInitRequest) Reset()         { *m = AddressMapperInitReque
 func (m *AddressMapperInitRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperInitRequest) ProtoMessage()    {}
 func (*AddressMapperInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{1}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{1}
 }
 func (m *AddressMapperInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperInitRequest.Unmarshal(m, b)
@@ -118,7 +118,7 @@ func (m *AddressMapperAddIdentityMappingRequest) Reset() {
 func (m *AddressMapperAddIdentityMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperAddIdentityMappingRequest) ProtoMessage()    {}
 func (*AddressMapperAddIdentityMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{2}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{2}
 }
 func (m *AddressMapperAddIdentityMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperAddIdentityMappingRequest.Unmarshal(m, b)
@@ -169,7 +169,7 @@ func (m *AddressMapperRemoveMappingRequest) Reset()         { *m = AddressMapper
 func (m *AddressMapperRemoveMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperRemoveMappingRequest) ProtoMessage()    {}
 func (*AddressMapperRemoveMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{3}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{3}
 }
 func (m *AddressMapperRemoveMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperRemoveMappingRequest.Unmarshal(m, b)
@@ -200,7 +200,7 @@ func (m *AddressMapperGetMappingRequest) Reset()         { *m = AddressMapperGet
 func (m *AddressMapperGetMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperGetMappingRequest) ProtoMessage()    {}
 func (*AddressMapperGetMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{4}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{4}
 }
 func (m *AddressMapperGetMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperGetMappingRequest.Unmarshal(m, b)
@@ -239,7 +239,7 @@ func (m *AddressMapperGetMappingResponse) Reset()         { *m = AddressMapperGe
 func (m *AddressMapperGetMappingResponse) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperGetMappingResponse) ProtoMessage()    {}
 func (*AddressMapperGetMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{5}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{5}
 }
 func (m *AddressMapperGetMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperGetMappingResponse.Unmarshal(m, b)
@@ -283,7 +283,7 @@ func (m *AddressMapperListMappingRequest) Reset()         { *m = AddressMapperLi
 func (m *AddressMapperListMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperListMappingRequest) ProtoMessage()    {}
 func (*AddressMapperListMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{6}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{6}
 }
 func (m *AddressMapperListMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperListMappingRequest.Unmarshal(m, b)
@@ -314,7 +314,7 @@ func (m *AddressMapperListMappingResponse) Reset()         { *m = AddressMapperL
 func (m *AddressMapperListMappingResponse) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperListMappingResponse) ProtoMessage()    {}
 func (*AddressMapperListMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{7}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{7}
 }
 func (m *AddressMapperListMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperListMappingResponse.Unmarshal(m, b)
@@ -352,7 +352,7 @@ func (m *AddressMapperHasMappingRequest) Reset()         { *m = AddressMapperHas
 func (m *AddressMapperHasMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperHasMappingRequest) ProtoMessage()    {}
 func (*AddressMapperHasMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{8}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{8}
 }
 func (m *AddressMapperHasMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperHasMappingRequest.Unmarshal(m, b)
@@ -390,7 +390,7 @@ func (m *AddressMapperHasMappingResponse) Reset()         { *m = AddressMapperHa
 func (m *AddressMapperHasMappingResponse) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperHasMappingResponse) ProtoMessage()    {}
 func (*AddressMapperHasMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_address_mapper_3fb0c4599d25c720, []int{9}
+	return fileDescriptor_address_mapper_0f6edfeb09aa42ff, []int{9}
 }
 func (m *AddressMapperHasMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperHasMappingResponse.Unmarshal(m, b)
@@ -431,10 +431,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/address_mapper/address_mapper.proto", fileDescriptor_address_mapper_3fb0c4599d25c720)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/address_mapper/address_mapper.proto", fileDescriptor_address_mapper_0f6edfeb09aa42ff)
 }
 
-var fileDescriptor_address_mapper_3fb0c4599d25c720 = []byte{
+var fileDescriptor_address_mapper_0f6edfeb09aa42ff = []byte{
 	// 322 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x92, 0xc1, 0x4b, 0xf3, 0x40,
 	0x10, 0xc5, 0x49, 0xfb, 0xf1, 0x51, 0xa7, 0x9e, 0x8a, 0x42, 0x28, 0xc5, 0xa6, 0x2b, 0x48, 0x2f,
