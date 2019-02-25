@@ -41,7 +41,7 @@ func (m *BlockHeader) Reset()         { *m = BlockHeader{} }
 func (m *BlockHeader) String() string { return proto.CompactTextString(m) }
 func (*BlockHeader) ProtoMessage()    {}
 func (*BlockHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{0}
+	return fileDescriptor_types_7ab4d5345663c140, []int{0}
 }
 func (m *BlockHeader) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BlockHeader.Unmarshal(m, b)
@@ -143,7 +143,7 @@ func (m *BlockID) Reset()         { *m = BlockID{} }
 func (m *BlockID) String() string { return proto.CompactTextString(m) }
 func (*BlockID) ProtoMessage()    {}
 func (*BlockID) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{1}
+	return fileDescriptor_types_7ab4d5345663c140, []int{1}
 }
 func (m *BlockID) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BlockID.Unmarshal(m, b)
@@ -189,7 +189,7 @@ func (m *PartSetHeader) Reset()         { *m = PartSetHeader{} }
 func (m *PartSetHeader) String() string { return proto.CompactTextString(m) }
 func (*PartSetHeader) ProtoMessage()    {}
 func (*PartSetHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{2}
+	return fileDescriptor_types_7ab4d5345663c140, []int{2}
 }
 func (m *PartSetHeader) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PartSetHeader.Unmarshal(m, b)
@@ -235,7 +235,7 @@ func (m *Validator) Reset()         { *m = Validator{} }
 func (m *Validator) String() string { return proto.CompactTextString(m) }
 func (*Validator) ProtoMessage()    {}
 func (*Validator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{3}
+	return fileDescriptor_types_7ab4d5345663c140, []int{3}
 }
 func (m *Validator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Validator.Unmarshal(m, b)
@@ -281,7 +281,7 @@ func (m *Evidence) Reset()         { *m = Evidence{} }
 func (m *Evidence) String() string { return proto.CompactTextString(m) }
 func (*Evidence) ProtoMessage()    {}
 func (*Evidence) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{4}
+	return fileDescriptor_types_7ab4d5345663c140, []int{4}
 }
 func (m *Evidence) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Evidence.Unmarshal(m, b)
@@ -326,7 +326,7 @@ func (m *BigUInt) Reset()         { *m = BigUInt{} }
 func (m *BigUInt) String() string { return proto.CompactTextString(m) }
 func (*BigUInt) ProtoMessage()    {}
 func (*BigUInt) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{5}
+	return fileDescriptor_types_7ab4d5345663c140, []int{5}
 }
 func (m *BigUInt) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BigUInt.Unmarshal(m, b)
@@ -358,7 +358,7 @@ func (m *Address) Reset()         { *m = Address{} }
 func (m *Address) String() string { return proto.CompactTextString(m) }
 func (*Address) ProtoMessage()    {}
 func (*Address) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{6}
+	return fileDescriptor_types_7ab4d5345663c140, []int{6}
 }
 func (m *Address) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Address.Unmarshal(m, b)
@@ -397,7 +397,7 @@ func (m *Transaction) Reset()         { *m = Transaction{} }
 func (m *Transaction) String() string { return proto.CompactTextString(m) }
 func (*Transaction) ProtoMessage()    {}
 func (*Transaction) Descriptor() ([]byte, []int) {
-	return fileDescriptor_types_83819d5bbd8c1723, []int{7}
+	return fileDescriptor_types_7ab4d5345663c140, []int{7}
 }
 func (m *Transaction) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Transaction.Unmarshal(m, b)
@@ -443,10 +443,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/types/types.proto", fileDescriptor_types_83819d5bbd8c1723)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/types/types.proto", fileDescriptor_types_7ab4d5345663c140)
 }
 
-var fileDescriptor_types_83819d5bbd8c1723 = []byte{
+var fileDescriptor_types_7ab4d5345663c140 = []byte{
 	// 578 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xbd, 0x6e, 0xd4, 0x40,
 	0x10, 0xc6, 0x4e, 0x7c, 0xf6, 0x8d, 0x93, 0x80, 0x96, 0x88, 0x1c, 0x50, 0xdc, 0xe1, 0x02, 0x2c,

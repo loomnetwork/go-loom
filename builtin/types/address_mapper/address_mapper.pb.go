@@ -3,12 +3,10 @@
 
 package address_mapper
 
-import (
-	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	types "github.com/loomnetwork/go-loom/types"
-	math "math"
-)
+import proto "github.com/gogo/protobuf/proto"
+import fmt "fmt"
+import math "math"
+import types "github.com/loomnetwork/go-loom/types"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -26,9 +24,9 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 // other must contain a foreign address.
 type AddressMapperMapping struct {
 	// Address on a blockchain
-	From *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	From *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
 	// Corresponding address on another blockchain
-	To                   *types.Address `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	To                   *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -38,7 +36,7 @@ func (m *AddressMapperMapping) Reset()         { *m = AddressMapperMapping{} }
 func (m *AddressMapperMapping) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperMapping) ProtoMessage()    {}
 func (*AddressMapperMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{0}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{0}
 }
 func (m *AddressMapperMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperMapping.Unmarshal(m, b)
@@ -46,8 +44,8 @@ func (m *AddressMapperMapping) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperMapping) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperMapping.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperMapping) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperMapping.Merge(m, src)
+func (dst *AddressMapperMapping) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperMapping.Merge(dst, src)
 }
 func (m *AddressMapperMapping) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperMapping.Size(m)
@@ -82,7 +80,7 @@ func (m *AddressMapperInitRequest) Reset()         { *m = AddressMapperInitReque
 func (m *AddressMapperInitRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperInitRequest) ProtoMessage()    {}
 func (*AddressMapperInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{1}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{1}
 }
 func (m *AddressMapperInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperInitRequest.Unmarshal(m, b)
@@ -90,8 +88,8 @@ func (m *AddressMapperInitRequest) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperInitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperInitRequest.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperInitRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperInitRequest.Merge(m, src)
+func (dst *AddressMapperInitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperInitRequest.Merge(dst, src)
 }
 func (m *AddressMapperInitRequest) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperInitRequest.Size(m)
@@ -104,9 +102,9 @@ var xxx_messageInfo_AddressMapperInitRequest proto.InternalMessageInfo
 
 type AddressMapperAddIdentityMappingRequest struct {
 	// Address on a blockchain
-	From *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	From *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
 	// Corresponding address on another blockchain
-	To *types.Address `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	To *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
 	// Signature of a hash of the two addresses signed with the key that corresponds to the foreign address
 	Signature            []byte   `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -120,7 +118,7 @@ func (m *AddressMapperAddIdentityMappingRequest) Reset() {
 func (m *AddressMapperAddIdentityMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperAddIdentityMappingRequest) ProtoMessage()    {}
 func (*AddressMapperAddIdentityMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{2}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{2}
 }
 func (m *AddressMapperAddIdentityMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperAddIdentityMappingRequest.Unmarshal(m, b)
@@ -128,8 +126,8 @@ func (m *AddressMapperAddIdentityMappingRequest) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperAddIdentityMappingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperAddIdentityMappingRequest.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperAddIdentityMappingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperAddIdentityMappingRequest.Merge(m, src)
+func (dst *AddressMapperAddIdentityMappingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperAddIdentityMappingRequest.Merge(dst, src)
 }
 func (m *AddressMapperAddIdentityMappingRequest) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperAddIdentityMappingRequest.Size(m)
@@ -171,7 +169,7 @@ func (m *AddressMapperRemoveMappingRequest) Reset()         { *m = AddressMapper
 func (m *AddressMapperRemoveMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperRemoveMappingRequest) ProtoMessage()    {}
 func (*AddressMapperRemoveMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{3}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{3}
 }
 func (m *AddressMapperRemoveMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperRemoveMappingRequest.Unmarshal(m, b)
@@ -179,8 +177,8 @@ func (m *AddressMapperRemoveMappingRequest) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperRemoveMappingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperRemoveMappingRequest.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperRemoveMappingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperRemoveMappingRequest.Merge(m, src)
+func (dst *AddressMapperRemoveMappingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperRemoveMappingRequest.Merge(dst, src)
 }
 func (m *AddressMapperRemoveMappingRequest) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperRemoveMappingRequest.Size(m)
@@ -192,7 +190,7 @@ func (m *AddressMapperRemoveMappingRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_AddressMapperRemoveMappingRequest proto.InternalMessageInfo
 
 type AddressMapperGetMappingRequest struct {
-	From                 *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	From                 *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -202,7 +200,7 @@ func (m *AddressMapperGetMappingRequest) Reset()         { *m = AddressMapperGet
 func (m *AddressMapperGetMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperGetMappingRequest) ProtoMessage()    {}
 func (*AddressMapperGetMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{4}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{4}
 }
 func (m *AddressMapperGetMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperGetMappingRequest.Unmarshal(m, b)
@@ -210,8 +208,8 @@ func (m *AddressMapperGetMappingRequest) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperGetMappingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperGetMappingRequest.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperGetMappingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperGetMappingRequest.Merge(m, src)
+func (dst *AddressMapperGetMappingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperGetMappingRequest.Merge(dst, src)
 }
 func (m *AddressMapperGetMappingRequest) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperGetMappingRequest.Size(m)
@@ -230,8 +228,8 @@ func (m *AddressMapperGetMappingRequest) GetFrom() *types.Address {
 }
 
 type AddressMapperGetMappingResponse struct {
-	From                 *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
-	To                   *types.Address `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	From                 *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
+	To                   *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -241,7 +239,7 @@ func (m *AddressMapperGetMappingResponse) Reset()         { *m = AddressMapperGe
 func (m *AddressMapperGetMappingResponse) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperGetMappingResponse) ProtoMessage()    {}
 func (*AddressMapperGetMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{5}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{5}
 }
 func (m *AddressMapperGetMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperGetMappingResponse.Unmarshal(m, b)
@@ -249,8 +247,8 @@ func (m *AddressMapperGetMappingResponse) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperGetMappingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperGetMappingResponse.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperGetMappingResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperGetMappingResponse.Merge(m, src)
+func (dst *AddressMapperGetMappingResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperGetMappingResponse.Merge(dst, src)
 }
 func (m *AddressMapperGetMappingResponse) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperGetMappingResponse.Size(m)
@@ -285,7 +283,7 @@ func (m *AddressMapperListMappingRequest) Reset()         { *m = AddressMapperLi
 func (m *AddressMapperListMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperListMappingRequest) ProtoMessage()    {}
 func (*AddressMapperListMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{6}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{6}
 }
 func (m *AddressMapperListMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperListMappingRequest.Unmarshal(m, b)
@@ -293,8 +291,8 @@ func (m *AddressMapperListMappingRequest) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperListMappingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperListMappingRequest.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperListMappingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperListMappingRequest.Merge(m, src)
+func (dst *AddressMapperListMappingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperListMappingRequest.Merge(dst, src)
 }
 func (m *AddressMapperListMappingRequest) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperListMappingRequest.Size(m)
@@ -306,7 +304,7 @@ func (m *AddressMapperListMappingRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_AddressMapperListMappingRequest proto.InternalMessageInfo
 
 type AddressMapperListMappingResponse struct {
-	AddressMapperGetMappingResponse []*AddressMapperGetMappingResponse `protobuf:"bytes,1,rep,name=AddressMapperGetMappingResponse,proto3" json:"AddressMapperGetMappingResponse,omitempty"`
+	AddressMapperGetMappingResponse []*AddressMapperGetMappingResponse `protobuf:"bytes,1,rep,name=AddressMapperGetMappingResponse" json:"AddressMapperGetMappingResponse,omitempty"`
 	XXX_NoUnkeyedLiteral            struct{}                           `json:"-"`
 	XXX_unrecognized                []byte                             `json:"-"`
 	XXX_sizecache                   int32                              `json:"-"`
@@ -316,7 +314,7 @@ func (m *AddressMapperListMappingResponse) Reset()         { *m = AddressMapperL
 func (m *AddressMapperListMappingResponse) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperListMappingResponse) ProtoMessage()    {}
 func (*AddressMapperListMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{7}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{7}
 }
 func (m *AddressMapperListMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperListMappingResponse.Unmarshal(m, b)
@@ -324,8 +322,8 @@ func (m *AddressMapperListMappingResponse) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperListMappingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperListMappingResponse.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperListMappingResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperListMappingResponse.Merge(m, src)
+func (dst *AddressMapperListMappingResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperListMappingResponse.Merge(dst, src)
 }
 func (m *AddressMapperListMappingResponse) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperListMappingResponse.Size(m)
@@ -344,7 +342,7 @@ func (m *AddressMapperListMappingResponse) GetAddressMapperGetMappingResponse() 
 }
 
 type AddressMapperHasMappingRequest struct {
-	From                 *types.Address `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	From                 *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -354,7 +352,7 @@ func (m *AddressMapperHasMappingRequest) Reset()         { *m = AddressMapperHas
 func (m *AddressMapperHasMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperHasMappingRequest) ProtoMessage()    {}
 func (*AddressMapperHasMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{8}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{8}
 }
 func (m *AddressMapperHasMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperHasMappingRequest.Unmarshal(m, b)
@@ -362,8 +360,8 @@ func (m *AddressMapperHasMappingRequest) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperHasMappingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperHasMappingRequest.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperHasMappingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperHasMappingRequest.Merge(m, src)
+func (dst *AddressMapperHasMappingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperHasMappingRequest.Merge(dst, src)
 }
 func (m *AddressMapperHasMappingRequest) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperHasMappingRequest.Size(m)
@@ -392,7 +390,7 @@ func (m *AddressMapperHasMappingResponse) Reset()         { *m = AddressMapperHa
 func (m *AddressMapperHasMappingResponse) String() string { return proto.CompactTextString(m) }
 func (*AddressMapperHasMappingResponse) ProtoMessage()    {}
 func (*AddressMapperHasMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_760e4e28ee7b07ef, []int{9}
+	return fileDescriptor_address_mapper_cafe86bacccc8350, []int{9}
 }
 func (m *AddressMapperHasMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddressMapperHasMappingResponse.Unmarshal(m, b)
@@ -400,8 +398,8 @@ func (m *AddressMapperHasMappingResponse) XXX_Unmarshal(b []byte) error {
 func (m *AddressMapperHasMappingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AddressMapperHasMappingResponse.Marshal(b, m, deterministic)
 }
-func (m *AddressMapperHasMappingResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddressMapperHasMappingResponse.Merge(m, src)
+func (dst *AddressMapperHasMappingResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddressMapperHasMappingResponse.Merge(dst, src)
 }
 func (m *AddressMapperHasMappingResponse) XXX_Size() int {
 	return xxx_messageInfo_AddressMapperHasMappingResponse.Size(m)
@@ -433,10 +431,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/address_mapper/address_mapper.proto", fileDescriptor_760e4e28ee7b07ef)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/address_mapper/address_mapper.proto", fileDescriptor_address_mapper_cafe86bacccc8350)
 }
 
-var fileDescriptor_760e4e28ee7b07ef = []byte{
+var fileDescriptor_address_mapper_cafe86bacccc8350 = []byte{
 	// 322 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x93, 0x41, 0x4b, 0xfb, 0x40,
 	0x10, 0xc5, 0x49, 0xfb, 0xe7, 0x4f, 0x9d, 0x7a, 0x2a, 0x1e, 0x42, 0x29, 0x36, 0x5d, 0x41, 0x7a,
