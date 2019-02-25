@@ -13,7 +13,7 @@ const AddressMapperContractName = "addressmapper"
 
 func GetMapping() *cobra.Command {
 	return &cobra.Command{
-		Use:   "get_mapping",
+		Use:   "get-mapping",
 		Short: "Get mapping address",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp address_mapper.AddressMapperGetMappingResponse
@@ -39,7 +39,7 @@ func GetMapping() *cobra.Command {
 
 func ListMapping() *cobra.Command {
 	return &cobra.Command{
-		Use:   "list_mapping",
+		Use:   "list-mapping",
 		Short: "List mapping address",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var resp address_mapper.AddressMapperListMappingResponse
