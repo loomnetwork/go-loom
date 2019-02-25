@@ -232,7 +232,7 @@ message ListAllDelegationsRequest {
 }
 
 message ListAllDelegationsResponse {
-    repeated ListDelegationsResponse listResponses = 1;
+    repeated ListDelegationsResponse list_responses = 1;
 }
 
 // Oracle request batch
