@@ -42,6 +42,14 @@ message AddressMapperGetMappingResponse {
     Address to = 2;
 }
 
+message AddressMapperListMappingRequest {
+}
+
+message AddressMapperListMappingResponse {
+    repeated AddressMapperGetMappingResponse AddressMapperGetMappingResponse = 1; 
+}
+
+
 message AddressMapperHasMappingRequest {
     Address from = 1;
 }
