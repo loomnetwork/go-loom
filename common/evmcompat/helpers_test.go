@@ -120,7 +120,13 @@ func TestSoliditySha3(t *testing.T) {
 		t.Errorf("TestSoliditySha3 failed got %q, want %q", gotsha3, wantsha3)
 	}
 
-	g2 = ssha.SoliditySHA3(slices...)
+	g2 = ssha.SoliditySHA3(
+        []string{"address", "address", "uint16", "uint32"},
+		"0x43989fb883ba8111221e89123897538475893837",
+		"0x0000000000000000000000000000000000000000",
+		uint16(10000),
+		uint32(1448075779),
+    )
 	gotsha3 = hex.EncodeToString(g2)
 
 	if gotsha3 != wantsha3 {
