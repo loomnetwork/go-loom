@@ -1,9 +1,17 @@
 syntax = "proto3";
 
+enum ChainId {
+    EOS = 0;
+    ETH = 1;
+    Tron = 2;
+    Cosmos = 3;
+}
+
 message SignedTx {
     bytes inner = 1;
     bytes signature = 2;
     bytes public_key = 3;
+    ChainId chainId = 4;
 }
 
 message NonceTx {
