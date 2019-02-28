@@ -279,3 +279,9 @@ message TransferGatewayPendingWithdrawalsRequest {
 message TransferGatewayPendingWithdrawalsResponse {
     repeated TransferGatewayPendingWithdrawalSummary withdrawals = 1;
 }
+
+message TransferGatewayProcessMainnetEventError {
+    uint64 eth_block = 1;
+    TransferGatewayMainnetEvent event = 2;
+    bytes error_message = 3;
+}
