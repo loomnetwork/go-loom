@@ -285,3 +285,8 @@ message TransferGatewayProcessMainnetEventError {
     TransferGatewayMainnetEvent event = 2;
     bytes error_message = 3;
 }
+
+message TransferGatewayReclaimError {
+    Address owner = 1;
+    bytes error_message = 2;
+}
