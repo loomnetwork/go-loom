@@ -37,23 +37,8 @@ message TransferGatewayWithdrawalReceipt {
     // ERC721X/ERC20/ETH amount
     BigUInt token_amount = 5;
     uint64 withdrawal_nonce = 6;
-    // Oracle Signature
+    // Serialized signatures of the validators, design choice made for backwards compatibility in a soft fork.
     bytes oracle_signature = 7;
-}
-
-message TransferGatewayWithdrawalReceiptV2 {
-    // Mainnet address of token owner
-    Address token_owner = 1;
-    // Mainnet address of token contract
-    Address token_contract = 2;
-    TransferGatewayTokenKind token_kind = 3;
-    // ERC721/X token ID
-    BigUInt token_id = 4 [(gogoproto.customname)="TokenID"];
-    // ERC721X/ERC20/ETH amount
-    BigUInt token_amount = 5;
-    uint64 withdrawal_nonce = 6;
-    // array of signature, one per each validator
-    repeated bytes validator_signatures = 7;
 }
 
 message TransferGatewayPendingWithdrawalSummary {
@@ -67,12 +52,6 @@ message TransferGatewayLocalAccount {
     Address owner = 1;
     uint64 withdrawal_nonce = 2;
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
-}
-
-message TransferGatewayLocalAccountV2 {
-    Address owner = 1;
-    uint64 withdrawal_nonce = 2;
-    TransferGatewayWithdrawalReceiptV2 withdrawal_receipt = 3;
 }
 
 message TransferGatewayForeignAccount {
@@ -188,22 +167,8 @@ message TransferGatewayTokenWithdrawalSigned {
     BigUInt token_id = 4 [(gogoproto.customname)="TokenID"];
     // ERC721X/ERC20/ETH amount
     BigUInt token_amount = 5;
-    // Oracle Signature
+    // Serialized signatures of the validators, design choice made for backwards compatibility in a soft fork.
     bytes sig = 6;
-}
-
-message TransferGatewayTokenWithdrawalSignedV2 {
-    // Mainnet address of token owner
-    Address token_owner = 1;
-    // Mainnet address of token contract, blank if ETH
-    Address token_contract = 2;
-    TransferGatewayTokenKind token_kind = 3;
-    // ERC721/X token ID
-    BigUInt token_id = 4 [(gogoproto.customname)="TokenID"];
-    // ERC721X/ERC20/ETH amount
-    BigUInt token_amount = 5;
-     // array of signature, one per each validator
-    repeated bytes validator_signatures = 6;
 }
 
 // Genesis
@@ -339,25 +304,11 @@ message TransferGatewayWithdrawalReceiptResponse {
     TransferGatewayWithdrawalReceipt receipt = 1;
 }
 
-message TransferGatewayWithdrawalReceiptResponseV2 {
-    TransferGatewayWithdrawalReceiptV2 receipt = 1;
-}
-
 message TransferGatewayConfirmWithdrawalReceiptRequest {
     // DAppChain address of the entity attempting to make the withdrawal
     Address token_owner = 1;
     // 66-byte hash of the withdrawal hash
-    // Oracle Signature -- DEPRECATED!!!
     bytes oracle_signature = 2;
-    // 32-byte hash of the withdrawal details
-    bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
-}
-
-message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
-    // DAppChain address of the entity attempting to make the withdrawal
-    Address token_owner = 1;
-    // array of signature, one per each validator
-    repeated bytes validator_signatures = 2;
     // 32-byte hash of the withdrawal details
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
 }
