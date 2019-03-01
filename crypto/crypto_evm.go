@@ -6,6 +6,7 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 
+	ssha "github.com/miguelmota/go-solidity-sha3"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
