@@ -336,3 +336,18 @@ message TransferGatewayReclaimError {
     Address owner = 1;
     bytes error_message = 2;
 }
+
+message TransferGatewayWithdrawETHError {
+    TransferGatewayWithdrawETHRequest withdraw_eth_request = 1;
+    bytes error_message = 2;
+}
+
+message TransferGatewayWithdrawLoomCoinError {
+    TransferGatewayWithdrawLoomCoinRequest withdraw_loom_coin_request = 1;
+    bytes error_message = 2;
+} 
+
+message TransferGatewayWithdrawTokenError {
+    TransferGatewayWithdrawTokenRequest withdraw_token_request = 1;
+    bytes error_message = 2;
+}
