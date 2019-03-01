@@ -325,3 +325,29 @@ message TransferGatewayPendingWithdrawalsResponse {
 message TransferGatewayResetMainnetBlockRequest {
     uint64 last_mainnet_block_num = 1;
 }
+
+message TransferGatewayProcessMainnetEventError {
+    uint64 eth_block = 1;
+    TransferGatewayMainnetEvent event = 2;
+    bytes error_message = 3;
+}
+
+message TransferGatewayReclaimError {
+    Address owner = 1;
+    bytes error_message = 2;
+}
+
+message TransferGatewayWithdrawETHError {
+    TransferGatewayWithdrawETHRequest withdraw_eth_request = 1;
+    bytes error_message = 2;
+}
+
+message TransferGatewayWithdrawLoomCoinError {
+    TransferGatewayWithdrawLoomCoinRequest withdraw_loom_coin_request = 1;
+    bytes error_message = 2;
+} 
+
+message TransferGatewayWithdrawTokenError {
+    TransferGatewayWithdrawTokenRequest withdraw_token_request = 1;
+    bytes error_message = 2;
+}
