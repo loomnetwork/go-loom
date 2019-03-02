@@ -112,13 +112,15 @@ func WaitForTxConfirmationAndFee(ctx context.Context, ethClient *ethclient.Clien
 	return new(big.Int).Mul(tx.GasPrice(), big.NewInt(0).SetUint64(r.GasUsed)), nil
 }
 
-func ParseSigs(sigs [][]byte, hash []byte, validators []common.Address) ([]uint8, [][32]byte, [][32]byte, []*big.Int, error) {
+func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, [][32]byte, [][32]byte, []*big.Int, error) {
 	var vs []uint8
 	var rs [][32]byte
 	var ss [][32]byte
 	var validatorIndexes []*big.Int
 
-	for _, sig := range sigs {
+	splitSigs := split(sigs, 65)
+
+	for _, sig := range splitSigs {
 		validator, err := evmcompat.SolidityRecover(hash, sig)
 		if err != nil {
 			return nil, nil, nil, nil, err
@@ -152,4 +154,17 @@ func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, 
 		}
 	}
 	return nil, ErrValnotFound
+}
+
+func split(buf []byte, lim int) [][]byte {
+	var chunk []byte
+	chunks := make([][]byte, 0, len(buf)/lim+1)
+	for len(buf) >= lim {
+		chunk, buf = buf[:lim], buf[lim:]
+		chunks = append(chunks, chunk)
+	}
+	if len(buf) > 0 {
+		chunks = append(chunks, buf[:len(buf)])
+	}
+	return chunks
 }

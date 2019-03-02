@@ -62,7 +62,7 @@ func (c *MainnetGatewayClient) ETHBalance() (*big.Int, error) {
 	return c.contract.GetETH(nil)
 }
 
-func (c *MainnetGatewayClient) WithdrawERC721(caller *client.Identity, tokenID *big.Int, tokenAddr common.Address, sigs [][]byte, hash []byte, validators []common.Address) error {
+func (c *MainnetGatewayClient) WithdrawERC721(caller *client.Identity, tokenID *big.Int, tokenAddr common.Address, sigs []byte, hash []byte, validators []common.Address) error {
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return err
@@ -75,7 +75,7 @@ func (c *MainnetGatewayClient) WithdrawERC721(caller *client.Identity, tokenID *
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) WithdrawERC721X(caller *client.Identity, tokenID, amount *big.Int, tokenAddr common.Address, sigs [][]byte, hash []byte, validators []common.Address) error {
+func (c *MainnetGatewayClient) WithdrawERC721X(caller *client.Identity, tokenID, amount *big.Int, tokenAddr common.Address, sigs []byte, hash []byte, validators []common.Address) error {
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return err
@@ -88,7 +88,7 @@ func (c *MainnetGatewayClient) WithdrawERC721X(caller *client.Identity, tokenID,
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs [][]byte, hash []byte, validators []common.Address) error {
+func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, hash []byte, validators []common.Address) error {
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return err
@@ -103,7 +103,7 @@ func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *bi
 
 // WithdrawETH sends a tx to the Mainnet Gateway to withdraw the specified amount of ETH,
 // and returns the tx fee.
-func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.Int, sigs [][]byte, hash []byte, validators []common.Address) (*big.Int, error) {
+func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.Int, sigs []byte, hash []byte, validators []common.Address) (*big.Int, error) {
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return nil, err

@@ -45,7 +45,7 @@ func (c *MainnetVMCClient) ToggleAllowAnyToken(caller *client.Identity, allow bo
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetVMCClient) RotateValidators(caller *client.Identity, newValidators []common.Address, newPowers []uint64, sigs [][]byte) error {
+func (c *MainnetVMCClient) RotateValidators(caller *client.Identity, newValidators []common.Address, newPowers []uint64, sigs []byte) error {
 	// Calculate the msg hash
 	hash, err := c.calculateHash(newValidators, newPowers)
 	if err != nil {
