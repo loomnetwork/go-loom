@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/ethereum/go-ethereum"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/loomnetwork/go-loom/common/evmcompat"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -18,6 +20,7 @@ import (
 )
 
 var ErrTxFailed = errors.New("tx failed")
+var ErrValnotFound = errors.New("validator not found")
 
 func DefaultTransactOptsForIdentity(ident *Identity) *bind.TransactOpts {
 	opts := bind.NewKeyedTransactor(ident.MainnetPrivKey)
@@ -107,4 +110,46 @@ func WaitForTxConfirmationAndFee(ctx context.Context, ethClient *ethclient.Clien
 		return nil, ErrTxFailed
 	}
 	return new(big.Int).Mul(tx.GasPrice(), big.NewInt(0).SetUint64(r.GasUsed)), nil
+}
+
+func ParseSigs(sigs [][]byte, hash []byte, validators []common.Address) ([]uint8, [][32]byte, [][32]byte, []*big.Int, error) {
+	var vs []uint8
+	var rs [][32]byte
+	var ss [][32]byte
+	var validatorIndexes []*big.Int
+
+	for _, sig := range sigs {
+		validator, err := evmcompat.SolidityRecover(hash, sig)
+		if err != nil {
+			return nil, nil, nil, nil, err
+		}
+
+		var r [32]byte
+		copy(r[:], sig[0:32])
+
+		var s [32]byte
+		copy(s[:], sig[32:64])
+
+		v := uint8(sig[64])
+
+		index, err := indexOfValidator(validator, validators)
+		if err != nil {
+			return nil, nil, nil, nil, err
+		}
+
+		vs = append(vs, v)
+		rs = append(rs, r)
+		ss = append(ss, s)
+		validatorIndexes = append(validatorIndexes, index)
+	}
+	return vs, rs, ss, validatorIndexes, nil
+}
+
+func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, error) {
+	for key, value := range validators {
+		if v.Hex() == value.Hex() {
+			return big.NewInt(int64(key)), nil
+		}
+	}
+	return nil, ErrValnotFound
 }
