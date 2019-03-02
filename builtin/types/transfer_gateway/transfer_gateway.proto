@@ -351,3 +351,11 @@ message TransferGatewayWithdrawTokenError {
     TransferGatewayWithdrawTokenRequest withdraw_token_request = 1;
     string error_message = 2;
 }
+
+message TransferGatewayGetUnclaimedTokensRequest {
+    Address owner = 1;
+}
+
+message TransferGatewayGetUnclaimedTokensResponse {
+    repeated TransferGatewayUnclaimedToken unclaimed_tokens = 1;
+}
