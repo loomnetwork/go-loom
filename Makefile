@@ -9,10 +9,6 @@ GETH_GIT_REV = f9c06695672d0be294447272e822db164739da67
 
 .PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
 
-$(SSHA3_DIR):
-	git clone -q https://github.com/loomnetwork/go-solidity-sha3.git $@
-
-
 all: examples
 
 evm: all example-evm-plugins evmexample-cli
@@ -82,6 +78,12 @@ test-evm: proto
 lint:
 	golint ./...
 
+$(SSHA3_DIR):
+	git clone -q https://github.com/loomnetwork/go-solidity-sha3.git $@
+
+$(GETH_DIR):
+	git clone -q https://github.com/loomnetwork/go-ethereum.git $@
+
 deps-all: deps deps-evm
 
 deps:
@@ -102,8 +104,7 @@ deps:
 	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 
-deps-evm: $(SSHA3_DIR)
-	git clone -q https://github.com/loomnetwork/go-ethereum.git $(GETH_DIR)
+deps-evm: $(SSHA3_DIR) $(GETH_DIR)
 	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
 	go get \
 		github.com/loomnetwork/yubihsm-go \
