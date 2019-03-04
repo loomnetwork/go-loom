@@ -74,10 +74,17 @@ message Delegation {
     }
     DelegationState state = 8;
     Address update_validator = 9;
+    uint64 index = 10;
+}
+
+message DelegationIndex {
+    Address validator = 1;
+    Address delegator = 2;
+    uint64 index = 3;
 }
 
 message DelegationList {
-    repeated Delegation delegations = 1;
+    repeated DelegationIndex delegations = 1;
 }
 
 message Distribution {
