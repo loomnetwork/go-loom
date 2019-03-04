@@ -329,25 +329,33 @@ message TransferGatewayResetMainnetBlockRequest {
 message TransferGatewayProcessMainnetEventError {
     uint64 eth_block = 1;
     TransferGatewayMainnetEvent event = 2;
-    bytes error_message = 3;
+    string error_message = 3;
 }
 
 message TransferGatewayReclaimError {
     Address owner = 1;
-    bytes error_message = 2;
+    string error_message = 2;
 }
 
 message TransferGatewayWithdrawETHError {
     TransferGatewayWithdrawETHRequest withdraw_eth_request = 1;
-    bytes error_message = 2;
+    string error_message = 2;
 }
 
 message TransferGatewayWithdrawLoomCoinError {
     TransferGatewayWithdrawLoomCoinRequest withdraw_loom_coin_request = 1;
-    bytes error_message = 2;
+    string error_message = 2;
 } 
 
 message TransferGatewayWithdrawTokenError {
     TransferGatewayWithdrawTokenRequest withdraw_token_request = 1;
-    bytes error_message = 2;
+    string error_message = 2;
+}
+
+message TransferGatewayGetUnclaimedTokensRequest {
+    Address owner = 1;
+}
+
+message TransferGatewayGetUnclaimedTokensResponse {
+    repeated TransferGatewayUnclaimedToken unclaimed_tokens = 1;
 }
