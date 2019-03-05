@@ -139,7 +139,9 @@ message CheckDelegationRequest {
 }
 
 message CheckDelegationResponse {
-	Delegation delegation = 1;
+    BigUInt amount = 1;
+    BigUInt weighted_amount = 2;
+    repeated Delegation delegations = 3;
 }
 
 message CheckRewardsRequest {
