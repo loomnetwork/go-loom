@@ -18,7 +18,8 @@ type DAppChainNativeCoin struct {
 	chainID  string
 	signer   auth.Signer
 
-	Address loom.Address
+	SignerAddress loom.Address
+	Address       loom.Address
 }
 
 func (ec *DAppChainNativeCoin) toLoomAddr(addr string) (loom.Address, error) {
@@ -34,6 +35,7 @@ func (ec *DAppChainNativeCoin) toLoomAddr(addr string) (loom.Address, error) {
 }
 
 func (ec *DAppChainNativeCoin) BalanceOf(ownerAddrStr string) (*big.Int, error) {
+
 	ownerAddr, err := ec.toLoomAddr(ownerAddrStr)
 	if err != nil {
 		return nil, err
@@ -53,7 +55,7 @@ func (ec *DAppChainNativeCoin) BalanceOf(ownerAddrStr string) (*big.Int, error) 
 	return nil, nil
 }
 
-func (ec *DAppChainNativeCoin) Approve(ownerSigner auth.Signer, spenderAddrStr string, amount *big.Int) error {
+func (ec *DAppChainNativeCoin) Approve(spenderAddrStr string, amount *big.Int) error {
 	spenderAddr, err := ec.toLoomAddr(spenderAddrStr)
 	if err != nil {
 		return err
@@ -63,11 +65,11 @@ func (ec *DAppChainNativeCoin) Approve(ownerSigner auth.Signer, spenderAddrStr s
 		Spender: spenderAddr.MarshalPB(),
 		Amount:  &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
-	_, err = ec.contract.Call("Approve", req, ownerSigner, nil)
+	_, err = ec.contract.Call("Approve", req, ec.signer, nil)
 	return err
 }
 
-func (ec *DAppChainNativeCoin) Transfer(ownerSigner auth.Signer, toAddrStr string, amount *big.Int) error {
+func (ec *DAppChainNativeCoin) Transfer(toAddrStr string, amount *big.Int) error {
 	toAddr, err := ec.toLoomAddr(toAddrStr)
 	if err != nil {
 		return err
@@ -77,7 +79,7 @@ func (ec *DAppChainNativeCoin) Transfer(ownerSigner auth.Signer, toAddrStr strin
 		To:     toAddr.MarshalPB(),
 		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
-	_, err = ec.contract.Call("Transfer", req, ownerSigner, nil)
+	_, err = ec.contract.Call("Transfer", req, ec.signer, nil)
 	return err
 }
 
@@ -97,10 +99,17 @@ func connectToDAppChainNativeCoin(loomClient *client.DAppChainRPCClient, signer 
 		return nil, err
 	}
 
+	localAddr := loom.LocalAddressFromPublicKey(signer.PublicKey())
+	signerAddress := loom.Address{
+		ChainID: loomClient.GetChainID(),
+		Local:   localAddr,
+	}
+
 	return &DAppChainNativeCoin{
-		contract: client.NewContract(loomClient, contractAddr.Local),
-		signer:   signer,
-		chainID:  loomClient.GetChainID(),
-		Address:  contractAddr,
+		contract:      client.NewContract(loomClient, contractAddr.Local),
+		signer:        signer,
+		SignerAddress: signerAddress,
+		chainID:       loomClient.GetChainID(),
+		Address:       contractAddr,
 	}, nil
 }
