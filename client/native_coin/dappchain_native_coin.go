@@ -16,7 +16,7 @@ import (
 type DAppChainNativeCoin struct {
 	contract *client.Contract
 	chainID  string
-	signer   auth.Signer
+	Signer   auth.Signer
 
 	SignerAddress loom.Address
 	Address       loom.Address
@@ -65,7 +65,7 @@ func (ec *DAppChainNativeCoin) Approve(spenderAddrStr string, amount *big.Int) e
 		Spender: spenderAddr.MarshalPB(),
 		Amount:  &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
-	_, err = ec.contract.Call("Approve", req, ec.signer, nil)
+	_, err = ec.contract.Call("Approve", req, ec.Signer, nil)
 	return err
 }
 
@@ -79,7 +79,7 @@ func (ec *DAppChainNativeCoin) Transfer(toAddrStr string, amount *big.Int) error
 		To:     toAddr.MarshalPB(),
 		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
-	_, err = ec.contract.Call("Transfer", req, ec.signer, nil)
+	_, err = ec.contract.Call("Transfer", req, ec.Signer, nil)
 	return err
 }
 
@@ -107,7 +107,7 @@ func connectToDAppChainNativeCoin(loomClient *client.DAppChainRPCClient, signer 
 
 	return &DAppChainNativeCoin{
 		contract:      client.NewContract(loomClient, contractAddr.Local),
-		signer:        signer,
+		Signer:        signer,
 		SignerAddress: signerAddress,
 		chainID:       loomClient.GetChainID(),
 		Address:       contractAddr,

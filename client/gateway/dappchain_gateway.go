@@ -41,7 +41,7 @@ type DAppChainGateway struct {
 	chainEventSubCount int
 	chainEventHub      pubsub.Hub
 
-	signer        auth.Signer
+	Signer        auth.Signer
 	SignerAddress loom.Address
 	Address       loom.Address
 }
@@ -57,7 +57,7 @@ func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to
 		ForeignContract: fromAddr.MarshalPB(),
 		LocalContract:   to.MarshalPB(),
 	}
-	_, err = tg.contract.Call("AddAuthorizedContractMapping", req, tg.signer, nil)
+	_, err = tg.contract.Call("AddAuthorizedContractMapping", req, tg.Signer, nil)
 	return err
 }
 
@@ -110,7 +110,7 @@ func (tg *DAppChainGateway) WithdrawERC721(
 			Local:   recipient.Bytes(),
 		}.MarshalPB()
 	}
-	_, err := tg.contract.Call("WithdrawToken", req, tg.signer, nil)
+	_, err := tg.contract.Call("WithdrawToken", req, tg.Signer, nil)
 	return err
 }
 
@@ -129,7 +129,7 @@ func (tg *DAppChainGateway) WithdrawERC721X(
 			Local:   recipient.Bytes(),
 		}.MarshalPB()
 	}
-	_, err := tg.contract.Call("WithdrawToken", req, tg.signer, nil)
+	_, err := tg.contract.Call("WithdrawToken", req, tg.Signer, nil)
 	return err
 }
 
@@ -139,7 +139,7 @@ func (tg *DAppChainGateway) WithdrawERC20(amount *big.Int, contract loom.Address
 		TokenAmount:   &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 		TokenContract: contract.MarshalPB(),
 	}
-	_, err := tg.contract.Call("WithdrawToken", req, tg.signer, nil)
+	_, err := tg.contract.Call("WithdrawToken", req, tg.Signer, nil)
 	return err
 }
 
@@ -151,7 +151,7 @@ func (tg *DAppChainGateway) WithdrawLoom(amount *big.Int, mainnetLoomCoinAddress
 		}.MarshalPB(),
 		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
-	_, err := tg.contract.Call("WithdrawLoomCoin", req, tg.signer, nil)
+	_, err := tg.contract.Call("WithdrawLoomCoin", req, tg.Signer, nil)
 	return err
 }
 
@@ -163,7 +163,7 @@ func (tg *DAppChainGateway) WithdrawETH(amount *big.Int, mainnetGateway common.A
 			Local:   mainnetGateway.Bytes(),
 		}.MarshalPB(),
 	}
-	_, err := tg.contract.Call("WithdrawETH", req, tg.signer, nil)
+	_, err := tg.contract.Call("WithdrawETH", req, tg.Signer, nil)
 	return err
 }
 
@@ -178,7 +178,7 @@ func (tg *DAppChainGateway) WithdrawalReceipt() (*tgtypes.TransferGatewayWithdra
 
 func (tg *DAppChainGateway) ReclaimDepositorTokens() error {
 	req := &tgtypes.TransferGatewayReclaimDepositorTokensRequest{}
-	_, err := tg.contract.Call("ReclaimDepositorTokens", req, tg.signer, nil)
+	_, err := tg.contract.Call("ReclaimDepositorTokens", req, tg.Signer, nil)
 	return err
 }
 
@@ -382,7 +382,7 @@ func connectToDAppChainGateway(loomClient *client.DAppChainRPCClient, signer aut
 	return &DAppChainGateway{
 		contract:      client.NewContract(loomClient, gatewayAddr.Local),
 		chainID:       loomClient.GetChainID(),
-		signer:        signer,
+		Signer:        signer,
 		ws:            ws,
 		Address:       gatewayAddr,
 		SignerAddress: signerAddress,

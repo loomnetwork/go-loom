@@ -14,7 +14,7 @@ import (
 type DAppChainDPOSContract struct {
 	contract      *client.Contract
 	chainID       string
-	signer        auth.Signer
+	Signer        auth.Signer
 	SignerAddress loom.Address
 	Address       loom.Address
 }
@@ -34,7 +34,7 @@ func ConnectToDAppChainDPOSContract(loomClient *client.DAppChainRPCClient, signe
 	return &DAppChainDPOSContract{
 		contract:      client.NewContract(loomClient, contractAddr.Local),
 		chainID:       loomClient.GetChainID(),
-		signer:        signer,
+		Signer:        signer,
 		SignerAddress: signerAddress,
 		Address:       contractAddr,
 	}, nil
@@ -75,7 +75,7 @@ func (dpos *DAppChainDPOSContract) ClaimRewards(withdrawalAddress string) (*dpos
 	}
 	resp := &dpostypes.ClaimDistributionResponseV2{}
 
-	_, err = dpos.contract.Call("ClaimDistribution", req, dpos.signer, resp)
+	_, err = dpos.contract.Call("ClaimDistribution", req, dpos.Signer, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func (dpos *DAppChainDPOSContract) ClaimRewards(withdrawalAddress string) (*dpos
 }
 
 func (dpos *DAppChainDPOSContract) ProcessRequestBatch(req *dpostypes.RequestBatchV2) error {
-	_, err := dpos.contract.Call("ProcessRequestBatch", req, dpos.signer, nil)
+	_, err := dpos.contract.Call("ProcessRequestBatch", req, dpos.Signer, nil)
 	return err
 }
 
@@ -101,7 +101,7 @@ func (dpos *DAppChainDPOSContract) ChangeFee(candidateFee uint64) error {
 	req := &dpostypes.ChangeCandidateFeeRequest{
 		Fee: candidateFee,
 	}
-	_, err := dpos.contract.Call("ChangeFee", req, dpos.signer, nil)
+	_, err := dpos.contract.Call("ChangeFee", req, dpos.Signer, nil)
 	return err
 }
 
@@ -113,12 +113,12 @@ func (dpos *DAppChainDPOSContract) RegisterCandidate(pubKey []byte, candidateFee
 		Description: candidateDescription,
 		Website:     candidateWebsite,
 	}
-	_, err := dpos.contract.Call("RegisterCandidate", req, dpos.signer, nil)
+	_, err := dpos.contract.Call("RegisterCandidate", req, dpos.Signer, nil)
 	return err
 }
 
 func (dpos *DAppChainDPOSContract) UnregisterCandidate() error {
 	req := &dpostypes.UnregisterCandidateRequestV2{}
-	_, err := dpos.contract.Call("UnregisterCandidate", req, dpos.signer, nil)
+	_, err := dpos.contract.Call("UnregisterCandidate", req, dpos.Signer, nil)
 	return err
 }
