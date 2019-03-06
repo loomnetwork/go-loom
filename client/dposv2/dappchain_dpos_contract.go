@@ -85,6 +85,19 @@ func (dpos *DAppChainDPOSContract) ChangeFee(identity *client.Identity, candidat
 	return err
 }
 
+func (dpos *DAppChainDPOSContract) ClaimRewards(identity *client.Identity) (*dpostypes.ClaimDistributionResponseV2, error) {
+    req := &dpostypes.ClaimDistributionRequestV2{
+        WithdrawalAddress: identity.LoomAddr.MarshalPB(),
+    }
+    resp := &dpostypes.ClaimDistributionResponseV2{}
+
+    _, err := dpos.contract.Call("ClaimDistribution", req, identity.LoomSigner, resp)
+    if err != nil {
+        return nil, err
+    }
+    return resp, nil
+}
+
 func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, pubKey []byte, candidateFee uint64, candidateName string, candidateDescription string, candidateWebsite string) error {
 	req := &dpostypes.RegisterCandidateRequestV2{
 		PubKey:      pubKey,
