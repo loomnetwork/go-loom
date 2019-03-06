@@ -111,11 +111,13 @@ message RedelegateRequest {
     Address validator_address = 1;
     Address former_validator_address = 2;
     BigUInt amount = 3;
+    uint64 index = 4;
 }
 
 message UnbondRequest {
     Address validator_address = 1;
     BigUInt amount = 2;
+    uint64 index = 3;
 }
 
 message WhitelistCandidateRequest {
@@ -139,7 +141,9 @@ message CheckDelegationRequest {
 }
 
 message CheckDelegationResponse {
-	Delegation delegation = 1;
+    BigUInt amount = 1;
+    BigUInt weighted_amount = 2;
+    repeated Delegation delegations = 3;
 }
 
 message CheckRewardsRequest {
