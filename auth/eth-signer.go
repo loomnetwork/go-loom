@@ -13,23 +13,23 @@ const (
 	EthChainId = "eth"
 )
 
-type EthSigner struct {
+type EthSigner66Byte struct {
 	PrivateKey *ecdsa.PrivateKey
 }
 
-func NewEthSigner(_ []byte) Signer {
+func NewEthSigner66Byte(_ []byte) Signer {
 	panic("EVM build isn't activated")
 }
 
-func (k *EthSigner) Sign(_ []byte) []byte {
-	sigBytes, err := evmcompat.SoliditySign(k.PublicKey(), k.PrivateKey)
+func (k *EthSigner66Byte) Sign(_ []byte) []byte {
+	sigBytes, err := evmcompat.GenerateTypedSig(k.PublicKey(), k.PrivateKey, evmcompat.SignatureType_EIP712)
 	if err != nil {
 		panic(err)
 	}
 	return sigBytes
 }
 
-func (k *EthSigner) PublicKey() []byte {
+func (k *EthSigner66Byte) PublicKey() []byte {
 	ethLocalAdr, err := loom.LocalAddressFromHexString(crypto.PubkeyToAddress(k.PrivateKey.PublicKey).Hex())
 	if err != nil {
 		panic(err)
