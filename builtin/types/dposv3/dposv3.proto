@@ -112,8 +112,9 @@ message DelegateRequest {
 message RedelegateRequest {
     Address validator_address = 1;
     Address former_validator_address = 2;
-    BigUInt amount = 3;
-    uint64 index = 4;
+    uint64 index = 3;
+    BigUInt amount = 4;
+    uint64 new_locktime_tier = 5;
 }
 
 message UnbondRequest {
