@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+
+message ChainConfigInitRequest {
+}
+
+message GetConfigRequest {
+    string key = 1;
+}
+message GetFeatureRequest {
+    string key = 1;
+}
+
+message Config {
+    string name = 1;
+    string value = 2;
+}
+
+message Feature {
+    string name = 1;
+    string enabled = 2;
+}
+
+message ListConfig {
+}
+
+message ListFeaturesRequest {
+}
+
+
+message ListFeaturesResponse {
+    repeated Feature features = 1;
+}
+
+
+message ListConfigResponse {
+    repeated Config config = 1;
+}
+
+//TODO:update config, not supported yet
+
+
+message UpdateFeatureRequest {
+    string key = 1;
+    bool enabled = 2;
+}
