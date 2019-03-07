@@ -39,3 +39,30 @@ func (k *EthSigner66Byte) PublicKey() []byte {
 
 	return hash
 }
+
+type EthSigner65Byte struct {
+	PrivateKey *ecdsa.PrivateKey
+}
+
+func NewEthSigner65Byte(_ []byte) Signer {
+	panic("EVM build isn't activated")
+}
+
+func (k *EthSigner65Byte) Sign(_ []byte) []byte {
+	sigBytes, err := evmcompat.SoliditySign(k.PublicKey(), k.PrivateKey)
+	if err != nil {
+		panic(err)
+	}
+	return sigBytes
+}
+
+func (k *EthSigner65Byte) PublicKey() []byte {
+	ethLocalAdr, err := loom.LocalAddressFromHexString(crypto.PubkeyToAddress(k.PrivateKey.PublicKey).Hex())
+	if err != nil {
+		panic(err)
+	}
+	ethPublicAddr := loom.Address{ChainID: EthChainId, Local: ethLocalAdr}
+	hash := crypto.Keccak256(ethPublicAddr.Bytes())
+
+	return hash
+}
