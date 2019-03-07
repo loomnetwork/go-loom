@@ -117,6 +117,10 @@ message RedelegateRequest {
     uint64 new_locktime_tier = 5;
 }
 
+message ConsolidateRequest {
+    Address validator_address = 1;
+}
+
 message UnbondRequest {
     Address validator_address = 1;
     BigUInt amount = 2;
