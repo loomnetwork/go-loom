@@ -11,6 +11,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/loomnetwork/go-loom/client"
 )
@@ -83,6 +84,11 @@ func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *bi
 		return err
 	}
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
+func (c *MainnetGatewayClient) UnsignedWithdrawERC20(caller *client.Identity, amount *big.Int, sig []byte, tokenAddr common.Address) (*types.Transaction, error) {
+	opts := client.DefaultTransactOptsForIdentity(caller)
+	return c.contract.MainnetGatewayContractTransactor.UnsignedWithdrawERC20(opts, amount, sig, tokenAddr)
 }
 
 // WithdrawETH sends a tx to the Mainnet Gateway to withdraw the specified amount of ETH,

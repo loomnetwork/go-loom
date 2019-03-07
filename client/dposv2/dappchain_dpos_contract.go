@@ -7,6 +7,7 @@ import (
 	dpostypes "github.com/loomnetwork/go-loom/builtin/types/dposv2"
 	"github.com/loomnetwork/go-loom/client"
 	"github.com/pkg/errors"
+	"math/big"
 )
 
 // DAppChainDPOSContract is a client-side binding for the builtin coin Go contract.
@@ -28,6 +29,20 @@ func ConnectToDAppChainDPOSContract(loomClient *client.DAppChainRPCClient) (*DAp
 		chainID:  loomClient.GetChainID(),
 		Address:  contractAddr,
 	}, nil
+}
+
+func (dpos *DAppChainDPOSContract) CheckDistributions(identity *client.Identity) (*big.Int, error) {
+	owner := loom.Address{
+		ChainID: dpos.chainID,
+		Local:   identity.LoomAddr.Local,
+	}
+	req := &dpostypes.CheckDistributionRequest{}
+	var resp dpostypes.CheckDistributionResponse
+	_, err := dpos.contract.StaticCall("CheckDistribution", req, owner, &resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Amount.Value.Int, err
 }
 
 func (dpos *DAppChainDPOSContract) ListCandidates(identity *client.Identity) ([]*dpostypes.CandidateV2, error) {
@@ -85,17 +100,17 @@ func (dpos *DAppChainDPOSContract) ChangeFee(identity *client.Identity, candidat
 	return err
 }
 
-func (dpos *DAppChainDPOSContract) ClaimRewards(identity *client.Identity) (*dpostypes.ClaimDistributionResponseV2, error) {
-    req := &dpostypes.ClaimDistributionRequestV2{
-        WithdrawalAddress: identity.LoomAddr.MarshalPB(),
-    }
-    resp := &dpostypes.ClaimDistributionResponseV2{}
+func (dpos *DAppChainDPOSContract) ClaimRewards(identity *client.Identity, addr loom.Address) (*dpostypes.ClaimDistributionResponseV2, error) {
+	req := &dpostypes.ClaimDistributionRequestV2{
+		WithdrawalAddress: addr.MarshalPB(),
+	}
+	resp := &dpostypes.ClaimDistributionResponseV2{}
 
-    _, err := dpos.contract.Call("ClaimDistribution", req, identity.LoomSigner, resp)
-    if err != nil {
-        return nil, err
-    }
-    return resp, nil
+	_, err := dpos.contract.Call("ClaimDistribution", req, identity.LoomSigner, &resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, pubKey []byte, candidateFee uint64, candidateName string, candidateDescription string, candidateWebsite string) error {
