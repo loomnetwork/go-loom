@@ -117,7 +117,7 @@ message RedelegateRequest {
     uint64 new_locktime_tier = 5;
 }
 
-message ConsolidateRequest {
+message ConsolidateDelegationsRequest {
     Address validator_address = 1;
 }
 
