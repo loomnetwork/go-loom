@@ -350,6 +350,11 @@ message DposDelegatorRedelegatesEvent {
     BigUInt amount = 2;
 }
 
+message DposDelegatorConsolidatesEvent {
+    Address address = 1;
+    Address validator = 2;
+}
+
 message DposDelegatorUnbondsEvent {
     Address address = 1;
     BigUInt amount = 2;
