@@ -57,9 +57,9 @@ message CandidateList {
 message Delegation {
     Address validator = 1;
     Address delegator = 2;
-    BigUInt amount = 3;
-    BigUInt update_amount = 4;
-    uint64 height = 5;
+    uint64 index = 3;
+    BigUInt amount = 4;
+    BigUInt update_amount = 5;
     uint64 lock_time = 6;
     enum LocktimeTier {
         TIER_ZERO = 0;
@@ -76,7 +76,6 @@ message Delegation {
     }
     DelegationState state = 8;
     Address update_validator = 9;
-    uint64 index = 10;
 }
 
 message DelegationIndex {
