@@ -5,7 +5,7 @@ package client
 import (
 	"crypto/ecdsa"
 	"encoding/base64"
-	"fmt"
+	"github.com/pkg/errors"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -21,26 +21,53 @@ type Identity struct {
 	LoomAddr       loom.Address
 }
 
-func CreateIdentity(name string, ethKey string, dappchainKey string, chainID string) (*Identity, error) {
-	mainnetPrivKey, err := crypto.HexToECDSA(strings.TrimPrefix(ethKey, "0x"))
-	if err != nil {
-		return nil, err
+func CreateIdentity(hexKeyOrECDSA interface{}, signerOrKey interface{}, chainID string) (*Identity, error) {
+	var mainnetPrivKey *ecdsa.PrivateKey
+	var signer auth.Signer
+	var err error
+
+	// Convert hex key to crypto.ECDSA key
+	switch signerOrKey.(type) {
+	case *ecdsa.PrivateKey:
+		mainnetPrivKey = hexKeyOrECDSA.(*ecdsa.PrivateKey)
+	case string:
+		mainnetPrivKey, err = crypto.HexToECDSA(strings.TrimPrefix(hexKeyOrECDSA.(string), "0x"))
+		if err != nil {
+			return nil, err
+		}
+		break
+	default:
+		return nil, errors.New("Invalid mainnet key/signer type")
 	}
-	keyBytes, err := base64.StdEncoding.DecodeString(dappchainKey)
-	if err != nil {
-		return nil, err
+
+	// Convert dappchain key to crypto.ECDSA key
+	switch signerOrKey.(type) {
+	case auth.Signer:
+		signer = signerOrKey.(auth.Signer)
+	case string:
+		privKey, err := base64.StdEncoding.DecodeString(signerOrKey.(string))
+		if err != nil {
+			return nil, err
+		}
+
+		signer = auth.NewEd25519Signer(privKey)
+		if err != nil {
+			return nil, err
+		}
+		break
+	default:
+		return nil, errors.New("Invalid dappchain key/signer type")
 	}
-	loomSigner := auth.NewEd25519Signer(keyBytes)
+
 	identity := &Identity{
 		MainnetPrivKey: mainnetPrivKey,
 		MainnetAddr:    crypto.PubkeyToAddress(mainnetPrivKey.PublicKey),
-		LoomSigner:     loomSigner,
+		LoomSigner:     signer,
 		LoomAddr: loom.Address{
 			ChainID: chainID,
-			Local:   loom.LocalAddressFromPublicKey(loomSigner.PublicKey()),
+			Local:   loom.LocalAddressFromPublicKey(signer.PublicKey()),
 		},
 	}
-	fmt.Printf("Identity %s: %v / %v\n", name, identity.LoomAddr, identity.MainnetAddr.Hex())
 	return identity, nil
 }
 
