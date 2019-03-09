@@ -110,3 +110,7 @@ message GetUserStateRequest{
 message GetUserStateResponse{
     KarmaState karmastate = 1;
 }
+
+message SetAllowedKarmaSourcesRequest{
+    repeated KarmaSource Karmasources = 1;
+}
