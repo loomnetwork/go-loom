@@ -112,5 +112,5 @@ message GetUserStateResponse{
 }
 
 message SetAllowedKarmaSourcesRequest{
-    repeated KarmaSource Karmasources = 1;
+    KarmaSources Karmasources = 1;
 }
