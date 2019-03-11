@@ -106,7 +106,7 @@ func (dpos *DAppChainDPOSContract) ClaimRewards(identity *client.Identity, addr 
 	}
 	resp := &dpostypes.ClaimDistributionResponseV2{}
 
-	_, err := dpos.contract.Call("ClaimDistribution", req, identity.LoomSigner, &resp)
+	_, err := dpos.contract.Call("ClaimDistribution", req, identity.LoomSigner, resp)
 	if err != nil {
 		return nil, err
 	}
