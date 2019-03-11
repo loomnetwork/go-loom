@@ -169,6 +169,14 @@ message CheckAllDelegationsResponse {
     repeated Delegation delegations = 3;
 }
 
+message CheckRewardDelegationRequest {
+    Address validator_address = 1;
+}
+
+message CheckRewardDelegationResponse {
+    Delegation delegation = 1;
+}
+
 message RegisterCandidateRequest {
     bytes pub_key = 1;
     uint64 fee = 2;
