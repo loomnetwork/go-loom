@@ -5,7 +5,6 @@ package client
 import (
 	"crypto/ecdsa"
 	"encoding/base64"
-	"fmt"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -21,7 +20,7 @@ type Identity struct {
 	LoomAddr       loom.Address
 }
 
-func CreateIdentity(mainnetPrivKey *ecdsa.PrivateKey, loomSigner *auth.Signer, chainID string) (*Identity, error) {
+func CreateIdentity(mainnetPrivKey *ecdsa.PrivateKey, loomSigner auth.Signer, chainID string) (*Identity, error) {
 	identity := &Identity{
 		MainnetPrivKey: mainnetPrivKey,
 		MainnetAddr:    crypto.PubkeyToAddress(mainnetPrivKey.PublicKey),
