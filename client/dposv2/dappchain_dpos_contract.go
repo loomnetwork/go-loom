@@ -32,13 +32,9 @@ func ConnectToDAppChainDPOSContract(loomClient *client.DAppChainRPCClient) (*DAp
 }
 
 func (dpos *DAppChainDPOSContract) CheckDistributions(identity *client.Identity) (*big.Int, error) {
-	owner := loom.Address{
-		ChainID: dpos.chainID,
-		Local:   identity.LoomAddr.Local,
-	}
 	req := &dpostypes.CheckDistributionRequest{}
 	var resp dpostypes.CheckDistributionResponse
-	_, err := dpos.contract.StaticCall("CheckDistribution", req, owner, &resp)
+	_, err := dpos.contract.StaticCall("CheckDistribution", req, identity.LoomAddr, &resp)
 	if err != nil {
 		return nil, err
 	}
@@ -46,13 +42,9 @@ func (dpos *DAppChainDPOSContract) CheckDistributions(identity *client.Identity)
 }
 
 func (dpos *DAppChainDPOSContract) ListCandidates(identity *client.Identity) ([]*dpostypes.CandidateV2, error) {
-	owner := loom.Address{
-		ChainID: dpos.chainID,
-		Local:   identity.LoomAddr.Local,
-	}
 	req := &dpostypes.ListCandidateRequestV2{}
 	var resp dpostypes.ListCandidateResponseV2
-	_, err := dpos.contract.StaticCall("ListCandidates", req, owner, &resp)
+	_, err := dpos.contract.StaticCall("ListCandidates", req, identity.LoomAddr, &resp)
 	if err != nil {
 		return nil, err
 	}
@@ -60,13 +52,9 @@ func (dpos *DAppChainDPOSContract) ListCandidates(identity *client.Identity) ([]
 }
 
 func (dpos *DAppChainDPOSContract) ListValidators(identity *client.Identity) ([]*dpostypes.ValidatorStatisticV2, error) {
-	owner := loom.Address{
-		ChainID: dpos.chainID,
-		Local:   identity.LoomAddr.Local,
-	}
 	req := &dpostypes.ListValidatorsRequestV2{}
 	var resp dpostypes.ListValidatorsResponseV2
-	_, err := dpos.contract.StaticCall("ListValidators", req, owner, &resp)
+	_, err := dpos.contract.StaticCall("ListValidators", req, identity.LoomAddr, &resp)
 	if err != nil {
 		return nil, err
 	}
@@ -79,13 +67,9 @@ func (dpos *DAppChainDPOSContract) ProcessRequestBatch(identity *client.Identity
 }
 
 func (dpos *DAppChainDPOSContract) GetRequestBatchTally(identity *client.Identity) (*dpostypes.RequestBatchTallyV2, error) {
-	caller := loom.Address{
-		ChainID: dpos.chainID,
-		Local:   identity.LoomAddr.Local,
-	}
 	req := &dpostypes.GetRequestBatchTallyRequestV2{}
 	resp := &dpostypes.RequestBatchTallyV2{}
-	if _, err := dpos.contract.StaticCall("GetRequestBatchTally", req, caller, resp); err != nil {
+	if _, err := dpos.contract.StaticCall("GetRequestBatchTally", req, identity.LoomAddr, resp); err != nil {
 		return nil, errors.Wrap(err, "failed to get request batch tally")
 	}
 
