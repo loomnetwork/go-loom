@@ -5,7 +5,6 @@ package client
 import (
 	"crypto/ecdsa"
 	"encoding/base64"
-	"fmt"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -21,7 +20,20 @@ type Identity struct {
 	LoomAddr       loom.Address
 }
 
-func CreateIdentity(name string, ethKey string, dappchainKey string, chainID string) (*Identity, error) {
+func CreateIdentity(mainnetPrivKey *ecdsa.PrivateKey, loomSigner auth.Signer, chainID string) (*Identity, error) {
+	identity := &Identity{
+		MainnetPrivKey: mainnetPrivKey,
+		MainnetAddr:    crypto.PubkeyToAddress(mainnetPrivKey.PublicKey),
+		LoomSigner:     loomSigner,
+		LoomAddr: loom.Address{
+			ChainID: chainID,
+			Local:   loom.LocalAddressFromPublicKey(loomSigner.PublicKey()),
+		},
+	}
+	return identity, nil
+}
+
+func CreateIdentityStr(ethKey string, dappchainKey string, chainID string) (*Identity, error) {
 	mainnetPrivKey, err := crypto.HexToECDSA(strings.TrimPrefix(ethKey, "0x"))
 	if err != nil {
 		return nil, err
@@ -40,7 +52,6 @@ func CreateIdentity(name string, ethKey string, dappchainKey string, chainID str
 			Local:   loom.LocalAddressFromPublicKey(loomSigner.PublicKey()),
 		},
 	}
-	fmt.Printf("Identity %s: %v / %v\n", name, identity.LoomAddr, identity.MainnetAddr.Hex())
 	return identity, nil
 }
 
