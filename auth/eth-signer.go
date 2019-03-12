@@ -10,8 +10,8 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
+	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
-	"github.com/loomnetwork/loomchain"
 	sha3 "github.com/miguelmota/go-solidity-sha3"
 )
 
@@ -33,7 +33,7 @@ func (k *EthSigner66Byte) Sign(txBytes []byte) []byte {
 		panic(err)
 	}
 
-	var tx loomchain.Transaction
+	var tx types.Transaction
 	if err := proto.Unmarshal(nonceTx.Inner, &tx); err != nil {
 		panic("throttle: unmarshal tx")
 	}
