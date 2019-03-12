@@ -171,7 +171,7 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 	return txResult.Data, nil
 }
 
-func (c *DAppChainRPCClient) CommitTx2(signer auth.Signer, tx proto.Message, caller loom.Address) ([]byte, error) {
+func (c *DAppChainRPCClient) CommitTx2(signer auth.Signer, tx proto.Message, caller loom.Address, chainName string) ([]byte, error) {
 	// TODO: signing & noncing should be handled by middleware
 	nonce, err := c.GetNonce2(caller)
 	if err != nil {
@@ -188,7 +188,9 @@ func (c *DAppChainRPCClient) CommitTx2(signer auth.Signer, tx proto.Message, cal
 	if err != nil {
 		return nil, err
 	}
-	signedTxBytes, err := proto.Marshal(auth.SignTx(signer, nonceTxBytes))
+	signedTx := auth.SignTx(signer, nonceTxBytes)
+	signedTx.ChainName = chainName
+	signedTxBytes, err := proto.Marshal(signedTx)
 	if err != nil {
 		return nil, err
 	}
@@ -489,7 +491,7 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 		Id:   1,
 		Data: msgBytes,
 	}
-	return c.CommitTx2(signer, tx, from)
+	return c.CommitTx2(signer, tx, from, "")
 }
 
 func (c *DAppChainRPCClient) CommitCallTx(
@@ -520,5 +522,67 @@ func (c *DAppChainRPCClient) CommitCallTx(
 		Id:   2,
 		Data: msgBytes,
 	}
-	return c.CommitTx2(signer, tx, caller)
+	return c.CommitTx2(signer, tx, caller, "")
+}
+
+func (c *DAppChainRPCClient) CommitDeployTx2(
+	from loom.Address,
+	signer auth.Signer,
+	vmType vm.VMType,
+	code []byte,
+	name, chainName string,
+) ([]byte, error) {
+	deployTxBytes, err := proto.Marshal(&vm.DeployTx{
+		VmType: vmType,
+		Code:   code,
+		Name:   name,
+	})
+	if err != nil {
+		return nil, err
+	}
+	msgBytes, err := proto.Marshal(&vm.MessageTx{
+		From: from.MarshalPB(),
+		To:   loom.Address{}.MarshalPB(), // not used
+		Data: deployTxBytes,
+	})
+	if err != nil {
+		return nil, err
+	}
+	tx := &types.Transaction{
+		Id:   1,
+		Data: msgBytes,
+	}
+	return c.CommitTx2(signer, tx, from, chainName)
+}
+
+func (c *DAppChainRPCClient) CommitCallTx2(
+	caller loom.Address,
+	contract loom.Address,
+	signer auth.Signer,
+	vmType vm.VMType,
+	input []byte,
+	chainName string,
+) ([]byte, error) {
+	callTxBytes, err := proto.Marshal(&vm.CallTx{
+		VmType: vm.VMType(vmType),
+		Input:  input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	msgTx := &vm.MessageTx{
+		From: caller.MarshalPB(),
+		To:   contract.MarshalPB(),
+		Data: callTxBytes,
+	}
+	msgBytes, err := proto.Marshal(msgTx)
+	if err != nil {
+		return nil, err
+	}
+	// tx ids associated with handlers in loadApp()
+	tx := &types.Transaction{
+		Id:   2,
+		Data: msgBytes,
+	}
+	return c.CommitTx2(signer, tx, caller, chainName)
 }
