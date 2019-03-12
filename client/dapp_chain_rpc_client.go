@@ -113,10 +113,67 @@ func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
 	return strconv.ParseUint(rRes, 10, 64)
 }
 
+func (c *DAppChainRPCClient) GetNonce2(caller loom.Address) (uint64, error) {
+	params := map[string]interface{}{
+		"chainId": caller.ChainID,
+		"local":   caller.Local,
+	}
+	var rRes string
+	err := c.queryClient.Call("nonce2", params, c.getNextRequestID(), &rRes)
+	if err != nil {
+		return 0, err
+	}
+	return strconv.ParseUint(rRes, 10, 64)
+}
+
 func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
 	// TODO: signing & noncing should be handled by middleware
 
 	nonce, err := c.GetNonce(signer)
+	if err != nil {
+		return nil, err
+	}
+	txBytes, err := proto.Marshal(tx)
+	if err != nil {
+		return nil, err
+	}
+	nonceTxBytes, err := proto.Marshal(&auth.NonceTx{
+		Inner:    txBytes,
+		Sequence: nonce + 1,
+	})
+	if err != nil {
+		return nil, err
+	}
+	signedTxBytes, err := proto.Marshal(auth.SignTx(signer, nonceTxBytes))
+	if err != nil {
+		return nil, err
+	}
+	params := map[string]interface{}{
+		"tx": signedTxBytes,
+	}
+
+	var r BoradcastTxSyncResult
+	if err = c.txClient.Call("broadcast_tx_sync", params, c.getNextRequestID(), &r); err != nil {
+		return nil, err
+	}
+	if r.Code != CodeTypeOK {
+		if len(r.Error) != 0 {
+			return nil, errors.New(r.Error)
+		}
+		return nil, fmt.Errorf("CheckTx failed")
+	}
+
+	txResult, err := c.pollTx(r.Hash, ShortPollLimit, ShortPollDelay)
+	if err != nil {
+		return nil, err
+	}
+
+	return txResult.Data, nil
+}
+
+func (c *DAppChainRPCClient) CommitTx2(signer auth.Signer, tx proto.Message, caller loom.Address) ([]byte, error) {
+	// TODO: signing & noncing should be handled by middleware
+	nonce, err := c.GetNonce2(caller)
 	if err != nil {
 		return nil, err
 	}
@@ -432,7 +489,7 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 		Id:   1,
 		Data: msgBytes,
 	}
-	return c.CommitTx(signer, tx)
+	return c.CommitTx2(signer, tx, from)
 }
 
 func (c *DAppChainRPCClient) CommitCallTx(
@@ -463,5 +520,5 @@ func (c *DAppChainRPCClient) CommitCallTx(
 		Id:   2,
 		Data: msgBytes,
 	}
-	return c.CommitTx(signer, tx)
+	return c.CommitTx2(signer, tx, caller)
 }
