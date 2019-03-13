@@ -7,6 +7,7 @@ import (
 	dpostypes "github.com/loomnetwork/go-loom/builtin/types/dposv2"
 	"github.com/loomnetwork/go-loom/client"
 	"github.com/pkg/errors"
+	"math/big"
 )
 
 // DAppChainDPOSContract is a client-side binding for the builtin coin Go contract.
@@ -30,14 +31,20 @@ func ConnectToDAppChainDPOSContract(loomClient *client.DAppChainRPCClient) (*DAp
 	}, nil
 }
 
-func (dpos *DAppChainDPOSContract) ListCandidates(identity *client.Identity) ([]*dpostypes.CandidateV2, error) {
-	owner := loom.Address{
-		ChainID: dpos.chainID,
-		Local:   identity.LoomAddr.Local,
+func (dpos *DAppChainDPOSContract) CheckDistributions(identity *client.Identity) (*big.Int, error) {
+	req := &dpostypes.CheckDistributionRequest{}
+	var resp dpostypes.CheckDistributionResponse
+	_, err := dpos.contract.StaticCall("CheckDistribution", req, identity.LoomAddr, &resp)
+	if err != nil {
+		return nil, err
 	}
+	return resp.Amount.Value.Int, err
+}
+
+func (dpos *DAppChainDPOSContract) ListCandidates(identity *client.Identity) ([]*dpostypes.CandidateV2, error) {
 	req := &dpostypes.ListCandidateRequestV2{}
 	var resp dpostypes.ListCandidateResponseV2
-	_, err := dpos.contract.StaticCall("ListCandidates", req, owner, &resp)
+	_, err := dpos.contract.StaticCall("ListCandidates", req, identity.LoomAddr, &resp)
 	if err != nil {
 		return nil, err
 	}
@@ -45,13 +52,9 @@ func (dpos *DAppChainDPOSContract) ListCandidates(identity *client.Identity) ([]
 }
 
 func (dpos *DAppChainDPOSContract) ListValidators(identity *client.Identity) ([]*dpostypes.ValidatorStatisticV2, error) {
-	owner := loom.Address{
-		ChainID: dpos.chainID,
-		Local:   identity.LoomAddr.Local,
-	}
 	req := &dpostypes.ListValidatorsRequestV2{}
 	var resp dpostypes.ListValidatorsResponseV2
-	_, err := dpos.contract.StaticCall("ListValidators", req, owner, &resp)
+	_, err := dpos.contract.StaticCall("ListValidators", req, identity.LoomAddr, &resp)
 	if err != nil {
 		return nil, err
 	}
@@ -64,13 +67,9 @@ func (dpos *DAppChainDPOSContract) ProcessRequestBatch(identity *client.Identity
 }
 
 func (dpos *DAppChainDPOSContract) GetRequestBatchTally(identity *client.Identity) (*dpostypes.RequestBatchTallyV2, error) {
-	caller := loom.Address{
-		ChainID: dpos.chainID,
-		Local:   identity.LoomAddr.Local,
-	}
 	req := &dpostypes.GetRequestBatchTallyRequestV2{}
 	resp := &dpostypes.RequestBatchTallyV2{}
-	if _, err := dpos.contract.StaticCall("GetRequestBatchTally", req, caller, resp); err != nil {
+	if _, err := dpos.contract.StaticCall("GetRequestBatchTally", req, identity.LoomAddr, resp); err != nil {
 		return nil, errors.Wrap(err, "failed to get request batch tally")
 	}
 
@@ -85,17 +84,17 @@ func (dpos *DAppChainDPOSContract) ChangeFee(identity *client.Identity, candidat
 	return err
 }
 
-func (dpos *DAppChainDPOSContract) ClaimRewards(identity *client.Identity) (*dpostypes.ClaimDistributionResponseV2, error) {
-    req := &dpostypes.ClaimDistributionRequestV2{
-        WithdrawalAddress: identity.LoomAddr.MarshalPB(),
-    }
-    resp := &dpostypes.ClaimDistributionResponseV2{}
+func (dpos *DAppChainDPOSContract) ClaimRewards(identity *client.Identity, addr loom.Address) (*dpostypes.ClaimDistributionResponseV2, error) {
+	req := &dpostypes.ClaimDistributionRequestV2{
+		WithdrawalAddress: addr.MarshalPB(),
+	}
+	resp := &dpostypes.ClaimDistributionResponseV2{}
 
-    _, err := dpos.contract.Call("ClaimDistribution", req, identity.LoomSigner, resp)
-    if err != nil {
-        return nil, err
-    }
-    return resp, nil
+	_, err := dpos.contract.Call("ClaimDistribution", req, identity.LoomSigner, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, pubKey []byte, candidateFee uint64, candidateName string, candidateDescription string, candidateWebsite string) error {
