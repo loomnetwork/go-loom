@@ -5,7 +5,7 @@ HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
 GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
 SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
 # This commit sha should match the one in loomchain repo
-GETH_GIT_REV = f9c06695672d0be294447272e822db164739da67
+GETH_GIT_REV = 1fb6138d017a4309105d91f187c126cf979c93f9
 
 .PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
 

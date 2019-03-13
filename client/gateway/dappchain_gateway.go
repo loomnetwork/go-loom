@@ -165,15 +165,11 @@ func (tg *DAppChainGateway) WithdrawETH(identity *client.Identity, amount *big.I
 }
 
 func (tg *DAppChainGateway) WithdrawalReceipt(identity *client.Identity) (*tgtypes.TransferGatewayWithdrawalReceipt, error) {
-	owner := loom.Address{
-		ChainID: tg.chainID,
-		Local:   identity.LoomAddr.Local,
-	}
 	req := &tgtypes.TransferGatewayWithdrawalReceiptRequest{
-		Owner: owner.MarshalPB(),
+		Owner: identity.LoomAddr.MarshalPB(),
 	}
 	var resp tgtypes.TransferGatewayWithdrawalReceiptResponse
-	_, err := tg.contract.StaticCall("WithdrawalReceipt", req, owner, &resp)
+	_, err := tg.contract.StaticCall("WithdrawalReceipt", req, identity.LoomAddr, &resp)
 	return resp.Receipt, err
 }
 

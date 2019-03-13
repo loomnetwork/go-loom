@@ -57,9 +57,9 @@ message CandidateList {
 message Delegation {
     Address validator = 1;
     Address delegator = 2;
-    BigUInt amount = 3;
-    BigUInt update_amount = 4;
-    uint64 height = 5;
+    uint64 index = 3;
+    BigUInt amount = 4;
+    BigUInt update_amount = 5;
     uint64 lock_time = 6;
     enum LocktimeTier {
         TIER_ZERO = 0;
@@ -76,7 +76,6 @@ message Delegation {
     }
     DelegationState state = 8;
     Address update_validator = 9;
-    uint64 index = 10;
 }
 
 message DelegationIndex {
@@ -112,8 +111,13 @@ message DelegateRequest {
 message RedelegateRequest {
     Address validator_address = 1;
     Address former_validator_address = 2;
-    BigUInt amount = 3;
-    uint64 index = 4;
+    uint64 index = 3;
+    BigUInt amount = 4;
+    uint64 new_locktime_tier = 5;
+}
+
+message ConsolidateDelegationsRequest {
+    Address validator_address = 1;
 }
 
 message UnbondRequest {
@@ -344,6 +348,11 @@ message DposDelegatorDelegatesEvent {
 message DposDelegatorRedelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;
+}
+
+message DposDelegatorConsolidatesEvent {
+    Address address = 1;
+    Address validator = 2;
 }
 
 message DposDelegatorUnbondsEvent {
