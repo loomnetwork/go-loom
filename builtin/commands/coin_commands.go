@@ -10,7 +10,7 @@ import (
 	"github.com/loomnetwork/go-loom/types"
 )
 
-const CoinContractName = "coin"
+const CoinContractName = "ethcoin"
 
 func TransferCmd() *cobra.Command {
 	return &cobra.Command{
@@ -118,6 +118,36 @@ func BalanceCmd() *cobra.Command {
 		},
 	}
 }
+
+/*
+func TotalSupplyCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "totalsupply",
+		Short: "Fetch the Total Supply of a coin account",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+			var resp coin.BalanceOfResponse
+			err = cli.StaticCallContract(CoinContractName, "BalanceOf", &coin.BalanceOfRequest{
+				Owner: addr.MarshalPB(),
+			}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+*/
+
 
 func AddCoin(root *cobra.Command) {
 	root.AddCommand(

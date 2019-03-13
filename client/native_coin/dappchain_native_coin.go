@@ -3,6 +3,7 @@
 package native_coin
 
 import (
+	"fmt"
 	"math/big"
 
 	"github.com/loomnetwork/go-loom"
@@ -18,6 +19,29 @@ type DAppChainNativeCoin struct {
 
 	Address loom.Address
 }
+
+
+func (ec *DAppChainNativeCoin) TotalSupply(identity *client.Identity) (*big.Int, error) {
+
+	ownerAddr := loom.Address{
+		ChainID: ec.chainID,
+		Local:   identity.LoomAddr.Local,
+	}
+
+	fmt.Println("In total Supply")
+
+	var req = types.TotalSupplyRequest{}
+	var resp types.TotalSupplyResponse
+	_, err := ec.contract.StaticCall("TotalSupply", &req, ownerAddr, &resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.TotalSupply != nil {
+		return resp.TotalSupply.Value.Int,nil
+	}
+	return nil, nil
+}
+
 
 func (ec *DAppChainNativeCoin) BalanceOf(identity *client.Identity) (*big.Int, error) {
 	ownerAddr := loom.Address{
