@@ -113,10 +113,18 @@ func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
 	return strconv.ParseUint(rRes, 10, 64)
 }
 
-func (c *DAppChainRPCClient) GetNonce2(caller loom.Address) (uint64, error) {
+func (c *DAppChainRPCClient) GetNonce2(caller loom.Address, isAddressMapped bool) (uint64, error) {
+	var accountType string
+	if isAddressMapped {
+		accountType = "2"
+	} else {
+		accountType = "1"
+	}
+	accountType = accountType
 	params := map[string]interface{}{
-		"chainId": caller.ChainID,
-		"local":   caller.Local,
+		"chainId":     caller.ChainID,
+		"local":       caller.Local,
+		"accountType": accountType,
 	}
 	var rRes string
 	err := c.queryClient.Call("nonce2", params, c.getNextRequestID(), &rRes)
@@ -173,7 +181,7 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 
 func (c *DAppChainRPCClient) CommitTx2(signer auth.Signer, tx proto.Message, caller loom.Address, chainName string) ([]byte, error) {
 	// TODO: signing & noncing should be handled by middleware
-	nonce, err := c.GetNonce2(caller)
+	nonce, err := c.GetNonce2(caller, len(chainName) > 0)
 	if err != nil {
 		return nil, err
 	}
