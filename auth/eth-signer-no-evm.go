@@ -2,8 +2,12 @@
 
 package auth
 
+import (
+	"crypto/ecdsa"
+)
+
 type EthSigner66Byte struct {
-	PrivateKey interface{}
+	PrivateKey *ecdsa.PrivateKey
 }
 
 func NewEthSigner66Byte(_ []byte) Signer {
