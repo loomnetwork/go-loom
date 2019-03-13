@@ -88,6 +88,15 @@ message DelegationList {
     repeated DelegationIndex delegations = 1;
 }
 
+message Distribution {
+    Address address = 1;
+    BigUInt amount = 2;
+}
+
+message DistributionList {
+    repeated Distribution distributions = 1;
+}
+
 message DPOSInitRequest {
     Params params = 1;
     repeated Validator validators = 2;
@@ -169,12 +178,19 @@ message CheckAllDelegationsResponse {
     repeated Delegation delegations = 3;
 }
 
-message CheckRewardDelegationRequest {
-    Address validator_address = 1;
+message CheckDistributionRequest {
 }
 
-message CheckRewardDelegationResponse {
-    Delegation delegation = 1;
+message CheckDistributionResponse {
+    BigUInt amount = 1;
+}
+
+message ClaimDistributionRequest {
+    Address withdrawal_address = 1;
+}
+
+message ClaimDistributionResponse {
+    BigUInt amount = 1;
 }
 
 message RegisterCandidateRequest {
