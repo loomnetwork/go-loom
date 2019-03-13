@@ -136,7 +136,7 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 
 		index, err := indexOfValidator(validator, validators)
 		if err != nil {
-			return nil, nil, nil, nil, err
+			continue
 		}
 
 		vs = append(vs, v)
