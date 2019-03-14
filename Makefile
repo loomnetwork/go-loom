@@ -5,13 +5,9 @@ HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
 GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
 SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
 # This commit sha should match the one in loomchain repo
-GETH_GIT_REV = f9c06695672d0be294447272e822db164739da67
+GETH_GIT_REV = 1fb6138d017a4309105d91f187c126cf979c93f9
 
 .PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
-
-$(SSHA3_DIR):
-	git clone -q https://github.com/loomnetwork/go-solidity-sha3.git $@
-
 
 all: examples
 
@@ -62,6 +58,7 @@ proto: \
 	builtin/types/ethcoin/ethcoin.pb.go \
 	builtin/types/dpos/dpos.pb.go \
 	builtin/types/dposv2/dposv2.pb.go \
+	builtin/types/dposv3/dposv3.pb.go \
 	builtin/types/plasma_cash/plasma_cash.pb.go \
 	builtin/types/karma/karma.pb.go \
 	builtin/types/config/config.pb.go \
@@ -81,6 +78,12 @@ test-evm: proto
 
 lint:
 	golint ./...
+
+$(SSHA3_DIR):
+	git clone -q https://github.com/loomnetwork/go-solidity-sha3.git $@
+
+$(GETH_DIR):
+	git clone -q https://github.com/loomnetwork/go-ethereum.git $@
 
 deps-all: deps deps-evm
 
@@ -102,8 +105,7 @@ deps:
 	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 
-deps-evm: $(SSHA3_DIR)
-	git clone -q https://github.com/loomnetwork/go-ethereum.git $(GETH_DIR)
+deps-evm: $(SSHA3_DIR) $(GETH_DIR)
 	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
 	go get \
 		github.com/loomnetwork/yubihsm-go \

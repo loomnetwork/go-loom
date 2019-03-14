@@ -19,6 +19,7 @@ var TxFlags struct {
 	PrivFile      string
 	HsmConfigFile string
 	Algo          string
+	ChainType     string
 }
 
 func ContractCallCommand(name string) *cobra.Command {
