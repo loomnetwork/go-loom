@@ -112,6 +112,7 @@ func WaitForTxConfirmationAndFee(ctx context.Context, ethClient *ethclient.Clien
 	return new(big.Int).Mul(tx.GasPrice(), big.NewInt(0).SetUint64(r.GasUsed)), nil
 }
 
+// Parses a serialized signatures array into a list of (v,r,s) triples plus their corresponding validator indexes, in order. Refer to https://github.com/loomnetwork/transfer-gateway-v2/pull/83/files#diff-0aada7672d303fc5bbdeb252dc7ff653R208 for more information.
 func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, [][32]byte, [][32]byte, []*big.Int, error) {
 	var vs []uint8
 	var rs [][32]byte
