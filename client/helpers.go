@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/ethereum/go-ethereum"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/loomnetwork/go-loom/common/evmcompat"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -18,6 +20,7 @@ import (
 )
 
 var ErrTxFailed = errors.New("tx failed")
+var ErrValnotFound = errors.New("validator not found")
 
 func DefaultTransactOptsForIdentity(ident *Identity) *bind.TransactOpts {
 	opts := bind.NewKeyedTransactor(ident.MainnetPrivKey)
@@ -107,4 +110,62 @@ func WaitForTxConfirmationAndFee(ctx context.Context, ethClient *ethclient.Clien
 		return nil, ErrTxFailed
 	}
 	return new(big.Int).Mul(tx.GasPrice(), big.NewInt(0).SetUint64(r.GasUsed)), nil
+}
+
+// Parses a serialized signatures array into a list of (v,r,s) triples plus their corresponding validator indexes, in order. Refer to https://github.com/loomnetwork/transfer-gateway-v2/pull/83/files#diff-0aada7672d303fc5bbdeb252dc7ff653R208 for more information.
+func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, [][32]byte, [][32]byte, []*big.Int, error) {
+	var vs []uint8
+	var rs [][32]byte
+	var ss [][32]byte
+	var validatorIndexes []*big.Int
+
+	splitSigs := split(sigs, 65)
+
+	for _, sig := range splitSigs {
+		validator, err := evmcompat.SolidityRecover(hash, sig)
+		if err != nil {
+			return nil, nil, nil, nil, err
+		}
+
+		var r [32]byte
+		copy(r[:], sig[0:32])
+
+		var s [32]byte
+		copy(s[:], sig[32:64])
+
+		v := uint8(sig[64])
+
+		index, err := indexOfValidator(validator, validators)
+		if err != nil {
+			continue
+		}
+
+		vs = append(vs, v)
+		rs = append(rs, r)
+		ss = append(ss, s)
+		validatorIndexes = append(validatorIndexes, index)
+	}
+	return vs, rs, ss, validatorIndexes, nil
+}
+
+func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, error) {
+	for key, value := range validators {
+		if v.Hex() == value.Hex() {
+			return big.NewInt(int64(key)), nil
+		}
+	}
+	return nil, ErrValnotFound
+}
+
+func split(buf []byte, lim int) [][]byte {
+	var chunk []byte
+	chunks := make([][]byte, 0, len(buf)/lim+1)
+	for len(buf) >= lim {
+		chunk, buf = buf[:lim], buf[lim:]
+		chunks = append(chunks, chunk)
+	}
+	if len(buf) > 0 {
+		chunks = append(chunks, buf[:len(buf)])
+	}
+	return chunks
 }
