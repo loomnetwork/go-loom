@@ -7,7 +7,7 @@ import (
 	"github.com/loomnetwork/go-loom/vm"
 	"github.com/loomnetwork/go-loom/auth/secp256k1"
 	"github.com/loomnetwork/go-loom/auth/yubihsm"
-	"github.com/loomnetwork/loomchain"
+	"github.com/loomnetwork/go-loom/types"
 	"github.com/pkg/errors"
 	"github.com/gogo/protobuf/proto"
 )
@@ -53,7 +53,7 @@ func GetFromToNonce(nonceBytes []byte) (loom.Address, loom.Address, uint64, erro
 		return loom.Address{}, loom.Address{}, 0, errors.Wrap(err, "unwrap nonce Tx")
 	}
 
-	var tx loomchain.Transaction
+	var tx types.Transaction
 	if err := proto.Unmarshal(nonceTx.Inner, &tx); err != nil {
 		return loom.Address{}, loom.Address{}, 0, errors.New("unmarshal tx")
 	}
