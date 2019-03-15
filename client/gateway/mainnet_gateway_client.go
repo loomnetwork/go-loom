@@ -57,7 +57,6 @@ func (c *MainnetGatewayClient) ERC20Balance(tokenAddr common.Address) (*big.Int,
 	return c.contract.GetERC20(nil, tokenAddr)
 }
 
-
 func (c *MainnetGatewayClient) ETHBalance() (*big.Int, error) {
 	return c.contract.GetETH(nil)
 }

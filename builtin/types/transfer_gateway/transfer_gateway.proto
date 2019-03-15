@@ -356,6 +356,15 @@ message TransferGatewayGetUnclaimedTokensRequest {
     Address owner = 1;
 }
 
+message TransferGatewayGetUnclaimedContractTokensRequest {
+    Address token_address = 1;
+}
+
+
 message TransferGatewayGetUnclaimedTokensResponse {
+    repeated TransferGatewayUnclaimedToken unclaimed_tokens = 1;
+}
+
+message TransferGatewayGetUnclaimedContractTokensResponse {
     repeated TransferGatewayUnclaimedToken unclaimed_tokens = 1;
 }

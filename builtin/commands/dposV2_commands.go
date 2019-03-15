@@ -160,14 +160,13 @@ func UpdateCandidateInfoCmd() *cobra.Command {
 			candidateWebsite := args[2]
 
 			return cli.CallContract(DPOSV2ContractName, "UpdateCandidateInfo", &dposv2.UpdateCandidateInfoRequest{
-				Name:         candidateName,
-				Description:  candidateDescription,
-				Website:      candidateWebsite,
+				Name:        candidateName,
+				Description: candidateDescription,
+				Website:     candidateWebsite,
 			}, nil)
 		},
 	}
 }
-
 
 func DelegateCmdV2() *cobra.Command {
 	return &cobra.Command{

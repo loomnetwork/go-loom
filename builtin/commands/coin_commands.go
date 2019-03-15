@@ -148,7 +148,6 @@ func TotalSupplyCmd() *cobra.Command {
 }
 */
 
-
 func AddCoin(root *cobra.Command) {
 	root.AddCommand(
 		ApproveCmd(),
