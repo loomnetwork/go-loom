@@ -20,16 +20,17 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 type ETHCoinInitRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Accounts             []*ETHInitialAccount `protobuf:"bytes,1,rep,name=accounts" json:"accounts,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
 func (m *ETHCoinInitRequest) Reset()         { *m = ETHCoinInitRequest{} }
 func (m *ETHCoinInitRequest) String() string { return proto.CompactTextString(m) }
 func (*ETHCoinInitRequest) ProtoMessage()    {}
 func (*ETHCoinInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ethcoin_15cf8379a9e6a48d, []int{0}
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{0}
 }
 func (m *ETHCoinInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ETHCoinInitRequest.Unmarshal(m, b)
@@ -49,6 +50,13 @@ func (m *ETHCoinInitRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ETHCoinInitRequest proto.InternalMessageInfo
 
+func (m *ETHCoinInitRequest) GetAccounts() []*ETHInitialAccount {
+	if m != nil {
+		return m.Accounts
+	}
+	return nil
+}
+
 type ETHCoinMintToGatewayRequest struct {
 	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
@@ -60,7 +68,7 @@ func (m *ETHCoinMintToGatewayRequest) Reset()         { *m = ETHCoinMintToGatewa
 func (m *ETHCoinMintToGatewayRequest) String() string { return proto.CompactTextString(m) }
 func (*ETHCoinMintToGatewayRequest) ProtoMessage()    {}
 func (*ETHCoinMintToGatewayRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ethcoin_15cf8379a9e6a48d, []int{1}
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{1}
 }
 func (m *ETHCoinMintToGatewayRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ETHCoinMintToGatewayRequest.Unmarshal(m, b)
@@ -87,26 +95,759 @@ func (m *ETHCoinMintToGatewayRequest) GetAmount() *types.BigUInt {
 	return nil
 }
 
+type ETHEconomy struct {
+	TotalSupply          *types.BigUInt `protobuf:"bytes,1,opt,name=total_supply,json=totalSupply" json:"total_supply,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHEconomy) Reset()         { *m = ETHEconomy{} }
+func (m *ETHEconomy) String() string { return proto.CompactTextString(m) }
+func (*ETHEconomy) ProtoMessage()    {}
+func (*ETHEconomy) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{2}
+}
+func (m *ETHEconomy) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHEconomy.Unmarshal(m, b)
+}
+func (m *ETHEconomy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHEconomy.Marshal(b, m, deterministic)
+}
+func (dst *ETHEconomy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHEconomy.Merge(dst, src)
+}
+func (m *ETHEconomy) XXX_Size() int {
+	return xxx_messageInfo_ETHEconomy.Size(m)
+}
+func (m *ETHEconomy) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHEconomy.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHEconomy proto.InternalMessageInfo
+
+func (m *ETHEconomy) GetTotalSupply() *types.BigUInt {
+	if m != nil {
+		return m.TotalSupply
+	}
+	return nil
+}
+
+type ETHAccount struct {
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Balance              *types.BigUInt `protobuf:"bytes,2,opt,name=balance" json:"balance,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHAccount) Reset()         { *m = ETHAccount{} }
+func (m *ETHAccount) String() string { return proto.CompactTextString(m) }
+func (*ETHAccount) ProtoMessage()    {}
+func (*ETHAccount) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{3}
+}
+func (m *ETHAccount) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHAccount.Unmarshal(m, b)
+}
+func (m *ETHAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHAccount.Marshal(b, m, deterministic)
+}
+func (dst *ETHAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHAccount.Merge(dst, src)
+}
+func (m *ETHAccount) XXX_Size() int {
+	return xxx_messageInfo_ETHAccount.Size(m)
+}
+func (m *ETHAccount) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHAccount.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHAccount proto.InternalMessageInfo
+
+func (m *ETHAccount) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *ETHAccount) GetBalance() *types.BigUInt {
+	if m != nil {
+		return m.Balance
+	}
+	return nil
+}
+
+type ETHAllowance struct {
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Spender              *types.Address `protobuf:"bytes,2,opt,name=spender" json:"spender,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,3,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHAllowance) Reset()         { *m = ETHAllowance{} }
+func (m *ETHAllowance) String() string { return proto.CompactTextString(m) }
+func (*ETHAllowance) ProtoMessage()    {}
+func (*ETHAllowance) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{4}
+}
+func (m *ETHAllowance) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHAllowance.Unmarshal(m, b)
+}
+func (m *ETHAllowance) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHAllowance.Marshal(b, m, deterministic)
+}
+func (dst *ETHAllowance) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHAllowance.Merge(dst, src)
+}
+func (m *ETHAllowance) XXX_Size() int {
+	return xxx_messageInfo_ETHAllowance.Size(m)
+}
+func (m *ETHAllowance) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHAllowance.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHAllowance proto.InternalMessageInfo
+
+func (m *ETHAllowance) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *ETHAllowance) GetSpender() *types.Address {
+	if m != nil {
+		return m.Spender
+	}
+	return nil
+}
+
+func (m *ETHAllowance) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+type ETHInitialAccount struct {
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Balance              uint64         `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHInitialAccount) Reset()         { *m = ETHInitialAccount{} }
+func (m *ETHInitialAccount) String() string { return proto.CompactTextString(m) }
+func (*ETHInitialAccount) ProtoMessage()    {}
+func (*ETHInitialAccount) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{5}
+}
+func (m *ETHInitialAccount) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHInitialAccount.Unmarshal(m, b)
+}
+func (m *ETHInitialAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHInitialAccount.Marshal(b, m, deterministic)
+}
+func (dst *ETHInitialAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHInitialAccount.Merge(dst, src)
+}
+func (m *ETHInitialAccount) XXX_Size() int {
+	return xxx_messageInfo_ETHInitialAccount.Size(m)
+}
+func (m *ETHInitialAccount) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHInitialAccount.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHInitialAccount proto.InternalMessageInfo
+
+func (m *ETHInitialAccount) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *ETHInitialAccount) GetBalance() uint64 {
+	if m != nil {
+		return m.Balance
+	}
+	return 0
+}
+
+type ETHBurnRequest struct {
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHBurnRequest) Reset()         { *m = ETHBurnRequest{} }
+func (m *ETHBurnRequest) String() string { return proto.CompactTextString(m) }
+func (*ETHBurnRequest) ProtoMessage()    {}
+func (*ETHBurnRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{6}
+}
+func (m *ETHBurnRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHBurnRequest.Unmarshal(m, b)
+}
+func (m *ETHBurnRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHBurnRequest.Marshal(b, m, deterministic)
+}
+func (dst *ETHBurnRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHBurnRequest.Merge(dst, src)
+}
+func (m *ETHBurnRequest) XXX_Size() int {
+	return xxx_messageInfo_ETHBurnRequest.Size(m)
+}
+func (m *ETHBurnRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHBurnRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHBurnRequest proto.InternalMessageInfo
+
+func (m *ETHBurnRequest) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *ETHBurnRequest) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+// read only
+type ETHTotalSupplyRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ETHTotalSupplyRequest) Reset()         { *m = ETHTotalSupplyRequest{} }
+func (m *ETHTotalSupplyRequest) String() string { return proto.CompactTextString(m) }
+func (*ETHTotalSupplyRequest) ProtoMessage()    {}
+func (*ETHTotalSupplyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{7}
+}
+func (m *ETHTotalSupplyRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHTotalSupplyRequest.Unmarshal(m, b)
+}
+func (m *ETHTotalSupplyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHTotalSupplyRequest.Marshal(b, m, deterministic)
+}
+func (dst *ETHTotalSupplyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHTotalSupplyRequest.Merge(dst, src)
+}
+func (m *ETHTotalSupplyRequest) XXX_Size() int {
+	return xxx_messageInfo_ETHTotalSupplyRequest.Size(m)
+}
+func (m *ETHTotalSupplyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHTotalSupplyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHTotalSupplyRequest proto.InternalMessageInfo
+
+type ETHTotalSupplyResponse struct {
+	TotalSupply          *types.BigUInt `protobuf:"bytes,1,opt,name=total_supply,json=totalSupply" json:"total_supply,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHTotalSupplyResponse) Reset()         { *m = ETHTotalSupplyResponse{} }
+func (m *ETHTotalSupplyResponse) String() string { return proto.CompactTextString(m) }
+func (*ETHTotalSupplyResponse) ProtoMessage()    {}
+func (*ETHTotalSupplyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{8}
+}
+func (m *ETHTotalSupplyResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHTotalSupplyResponse.Unmarshal(m, b)
+}
+func (m *ETHTotalSupplyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHTotalSupplyResponse.Marshal(b, m, deterministic)
+}
+func (dst *ETHTotalSupplyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHTotalSupplyResponse.Merge(dst, src)
+}
+func (m *ETHTotalSupplyResponse) XXX_Size() int {
+	return xxx_messageInfo_ETHTotalSupplyResponse.Size(m)
+}
+func (m *ETHTotalSupplyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHTotalSupplyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHTotalSupplyResponse proto.InternalMessageInfo
+
+func (m *ETHTotalSupplyResponse) GetTotalSupply() *types.BigUInt {
+	if m != nil {
+		return m.TotalSupply
+	}
+	return nil
+}
+
+type ETHBalanceOfRequest struct {
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHBalanceOfRequest) Reset()         { *m = ETHBalanceOfRequest{} }
+func (m *ETHBalanceOfRequest) String() string { return proto.CompactTextString(m) }
+func (*ETHBalanceOfRequest) ProtoMessage()    {}
+func (*ETHBalanceOfRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{9}
+}
+func (m *ETHBalanceOfRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHBalanceOfRequest.Unmarshal(m, b)
+}
+func (m *ETHBalanceOfRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHBalanceOfRequest.Marshal(b, m, deterministic)
+}
+func (dst *ETHBalanceOfRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHBalanceOfRequest.Merge(dst, src)
+}
+func (m *ETHBalanceOfRequest) XXX_Size() int {
+	return xxx_messageInfo_ETHBalanceOfRequest.Size(m)
+}
+func (m *ETHBalanceOfRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHBalanceOfRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHBalanceOfRequest proto.InternalMessageInfo
+
+func (m *ETHBalanceOfRequest) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+type ETHBalanceOfResponse struct {
+	Balance              *types.BigUInt `protobuf:"bytes,1,opt,name=balance" json:"balance,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHBalanceOfResponse) Reset()         { *m = ETHBalanceOfResponse{} }
+func (m *ETHBalanceOfResponse) String() string { return proto.CompactTextString(m) }
+func (*ETHBalanceOfResponse) ProtoMessage()    {}
+func (*ETHBalanceOfResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{10}
+}
+func (m *ETHBalanceOfResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHBalanceOfResponse.Unmarshal(m, b)
+}
+func (m *ETHBalanceOfResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHBalanceOfResponse.Marshal(b, m, deterministic)
+}
+func (dst *ETHBalanceOfResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHBalanceOfResponse.Merge(dst, src)
+}
+func (m *ETHBalanceOfResponse) XXX_Size() int {
+	return xxx_messageInfo_ETHBalanceOfResponse.Size(m)
+}
+func (m *ETHBalanceOfResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHBalanceOfResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHBalanceOfResponse proto.InternalMessageInfo
+
+func (m *ETHBalanceOfResponse) GetBalance() *types.BigUInt {
+	if m != nil {
+		return m.Balance
+	}
+	return nil
+}
+
+type ETHAllowanceRequest struct {
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	Spender              *types.Address `protobuf:"bytes,2,opt,name=spender" json:"spender,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHAllowanceRequest) Reset()         { *m = ETHAllowanceRequest{} }
+func (m *ETHAllowanceRequest) String() string { return proto.CompactTextString(m) }
+func (*ETHAllowanceRequest) ProtoMessage()    {}
+func (*ETHAllowanceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{11}
+}
+func (m *ETHAllowanceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHAllowanceRequest.Unmarshal(m, b)
+}
+func (m *ETHAllowanceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHAllowanceRequest.Marshal(b, m, deterministic)
+}
+func (dst *ETHAllowanceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHAllowanceRequest.Merge(dst, src)
+}
+func (m *ETHAllowanceRequest) XXX_Size() int {
+	return xxx_messageInfo_ETHAllowanceRequest.Size(m)
+}
+func (m *ETHAllowanceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHAllowanceRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHAllowanceRequest proto.InternalMessageInfo
+
+func (m *ETHAllowanceRequest) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
+func (m *ETHAllowanceRequest) GetSpender() *types.Address {
+	if m != nil {
+		return m.Spender
+	}
+	return nil
+}
+
+type ETHAllowanceResponse struct {
+	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHAllowanceResponse) Reset()         { *m = ETHAllowanceResponse{} }
+func (m *ETHAllowanceResponse) String() string { return proto.CompactTextString(m) }
+func (*ETHAllowanceResponse) ProtoMessage()    {}
+func (*ETHAllowanceResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{12}
+}
+func (m *ETHAllowanceResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHAllowanceResponse.Unmarshal(m, b)
+}
+func (m *ETHAllowanceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHAllowanceResponse.Marshal(b, m, deterministic)
+}
+func (dst *ETHAllowanceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHAllowanceResponse.Merge(dst, src)
+}
+func (m *ETHAllowanceResponse) XXX_Size() int {
+	return xxx_messageInfo_ETHAllowanceResponse.Size(m)
+}
+func (m *ETHAllowanceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHAllowanceResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHAllowanceResponse proto.InternalMessageInfo
+
+func (m *ETHAllowanceResponse) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+// volatile
+type ETHApproveRequest struct {
+	Spender              *types.Address `protobuf:"bytes,1,opt,name=spender" json:"spender,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHApproveRequest) Reset()         { *m = ETHApproveRequest{} }
+func (m *ETHApproveRequest) String() string { return proto.CompactTextString(m) }
+func (*ETHApproveRequest) ProtoMessage()    {}
+func (*ETHApproveRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{13}
+}
+func (m *ETHApproveRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHApproveRequest.Unmarshal(m, b)
+}
+func (m *ETHApproveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHApproveRequest.Marshal(b, m, deterministic)
+}
+func (dst *ETHApproveRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHApproveRequest.Merge(dst, src)
+}
+func (m *ETHApproveRequest) XXX_Size() int {
+	return xxx_messageInfo_ETHApproveRequest.Size(m)
+}
+func (m *ETHApproveRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHApproveRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHApproveRequest proto.InternalMessageInfo
+
+func (m *ETHApproveRequest) GetSpender() *types.Address {
+	if m != nil {
+		return m.Spender
+	}
+	return nil
+}
+
+func (m *ETHApproveRequest) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+type ETHApproveResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ETHApproveResponse) Reset()         { *m = ETHApproveResponse{} }
+func (m *ETHApproveResponse) String() string { return proto.CompactTextString(m) }
+func (*ETHApproveResponse) ProtoMessage()    {}
+func (*ETHApproveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{14}
+}
+func (m *ETHApproveResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHApproveResponse.Unmarshal(m, b)
+}
+func (m *ETHApproveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHApproveResponse.Marshal(b, m, deterministic)
+}
+func (dst *ETHApproveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHApproveResponse.Merge(dst, src)
+}
+func (m *ETHApproveResponse) XXX_Size() int {
+	return xxx_messageInfo_ETHApproveResponse.Size(m)
+}
+func (m *ETHApproveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHApproveResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHApproveResponse proto.InternalMessageInfo
+
+type ETHTransferRequest struct {
+	To                   *types.Address `protobuf:"bytes,1,opt,name=to" json:"to,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHTransferRequest) Reset()         { *m = ETHTransferRequest{} }
+func (m *ETHTransferRequest) String() string { return proto.CompactTextString(m) }
+func (*ETHTransferRequest) ProtoMessage()    {}
+func (*ETHTransferRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{15}
+}
+func (m *ETHTransferRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHTransferRequest.Unmarshal(m, b)
+}
+func (m *ETHTransferRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHTransferRequest.Marshal(b, m, deterministic)
+}
+func (dst *ETHTransferRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHTransferRequest.Merge(dst, src)
+}
+func (m *ETHTransferRequest) XXX_Size() int {
+	return xxx_messageInfo_ETHTransferRequest.Size(m)
+}
+func (m *ETHTransferRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHTransferRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHTransferRequest proto.InternalMessageInfo
+
+func (m *ETHTransferRequest) GetTo() *types.Address {
+	if m != nil {
+		return m.To
+	}
+	return nil
+}
+
+func (m *ETHTransferRequest) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+type ETHTransferResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ETHTransferResponse) Reset()         { *m = ETHTransferResponse{} }
+func (m *ETHTransferResponse) String() string { return proto.CompactTextString(m) }
+func (*ETHTransferResponse) ProtoMessage()    {}
+func (*ETHTransferResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{16}
+}
+func (m *ETHTransferResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHTransferResponse.Unmarshal(m, b)
+}
+func (m *ETHTransferResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHTransferResponse.Marshal(b, m, deterministic)
+}
+func (dst *ETHTransferResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHTransferResponse.Merge(dst, src)
+}
+func (m *ETHTransferResponse) XXX_Size() int {
+	return xxx_messageInfo_ETHTransferResponse.Size(m)
+}
+func (m *ETHTransferResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHTransferResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHTransferResponse proto.InternalMessageInfo
+
+type ETHTransferFromRequest struct {
+	From                 *types.Address `protobuf:"bytes,1,opt,name=from" json:"from,omitempty"`
+	To                   *types.Address `protobuf:"bytes,2,opt,name=to" json:"to,omitempty"`
+	Amount               *types.BigUInt `protobuf:"bytes,3,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ETHTransferFromRequest) Reset()         { *m = ETHTransferFromRequest{} }
+func (m *ETHTransferFromRequest) String() string { return proto.CompactTextString(m) }
+func (*ETHTransferFromRequest) ProtoMessage()    {}
+func (*ETHTransferFromRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{17}
+}
+func (m *ETHTransferFromRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHTransferFromRequest.Unmarshal(m, b)
+}
+func (m *ETHTransferFromRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHTransferFromRequest.Marshal(b, m, deterministic)
+}
+func (dst *ETHTransferFromRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHTransferFromRequest.Merge(dst, src)
+}
+func (m *ETHTransferFromRequest) XXX_Size() int {
+	return xxx_messageInfo_ETHTransferFromRequest.Size(m)
+}
+func (m *ETHTransferFromRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHTransferFromRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHTransferFromRequest proto.InternalMessageInfo
+
+func (m *ETHTransferFromRequest) GetFrom() *types.Address {
+	if m != nil {
+		return m.From
+	}
+	return nil
+}
+
+func (m *ETHTransferFromRequest) GetTo() *types.Address {
+	if m != nil {
+		return m.To
+	}
+	return nil
+}
+
+func (m *ETHTransferFromRequest) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+type ETHTransferFromResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ETHTransferFromResponse) Reset()         { *m = ETHTransferFromResponse{} }
+func (m *ETHTransferFromResponse) String() string { return proto.CompactTextString(m) }
+func (*ETHTransferFromResponse) ProtoMessage()    {}
+func (*ETHTransferFromResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ethcoin_f49ff858cd4339e4, []int{18}
+}
+func (m *ETHTransferFromResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ETHTransferFromResponse.Unmarshal(m, b)
+}
+func (m *ETHTransferFromResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ETHTransferFromResponse.Marshal(b, m, deterministic)
+}
+func (dst *ETHTransferFromResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ETHTransferFromResponse.Merge(dst, src)
+}
+func (m *ETHTransferFromResponse) XXX_Size() int {
+	return xxx_messageInfo_ETHTransferFromResponse.Size(m)
+}
+func (m *ETHTransferFromResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ETHTransferFromResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ETHTransferFromResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*ETHCoinInitRequest)(nil), "ETHCoinInitRequest")
 	proto.RegisterType((*ETHCoinMintToGatewayRequest)(nil), "ETHCoinMintToGatewayRequest")
+	proto.RegisterType((*ETHEconomy)(nil), "ETHEconomy")
+	proto.RegisterType((*ETHAccount)(nil), "ETHAccount")
+	proto.RegisterType((*ETHAllowance)(nil), "ETHAllowance")
+	proto.RegisterType((*ETHInitialAccount)(nil), "ETHInitialAccount")
+	proto.RegisterType((*ETHBurnRequest)(nil), "ETHBurnRequest")
+	proto.RegisterType((*ETHTotalSupplyRequest)(nil), "ETHTotalSupplyRequest")
+	proto.RegisterType((*ETHTotalSupplyResponse)(nil), "ETHTotalSupplyResponse")
+	proto.RegisterType((*ETHBalanceOfRequest)(nil), "ETHBalanceOfRequest")
+	proto.RegisterType((*ETHBalanceOfResponse)(nil), "ETHBalanceOfResponse")
+	proto.RegisterType((*ETHAllowanceRequest)(nil), "ETHAllowanceRequest")
+	proto.RegisterType((*ETHAllowanceResponse)(nil), "ETHAllowanceResponse")
+	proto.RegisterType((*ETHApproveRequest)(nil), "ETHApproveRequest")
+	proto.RegisterType((*ETHApproveResponse)(nil), "ETHApproveResponse")
+	proto.RegisterType((*ETHTransferRequest)(nil), "ETHTransferRequest")
+	proto.RegisterType((*ETHTransferResponse)(nil), "ETHTransferResponse")
+	proto.RegisterType((*ETHTransferFromRequest)(nil), "ETHTransferFromRequest")
+	proto.RegisterType((*ETHTransferFromResponse)(nil), "ETHTransferFromResponse")
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/ethcoin/ethcoin.proto", fileDescriptor_ethcoin_15cf8379a9e6a48d)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/ethcoin/ethcoin.proto", fileDescriptor_ethcoin_f49ff858cd4339e4)
 }
 
-var fileDescriptor_ethcoin_15cf8379a9e6a48d = []byte{
-	// 170 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x72, 0x4a, 0xcf, 0x2c, 0xc9,
-	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,
-	0x2f, 0xca, 0xd6, 0x4f, 0xcf, 0xd7, 0x05, 0x71, 0xf5, 0x93, 0x4a, 0x33, 0x73, 0x4a, 0x32, 0xf3,
-	0xf4, 0x4b, 0x2a, 0x0b, 0x52, 0x8b, 0xf5, 0x53, 0x4b, 0x32, 0x92, 0xf3, 0x33, 0xf3, 0x60, 0xb4,
-	0x5e, 0x41, 0x51, 0x7e, 0x49, 0xbe, 0x94, 0x01, 0x01, 0x33, 0x20, 0x7a, 0xc1, 0x24, 0x44, 0x87,
-	0x92, 0x08, 0x97, 0x90, 0x6b, 0x88, 0x87, 0x73, 0x7e, 0x66, 0x9e, 0x67, 0x5e, 0x66, 0x49, 0x50,
-	0x6a, 0x61, 0x69, 0x6a, 0x71, 0x89, 0x92, 0x3d, 0x97, 0x34, 0x54, 0xd4, 0x37, 0x33, 0xaf, 0x24,
-	0x24, 0xdf, 0x3d, 0xb1, 0x24, 0xb5, 0x3c, 0xb1, 0x12, 0x2a, 0x2d, 0xa4, 0xc0, 0xc5, 0x96, 0x98,
-	0x9b, 0x5f, 0x9a, 0x57, 0x22, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x6d, 0xc4, 0xa1, 0xe7, 0x94, 0x99,
-	0x1e, 0xea, 0x99, 0x57, 0x12, 0x04, 0x15, 0x4f, 0x62, 0x03, 0x9b, 0x6e, 0x0c, 0x08, 0x00, 0x00,
-	0xff, 0xff, 0x56, 0xda, 0xd7, 0x3c, 0xd5, 0x00, 0x00, 0x00,
+var fileDescriptor_ethcoin_f49ff858cd4339e4 = []byte{
+	// 493 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0x5d, 0x6f, 0xd3, 0x30,
+	0x14, 0x55, 0xb3, 0x31, 0xa6, 0xdb, 0x09, 0x89, 0xb0, 0xb1, 0xf0, 0x21, 0x54, 0xf9, 0x69, 0x12,
+	0x22, 0x41, 0x43, 0x48, 0xc0, 0x0b, 0x6a, 0x21, 0x90, 0x3d, 0x4c, 0x4c, 0x21, 0x3c, 0xec, 0x09,
+	0xa5, 0xa9, 0xdb, 0x59, 0x24, 0xbe, 0xc1, 0x76, 0xa8, 0xfa, 0xef, 0x51, 0x1c, 0x27, 0xed, 0x16,
+	0x85, 0x84, 0x97, 0x56, 0xbe, 0x1f, 0xe7, 0x1c, 0xdf, 0xe3, 0x1b, 0x98, 0xad, 0x98, 0xba, 0x29,
+	0xe6, 0x6e, 0x82, 0x99, 0x97, 0x22, 0x66, 0x9c, 0xaa, 0x35, 0x8a, 0x5f, 0xde, 0x0a, 0x5f, 0x95,
+	0x47, 0x6f, 0x5e, 0xb0, 0x54, 0x31, 0xee, 0xa9, 0x4d, 0x4e, 0xa5, 0x47, 0xd5, 0x4d, 0x82, 0x8c,
+	0xd7, 0xff, 0x6e, 0x2e, 0x50, 0xe1, 0xd3, 0xd7, 0x3d, 0x18, 0x55, 0xaf, 0xfe, 0xad, 0x3a, 0xc8,
+	0x67, 0xb0, 0xfd, 0x28, 0xf8, 0x84, 0x8c, 0x5f, 0x70, 0xa6, 0x42, 0xfa, 0xbb, 0xa0, 0x52, 0xd9,
+	0x2e, 0x1c, 0xc6, 0x49, 0x82, 0x05, 0x57, 0xd2, 0x19, 0x4d, 0xf6, 0xce, 0xc6, 0xe7, 0xb6, 0xeb,
+	0x47, 0x41, 0x59, 0xc2, 0xe2, 0x74, 0x5a, 0xa5, 0xc2, 0xa6, 0x86, 0x7c, 0x84, 0x67, 0x06, 0xe5,
+	0x92, 0x71, 0x15, 0xe1, 0xd7, 0x58, 0xd1, 0x75, 0xbc, 0xa9, 0xe1, 0x26, 0x70, 0x10, 0x67, 0x65,
+	0xa5, 0x33, 0x9a, 0x8c, 0xce, 0xc6, 0xe7, 0x87, 0xee, 0x8c, 0xad, 0x7e, 0x5c, 0x70, 0x15, 0x9a,
+	0x38, 0x79, 0x0f, 0xe0, 0x47, 0x81, 0x9f, 0x20, 0xc7, 0x6c, 0x63, 0xbf, 0x84, 0x23, 0x85, 0x2a,
+	0x4e, 0x7f, 0xca, 0x22, 0xcf, 0xd3, 0x4d, 0xab, 0x6b, 0xac, 0xb3, 0xdf, 0x75, 0x92, 0x5c, 0xe9,
+	0x56, 0xa3, 0xc9, 0x7e, 0x01, 0xf7, 0x70, 0xcd, 0xa9, 0x68, 0x7a, 0xa6, 0x8b, 0x85, 0xa0, 0x52,
+	0x86, 0x55, 0xd8, 0x26, 0x70, 0x7f, 0x1e, 0xa7, 0x31, 0x4f, 0xa8, 0x63, 0xdd, 0x41, 0xad, 0x13,
+	0x44, 0xc1, 0x51, 0x89, 0x98, 0xa6, 0xb8, 0x2e, 0xcf, 0x43, 0x30, 0x65, 0x4e, 0xf9, 0x82, 0x8a,
+	0x06, 0xb3, 0xae, 0xa8, 0x13, 0x3b, 0x23, 0xd8, 0xeb, 0x18, 0xc1, 0x25, 0x3c, 0x6c, 0x8d, 0xb8,
+	0x97, 0xda, 0xb9, 0x7d, 0x9d, 0xfd, 0xed, 0x25, 0x42, 0x78, 0xe0, 0x47, 0xc1, 0xac, 0x10, 0xbc,
+	0x76, 0xa1, 0x0f, 0x6b, 0x2b, 0xd1, 0xea, 0x90, 0x78, 0x0a, 0x27, 0x7e, 0x14, 0x44, 0xdb, 0xe1,
+	0x1b, 0x68, 0xe2, 0xc3, 0xe3, 0xbb, 0x09, 0x99, 0x23, 0x97, 0xf4, 0xff, 0xac, 0x7c, 0x0b, 0x8f,
+	0x4a, 0xcd, 0xd5, 0x0d, 0xbe, 0x2d, 0x07, 0x0a, 0x27, 0x1f, 0xe0, 0xf8, 0x76, 0x9b, 0xe1, 0xde,
+	0xf1, 0x7a, 0xd4, 0xe5, 0xf5, 0xb5, 0xa6, 0x6c, 0xbc, 0x1e, 0x3a, 0xab, 0x01, 0x96, 0x93, 0x77,
+	0x5a, 0xd6, 0x0e, 0xb4, 0x91, 0xd5, 0xbf, 0x0d, 0xd7, 0xfa, 0x29, 0x4c, 0xf3, 0x5c, 0xe0, 0x9f,
+	0x46, 0xd2, 0x0e, 0xe5, 0xa8, 0xff, 0x95, 0x75, 0x59, 0x78, 0xac, 0xf7, 0xbd, 0x81, 0xae, 0x24,
+	0x91, 0x2b, 0x1d, 0x8d, 0x44, 0xcc, 0xe5, 0x92, 0x8a, 0x9a, 0xd1, 0x01, 0x4b, 0x61, 0x8b, 0xcc,
+	0x52, 0x38, 0x80, 0xe7, 0x44, 0xcf, 0x75, 0x8b, 0x68, 0x88, 0x44, 0xf5, 0x50, 0x4c, 0xf8, 0x8b,
+	0xc0, 0xac, 0x26, 0x7b, 0x0e, 0xfb, 0x4b, 0x81, 0x59, 0x8b, 0x4e, 0x47, 0x8d, 0x14, 0xeb, 0x9f,
+	0x52, 0xba, 0x16, 0xeb, 0x09, 0x9c, 0xb6, 0x38, 0x2b, 0x39, 0xf3, 0x03, 0xfd, 0x11, 0x7c, 0xf3,
+	0x37, 0x00, 0x00, 0xff, 0xff, 0x49, 0xc8, 0x14, 0xb8, 0x7c, 0x05, 0x00, 0x00,
 }

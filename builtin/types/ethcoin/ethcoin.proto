@@ -5,8 +5,93 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 // TODO: copy all the coin types
 
 message ETHCoinInitRequest {
+    repeated ETHInitialAccount accounts = 1;
 }
 
 message ETHCoinMintToGatewayRequest {
     BigUInt amount = 1;
+}
+
+message ETHEconomy {
+    BigUInt total_supply = 1;
+}
+
+message ETHAccount {
+    Address owner = 1;
+    BigUInt balance = 2;
+}
+
+message ETHAllowance {
+    Address owner = 1;
+    Address spender = 2;
+    BigUInt amount = 3;
+}
+
+message ETHInitialAccount {
+    Address owner = 1;
+    uint64 balance = 2;
+}
+
+
+message ETHBurnRequest {
+    Address owner = 1;
+    BigUInt amount = 2;
+}
+
+// ERC20 messages
+// See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
+
+// read only
+message ETHTotalSupplyRequest {
+
+}
+
+message ETHTotalSupplyResponse {
+    BigUInt total_supply = 1;
+}
+
+message ETHBalanceOfRequest {
+    Address owner = 1;
+}
+
+message ETHBalanceOfResponse {
+    BigUInt balance = 1;
+}
+
+message ETHAllowanceRequest {
+    Address owner = 1;
+    Address spender = 2;
+}
+
+message ETHAllowanceResponse {
+    BigUInt amount = 1;
+}
+
+// volatile
+message ETHApproveRequest {
+    Address spender = 1;
+    BigUInt amount = 2;
+}
+
+message ETHApproveResponse {
+
+}
+
+message ETHTransferRequest {
+    Address to = 1;
+    BigUInt amount = 2;
+}
+
+message ETHTransferResponse {
+
+}
+
+message ETHTransferFromRequest {
+    Address from = 1;
+    Address to = 2;
+    BigUInt amount = 3;
+}
+
+message ETHTransferFromResponse {
+
 }
