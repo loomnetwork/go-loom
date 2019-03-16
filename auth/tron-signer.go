@@ -6,6 +6,7 @@ import (
 	"crypto/ecdsa"
 
 	"github.com/ethereum/go-ethereum/crypto"
+	sha3 "github.com/miguelmota/go-solidity-sha3"
 )
 
 type TronSigner struct {
@@ -13,11 +14,7 @@ type TronSigner struct {
 }
 
 func (k *TronSigner) Sign(txBytes []byte) []byte {
-	hash, err := GetTxHash(txBytes)
-	if err != nil {
-		panic(err)
-	}
-	signature, err := crypto.Sign(hash, k.PrivateKey)
+	signature, err := crypto.Sign(sha3.SoliditySHA3(txBytes), k.PrivateKey)
 	if err != nil {
 		panic(err)
 	}
@@ -27,4 +24,3 @@ func (k *TronSigner) Sign(txBytes []byte) []byte {
 func (k *TronSigner) PublicKey() []byte {
 	return crypto.FromECDSAPub(&k.PrivateKey.PublicKey)
 }
-

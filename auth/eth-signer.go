@@ -7,6 +7,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
+	sha3 "github.com/miguelmota/go-solidity-sha3"
 )
 
 type EthSigner66Byte struct {
@@ -14,11 +15,9 @@ type EthSigner66Byte struct {
 }
 
 func (k *EthSigner66Byte) Sign(txBytes []byte) []byte {
-	hash, err := GetTxHash(txBytes)
-	if err != nil {
-		panic(err)
-	}
-	signature, err := evmcompat.GenerateTypedSig(hash, k.PrivateKey, evmcompat.SignatureType_EIP712)
+	signature, err := evmcompat.GenerateTypedSig(
+		sha3.SoliditySHA3(txBytes), k.PrivateKey, evmcompat.SignatureType_EIP712,
+	)
 	if err != nil {
 		panic(err)
 	}
