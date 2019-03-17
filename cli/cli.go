@@ -19,7 +19,7 @@ var TxFlags struct {
 	PrivFile      string
 	HsmConfigFile string
 	Algo          string
-	ChainType     string
+	CallerChainID string
 }
 
 func ContractCallCommand(name string) *cobra.Command {
@@ -42,7 +42,8 @@ func ContractCallCommand(name string) *cobra.Command {
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
 	pflags.StringVarP(&TxFlags.PrivFile, "key", "k", "", "private key file")
 	pflags.StringVarP(&TxFlags.HsmConfigFile, "hsmconfig", "", "", "hsm config file")
-	pflags.StringVarP(&TxFlags.Algo, "algo", "", "ed25519", "crypto algo Ed25519 or Secp256k1")
+	pflags.StringVar(&TxFlags.Algo, "algo", "ed25519", "Signing algo: ed25519, secp256k1, tron")
+	pflags.StringVar(&TxFlags.CallerChainID, "caller-chain", "", "Overrides chain ID of caller")
 	return cmd
 }
 
