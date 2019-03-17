@@ -101,9 +101,24 @@ func (c *DAppChainRPCClient) GetChainID() string {
 	return c.chainID
 }
 
+// GetNonce queries the chain for the nonce of the last commited tx signed by the the given signer.
 func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
-	params := map[string]interface{}{
-		"key": hex.EncodeToString(signer.PublicKey()),
+	return c.GetNonce2(loom.Address{}, signer)
+}
+
+// GetNonce2 queries the chain for the nonce of the last commited tx sent by the given account.
+func (c *DAppChainRPCClient) GetNonce2(caller loom.Address, signer auth.Signer) (uint64, error) {
+	// TODO: Currently if both the caller & key are specified then both are sent in the request,
+	//       this is done to maintain compatibility with older loomchain builds.
+	//       Newer loomchain builds will ignore the key param if the account param is set,
+	//       while older builds will only look at the key param. Further down the line the key
+	//       param should be removed.
+	params := map[string]interface{}{}
+	if !caller.IsEmpty() {
+		params["account"] = caller.String()
+	}
+	if signer != nil {
+		params["key"] = hex.EncodeToString(signer.PublicKey())
 	}
 	var rRes string
 	err := c.queryClient.Call("nonce", params, c.getNextRequestID(), &rRes)
@@ -113,31 +128,16 @@ func (c *DAppChainRPCClient) GetNonce(signer auth.Signer) (uint64, error) {
 	return strconv.ParseUint(rRes, 10, 64)
 }
 
-func (c *DAppChainRPCClient) GetNonce2(caller loom.Address, isAddressMapped bool) (uint64, error) {
-	var accountType string
-	if isAddressMapped {
-		accountType = "2"
-	} else {
-		accountType = "1"
-	}
-	accountType = accountType
-	params := map[string]interface{}{
-		"chainId":     caller.ChainID,
-		"local":       caller.Local,
-		"accountType": accountType,
-	}
-	var rRes string
-	err := c.queryClient.Call("nonce2", params, c.getNextRequestID(), &rRes)
-	if err != nil {
-		return 0, err
-	}
-	return strconv.ParseUint(rRes, 10, 64)
+// CommitTx signs a tx with the given signer and sends it to the chain.
+func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
+	return c.CommitTx2(loom.Address{}, signer, tx)
 }
 
-func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]byte, error) {
+// CommitTx2 signs a tx with the given signer and sends it to the chain, the from address is used to
+// query the chain for a tx nonce (this address may have a different chain ID to the client).
+func (c *DAppChainRPCClient) CommitTx2(from loom.Address, signer auth.Signer, tx proto.Message) ([]byte, error) {
 	// TODO: signing & noncing should be handled by middleware
-
-	nonce, err := c.GetNonce(signer)
+	nonce, err := c.GetNonce2(from, signer)
 	if err != nil {
 		return nil, err
 	}
@@ -153,52 +153,6 @@ func (c *DAppChainRPCClient) CommitTx(signer auth.Signer, tx proto.Message) ([]b
 		return nil, err
 	}
 	signedTxBytes, err := proto.Marshal(auth.SignTx(signer, nonceTxBytes))
-	if err != nil {
-		return nil, err
-	}
-	params := map[string]interface{}{
-		"tx": signedTxBytes,
-	}
-
-	var r BoradcastTxSyncResult
-	if err = c.txClient.Call("broadcast_tx_sync", params, c.getNextRequestID(), &r); err != nil {
-		return nil, err
-	}
-	if r.Code != CodeTypeOK {
-		if len(r.Error) != 0 {
-			return nil, errors.New(r.Error)
-		}
-		return nil, fmt.Errorf("CheckTx failed")
-	}
-
-	txResult, err := c.pollTx(r.Hash, ShortPollLimit, ShortPollDelay)
-	if err != nil {
-		return nil, err
-	}
-
-	return txResult.Data, nil
-}
-
-func (c *DAppChainRPCClient) CommitTx2(signer auth.Signer, tx proto.Message, caller loom.Address, chainName string) ([]byte, error) {
-	// TODO: signing & noncing should be handled by middleware
-	nonce, err := c.GetNonce2(caller, len(chainName) > 0)
-	if err != nil {
-		return nil, err
-	}
-	txBytes, err := proto.Marshal(tx)
-	if err != nil {
-		return nil, err
-	}
-	nonceTxBytes, err := proto.Marshal(&auth.NonceTx{
-		Inner:    txBytes,
-		Sequence: nonce + 1,
-	})
-	if err != nil {
-		return nil, err
-	}
-	signedTx := auth.SignTx(signer, nonceTxBytes)
-	signedTx.ChainName = chainName
-	signedTxBytes, err := proto.Marshal(signedTx)
 	if err != nil {
 		return nil, err
 	}
@@ -499,7 +453,7 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 		Id:   1,
 		Data: msgBytes,
 	}
-	return c.CommitTx2(signer, tx, from, "")
+	return c.CommitTx2(from, signer, tx)
 }
 
 func (c *DAppChainRPCClient) CommitCallTx(
@@ -530,67 +484,5 @@ func (c *DAppChainRPCClient) CommitCallTx(
 		Id:   2,
 		Data: msgBytes,
 	}
-	return c.CommitTx2(signer, tx, caller, "")
-}
-
-func (c *DAppChainRPCClient) CommitDeployTx2(
-	from loom.Address,
-	signer auth.Signer,
-	vmType vm.VMType,
-	code []byte,
-	name, chainName string,
-) ([]byte, error) {
-	deployTxBytes, err := proto.Marshal(&vm.DeployTx{
-		VmType: vmType,
-		Code:   code,
-		Name:   name,
-	})
-	if err != nil {
-		return nil, err
-	}
-	msgBytes, err := proto.Marshal(&vm.MessageTx{
-		From: from.MarshalPB(),
-		To:   loom.Address{}.MarshalPB(), // not used
-		Data: deployTxBytes,
-	})
-	if err != nil {
-		return nil, err
-	}
-	tx := &types.Transaction{
-		Id:   1,
-		Data: msgBytes,
-	}
-	return c.CommitTx2(signer, tx, from, chainName)
-}
-
-func (c *DAppChainRPCClient) CommitCallTx2(
-	caller loom.Address,
-	contract loom.Address,
-	signer auth.Signer,
-	vmType vm.VMType,
-	input []byte,
-	chainName string,
-) ([]byte, error) {
-	callTxBytes, err := proto.Marshal(&vm.CallTx{
-		VmType: vm.VMType(vmType),
-		Input:  input,
-	})
-	if err != nil {
-		return nil, err
-	}
-	msgTx := &vm.MessageTx{
-		From: caller.MarshalPB(),
-		To:   contract.MarshalPB(),
-		Data: callTxBytes,
-	}
-	msgBytes, err := proto.Marshal(msgTx)
-	if err != nil {
-		return nil, err
-	}
-	// tx ids associated with handlers in loadApp()
-	tx := &types.Transaction{
-		Id:   2,
-		Data: msgBytes,
-	}
-	return c.CommitTx2(signer, tx, caller, chainName)
+	return c.CommitTx2(caller, signer, tx)
 }

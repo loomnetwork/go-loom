@@ -3,13 +3,8 @@ package auth
 import (
 	"fmt"
 
-	"github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/vm"
 	"github.com/loomnetwork/go-loom/auth/secp256k1"
 	"github.com/loomnetwork/go-loom/auth/yubihsm"
-	"github.com/loomnetwork/go-loom/types"
-	"github.com/pkg/errors"
-	"github.com/gogo/protobuf/proto"
 )
 
 const (
@@ -45,27 +40,4 @@ func SignTx(signer Signer, txBytes []byte) *SignedTx {
 		Signature: signer.Sign(txBytes),
 		PublicKey: signer.PublicKey(),
 	}
-}
-
-func GetFromToNonce(nonceBytes []byte) (loom.Address, loom.Address, uint64, error) {
-	var nonceTx NonceTx
-	if err := proto.Unmarshal(nonceBytes, &nonceTx); err != nil {
-		return loom.Address{}, loom.Address{}, 0, errors.Wrap(err, "unwrap nonce Tx")
-	}
-
-	var tx types.Transaction
-	if err := proto.Unmarshal(nonceTx.Inner, &tx); err != nil {
-		return loom.Address{}, loom.Address{}, 0, errors.New("unmarshal tx")
-	}
-
-	var msg vm.MessageTx
-	if err := proto.Unmarshal(tx.Data, &msg); err != nil {
-		return loom.Address{}, loom.Address{}, 0, errors.Wrapf(err, "unmarshal message tx %v", tx.Data)
-	}
-
-	if msg.From == nil {
-		return loom.Address{}, loom.Address{}, 0, errors.Errorf("nil from address")
-	}
-
-	return loom.UnmarshalAddressPB(msg.From), loom.UnmarshalAddressPB(msg.To), nonceTx.Sequence, nil
 }
