@@ -7,12 +7,14 @@ import (
 	"crypto/ecdsa"
 	"encoding/binary"
 	"encoding/hex"
-	"errors"
 	"fmt"
 	"math/big"
 	"strconv"
 	"strings"
 
+	"github.com/pkg/errors"
+
+	"github.com/eosspark/eos-go/crypto/ecc"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/sha3"
@@ -22,9 +24,10 @@ import (
 type SignatureType uint8
 
 const (
-	SignatureType_EIP712 SignatureType = 0
-	SignatureType_GETH   SignatureType = 1
-	SignatureType_TREZOR SignatureType = 2
+	SignatureType_EIP712 SignatureType = iota
+	SignatureType_GETH
+	SignatureType_TREZOR
+	SignatureType_EOS
 )
 
 // SoliditySign signs the given data with the specified private key and returns the 65-byte signature.
@@ -80,7 +83,7 @@ func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureT
 func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
 
-	if len(sig) != 66 {
+	if len(sig) != 66 && SignatureType(sig[0]) != SignatureType_EOS {
 		return signer, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
 	}
 
@@ -96,12 +99,36 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 			ssha.String("\x19Ethereum Signed Message:\n\x20"),
 			ssha.Bytes32(hash),
 		)
+	case SignatureType_EOS:
+		return recoverAddressFromEosSig(hash, sig)
 	default:
 		return signer, fmt.Errorf("invalid signature type: %d", sig[0])
 	}
 
 	signer, err := SolidityRecover(hash, sig[1:])
 	return signer, err
+}
+
+func recoverAddressFromEosSig(hash []byte, sig []byte) (common.Address, error) {
+	var signer common.Address
+	if len(sig) != 67 {
+		return signer, fmt.Errorf("eos signature must be 67 bytes, not %d bytes", len(sig))
+	}
+	signature := ecc.NewSigNil()
+	_, err := signature.Unpack(sig[1:])
+	if err != nil{
+		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
+	}
+	pubKey, err := signature.PublicKey(hash)
+	if err != nil {
+		return signer, fmt.Errorf("cannot get publlic key from hash %v", string(hash))
+	}
+	btcecPubKey, err := pubKey.Key()
+	if err != nil {
+		return signer, errors.Wrapf(err, "retrieve btcec key from eos key %v", pubKey)
+	}
+	local := common.HexToAddress(crypto.PubkeyToAddress(ecdsa.PublicKey(*btcecPubKey)).Hex())
+	return local, nil
 }
 
 //TODO in future all interfaces and not do conversions from strings
