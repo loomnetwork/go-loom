@@ -38,3 +38,15 @@ func (k *TronSigner) Sign(_ []byte) []byte {
 func (k *TronSigner) PublicKey() []byte {
 	return nil
 }
+
+type EosSigner struct {
+	PrivateKey *ecdsa.PrivateKey
+}
+
+func (k *EosSigner) Sign(_ []byte) []byte {
+	return nil
+}
+
+func (k *EosSigner) PublicKey() []byte {
+	return nil
+}
