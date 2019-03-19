@@ -82,34 +82,55 @@ func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureT
 // (the first byte of which is expected to denote the SignatureType).
 func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
-
-	if len(sig) != 66 && SignatureType(sig[0]) != SignatureType_EOS {
-		return signer, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
-	}
+	var err error
 
 	switch SignatureType(sig[0]) {
 	case SignatureType_EIP712:
+		err = recoverAddressFromEIP712(sig)
 	case SignatureType_GETH:
-		hash = ssha.SoliditySHA3(
-			ssha.String("\x19Ethereum Signed Message:\n32"),
-			ssha.Bytes32(hash),
-		)
+		hash, err = recoverAddressFromGeth(hash, sig)
 	case SignatureType_TREZOR:
-		hash = ssha.SoliditySHA3(
-			ssha.String("\x19Ethereum Signed Message:\n\x20"),
-			ssha.Bytes32(hash),
-		)
+		hash, err = recoverAddressFromTrezor(hash, sig)
 	case SignatureType_EOS:
-		return recoverAddressFromEosSig(hash, sig)
+		return recoverAddressFromEos(hash, sig)
 	default:
-		return signer, fmt.Errorf("invalid signature type: %d", sig[0])
+		err = fmt.Errorf("invalid signature type: %d", sig[0])
+	}
+	if err != nil {
+		return signer, err
 	}
 
-	signer, err := SolidityRecover(hash, sig[1:])
-	return signer, err
+	return SolidityRecover(hash, sig[1:])
 }
 
-func recoverAddressFromEosSig(hash []byte, sig []byte) (common.Address, error) {
+func recoverAddressFromEIP712(sig []byte) (error) {
+	if len(sig) != 66 {
+		return signer, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
+	}
+	return nil
+}
+
+func recoverAddressFromGeth(hash []byte, sig []byte) ([]byte, error) {
+	if len(sig) != 66 {
+		return nil, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
+	}
+	return ssha.SoliditySHA3(
+		ssha.String("\x19Ethereum Signed Message:\n32"),
+		ssha.Bytes32(hash),
+	), nil
+}
+
+func recoverAddressFromTrezor(hash []byte, sig []byte) ([]byte, error) {
+	if len(sig) != 66 {
+		return nil, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
+	}
+	return ssha.SoliditySHA3(
+		ssha.String("\x19Ethereum Signed Message:\n\x20"),
+		ssha.Bytes32(hash),
+	), nil
+}
+
+func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
 	if len(sig) != 67 {
 		return signer, fmt.Errorf("eos signature must be 67 bytes, not %d bytes", len(sig))
