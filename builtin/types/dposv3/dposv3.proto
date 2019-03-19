@@ -23,6 +23,13 @@ message State {
     BigUInt total_reward_distribution = 5;
 }
 
+message InitializationState {
+    State state = 1;
+    repeated Candidate candidates = 2;
+    repeated Delegation delegations = 3;
+    repeated ValidatorStatistic statistics = 4;
+}
+
 message ValidatorStatistic {
     Address address = 1;
     bytes pub_key = 2;
@@ -33,10 +40,6 @@ message ValidatorStatistic {
     BigUInt delegation_total = 7;
     BigUInt whitelist_amount = 8;
     uint64 whitelist_locktime = 9;
-}
-
-message ValidatorStatisticList {
-    repeated ValidatorStatistic statistics = 1;
 }
 
 message Candidate {
