@@ -127,7 +127,7 @@ func recoverAddressFromEosSig(hash []byte, sig []byte) (common.Address, error) {
 	if err != nil {
 		return signer, errors.Wrapf(err, "retrieve btcec key from eos key %v", pubKey)
 	}
-	local := common.HexToAddress(crypto.PubkeyToAddress(ecdsa.PublicKey(*btcecPubKey)).Hex())
+	local := crypto.PubkeyToAddress(ecdsa.PublicKey(*btcecPubKey))
 	return local, nil
 }
 
