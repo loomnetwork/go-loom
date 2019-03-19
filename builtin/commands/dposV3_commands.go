@@ -8,30 +8,36 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/loomnetwork/go-loom/builtin/types/dposv2"
+	"github.com/loomnetwork/go-loom/builtin/types/dposv3"
 	"github.com/loomnetwork/go-loom/cli"
 	"github.com/loomnetwork/go-loom/types"
 )
 
-const DPOSV2ContractName = "dposV2"
+const DPOSV3ContractName = "dposV3"
 
-func UnregisterCandidateCmdV2() *cobra.Command {
+var (
+	candidateName        string
+	candidateDescription string
+	candidateWebsite     string
+)
+
+func UnregisterCandidateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "unregister_candidateV2",
+		Use:   "unregister_candidate_v3",
 		Short: "Unregisters the candidate (only called if previously registered)",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return cli.CallContract(DPOSV2ContractName, "UnregisterCandidate", &dposv2.UnregisterCandidateRequestV2{}, nil)
+			return cli.CallContract(DPOSV3ContractName, "UnregisterCandidate", &dposv3.UnregisterCandidateRequest{}, nil)
 		},
 	}
 }
 
-func GetStateCmd() *cobra.Command {
+func GetStateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "get_dpos_state",
+		Use:   "get_dpos_state_v3",
 		Short: "Gets dpos state",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.GetStateResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "GetState", &dposv2.GetStateRequest{}, &resp)
+			var resp dposv3.GetStateResponse
+			err := cli.StaticCallContract(DPOSV3ContractName, "GetState", &dposv3.GetStateRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -44,13 +50,13 @@ func GetStateCmd() *cobra.Command {
 		},
 	}
 }
-func ListValidatorsCmdV2() *cobra.Command {
+func ListValidatorsCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "list_validatorsV2",
+		Use:   "list_validators_v3",
 		Short: "List the current validators",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.ListValidatorsResponseV2
-			err := cli.StaticCallContract(DPOSV2ContractName, "ListValidators", &dposv2.ListValidatorsRequestV2{}, &resp)
+			var resp dposv3.ListValidatorsResponse
+			err := cli.StaticCallContract(DPOSV3ContractName, "ListValidators", &dposv3.ListValidatorsRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -64,13 +70,13 @@ func ListValidatorsCmdV2() *cobra.Command {
 	}
 }
 
-func ListCandidatesCmdV2() *cobra.Command {
+func ListCandidatesCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "list_candidatesV2",
+		Use:   "list_candidates_v3",
 		Short: "List the registered candidates",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.ListCandidateResponseV2
-			err := cli.StaticCallContract(DPOSV2ContractName, "ListCandidates", &dposv2.ListCandidateRequestV2{}, &resp)
+			var resp dposv3.ListCandidateResponse
+			err := cli.StaticCallContract(DPOSV3ContractName, "ListCandidates", &dposv3.ListCandidateRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -84,9 +90,9 @@ func ListCandidatesCmdV2() *cobra.Command {
 	}
 }
 
-func ChangeFeeCmd() *cobra.Command {
+func ChangeFeeCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "change_fee [new validator fee (in basis points)]",
+		Use:   "change_fee_v3 [new validator fee (in basis points)]",
 		Short: "Changes a validator's fee after (with a 2 election delay)",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -97,16 +103,16 @@ func ChangeFeeCmd() *cobra.Command {
 			if candidateFee > 10000 {
 				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
 			}
-			return cli.CallContract(DPOSV2ContractName, "ChangeFee", &dposv2.ChangeCandidateFeeRequest{
+			return cli.CallContract(DPOSV3ContractName, "ChangeFee", &dposv3.ChangeCandidateFeeRequest{
 				Fee: candidateFee,
 			}, nil)
 		},
 	}
 }
 
-func RegisterCandidateCmdV2() *cobra.Command {
+func RegisterCandidateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "register_candidateV2 [public key] [validator fee (in basis points)] [locktime tier]",
+		Use:   "register_candidate_v3 [public key] [validator fee (in basis points)] [locktime tier]",
 		Short: "Register a candidate for validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -131,7 +137,7 @@ func RegisterCandidateCmdV2() *cobra.Command {
 				}
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "RegisterCandidate2", &dposv2.RegisterCandidateRequestV2{
+			return cli.CallContract(DPOSV3ContractName, "RegisterCandidate2", &dposv3.RegisterCandidateRequest{
 				PubKey:       pubKey,
 				Fee:          candidateFee,
 				Name:         candidateName,
@@ -143,9 +149,9 @@ func RegisterCandidateCmdV2() *cobra.Command {
 	}
 }
 
-func UpdateCandidateInfoCmd() *cobra.Command {
+func UpdateCandidateInfoCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "update_candidate_info [name] [description] [website]",
+		Use:   "update_candidate_info_v3 [name] [description] [website]",
 		Short: "Update candidate information for a validator",
 		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -153,7 +159,7 @@ func UpdateCandidateInfoCmd() *cobra.Command {
 			candidateDescription := args[1]
 			candidateWebsite := args[2]
 
-			return cli.CallContract(DPOSV2ContractName, "UpdateCandidateInfo", &dposv2.UpdateCandidateInfoRequest{
+			return cli.CallContract(DPOSV3ContractName, "UpdateCandidateInfo", &dposv3.UpdateCandidateInfoRequest{
 				Name:        candidateName,
 				Description: candidateDescription,
 				Website:     candidateWebsite,
@@ -162,9 +168,9 @@ func UpdateCandidateInfoCmd() *cobra.Command {
 	}
 }
 
-func DelegateCmdV2() *cobra.Command {
+func DelegateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "delegateV2 [validator address] [amount] [locktime tier]",
+		Use:   "delegate_v3 [validator address] [amount] [locktime tier]",
 		Short: "delegate tokens to a validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -177,7 +183,7 @@ func DelegateCmdV2() *cobra.Command {
 				return err
 			}
 
-			var req dposv2.DelegateRequestV2
+			var req dposv3.DelegateRequest
 			req.Amount = &types.BigUInt{Value: *amount}
 			req.ValidatorAddress = addr.MarshalPB()
 
@@ -194,14 +200,14 @@ func DelegateCmdV2() *cobra.Command {
 				req.LocktimeTier = tier
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "Delegate2", &req, nil)
+			return cli.CallContract(DPOSV3ContractName, "Delegate2", &req, nil)
 		},
 	}
 }
 
-func RedelegateCmdV2() *cobra.Command {
+func RedelegateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "redelegateV2 [new validator address] [former validator address] [amount]",
+		Use:   "redelegate_v3 [new validator address] [former validator address] [amount]",
 		Short: "Redelegate tokens from one validator to another",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -214,7 +220,7 @@ func RedelegateCmdV2() *cobra.Command {
 				return err
 			}
 
-			var req dposv2.RedelegateRequestV2
+			var req dposv3.RedelegateRequest
 			req.ValidatorAddress = validatorAddress.MarshalPB()
 			req.FormerValidatorAddress = formerValidatorAddress.MarshalPB()
 
@@ -226,14 +232,14 @@ func RedelegateCmdV2() *cobra.Command {
 				req.Amount = &types.BigUInt{Value: *amount}
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "Redelegate", &req, nil)
+			return cli.CallContract(DPOSV3ContractName, "Redelegate", &req, nil)
 		},
 	}
 }
 
-func WhitelistCandidateCmdV2() *cobra.Command {
+func WhitelistCandidateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "whitelist_candidate [candidate address] [amount] [lock time]",
+		Use:   "whitelist_candidate_v3 [candidate address] [amount] [lock time]",
 		Short: "Whitelist candidate & credit candidate's self delegation without token deposit",
 		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -250,7 +256,7 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "WhitelistCandidate", &dposv2.WhitelistCandidateRequestV2{
+			return cli.CallContract(DPOSV3ContractName, "WhitelistCandidate", &dposv3.WhitelistCandidateRequest{
 				CandidateAddress: candidateAddress.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
@@ -261,9 +267,9 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 	}
 }
 
-func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
+func RemoveWhitelistedCandidateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "remove_whitelisted_candidate [candidate address]",
+		Use:   "remove_whitelisted_candidate_v3 [candidate address]",
 		Short: "remove a candidate's whitelist entry",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -272,16 +278,16 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 				return err
 			}
 
-			return cli.CallContract(DPOSV2ContractName, "RemoveWhitelistedCandidate", &dposv2.RemoveWhitelistedCandidateRequestV2{
+			return cli.CallContract(DPOSV3ContractName, "RemoveWhitelistedCandidate", &dposv3.RemoveWhitelistedCandidateRequest{
 				CandidateAddress: candidateAddress.MarshalPB(),
 			}, nil)
 		},
 	}
 }
 
-func ChangeWhitelistAmountCmdV2() *cobra.Command {
+func ChangeWhitelistAmountCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "change_whitelist_amount [candidate address] [amount]",
+		Use:   "change_whitelist_amount_v3 [candidate address] [amount]",
 		Short: "Changes a whitelisted candidate's whitelist amount",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -293,7 +299,7 @@ func ChangeWhitelistAmountCmdV2() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistAmount", &dposv2.ChangeWhitelistAmountRequestV2{
+			return cli.CallContract(DPOSV3ContractName, "ChangeWhitelistAmount", &dposv3.ChangeWhitelistAmountRequest{
 				CandidateAddress: candidateAddress.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
@@ -303,13 +309,13 @@ func ChangeWhitelistAmountCmdV2() *cobra.Command {
 	}
 }
 
-func CheckDelegationCmdV2() *cobra.Command {
+func CheckDelegationCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "check_delegationV2 [validator address] [delegator address]",
+		Use:   "check_delegation_v3 [validator address] [delegator address]",
 		Short: "check delegation to a particular validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.CheckDelegationResponseV2
+			var resp dposv3.CheckDelegationResponse
 			validatorAddress, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
@@ -318,7 +324,7 @@ func CheckDelegationCmdV2() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			err = cli.StaticCallContract(DPOSV2ContractName, "CheckDelegation", &dposv2.CheckDelegationRequestV2{ValidatorAddress: validatorAddress.MarshalPB(), DelegatorAddress: delegatorAddress.MarshalPB()}, &resp)
+			err = cli.StaticCallContract(DPOSV3ContractName, "CheckDelegation", &dposv3.CheckDelegationRequest{ValidatorAddress: validatorAddress.MarshalPB(), DelegatorAddress: delegatorAddress.MarshalPB()}, &resp)
 			if err != nil {
 				return err
 			}
@@ -332,9 +338,9 @@ func CheckDelegationCmdV2() *cobra.Command {
 	}
 }
 
-func UnbondCmdV2() *cobra.Command {
+func UnbondCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "unbondV2 [validator address] [amount]",
+		Use:   "unbond_v3 [validator address] [amount]",
 		Short: "De-allocate tokens from a validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -347,7 +353,7 @@ func UnbondCmdV2() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return cli.CallContract(DPOSV2ContractName, "Unbond", &dposv2.UnbondRequestV2{
+			return cli.CallContract(DPOSV3ContractName, "Unbond", &dposv3.UnbondRequest{
 				ValidatorAddress: addr.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
@@ -357,42 +363,14 @@ func UnbondCmdV2() *cobra.Command {
 	}
 }
 
-func ClaimDistributionCmdV2() *cobra.Command {
+func CheckRewardsCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "claim_distributionV2 [withdrawal address]",
-		Short: "claim dpos distributions due to a validator or delegator",
-		Args:  cobra.MinimumNArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
-			if err != nil {
-				return err
-			}
-
-			var resp dposv2.ClaimDistributionResponseV2
-			err = cli.CallContract(DPOSV2ContractName, "ClaimDistribution", &dposv2.ClaimDistributionRequestV2{
-				WithdrawalAddress: addr.MarshalPB(),
-			}, &resp)
-			if err != nil {
-				return err
-			}
-			out, err := formatJSON(&resp)
-			if err != nil {
-				return err
-			}
-			fmt.Println(out)
-			return nil
-		},
-	}
-}
-
-func CheckRewardsCmd() *cobra.Command {
-	return &cobra.Command{
-		Use:   "check_rewards",
+		Use:   "check_rewards_v3",
 		Short: "check rewards statistics",
 		Args:  cobra.MinimumNArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.CheckRewardsResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "CheckRewards", &dposv2.CheckRewardsRequest{}, &resp)
+			var resp dposv3.CheckRewardsResponse
+			err := cli.StaticCallContract(DPOSV3ContractName, "CheckRewards", &dposv3.CheckRewardsRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -406,30 +384,9 @@ func CheckRewardsCmd() *cobra.Command {
 	}
 }
 
-func CheckDistributionCmd() *cobra.Command {
+func TotalDelegationCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "check_distribution",
-		Short: "check rewards distribution",
-		Args:  cobra.MinimumNArgs(0),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.CheckDistributionResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "CheckDistribution", &dposv2.CheckDistributionRequest{}, &resp)
-			if err != nil {
-				return err
-			}
-			out, err := formatJSON(&resp)
-			if err != nil {
-				return err
-			}
-			fmt.Println(out)
-			return nil
-		},
-	}
-}
-
-func TotalDelegationCmd() *cobra.Command {
-	return &cobra.Command{
-		Use:   "total_delegation [delegator]",
+		Use:   "total_delegation_v3 [delegator]",
 		Short: "check how much a delegator has delegated in total (to all validators)",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -438,8 +395,8 @@ func TotalDelegationCmd() *cobra.Command {
 				return err
 			}
 
-			var resp dposv2.TotalDelegationResponse
-			err = cli.StaticCallContract(DPOSV2ContractName, "TotalDelegation", &dposv2.TotalDelegationRequest{DelegatorAddress: addr.MarshalPB()}, &resp)
+			var resp dposv3.TotalDelegationResponse
+			err = cli.StaticCallContract(DPOSV3ContractName, "TotalDelegation", &dposv3.TotalDelegationRequest{DelegatorAddress: addr.MarshalPB()}, &resp)
 			if err != nil {
 				return err
 			}
@@ -453,9 +410,9 @@ func TotalDelegationCmd() *cobra.Command {
 	}
 }
 
-func CheckAllDelegationsCmd() *cobra.Command {
+func CheckAllDelegationsCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "check_all_delegations [delegator]",
+		Use:   "check_all_delegations_v3 [delegator]",
 		Short: "display all of a particular delegator's delegations",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -464,8 +421,8 @@ func CheckAllDelegationsCmd() *cobra.Command {
 				return err
 			}
 
-			var resp dposv2.CheckAllDelegationsResponse
-			err = cli.StaticCallContract(DPOSV2ContractName, "CheckAllDelegations", &dposv2.CheckAllDelegationsRequest{DelegatorAddress: addr.MarshalPB()}, &resp)
+			var resp dposv3.CheckAllDelegationsResponse
+			err = cli.StaticCallContract(DPOSV3ContractName, "CheckAllDelegations", &dposv3.CheckAllDelegationsRequest{DelegatorAddress: addr.MarshalPB()}, &resp)
 			if err != nil {
 				return err
 			}
@@ -479,14 +436,14 @@ func CheckAllDelegationsCmd() *cobra.Command {
 	}
 }
 
-func TimeUntilElectionCmd() *cobra.Command {
+func TimeUntilElectionCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "time_until_election",
+		Use:   "time_until_election_v3",
 		Short: "check how many seconds remain until the next election",
 		Args:  cobra.MinimumNArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.TimeUntilElectionResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "TimeUntilElection", &dposv2.TimeUntilElectionRequest{}, &resp)
+			var resp dposv3.TimeUntilElectionResponse
+			err := cli.StaticCallContract(DPOSV3ContractName, "TimeUntilElection", &dposv3.TimeUntilElectionRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -500,9 +457,9 @@ func TimeUntilElectionCmd() *cobra.Command {
 	}
 }
 
-func ListDelegationsCmd() *cobra.Command {
+func ListDelegationsCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "list_delegations",
+		Use:   "list_delegations_v3",
 		Short: "list a candidate's delegations & delegation total",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -511,8 +468,8 @@ func ListDelegationsCmd() *cobra.Command {
 				return err
 			}
 
-			var resp dposv2.ListDelegationsResponse
-			err = cli.StaticCallContract(DPOSV2ContractName, "ListDelegations", &dposv2.ListDelegationsRequest{Candidate: addr.MarshalPB()}, &resp)
+			var resp dposv3.ListDelegationsResponse
+			err = cli.StaticCallContract(DPOSV3ContractName, "ListDelegations", &dposv3.ListDelegationsRequest{Candidate: addr.MarshalPB()}, &resp)
 			if err != nil {
 				return err
 			}
@@ -526,14 +483,14 @@ func ListDelegationsCmd() *cobra.Command {
 	}
 }
 
-func ListAllDelegationsCmd() *cobra.Command {
+func ListAllDelegationsCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "list_all_delegations",
+		Use:   "list_all_delegations_v3",
 		Short: "display the results of calling list_delegations for all candidates",
 		Args:  cobra.MinimumNArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv2.ListAllDelegationsResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "ListAllDelegations", &dposv2.ListAllDelegationsRequest{}, &resp)
+			var resp dposv3.ListAllDelegationsResponse
+			err := cli.StaticCallContract(DPOSV3ContractName, "ListAllDelegations", &dposv3.ListAllDelegationsRequest{}, &resp)
 			if err != nil {
 				return err
 			}
@@ -549,9 +506,9 @@ func ListAllDelegationsCmd() *cobra.Command {
 
 // Oracle Commands for setting parameters
 
-func SetElectionCycleCmdV2() *cobra.Command {
+func SetElectionCycleCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "set_election_cycle [election duration]",
+		Use:   "set_election_cycle_v3 [election duration]",
 		Short: "Set election cycle duration (in seconds)",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -560,7 +517,7 @@ func SetElectionCycleCmdV2() *cobra.Command {
 				return err
 			}
 
-			err = cli.CallContract(DPOSV2ContractName, "SetElectionCycle", &dposv2.SetElectionCycleRequestV2{
+			err = cli.CallContract(DPOSV3ContractName, "SetElectionCycle", &dposv3.SetElectionCycleRequest{
 				ElectionCycle: int64(electionCycleDuration),
 			}, nil)
 			if err != nil {
@@ -571,9 +528,9 @@ func SetElectionCycleCmdV2() *cobra.Command {
 	}
 }
 
-func SetValidatorCountCmdV2() *cobra.Command {
+func SetValidatorCountCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "set_validator_count [validator count]",
+		Use:   "set_validator_count_v3 [validator count]",
 		Short: "Set maximum number of validators",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -582,7 +539,7 @@ func SetValidatorCountCmdV2() *cobra.Command {
 				return err
 			}
 
-			err = cli.CallContract(DPOSV2ContractName, "SetValidatorCount", &dposv2.SetValidatorCountRequestV2{
+			err = cli.CallContract(DPOSV3ContractName, "SetValidatorCount", &dposv3.SetValidatorCountRequest{
 				ValidatorCount: int64(validatorCount),
 			}, nil)
 			if err != nil {
@@ -593,9 +550,9 @@ func SetValidatorCountCmdV2() *cobra.Command {
 	}
 }
 
-func SetMaxYearlyRewardCmdV2() *cobra.Command {
+func SetMaxYearlyRewardCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "set_max_yearly_reward [max yearly rewward amount]",
+		Use:   "set_max_yearly_reward_v3 [max yearly rewward amount]",
 		Short: "Set maximum yearly reward",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -604,7 +561,7 @@ func SetMaxYearlyRewardCmdV2() *cobra.Command {
 				return err
 			}
 
-			err = cli.CallContract(DPOSV2ContractName, "SetMaxYearlyReward", &dposv2.SetMaxYearlyRewardRequestV2{
+			err = cli.CallContract(DPOSV3ContractName, "SetMaxYearlyReward", &dposv3.SetMaxYearlyRewardRequest{
 				MaxYearlyReward: &types.BigUInt{
 					Value: *maxYearlyReward,
 				},
@@ -617,9 +574,9 @@ func SetMaxYearlyRewardCmdV2() *cobra.Command {
 	}
 }
 
-func SetRegistrationRequirementCmdV2() *cobra.Command {
+func SetRegistrationRequirementCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "set_registration_requirement [registration_requirement]",
+		Use:   "set_registration_requirement_v3 [registration_requirement]",
 		Short: "Set minimum self-delegation required of a new Candidate",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -628,7 +585,7 @@ func SetRegistrationRequirementCmdV2() *cobra.Command {
 				return err
 			}
 
-			err = cli.CallContract(DPOSV2ContractName, "SetRegistrationRequirement", &dposv2.SetRegistrationRequirementRequestV2{
+			err = cli.CallContract(DPOSV3ContractName, "SetRegistrationRequirement", &dposv3.SetRegistrationRequirementRequest{
 				RegistrationRequirement: &types.BigUInt{
 					Value: *registrationRequirement,
 				},
@@ -641,9 +598,9 @@ func SetRegistrationRequirementCmdV2() *cobra.Command {
 	}
 }
 
-func SetOracleAddressCmdV2() *cobra.Command {
+func SetOracleAddressCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "set_oracle_address [oracle address]",
+		Use:   "set_oracle_address_v3 [oracle address]",
 		Short: "Set oracle address",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -651,7 +608,7 @@ func SetOracleAddressCmdV2() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			err = cli.CallContract(DPOSV2ContractName, "SetOracleAddress", &dposv2.SetOracleAddressRequestV2{OracleAddress: oracleAddress.MarshalPB()}, nil)
+			err = cli.CallContract(DPOSV3ContractName, "SetOracleAddress", &dposv3.SetOracleAddressRequest{OracleAddress: oracleAddress.MarshalPB()}, nil)
 			if err != nil {
 				return err
 			}
@@ -660,9 +617,9 @@ func SetOracleAddressCmdV2() *cobra.Command {
 	}
 }
 
-func SetSlashingPercentagesCmdV2() *cobra.Command {
+func SetSlashingPercentagesCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "set_slashing_percentages [crash fault slashing percentage] [byzantine fault slashing percentage",
+		Use:   "set_slashing_percentages_v3 [crash fault slashing percentage] [byzantine fault slashing percentage",
 		Short: "Set crash and byzantine fualt slashing percentages expressed in basis points",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -671,7 +628,7 @@ func SetSlashingPercentagesCmdV2() *cobra.Command {
 				return err
 			}
 
-			err = cli.CallContract(DPOSV2ContractName, "SetRegistrationRequirement", &dposv2.SetRegistrationRequirementRequestV2{
+			err = cli.CallContract(DPOSV3ContractName, "SetRegistrationRequirement", &dposv3.SetRegistrationRequirementRequest{
 				RegistrationRequirement: &types.BigUInt{
 					Value: *registrationRequirement,
 				},
@@ -684,39 +641,37 @@ func SetSlashingPercentagesCmdV2() *cobra.Command {
 	}
 }
 
-func AddDPOSV2(root *cobra.Command) {
-	registercmd := RegisterCandidateCmdV2()
+func AddDPOSV3(root *cobra.Command) {
+	registercmd := RegisterCandidateCmdV3()
 	registercmd.Flags().StringVarP(&candidateName, "name", "", "", "candidate name")
 	registercmd.Flags().StringVarP(&candidateDescription, "description", "", "", "candidate description")
 	registercmd.Flags().StringVarP(&candidateWebsite, "website", "", "", "candidate website")
 	root.AddCommand(
 		registercmd,
-		ListCandidatesCmdV2(),
-		ListValidatorsCmdV2(),
-		ListDelegationsCmd(),
-		ListAllDelegationsCmd(),
-		UnregisterCandidateCmdV2(),
-		UpdateCandidateInfoCmd(),
-		DelegateCmdV2(),
-		RedelegateCmdV2(),
-		WhitelistCandidateCmdV2(),
-		RemoveWhitelistedCandidateCmdV2(),
-		ChangeWhitelistAmountCmdV2(),
-		CheckDelegationCmdV2(),
-		CheckAllDelegationsCmd(),
-		CheckDistributionCmd(),
-		CheckRewardsCmd(),
-		UnbondCmdV2(),
-		ClaimDistributionCmdV2(),
-		SetElectionCycleCmdV2(),
-		SetValidatorCountCmdV2(),
-		SetMaxYearlyRewardCmdV2(),
-		SetRegistrationRequirementCmdV2(),
-		SetOracleAddressCmdV2(),
-		SetSlashingPercentagesCmdV2(),
-		ChangeFeeCmd(),
-		TimeUntilElectionCmd(),
-		TotalDelegationCmd(),
-		GetStateCmd(),
+		ListCandidatesCmdV3(),
+		ListValidatorsCmdV3(),
+		ListDelegationsCmdV3(),
+		ListAllDelegationsCmdV3(),
+		UnregisterCandidateCmdV3(),
+		UpdateCandidateInfoCmdV3(),
+		DelegateCmdV3(),
+		RedelegateCmdV3(),
+		WhitelistCandidateCmdV3(),
+		RemoveWhitelistedCandidateCmdV3(),
+		ChangeWhitelistAmountCmdV3(),
+		CheckDelegationCmdV3(),
+		CheckAllDelegationsCmdV3(),
+		CheckRewardsCmdV3(),
+		UnbondCmdV3(),
+		SetElectionCycleCmdV3(),
+		SetValidatorCountCmdV3(),
+		SetMaxYearlyRewardCmdV3(),
+		SetRegistrationRequirementCmdV3(),
+		SetOracleAddressCmdV3(),
+		SetSlashingPercentagesCmdV3(),
+		ChangeFeeCmdV3(),
+		TimeUntilElectionCmdV3(),
+		TotalDelegationCmdV3(),
+		GetStateCmdV3(),
 	)
 }

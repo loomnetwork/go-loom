@@ -44,7 +44,13 @@ message Candidate {
     bytes pub_key = 2;
     uint64 fee = 3;
     uint64 new_fee = 4;
-    uint64 fee_delay_counter = 5;
+    enum CandidateState {
+        REGISTERED = 0;
+        UNREGISTERING = 1;
+        ABOUT_TO_CHANGE_FEE = 2;
+        CHANGING_FEE = 3;
+    }
+    CandidateState state = 5;
     string name = 6;
     string description = 7;
     string website = 8;
