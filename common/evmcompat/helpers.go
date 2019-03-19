@@ -81,7 +81,6 @@ func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureT
 // RecoverAddressFromTypedSig recovers the Ethereum address from a signed hash and a 66-byte signature
 // (the first byte of which is expected to denote the SignatureType).
 func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error) {
-	var signer common.Address
 	var err error
 
 	switch SignatureType(sig[0]) {
@@ -97,7 +96,7 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 		err = fmt.Errorf("invalid signature type: %d", sig[0])
 	}
 	if err != nil {
-		return signer, err
+		return common.Address{}, err
 	}
 
 	return SolidityRecover(hash, sig[1:])
