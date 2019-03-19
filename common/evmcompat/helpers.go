@@ -103,9 +103,9 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 	return SolidityRecover(hash, sig[1:])
 }
 
-func recoverAddressFromEIP712(sig []byte) (error) {
+func recoverAddressFromEIP712(sig []byte) error {
 	if len(sig) != 66 {
-		return signer, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
+		return fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
 	}
 	return nil
 }
@@ -137,7 +137,7 @@ func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 	}
 	signature := ecc.NewSigNil()
 	_, err := signature.Unpack(sig[1:])
-	if err != nil{
+	if err != nil {
 		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
 	}
 	pubKey, err := signature.PublicKey(hash)
