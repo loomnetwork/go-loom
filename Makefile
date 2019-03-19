@@ -99,7 +99,7 @@ deps:
 		github.com/spf13/cobra \
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert \
-	    github.com/eosspark/eos-go/crypto \
+		github.com/eosspark/eos-go/crypto \
 		github.com/go-kit/kit/log \
 		github.com/pkg/errors
 	dep ensure -vendor-only

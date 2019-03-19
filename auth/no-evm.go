@@ -4,6 +4,7 @@ package auth
 
 import (
 	"crypto/ecdsa"
+	"github.com/eosspark/eos-go/crypto/ecc"
 	"fmt"
 )
 
@@ -40,7 +41,7 @@ func (k *TronSigner) PublicKey() []byte {
 }
 
 type EosSigner struct {
-	PrivateKey *ecdsa.PrivateKey
+	PrivateKey *ecc.PrivateKey
 }
 
 func (k *EosSigner) Sign(_ []byte) []byte {
