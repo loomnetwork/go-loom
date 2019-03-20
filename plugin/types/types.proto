@@ -294,6 +294,15 @@ message ContractRecordResponse {
     Address creator_address = 3;
 }
 
+message FeatureEnabledRequest {
+    string name = 1;
+    bool defaultVal = 2;
+}
+
+message FeatureEnabledResponse {
+    bool value = 1;
+}
+
 
 
 service API {
@@ -310,4 +319,5 @@ service API {
     rpc Call(CallRequest) returns (CallResponse);
     rpc SetValidatorPower(SetValidatorPowerRequest) returns (SetValidatorPowerResponse);
     rpc ContractRecord(ContractRecordRequest) returns (ContractRecordResponse);
+    rpc FeatureEnabled(FeatureEnabledRequest) returns (FeatureEnabledResponse);
 }

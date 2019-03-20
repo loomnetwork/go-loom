@@ -1,0 +1,80 @@
+syntax = "proto3";
+package chainconfig;
+import "github.com/loomnetwork/go-loom/types/types.proto";
+
+message InitRequest {
+    Address owner = 1;
+    Params params = 2;
+}
+
+message GetFeatureRequest {
+    string name = 1;
+}
+
+message AddFeatureRequest {
+    string name = 1;
+}
+
+message AddFeatureResponse {
+}
+
+message GetFeatureResponse {
+    Feature feature = 1;
+}
+
+message Feature {
+    string name = 1;
+    enum FeatureStatus {
+        PENDING = 0;
+        WAITING = 1;
+        ENABLED = 2;
+        DISABLED = 3;
+    }
+    FeatureStatus status = 2;
+    repeated Address validators = 3;
+
+    //Percentage of feature enabled validators exceeds vote_threshold at this block_height
+    uint64 block_height = 4;
+
+    //Feature changes status from `pending` to `waiting` with at this percentage
+    uint64 percentage = 5;
+}
+
+message Params {
+    uint64 vote_threshold = 1;
+    uint64 num_block_confirmations = 2;
+}
+
+message SetParamsRequest {
+    Params params = 1;
+}
+
+message GetParamsRequest {
+}
+
+message GetParamsResponse {
+    Params params = 1;
+}
+
+message ListFeaturesRequest {
+}
+
+message ListFeaturesResponse {
+    repeated Feature features = 1;
+}
+
+message EnableFeatureRequest {
+    string name = 1;
+}
+
+message EnableFeatureResponse {
+
+}
+
+//TODO:update config, not supported yet
+
+
+message UpdateFeatureRequest {
+    string key = 1;
+    bool enabled = 2;
+}

@@ -171,6 +171,11 @@ func (c *FakeContext) ValidatorPower(pubKey []byte) int64 {
 	return 0
 }
 
+func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
+	// TODO
+	return defaultVal
+}
+
 func (c *FakeContext) Message() Message {
 	return Message{
 		Sender: c.caller,
