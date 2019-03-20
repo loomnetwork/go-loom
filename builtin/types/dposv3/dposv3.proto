@@ -33,13 +33,11 @@ message InitializationState {
 message ValidatorStatistic {
     Address address = 1;
     bytes pub_key = 2;
-    uint64 upblock_count = 3;
-    uint64 block_count = 4;
-    BigUInt slash_percentage = 5;
-    BigUInt distribution_total = 6;
-    BigUInt delegation_total = 7;
-    BigUInt whitelist_amount = 8;
-    uint64 whitelist_locktime = 9;
+    BigUInt whitelist_amount = 3;
+    BigUInt delegation_total = 4;
+    BigUInt distribution_total = 5;
+    BigUInt slash_percentage = 6;
+    uint64 recently_missed_blocks = 7;
 }
 
 message Candidate {
