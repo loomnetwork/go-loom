@@ -328,11 +328,13 @@ message DposUpdateCandidateInfoEvent {
 message DposDelegatorDelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;
+    string referrer = 3;
 }
 
 message DposDelegatorRedelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;
+    string referrer = 3;
 }
 
 message DposDelegatorUnbondsEvent {
