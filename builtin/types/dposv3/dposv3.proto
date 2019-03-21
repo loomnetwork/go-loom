@@ -104,6 +104,7 @@ message DelegateRequest {
     Address validator_address = 1;
     BigUInt amount = 2;
     uint64 locktime_tier = 3;
+    string referrer = 4; //optional wallet the sent the delegation
 }
 
 message RedelegateRequest {
@@ -112,6 +113,7 @@ message RedelegateRequest {
     uint64 index = 3;
     BigUInt amount = 4;
     uint64 new_locktime_tier = 5;
+    string referrer = 6; //optional wallet the sent the delegation
 }
 
 message ConsolidateDelegationsRequest {
