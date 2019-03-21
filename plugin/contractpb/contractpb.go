@@ -133,7 +133,7 @@ func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []b
 
 // Check if feature is enabled on chain
 func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool {
-	return c.FeatureEnabled(name, defaultVal)
+	return c.Context.FeatureEnabled(name, defaultVal)
 }
 
 func rolePermKey(addr loom.Address, token []byte, role string) []byte {
