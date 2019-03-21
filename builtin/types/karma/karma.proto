@@ -108,9 +108,9 @@ message GetUserStateRequest{
 }
 
 message GetUserStateResponse{
-    KarmaState karmastate = 1;
+    KarmaState user_state = 1;
 }
 
 message SetAllowedKarmaSourcesRequest{
-    KarmaSources Karmasources = 1;
+    KarmaSources sources = 1;
 }
