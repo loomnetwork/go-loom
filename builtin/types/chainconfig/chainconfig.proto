@@ -30,6 +30,7 @@ message Feature {
         WAITING = 1;
         ENABLED = 2;
         DISABLED = 3;
+        INIT = 4;
     }
     FeatureStatus status = 2;
     repeated Address validators = 3;
