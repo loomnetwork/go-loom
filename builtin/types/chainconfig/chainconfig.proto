@@ -5,6 +5,7 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 message InitRequest {
     Address owner = 1;
     Params params = 2;
+    repeated Feature features = 3; 
 }
 
 message GetFeatureRequest {
