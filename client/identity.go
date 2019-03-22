@@ -21,9 +21,15 @@ type Identity struct {
 }
 
 func CreateIdentity(mainnetPrivKey *ecdsa.PrivateKey, loomSigner auth.Signer, chainID string) (*Identity, error) {
+	var mainnetAddr common.Address
+	if mainnetPrivKey != nil {
+		mainnetAddr = crypto.PubkeyToAddress(mainnetPrivKey.PublicKey)
+	} else {
+		mainnetAddr = common.HexToAddress("0x0")
+	}
 	identity := &Identity{
 		MainnetPrivKey: mainnetPrivKey,
-		MainnetAddr:    crypto.PubkeyToAddress(mainnetPrivKey.PublicKey),
+		MainnetAddr:    mainnetAddr,
 		LoomSigner:     loomSigner,
 		LoomAddr: loom.Address{
 			ChainID: chainID,
