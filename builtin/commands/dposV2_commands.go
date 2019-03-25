@@ -430,10 +430,17 @@ func CheckDistributionCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "check_distribution",
 		Short: "check rewards distribution",
-		Args:  cobra.MinimumNArgs(0),
+		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ResolveAddress(args[0])
+			if err != nil {
+				return err
+			}
+
 			var resp dposv2.CheckDistributionResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "CheckDistribution", &dposv2.CheckDistributionRequest{}, &resp)
+			err = cli.StaticCallContract(DPOSV2ContractName, "CheckDistribution", &dposv2.CheckDistributionRequest{
+                Address: addr.MarshalPB(),
+            }, &resp)
 			if err != nil {
 				return err
 			}
