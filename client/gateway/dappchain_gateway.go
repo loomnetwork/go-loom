@@ -179,6 +179,15 @@ func (tg *DAppChainGateway) ReclaimDepositorTokens(identity *client.Identity) er
 	return err
 }
 
+func (tg *DAppChainGateway) GetUnclaimedTokens(identity *client.Identity, addr loom.Address) ([]*tgtypes.TransferGatewayUnclaimedToken, error) {
+	req := &tgtypes.TransferGatewayGetUnclaimedTokensRequest{
+		Owner: addr.MarshalPB(), // addr is an eth: prefixed ethereum address
+	}
+	resp := &tgtypes.TransferGatewayGetUnclaimedTokensResponse{}
+	_, err := tg.contract.StaticCall("GetUnclaimedTokens", req, identity.LoomAddr, resp)
+	return resp.UnclaimedTokens, err
+}
+
 type EventSub struct {
 	subscriber pubsub.Subscriber
 	closeFn    func()

@@ -57,6 +57,11 @@ message Candidate {
     string website = 8;
 }
 
+message CandidateStatistic {
+    ValidatorStatistic statistic = 1;
+    Candidate          candidate = 2;
+}
+
 message CandidateList {
     repeated Candidate candidates = 1;
 }
@@ -226,7 +231,7 @@ message ListCandidateRequest {
 }
 
 message ListCandidateResponse {
-    repeated Candidate candidates = 1;
+    repeated CandidateStatistic candidates = 1;
 }
 
 message ListDelegationsRequest {

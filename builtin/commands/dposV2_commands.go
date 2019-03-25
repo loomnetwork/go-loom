@@ -25,6 +25,26 @@ func UnregisterCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func GetDistributionsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "get_distributions",
+		Short: "Gets a list of all rewards for each address",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.GetDistributionsResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "GetDistributions", &dposv2.GetDistributionsRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 func GetStateCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "get_dpos_state",
@@ -718,5 +738,6 @@ func AddDPOSV2(root *cobra.Command) {
 		TimeUntilElectionCmd(),
 		TotalDelegationCmd(),
 		GetStateCmd(),
+		GetDistributionsCmd(),
 	)
 }
