@@ -287,7 +287,7 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 		Short: "remove a candidate's whitelist entry",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			candidateAddress, err := cli.ParseAdress(args[0])
+			candidateAddress, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
