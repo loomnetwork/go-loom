@@ -227,11 +227,11 @@ message ListValidatorsResponse {
     repeated ValidatorStatistic statistics = 1;
 }
 
-message ListCandidateRequest {
+message ListCandidatesRequest {
 }
 
-message ListCandidateResponse {
-    repeated CandidateStatistic candidates = 1;
+message ListCandidatesResponse {
+    repeated Candidate candidates = 1;
 }
 
 message ListDelegationsRequest {
