@@ -91,7 +91,7 @@ message TransferGatewayTokenDeposited {
     BigUInt token_id = 4 [(gogoproto.customname)="TokenID"];
     // ERC721X/ERC20/ETH amount
     BigUInt token_amount = 5;
-    // Mainnet transaction hash
+    // Mainnet tx hash
     bytes tx_hash = 6;
 }
 
@@ -107,7 +107,7 @@ message TransferGatewayTokenWithdrawn {
     BigUInt token_id = 4 [(gogoproto.customname)="TokenID"];
     // ERC721X/ERC20/ETH amount
     BigUInt token_amount = 5;
-    // Mainnet transaction hash
+    // Mainnet tx hash
     bytes tx_hash = 6;
 }
 
