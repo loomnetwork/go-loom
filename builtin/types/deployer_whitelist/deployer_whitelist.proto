@@ -10,7 +10,8 @@ message InitRequest {
 enum DeployPermission {
     EVM = 0;
     GO = 1;
-    BOTH = 2;
+    ANY = 2;
+    NONE = 4;
 };
 
 message Deployer {
