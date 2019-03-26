@@ -50,6 +50,7 @@ func GetStateCmdV3() *cobra.Command {
 		},
 	}
 }
+
 func ListValidatorsCmdV3() *cobra.Command {
 	return &cobra.Command{
 		Use:   "list_validators_v3",
@@ -75,8 +76,8 @@ func ListCandidatesCmdV3() *cobra.Command {
 		Use:   "list_candidates_v3",
 		Short: "List the registered candidates",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var resp dposv3.ListCandidateResponse
-			err := cli.StaticCallContract(DPOSV3ContractName, "ListCandidates", &dposv3.ListCandidateRequest{}, &resp)
+			var resp dposv3.ListCandidatesResponse
+			err := cli.StaticCallContract(DPOSV3ContractName, "ListCandidates", &dposv3.ListCandidatesRequest{}, &resp)
 			if err != nil {
 				return err
 			}
