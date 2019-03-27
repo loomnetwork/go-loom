@@ -7,21 +7,21 @@ message InitRequest {
     repeated Deployer deployers = 2;
 }
 
-enum DeployPermission {
+enum Flags {
     NONE = 0;
-    EVM = 1;
-    GO = 2;
-    ANY = 3;
-};
+    GO = 1;
+    EVM = 2;
+}
+
 
 message Deployer {
     Address address = 1;
-    DeployPermission permission = 2;
+    int32 flags = 2;
 }
 
 message AddDeployerRequest {
     Address deployerAddr = 1;
-    DeployPermission permission = 2;
+    int32 flags = 2;
 }
 
 message AddDeployerResponse {
