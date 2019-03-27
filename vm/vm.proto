@@ -30,6 +30,10 @@ message CallTx {
     string contract_version = 4;
 }
 
+message MigrationTx {
+    uint32 id = 1;
+}
+
 message DeployResponse {
     Address contract = 1;
     bytes output = 2;
