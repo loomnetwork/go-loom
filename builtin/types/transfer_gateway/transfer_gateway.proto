@@ -364,6 +364,6 @@ message TransferGatewayGetUnclaimedTokensResponse {
     repeated TransferGatewayUnclaimedToken unclaimed_tokens = 1;
 }
 
-message TransferGatewayGetSeenTxHash {
+message TransferGatewayMainnetEventTxHashInfo {
     TransferGatewayTokenKind token_kind = 1;
 }
