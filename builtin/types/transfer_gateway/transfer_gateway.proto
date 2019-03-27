@@ -9,6 +9,7 @@ enum TransferGatewayTokenKind {
     ERC721 = 2;
     ERC721X = 3;
     LOOMCOIN = 4;
+    TRX = 5;
 }
 
 message TransferGatewayState {
@@ -19,6 +20,8 @@ message TransferGatewayState {
     uint64 next_contract_mapping_id = 3 [(gogoproto.customname)="NextContractMappingID"];
     // Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
     repeated Address token_withdrawers = 4;
+    // Last Tron block processed by the Transfer Gateway contract
+    uint64 last_tron_block_num = 5;
 }
 
 message TransferGatewayOracleState {
@@ -109,6 +112,14 @@ message TransferGatewayTokenWithdrawn {
 
 message TransferGatewayMainnetEvent {
     uint64 eth_block = 1;
+    oneof payload {
+        TransferGatewayTokenDeposited deposit = 2;
+        TransferGatewayTokenWithdrawn withdrawal = 3;
+    }
+}
+
+message TransferGatewayTronEvent {
+    uint64 tron_block = 1;
     oneof payload {
         TransferGatewayTokenDeposited deposit = 2;
         TransferGatewayTokenWithdrawn withdrawal = 3;
@@ -240,6 +251,13 @@ message TransferGatewayStateResponse {
     TransferGatewayState state = 1;
 }
 
+
+// Batch of events from the Gateway on Tron
+message TransferGatewayProcessTronEventBatchRequest {
+    repeated TransferGatewayTronEvent events = 1;
+}
+
+
 // Recovery
 
 // Transfer unclaimed tokens to the sender, or to the specified depositors
@@ -329,6 +347,12 @@ message TransferGatewayResetMainnetBlockRequest {
 message TransferGatewayProcessMainnetEventError {
     uint64 eth_block = 1;
     TransferGatewayMainnetEvent event = 2;
+    string error_message = 3;
+}
+
+message TransferGatewayProcessTronEventError {
+    uint64 tron_block = 1;
+    TransferGatewayTronEvent event = 2;
     string error_message = 3;
 }
 
