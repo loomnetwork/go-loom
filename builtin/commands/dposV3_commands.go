@@ -138,7 +138,7 @@ func RegisterCandidateCmdV3() *cobra.Command {
 				}
 			}
 
-			return cli.CallContract(DPOSV3ContractName, "RegisterCandidate2", &dposv3.RegisterCandidateRequest{
+			return cli.CallContract(DPOSV3ContractName, "RegisterCandidate", &dposv3.RegisterCandidateRequest{
 				PubKey:       pubKey,
 				Fee:          candidateFee,
 				Name:         candidateName,
@@ -201,7 +201,7 @@ func DelegateCmdV3() *cobra.Command {
 				req.LocktimeTier = tier
 			}
 
-			return cli.CallContract(DPOSV3ContractName, "Delegate2", &req, nil)
+			return cli.CallContract(DPOSV3ContractName, "Delegate", &req, nil)
 		},
 	}
 }
