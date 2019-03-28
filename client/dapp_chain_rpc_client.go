@@ -456,6 +456,36 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 	return c.CommitTx2(from, signer, tx)
 }
 
+func (c *DAppChainRPCClient) CommitMigrationTx(
+	from loom.Address,
+	signer auth.Signer,
+	id string,
+) ([]byte, error) {
+	txID, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, err
+	}
+	migrationTxBytes, err := proto.Marshal(&vm.MigrationTx{
+		Id: uint32(txID),
+	})
+	if err != nil {
+		return nil, err
+	}
+	msgBytes, err := proto.Marshal(&vm.MessageTx{
+		From: from.MarshalPB(),
+		To:   loom.Address{}.MarshalPB(), // not used
+		Data: migrationTxBytes,
+	})
+	if err != nil {
+		return nil, err
+	}
+	tx := &types.Transaction{
+		Id:   3,
+		Data: msgBytes,
+	}
+	return c.CommitTx2(from, signer, tx)
+}
+
 func (c *DAppChainRPCClient) CommitCallTx(
 	caller loom.Address,
 	contract loom.Address,
