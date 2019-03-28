@@ -231,7 +231,7 @@ message ListCandidatesRequest {
 }
 
 message ListCandidatesResponse {
-    repeated Candidate candidates = 1;
+    repeated CandidateStatistic candidates = 1;
 }
 
 message ListDelegationsRequest {
