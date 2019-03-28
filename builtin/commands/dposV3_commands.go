@@ -341,7 +341,7 @@ func CheckDelegationCmdV3() *cobra.Command {
 
 func UnbondCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "unbond_v3 [validator address] [amount]",
+		Use:   "unbond_v3 [validator address] [amount] [index]",
 		Short: "De-allocate tokens from a validator",
 		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
