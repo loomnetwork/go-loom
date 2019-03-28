@@ -16,12 +16,12 @@ enum Flags {
 
 message Deployer {
     Address address = 1;
-    int32 flags = 2;
+    uint32 flags = 2;
 }
 
 message AddDeployerRequest {
     Address deployerAddr = 1;
-    int32 flags = 2;
+    uint32 flags = 2;
 }
 
 message AddDeployerResponse {
