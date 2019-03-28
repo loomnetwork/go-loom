@@ -343,7 +343,7 @@ func UnbondCmdV3() *cobra.Command {
 	return &cobra.Command{
 		Use:   "unbond_v3 [validator address] [amount]",
 		Short: "De-allocate tokens from a validator",
-		Args:  cobra.MinimumNArgs(2),
+		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			addr, err := cli.ResolveAddress(args[0])
 			if err != nil {
@@ -354,11 +354,18 @@ func UnbondCmdV3() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			index, err := strconv.ParseUint(args[2], 10, 64)
+			if err != nil {
+				return err
+			}
+
 			return cli.CallContract(DPOSV3ContractName, "Unbond", &dposv3.UnbondRequest{
 				ValidatorAddress: addr.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
 				},
+				Index: index,
 			}, nil)
 		},
 	}
