@@ -208,9 +208,9 @@ func DelegateCmdV3() *cobra.Command {
 
 func RedelegateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "redelegate_v3 [new validator address] [former validator address] [amount]",
+		Use:   "redelegate_v3 [new validator address] [former validator address] [index] [amount]",
 		Short: "Redelegate tokens from one validator to another",
-		Args:  cobra.MinimumNArgs(2),
+		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			validatorAddress, err := cli.ResolveAddress(args[0])
 			if err != nil {
@@ -221,12 +221,18 @@ func RedelegateCmdV3() *cobra.Command {
 				return err
 			}
 
+			index, err := strconv.ParseUint(args[2], 10, 64)
+			if err != nil {
+				return err
+			}
+
 			var req dposv3.RedelegateRequest
 			req.ValidatorAddress = validatorAddress.MarshalPB()
 			req.FormerValidatorAddress = formerValidatorAddress.MarshalPB()
+			req.Index = index
 
-			if len(args) == 3 {
-				amount, err := cli.ParseAmount(args[2])
+			if len(args) == 4 {
+				amount, err := cli.ParseAmount(args[3])
 				if err != nil {
 					return err
 				}
