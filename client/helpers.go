@@ -119,7 +119,16 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 	var ss [][32]byte
 	var validatorIndexes []*big.Int
 
-	splitSigs := split(sigs, 65)
+
+    // don't try splitting if 65 or 66
+    var splitSigs [][]byte
+    if len(sigs) == 65 {
+        splitSigs = [][]byte{sigs}
+    } else if len(sigs) == 66 {
+        splitSigs = [][]byte{sigs[1:]} // remove the mode flag
+    } else {
+	    splitSigs = split(sigs, 65) // assume we receive unprefixed if more than 1 element
+    }
 
 	for _, sig := range splitSigs {
 		validator, err := evmcompat.SolidityRecover(hash, sig)
