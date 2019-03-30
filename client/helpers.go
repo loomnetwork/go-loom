@@ -9,6 +9,8 @@ import (
 	"os"
 	"time"
 
+	ssha "github.com/miguelmota/go-solidity-sha3"
+
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
@@ -119,18 +121,24 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 	var ss [][32]byte
 	var validatorIndexes []*big.Int
 
-
-    // don't try splitting if 65 or 66
-    var splitSigs [][]byte
-    if len(sigs) == 65 {
-        splitSigs = [][]byte{sigs}
-    } else if len(sigs) == 66 {
-        splitSigs = [][]byte{sigs[1:]} // remove the mode flag
-    } else {
-	    splitSigs = split(sigs, 65) // assume we receive unprefixed if more than 1 element
-    }
+	// don't try splitting if 65 or 66
+	var splitSigs [][]byte
+	if len(sigs) == 65 {
+		splitSigs = [][]byte{sigs}
+	} else if len(sigs) == 66 {
+		splitSigs = [][]byte{sigs[1:]} // remove the mode flag
+	} else {
+		splitSigs = split(sigs, 65) // assume we receive unprefixed if more than 1 element
+	}
 
 	for _, sig := range splitSigs {
+		// Need to prefix the hash with the Ethereum Signed Message
+		hash = ssha.SoliditySHA3(
+			[]string{"string", "bytes32"},
+			"\x19Ethereum Signed Message:\n32",
+			hash,
+		)
+
 		validator, err := evmcompat.SolidityRecover(hash, sig)
 		if err != nil {
 			return nil, nil, nil, nil, err
@@ -144,14 +152,14 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 
 		v := uint8(sig[64])
 
+		vs = append(vs, v)
+		rs = append(rs, r)
+		ss = append(ss, s)
+
 		index, err := indexOfValidator(validator, validators)
 		if err != nil {
 			continue
 		}
-
-		vs = append(vs, v)
-		rs = append(rs, r)
-		ss = append(ss, s)
 		validatorIndexes = append(validatorIndexes, index)
 	}
 	return vs, rs, ss, validatorIndexes, nil
