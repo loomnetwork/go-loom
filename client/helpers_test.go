@@ -27,23 +27,23 @@ func TestParseSigWithoutMode(t *testing.T) {
 	hash, _ := hex.DecodeString("9be6cc490c68327498647b5a846b34565b4358a806d8b7e25a64058cfec744a0")
 
 	vs, rs, ss, ind, _ := ParseSigs(sigs, hash, validators)
-    assert.Equal(t, len(vs), 1, "incorrect v length")
-    assert.Equal(t, len(rs), 1, "incorrect v length")
-    assert.Equal(t, len(ss), 1, "incorrect v length")
-    assert.Equal(t, len(ind), 1, "incorrect v length")
+	assert.Equal(t, len(vs), 1, "incorrect v length")
+	assert.Equal(t, len(rs), 1, "incorrect v length")
+	assert.Equal(t, len(ss), 1, "incorrect v length")
+	assert.Equal(t, len(ind), 1, "incorrect v length")
 
-    sig := make([]byte, 0, 65)
-    sig = append(sig, rs[0][:]...)
-    sig = append(sig, ss[0][:]...)
-    sig = append(sig, vs[0]-27)
+	sig := make([]byte, 0, 65)
+	sig = append(sig, rs[0][:]...)
+	sig = append(sig, ss[0][:]...)
+	sig = append(sig, vs[0]-27)
 
-    validatorBytes, err := crypto.SigToPub(hash, sig)
-    if err != nil {
-        fmt.Println(err)
-    }
+	validatorBytes, err := crypto.SigToPub(hash, sig)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-    addr := crypto.PubkeyToAddress(*validatorBytes)
-    assert.Equal(t, addr.String(), validators[ind[0].Int64()].String(), "Validator did not match")
+	addr := crypto.PubkeyToAddress(*validatorBytes)
+	assert.Equal(t, addr.String(), validators[ind[0].Int64()].String(), "Validator did not match")
 }
 
 func TestParseSigWithMode(t *testing.T) {
@@ -61,23 +61,23 @@ func TestParseSigWithMode(t *testing.T) {
 	hash, _ := hex.DecodeString("9be6cc490c68327498647b5a846b34565b4358a806d8b7e25a64058cfec744a0")
 
 	vs, rs, ss, ind, _ := ParseSigs(sigs, hash, validators)
-    assert.Equal(t, len(vs), 1, "incorrect v length")
-    assert.Equal(t, len(rs), 1, "incorrect v length")
-    assert.Equal(t, len(ss), 1, "incorrect v length")
-    assert.Equal(t, len(ind), 1, "incorrect v length")
+	assert.Equal(t, len(vs), 1, "incorrect v length")
+	assert.Equal(t, len(rs), 1, "incorrect v length")
+	assert.Equal(t, len(ss), 1, "incorrect v length")
+	assert.Equal(t, len(ind), 1, "incorrect v length")
 
-    sig := make([]byte, 0, 65)
-    sig = append(sig, rs[0][:]...)
-    sig = append(sig, ss[0][:]...)
-    sig = append(sig, vs[0]-27)
+	sig := make([]byte, 0, 65)
+	sig = append(sig, rs[0][:]...)
+	sig = append(sig, ss[0][:]...)
+	sig = append(sig, vs[0]-27)
 
-    validatorBytes, err := crypto.SigToPub(hash, sig)
-    if err != nil {
-        fmt.Println(err)
-    }
+	validatorBytes, err := crypto.SigToPub(hash, sig)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-    addr := crypto.PubkeyToAddress(*validatorBytes)
-    assert.Equal(t, addr.String(), validators[ind[0].Int64()].String(), "Validator did not match")
+	addr := crypto.PubkeyToAddress(*validatorBytes)
+	assert.Equal(t, addr.String(), validators[ind[0].Int64()].String(), "Validator did not match")
 }
 
 func TestParseSigs(t *testing.T) {
