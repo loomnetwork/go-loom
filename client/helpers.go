@@ -9,8 +9,6 @@ import (
 	"os"
 	"time"
 
-	ssha "github.com/miguelmota/go-solidity-sha3"
-
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
@@ -132,13 +130,6 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 	}
 
 	for _, sig := range splitSigs {
-		// Need to prefix the hash with the Ethereum Signed Message
-		hash = ssha.SoliditySHA3(
-			[]string{"string", "bytes32"},
-			"\x19Ethereum Signed Message:\n32",
-			hash,
-		)
-
 		validator, err := evmcompat.SolidityRecover(hash, sig)
 		if err != nil {
 			return nil, nil, nil, nil, err
