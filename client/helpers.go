@@ -122,12 +122,16 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 	// don't try splitting if 65 or 66
 	var splitSigs [][]byte
 	if len(sigs) == 65 {
+        fmt.Println("GOT 65 sig")
 		splitSigs = [][]byte{sigs}
 	} else if len(sigs) == 66 {
+        fmt.Println("GOT 66 sig")
 		splitSigs = [][]byte{sigs[1:]} // remove the mode flag
 	} else {
+        fmt.Println("GOT MULTISIG")
 		splitSigs = split(sigs, 65) // assume we receive unprefixed if more than 1 element
 	}
+    fmt.Println(splitSigs)
 
 	for _, sig := range splitSigs {
 		validator, err := evmcompat.SolidityRecover(hash, sig)
@@ -149,15 +153,18 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 
 		index, err := indexOfValidator(validator, validators)
 		if err != nil {
+            fmt.Println("Validator not found.")
 			continue
 		}
 		validatorIndexes = append(validatorIndexes, index)
 	}
+    fmt.Println(validatorIndexes)
 	return vs, rs, ss, validatorIndexes, nil
 }
 
 func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, error) {
 	for key, value := range validators {
+        fmt.Println("COMPARING", v.Hex(), value.Hex(), key)
 		if v.Hex() == value.Hex() {
 			return big.NewInt(int64(key)), nil
 		}

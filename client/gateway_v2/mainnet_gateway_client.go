@@ -3,6 +3,7 @@
 package gateway_v2
 
 import (
+    "fmt"
 	"context"
 	"math/big"
 	"time"
@@ -137,9 +138,10 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 			tokenId, amount, tokenAddr,
 		)
 	case tgtypes.TransferGatewayTokenKind_ERC20:
+        fmt.Println("GOT ERC20!")
 		hash = ssha.SoliditySHA3(
 			[]string{"uint256", "address"},
-			amount, tokenAddr,
+			amount, tokenAddr.String(),
 		)
 	case tgtypes.TransferGatewayTokenKind_ETH:
 		hash = ssha.SoliditySHA3(
@@ -149,17 +151,29 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 	default:
 		return nil
 	}
+    fmt.Println("hASH WIH NEW syntax")
+    fmt.Println(ssha.SoliditySHA3([]string{"uint256", "address"}, amount, tokenAddr.String()))
+
+    fmt.Println("hASH WITH OLD SYNTAX()")
+    fmt.Println(ssha.SoliditySHA3(ssha.Uint256(amount), ssha.Address(tokenAddr)))
 
 	nonce, err := c.Nonces(withdrawer)
 	if err != nil {
 		return nil
 	}
 
+    fmt.Println("GOT WITHDRAWER", withdrawer.String())
+    fmt.Println("GOT AMOUNT", amount)
+    fmt.Println("GOT TOKEN ADDRESS", tokenAddr.String())
+    fmt.Println("GOT nONCE", nonce)
+    fmt.Println("GOT GATEWAY ADDR", c.Address.String())
+
 	// Make it non replayable
 	hash = ssha.SoliditySHA3(
 		[]string{"address", "uint256", "address", "bytes32"},
 		withdrawer, nonce, c.Address, hash,
 	)
+
 
 	// Prefix the hash with the Ethereum Signed Message
 	hash = ssha.SoliditySHA3(
