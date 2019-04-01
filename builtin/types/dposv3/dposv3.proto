@@ -55,6 +55,7 @@ message Candidate {
     string name = 6;
     string description = 7;
     string website = 8;
+    uint64 max_referral_percentage = 9;
 }
 
 message CandidateStatistic {
@@ -198,6 +199,7 @@ message RegisterCandidateRequest {
     string description = 4;
     string website = 5;
     uint64 locktime_tier = 6;
+    uint64 max_referral_percentage = 7;
 }
 
 message ChangeCandidateFeeRequest {
@@ -208,6 +210,7 @@ message UpdateCandidateInfoRequest {
     string name = 1;
     string description = 2;
     string website = 3;
+    uint64 max_referral_percentage = 4;
 }
 
 message UnregisterCandidateRequest {
