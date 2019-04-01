@@ -102,7 +102,7 @@ func ChangeFeeCmdV3() *cobra.Command {
 				return err
 			}
 			if candidateFee > 10000 {
-				errors.New("candidateFee is expressed in basis point (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
+				errors.New("candidateFee is expressed in basis points (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
 			}
 			return cli.CallContract(DPOSV3ContractName, "ChangeFee", &dposv3.ChangeCandidateFeeRequest{
 				Fee: candidateFee,
@@ -113,7 +113,7 @@ func ChangeFeeCmdV3() *cobra.Command {
 
 func RegisterCandidateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "register_candidate_v3 [public key] [validator fee (in basis points)] [locktime tier]",
+		Use:   "register_candidate_v3 [public key] [validator fee (in basis points)] [locktime tier] [maximum referral percentage]",
 		Short: "Register a candidate for validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -127,7 +127,7 @@ func RegisterCandidateCmdV3() *cobra.Command {
 			}
 
 			tier := uint64(0)
-			if len(args) == 3 {
+			if len(args) >= 3 {
 				tier, err = strconv.ParseUint(args[2], 10, 64)
 				if err != nil {
 					return err
@@ -135,6 +135,13 @@ func RegisterCandidateCmdV3() *cobra.Command {
 
 				if tier > 3 {
 					errors.New("Tier value must be integer 0 - 4")
+				}
+			}
+			maxReferralPercentage := uint64(0)
+			if len(args) >= 4 {
+				maxReferralPercentage, err = strconv.ParseUint(args[3], 10, 64)
+				if err != nil {
+					return err
 				}
 			}
 
@@ -145,6 +152,7 @@ func RegisterCandidateCmdV3() *cobra.Command {
 				Description:  candidateDescription,
 				Website:      candidateWebsite,
 				LocktimeTier: tier,
+				MaxReferralPercentage: maxReferralPercentage,
 			}, nil)
 		},
 	}
@@ -152,18 +160,30 @@ func RegisterCandidateCmdV3() *cobra.Command {
 
 func UpdateCandidateInfoCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "update_candidate_info_v3 [name] [description] [website]",
+		Use:   "update_candidate_info_v3 [name] [description] [website] [maximum referral percentage]",
 		Short: "Update candidate information for a validator",
 		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			candidateName := args[0]
 			candidateDescription := args[1]
 			candidateWebsite := args[2]
+			maxReferralPercentage := uint64(0)
+			if len(args) >= 4 {
+				percentage, err := strconv.ParseUint(args[3], 10, 64)
+				if err != nil {
+					return err
+				}
+				if percentage > 10000 {
+					errors.New("maxReferralFee is expressed in basis points (hundredths of a percent) and must be between 10000 (100%) and 0 (0%).")
+				}
+				maxReferralPercentage = percentage
+			}
 
 			return cli.CallContract(DPOSV3ContractName, "UpdateCandidateInfo", &dposv3.UpdateCandidateInfoRequest{
 				Name:        candidateName,
 				Description: candidateDescription,
 				Website:     candidateWebsite,
+				MaxReferralPercentage: maxReferralPercentage,
 			}, nil)
 		},
 	}
