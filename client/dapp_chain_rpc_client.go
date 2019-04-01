@@ -462,7 +462,7 @@ func (c *DAppChainRPCClient) CommitMigrationTx(
 	id uint32,
 ) ([]byte, error) {
 	migrationTxBytes, err := proto.Marshal(&vm.MigrationTx{
-		Id: id,
+		ID: id,
 	})
 	if err != nil {
 		return nil, err
