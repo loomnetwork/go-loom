@@ -10,6 +10,7 @@ enum TransferGatewayTokenKind {
     ERC721X = 3;
     LOOMCOIN = 4;
     TRX = 5;
+    TRC20 = 6;
 }
 
 message TransferGatewayState {
