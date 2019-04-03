@@ -428,7 +428,7 @@ func CheckRewardsCmd() *cobra.Command {
 
 func CheckDistributionCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "check_distribution",
+		Use:   "check_distribution [address]",
 		Short: "check rewards distribution",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
