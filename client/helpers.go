@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+	"sort"
 	"time"
-    "sort"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -136,10 +136,10 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 			return nil, nil, nil, nil, err
 		}
 
-        // Try to find the validator
+		// Try to find the validator
 		index, err := indexOfValidator(validator, validators)
 		if err != nil {
-            fmt.Println("validator not found", validator)
+			fmt.Println("validator not found", validator)
 			continue
 		}
 
@@ -157,62 +157,60 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 		validatorIndexes = append(validatorIndexes, index)
 	}
 
-    // put them in the right oder
-    rs, err := mapOrderByte32(rs, validatorIndexes)
-    if err != nil {
-        return nil, nil, nil, nil, err
-    }
-    ss, err = mapOrderByte32(ss, validatorIndexes)
-    if err != nil {
-        return nil, nil, nil, nil, err
-    }
-    vs, err = mapOrderUint8(vs, validatorIndexes)
-    if err != nil {
-        return nil, nil, nil, nil, err
-    }
+	// put them in the right oder
+	rs, err := mapOrderByte32(rs, validatorIndexes)
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
+	ss, err = mapOrderByte32(ss, validatorIndexes)
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
+	vs, err = mapOrderUint8(vs, validatorIndexes)
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
 
-    valIndexes := BigIntSlice(validatorIndexes)
-    valIndexes.Sort()
+	valIndexes := BigIntSlice(validatorIndexes)
+	valIndexes.Sort()
 
-
-    fmt.Println("SUBMITTING INDEXES", valIndexes)
 	return vs, rs, ss, valIndexes, nil
 }
 
 func mapOrderByte32(array [][32]byte, order []*big.Int) ([][32]byte, error) {
-    if len(array) == 1 {
-        return array, nil
-    }
+	if len(array) == 1 {
+		return array, nil
+	}
 
-    var sortedArray [][32]byte
+	var sortedArray [][32]byte
 
-    for k, _ := range(order) {
-        ind, err := indexOfInteger(k, order)
+	for k, _ := range order {
+		ind, err := indexOfInteger(k, order)
 		if err != nil {
-            return nil, err
+			return nil, err
 		}
-        sortedArray = append(sortedArray, array[ind])
-    }
+		sortedArray = append(sortedArray, array[ind])
+	}
 
-    return sortedArray, nil
+	return sortedArray, nil
 }
 
 func mapOrderUint8(array []uint8, order []*big.Int) ([]uint8, error) {
-    if len(array) == 1 {
-        return array, nil
-    }
+	if len(array) == 1 {
+		return array, nil
+	}
 
-    var sortedArray []uint8
+	var sortedArray []uint8
 
-    for k, _ := range(order) {
-        ind, err := indexOfInteger(k, order)
+	for k, _ := range order {
+		ind, err := indexOfInteger(k, order)
 		if err != nil {
-            return nil, err
+			return nil, err
 		}
-        sortedArray = append(sortedArray, array[ind])
-    }
+		sortedArray = append(sortedArray, array[ind])
+	}
 
-    return sortedArray, nil
+	return sortedArray, nil
 }
 
 func indexOfInteger(v int, array []*big.Int) (int, error) {
@@ -246,7 +244,6 @@ func split(buf []byte, lim int) [][]byte {
 	return chunks
 }
 
-
 // Taken from: https://github.com/cznic/sortutil/blob/master/sortutil.go
 // BigIntSlice attaches the methods of sort.Interface to []*big.Int, sorting in increasing order.
 type BigIntSlice []*big.Int
@@ -257,5 +254,5 @@ func (s BigIntSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
 
 // Sort is a convenience method.
 func (s BigIntSlice) Sort() {
-        sort.Sort(s)
-    }
+	sort.Sort(s)
+}
