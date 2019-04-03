@@ -191,7 +191,7 @@ func UpdateCandidateInfoCmdV3() *cobra.Command {
 
 func DelegateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "delegate_v3 [validator address] [amount] [locktime tier]",
+		Use:   "delegate_v3 [validator address] [amount] [locktime tier] [referrer]",
 		Short: "delegate tokens to a validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -208,7 +208,7 @@ func DelegateCmdV3() *cobra.Command {
 			req.Amount = &types.BigUInt{Value: *amount}
 			req.ValidatorAddress = addr.MarshalPB()
 
-			if len(args) == 3 {
+			if len(args) >= 3 {
 				tier, err := strconv.ParseUint(args[2], 10, 64)
 				if err != nil {
 					return err
@@ -221,6 +221,10 @@ func DelegateCmdV3() *cobra.Command {
 				req.LocktimeTier = tier
 			}
 
+			if len(args) >= 4 {
+				req.Referrer = args[3]
+			}
+
 			return cli.CallContract(DPOSV3ContractName, "Delegate", &req, nil)
 		},
 	}
@@ -228,7 +232,7 @@ func DelegateCmdV3() *cobra.Command {
 
 func RedelegateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "redelegate_v3 [new validator address] [former validator address] [index] [amount]",
+		Use:   "redelegate_v3 [new validator address] [former validator address] [index] [amount] [referrer]",
 		Short: "Redelegate tokens from one validator to another",
 		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -251,13 +255,18 @@ func RedelegateCmdV3() *cobra.Command {
 			req.FormerValidatorAddress = formerValidatorAddress.MarshalPB()
 			req.Index = index
 
-			if len(args) == 4 {
+			if len(args) >= 4 {
 				amount, err := cli.ParseAmount(args[3])
 				if err != nil {
 					return err
 				}
 				req.Amount = &types.BigUInt{Value: *amount}
 			}
+
+			if len(args) >= 5 {
+				req.Referrer = args[4]
+			}
+
 
 			return cli.CallContract(DPOSV3ContractName, "Redelegate", &req, nil)
 		},
