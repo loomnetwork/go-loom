@@ -30,6 +30,9 @@ func ParseAddress(s string) (loom.Address, error) {
 	}
 
 	b, err := ParseBytes(s)
+	if err != nil {
+		return loom.Address{}, nil
+	}
 	if len(b) != 20 {
 		return loom.Address{}, loom.ErrInvalidAddress
 	}
