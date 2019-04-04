@@ -2,8 +2,9 @@ package plugin
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/util"
@@ -22,7 +23,7 @@ func TestRange(t *testing.T) {
 	s.Set(util.PrefixKey([]byte("bob"), []byte("6")), []byte("asasdfasdf"))
 	s.Set([]byte("afsddsf"), []byte("asasdfasdf"))
 
-	data := s.Range([]byte("bob"))
+	data, _ := s.Range([]byte("bob"))
 
 	assert.Equal(t, 4, len(data))
 
