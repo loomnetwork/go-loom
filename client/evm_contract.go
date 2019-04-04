@@ -41,6 +41,9 @@ func DeployContract(client *DAppChainRPCClient, byteCode []byte, signer auth.Sig
 	}
 	data := vm.DeployResponseData{}
 	err = proto.Unmarshal(response.Output, &data)
+	if err != nil {
+		return nil, []byte{}, err
+	}
 	return &EvmContract{
 		client:  client,
 		Address: loom.UnmarshalAddressPB(response.Contract),
