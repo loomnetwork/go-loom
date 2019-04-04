@@ -162,8 +162,10 @@ func (privKey *YubiHsmPrivateKey) deletePrivKey() {
 	}
 
 	// send command
-	privKey.sessionMgr.SendEncryptedCommand(command)
-
+	_,err =privKey.sessionMgr.SendEncryptedCommand(command)
+    if err != nil{
+    	return
+	}
 	privKey.privKeyID = 0
 }
 
@@ -366,7 +368,7 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyBytes() []byte {
 }
 
 // get pubkey address
-func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
+func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() (string) {
 	if privKey.privKeyType == PrivateKeyTypeSecp256k1 {
 		ecdsaPubKey, err := crypto.UnmarshalPubkey(privKey.pubKeyUncompressed)
 		if err != nil {
@@ -376,13 +378,18 @@ func (privKey *YubiHsmPrivateKey) GetPubKeyAddr() string {
 		pubKeyAddr := crypto.PubkeyToAddress(*ecdsaPubKey)
 		return pubKeyAddr.Hex()
 	}
-	return loom.LocalAddressFromPublicKey(privKey.pubKeyBytes).String()
-}
+
+	localAddress := loom.LocalAddressFromPublicKey(privKey.pubKeyBytes)
+
+	return localAddress.String()
+
+	}
 
 // get base64 encoded pubkey address
 func (privKey *YubiHsmPrivateKey) GetPubKeyAddrB64Encoded() (string, error) {
 	if privKey.privKeyType == PrivateKeyTypeEd25519 {
-		return base64.StdEncoding.EncodeToString(loom.LocalAddressFromPublicKey(privKey.pubKeyBytes)), nil
+		localAddress  := loom.LocalAddressFromPublicKey(privKey.pubKeyBytes).String()
+		return base64.StdEncoding.EncodeToString([]byte(localAddress)), nil
 	}
 
 	return "", fmt.Errorf("Not suported")
