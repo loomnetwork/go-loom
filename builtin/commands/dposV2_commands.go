@@ -299,6 +299,34 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func ChangeWhitelistLockTimeTierCmdV2() *cobra.Command {
+    return &cobra.Command{
+        Use:   "change_whitelist_locktime_tier [candidate address] [amount]",
+        Short: "Changes a whitelisted candidate's whitelist lock time tier",
+        Args:  cobra.MinimumNArgs(2),
+        RunE: func(cmd *cobra.Command, args []string) error {
+            candidateAddress, err := cli.ParseAddress(args[0])
+            if err != nil {
+                return err
+            }
+
+            tier, err := strconv.ParseUint(args[1], 10, 64)
+            if err != nil {
+                return err
+            }
+
+            if tier > 3 {
+                errors.New("Tier value must be integer 0 - 4")
+            }
+
+            return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistLockTimeTier", &dposv2.ChangeWhitelistAmountRequestV2{
+                CandidateAddress: candidateAddress.MarshalPB(),
+                LockTimeTIer: tier
+            },
+        }, nil)
+    }
+}
+
 func ChangeWhitelistAmountCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "change_whitelist_amount [candidate address] [amount]",
