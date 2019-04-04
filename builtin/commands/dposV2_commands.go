@@ -300,31 +300,31 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 }
 
 func ChangeWhitelistLockTimeTierCmdV2() *cobra.Command {
-    return &cobra.Command{
-        Use:   "change_whitelist_locktime_tier [candidate address] [amount]",
-        Short: "Changes a whitelisted candidate's whitelist lock time tier",
-        Args:  cobra.MinimumNArgs(2),
-        RunE: func(cmd *cobra.Command, args []string) error {
-            candidateAddress, err := cli.ParseAddress(args[0])
-            if err != nil {
-                return err
-            }
+	return &cobra.Command{
+		Use:   "change_whitelist_locktime_tier [candidate address] [amount]",
+		Short: "Changes a whitelisted candidate's whitelist lock time tier",
+		Args:  cobra.MinimumNArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateAddress, err := cli.ParseAddress(args[0])
+			if err != nil {
+				return err
+			}
 
-            tier, err := strconv.ParseUint(args[1], 10, 64)
-            if err != nil {
-                return err
-            }
+			tier, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
 
-            if tier > 3 {
-                errors.New("Tier value must be integer 0 - 4")
-            }
+			if tier > 3 {
+				errors.New("Tier value must be integer 0 - 4")
+			}
 
-            return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistLockTimeTier", &dposv2.ChangeWhitelistLockTimeTierRequestV2{
-                CandidateAddress: candidateAddress.MarshalPB(),
-                LockTimeTier: tier,
-            }, nil)
-        },
-    }
+			return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistLockTimeTier", &dposv2.ChangeWhitelistLockTimeTierRequestV2{
+				CandidateAddress: candidateAddress.MarshalPB(),
+				LockTimeTier:     tier,
+			}, nil)
+		},
+	}
 }
 
 func ChangeWhitelistAmountCmdV2() *cobra.Command {
@@ -467,8 +467,8 @@ func CheckDistributionCmd() *cobra.Command {
 
 			var resp dposv2.CheckDistributionResponse
 			err = cli.StaticCallContract(DPOSV2ContractName, "CheckDistribution", &dposv2.CheckDistributionRequest{
-                Address: addr.MarshalPB(),
-            }, &resp)
+				Address: addr.MarshalPB(),
+			}, &resp)
 			if err != nil {
 				return err
 			}
