@@ -41,14 +41,20 @@ type GRPCAPIClient struct {
 	client types.APIClient
 }
 
-func (c *GRPCAPIClient) Get(key []byte) []byte {
-	resp, _ := c.client.Get(context.TODO(), &types.GetRequest{Key: key})
-	return resp.Value
+func (c *GRPCAPIClient) Get(key []byte) ([]byte, error) {
+	resp, err := c.client.Get(context.TODO(), &types.GetRequest{Key: key})
+	if err != nil {
+		return nil, err
+	}
+	return resp.Value, nil
 }
 
-func (c *GRPCAPIClient) Range(prefix []byte) RangeData {
+func (c *GRPCAPIClient) Range(prefix []byte) (RangeData, error) {
 	ret := make(RangeData, 0)
-	resp, _ := c.client.Range(context.TODO(), &types.RangeRequest{Prefix: prefix})
+	resp, err := c.client.Range(context.TODO(), &types.RangeRequest{Prefix: prefix})
+	if err != nil {
+		return nil, err
+	}
 	for _, x := range resp.RangeEntries {
 		r := &RangeEntry{
 			Key:   x.Key,
@@ -56,7 +62,7 @@ func (c *GRPCAPIClient) Range(prefix []byte) RangeData {
 		}
 		ret = append(ret, r)
 	}
-	return ret
+	return ret, nil
 }
 
 func (c *GRPCAPIClient) Has(key []byte) bool {
@@ -77,12 +83,20 @@ func (c *GRPCAPIClient) ValidatorPower(pubKey []byte) int64 {
 	return resp.Power
 }
 
-func (c *GRPCAPIClient) Set(key, value []byte) {
-	c.client.Set(context.TODO(), &types.SetRequest{Key: key, Value: value})
+func (c *GRPCAPIClient) Set(key, value []byte) error {
+	_, err := c.client.Set(context.TODO(), &types.SetRequest{Key: key, Value: value})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func (c *GRPCAPIClient) Delete(key []byte) {
-	c.client.Delete(context.TODO(), &types.DeleteRequest{Key: key})
+func (c *GRPCAPIClient) Delete(key []byte) error {
+	_, err := c.client.Delete(context.TODO(), &types.DeleteRequest{Key: key})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *GRPCAPIClient) staticCall(addr loom.Address, input []byte, vmType vm.VMType) ([]byte, error) {
@@ -143,11 +157,17 @@ func (c *GRPCAPIClient) CallEVM(addr loom.Address, input []byte, value *loom.Big
 	return c.call(addr, input, vm.VMType_EVM, value)
 }
 
-func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
-	c.client.SetValidatorPower(context.TODO(), &types.SetValidatorPowerRequest{
+func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) error {
+	_, err := c.client.SetValidatorPower(context.TODO(), &types.SetValidatorPowerRequest{
 		PubKey: pubKey,
 		Power:  power,
 	})
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (c *GRPCAPIClient) ContractRecord(contractAddr loom.Address) (*ContractRecord, error) {
@@ -191,15 +211,25 @@ func (c *GRPCContext) Message() Message {
 	}
 }
 
-func (c *GRPCContext) EmitTopics(data []byte, topics ...string) {
+func (c *GRPCContext) EmitTopics(data []byte, topics ...string) error {
 	if topics == nil {
 		topics = []string{}
 	}
-	c.client.Emit(context.TODO(), &types.EmitRequest{Data: data, Topics: topics})
+	_, err := c.client.Emit(context.TODO(), &types.EmitRequest{Data: data, Topics: topics})
+	if err != nil {
+		return err
+	}
+
+	return nil
+
 }
 
-func (c *GRPCContext) Emit(data []byte) {
-	c.EmitTopics(data)
+func (c *GRPCContext) Emit(data []byte) error {
+	err := c.EmitTopics(data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
