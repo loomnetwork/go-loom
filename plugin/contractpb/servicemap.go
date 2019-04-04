@@ -56,6 +56,7 @@ const (
 type serviceMethod struct {
 	method     reflect.Method // receiver method
 	argsType   reflect.Type   // type of the request argument
+	//nolint:unused
 	resultType reflect.Type   // type of the response argument
 	methodSig  methodSig
 }
@@ -211,6 +212,7 @@ func isExported(name string) bool {
 	return unicode.IsUpper(rune)
 }
 
+//nolint:deadcode
 // isExportedOrBuiltin returns true if a type is exported or a builtin.
 func isExportedOrBuiltin(t reflect.Type) bool {
 	for t.Kind() == reflect.Ptr {
