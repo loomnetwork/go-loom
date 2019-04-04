@@ -37,15 +37,18 @@ type FakeContext struct {
 
 var _ Context = &FakeContext{}
 
-func createAddress(parent loom.Address, nonce uint64) loom.Address {
+func createAddress(parent loom.Address, nonce uint64) (loom.Address, error) {
 	var nonceBuf bytes.Buffer
-	binary.Write(&nonceBuf, binary.BigEndian, nonce)
+	err := binary.Write(&nonceBuf, binary.BigEndian, nonce)
+	if err != nil {
+		return loom.Address{}, err
+	}
 	data := util.PrefixKey(parent.Bytes(), nonceBuf.Bytes())
 	hash := sha3.Sum256(data)
 	return loom.Address{
 		ChainID: parent.ChainID,
 		Local:   hash[12:],
-	}
+	}, nil
 }
 
 func CreateFakeContext(caller, address loom.Address) *FakeContext {
@@ -96,11 +99,19 @@ func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
 	return clone
 }
 
-func (c *FakeContext) CreateContract(contract Contract) loom.Address {
-	addr := createAddress(c.address, c.contractNonce)
+func (c *FakeContext) CreateContract(contract Contract) (loom.Address, error) {
+	addr, err := createAddress(c.address, c.contractNonce)
+	if err != nil {
+		return loom.Address{}, err
+	}
 	c.contractNonce++
-	c.contracts[addr.String()] = contract
-	return addr
+	address := addr.String()
+	if err != nil {
+		return loom.Address{}, err
+	}
+	c.contracts[address] = contract
+	return addr, nil
+
 }
 
 func (c *FakeContext) RegisterContract(contractName string, contractAddr, creatorAddr loom.Address) {
@@ -211,12 +222,14 @@ func (c *FakeContext) Now() time.Time {
 	return time.Unix(c.block.Time, 0)
 }
 
-func (c *FakeContext) EmitTopics(event []byte, topics ...string) {
+func (c *FakeContext) EmitTopics(event []byte, topics ...string) error {
 	//Store last emitted strings, to make it testable
 	c.Events = append(c.Events, FEvent{event, topics})
+	return nil
 }
 
-func (c *FakeContext) Emit(event []byte) {
+func (c *FakeContext) Emit(event []byte) error {
+	return nil
 }
 
 // Prefix the given key with the contract address
@@ -229,12 +242,12 @@ func (c *FakeContext) recoverKey(key string, prefix []byte) ([]byte, error) {
 	return util.UnprefixKey([]byte(key), util.PrefixKey(c.address.Bytes(), prefix))
 }
 
-func (c *FakeContext) Range(prefix []byte) RangeData {
+func (c *FakeContext) Range(prefix []byte) (RangeData, error) {
 	ret := make(RangeData, 0)
 
 	keyedPrefix := c.makeKey(prefix)
 	for key, value := range c.data {
-		if strings.HasPrefix(key, keyedPrefix) == true {
+		if strings.HasPrefix(key, keyedPrefix) {
 			k, err := c.recoverKey(key, prefix)
 			if err != nil {
 				panic(err)
@@ -247,12 +260,12 @@ func (c *FakeContext) Range(prefix []byte) RangeData {
 			ret = append(ret, r)
 		}
 	}
-	return ret
+	return ret, nil
 }
 
-func (c *FakeContext) Get(key []byte) []byte {
+func (c *FakeContext) Get(key []byte) ([]byte, error) {
 	v, _ := c.data[c.makeKey(key)]
-	return v
+	return v, nil
 }
 
 func (c *FakeContext) Has(key []byte) bool {
@@ -260,16 +273,21 @@ func (c *FakeContext) Has(key []byte) bool {
 	return ok
 }
 
-func (c *FakeContext) Set(key []byte, value []byte) {
+func (c *FakeContext) Set(key []byte, value []byte) error {
 	c.data[c.makeKey(key)] = value
+	return nil
 }
 
-func (c *FakeContext) Delete(key []byte) {
+//Delete will ideally never return error
+func (c *FakeContext) Delete(key []byte) error {
 	delete(c.data, c.makeKey(key))
+	return nil
 }
 
-func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
+//Methods which will never return error in practical
+func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) error {
 	c.validators.Set(&loom.Validator{PubKey: pubKey, Power: power})
+	return nil
 }
 
 func (c *FakeContext) Validators() []*loom.Validator {
