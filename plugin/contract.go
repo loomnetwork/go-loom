@@ -30,15 +30,15 @@ type StaticAPI interface {
 	StaticCallEVM(addr loom.Address, input []byte) ([]byte, error)
 	Resolve(name string) (loom.Address, error)
 	ValidatorPower(pubKey []byte) int64
-	EmitTopics(event []byte, topics ...string)
-	Emit(event []byte)
+	EmitTopics(event []byte, topics ...string) error
+	Emit(event []byte) error
 }
 
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
 	CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error)
 	// Privileged API
-	SetValidatorPower(pubKey []byte, power int64)
+	SetValidatorPower(pubKey []byte, power int64) (error)
 }
 
 type API interface {
@@ -66,9 +66,9 @@ type ContractRecord struct {
 // For external GRPC contracts plugin.contractContext is wrapped by GRPCContext (go-loom/plugin package).
 type StaticContext interface {
 	StaticAPI
-	Get(key []byte) []byte
+	Get(key []byte) ([]byte,error)
 	Has(key []byte) bool
-	Range(prefix []byte) RangeData
+	Range(prefix []byte) (RangeData,error)
 	Block() loom.BlockHeader
 	Now() time.Time
 	Message() Message
@@ -84,8 +84,8 @@ type StaticContext interface {
 type Context interface {
 	StaticContext
 	VolatileAPI
-	Set(key, value []byte)
-	Delete(key []byte)
+	Set(key, value []byte) error
+	Delete(key []byte) error
 }
 
 type Contract interface {
