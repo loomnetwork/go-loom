@@ -319,11 +319,11 @@ func ChangeWhitelistLockTimeTierCmdV2() *cobra.Command {
                 errors.New("Tier value must be integer 0 - 4")
             }
 
-            return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistLockTimeTier", &dposv2.ChangeWhitelistAmountRequestV2{
+            return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistLockTimeTier", &dposv2.ChangeWhitelistLockTimeTierRequestV2{
                 CandidateAddress: candidateAddress.MarshalPB(),
-                LockTimeTIer: tier
-            },
-        }, nil)
+                LockTimeTier: tier,
+            }, nil)
+        },
     }
 }
 
@@ -757,6 +757,7 @@ func AddDPOSV2(root *cobra.Command) {
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
 		ChangeWhitelistAmountCmdV2(),
+		ChangeWhitelistLockTimeTierCmdV2(),
 		CheckDelegationCmdV2(),
 		CheckAllDelegationsCmd(),
 		CheckDistributionCmd(),
