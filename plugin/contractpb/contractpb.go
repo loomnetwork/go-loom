@@ -22,7 +22,7 @@ var (
 type StaticContext interface {
 	plugin.StaticAPI
 	Get(key []byte, pb proto.Message) error
-	Range(prefix []byte) plugin.RangeData
+	Range(prefix []byte) (plugin.RangeData, error)
 	Has(key []byte) bool
 	Block() loom.BlockHeader
 	Now() time.Time
@@ -30,7 +30,7 @@ type StaticContext interface {
 	ContractAddress() loom.Address
 	Logger() *loom.Logger
 	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
-	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
+	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string, error)
 	FeatureEnabled(name string, defaultVal bool) bool
 
 	// ContractRecord retrieves the contract meta data stored in the Registry.
@@ -43,8 +43,8 @@ type Context interface {
 	plugin.VolatileAPI
 	StaticContext
 	Set(key []byte, pb proto.Message) error
-	Delete(key []byte)
-	HasPermission(token []byte, roles []string) (bool, []string)
+	Delete(key []byte) error
+	HasPermission(token []byte, roles []string) (bool, []string, error)
 	GrantPermissionTo(addr loom.Address, token []byte, role string)
 	RevokePermissionFrom(addr loom.Address, token []byte, role string)
 	GrantPermission(token []byte, roles []string)
@@ -66,8 +66,24 @@ func (c *wrappedPluginStaticContext) Logger() *loom.Logger {
 	return c.logger
 }
 
+func (c *wrappedPluginStaticContext) Range(prefix []byte) ( plugin.RangeData,error) {
+	ret := make( plugin.RangeData, 0)
+	return ret,nil
+}
+
+func (c *wrappedPluginStaticContext) Has (key []byte) bool {
+	return false
+}
+
+func (c *wrappedPluginStaticContext) Delete (key []byte) error {
+	return nil
+}
+
 func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
-	data := c.StaticContext.Get(key)
+	data,err := c.StaticContext.Get(key)
+	if err != nil {
+		return err
+	}
 	if len(data) == 0 {
 		return ErrNotFound
 	}
@@ -76,17 +92,20 @@ func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 }
 
 // HasPermissionFor checks whether the given `addr` has any of the permission given in `roles` on `token`
-func (c *wrappedPluginStaticContext) HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string) {
+func (c *wrappedPluginStaticContext) HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string, error) {
 	found := false
 	foundRoles := []string{}
 	for _, role := range roles {
-		v := c.StaticContext.Get(rolePermKey(addr, token, role))
+		v,err := c.StaticContext.Get(rolePermKey(addr, token, role))
+		if err != nil {
+			return false,nil,err
+		}
 		if v != nil && string(v) == "true" {
 			found = true
 			foundRoles = append(foundRoles, role)
 		}
 	}
-	return found, foundRoles
+	return found, foundRoles, nil
 }
 
 // FeatureEnabled checks whether the feature is enabled on chain
@@ -106,6 +125,15 @@ func (c *wrappedPluginContext) Get(key []byte, pb proto.Message) error {
 	return c.wrappedPluginStaticContext.Get(key, pb)
 }
 
+func (c *wrappedPluginContext) Has (key []byte) bool {
+	return false
+}
+
+func (c *wrappedPluginContext) Delete (key []byte) error {
+	return nil
+}
+
+
 func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
 	enc, err := proto.Marshal(pb)
 	if err != nil {
@@ -116,9 +144,16 @@ func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
 }
 
 // HasPermission checks whether the sender of the tx has any of the permission given in `roles` on `token`
-func (c *wrappedPluginContext) HasPermission(token []byte, roles []string) (bool, []string) {
+func (c *wrappedPluginContext) HasPermission(token []byte, roles []string) (bool, []string, error) {
 	addr := c.Message().Sender
-	return c.HasPermissionFor(addr, token, roles)
+	found, foundRoles, err :=  c.HasPermissionFor(addr, token, roles)
+	return found, foundRoles, err
+}
+
+
+func (c *wrappedPluginContext) Range(prefix []byte) ( plugin.RangeData,error) {
+	ret := make( plugin.RangeData, 0)
+	return ret,nil
 }
 
 // GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
