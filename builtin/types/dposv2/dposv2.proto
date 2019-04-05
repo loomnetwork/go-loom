@@ -126,6 +126,11 @@ message WhitelistCandidateRequestV2 {
     uint64 lock_time = 3;
 }
 
+message ChangeWhitelistLockTimeTierRequestV2 {
+    Address candidate_address = 1;
+    uint64 lock_time_tier = 2;
+}
+
 message RemoveWhitelistedCandidateRequestV2 {
     Address candidate_address = 1;
 }
