@@ -66,19 +66,6 @@ func (c *wrappedPluginStaticContext) Logger() *loom.Logger {
 	return c.logger
 }
 
-func (c *wrappedPluginStaticContext) Range(prefix []byte) plugin.RangeData {
-	ret := make(plugin.RangeData, 0)
-	return ret
-}
-
-func (c *wrappedPluginStaticContext) Has(key []byte) bool {
-	return false
-}
-
-func (c *wrappedPluginStaticContext) Delete(key []byte) {
-
-}
-
 func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 	data := c.StaticContext.Get(key)
 	if len(data) == 0 {
@@ -119,14 +106,6 @@ func (c *wrappedPluginContext) Get(key []byte, pb proto.Message) error {
 	return c.wrappedPluginStaticContext.Get(key, pb)
 }
 
-func (c *wrappedPluginContext) Has(key []byte) bool {
-	return false
-}
-
-func (c *wrappedPluginContext) Delete(key []byte) {
-
-}
-
 func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
 	enc, err := proto.Marshal(pb)
 	if err != nil {
@@ -140,11 +119,6 @@ func (c *wrappedPluginContext) Set(key []byte, pb proto.Message) error {
 func (c *wrappedPluginContext) HasPermission(token []byte, roles []string) (bool, []string) {
 	addr := c.Message().Sender
 	return c.HasPermissionFor(addr, token, roles)
-}
-
-func (c *wrappedPluginContext) Range(prefix []byte) plugin.RangeData {
-	ret := make(plugin.RangeData, 0)
-	return ret
 }
 
 // GrantPermissionTo sets a given `role` permission on `token` for the given `addr`
