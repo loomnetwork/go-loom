@@ -36,24 +36,24 @@ func (s *ContractContextTestSuite) TestPermissions() {
 	role2 := "role2"
 	roles := []string{role1, role2}
 
-	hasPerm, _,_ := ctx.HasPermissionFor(callerAddr, perm1, roles)
+	hasPerm, _ := ctx.HasPermissionFor(callerAddr, perm1, roles)
 	require.False(hasPerm)
 
 	ctx.GrantPermissionTo(callerAddr, perm1, role1)
-	hasPerm, _,_= ctx.HasPermissionFor(callerAddr, perm1, []string{role1})
+	hasPerm, _ = ctx.HasPermissionFor(callerAddr, perm1, []string{role1})
 	require.True(hasPerm)
-	hasPerm,_,_ = ctx.HasPermissionFor(callerAddr, perm1, []string{role2})
+	hasPerm, _ = ctx.HasPermissionFor(callerAddr, perm1, []string{role2})
 	require.False(hasPerm)
 
 	ctx.GrantPermissionTo(callerAddr, perm2, role1)
-	hasPerm, _,_ = ctx.HasPermissionFor(callerAddr, perm2, []string{role1})
+	hasPerm, _ = ctx.HasPermissionFor(callerAddr, perm2, []string{role1})
 	require.True(hasPerm)
-	hasPerm,_,_ = ctx.HasPermissionFor(callerAddr, perm2, []string{role2})
+	hasPerm, _ = ctx.HasPermissionFor(callerAddr, perm2, []string{role2})
 	require.False(hasPerm)
 
 	ctx.RevokePermissionFrom(callerAddr, perm1, role1)
-	hasPerm, _,_ = ctx.HasPermissionFor(callerAddr, perm1, []string{role1})
+	hasPerm, _ = ctx.HasPermissionFor(callerAddr, perm1, []string{role1})
 	require.False(hasPerm)
-	hasPerm,_,_ = ctx.HasPermissionFor(callerAddr, perm2, []string{role1})
+	hasPerm, _ = ctx.HasPermissionFor(callerAddr, perm2, []string{role1})
 	require.True(hasPerm)
 }
