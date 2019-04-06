@@ -23,7 +23,7 @@ func TestRange(t *testing.T) {
 	s.Set(util.PrefixKey([]byte("bob"), []byte("6")), []byte("asasdfasdf"))
 	s.Set([]byte("afsddsf"), []byte("asasdfasdf"))
 
-	data, _ := s.Range([]byte("bob"))
+	data := s.Range([]byte("bob"))
 
 	assert.Equal(t, 4, len(data))
 
