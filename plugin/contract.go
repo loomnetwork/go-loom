@@ -30,15 +30,15 @@ type StaticAPI interface {
 	StaticCallEVM(addr loom.Address, input []byte) ([]byte, error)
 	Resolve(name string) (loom.Address, error)
 	ValidatorPower(pubKey []byte) int64
-	EmitTopics(event []byte, topics ...string) error
-	Emit(event []byte) error
+	EmitTopics(event []byte, topics ...string)
+	Emit(event []byte)
 }
 
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
 	CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error)
 	// Privileged API
-	SetValidatorPower(pubKey []byte, power int64) (error)
+	SetValidatorPower(pubKey []byte, power int64)
 }
 
 type API interface {
@@ -66,13 +66,13 @@ type ContractRecord struct {
 // For external GRPC contracts plugin.contractContext is wrapped by GRPCContext (go-loom/plugin package).
 type StaticContext interface {
 	StaticAPI
-	Get(key []byte) ([]byte,error)
+	Get(key []byte) []byte
 	Has(key []byte) bool
-	Range(prefix []byte) (RangeData,error)
+	Range(prefix []byte) RangeData
 	Block() loom.BlockHeader
 	Now() time.Time
 	Message() Message
-	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
+	GetEvmTxReceipt([]byte) (types.EvmTxReceipt,error)
 	ContractAddress() loom.Address
 	FeatureEnabled(name string, defaultVal bool) bool
 	// ContractRecord retrieves the contract meta data stored in the Registry.
@@ -84,8 +84,8 @@ type StaticContext interface {
 type Context interface {
 	StaticContext
 	VolatileAPI
-	Set(key, value []byte) error
-	Delete(key []byte) error
+	Set(key, value []byte)
+	Delete(key []byte)
 }
 
 type Contract interface {
