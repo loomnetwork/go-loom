@@ -15,6 +15,7 @@ func (a LocalAddress) Hex() string {
 	unchecksummed := hex.EncodeToString(a)
 	sha := sha3.New256()
 	sha.Write([]byte(unchecksummed))
+
 	hash := sha.Sum(nil)
 
 	result := []byte(unchecksummed)
