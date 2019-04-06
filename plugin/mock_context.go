@@ -106,9 +106,6 @@ func (c *FakeContext) CreateContract(contract Contract) (loom.Address, error) {
 	}
 	c.contractNonce++
 	address := addr.String()
-	if err != nil {
-		return loom.Address{}, err
-	}
 	c.contracts[address] = contract
 	return addr, nil
 
@@ -210,8 +207,8 @@ func (c *FakeContext) ContractAddress() loom.Address {
 	return c.address
 }
 
-func (c *FakeContext) GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error) {
-	return ptypes.EvmTxReceipt{}, nil
+func (c *FakeContext) GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt,error) {
+	return ptypes.EvmTxReceipt{},nil
 }
 
 func (c *FakeContext) SetTime(t time.Time) {
@@ -222,14 +219,12 @@ func (c *FakeContext) Now() time.Time {
 	return time.Unix(c.block.Time, 0)
 }
 
-func (c *FakeContext) EmitTopics(event []byte, topics ...string) error {
+func (c *FakeContext) EmitTopics(event []byte, topics ...string) {
 	//Store last emitted strings, to make it testable
 	c.Events = append(c.Events, FEvent{event, topics})
-	return nil
 }
 
-func (c *FakeContext) Emit(event []byte) error {
-	return nil
+func (c *FakeContext) Emit(event []byte) {
 }
 
 // Prefix the given key with the contract address
@@ -242,9 +237,8 @@ func (c *FakeContext) recoverKey(key string, prefix []byte) ([]byte, error) {
 	return util.UnprefixKey([]byte(key), util.PrefixKey(c.address.Bytes(), prefix))
 }
 
-func (c *FakeContext) Range(prefix []byte) (RangeData, error) {
+func (c *FakeContext) Range(prefix []byte) RangeData {
 	ret := make(RangeData, 0)
-
 	keyedPrefix := c.makeKey(prefix)
 	for key, value := range c.data {
 		if strings.HasPrefix(key, keyedPrefix) {
@@ -260,12 +254,12 @@ func (c *FakeContext) Range(prefix []byte) (RangeData, error) {
 			ret = append(ret, r)
 		}
 	}
-	return ret, nil
+	return ret
 }
 
-func (c *FakeContext) Get(key []byte) ([]byte, error) {
-	v, _ := c.data[c.makeKey(key)]
-	return v, nil
+func (c *FakeContext) Get(key []byte) []byte {
+	v := c.data[c.makeKey(key)]
+	return v
 }
 
 func (c *FakeContext) Has(key []byte) bool {
@@ -273,21 +267,17 @@ func (c *FakeContext) Has(key []byte) bool {
 	return ok
 }
 
-func (c *FakeContext) Set(key []byte, value []byte) error {
+func (c *FakeContext) Set(key []byte, value []byte) {
 	c.data[c.makeKey(key)] = value
-	return nil
 }
 
-//Delete will ideally never return error
-func (c *FakeContext) Delete(key []byte) error {
+func (c *FakeContext) Delete(key []byte) {
 	delete(c.data, c.makeKey(key))
-	return nil
+
 }
 
-//Methods which will never return error in practical
-func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) error {
+func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
 	c.validators.Set(&loom.Validator{PubKey: pubKey, Power: power})
-	return nil
 }
 
 func (c *FakeContext) Validators() []*loom.Validator {
