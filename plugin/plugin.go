@@ -173,6 +173,8 @@ type GRPCContext struct {
 	contractAddr loom.Address
 }
 
+var _ Context = &GRPCContext{}
+
 func (c *GRPCContext) Block() loom.BlockHeader {
 	return *c.block
 }
