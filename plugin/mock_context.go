@@ -37,18 +37,18 @@ type FakeContext struct {
 
 var _ Context = &FakeContext{}
 
-func createAddress(parent loom.Address, nonce uint64) (loom.Address, error) {
+func createAddress(parent loom.Address, nonce uint64) loom.Address {
 	var nonceBuf bytes.Buffer
 	err := binary.Write(&nonceBuf, binary.BigEndian, nonce)
 	if err != nil {
-		return loom.Address{}, err
+		panic(err)
 	}
 	data := util.PrefixKey(parent.Bytes(), nonceBuf.Bytes())
 	hash := sha3.Sum256(data)
 	return loom.Address{
 		ChainID: parent.ChainID,
 		Local:   hash[12:],
-	}, nil
+	}
 }
 
 func CreateFakeContext(caller, address loom.Address) *FakeContext {
@@ -99,15 +99,12 @@ func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
 	return clone
 }
 
-func (c *FakeContext) CreateContract(contract Contract) (loom.Address, error) {
-	addr, err := createAddress(c.address, c.contractNonce)
-	if err != nil {
-		return loom.Address{}, err
-	}
+func (c *FakeContext) CreateContract(contract Contract) loom.Address {
+	addr := createAddress(c.address, c.contractNonce)
 	c.contractNonce++
 	address := addr.String()
 	c.contracts[address] = contract
-	return addr, nil
+	return addr
 
 }
 
@@ -207,8 +204,8 @@ func (c *FakeContext) ContractAddress() loom.Address {
 	return c.address
 }
 
-func (c *FakeContext) GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt,error) {
-	return ptypes.EvmTxReceipt{},nil
+func (c *FakeContext) GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error) {
+	return ptypes.EvmTxReceipt{}, nil
 }
 
 func (c *FakeContext) SetTime(t time.Time) {
