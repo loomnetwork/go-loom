@@ -130,6 +130,13 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 		splitSigs = split(sigs, 65) // assume we receive unprefixed if more than 1 element
 	}
 
+	fmt.Println("Got signatures: ", len(splitSigs), len(splitSigs[0]))
+
+	fmt.Println("Got validators:")
+	for _, v := range validators {
+		fmt.Println(v.String())
+	}
+
 	for _, sig := range splitSigs {
 		validator, err := evmcompat.SolidityRecover(hash, sig)
 		if err != nil {
@@ -139,7 +146,7 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 		// Try to find the validator
 		index, err := indexOfValidator(validator, validators)
 		if err != nil {
-			fmt.Println("validator not found", validator)
+			fmt.Println("validator not found", validator.String())
 			continue
 		}
 
@@ -157,6 +164,11 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 		validatorIndexes = append(validatorIndexes, index)
 	}
 
+	fmt.Println("Got vs", vs)
+	fmt.Println("Got rs", rs)
+	fmt.Println("Got ss", ss)
+	fmt.Println("Got inds", validatorIndexes)
+
 	// put them in the right oder
 	rs, err := mapOrderByte32(rs, validatorIndexes)
 	if err != nil {
@@ -173,6 +185,11 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 
 	valIndexes := BigIntSlice(validatorIndexes)
 	valIndexes.Sort()
+
+	fmt.Println("After: Got vs", vs)
+	fmt.Println("After: Got rs", rs)
+	fmt.Println("After: Got ss", ss)
+	fmt.Println("After: Got inds", valIndexes)
 
 	return vs, rs, ss, valIndexes, nil
 }
@@ -223,7 +240,9 @@ func indexOfInteger(v int, array []*big.Int) (int, error) {
 }
 
 func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, error) {
+	fmt.Println("Checking for:", v.String())
 	for key, value := range validators {
+		fmt.Println("Checking against:", value.String())
 		if v.Hex() == value.Hex() {
 			return big.NewInt(int64(key)), nil
 		}
