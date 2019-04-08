@@ -72,7 +72,7 @@ type StaticContext interface {
 	Block() loom.BlockHeader
 	Now() time.Time
 	Message() Message
-	GetEvmTxReceipt([]byte) (types.EvmTxReceipt,error)
+	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
 	ContractAddress() loom.Address
 	FeatureEnabled(name string, defaultVal bool) bool
 	// ContractRecord retrieves the contract meta data stored in the Registry.
