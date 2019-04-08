@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"math/big"
 	"math/rand"
 	"time"
@@ -164,7 +163,9 @@ func (privKey *YubiHsmPrivateKey) deletePrivKey() {
 
 	// send command
 	_, err = privKey.sessionMgr.SendEncryptedCommand(command)
-	log.Println(err)
+	if err != nil {
+		return
+	}
 
 	privKey.privKeyID = 0
 }
