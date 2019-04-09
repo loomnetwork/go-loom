@@ -367,3 +367,14 @@ message TransferGatewayGetUnclaimedTokensResponse {
 message TransferGatewayMainnetEventTxHashInfo {
     TransferGatewayTokenKind token_kind = 1;
 }
+
+message TransferGatewayTrustedValidators {
+    repeated Validator validators = 1;
+}
+
+message TransferGatewayTrustedValidatorsRequest {
+}
+
+message TransferGatewayTrustedValidatorsResponse {
+    TransferGatewayTrustedValidators trusted_validators = 1;
+}
