@@ -79,7 +79,6 @@ func (c *GRPCAPIClient) ValidatorPower(pubKey []byte) int64 {
 
 func (c *GRPCAPIClient) Set(key, value []byte) {
 	c.client.Set(context.TODO(), &types.SetRequest{Key: key, Value: value})
-
 }
 
 func (c *GRPCAPIClient) Delete(key []byte) {
@@ -149,7 +148,6 @@ func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
 		PubKey: pubKey,
 		Power:  power,
 	})
-
 }
 
 func (c *GRPCAPIClient) ContractRecord(contractAddr loom.Address) (*ContractRecord, error) {
@@ -202,7 +200,6 @@ func (c *GRPCContext) EmitTopics(data []byte, topics ...string) {
 
 func (c *GRPCContext) Emit(data []byte) {
 	c.EmitTopics(data)
-
 }
 
 func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
