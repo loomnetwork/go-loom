@@ -378,3 +378,7 @@ message TransferGatewayTrustedValidatorsRequest {
 message TransferGatewayTrustedValidatorsResponse {
     TransferGatewayTrustedValidators trusted_validators = 1;
 }
+
+message TransferGatewayUpdateTrustedValidatorsRequest {
+    TransferGatewayTrustedValidators trusted_validators = 1;
+}
