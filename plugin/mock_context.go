@@ -270,7 +270,6 @@ func (c *FakeContext) Set(key []byte, value []byte) {
 
 func (c *FakeContext) Delete(key []byte) {
 	delete(c.data, c.makeKey(key))
-
 }
 
 func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
