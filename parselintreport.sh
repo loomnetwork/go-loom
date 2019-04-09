@@ -1,7 +1,7 @@
 #!/bin/bash
-count=`grep ".go" lintreport | wc -l`
+count=`grep ".go" goloomreport | wc -l`
 echo "Number of errors $count"
-if [ $count -le 200 ]
+if [ $count -le 100 ]
 then
   echo "Errors within threshold"
   exit 0
