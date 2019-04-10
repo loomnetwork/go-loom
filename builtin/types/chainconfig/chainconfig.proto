@@ -19,6 +19,15 @@ message AddFeatureRequest {
 message AddFeatureResponse {
 }
 
+message UpdateFeatureRequest {
+    string name = 1;
+    uint64 build_number = 2;
+}
+
+message UpdateFeatureResponse {
+}
+
+
 message GetFeatureResponse {
     Feature feature = 1;
 }
@@ -39,6 +48,9 @@ message Feature {
 
     //Feature changes status from `pending` to `waiting` with at this percentage
     uint64 percentage = 5;
+
+    //Minimum build number that supports this feature
+    uint64 build_number = 6;
 }
 
 message Params {
@@ -70,12 +82,4 @@ message EnableFeatureRequest {
 
 message EnableFeatureResponse {
 
-}
-
-//TODO:update config, not supported yet
-
-
-message UpdateFeatureRequest {
-    string key = 1;
-    bool enabled = 2;
 }
