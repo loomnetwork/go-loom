@@ -11,6 +11,7 @@ enum Flags {
     NONE = 0;
     GO = 1;
     EVM = 2;
+    MIGRATION = 4;
 }
 
 

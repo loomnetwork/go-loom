@@ -32,7 +32,9 @@ func ConnectToDAppChainDPOSContract(loomClient *client.DAppChainRPCClient) (*DAp
 }
 
 func (dpos *DAppChainDPOSContract) CheckDistributions(identity *client.Identity) (*big.Int, error) {
-	req := &dpostypes.CheckDistributionRequest{}
+	req := &dpostypes.CheckDistributionRequest{
+		Address: identity.LoomAddr.MarshalPB(),
+	}
 	var resp dpostypes.CheckDistributionResponse
 	_, err := dpos.contract.StaticCall("CheckDistribution", req, identity.LoomAddr, &resp)
 	if err != nil {
