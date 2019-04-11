@@ -283,6 +283,11 @@ message RequestBatch {
 message GetRequestBatchTallyRequest {
 }
 
+message RegisterReferrerRequest {
+    string name = 1;
+    Address address = 2;
+}
+
 message SetElectionCycleRequest {
     int64 election_cycle = 1;
 }
@@ -364,4 +369,9 @@ message DposDelegatorConsolidatesEvent {
 message DposDelegatorUnbondsEvent {
     Address address = 1;
     BigUInt amount = 2;
+}
+
+message DposReferrerRegistersEvent {
+    string name = 1;
+    Address address = 2;
 }
