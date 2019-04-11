@@ -570,6 +570,26 @@ func ListAllDelegationsCmdV3() *cobra.Command {
 
 // Oracle Commands for setting parameters
 
+func RegisterReferrerCmdV3() *cobra.Command {
+	return &cobra.Command{
+		Use:   "register_referrer_v3 [name] [address]",
+		Short: "Register a referrer wallet's name and address",
+		Args:  cobra.MinimumNArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			name := args[0]
+			address, err := cli.ParseAddress(args[1])
+			if err != nil {
+				return err
+			}
+
+			return cli.CallContract(DPOSV3ContractName, "RegisterReferer", &dposv3.RegisterReferrerRequest{
+				Name:    name,
+				Address: address.MarshalPB(),
+			}, nil)
+		},
+	}
+}
+
 func SetElectionCycleCmdV3() *cobra.Command {
 	return &cobra.Command{
 		Use:   "set_election_cycle_v3 [election duration]",
@@ -727,6 +747,7 @@ func AddDPOSV3(root *cobra.Command) {
 		CheckAllDelegationsCmdV3(),
 		CheckRewardsCmdV3(),
 		UnbondCmdV3(),
+		RegisterReferrerCmdV3(),
 		SetElectionCycleCmdV3(),
 		SetValidatorCountCmdV3(),
 		SetMaxYearlyRewardCmdV3(),
