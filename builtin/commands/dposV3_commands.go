@@ -146,12 +146,12 @@ func RegisterCandidateCmdV3() *cobra.Command {
 			}
 
 			return cli.CallContract(DPOSV3ContractName, "RegisterCandidate", &dposv3.RegisterCandidateRequest{
-				PubKey:       pubKey,
-				Fee:          candidateFee,
-				Name:         candidateName,
-				Description:  candidateDescription,
-				Website:      candidateWebsite,
-				LocktimeTier: tier,
+				PubKey:                pubKey,
+				Fee:                   candidateFee,
+				Name:                  candidateName,
+				Description:           candidateDescription,
+				Website:               candidateWebsite,
+				LocktimeTier:          tier,
 				MaxReferralPercentage: maxReferralPercentage,
 			}, nil)
 		},
@@ -180,9 +180,9 @@ func UpdateCandidateInfoCmdV3() *cobra.Command {
 			}
 
 			return cli.CallContract(DPOSV3ContractName, "UpdateCandidateInfo", &dposv3.UpdateCandidateInfoRequest{
-				Name:        candidateName,
-				Description: candidateDescription,
-				Website:     candidateWebsite,
+				Name:                  candidateName,
+				Description:           candidateDescription,
+				Website:               candidateWebsite,
 				MaxReferralPercentage: maxReferralPercentage,
 			}, nil)
 		},
@@ -267,7 +267,6 @@ func RedelegateCmdV3() *cobra.Command {
 				req.Referrer = args[4]
 			}
 
-
 			return cli.CallContract(DPOSV3ContractName, "Redelegate", &req, nil)
 		},
 	}
@@ -275,7 +274,7 @@ func RedelegateCmdV3() *cobra.Command {
 
 func WhitelistCandidateCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "whitelist_candidate_v3 [candidate address] [amount] [lock time]",
+		Use:   "whitelist_candidate_v3 [candidate address] [amount] [locktime tier]",
 		Short: "Whitelist candidate & credit candidate's self delegation without token deposit",
 		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -287,9 +286,17 @@ func WhitelistCandidateCmdV3() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			locktime, err := strconv.ParseUint(args[2], 10, 64)
-			if err != nil {
-				return err
+
+			tier := uint64(0)
+			if len(args) >= 3 {
+				tier, err = strconv.ParseUint(args[2], 10, 64)
+				if err != nil {
+					return err
+				}
+
+				if tier > 3 {
+					errors.New("Tier value must be integer 0 - 4")
+				}
 			}
 
 			return cli.CallContract(DPOSV3ContractName, "WhitelistCandidate", &dposv3.WhitelistCandidateRequest{
@@ -297,7 +304,7 @@ func WhitelistCandidateCmdV3() *cobra.Command {
 				Amount: &types.BigUInt{
 					Value: *amount,
 				},
-				LockTime: locktime,
+				LocktimeTier: tier,
 			}, nil)
 		},
 	}
@@ -321,10 +328,10 @@ func RemoveWhitelistedCandidateCmdV3() *cobra.Command {
 	}
 }
 
-func ChangeWhitelistAmountCmdV3() *cobra.Command {
+func ChangeWhitelistInfoCmdV3() *cobra.Command {
 	return &cobra.Command{
-		Use:   "change_whitelist_amount_v3 [candidate address] [amount]",
-		Short: "Changes a whitelisted candidate's whitelist amount",
+		Use:   "change_whitelist_info_v3 [candidate address] [amount] [locktime tier]",
+		Short: "Changes a whitelisted candidate's whitelist amount and tier",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			candidateAddress, err := cli.ResolveAddress(args[0])
@@ -335,11 +342,25 @@ func ChangeWhitelistAmountCmdV3() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return cli.CallContract(DPOSV3ContractName, "ChangeWhitelistAmount", &dposv3.ChangeWhitelistAmountRequest{
+
+			tier := uint64(0)
+			if len(args) >= 3 {
+				tier, err = strconv.ParseUint(args[2], 10, 64)
+				if err != nil {
+					return err
+				}
+
+				if tier > 3 {
+					errors.New("Tier value must be integer 0 - 4")
+				}
+			}
+
+			return cli.CallContract(DPOSV3ContractName, "ChangeWhitelistAmount", &dposv3.ChangeWhitelistInfoRequest{
 				CandidateAddress: candidateAddress.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
 				},
+				LocktimeTier: tier,
 			}, nil)
 		},
 	}
