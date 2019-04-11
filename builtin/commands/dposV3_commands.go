@@ -351,7 +351,7 @@ func ChangeWhitelistInfoCmdV3() *cobra.Command {
 				}
 
 				if tier > 3 {
-					errors.New("Tier value must be integer 0 - 4")
+					errors.New("Tier value must be integer 0 - 3")
 				}
 			}
 
