@@ -93,6 +93,13 @@ func (tg *DAppChainGateway) AddContractMapping(from common.Address, to loom.Addr
 	return err
 }
 
+func (tg *DAppChainGateway) GetTrustedValidators(identity *client.Identity) (*tgtypes.TransferGatewayTrustedValidators, error) {
+	req := &tgtypes.TransferGatewayTrustedValidatorsRequest{}
+	var resp tgtypes.TransferGatewayTrustedValidatorsResponse
+	_, err := tg.contract.StaticCall("GetTrustedValidators", req, identity.LoomAddr, &resp)
+	return resp.TrustedValidators, err
+}
+
 func (tg *DAppChainGateway) UpdateTrustedValidators(
 	identity *client.Identity, validators []*loom.Address,
 ) error {
