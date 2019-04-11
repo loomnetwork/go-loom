@@ -304,7 +304,7 @@ func WhitelistCandidateCmdV3() *cobra.Command {
 				Amount: &types.BigUInt{
 					Value: *amount,
 				},
-				LocktimeTier: tier,
+				LocktimeTier: dposv3.LocktimeTier(tier),
 			}, nil)
 		},
 	}
@@ -360,7 +360,7 @@ func ChangeWhitelistInfoCmdV3() *cobra.Command {
 				Amount: &types.BigUInt{
 					Value: *amount,
 				},
-				LocktimeTier: tier,
+				LocktimeTier: dposv3.LocktimeTier(tier),
 			}, nil)
 		},
 	}
@@ -722,7 +722,7 @@ func AddDPOSV3(root *cobra.Command) {
 		RedelegateCmdV3(),
 		WhitelistCandidateCmdV3(),
 		RemoveWhitelistedCandidateCmdV3(),
-		ChangeWhitelistAmountCmdV3(),
+		ChangeWhitelistInfoCmdV3(),
 		CheckDelegationCmdV3(),
 		CheckAllDelegationsCmdV3(),
 		CheckRewardsCmdV3(),
