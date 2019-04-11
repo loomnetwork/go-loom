@@ -93,6 +93,26 @@ func (tg *DAppChainGateway) AddContractMapping(from common.Address, to loom.Addr
 	return err
 }
 
+func (tg *DAppChainGateway) UpdateTrustedValidators(
+	identity *client.Identity, validators []*loom.Address,
+) error {
+	trustedVals := make([]*types.Address, len(validators))
+	for i, v := range validators {
+		trustedVals[i] = v.MarshalPB()
+	}
+
+	trustedValidators := tgtypes.TransferGatewayTrustedValidators{
+		Validators: trustedVals,
+	}
+
+	req := &tgtypes.TransferGatewayUpdateTrustedValidatorsRequest{
+		TrustedValidators: &trustedValidators,
+	}
+
+	_, err := tg.contract.Call("UpdateTrustedValidators", req, identity.LoomSigner, nil)
+	return err
+}
+
 func (tg *DAppChainGateway) WithdrawERC721(
 	identity *client.Identity, tokenID *big.Int, contract loom.Address, recipient *common.Address,
 ) error {
