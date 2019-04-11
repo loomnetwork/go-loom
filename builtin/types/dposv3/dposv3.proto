@@ -34,10 +34,11 @@ message ValidatorStatistic {
     Address address = 1;
     bytes pub_key = 2;
     BigUInt whitelist_amount = 3;
-    BigUInt delegation_total = 4;
-    BigUInt distribution_total = 5;
-    BigUInt slash_percentage = 6;
-    uint64 recently_missed_blocks = 7;
+    LocktimeTier locktime_tier = 4;
+    BigUInt delegation_total = 5;
+    BigUInt distribution_total = 6;
+    BigUInt slash_percentage = 7;
+    uint64 recently_missed_blocks = 8;
 }
 
 message Candidate {
