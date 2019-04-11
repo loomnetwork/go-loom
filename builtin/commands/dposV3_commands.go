@@ -355,7 +355,7 @@ func ChangeWhitelistInfoCmdV3() *cobra.Command {
 				}
 			}
 
-			return cli.CallContract(DPOSV3ContractName, "ChangeWhitelistAmount", &dposv3.ChangeWhitelistInfoRequest{
+			return cli.CallContract(DPOSV3ContractName, "ChangeWhitelistInfo", &dposv3.ChangeWhitelistInfoRequest{
 				CandidateAddress: candidateAddress.MarshalPB(),
 				Amount: &types.BigUInt{
 					Value: *amount,
