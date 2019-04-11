@@ -96,6 +96,12 @@ func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
 	return clone
 }
 
+func (c *FakeContext) WithValidators(validators []*types.Validator) *FakeContext {
+	clone := c.shallowClone()
+	clone.validators = loom.NewValidatorSet(validators...)
+	return clone
+}
+
 func (c *FakeContext) CreateContract(contract Contract) loom.Address {
 	addr := createAddress(c.address, c.contractNonce)
 	c.contractNonce++
