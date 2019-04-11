@@ -25,6 +25,26 @@ func UnregisterCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func GetDistributionsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "get_distributions",
+		Short: "Gets a list of all rewards for each address",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var resp dposv2.GetDistributionsResponse
+			err := cli.StaticCallContract(DPOSV2ContractName, "GetDistributions", &dposv2.GetDistributionsRequest{}, &resp)
+			if err != nil {
+				return err
+			}
+			out, err := formatJSON(&resp)
+			if err != nil {
+				return err
+			}
+			fmt.Println(out)
+			return nil
+		},
+	}
+}
+
 func GetStateCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "get_dpos_state",
@@ -168,7 +188,7 @@ func DelegateCmdV2() *cobra.Command {
 		Short: "delegate tokens to a validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
+			addr, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -205,11 +225,11 @@ func RedelegateCmdV2() *cobra.Command {
 		Short: "Redelegate tokens from one validator to another",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			validatorAddress, err := cli.ResolveAddress(args[0])
+			validatorAddress, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
-			formerValidatorAddress, err := cli.ResolveAddress(args[1])
+			formerValidatorAddress, err := cli.ParseAddress(args[1])
 			if err != nil {
 				return err
 			}
@@ -237,7 +257,7 @@ func WhitelistCandidateCmdV2() *cobra.Command {
 		Short: "Whitelist candidate & credit candidate's self delegation without token deposit",
 		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			candidateAddress, err := cli.ResolveAddress(args[0])
+			candidateAddress, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -267,7 +287,7 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 		Short: "remove a candidate's whitelist entry",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			candidateAddress, err := cli.ResolveAddress(args[0])
+			candidateAddress, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -279,13 +299,41 @@ func RemoveWhitelistedCandidateCmdV2() *cobra.Command {
 	}
 }
 
+func ChangeWhitelistLockTimeTierCmdV2() *cobra.Command {
+	return &cobra.Command{
+		Use:   "change_whitelist_locktime_tier [candidate address] [amount]",
+		Short: "Changes a whitelisted candidate's whitelist lock time tier",
+		Args:  cobra.MinimumNArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			candidateAddress, err := cli.ParseAddress(args[0])
+			if err != nil {
+				return err
+			}
+
+			tier, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			if tier > 3 {
+				errors.New("Tier value must be integer 0 - 4")
+			}
+
+			return cli.CallContract(DPOSV2ContractName, "ChangeWhitelistLockTimeTier", &dposv2.ChangeWhitelistLockTimeTierRequestV2{
+				CandidateAddress: candidateAddress.MarshalPB(),
+				LockTimeTier:     tier,
+			}, nil)
+		},
+	}
+}
+
 func ChangeWhitelistAmountCmdV2() *cobra.Command {
 	return &cobra.Command{
 		Use:   "change_whitelist_amount [candidate address] [amount]",
 		Short: "Changes a whitelisted candidate's whitelist amount",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			candidateAddress, err := cli.ResolveAddress(args[0])
+			candidateAddress, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -338,7 +386,7 @@ func UnbondCmdV2() *cobra.Command {
 		Short: "De-allocate tokens from a validator",
 		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
+			addr, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -363,7 +411,7 @@ func ClaimDistributionCmdV2() *cobra.Command {
 		Short: "claim dpos distributions due to a validator or delegator",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
+			addr, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -408,12 +456,19 @@ func CheckRewardsCmd() *cobra.Command {
 
 func CheckDistributionCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "check_distribution",
+		Use:   "check_distribution [address]",
 		Short: "check rewards distribution",
-		Args:  cobra.MinimumNArgs(0),
+		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			addr, err := cli.ParseAddress(args[0])
+			if err != nil {
+				return err
+			}
+
 			var resp dposv2.CheckDistributionResponse
-			err := cli.StaticCallContract(DPOSV2ContractName, "CheckDistribution", &dposv2.CheckDistributionRequest{}, &resp)
+			err = cli.StaticCallContract(DPOSV2ContractName, "CheckDistribution", &dposv2.CheckDistributionRequest{
+				Address: addr.MarshalPB(),
+			}, &resp)
 			if err != nil {
 				return err
 			}
@@ -433,7 +488,7 @@ func TotalDelegationCmd() *cobra.Command {
 		Short: "check how much a delegator has delegated in total (to all validators)",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
+			addr, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -459,7 +514,7 @@ func CheckAllDelegationsCmd() *cobra.Command {
 		Short: "display all of a particular delegator's delegations",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
+			addr, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -506,7 +561,7 @@ func ListDelegationsCmd() *cobra.Command {
 		Short: "list a candidate's delegations & delegation total",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			addr, err := cli.ResolveAddress(args[0])
+			addr, err := cli.ParseAddress(args[0])
 			if err != nil {
 				return err
 			}
@@ -702,6 +757,7 @@ func AddDPOSV2(root *cobra.Command) {
 		WhitelistCandidateCmdV2(),
 		RemoveWhitelistedCandidateCmdV2(),
 		ChangeWhitelistAmountCmdV2(),
+		ChangeWhitelistLockTimeTierCmdV2(),
 		CheckDelegationCmdV2(),
 		CheckAllDelegationsCmd(),
 		CheckDistributionCmd(),
@@ -718,5 +774,6 @@ func AddDPOSV2(root *cobra.Command) {
 		TimeUntilElectionCmd(),
 		TotalDelegationCmd(),
 		GetStateCmd(),
+		GetDistributionsCmd(),
 	)
 }

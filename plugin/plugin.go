@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/grpc-ecosystem/go-grpc-prometheus"
+	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
@@ -200,6 +200,10 @@ func (c *GRPCContext) EmitTopics(data []byte, topics ...string) {
 
 func (c *GRPCContext) Emit(data []byte) {
 	c.EmitTopics(data)
+}
+
+func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
+	return c.FeatureEnabled(name, defaultVal)
 }
 
 func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRPCContext {

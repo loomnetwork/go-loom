@@ -23,20 +23,22 @@ message State {
     BigUInt total_reward_distribution = 5;
 }
 
+message InitializationState {
+    State state = 1;
+    repeated Candidate candidates = 2;
+    repeated Delegation delegations = 3;
+    repeated ValidatorStatistic statistics = 4;
+}
+
 message ValidatorStatistic {
     Address address = 1;
     bytes pub_key = 2;
-    uint64 upblock_count = 3;
-    uint64 block_count = 4;
-    BigUInt slash_percentage = 5;
+    BigUInt whitelist_amount = 3;
+    LocktimeTier locktime_tier = 4;
+    BigUInt delegation_total = 5;
     BigUInt distribution_total = 6;
-    BigUInt delegation_total = 7;
-    BigUInt whitelist_amount = 8;
-    uint64 whitelist_locktime = 9;
-}
-
-message ValidatorStatisticList {
-    repeated ValidatorStatistic statistics = 1;
+    BigUInt slash_percentage = 7;
+    uint64 recently_missed_blocks = 8;
 }
 
 message Candidate {
@@ -54,10 +56,23 @@ message Candidate {
     string name = 6;
     string description = 7;
     string website = 8;
+    uint64 max_referral_percentage = 9;
+}
+
+message CandidateStatistic {
+    ValidatorStatistic statistic = 1;
+    Candidate          candidate = 2;
 }
 
 message CandidateList {
     repeated Candidate candidates = 1;
+}
+
+enum LocktimeTier {
+    TIER_ZERO = 0;
+    TIER_ONE = 1;
+    TIER_TWO = 2;
+    TIER_THREE = 3;
 }
 
 message Delegation {
@@ -67,12 +82,6 @@ message Delegation {
     BigUInt amount = 4;
     BigUInt update_amount = 5;
     uint64 lock_time = 6;
-    enum LocktimeTier {
-        TIER_ZERO = 0;
-        TIER_ONE = 1;
-        TIER_TWO = 2;
-        TIER_THREE = 3;
-    }
     LocktimeTier locktime_tier = 7;
     enum DelegationState {
         BONDING = 0;
@@ -82,6 +91,7 @@ message Delegation {
     }
     DelegationState state = 8;
     Address update_validator = 9;
+    string referrer = 10; // wallet that sent the delegation
 }
 
 message DelegationIndex {
@@ -103,6 +113,7 @@ message DelegateRequest {
     Address validator_address = 1;
     BigUInt amount = 2;
     uint64 locktime_tier = 3;
+    string referrer = 4; // wallet that sent the delegation
 }
 
 message RedelegateRequest {
@@ -111,6 +122,7 @@ message RedelegateRequest {
     uint64 index = 3;
     BigUInt amount = 4;
     uint64 new_locktime_tier = 5;
+    string referrer = 6; // wallet that sent the delegation
 }
 
 message ConsolidateDelegationsRequest {
@@ -126,16 +138,17 @@ message UnbondRequest {
 message WhitelistCandidateRequest {
     Address candidate_address = 1;
     BigUInt amount = 2;
-    uint64 lock_time = 3;
+    LocktimeTier locktime_tier = 3;
 }
 
 message RemoveWhitelistedCandidateRequest {
     Address candidate_address = 1;
 }
 
-message ChangeWhitelistAmountRequest {
+message ChangeWhitelistInfoRequest {
     Address candidate_address = 1;
     BigUInt amount = 2;
+    LocktimeTier locktime_tier = 3;
 }
 
 message CheckDelegationRequest {
@@ -190,6 +203,7 @@ message RegisterCandidateRequest {
     string description = 4;
     string website = 5;
     uint64 locktime_tier = 6;
+    uint64 max_referral_percentage = 7;
 }
 
 message ChangeCandidateFeeRequest {
@@ -200,6 +214,7 @@ message UpdateCandidateInfoRequest {
     string name = 1;
     string description = 2;
     string website = 3;
+    uint64 max_referral_percentage = 4;
 }
 
 message UnregisterCandidateRequest {
@@ -219,11 +234,11 @@ message ListValidatorsResponse {
     repeated ValidatorStatistic statistics = 1;
 }
 
-message ListCandidateRequest {
+message ListCandidatesRequest {
 }
 
-message ListCandidateResponse {
-    repeated Candidate candidates = 1;
+message ListCandidatesResponse {
+    repeated CandidateStatistic candidates = 1;
 }
 
 message ListDelegationsRequest {
@@ -333,11 +348,13 @@ message DposUpdateCandidateInfoEvent {
 message DposDelegatorDelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;
+    string referrer = 3;
 }
 
 message DposDelegatorRedelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;
+    string referrer = 3;
 }
 
 message DposDelegatorConsolidatesEvent {

@@ -89,6 +89,13 @@ message DistributionListV2 {
     repeated DistributionV2 distributions = 1;
 }
 
+message GetDistributionsRequest {
+}
+
+message GetDistributionsResponse {
+    repeated DistributionV2 distributions = 1;
+}
+
 message DPOSInitRequestV2 {
     ParamsV2 params = 1;
     repeated Validator validators = 2;
@@ -98,12 +105,14 @@ message DelegateRequestV2 {
     Address validator_address = 1;
     BigUInt amount = 2;
     uint64 locktime_tier = 3;
+    string referrer = 4; //optional wallet that sent the delegation
 }
 
 message RedelegateRequestV2 {
     Address validator_address = 1;
     Address former_validator_address = 2;
     BigUInt amount = 3;
+    string referrer = 4; //optional wallet that sent the delegation
 }
 
 message UnbondRequestV2 {
@@ -115,6 +124,11 @@ message WhitelistCandidateRequestV2 {
     Address candidate_address = 1;
     BigUInt amount = 2;
     uint64 lock_time = 3;
+}
+
+message ChangeWhitelistLockTimeTierRequestV2 {
+    Address candidate_address = 1;
+    uint64 lock_time_tier = 2;
 }
 
 message RemoveWhitelistedCandidateRequestV2 {
@@ -162,6 +176,7 @@ message CheckAllDelegationsResponse {
 }
 
 message CheckDistributionRequest {
+    Address address = 1;
 }
 
 message CheckDistributionResponse {
@@ -326,11 +341,13 @@ message DposUpdateCandidateInfoEvent {
 message DposDelegatorDelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;
+    string referrer = 3;
 }
 
 message DposDelegatorRedelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;
+    string referrer = 3;
 }
 
 message DposDelegatorUnbondsEvent {

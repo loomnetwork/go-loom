@@ -31,6 +31,7 @@ type StaticContext interface {
 	Logger() *loom.Logger
 	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
+	FeatureEnabled(name string, defaultVal bool) bool
 
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
@@ -88,6 +89,11 @@ func (c *wrappedPluginStaticContext) HasPermissionFor(addr loom.Address, token [
 	return found, foundRoles
 }
 
+// FeatureEnabled checks whether the feature is enabled on chain
+func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool) bool {
+	return c.StaticContext.FeatureEnabled(name, defaultVal)
+}
+
 // Implements the Context interface for Go contract methods.
 type wrappedPluginContext struct {
 	plugin.Context
@@ -123,6 +129,11 @@ func (c *wrappedPluginContext) GrantPermissionTo(addr loom.Address, token []byte
 // RevokePermissionFrom removes a permission previously granted by GrantPermissionTo
 func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []byte, role string) {
 	c.Context.Delete(rolePermKey(addr, token, role))
+}
+
+// Check if feature is enabled on chain
+func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool {
+	return c.Context.FeatureEnabled(name, defaultVal)
 }
 
 func rolePermKey(addr loom.Address, token []byte, role string) []byte {

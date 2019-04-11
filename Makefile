@@ -62,7 +62,8 @@ proto: \
 	builtin/types/dposv3/dposv3.pb.go \
 	builtin/types/plasma_cash/plasma_cash.pb.go \
 	builtin/types/karma/karma.pb.go \
-	builtin/types/config/config.pb.go \
+	builtin/types/chainconfig/chainconfig.pb.go \
+	builtin/types/deployer_whitelist/deployer_whitelist.pb.go \
 	builtin/types/transfer_gateway/transfer_gateway.pb.go \
 	builtin/types/transfer_gateway/v1/transfer_gateway.pb.go \
 	testdata/test.pb.go \
@@ -128,7 +129,8 @@ clean:
 		builtin/types/ethcoin/ethcoin.pb.go \
 		builtin/types/plasma_cash/plasma_cash.pb.go \
 		builtin/types/karma/karma.pb.go \
-		builtin/types/config/config.pb.go \
+		builtin/types/chainconfig/chainconfig.pb.go \
+		builtin/types/deployer_whitelist/deployer_whitelist.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
 		examples/plugins/evmexample/types/types.pb.go \

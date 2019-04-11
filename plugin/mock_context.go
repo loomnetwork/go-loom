@@ -32,6 +32,7 @@ type FakeContext struct {
 	validators    loom.ValidatorSet
 	Events        []FEvent
 	ethBalances   map[string]*loom.BigUInt
+	features      map[string]bool
 }
 
 var _ Context = &FakeContext{}
@@ -57,6 +58,7 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		validators:  loom.NewValidatorSet(),
 		Events:      make([]FEvent, 0),
 		ethBalances: make(map[string]*loom.BigUInt),
+		features:    make(map[string]bool),
 	}
 }
 
@@ -72,6 +74,7 @@ func (c *FakeContext) shallowClone() *FakeContext {
 		validators:    c.validators,
 		Events:        c.Events,
 		ethBalances:   c.ethBalances,
+		features:      c.features,
 	}
 }
 
@@ -169,6 +172,17 @@ func (c *FakeContext) Resolve(name string) (loom.Address, error) {
 
 func (c *FakeContext) ValidatorPower(pubKey []byte) int64 {
 	return 0
+}
+
+func (c *FakeContext) SetFeature(name string, val bool) {
+	c.features[name] = val
+}
+
+func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
+	if val, ok := c.features[name]; ok {
+		return val
+	}
+	return defaultVal
 }
 
 func (c *FakeContext) Message() Message {
