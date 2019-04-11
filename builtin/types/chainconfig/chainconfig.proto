@@ -13,20 +13,12 @@ message GetFeatureRequest {
 }
 
 message AddFeatureRequest {
-    repeated string names = 1;
-}
-
-message AddFeatureResponse {
-}
-
-message UpdateFeatureRequest {
     string name = 1;
     uint64 build_number = 2;
 }
 
-message UpdateFeatureResponse {
+message AddFeatureResponse {
 }
-
 
 message GetFeatureResponse {
     Feature feature = 1;
