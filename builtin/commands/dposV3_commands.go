@@ -582,7 +582,7 @@ func RegisterReferrerCmdV3() *cobra.Command {
 				return err
 			}
 
-			return cli.CallContract(DPOSV3ContractName, "RegisterReferer", &dposv3.RegisterReferrerRequest{
+			return cli.CallContract(DPOSV3ContractName, "RegisterReferrer", &dposv3.RegisterReferrerRequest{
 				Name:    name,
 				Address: address.MarshalPB(),
 			}, nil)
