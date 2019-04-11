@@ -6,8 +6,8 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 
-	ssha "github.com/miguelmota/go-solidity-sha3"
 	"github.com/ethereum/go-ethereum/crypto"
+	ssha "github.com/miguelmota/go-solidity-sha3"
 )
 
 type Secp256k1PrivateKey ecdsa.PrivateKey
