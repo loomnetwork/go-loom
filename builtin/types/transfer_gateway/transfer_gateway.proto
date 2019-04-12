@@ -368,8 +368,18 @@ message TransferGatewayMainnetEventTxHashInfo {
     TransferGatewayTokenKind token_kind = 1;
 }
 
+enum ValidatorAuthStrategy {
+    USE_TRUSTED_VALIDATORS = 0;
+    USE_DPOS_VALIDATORS = 1;
+}
+
+message TransferGatewayValidatorAuthConfig {
+    ValidatorAuthStrategy auth_strategy = 1;
+    TransferGatewayTrustedValidators trusted_validators = 2;
+}
+
 message TransferGatewayTrustedValidators {
-    repeated Validator validators = 1;
+    repeated Address validators = 1;
 }
 
 message TransferGatewayTrustedValidatorsRequest {
@@ -381,4 +391,16 @@ message TransferGatewayTrustedValidatorsResponse {
 
 message TransferGatewayUpdateTrustedValidatorsRequest {
     TransferGatewayTrustedValidators trusted_validators = 1;
+}
+
+message TransferGatewayUpdateValidatorAuthStrategyRequest {
+    ValidatorAuthStrategy auth_strategy = 1;
+}
+
+message TransferGatewayGetValidatorAuthStrategyRequest {
+
+}
+
+message TransferGatewayGetValidatorAuthStrategyResponse {
+    ValidatorAuthStrategy auth_strategy = 1;
 }
