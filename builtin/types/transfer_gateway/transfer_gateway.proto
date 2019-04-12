@@ -368,6 +368,11 @@ message TransferGatewayMainnetEventTxHashInfo {
     TransferGatewayTokenKind token_kind = 1;
 }
 
+message TransferGatewayValidatorAuthConfig {
+    bool use_trusted_val_for_auth = 1;
+    TransferGatewayTrustedValidators trusted_validators = 2;
+}
+
 message TransferGatewayTrustedValidators {
     repeated Address validators = 1;
 }
