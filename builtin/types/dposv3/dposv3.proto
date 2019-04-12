@@ -36,9 +36,8 @@ message ValidatorStatistic {
     BigUInt whitelist_amount = 3;
     LocktimeTier locktime_tier = 4;
     BigUInt delegation_total = 5;
-    BigUInt distribution_total = 6;
-    BigUInt slash_percentage = 7;
-    uint64 recently_missed_blocks = 8;
+    BigUInt slash_percentage = 6;
+    uint64 recently_missed_blocks = 7;
 }
 
 message Candidate {
@@ -284,6 +283,11 @@ message RequestBatch {
 message GetRequestBatchTallyRequest {
 }
 
+message RegisterReferrerRequest {
+    string name = 1;
+    Address address = 2;
+}
+
 message SetElectionCycleRequest {
     int64 election_cycle = 1;
 }
@@ -365,4 +369,9 @@ message DposDelegatorConsolidatesEvent {
 message DposDelegatorUnbondsEvent {
     Address address = 1;
     BigUInt amount = 2;
+}
+
+message DposReferrerRegistersEvent {
+    string name = 1;
+    Address address = 2;
 }
