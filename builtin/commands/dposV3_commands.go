@@ -134,9 +134,10 @@ func RegisterCandidateCmdV3() *cobra.Command {
 				}
 
 				if tier > 3 {
-					errors.New("Tier value must be integer 0 - 4")
+					return errors.New("Tier value must be integer 0 - 3")
 				}
 			}
+
 			maxReferralPercentage := uint64(0)
 			if len(args) >= 4 {
 				maxReferralPercentage, err = strconv.ParseUint(args[3], 10, 64)
@@ -215,7 +216,7 @@ func DelegateCmdV3() *cobra.Command {
 				}
 
 				if tier > 3 {
-					errors.New("Tier value must be integer 0 - 4")
+					return errors.New("Tier value must be integer 0 - 3")
 				}
 
 				req.LocktimeTier = tier
@@ -295,7 +296,7 @@ func WhitelistCandidateCmdV3() *cobra.Command {
 				}
 
 				if tier > 3 {
-					errors.New("Tier value must be integer 0 - 3")
+					return errors.New("Tier value must be integer 0 - 3")
 				}
 			}
 
@@ -351,7 +352,7 @@ func ChangeWhitelistInfoCmdV3() *cobra.Command {
 				}
 
 				if tier > 3 {
-					errors.New("Tier value must be integer 0 - 3")
+					return errors.New("Tier value must be integer 0 - 3")
 				}
 			}
 
