@@ -10,4 +10,3 @@ message ETHCoinInitRequest {
 message ETHCoinMintToGatewayRequest {
     BigUInt amount = 1;
 }
-
