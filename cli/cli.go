@@ -23,8 +23,6 @@ type ContractCallFlags struct {
 
 var TxFlags struct {
 	URI           string
-	WriteURI      string
-	ReadURI       string
 	MainnetURI    string
 	ContractAddr  string
 	ChainID       string
@@ -47,8 +45,6 @@ func ContractCallCommand(name string) *cobra.Command {
 	}
 	pflags := cmd.PersistentFlags()
 	pflags.StringVarP(&TxFlags.URI, "uri", "u", "http://localhost:46658", "DAppChain base URI")
-	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
-	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
 	pflags.StringVarP(&TxFlags.MainnetURI, "ethereum", "e", "http://localhost:8545", "URI for talking to Ethereum")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract address")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
@@ -67,8 +63,6 @@ func ContractResolveCommand() *cobra.Command {
 	}
 	pflags := cmd.PersistentFlags()
 	pflags.StringVarP(&TxFlags.URI, "uri", "u", "http://localhost:46658", "DAppChain base URI")
-	pflags.StringVarP(&TxFlags.WriteURI, "write", "w", "http://localhost:46658/rpc", "URI for sending txs")
-	pflags.StringVarP(&TxFlags.ReadURI, "read", "r", "http://localhost:46658/query", "URI for quering app state")
 	pflags.StringVarP(&TxFlags.MainnetURI, "ethereum", "e", "http://localhost:8545", "URI for talking to Ethereum")
 	pflags.StringVarP(&TxFlags.ContractAddr, "contract", "", "", "contract name")
 	pflags.StringVarP(&TxFlags.ChainID, "chain", "", "default", "chain ID")
@@ -79,7 +73,7 @@ func ContractResolveCommand() *cobra.Command {
 	return cmd
 }
 
-func contractv1(callFlags *ContractCallFlags, defaultAddr string) (*client.Contract, error) {
+func resolveContract(callFlags *ContractCallFlags, defaultAddr string) (*client.Contract, error) {
 	contractAddrStr := callFlags.ContractAddr
 	if contractAddrStr == "" {
 		contractAddrStr = defaultAddr
@@ -89,7 +83,7 @@ func contractv1(callFlags *ContractCallFlags, defaultAddr string) (*client.Contr
 		return nil, errors.New("contract address or name required")
 	}
 
-	contractAddr, err := ResolveAddressv1(contractAddrStr, callFlags)
+	contractAddr, err := ResolveAddress(contractAddrStr, callFlags.ChainID, callFlags.URI)
 	if err != nil {
 		return nil, err
 	}
@@ -100,12 +94,12 @@ func contractv1(callFlags *ContractCallFlags, defaultAddr string) (*client.Contr
 	return contract, nil
 }
 
-func CallContractv1(callFlags *ContractCallFlags, defaultAddr string, method string, params proto.Message, result interface{}) error {
+func CallContractWithFlags(callFlags *ContractCallFlags, defaultAddr string, method string, params proto.Message, result interface{}) error {
 	signer, err := GetSigner(callFlags.PrivFile, callFlags.HsmConfigFile, callFlags.Algo)
 	if err != nil {
 		return err
 	}
-	contract, err := contractv1(callFlags, defaultAddr)
+	contract, err := resolveContract(callFlags, defaultAddr)
 	if err != nil {
 		return err
 	}
@@ -113,8 +107,8 @@ func CallContractv1(callFlags *ContractCallFlags, defaultAddr string, method str
 	return err
 }
 
-func StaticCallContractv1(callFlags *ContractCallFlags, defaultAddr string, method string, params proto.Message, result interface{}) error {
-	contract, err := contractv1(callFlags, defaultAddr)
+func StaticCallContractWithFlags(callFlags *ContractCallFlags, defaultAddr string, method string, params proto.Message, result interface{}) error {
+	contract, err := resolveContract(callFlags, defaultAddr)
 	if err != nil {
 		return err
 	}
@@ -132,7 +126,7 @@ func contract(defaultAddr string) (*client.Contract, error) {
 		return nil, errors.New("contract address or name required")
 	}
 
-	contractAddr, err := ResolveAddress(contractAddrStr)
+	contractAddr, err := ResolveAddress(contractAddrStr,TxFlags.ChainID,TxFlags.URI)
 	if err != nil {
 		return nil, err
 	}
