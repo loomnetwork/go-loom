@@ -37,22 +37,8 @@ func ParseAddress(s string) (loom.Address, error) {
 	return loom.Address{ChainID: TxFlags.ChainID, Local: loom.LocalAddress(b)}, nil
 }
 
-func ResolveAddressv1(s string, callFlags *ContractCallFlags) (loom.Address, error) {
-	rpcClient := client.NewDAppChainRPCClient(callFlags.ChainID, callFlags.URI+"/rpc", callFlags.URI+"/query")
-	contractAddr, err := ParseAddress(s)
-	if err != nil {
-		// if address invalid, try to resolve it using registry
-		contractAddr, err = rpcClient.Resolve(s)
-		if err != nil {
-			return loom.Address{}, err
-		}
-	}
-
-	return contractAddr, nil
-}
-
-func ResolveAddress(s string) (loom.Address, error) {
-	rpcClient := client.NewDAppChainRPCClient(TxFlags.ChainID, TxFlags.URI+"/rpc", TxFlags.URI+"/query")
+func ResolveAddress(s, chainID, URI string) (loom.Address, error) {
+	rpcClient := client.NewDAppChainRPCClient(chainID, URI+"/rpc", URI+"/query")
 	contractAddr, err := ParseAddress(s)
 	if err != nil {
 		// if address invalid, try to resolve it using registry
