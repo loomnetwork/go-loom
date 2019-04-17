@@ -5,6 +5,8 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 message InitRequest {
     Address owner = 1;
     repeated Deployer deployers = 2;
+    //default deployer flags
+    uint32 flags = 3;
 }
 
 enum Flags {
@@ -48,4 +50,18 @@ message ListDeployersRequest {
 
 message ListDeployersResponse {
     repeated Deployer deployers = 1;
+}
+
+message SetDefaultDeployerRequest {
+    uint32 flags = 1;
+}
+
+message SetDefaultDeployerResponse {
+}
+
+message GetDefaultDeployerRequest {
+}
+
+message GetDefaultDeployerResponse {
+    Deployer deployer = 1;
 }
