@@ -73,7 +73,7 @@ func ContractResolveCommand() *cobra.Command {
 	return cmd
 }
 
-func resolveContract(callFlags *ContractCallFlags, defaultAddr string) (*client.Contract, error) {
+func ResolveContract(callFlags *ContractCallFlags, defaultAddr string) (*client.Contract, error) {
 	contractAddrStr := callFlags.ContractAddr
 	if contractAddrStr == "" {
 		contractAddrStr = defaultAddr
@@ -99,7 +99,7 @@ func CallContractWithFlags(callFlags *ContractCallFlags, defaultAddr string, met
 	if err != nil {
 		return err
 	}
-	contract, err := resolveContract(callFlags, defaultAddr)
+	contract, err := ResolveContract(callFlags, defaultAddr)
 	if err != nil {
 		return err
 	}
@@ -108,7 +108,7 @@ func CallContractWithFlags(callFlags *ContractCallFlags, defaultAddr string, met
 }
 
 func StaticCallContractWithFlags(callFlags *ContractCallFlags, defaultAddr string, method string, params proto.Message, result interface{}) error {
-	contract, err := resolveContract(callFlags, defaultAddr)
+	contract, err := ResolveContract(callFlags, defaultAddr)
 	if err != nil {
 		return err
 	}
@@ -126,7 +126,7 @@ func contract(defaultAddr string) (*client.Contract, error) {
 		return nil, errors.New("contract address or name required")
 	}
 
-	contractAddr, err := ResolveAddress(contractAddrStr,TxFlags.ChainID,TxFlags.URI)
+	contractAddr, err := ResolveAddress(contractAddrStr, TxFlags.ChainID, TxFlags.URI)
 	if err != nil {
 		return nil, err
 	}
