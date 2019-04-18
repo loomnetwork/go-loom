@@ -4,6 +4,7 @@ package gateway_v2
 
 import (
 	"context"
+	ssha "github.com/miguelmota/go-solidity-sha3"
 	"math/big"
 	"time"
 
@@ -126,7 +127,12 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 	if err != nil {
 		return nil
 	}
-	return client.WithdrawalHash(withdrawer, tokenAddr, c.Address, tokenKind, tokenId, amount, nonce)
+	hash := client.WithdrawalHash(withdrawer, tokenAddr, c.Address, tokenKind, tokenId, amount, nonce)
+	return ssha.SoliditySHA3(
+		[]string{"string", "bytes32"},
+		"\x19Ethereum Signed Message:\n32",
+		hash,
+	)
 }
 
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {

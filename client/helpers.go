@@ -292,13 +292,6 @@ func WithdrawalHash(withdrawer common.Address, tokenAddr common.Address, gateway
 		prefix, withdrawer, nonce, gatewayAddr, hash,
 	)
 
-	// Prefix the hash with the Ethereum Signed Message
-	hash = ssha.SoliditySHA3(
-		[]string{"string", "bytes32"},
-		"\x19Ethereum Signed Message:\n32",
-		hash,
-	)
-
 	return hash
 }
 
