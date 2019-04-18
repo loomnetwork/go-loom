@@ -52,16 +52,21 @@ message ListDeployersResponse {
     repeated Deployer deployers = 1;
 }
 
-message SetDefaultDeployerRequest {
+message SetOverrideRequest {
     uint32 flags = 1;
 }
 
-message SetDefaultDeployerResponse {
+message SetOverrideResponse {
+    Override override = 1;
 }
 
-message GetDefaultDeployerRequest {
+message GetOverrideRequest {
 }
 
-message GetDefaultDeployerResponse {
-    Deployer deployer = 1;
+message GetOverrideResponse {
+    Override override = 1;
+}
+
+message Override {
+    uint32 flags = 1;
 }
