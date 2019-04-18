@@ -131,21 +131,31 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 			[]string{"uint256", "address"},
 			tokenId, tokenAddr,
 		)
+		prefix = client.ERC721Prefix
 	case tgtypes.TransferGatewayTokenKind_ERC721X:
 		hash = ssha.SoliditySHA3(
 			[]string{"uint256", "uint256", "address"},
 			tokenId, amount, tokenAddr,
 		)
+		prefix = client.ERC721XPrefix
+	case tgtypes.TransferGatewayTokenKind_LOOMCOIN:
+		hash = ssha.SoliditySHA3(
+			[]string{"uint256", "address"},
+			amount, tokenAddr,
+		)
+		prefix = client.ERC20Prefix
 	case tgtypes.TransferGatewayTokenKind_ERC20:
 		hash = ssha.SoliditySHA3(
 			[]string{"uint256", "address"},
 			amount, tokenAddr,
 		)
+		prefix = client.ERC20Prefix
 	case tgtypes.TransferGatewayTokenKind_ETH:
 		hash = ssha.SoliditySHA3(
 			[]string{"uint256"},
 			amount,
 		)
+		prefix = client.ETHPrefix
 	default:
 		return nil
 	}
@@ -157,8 +167,8 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 
 	// Make it non replayable
 	hash = ssha.SoliditySHA3(
-		[]string{"address", "uint256", "address", "bytes32"},
-		withdrawer, nonce, c.Address, hash,
+		[]string{"string", "address", "uint256", "address", "bytes32"},
+		prefix, withdrawer, nonce, c.Address, hash,
 	)
 
 	// Prefix the hash with the Ethereum Signed Message
