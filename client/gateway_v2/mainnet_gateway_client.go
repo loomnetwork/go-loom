@@ -11,7 +11,6 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/client"
-	ssha "github.com/miguelmota/go-solidity-sha3"
 )
 
 type MainnetGatewayClient struct {
@@ -123,63 +122,11 @@ func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.
 }
 
 func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAddr common.Address, tokenKind tgtypes.TransferGatewayTokenKind, tokenId *big.Int, amount *big.Int) []byte {
-	// Create hash of the message
-	var hash []byte
-	var prefix string
-	switch tokenKind {
-	case tgtypes.TransferGatewayTokenKind_ERC721:
-		hash = ssha.SoliditySHA3(
-			[]string{"uint256", "address"},
-			tokenId, tokenAddr,
-		)
-		prefix = client.ERC721Prefix
-	case tgtypes.TransferGatewayTokenKind_ERC721X:
-		hash = ssha.SoliditySHA3(
-			[]string{"uint256", "uint256", "address"},
-			tokenId, amount, tokenAddr,
-		)
-		prefix = client.ERC721XPrefix
-	case tgtypes.TransferGatewayTokenKind_LOOMCOIN:
-		hash = ssha.SoliditySHA3(
-			[]string{"uint256", "address"},
-			amount, tokenAddr,
-		)
-		prefix = client.ERC20Prefix
-	case tgtypes.TransferGatewayTokenKind_ERC20:
-		hash = ssha.SoliditySHA3(
-			[]string{"uint256", "address"},
-			amount, tokenAddr,
-		)
-		prefix = client.ERC20Prefix
-	case tgtypes.TransferGatewayTokenKind_ETH:
-		hash = ssha.SoliditySHA3(
-			[]string{"uint256"},
-			amount,
-		)
-		prefix = client.ETHPrefix
-	default:
-		return nil
-	}
-
 	nonce, err := c.Nonces(withdrawer)
 	if err != nil {
 		return nil
 	}
-
-	// Make it non replayable
-	hash = ssha.SoliditySHA3(
-		[]string{"string", "address", "uint256", "address", "bytes32"},
-		prefix, withdrawer, nonce, c.Address, hash,
-	)
-
-	// Prefix the hash with the Ethereum Signed Message
-	hash = ssha.SoliditySHA3(
-		[]string{"string", "bytes32"},
-		"\x19Ethereum Signed Message:\n32",
-		hash,
-	)
-
-	return hash
+	return client.WithdrawalHash(withdrawer, tokenAddr, c.Address, tokenKind, tokenId, amount, nonce)
 }
 
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {
