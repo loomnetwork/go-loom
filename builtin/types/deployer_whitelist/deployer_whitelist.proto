@@ -5,8 +5,6 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 message InitRequest {
     Address owner = 1;
     repeated Deployer deployers = 2;
-    //default deployer flags
-    uint32 flags = 3;
 }
 
 enum Flags {
@@ -54,10 +52,6 @@ message ListDeployersResponse {
 
 message SetOverrideRequest {
     uint32 flags = 1;
-}
-
-message SetOverrideResponse {
-    Override override = 1;
 }
 
 message GetOverrideRequest {
