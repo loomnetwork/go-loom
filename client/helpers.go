@@ -20,6 +20,13 @@ import (
 	"github.com/pkg/errors"
 )
 
+const (
+	ERC721Prefix  = "\x16Withdraw ERC721:\n"
+	ERC721XPrefix = "\x15Withdraw ERC721X:\n"
+	ERC20Prefix   = "\x14Withdraw ERC20:\n"
+	ETHPrefix     = "\x13Withdraw ETH:\n"
+)
+
 var ErrTxFailed = errors.New("tx failed")
 var ErrValnotFound = errors.New("validator not found")
 
