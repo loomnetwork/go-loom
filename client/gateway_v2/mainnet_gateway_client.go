@@ -125,6 +125,7 @@ func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.
 func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAddr common.Address, tokenKind tgtypes.TransferGatewayTokenKind, tokenId *big.Int, amount *big.Int) []byte {
 	// Create hash of the message
 	var hash []byte
+	var prefix string
 	switch tokenKind {
 	case tgtypes.TransferGatewayTokenKind_ERC721:
 		hash = ssha.SoliditySHA3(
