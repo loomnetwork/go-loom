@@ -349,7 +349,7 @@ message TransferGatewayWithdrawETHError {
 message TransferGatewayWithdrawLoomCoinError {
     TransferGatewayWithdrawLoomCoinRequest withdraw_loom_coin_request = 1;
     string error_message = 2;
-} 
+}
 
 message TransferGatewayWithdrawTokenError {
     TransferGatewayWithdrawTokenRequest withdraw_token_request = 1;
@@ -403,4 +403,12 @@ message TransferGatewayGetValidatorAuthStrategyRequest {
 
 message TransferGatewayGetValidatorAuthStrategyResponse {
     ValidatorAuthStrategy auth_strategy = 1;
+}
+
+message TransferGatewayGetUnclaimedContractTokensRequest {
+    Address token_address = 1;
+}
+
+message TransferGatewayGetUnclaimedContractTokensResponse {
+    BigUInt unclaimed_amount = 1;
 }
