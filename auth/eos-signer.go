@@ -59,11 +59,7 @@ func (e *EosScatterSigner) Sign(txBytes []byte) []byte {
 	if err != nil {
 		panic(err)
 	}
-	sigByes, err := signature.Pack()
-	if err != nil {
-		panic(err)
-	}
-	return sigByes
+	return []byte(signature.String())
 }
 
 func (e *EosScatterSigner) PublicKey() []byte {
