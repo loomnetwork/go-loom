@@ -127,7 +127,7 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 	if err != nil {
 		return nil
 	}
-	hash := client.WithdrawalHash(withdrawer, tokenAddr, c.Address, tokenKind, tokenId, amount, nonce)
+	hash := client.WithdrawalHash(withdrawer, tokenAddr, c.Address, tokenKind, tokenId, amount, nonce, true)
 	return ssha.SoliditySHA3(
 		[]string{"string", "bytes32"},
 		"\x19Ethereum Signed Message:\n32",

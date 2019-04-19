@@ -253,7 +253,7 @@ func split(buf []byte, lim int) [][]byte {
 	return chunks
 }
 
-func WithdrawalHash(withdrawer common.Address, tokenAddr common.Address, gatewayAddr common.Address, tokenKind tgtypes.TransferGatewayTokenKind, tokenId *big.Int, amount *big.Int, nonce *big.Int) []byte {
+func WithdrawalHash(withdrawer common.Address, tokenAddr common.Address, gatewayAddr common.Address, tokenKind tgtypes.TransferGatewayTokenKind, tokenId *big.Int, amount *big.Int, nonce *big.Int, shouldPrefix bool) []byte {
 	// Create hash of the message
 	var hash []byte
 	var prefix string
@@ -287,10 +287,17 @@ func WithdrawalHash(withdrawer common.Address, tokenAddr common.Address, gateway
 	}
 
 	// Make it non replayable
-	hash = ssha.SoliditySHA3(
-		[]string{"string", "address", "uint256", "address", "bytes32"},
-		prefix, withdrawer, nonce, gatewayAddr, hash,
-	)
+	if shouldPrefix {
+		hash = ssha.SoliditySHA3(
+			[]string{"string", "address", "uint256", "address", "bytes32"},
+			prefix, withdrawer, nonce, gatewayAddr, hash,
+		)
+	} else {
+		hash = ssha.SoliditySHA3(
+			[]string{"address", "uint256", "address", "bytes32"},
+			withdrawer, nonce, gatewayAddr, hash,
+		)
+	}
 
 	return hash
 }
