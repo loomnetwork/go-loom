@@ -69,14 +69,6 @@ func (c *GRPCAPIClient) GetEvmTxReceipt(hash []byte) (types.EvmTxReceipt, error)
 	return *resp, err
 }
 
-func (c *GRPCAPIClient) ValidatorPower(pubKey []byte) int64 {
-	resp, _ := c.client.ValidatorPower(context.TODO(), &types.ValidatorPowerRequest{
-		PubKey: pubKey,
-	})
-
-	return resp.Power
-}
-
 func (c *GRPCAPIClient) Set(key, value []byte) {
 	c.client.Set(context.TODO(), &types.SetRequest{Key: key, Value: value})
 }
@@ -141,13 +133,6 @@ func (c *GRPCAPIClient) Call(addr loom.Address, input []byte) ([]byte, error) {
 
 func (c *GRPCAPIClient) CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error) {
 	return c.call(addr, input, vm.VMType_EVM, value)
-}
-
-func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
-	c.client.SetValidatorPower(context.TODO(), &types.SetValidatorPowerRequest{
-		PubKey: pubKey,
-		Power:  power,
-	})
 }
 
 func (c *GRPCAPIClient) ContractRecord(contractAddr loom.Address) (*ContractRecord, error) {
