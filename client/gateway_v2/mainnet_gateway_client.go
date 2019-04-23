@@ -4,7 +4,6 @@ package gateway_v2
 
 import (
 	"context"
-	ssha "github.com/miguelmota/go-solidity-sha3"
 	"math/big"
 	"time"
 
