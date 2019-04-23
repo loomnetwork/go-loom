@@ -77,14 +77,8 @@ message EnableFeatureRequest {
 }
 
 message EnableFeatureResponse {
-
 }
 
-message UpdateFeatureRequest {
+message AutoEnableRequest {
     repeated string names = 1;
-    uint64 build_number = 2;
-    bool auto_enabled = 3;
-}
-
-message UpdateFeatureResponse {
 }
