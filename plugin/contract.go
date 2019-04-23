@@ -4,21 +4,22 @@ import (
 	"time"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/plugin/types"
+	ptypes "github.com/loomnetwork/go-loom/plugin/types"
+	"github.com/loomnetwork/go-loom/types"
 )
 
 type (
-	Request            = types.Request
-	Response           = types.Response
-	Meta               = types.ContractMeta
-	EncodingType       = types.EncodingType
-	ContractMethodCall = types.ContractMethodCall
-	Code               = types.PluginCode
+	Request            = ptypes.Request
+	Response           = ptypes.Response
+	Meta               = ptypes.ContractMeta
+	EncodingType       = ptypes.EncodingType
+	ContractMethodCall = ptypes.ContractMethodCall
+	Code               = ptypes.PluginCode
 )
 
 var (
-	EncodingType_JSON      = types.EncodingType_JSON
-	EncodingType_PROTOBUF3 = types.EncodingType_PROTOBUF3
+	EncodingType_JSON      = ptypes.EncodingType_JSON
+	EncodingType_PROTOBUF3 = ptypes.EncodingType_PROTOBUF3
 )
 
 type Message struct {
@@ -29,7 +30,6 @@ type StaticAPI interface {
 	StaticCall(addr loom.Address, input []byte) ([]byte, error)
 	StaticCallEVM(addr loom.Address, input []byte) ([]byte, error)
 	Resolve(name string) (loom.Address, error)
-	ValidatorPower(pubKey []byte) int64
 	EmitTopics(event []byte, topics ...string)
 	Emit(event []byte)
 }
@@ -37,8 +37,6 @@ type StaticAPI interface {
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
 	CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error)
-	// Privileged API
-	SetValidatorPower(pubKey []byte, power int64)
 }
 
 type API interface {
@@ -72,9 +70,10 @@ type StaticContext interface {
 	Block() loom.BlockHeader
 	Now() time.Time
 	Message() Message
-	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
+	GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error)
 	ContractAddress() loom.Address
 	FeatureEnabled(name string, defaultVal bool) bool
+	Validators() []*types.Validator
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
 	ContractRecord(contractAddr loom.Address) (*ContractRecord, error)

@@ -34,8 +34,8 @@ message ValidatorStatistic {
     Address address = 1;
     bytes pub_key = 2;
     BigUInt whitelist_amount = 3;
-    BigUInt delegation_total = 4;
-    BigUInt distribution_total = 5;
+    LocktimeTier locktime_tier = 4;
+    BigUInt delegation_total = 5;
     BigUInt slash_percentage = 6;
     uint64 recently_missed_blocks = 7;
 }
@@ -67,6 +67,13 @@ message CandidateList {
     repeated Candidate candidates = 1;
 }
 
+enum LocktimeTier {
+    TIER_ZERO = 0;
+    TIER_ONE = 1;
+    TIER_TWO = 2;
+    TIER_THREE = 3;
+}
+
 message Delegation {
     Address validator = 1;
     Address delegator = 2;
@@ -74,12 +81,6 @@ message Delegation {
     BigUInt amount = 4;
     BigUInt update_amount = 5;
     uint64 lock_time = 6;
-    enum LocktimeTier {
-        TIER_ZERO = 0;
-        TIER_ONE = 1;
-        TIER_TWO = 2;
-        TIER_THREE = 3;
-    }
     LocktimeTier locktime_tier = 7;
     enum DelegationState {
         BONDING = 0;
@@ -136,16 +137,17 @@ message UnbondRequest {
 message WhitelistCandidateRequest {
     Address candidate_address = 1;
     BigUInt amount = 2;
-    uint64 lock_time = 3;
+    LocktimeTier locktime_tier = 3;
 }
 
 message RemoveWhitelistedCandidateRequest {
     Address candidate_address = 1;
 }
 
-message ChangeWhitelistAmountRequest {
+message ChangeWhitelistInfoRequest {
     Address candidate_address = 1;
     BigUInt amount = 2;
+    LocktimeTier locktime_tier = 3;
 }
 
 message CheckDelegationRequest {
@@ -281,6 +283,11 @@ message RequestBatch {
 message GetRequestBatchTallyRequest {
 }
 
+message RegisterReferrerRequest {
+    string name = 1;
+    Address address = 2;
+}
+
 message SetElectionCycleRequest {
     int64 election_cycle = 1;
 }
@@ -362,4 +369,9 @@ message DposDelegatorConsolidatesEvent {
 message DposDelegatorUnbondsEvent {
     Address address = 1;
     BigUInt amount = 2;
+}
+
+message DposReferrerRegistersEvent {
+    string name = 1;
+    Address address = 2;
 }
