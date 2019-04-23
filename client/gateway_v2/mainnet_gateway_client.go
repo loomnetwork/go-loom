@@ -128,12 +128,7 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 		return nil
 	}
 	hash := client.WithdrawalHash(withdrawer, tokenAddr, c.Address, tokenKind, tokenId, amount, nonce, true)
-	return ssha.SoliditySHA3(
-		[]string{"string", "bytes32"},
-		"\x19Ethereum Signed Message:\n32",
-		hash,
-	)
-}
+	return client.ToEthereumSignedMessage(hash)
 
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {
 	contractAddr := common.HexToAddress(gatewayAddr)
