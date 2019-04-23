@@ -69,14 +69,6 @@ func (c *GRPCAPIClient) GetEvmTxReceipt(hash []byte) (types.EvmTxReceipt, error)
 	return *resp, err
 }
 
-func (c *GRPCAPIClient) ValidatorPower(pubKey []byte) int64 {
-	resp, _ := c.client.ValidatorPower(context.TODO(), &types.ValidatorPowerRequest{
-		PubKey: pubKey,
-	})
-
-	return resp.Power
-}
-
 func (c *GRPCAPIClient) Set(key, value []byte) {
 	c.client.Set(context.TODO(), &types.SetRequest{Key: key, Value: value})
 }
@@ -143,13 +135,6 @@ func (c *GRPCAPIClient) CallEVM(addr loom.Address, input []byte, value *loom.Big
 	return c.call(addr, input, vm.VMType_EVM, value)
 }
 
-func (c *GRPCAPIClient) SetValidatorPower(pubKey []byte, power int64) {
-	c.client.SetValidatorPower(context.TODO(), &types.SetValidatorPowerRequest{
-		PubKey: pubKey,
-		Power:  power,
-	})
-}
-
 func (c *GRPCAPIClient) ContractRecord(contractAddr loom.Address) (*ContractRecord, error) {
 	resp, err := c.client.ContractRecord(context.TODO(), &types.ContractRecordRequest{
 		Contract: contractAddr.MarshalPB(),
@@ -204,6 +189,10 @@ func (c *GRPCContext) Emit(data []byte) {
 
 func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.FeatureEnabled(name, defaultVal)
+}
+
+func (c *GRPCContext) Validators() []*ltypes.Validator {
+	return c.Validators()
 }
 
 func MakeGRPCContext(conn *grpc.ClientConn, req *types.ContractCallRequest) *GRPCContext {
