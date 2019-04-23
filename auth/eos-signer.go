@@ -50,12 +50,13 @@ func (e *EosScatterSigner) Sign(txBytes []byte) []byte {
 		panic(err)
 	}
 
+	nonceSha := sha256.Sum256([]byte(strconv.FormatUint(nonceTx.Sequence, 10)))
 	txDataHex := strings.ToUpper(hex.EncodeToString(txBytes))
 	hash_1 := sha256.Sum256([]byte(txDataHex))
-	hash_2 := sha256.Sum256([]byte(strconv.FormatUint(nonceTx.Sequence, 10)))
-	scatterMsgHash := sha256.Sum256([]byte(hex.EncodeToString(hash_1[:32]) + hex.EncodeToString(hash_2[:32])))
+	hash_2 := sha256.Sum256([]byte(hex.EncodeToString(nonceSha[:6])))
+	scatterMsgHash := sha256.Sum256([]byte(hex.EncodeToString(hash_1[:]) + hex.EncodeToString(hash_2[:])))
 
-	signature, err := e.PrivateKey.Sign(scatterMsgHash[:32])
+	signature, err := e.PrivateKey.Sign(scatterMsgHash[:])
 	if err != nil {
 		panic(err)
 	}
