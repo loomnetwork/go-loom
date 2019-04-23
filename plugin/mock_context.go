@@ -96,6 +96,12 @@ func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
 	return clone
 }
 
+func (c *FakeContext) WithValidators(validators []*types.Validator) *FakeContext {
+	clone := c.shallowClone()
+	clone.validators = loom.NewValidatorSet(validators...)
+	return clone
+}
+
 func (c *FakeContext) CreateContract(contract Contract) loom.Address {
 	addr := createAddress(c.address, c.contractNonce)
 	c.contractNonce++
@@ -168,10 +174,6 @@ func (c *FakeContext) Resolve(name string) (loom.Address, error) {
 		}
 	}
 	return loom.Address{}, fmt.Errorf("failed  to resolve address of contract '%s'", name)
-}
-
-func (c *FakeContext) ValidatorPower(pubKey []byte) int64 {
-	return 0
 }
 
 func (c *FakeContext) SetFeature(name string, val bool) {
@@ -266,10 +268,6 @@ func (c *FakeContext) Set(key []byte, value []byte) {
 
 func (c *FakeContext) Delete(key []byte) {
 	delete(c.data, c.makeKey(key))
-}
-
-func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
-	c.validators.Set(&loom.Validator{PubKey: pubKey, Power: power})
 }
 
 func (c *FakeContext) Validators() []*loom.Validator {
