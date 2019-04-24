@@ -134,11 +134,10 @@ func recoverAddressFromTrezor(hash []byte, sig []byte) ([]byte, error) {
 
 func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
-	if len(sig) != 67 {
-		return signer, fmt.Errorf("eos signature must be 67 bytes, not %d bytes", len(sig))
+	if len(sig) != 102 {
+		return signer, fmt.Errorf("eos signature must be 102 bytes, not %d bytes", len(sig))
 	}
-	signature := ecc.NewSigNil()
-	_, err := signature.Unpack(sig[1:])
+	signature, err := ecc.NewSignature(string(sig[1:]))
 	if err != nil {
 		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
 	}
@@ -157,7 +156,7 @@ func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 func recoverAddressFromEosScatter(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
 	if len(sig) != 102 {
-		return signer, fmt.Errorf("eos signature must be 67 bytes, not %d bytes", len(sig))
+		return signer, fmt.Errorf("eos signature must be 102 bytes, not %d bytes", len(sig))
 	}
 	signature, err := ecc.NewSignature(string(sig[1:]))
 	if err != nil {
