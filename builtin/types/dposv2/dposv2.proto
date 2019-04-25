@@ -2,6 +2,11 @@ syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
+message PubKeyV2 {
+    bytes pub_key = 1;
+}
+
+
 message ParamsV2 {
     uint64 validator_count = 1;
     int64 election_cycle_length = 2;
@@ -23,7 +28,7 @@ message StateV2 {
 
 message ValidatorStatisticV2 {
     Address address = 1;
-    bytes pub_key = 2;
+    PubKeyV2 pub_key = 2;
     uint64 upblock_count = 3;
     uint64 block_count = 4;
     BigUInt slash_percentage = 5;
@@ -39,7 +44,7 @@ message ValidatorStatisticListV2 {
 
 message CandidateV2 {
     Address address = 1;
-    bytes pub_key = 2;
+    PubKeyV2 pub_key = 2;
     uint64 fee = 3;
     uint64 new_fee = 4;
     uint64 fee_delay_counter = 5;
@@ -192,7 +197,7 @@ message ClaimDistributionResponseV2 {
 }
 
 message RegisterCandidateRequestV2 {
-    bytes pub_key = 1;
+    PubKeyV2 pub_key = 1;
     uint64 fee = 2;
     string name = 3;
     string description = 4;

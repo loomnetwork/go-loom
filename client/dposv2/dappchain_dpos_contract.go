@@ -101,7 +101,7 @@ func (dpos *DAppChainDPOSContract) ClaimRewards(identity *client.Identity, addr 
 
 func (dpos *DAppChainDPOSContract) RegisterCandidate(identity *client.Identity, pubKey []byte, candidateFee uint64, candidateName string, candidateDescription string, candidateWebsite string) error {
 	req := &dpostypes.RegisterCandidateRequestV2{
-		PubKey:      pubKey,
+		PubKey:      &dpostypes.PubKeyV2{PubKey:pubKey},
 		Fee:         candidateFee,
 		Name:        candidateName,
 		Description: candidateDescription,
