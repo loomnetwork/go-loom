@@ -95,7 +95,7 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 	case SignatureType_EOS:
 		return recoverAddressFromEos(hash, sig)
 	case SignatureType_EOS_SCATTER:
-		return recoverAddressFromEosScatter(hash, sig)
+		return recoverAddressFromEosScatter(hash[1:], sig)
 	default:
 		err = fmt.Errorf("invalid signature type: %d", sig[0])
 	}
@@ -156,16 +156,16 @@ func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 
 func recoverAddressFromEosScatter(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
-	if len(sig) != 102 {
+	if len(sig) != 107 {
 		return signer, fmt.Errorf("eos signature must be 102 bytes, not %d bytes", len(sig))
 	}
-	signature, err := ecc.NewSignature(string(sig[13:]))
+	signature, err := ecc.NewSignature(string(sig[6:]))
 	if err != nil {
 		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
 	}
 
-	nonceSha := sha256.Sum256(hash[1:6])
-	hash_1 := sha256.Sum256([]byte("0x" + hex.EncodeToString(hash[:6])))
+	nonceSha := sha256.Sum256(sig[:6])
+	hash_1 := sha256.Sum256([]byte("0x" + hex.EncodeToString(hash)))
 	hash_2 := sha256.Sum256([]byte(hex.EncodeToString(nonceSha[:6])))
 	scatterMsgHash := sha256.Sum256([]byte(hex.EncodeToString(hash_1[:]) + hex.EncodeToString(hash_2[:])))
 
