@@ -5,6 +5,7 @@ package evmcompat
 import (
 	"bytes"
 	"crypto/ecdsa"
+	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
@@ -158,11 +159,17 @@ func recoverAddressFromEosScatter(hash []byte, sig []byte) (common.Address, erro
 	if len(sig) != 102 {
 		return signer, fmt.Errorf("eos signature must be 102 bytes, not %d bytes", len(sig))
 	}
-	signature, err := ecc.NewSignature(string(sig[1:]))
+	signature, err := ecc.NewSignature(string(sig[13:]))
 	if err != nil {
 		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
 	}
-	pubKey, err := signature.PublicKey(hash)
+
+	nonceSha := sha256.Sum256(hash[1:6])
+	hash_1 := sha256.Sum256([]byte("0x" + hex.EncodeToString(hash[:6])))
+	hash_2 := sha256.Sum256([]byte(hex.EncodeToString(nonceSha[:6])))
+	scatterMsgHash := sha256.Sum256([]byte(hex.EncodeToString(hash_1[:]) + hex.EncodeToString(hash_2[:])))
+
+	pubKey, err := signature.PublicKey(scatterMsgHash[:])
 	if err != nil {
 		return signer, fmt.Errorf("cannot get publlic key from hash %v", string(hash))
 	}
