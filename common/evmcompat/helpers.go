@@ -95,7 +95,7 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 	case SignatureType_EOS:
 		return recoverAddressFromEos(hash, sig)
 	case SignatureType_EOS_SCATTER:
-		return recoverAddressFromEosScatter(hash[1:], sig)
+		return recoverAddressFromEosScatter(hash, sig[1:])
 	default:
 		err = fmt.Errorf("invalid signature type: %d", sig[0])
 	}

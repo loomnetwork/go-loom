@@ -13,6 +13,8 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/gogo/protobuf/proto"
 	sha3 "github.com/miguelmota/go-solidity-sha3"
+
+	"github.com/loomnetwork/go-loom/common/evmcompat"
 )
 
 type EosSigner struct {
@@ -45,14 +47,18 @@ type EosScatterSigner struct {
 }
 
 func (e *EosScatterSigner) Sign(txBytes []byte) []byte {
+	hash := sha256.Sum256([]byte(strings.ToUpper(hex.EncodeToString(txBytes))))
 	var nonceTx NonceTx
 	if err := proto.Unmarshal(txBytes, &nonceTx); err != nil {
 		panic(err)
 	}
+	typedSignature := []byte{byte(evmcompat.SignatureType_EOS_SCATTER)}
 
-	nonceSha := sha256.Sum256([]byte(strconv.FormatUint(nonceTx.Sequence, 10)))
-	txDataHex := strings.ToUpper(hex.EncodeToString(txBytes))
-	hash_1 := sha256.Sum256([]byte(txDataHex))
+	nonceBytes := []byte(strconv.FormatUint(nonceTx.Sequence, 10))[:6]
+	nonceSha := sha256.Sum256(nonceBytes)
+	typedSignature = append(typedSignature, nonceBytes...)
+
+	hash_1 := sha256.Sum256([]byte("0x" + hex.EncodeToString(hash[:])))
 	hash_2 := sha256.Sum256([]byte(hex.EncodeToString(nonceSha[:6])))
 	scatterMsgHash := sha256.Sum256([]byte(hex.EncodeToString(hash_1[:]) + hex.EncodeToString(hash_2[:])))
 
@@ -60,7 +66,9 @@ func (e *EosScatterSigner) Sign(txBytes []byte) []byte {
 	if err != nil {
 		panic(err)
 	}
-	return []byte(signature.String())
+	typedSignature = append(typedSignature, []byte(signature.String())...)
+
+	return typedSignature
 }
 
 func (e *EosScatterSigner) PublicKey() []byte {
