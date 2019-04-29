@@ -5,6 +5,7 @@ package evmcompat
 import (
 	"bytes"
 	"crypto/ecdsa"
+	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
@@ -94,7 +95,7 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 	case SignatureType_EOS:
 		return recoverAddressFromEos(hash, sig)
 	case SignatureType_EOS_SCATTER:
-		return recoverAddressFromEosScatter(hash, sig)
+		return recoverAddressFromEosScatter(hash, sig[1:])
 	default:
 		err = fmt.Errorf("invalid signature type: %d", sig[0])
 	}
@@ -134,11 +135,10 @@ func recoverAddressFromTrezor(hash []byte, sig []byte) ([]byte, error) {
 
 func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
-	if len(sig) != 67 {
-		return signer, fmt.Errorf("eos signature must be 67 bytes, not %d bytes", len(sig))
+	if len(sig) != 102 {
+		return signer, fmt.Errorf("eos signature must be 102 bytes, not %d bytes", len(sig))
 	}
-	signature := ecc.NewSigNil()
-	_, err := signature.Unpack(sig[1:])
+	signature, err := ecc.NewSignature(string(sig[1:]))
 	if err != nil {
 		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
 	}
@@ -156,15 +156,19 @@ func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 
 func recoverAddressFromEosScatter(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
-	if len(sig) != 67 {
-		return signer, fmt.Errorf("eos signature must be 67 bytes, not %d bytes", len(sig))
+
+	if len(sig) != 107 {
+		return signer, fmt.Errorf("eos scatter signature must be 107 bytes, not %d bytes", len(sig))
 	}
-	signature := ecc.NewSigNil()
-	_, err := signature.Unpack(sig[1:])
+	signature, err := ecc.NewSignature(string(sig[6:]))
 	if err != nil {
 		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
 	}
-	pubKey, err := signature.PublicKey(hash)
+
+	nonceHash := sha256.Sum256([]byte(hex.EncodeToString(sig[:6])))
+	scatterMsgHash := sha256.Sum256([]byte(hex.EncodeToString(hash) + hex.EncodeToString(nonceHash[:])))
+
+	pubKey, err := signature.PublicKey(scatterMsgHash[:])
 	if err != nil {
 		return signer, fmt.Errorf("cannot get publlic key from hash %v", string(hash))
 	}
