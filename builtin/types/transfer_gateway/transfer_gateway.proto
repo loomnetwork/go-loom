@@ -322,10 +322,8 @@ message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
     Address token_owner = 1;
     // 66-byte hash of the withdrawal hash
     bytes oracle_signature = 2;
-    // 32-byte hash of the withdrawal details
-    bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
     // Address of mainnet gateway contract
-    Address mainnet_gateway = 4;
+    Address mainnet_gateway = 3;
 }
 
 message TransferGatewayPendingWithdrawalsRequest {
