@@ -38,6 +38,8 @@ message ValidatorStatistic {
     BigUInt delegation_total = 5;
     BigUInt slash_percentage = 6;
     uint64 recently_missed_blocks = 7;
+    BigUInt update_whitelist_amount = 8;
+    LocktimeTier update_locktime_tier = 9;
 }
 
 message Candidate {
