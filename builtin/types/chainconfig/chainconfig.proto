@@ -15,6 +15,7 @@ message GetFeatureRequest {
 message AddFeatureRequest {
     repeated string names = 1;
     uint64 build_number = 2;
+    bool auto_enable = 3;
 }
 
 message AddFeatureResponse {
@@ -43,6 +44,9 @@ message Feature {
 
     //Minimum build number that supports this feature
     uint64 build_number = 6;
+
+    //Pending feature is automatically enabled if it is supported in current build
+    bool auto_enable = 7;
 }
 
 message Params {
@@ -73,5 +77,8 @@ message EnableFeatureRequest {
 }
 
 message EnableFeatureResponse {
+}
 
+message RemoveFeatureRequest {
+    repeated string names = 1;
 }
