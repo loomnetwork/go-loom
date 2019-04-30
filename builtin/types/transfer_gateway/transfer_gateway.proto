@@ -320,7 +320,7 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
 message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
     // DAppChain address of the entity attempting to make the withdrawal
     Address token_owner = 1;
-    // 66-byte hash of the withdrawal hash
+    // 65-byte hash of the withdrawal hash
     bytes oracle_signature = 2;
     // Address of mainnet gateway contract
     Address mainnet_gateway = 3;
