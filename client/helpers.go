@@ -5,13 +5,14 @@ package client
 import (
 	"context"
 	"fmt"
-	ssha "github.com/miguelmota/go-solidity-sha3"
 	"math/big"
 	"os"
 	"sort"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
+	ssha "github.com/miguelmota/go-solidity-sha3"
+
+	ethereum "github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
@@ -27,6 +28,8 @@ const (
 	ERC721XPrefix = "\x15Withdraw ERC721X:\n"
 	ERC20Prefix   = "\x14Withdraw ERC20:\n"
 	ETHPrefix     = "\x13Withdraw ETH:\n"
+	TRXPrefix     = "\x13Withdraw TRX:\n"
+	TRC20Prefix   = "\x13Withdraw TRC20:\n"
 )
 
 var ErrTxFailed = errors.New("tx failed")
@@ -290,6 +293,18 @@ func WithdrawalHash(withdrawer common.Address, tokenAddr common.Address, gateway
 			amount,
 		)
 		prefix = ETHPrefix
+	case tgtypes.TransferGatewayTokenKind_TRX:
+		hash = ssha.SoliditySHA3(
+			[]string{"uint256"},
+			amount,
+		)
+		prefix = TRXPrefix
+	case tgtypes.TransferGatewayTokenKind_TRC20:
+		hash = ssha.SoliditySHA3(
+			[]string{"uint256", "address"},
+			amount, tokenAddr,
+		)
+		prefix = TRC20Prefix
 	default:
 		return nil
 	}
