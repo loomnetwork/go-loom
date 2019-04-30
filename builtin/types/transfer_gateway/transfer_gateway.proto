@@ -317,6 +317,17 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
 }
 
+message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
+    // DAppChain address of the entity attempting to make the withdrawal
+    Address token_owner = 1;
+    // 66-byte hash of the withdrawal hash
+    bytes oracle_signature = 2;
+    // 32-byte hash of the withdrawal details
+    bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
+    // Address of mainnet gateway contract
+    Address mainnet_gateway = 4;
+}
+
 message TransferGatewayPendingWithdrawalsRequest {
     // Address of Mainnet Gateway contract
     Address mainnet_gateway = 1;
