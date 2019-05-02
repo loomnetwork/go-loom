@@ -77,22 +77,29 @@ enum LocktimeTier {
 }
 
 message Delegation {
-    Address validator = 1;
-    Address delegator = 2;
-    uint64 index = 3;
-    BigUInt amount = 4;
-    BigUInt update_amount = 5;
-    uint64 lock_time = 6;
-    LocktimeTier locktime_tier = 7;
+    Address delegator = 1;
+
+    Address validator = 2;
+    Address update_validator = 3;
+
+    uint64 index = 4;
+    uint64 update_index = 5;
+
+    BigUInt amount = 6;
+    BigUInt update_amount = 7;
+
+    LocktimeTier locktime_tier = 8;
+    LocktimeTier update_locktime_tier = 9;
+
+    uint64 lock_time = 10;
     enum DelegationState {
         BONDING = 0;
         BONDED = 1;
         UNBONDING = 2;
         REDELEGATING = 3;
     }
-    DelegationState state = 8;
-    Address update_validator = 9;
-    string referrer = 10; // wallet that sent the delegation
+    DelegationState state = 11;
+    string referrer = 12;
 }
 
 message DelegationIndex {
