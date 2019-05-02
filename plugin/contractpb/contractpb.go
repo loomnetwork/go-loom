@@ -70,7 +70,7 @@ func (c *wrappedPluginStaticContext) Logger() *loom.Logger {
 
 func (c *wrappedPluginStaticContext) Get(key []byte, pb proto.Message) error {
 	data := c.StaticContext.Get(key)
-	if len(data) == 0 {
+	if data == nil {
 		return ErrNotFound
 	}
 

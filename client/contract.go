@@ -85,7 +85,7 @@ func (c *Contract) Call(method string, args proto.Message, signer auth.Signer, r
 	if err != nil {
 		return nil, err
 	}
-	if result != nil && len(resultBytes) > 0 {
+	if result != nil {
 		response := &ptypes.Response{}
 		err = proto.Unmarshal(resultBytes, response)
 		if err != nil {
@@ -114,7 +114,7 @@ func (c *Contract) StaticCall(method string, args proto.Message, caller loom.Add
 	if err != nil {
 		return nil, err
 	}
-	if len(resultBytes) > 0 {
+	if resultBytes != nil {
 		if err := proto.Unmarshal(resultBytes, result.(proto.Message)); err != nil {
 			return result, err
 		}
