@@ -5,11 +5,12 @@ package client
 import (
 	"context"
 	"fmt"
-	ssha "github.com/miguelmota/go-solidity-sha3"
 	"math/big"
 	"os"
 	"sort"
 	"time"
+
+	ssha "github.com/miguelmota/go-solidity-sha3"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -132,10 +133,13 @@ func ToEthereumSignedMessage(hash []byte) []byte {
 
 // Parses a serialized signatures array into a list of (v,r,s) triples plus their corresponding validator indexes, in order. Refer to https://github.com/loomnetwork/transfer-gateway-v2/pull/83/files#diff-0aada7672d303fc5bbdeb252dc7ff653R208 for more information.
 func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, [][32]byte, [][32]byte, []*big.Int, error) {
-	var vs []uint8
-	var rs [][32]byte
-	var ss [][32]byte
-	var validatorIndexes []*big.Int
+	type signatureDetail struct {
+		valIndex *big.Int
+		v        uint8
+		r        [32]byte
+		s        [32]byte
+	}
+	signatureDetails := make([]*signatureDetail, 0, len(validators))
 
 	// don't try splitting if 65 or 66
 	var splitSigs [][]byte
@@ -160,41 +164,36 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 			continue
 		}
 
-		var r [32]byte
-		copy(r[:], sig[0:32])
-		rs = append(rs, r)
+		signatureDetailObj := &signatureDetail{
+			valIndex: index,
+			v:        uint8(sig[64]),
+		}
+		copy(signatureDetailObj.r[:], sig[0:32])
+		copy(signatureDetailObj.s[:], sig[32:64])
 
-		var s [32]byte
-		copy(s[:], sig[32:64])
-		ss = append(ss, s)
-
-		v := uint8(sig[64])
-		vs = append(vs, v)
-
-		validatorIndexes = append(validatorIndexes, index)
+		signatureDetails = append(signatureDetails, signatureDetailObj)
 	}
 
-	// put them in the right oder
-	rs, err := mapOrderByte32(rs, validatorIndexes)
-	if err != nil {
-		return nil, nil, nil, nil, err
-	}
-	ss, err = mapOrderByte32(ss, validatorIndexes)
-	if err != nil {
-		return nil, nil, nil, nil, err
-	}
-	vs, err = mapOrderUint8(vs, validatorIndexes)
-	if err != nil {
-		return nil, nil, nil, nil, err
-	}
+	sort.Slice(signatureDetails, func(i, j int) bool {
+		return signatureDetails[i].valIndex.Cmp(signatureDetails[j].valIndex) == -1
+	})
 
-	valIndexes := BigIntSlice(validatorIndexes)
-	valIndexes.Sort()
+	vs := make([]uint8, len(signatureDetails))
+	rs := make([][32]byte, len(signatureDetails))
+	ss := make([][32]byte, len(signatureDetails))
+	valIndexes := make([]*big.Int, len(signatureDetails))
+
+	for i, signatureDetailObj := range signatureDetails {
+		vs[i] = signatureDetailObj.v
+		rs[i] = signatureDetailObj.r
+		ss[i] = signatureDetailObj.s
+		valIndexes[i] = signatureDetailObj.valIndex
+	}
 
 	return vs, rs, ss, valIndexes, nil
 }
 
-func mapOrderByte32(array [][32]byte, order []*big.Int) ([][32]byte, error) {
+func mapOrderByte32(array [][32]byte, order []*big.Int, validators []common.Address) ([][32]byte, error) {
 	if len(array) == 1 {
 		return array, nil
 	}
