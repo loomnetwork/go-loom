@@ -193,51 +193,6 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 	return vs, rs, ss, valIndexes, nil
 }
 
-func mapOrderByte32(array [][32]byte, order []*big.Int, validators []common.Address) ([][32]byte, error) {
-	if len(array) == 1 {
-		return array, nil
-	}
-
-	var sortedArray [][32]byte
-
-	for k, _ := range order {
-		ind, err := indexOfInteger(k, order)
-		if err != nil {
-			return nil, err
-		}
-		sortedArray = append(sortedArray, array[ind])
-	}
-
-	return sortedArray, nil
-}
-
-func mapOrderUint8(array []uint8, order []*big.Int) ([]uint8, error) {
-	if len(array) == 1 {
-		return array, nil
-	}
-
-	var sortedArray []uint8
-
-	for k, _ := range order {
-		ind, err := indexOfInteger(k, order)
-		if err != nil {
-			return nil, err
-		}
-		sortedArray = append(sortedArray, array[ind])
-	}
-
-	return sortedArray, nil
-}
-
-func indexOfInteger(v int, array []*big.Int) (int, error) {
-	for key, value := range array {
-		if int64(v) == value.Int64() {
-			return key, nil
-		}
-	}
-	return 0, ErrValnotFound
-}
-
 func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, error) {
 	for key, value := range validators {
 		if v.Hex() == value.Hex() {
