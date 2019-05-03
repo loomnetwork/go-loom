@@ -83,7 +83,6 @@ message Delegation {
     Address update_validator = 3;
 
     uint64 index = 4;
-    uint64 update_index = 5;
 
     BigUInt amount = 6;
     BigUInt update_amount = 7;
