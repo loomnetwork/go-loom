@@ -32,6 +32,7 @@ type FakeContext struct {
 	validators    loom.ValidatorSet
 	Events        []FEvent
 	ethBalances   map[string]*loom.BigUInt
+	features      map[string]bool
 }
 
 var _ Context = &FakeContext{}
@@ -57,6 +58,7 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		validators:  loom.NewValidatorSet(),
 		Events:      make([]FEvent, 0),
 		ethBalances: make(map[string]*loom.BigUInt),
+		features:    make(map[string]bool),
 	}
 }
 
@@ -72,6 +74,7 @@ func (c *FakeContext) shallowClone() *FakeContext {
 		validators:    c.validators,
 		Events:        c.Events,
 		ethBalances:   c.ethBalances,
+		features:      c.features,
 	}
 }
 
@@ -90,6 +93,12 @@ func (c *FakeContext) WithSender(caller loom.Address) *FakeContext {
 func (c *FakeContext) WithAddress(addr loom.Address) *FakeContext {
 	clone := c.shallowClone()
 	clone.address = addr
+	return clone
+}
+
+func (c *FakeContext) WithValidators(validators []*types.Validator) *FakeContext {
+	clone := c.shallowClone()
+	clone.validators = loom.NewValidatorSet(validators...)
 	return clone
 }
 
@@ -167,12 +176,14 @@ func (c *FakeContext) Resolve(name string) (loom.Address, error) {
 	return loom.Address{}, fmt.Errorf("failed  to resolve address of contract '%s'", name)
 }
 
-func (c *FakeContext) ValidatorPower(pubKey []byte) int64 {
-	return 0
+func (c *FakeContext) SetFeature(name string, val bool) {
+	c.features[name] = val
 }
 
 func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
-	// TODO
+	if val, ok := c.features[name]; ok {
+		return val
+	}
 	return defaultVal
 }
 
@@ -257,10 +268,6 @@ func (c *FakeContext) Set(key []byte, value []byte) {
 
 func (c *FakeContext) Delete(key []byte) {
 	delete(c.data, c.makeKey(key))
-}
-
-func (c *FakeContext) SetValidatorPower(pubKey []byte, power int64) {
-	c.validators.Set(&loom.Validator{PubKey: pubKey, Power: power})
 }
 
 func (c *FakeContext) Validators() []*loom.Validator {

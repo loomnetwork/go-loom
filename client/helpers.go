@@ -7,16 +7,27 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+	"sort"
 	"time"
+
+	ssha "github.com/miguelmota/go-solidity-sha3"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
+	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/pkg/errors"
+)
+
+const (
+	ERC721Prefix  = "\x16Withdraw ERC721:\n"
+	ERC721XPrefix = "\x15Withdraw ERC721X:\n"
+	ERC20Prefix   = "\x14Withdraw ERC20:\n"
+	ETHPrefix     = "\x13Withdraw ETH:\n"
 )
 
 var ErrTxFailed = errors.New("tx failed")
@@ -112,14 +123,33 @@ func WaitForTxConfirmationAndFee(ctx context.Context, ethClient *ethclient.Clien
 	return new(big.Int).Mul(tx.GasPrice(), big.NewInt(0).SetUint64(r.GasUsed)), nil
 }
 
+func ToEthereumSignedMessage(hash []byte) []byte {
+	return ssha.SoliditySHA3(
+		[]string{"string", "bytes32"},
+		"\x19Ethereum Signed Message:\n32",
+		hash,
+	)
+}
+
 // Parses a serialized signatures array into a list of (v,r,s) triples plus their corresponding validator indexes, in order. Refer to https://github.com/loomnetwork/transfer-gateway-v2/pull/83/files#diff-0aada7672d303fc5bbdeb252dc7ff653R208 for more information.
 func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, [][32]byte, [][32]byte, []*big.Int, error) {
-	var vs []uint8
-	var rs [][32]byte
-	var ss [][32]byte
-	var validatorIndexes []*big.Int
+	type signatureDetail struct {
+		valIndex *big.Int
+		v        uint8
+		r        [32]byte
+		s        [32]byte
+	}
+	signatureDetails := make([]*signatureDetail, 0, len(validators))
 
-	splitSigs := split(sigs, 65)
+	// don't try splitting if 65 or 66
+	var splitSigs [][]byte
+	if len(sigs) == 65 {
+		splitSigs = [][]byte{sigs}
+	} else if len(sigs) == 66 {
+		splitSigs = [][]byte{sigs[1:]} // remove the mode flag
+	} else {
+		splitSigs = split(sigs, 65) // assume we receive unprefixed if more than 1 element
+	}
 
 	for _, sig := range splitSigs {
 		validator, err := evmcompat.SolidityRecover(hash, sig)
@@ -127,25 +157,40 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 			return nil, nil, nil, nil, err
 		}
 
-		var r [32]byte
-		copy(r[:], sig[0:32])
-
-		var s [32]byte
-		copy(s[:], sig[32:64])
-
-		v := uint8(sig[64])
-
+		// Try to find the validator
 		index, err := indexOfValidator(validator, validators)
 		if err != nil {
+			fmt.Println("validator not found", validator.String())
 			continue
 		}
 
-		vs = append(vs, v)
-		rs = append(rs, r)
-		ss = append(ss, s)
-		validatorIndexes = append(validatorIndexes, index)
+		signatureDetailObj := &signatureDetail{
+			valIndex: index,
+			v:        uint8(sig[64]),
+		}
+		copy(signatureDetailObj.r[:], sig[0:32])
+		copy(signatureDetailObj.s[:], sig[32:64])
+
+		signatureDetails = append(signatureDetails, signatureDetailObj)
 	}
-	return vs, rs, ss, validatorIndexes, nil
+
+	sort.Slice(signatureDetails, func(i, j int) bool {
+		return signatureDetails[i].valIndex.Cmp(signatureDetails[j].valIndex) == -1
+	})
+
+	vs := make([]uint8, len(signatureDetails))
+	rs := make([][32]byte, len(signatureDetails))
+	ss := make([][32]byte, len(signatureDetails))
+	valIndexes := make([]*big.Int, len(signatureDetails))
+
+	for i, signatureDetailObj := range signatureDetails {
+		vs[i] = signatureDetailObj.v
+		rs[i] = signatureDetailObj.r
+		ss[i] = signatureDetailObj.s
+		valIndexes[i] = signatureDetailObj.valIndex
+	}
+
+	return vs, rs, ss, valIndexes, nil
 }
 
 func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, error) {
@@ -168,4 +213,66 @@ func split(buf []byte, lim int) [][]byte {
 		chunks = append(chunks, buf[:len(buf)])
 	}
 	return chunks
+}
+
+func WithdrawalHash(withdrawer common.Address, tokenAddr common.Address, gatewayAddr common.Address, tokenKind tgtypes.TransferGatewayTokenKind, tokenId *big.Int, amount *big.Int, nonce *big.Int, shouldPrefix bool) []byte {
+	// Create hash of the message
+	var hash []byte
+	var prefix string
+	switch tokenKind {
+	case tgtypes.TransferGatewayTokenKind_ERC721:
+		hash = ssha.SoliditySHA3(
+			[]string{"uint256", "address"},
+			tokenId, tokenAddr,
+		)
+		prefix = ERC721Prefix
+	case tgtypes.TransferGatewayTokenKind_ERC721X:
+		hash = ssha.SoliditySHA3(
+			[]string{"uint256", "uint256", "address"},
+			tokenId, amount, tokenAddr,
+		)
+		prefix = ERC721XPrefix
+	case tgtypes.TransferGatewayTokenKind_LOOMCOIN, tgtypes.TransferGatewayTokenKind_ERC20:
+		hash = ssha.SoliditySHA3(
+			[]string{"uint256", "address"},
+			amount, tokenAddr,
+		)
+		prefix = ERC20Prefix
+	case tgtypes.TransferGatewayTokenKind_ETH:
+		hash = ssha.SoliditySHA3(
+			[]string{"uint256"},
+			amount,
+		)
+		prefix = ETHPrefix
+	default:
+		return nil
+	}
+
+	// Make it non replayable
+	if shouldPrefix {
+		hash = ssha.SoliditySHA3(
+			[]string{"string", "address", "uint256", "address", "bytes32"},
+			prefix, withdrawer, nonce, gatewayAddr, hash,
+		)
+	} else {
+		hash = ssha.SoliditySHA3(
+			[]string{"address", "uint256", "address", "bytes32"},
+			withdrawer, nonce, gatewayAddr, hash,
+		)
+	}
+
+	return hash
+}
+
+// Taken from: https://github.com/cznic/sortutil/blob/master/sortutil.go
+// BigIntSlice attaches the methods of sort.Interface to []*big.Int, sorting in increasing order.
+type BigIntSlice []*big.Int
+
+func (s BigIntSlice) Len() int           { return len(s) }
+func (s BigIntSlice) Less(i, j int) bool { return s[i].Cmp(s[j]) < 0 }
+func (s BigIntSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
+
+// Sort is a convenience method.
+func (s BigIntSlice) Sort() {
+	sort.Sort(s)
 }

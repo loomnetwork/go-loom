@@ -91,6 +91,8 @@ message TransferGatewayTokenDeposited {
     BigUInt token_id = 4 [(gogoproto.customname)="TokenID"];
     // ERC721X/ERC20/ETH amount
     BigUInt token_amount = 5;
+    // Mainnet tx hash
+    bytes tx_hash = 6;
 }
 
 
@@ -105,6 +107,8 @@ message TransferGatewayTokenWithdrawn {
     BigUInt token_id = 4 [(gogoproto.customname)="TokenID"];
     // ERC721X/ERC20/ETH amount
     BigUInt token_amount = 5;
+    // Mainnet tx hash
+    bytes tx_hash = 6;
 }
 
 message TransferGatewayMainnetEvent {
@@ -313,6 +317,15 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
 }
 
+message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
+    // DAppChain address of the entity attempting to make the withdrawal
+    Address token_owner = 1;
+    // serialized array of 65-byte signatures on the withdrawal hash
+    bytes oracle_signature = 2;
+    // Address of mainnet gateway contract
+    Address mainnet_gateway = 3;
+}
+
 message TransferGatewayPendingWithdrawalsRequest {
     // Address of Mainnet Gateway contract
     Address mainnet_gateway = 1;
@@ -345,7 +358,7 @@ message TransferGatewayWithdrawETHError {
 message TransferGatewayWithdrawLoomCoinError {
     TransferGatewayWithdrawLoomCoinRequest withdraw_loom_coin_request = 1;
     string error_message = 2;
-} 
+}
 
 message TransferGatewayWithdrawTokenError {
     TransferGatewayWithdrawTokenRequest withdraw_token_request = 1;
@@ -358,4 +371,53 @@ message TransferGatewayGetUnclaimedTokensRequest {
 
 message TransferGatewayGetUnclaimedTokensResponse {
     repeated TransferGatewayUnclaimedToken unclaimed_tokens = 1;
+}
+
+message TransferGatewayMainnetEventTxHashInfo {
+    TransferGatewayTokenKind token_kind = 1;
+}
+
+enum ValidatorAuthStrategy {
+    USE_TRUSTED_VALIDATORS = 0;
+    USE_DPOS_VALIDATORS = 1;
+}
+
+message TransferGatewayValidatorAuthConfig {
+    ValidatorAuthStrategy auth_strategy = 1;
+    TransferGatewayTrustedValidators trusted_validators = 2;
+}
+
+message TransferGatewayTrustedValidators {
+    repeated Address validators = 1;
+}
+
+message TransferGatewayTrustedValidatorsRequest {
+}
+
+message TransferGatewayTrustedValidatorsResponse {
+    TransferGatewayTrustedValidators trusted_validators = 1;
+}
+
+message TransferGatewayUpdateTrustedValidatorsRequest {
+    TransferGatewayTrustedValidators trusted_validators = 1;
+}
+
+message TransferGatewayUpdateValidatorAuthStrategyRequest {
+    ValidatorAuthStrategy auth_strategy = 1;
+}
+
+message TransferGatewayGetValidatorAuthStrategyRequest {
+
+}
+
+message TransferGatewayGetValidatorAuthStrategyResponse {
+    ValidatorAuthStrategy auth_strategy = 1;
+}
+
+message TransferGatewayGetUnclaimedContractTokensRequest {
+    Address token_address = 1;
+}
+
+message TransferGatewayGetUnclaimedContractTokensResponse {
+    BigUInt unclaimed_amount = 1;
 }

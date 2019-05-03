@@ -34,10 +34,12 @@ message ValidatorStatistic {
     Address address = 1;
     bytes pub_key = 2;
     BigUInt whitelist_amount = 3;
-    BigUInt delegation_total = 4;
-    BigUInt distribution_total = 5;
+    LocktimeTier locktime_tier = 4;
+    BigUInt delegation_total = 5;
     BigUInt slash_percentage = 6;
     uint64 recently_missed_blocks = 7;
+    BigUInt update_whitelist_amount = 8;
+    LocktimeTier update_locktime_tier = 9;
 }
 
 message Candidate {
@@ -55,34 +57,48 @@ message Candidate {
     string name = 6;
     string description = 7;
     string website = 8;
+    uint64 max_referral_percentage = 9;
+}
+
+message CandidateStatistic {
+    ValidatorStatistic statistic = 1;
+    Candidate          candidate = 2;
 }
 
 message CandidateList {
     repeated Candidate candidates = 1;
 }
 
+enum LocktimeTier {
+    TIER_ZERO = 0;
+    TIER_ONE = 1;
+    TIER_TWO = 2;
+    TIER_THREE = 3;
+}
+
 message Delegation {
-    Address validator = 1;
-    Address delegator = 2;
-    uint64 index = 3;
-    BigUInt amount = 4;
-    BigUInt update_amount = 5;
-    uint64 lock_time = 6;
-    enum LocktimeTier {
-        TIER_ZERO = 0;
-        TIER_ONE = 1;
-        TIER_TWO = 2;
-        TIER_THREE = 3;
-    }
-    LocktimeTier locktime_tier = 7;
+    Address delegator = 1;
+
+    Address validator = 2;
+    Address update_validator = 3;
+
+    uint64 index = 4;
+
+    BigUInt amount = 6;
+    BigUInt update_amount = 7;
+
+    LocktimeTier locktime_tier = 8;
+    LocktimeTier update_locktime_tier = 9;
+
+    uint64 lock_time = 10;
     enum DelegationState {
         BONDING = 0;
         BONDED = 1;
         UNBONDING = 2;
         REDELEGATING = 3;
     }
-    DelegationState state = 8;
-    Address update_validator = 9;
+    DelegationState state = 11;
+    string referrer = 12;
 }
 
 message DelegationIndex {
@@ -104,7 +120,7 @@ message DelegateRequest {
     Address validator_address = 1;
     BigUInt amount = 2;
     uint64 locktime_tier = 3;
-    string referrer = 4; //optional wallet the sent the delegation
+    string referrer = 4; // wallet that sent the delegation
 }
 
 message RedelegateRequest {
@@ -113,7 +129,7 @@ message RedelegateRequest {
     uint64 index = 3;
     BigUInt amount = 4;
     uint64 new_locktime_tier = 5;
-    string referrer = 6; //optional wallet the sent the delegation
+    string referrer = 6; // wallet that sent the delegation
 }
 
 message ConsolidateDelegationsRequest {
@@ -129,16 +145,17 @@ message UnbondRequest {
 message WhitelistCandidateRequest {
     Address candidate_address = 1;
     BigUInt amount = 2;
-    uint64 lock_time = 3;
+    LocktimeTier locktime_tier = 3;
 }
 
 message RemoveWhitelistedCandidateRequest {
     Address candidate_address = 1;
 }
 
-message ChangeWhitelistAmountRequest {
+message ChangeWhitelistInfoRequest {
     Address candidate_address = 1;
     BigUInt amount = 2;
+    LocktimeTier locktime_tier = 3;
 }
 
 message CheckDelegationRequest {
@@ -193,6 +210,7 @@ message RegisterCandidateRequest {
     string description = 4;
     string website = 5;
     uint64 locktime_tier = 6;
+    uint64 max_referral_percentage = 7;
 }
 
 message ChangeCandidateFeeRequest {
@@ -203,6 +221,7 @@ message UpdateCandidateInfoRequest {
     string name = 1;
     string description = 2;
     string website = 3;
+    uint64 max_referral_percentage = 4;
 }
 
 message UnregisterCandidateRequest {
@@ -222,11 +241,11 @@ message ListValidatorsResponse {
     repeated ValidatorStatistic statistics = 1;
 }
 
-message ListCandidateRequest {
+message ListCandidatesRequest {
 }
 
-message ListCandidateResponse {
-    repeated Candidate candidates = 1;
+message ListCandidatesResponse {
+    repeated CandidateStatistic candidates = 1;
 }
 
 message ListDelegationsRequest {
@@ -270,6 +289,11 @@ message RequestBatch {
 }
 
 message GetRequestBatchTallyRequest {
+}
+
+message RegisterReferrerRequest {
+    string name = 1;
+    Address address = 2;
 }
 
 message SetElectionCycleRequest {
@@ -353,4 +377,9 @@ message DposDelegatorConsolidatesEvent {
 message DposDelegatorUnbondsEvent {
     Address address = 1;
     BigUInt amount = 2;
+}
+
+message DposReferrerRegistersEvent {
+    string name = 1;
+    Address address = 2;
 }

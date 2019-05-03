@@ -11,7 +11,8 @@ import (
 
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin"
-	"github.com/loomnetwork/go-loom/plugin/types"
+	ptypes "github.com/loomnetwork/go-loom/plugin/types"
+	"github.com/loomnetwork/go-loom/types"
 )
 
 var (
@@ -29,9 +30,10 @@ type StaticContext interface {
 	Message() plugin.Message
 	ContractAddress() loom.Address
 	Logger() *loom.Logger
-	GetEvmTxReceipt([]byte) (types.EvmTxReceipt, error)
+	GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
 	FeatureEnabled(name string, defaultVal bool) bool
+	Validators() []*types.Validator
 
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
@@ -94,6 +96,11 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
+// Validators gives a list of validators
+func (c *wrappedPluginStaticContext) Validators() []*types.Validator {
+	return c.StaticContext.Validators()
+}
+
 // Implements the Context interface for Go contract methods.
 type wrappedPluginContext struct {
 	plugin.Context
@@ -134,6 +141,11 @@ func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []b
 // Check if feature is enabled on chain
 func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.Context.FeatureEnabled(name, defaultVal)
+}
+
+// Validators gives a list of validators
+func (c *wrappedPluginContext) Validators() []*types.Validator {
+	return c.Context.Validators()
 }
 
 func rolePermKey(addr loom.Address, token []byte, role string) []byte {
@@ -194,7 +206,7 @@ func CallMethod(ctx Context, addr loom.Address, method string, inpb proto.Messag
 		return err
 	}
 
-	query := &types.ContractMethodCall{
+	query := &ptypes.ContractMethodCall{
 		Method: method,
 		Args:   args,
 	}
@@ -254,7 +266,7 @@ func StaticCallMethod(ctx StaticContext, addr loom.Address, method string, inpb 
 		return err
 	}
 
-	query := &types.ContractMethodCall{
+	query := &ptypes.ContractMethodCall{
 		Method: method,
 		Args:   args,
 	}

@@ -9,6 +9,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/client"
 )
 
@@ -62,7 +63,8 @@ func (c *MainnetGatewayClient) ETHBalance() (*big.Int, error) {
 	return c.contract.GetETH(nil)
 }
 
-func (c *MainnetGatewayClient) WithdrawERC721(caller *client.Identity, tokenID *big.Int, tokenAddr common.Address, sigs []byte, hash []byte, validators []common.Address) error {
+func (c *MainnetGatewayClient) WithdrawERC721(caller *client.Identity, tokenID *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) error {
+	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC721, tokenID, big.NewInt(0))
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return err
@@ -75,7 +77,8 @@ func (c *MainnetGatewayClient) WithdrawERC721(caller *client.Identity, tokenID *
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) WithdrawERC721X(caller *client.Identity, tokenID, amount *big.Int, tokenAddr common.Address, sigs []byte, hash []byte, validators []common.Address) error {
+func (c *MainnetGatewayClient) WithdrawERC721X(caller *client.Identity, tokenID, amount *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) error {
+	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC721X, tokenID, amount)
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return err
@@ -88,7 +91,8 @@ func (c *MainnetGatewayClient) WithdrawERC721X(caller *client.Identity, tokenID,
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, hash []byte, validators []common.Address) error {
+func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) error {
+	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC20, big.NewInt(0), amount)
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return err
@@ -103,7 +107,8 @@ func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *bi
 
 // WithdrawETH sends a tx to the Mainnet Gateway to withdraw the specified amount of ETH,
 // and returns the tx fee.
-func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.Int, sigs []byte, hash []byte, validators []common.Address) (*big.Int, error) {
+func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.Int, sigs []byte, validators []common.Address) (*big.Int, error) {
+	hash := c.withdrawalHash(caller.MainnetAddr, common.HexToAddress("0x0"), tgtypes.TransferGatewayTokenKind_ETH, big.NewInt(0), amount)
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return nil, err
@@ -114,6 +119,15 @@ func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.
 		return nil, err
 	}
 	return client.WaitForTxConfirmationAndFee(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
+func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAddr common.Address, tokenKind tgtypes.TransferGatewayTokenKind, tokenId *big.Int, amount *big.Int) []byte {
+	nonce, err := c.Nonces(withdrawer)
+	if err != nil {
+		return nil
+	}
+	hash := client.WithdrawalHash(withdrawer, tokenAddr, c.Address, tokenKind, tokenId, amount, nonce, true)
+	return client.ToEthereumSignedMessage(hash)
 }
 
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {

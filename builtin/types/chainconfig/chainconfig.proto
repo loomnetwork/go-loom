@@ -5,6 +5,7 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 message InitRequest {
     Address owner = 1;
     Params params = 2;
+    repeated Feature features = 3; 
 }
 
 message GetFeatureRequest {
@@ -12,7 +13,9 @@ message GetFeatureRequest {
 }
 
 message AddFeatureRequest {
-    string name = 1;
+    repeated string names = 1;
+    uint64 build_number = 2;
+    bool auto_enable = 3;
 }
 
 message AddFeatureResponse {
@@ -38,6 +41,12 @@ message Feature {
 
     //Feature changes status from `pending` to `waiting` with at this percentage
     uint64 percentage = 5;
+
+    //Minimum build number that supports this feature
+    uint64 build_number = 6;
+
+    //Pending feature is automatically enabled if it is supported in current build
+    bool auto_enable = 7;
 }
 
 message Params {
@@ -64,17 +73,12 @@ message ListFeaturesResponse {
 }
 
 message EnableFeatureRequest {
-    string name = 1;
+    repeated string names = 1;
 }
 
 message EnableFeatureResponse {
-
 }
 
-//TODO:update config, not supported yet
-
-
-message UpdateFeatureRequest {
-    string key = 1;
-    bool enabled = 2;
+message RemoveFeatureRequest {
+    repeated string names = 1;
 }

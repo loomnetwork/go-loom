@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/loomnetwork/go-loom/builtin/types/dposv3/dposv3.proto";
 
 message ParamsV2 {
     uint64 validator_count = 1;
@@ -19,6 +20,14 @@ message StateV2 {
     int64 last_election_time = 3;
     BigUInt total_validator_delegations = 4;
     BigUInt total_reward_distribution = 5;
+}
+
+message StateDumpV2 {
+    StateV2 state = 1;
+    repeated CandidateV2 candidates = 2;
+    repeated DelegationV2 delegations = 3;
+    repeated DistributionV2 distributions = 4;
+    repeated ValidatorStatisticV2 statistics = 5;
 }
 
 message ValidatorStatisticV2 {
@@ -89,6 +98,13 @@ message DistributionListV2 {
     repeated DistributionV2 distributions = 1;
 }
 
+message GetDistributionsRequest {
+}
+
+message GetDistributionsResponse {
+    repeated DistributionV2 distributions = 1;
+}
+
 message DPOSInitRequestV2 {
     ParamsV2 params = 1;
     repeated Validator validators = 2;
@@ -117,6 +133,11 @@ message WhitelistCandidateRequestV2 {
     Address candidate_address = 1;
     BigUInt amount = 2;
     uint64 lock_time = 3;
+}
+
+message ChangeWhitelistLockTimeTierRequestV2 {
+    Address candidate_address = 1;
+    uint64 lock_time_tier = 2;
 }
 
 message RemoveWhitelistedCandidateRequestV2 {
@@ -164,6 +185,7 @@ message CheckAllDelegationsResponse {
 }
 
 message CheckDistributionRequest {
+    Address address = 1;
 }
 
 message CheckDistributionResponse {
@@ -294,6 +316,14 @@ message GetStateRequest {
 
 message GetStateResponse {
     StateV2 state = 1;
+}
+
+message ViewStateDumpRequest {
+}
+
+message ViewStateDumpResponse {
+    StateDumpV2 old_state = 1;
+    dposv3.InitializationState new_state = 2;
 }
 
 // EVENTS

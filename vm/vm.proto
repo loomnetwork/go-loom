@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 enum VMType {
     PLUGIN = 0;
@@ -28,6 +29,10 @@ message CallTx {
     BigUInt value = 3;
 
     string contract_version = 4;
+}
+
+message MigrationTx {
+    uint32 id = 1 [(gogoproto.customname)="ID"];
 }
 
 message DeployResponse {

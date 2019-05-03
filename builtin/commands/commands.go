@@ -15,10 +15,6 @@ func formatJSON(pb proto.Message) (string, error) {
 }
 
 func Add(cmd *cobra.Command) {
-	//	AddDPOS(cmd) //No one should be using the old DPOS version
-	AddDPOSV2(cmd)
-	AddDPOSV3(cmd)
-	AddCoin(cmd)
+	//AddDPOS(cmd) //No one should be using the old DPOS version
 	AddGeneralCommands(cmd)
-	AddAddressMapper(cmd)
 }

@@ -49,7 +49,30 @@ func (x TransferGatewayTokenKind) String() string {
 	return proto.EnumName(TransferGatewayTokenKind_name, int32(x))
 }
 func (TransferGatewayTokenKind) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{0}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{0}
+}
+
+type ValidatorAuthStrategy int32
+
+const (
+	ValidatorAuthStrategy_USE_TRUSTED_VALIDATORS ValidatorAuthStrategy = 0
+	ValidatorAuthStrategy_USE_DPOS_VALIDATORS    ValidatorAuthStrategy = 1
+)
+
+var ValidatorAuthStrategy_name = map[int32]string{
+	0: "USE_TRUSTED_VALIDATORS",
+	1: "USE_DPOS_VALIDATORS",
+}
+var ValidatorAuthStrategy_value = map[string]int32{
+	"USE_TRUSTED_VALIDATORS": 0,
+	"USE_DPOS_VALIDATORS":    1,
+}
+
+func (x ValidatorAuthStrategy) String() string {
+	return proto.EnumName(ValidatorAuthStrategy_name, int32(x))
+}
+func (ValidatorAuthStrategy) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{1}
 }
 
 type TransferGatewayState struct {
@@ -69,7 +92,7 @@ func (m *TransferGatewayState) Reset()         { *m = TransferGatewayState{} }
 func (m *TransferGatewayState) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayState) ProtoMessage()    {}
 func (*TransferGatewayState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{0}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{0}
 }
 func (m *TransferGatewayState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayState.Unmarshal(m, b)
@@ -129,7 +152,7 @@ func (m *TransferGatewayOracleState) Reset()         { *m = TransferGatewayOracl
 func (m *TransferGatewayOracleState) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayOracleState) ProtoMessage()    {}
 func (*TransferGatewayOracleState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{1}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{1}
 }
 func (m *TransferGatewayOracleState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayOracleState.Unmarshal(m, b)
@@ -178,7 +201,7 @@ func (m *TransferGatewayWithdrawalReceipt) Reset()         { *m = TransferGatewa
 func (m *TransferGatewayWithdrawalReceipt) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceipt) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceipt) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{2}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{2}
 }
 func (m *TransferGatewayWithdrawalReceipt) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceipt.Unmarshal(m, b)
@@ -263,7 +286,7 @@ func (m *TransferGatewayPendingWithdrawalSummary) Reset() {
 func (m *TransferGatewayPendingWithdrawalSummary) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalSummary) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalSummary) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{3}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{3}
 }
 func (m *TransferGatewayPendingWithdrawalSummary) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalSummary.Unmarshal(m, b)
@@ -310,7 +333,7 @@ func (m *TransferGatewayLocalAccount) Reset()         { *m = TransferGatewayLoca
 func (m *TransferGatewayLocalAccount) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayLocalAccount) ProtoMessage()    {}
 func (*TransferGatewayLocalAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{4}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{4}
 }
 func (m *TransferGatewayLocalAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayLocalAccount.Unmarshal(m, b)
@@ -368,7 +391,7 @@ func (m *TransferGatewayForeignAccount) Reset()         { *m = TransferGatewayFo
 func (m *TransferGatewayForeignAccount) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayForeignAccount) ProtoMessage()    {}
 func (*TransferGatewayForeignAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{5}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{5}
 }
 func (m *TransferGatewayForeignAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayForeignAccount.Unmarshal(m, b)
@@ -421,7 +444,7 @@ func (m *TransferGatewayTokenAmount) Reset()         { *m = TransferGatewayToken
 func (m *TransferGatewayTokenAmount) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenAmount) ProtoMessage()    {}
 func (*TransferGatewayTokenAmount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{6}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{6}
 }
 func (m *TransferGatewayTokenAmount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenAmount.Unmarshal(m, b)
@@ -473,7 +496,7 @@ func (m *TransferGatewayUnclaimedToken) Reset()         { *m = TransferGatewayUn
 func (m *TransferGatewayUnclaimedToken) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayUnclaimedToken) ProtoMessage()    {}
 func (*TransferGatewayUnclaimedToken) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{7}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{7}
 }
 func (m *TransferGatewayUnclaimedToken) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnclaimedToken.Unmarshal(m, b)
@@ -524,17 +547,19 @@ type TransferGatewayTokenDeposited struct {
 	// ERC721/X token ID
 	TokenID *types.BigUInt `protobuf:"bytes,4,opt,name=token_id,json=tokenId" json:"token_id,omitempty"`
 	// ERC721X/ERC20/ETH amount
-	TokenAmount          *types.BigUInt `protobuf:"bytes,5,opt,name=token_amount,json=tokenAmount" json:"token_amount,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	TokenAmount *types.BigUInt `protobuf:"bytes,5,opt,name=token_amount,json=tokenAmount" json:"token_amount,omitempty"`
+	// Mainnet tx hash
+	TxHash               []byte   `protobuf:"bytes,6,opt,name=tx_hash,json=txHash,proto3" json:"tx_hash,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *TransferGatewayTokenDeposited) Reset()         { *m = TransferGatewayTokenDeposited{} }
 func (m *TransferGatewayTokenDeposited) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenDeposited) ProtoMessage()    {}
 func (*TransferGatewayTokenDeposited) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{8}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{8}
 }
 func (m *TransferGatewayTokenDeposited) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenDeposited.Unmarshal(m, b)
@@ -589,6 +614,13 @@ func (m *TransferGatewayTokenDeposited) GetTokenAmount() *types.BigUInt {
 	return nil
 }
 
+func (m *TransferGatewayTokenDeposited) GetTxHash() []byte {
+	if m != nil {
+		return m.TxHash
+	}
+	return nil
+}
+
 // Withdrawal from Mainnet Transfer Gateway
 type TransferGatewayTokenWithdrawn struct {
 	// Mainnet address of token owner
@@ -599,17 +631,19 @@ type TransferGatewayTokenWithdrawn struct {
 	// ERC721/X token ID
 	TokenID *types.BigUInt `protobuf:"bytes,4,opt,name=token_id,json=tokenId" json:"token_id,omitempty"`
 	// ERC721X/ERC20/ETH amount
-	TokenAmount          *types.BigUInt `protobuf:"bytes,5,opt,name=token_amount,json=tokenAmount" json:"token_amount,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	TokenAmount *types.BigUInt `protobuf:"bytes,5,opt,name=token_amount,json=tokenAmount" json:"token_amount,omitempty"`
+	// Mainnet tx hash
+	TxHash               []byte   `protobuf:"bytes,6,opt,name=tx_hash,json=txHash,proto3" json:"tx_hash,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *TransferGatewayTokenWithdrawn) Reset()         { *m = TransferGatewayTokenWithdrawn{} }
 func (m *TransferGatewayTokenWithdrawn) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenWithdrawn) ProtoMessage()    {}
 func (*TransferGatewayTokenWithdrawn) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{9}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{9}
 }
 func (m *TransferGatewayTokenWithdrawn) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawn.Unmarshal(m, b)
@@ -664,6 +698,13 @@ func (m *TransferGatewayTokenWithdrawn) GetTokenAmount() *types.BigUInt {
 	return nil
 }
 
+func (m *TransferGatewayTokenWithdrawn) GetTxHash() []byte {
+	if m != nil {
+		return m.TxHash
+	}
+	return nil
+}
+
 type TransferGatewayMainnetEvent struct {
 	EthBlock uint64 `protobuf:"varint,1,opt,name=eth_block,json=ethBlock,proto3" json:"eth_block,omitempty"`
 	// Types that are valid to be assigned to Payload:
@@ -679,7 +720,7 @@ func (m *TransferGatewayMainnetEvent) Reset()         { *m = TransferGatewayMain
 func (m *TransferGatewayMainnetEvent) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayMainnetEvent) ProtoMessage()    {}
 func (*TransferGatewayMainnetEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{10}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{10}
 }
 func (m *TransferGatewayMainnetEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayMainnetEvent.Unmarshal(m, b)
@@ -834,7 +875,7 @@ func (m *TransferGatewayPendingContractMapping) Reset()         { *m = TransferG
 func (m *TransferGatewayPendingContractMapping) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingContractMapping) ProtoMessage()    {}
 func (*TransferGatewayPendingContractMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{11}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{11}
 }
 func (m *TransferGatewayPendingContractMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingContractMapping.Unmarshal(m, b)
@@ -903,7 +944,7 @@ func (m *TransferGatewayContractAddressMapping) Reset()         { *m = TransferG
 func (m *TransferGatewayContractAddressMapping) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayContractAddressMapping) ProtoMessage()    {}
 func (*TransferGatewayContractAddressMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{12}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{12}
 }
 func (m *TransferGatewayContractAddressMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayContractAddressMapping.Unmarshal(m, b)
@@ -952,7 +993,7 @@ func (m *TransferGatewayUnverifiedContractCreator) Reset() {
 func (m *TransferGatewayUnverifiedContractCreator) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayUnverifiedContractCreator) ProtoMessage()    {}
 func (*TransferGatewayUnverifiedContractCreator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{13}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{13}
 }
 func (m *TransferGatewayUnverifiedContractCreator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreator.Unmarshal(m, b)
@@ -1001,7 +1042,7 @@ func (m *TransferGatewayVerifiedContractCreator) Reset() {
 func (m *TransferGatewayVerifiedContractCreator) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayVerifiedContractCreator) ProtoMessage()    {}
 func (*TransferGatewayVerifiedContractCreator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{14}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{14}
 }
 func (m *TransferGatewayVerifiedContractCreator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayVerifiedContractCreator.Unmarshal(m, b)
@@ -1058,7 +1099,7 @@ func (m *TransferGatewayContractMappingConfirmed) Reset() {
 func (m *TransferGatewayContractMappingConfirmed) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayContractMappingConfirmed) ProtoMessage()    {}
 func (*TransferGatewayContractMappingConfirmed) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{15}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{15}
 }
 func (m *TransferGatewayContractMappingConfirmed) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayContractMappingConfirmed.Unmarshal(m, b)
@@ -1115,7 +1156,7 @@ func (m *TransferGatewayTokenWithdrawalSigned) Reset()         { *m = TransferGa
 func (m *TransferGatewayTokenWithdrawalSigned) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenWithdrawalSigned) ProtoMessage()    {}
 func (*TransferGatewayTokenWithdrawalSigned) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{16}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{16}
 }
 func (m *TransferGatewayTokenWithdrawalSigned) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawalSigned.Unmarshal(m, b)
@@ -1196,7 +1237,7 @@ func (m *TransferGatewayInitRequest) Reset()         { *m = TransferGatewayInitR
 func (m *TransferGatewayInitRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayInitRequest) ProtoMessage()    {}
 func (*TransferGatewayInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{17}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{17}
 }
 func (m *TransferGatewayInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayInitRequest.Unmarshal(m, b)
@@ -1248,7 +1289,7 @@ func (m *TransferGatewayAddOracleRequest) Reset()         { *m = TransferGateway
 func (m *TransferGatewayAddOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayAddOracleRequest) ProtoMessage()    {}
 func (*TransferGatewayAddOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{18}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{18}
 }
 func (m *TransferGatewayAddOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayAddOracleRequest.Unmarshal(m, b)
@@ -1286,7 +1327,7 @@ func (m *TransferGatewayRemoveOracleRequest) Reset()         { *m = TransferGate
 func (m *TransferGatewayRemoveOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayRemoveOracleRequest) ProtoMessage()    {}
 func (*TransferGatewayRemoveOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{19}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{19}
 }
 func (m *TransferGatewayRemoveOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayRemoveOracleRequest.Unmarshal(m, b)
@@ -1323,7 +1364,7 @@ func (m *TransferGatewayGetOraclesRequest) Reset()         { *m = TransferGatewa
 func (m *TransferGatewayGetOraclesRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetOraclesRequest) ProtoMessage()    {}
 func (*TransferGatewayGetOraclesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{20}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{20}
 }
 func (m *TransferGatewayGetOraclesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetOraclesRequest.Unmarshal(m, b)
@@ -1354,7 +1395,7 @@ func (m *TransferGatewayGetOraclesResponse) Reset()         { *m = TransferGatew
 func (m *TransferGatewayGetOraclesResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetOraclesResponse) ProtoMessage()    {}
 func (*TransferGatewayGetOraclesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{21}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{21}
 }
 func (m *TransferGatewayGetOraclesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetOraclesResponse.Unmarshal(m, b)
@@ -1401,7 +1442,7 @@ func (m *TransferGatewayAddContractMappingRequest) Reset() {
 func (m *TransferGatewayAddContractMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayAddContractMappingRequest) ProtoMessage()    {}
 func (*TransferGatewayAddContractMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{22}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{22}
 }
 func (m *TransferGatewayAddContractMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayAddContractMappingRequest.Unmarshal(m, b)
@@ -1463,7 +1504,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsRequest) String() string {
 }
 func (*TransferGatewayUnverifiedContractCreatorsRequest) ProtoMessage() {}
 func (*TransferGatewayUnverifiedContractCreatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{23}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{23}
 }
 func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest.Unmarshal(m, b)
@@ -1498,7 +1539,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsResponse) String() string {
 }
 func (*TransferGatewayUnverifiedContractCreatorsResponse) ProtoMessage() {}
 func (*TransferGatewayUnverifiedContractCreatorsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{24}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{24}
 }
 func (m *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsResponse.Unmarshal(m, b)
@@ -1540,7 +1581,7 @@ func (m *TransferGatewayVerifyContractCreatorsRequest) String() string {
 }
 func (*TransferGatewayVerifyContractCreatorsRequest) ProtoMessage() {}
 func (*TransferGatewayVerifyContractCreatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{25}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{25}
 }
 func (m *TransferGatewayVerifyContractCreatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayVerifyContractCreatorsRequest.Unmarshal(m, b)
@@ -1581,7 +1622,7 @@ func (m *TransferGatewayProcessEventBatchRequest) Reset() {
 func (m *TransferGatewayProcessEventBatchRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayProcessEventBatchRequest) ProtoMessage()    {}
 func (*TransferGatewayProcessEventBatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{26}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{26}
 }
 func (m *TransferGatewayProcessEventBatchRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayProcessEventBatchRequest.Unmarshal(m, b)
@@ -1618,7 +1659,7 @@ func (m *TransferGatewayStateRequest) Reset()         { *m = TransferGatewayStat
 func (m *TransferGatewayStateRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateRequest) ProtoMessage()    {}
 func (*TransferGatewayStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{27}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{27}
 }
 func (m *TransferGatewayStateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayStateRequest.Unmarshal(m, b)
@@ -1649,7 +1690,7 @@ func (m *TransferGatewayStateResponse) Reset()         { *m = TransferGatewaySta
 func (m *TransferGatewayStateResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateResponse) ProtoMessage()    {}
 func (*TransferGatewayStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{28}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{28}
 }
 func (m *TransferGatewayStateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayStateResponse.Unmarshal(m, b)
@@ -1693,7 +1734,7 @@ func (m *TransferGatewayReclaimDepositorTokensRequest) String() string {
 }
 func (*TransferGatewayReclaimDepositorTokensRequest) ProtoMessage() {}
 func (*TransferGatewayReclaimDepositorTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{29}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{29}
 }
 func (m *TransferGatewayReclaimDepositorTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimDepositorTokensRequest.Unmarshal(m, b)
@@ -1737,7 +1778,7 @@ func (m *TransferGatewayReclaimContractTokensRequest) String() string {
 }
 func (*TransferGatewayReclaimContractTokensRequest) ProtoMessage() {}
 func (*TransferGatewayReclaimContractTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{30}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{30}
 }
 func (m *TransferGatewayReclaimContractTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimContractTokensRequest.Unmarshal(m, b)
@@ -1786,7 +1827,7 @@ func (m *TransferGatewayWithdrawTokenRequest) Reset()         { *m = TransferGat
 func (m *TransferGatewayWithdrawTokenRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawTokenRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawTokenRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{31}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{31}
 }
 func (m *TransferGatewayWithdrawTokenRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawTokenRequest.Unmarshal(m, b)
@@ -1862,7 +1903,7 @@ func (m *TransferGatewayWithdrawLoomCoinRequest) Reset() {
 func (m *TransferGatewayWithdrawLoomCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawLoomCoinRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawLoomCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{32}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{32}
 }
 func (m *TransferGatewayWithdrawLoomCoinRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawLoomCoinRequest.Unmarshal(m, b)
@@ -1923,7 +1964,7 @@ func (m *TransferGatewayWithdrawETHRequest) Reset()         { *m = TransferGatew
 func (m *TransferGatewayWithdrawETHRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawETHRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawETHRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{33}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{33}
 }
 func (m *TransferGatewayWithdrawETHRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawETHRequest.Unmarshal(m, b)
@@ -1977,7 +2018,7 @@ func (m *TransferGatewayWithdrawalReceiptRequest) Reset() {
 func (m *TransferGatewayWithdrawalReceiptRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{34}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{34}
 }
 func (m *TransferGatewayWithdrawalReceiptRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptRequest.Unmarshal(m, b)
@@ -2017,7 +2058,7 @@ func (m *TransferGatewayWithdrawalReceiptResponse) Reset() {
 func (m *TransferGatewayWithdrawalReceiptResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptResponse) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{35}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{35}
 }
 func (m *TransferGatewayWithdrawalReceiptResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptResponse.Unmarshal(m, b)
@@ -2064,7 +2105,7 @@ func (m *TransferGatewayConfirmWithdrawalReceiptRequest) String() string {
 }
 func (*TransferGatewayConfirmWithdrawalReceiptRequest) ProtoMessage() {}
 func (*TransferGatewayConfirmWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{36}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{36}
 }
 func (m *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequest.Unmarshal(m, b)
@@ -2105,6 +2146,67 @@ func (m *TransferGatewayConfirmWithdrawalReceiptRequest) GetWithdrawalHash() []b
 	return nil
 }
 
+type TransferGatewayConfirmWithdrawalReceiptRequestV2 struct {
+	// DAppChain address of the entity attempting to make the withdrawal
+	TokenOwner *types.Address `protobuf:"bytes,1,opt,name=token_owner,json=tokenOwner" json:"token_owner,omitempty"`
+	// 65-byte hash of the withdrawal hash
+	OracleSignature []byte `protobuf:"bytes,2,opt,name=oracle_signature,json=oracleSignature,proto3" json:"oracle_signature,omitempty"`
+	// Address of mainnet gateway contract
+	MainnetGateway       *types.Address `protobuf:"bytes,3,opt,name=mainnet_gateway,json=mainnetGateway" json:"mainnet_gateway,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) Reset() {
+	*m = TransferGatewayConfirmWithdrawalReceiptRequestV2{}
+}
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayConfirmWithdrawalReceiptRequestV2) ProtoMessage() {}
+func (*TransferGatewayConfirmWithdrawalReceiptRequestV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{37}
+}
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequestV2.Unmarshal(m, b)
+}
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequestV2.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayConfirmWithdrawalReceiptRequestV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequestV2.Merge(dst, src)
+}
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequestV2.Size(m)
+}
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequestV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequestV2 proto.InternalMessageInfo
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) GetTokenOwner() *types.Address {
+	if m != nil {
+		return m.TokenOwner
+	}
+	return nil
+}
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) GetOracleSignature() []byte {
+	if m != nil {
+		return m.OracleSignature
+	}
+	return nil
+}
+
+func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) GetMainnetGateway() *types.Address {
+	if m != nil {
+		return m.MainnetGateway
+	}
+	return nil
+}
+
 type TransferGatewayPendingWithdrawalsRequest struct {
 	// Address of Mainnet Gateway contract
 	MainnetGateway       *types.Address `protobuf:"bytes,1,opt,name=mainnet_gateway,json=mainnetGateway" json:"mainnet_gateway,omitempty"`
@@ -2119,7 +2221,7 @@ func (m *TransferGatewayPendingWithdrawalsRequest) Reset() {
 func (m *TransferGatewayPendingWithdrawalsRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalsRequest) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{37}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{38}
 }
 func (m *TransferGatewayPendingWithdrawalsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsRequest.Unmarshal(m, b)
@@ -2159,7 +2261,7 @@ func (m *TransferGatewayPendingWithdrawalsResponse) Reset() {
 func (m *TransferGatewayPendingWithdrawalsResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalsResponse) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{38}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{39}
 }
 func (m *TransferGatewayPendingWithdrawalsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsResponse.Unmarshal(m, b)
@@ -2199,7 +2301,7 @@ func (m *TransferGatewayResetMainnetBlockRequest) Reset() {
 func (m *TransferGatewayResetMainnetBlockRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayResetMainnetBlockRequest) ProtoMessage()    {}
 func (*TransferGatewayResetMainnetBlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{39}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{40}
 }
 func (m *TransferGatewayResetMainnetBlockRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayResetMainnetBlockRequest.Unmarshal(m, b)
@@ -2241,7 +2343,7 @@ func (m *TransferGatewayProcessMainnetEventError) Reset() {
 func (m *TransferGatewayProcessMainnetEventError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayProcessMainnetEventError) ProtoMessage()    {}
 func (*TransferGatewayProcessMainnetEventError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{40}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{41}
 }
 func (m *TransferGatewayProcessMainnetEventError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayProcessMainnetEventError.Unmarshal(m, b)
@@ -2294,7 +2396,7 @@ func (m *TransferGatewayReclaimError) Reset()         { *m = TransferGatewayRecl
 func (m *TransferGatewayReclaimError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayReclaimError) ProtoMessage()    {}
 func (*TransferGatewayReclaimError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{41}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{42}
 }
 func (m *TransferGatewayReclaimError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimError.Unmarshal(m, b)
@@ -2340,7 +2442,7 @@ func (m *TransferGatewayWithdrawETHError) Reset()         { *m = TransferGateway
 func (m *TransferGatewayWithdrawETHError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawETHError) ProtoMessage()    {}
 func (*TransferGatewayWithdrawETHError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{42}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{43}
 }
 func (m *TransferGatewayWithdrawETHError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawETHError.Unmarshal(m, b)
@@ -2386,7 +2488,7 @@ func (m *TransferGatewayWithdrawLoomCoinError) Reset()         { *m = TransferGa
 func (m *TransferGatewayWithdrawLoomCoinError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawLoomCoinError) ProtoMessage()    {}
 func (*TransferGatewayWithdrawLoomCoinError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{43}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{44}
 }
 func (m *TransferGatewayWithdrawLoomCoinError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawLoomCoinError.Unmarshal(m, b)
@@ -2432,7 +2534,7 @@ func (m *TransferGatewayWithdrawTokenError) Reset()         { *m = TransferGatew
 func (m *TransferGatewayWithdrawTokenError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawTokenError) ProtoMessage()    {}
 func (*TransferGatewayWithdrawTokenError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{44}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{45}
 }
 func (m *TransferGatewayWithdrawTokenError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawTokenError.Unmarshal(m, b)
@@ -2479,7 +2581,7 @@ func (m *TransferGatewayGetUnclaimedTokensRequest) Reset() {
 func (m *TransferGatewayGetUnclaimedTokensRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetUnclaimedTokensRequest) ProtoMessage()    {}
 func (*TransferGatewayGetUnclaimedTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{45}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{46}
 }
 func (m *TransferGatewayGetUnclaimedTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetUnclaimedTokensRequest.Unmarshal(m, b)
@@ -2519,7 +2621,7 @@ func (m *TransferGatewayGetUnclaimedTokensResponse) Reset() {
 func (m *TransferGatewayGetUnclaimedTokensResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetUnclaimedTokensResponse) ProtoMessage()    {}
 func (*TransferGatewayGetUnclaimedTokensResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_1de74002f2f42c0f, []int{46}
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{47}
 }
 func (m *TransferGatewayGetUnclaimedTokensResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetUnclaimedTokensResponse.Unmarshal(m, b)
@@ -2542,6 +2644,444 @@ var xxx_messageInfo_TransferGatewayGetUnclaimedTokensResponse proto.InternalMess
 func (m *TransferGatewayGetUnclaimedTokensResponse) GetUnclaimedTokens() []*TransferGatewayUnclaimedToken {
 	if m != nil {
 		return m.UnclaimedTokens
+	}
+	return nil
+}
+
+type TransferGatewayMainnetEventTxHashInfo struct {
+	TokenKind            TransferGatewayTokenKind `protobuf:"varint,1,opt,name=token_kind,json=tokenKind,proto3,enum=TransferGatewayTokenKind" json:"token_kind,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
+}
+
+func (m *TransferGatewayMainnetEventTxHashInfo) Reset()         { *m = TransferGatewayMainnetEventTxHashInfo{} }
+func (m *TransferGatewayMainnetEventTxHashInfo) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayMainnetEventTxHashInfo) ProtoMessage()    {}
+func (*TransferGatewayMainnetEventTxHashInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{48}
+}
+func (m *TransferGatewayMainnetEventTxHashInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayMainnetEventTxHashInfo.Unmarshal(m, b)
+}
+func (m *TransferGatewayMainnetEventTxHashInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayMainnetEventTxHashInfo.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayMainnetEventTxHashInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayMainnetEventTxHashInfo.Merge(dst, src)
+}
+func (m *TransferGatewayMainnetEventTxHashInfo) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayMainnetEventTxHashInfo.Size(m)
+}
+func (m *TransferGatewayMainnetEventTxHashInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayMainnetEventTxHashInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayMainnetEventTxHashInfo proto.InternalMessageInfo
+
+func (m *TransferGatewayMainnetEventTxHashInfo) GetTokenKind() TransferGatewayTokenKind {
+	if m != nil {
+		return m.TokenKind
+	}
+	return TransferGatewayTokenKind_ETH
+}
+
+type TransferGatewayValidatorAuthConfig struct {
+	AuthStrategy         ValidatorAuthStrategy             `protobuf:"varint,1,opt,name=auth_strategy,json=authStrategy,proto3,enum=ValidatorAuthStrategy" json:"auth_strategy,omitempty"`
+	TrustedValidators    *TransferGatewayTrustedValidators `protobuf:"bytes,2,opt,name=trusted_validators,json=trustedValidators" json:"trusted_validators,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
+}
+
+func (m *TransferGatewayValidatorAuthConfig) Reset()         { *m = TransferGatewayValidatorAuthConfig{} }
+func (m *TransferGatewayValidatorAuthConfig) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayValidatorAuthConfig) ProtoMessage()    {}
+func (*TransferGatewayValidatorAuthConfig) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{49}
+}
+func (m *TransferGatewayValidatorAuthConfig) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayValidatorAuthConfig.Unmarshal(m, b)
+}
+func (m *TransferGatewayValidatorAuthConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayValidatorAuthConfig.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayValidatorAuthConfig) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayValidatorAuthConfig.Merge(dst, src)
+}
+func (m *TransferGatewayValidatorAuthConfig) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayValidatorAuthConfig.Size(m)
+}
+func (m *TransferGatewayValidatorAuthConfig) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayValidatorAuthConfig.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayValidatorAuthConfig proto.InternalMessageInfo
+
+func (m *TransferGatewayValidatorAuthConfig) GetAuthStrategy() ValidatorAuthStrategy {
+	if m != nil {
+		return m.AuthStrategy
+	}
+	return ValidatorAuthStrategy_USE_TRUSTED_VALIDATORS
+}
+
+func (m *TransferGatewayValidatorAuthConfig) GetTrustedValidators() *TransferGatewayTrustedValidators {
+	if m != nil {
+		return m.TrustedValidators
+	}
+	return nil
+}
+
+type TransferGatewayTrustedValidators struct {
+	Validators           []*types.Address `protobuf:"bytes,1,rep,name=validators" json:"validators,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *TransferGatewayTrustedValidators) Reset()         { *m = TransferGatewayTrustedValidators{} }
+func (m *TransferGatewayTrustedValidators) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayTrustedValidators) ProtoMessage()    {}
+func (*TransferGatewayTrustedValidators) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{50}
+}
+func (m *TransferGatewayTrustedValidators) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayTrustedValidators.Unmarshal(m, b)
+}
+func (m *TransferGatewayTrustedValidators) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayTrustedValidators.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayTrustedValidators) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayTrustedValidators.Merge(dst, src)
+}
+func (m *TransferGatewayTrustedValidators) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayTrustedValidators.Size(m)
+}
+func (m *TransferGatewayTrustedValidators) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayTrustedValidators.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayTrustedValidators proto.InternalMessageInfo
+
+func (m *TransferGatewayTrustedValidators) GetValidators() []*types.Address {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
+type TransferGatewayTrustedValidatorsRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TransferGatewayTrustedValidatorsRequest) Reset() {
+	*m = TransferGatewayTrustedValidatorsRequest{}
+}
+func (m *TransferGatewayTrustedValidatorsRequest) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayTrustedValidatorsRequest) ProtoMessage()    {}
+func (*TransferGatewayTrustedValidatorsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{51}
+}
+func (m *TransferGatewayTrustedValidatorsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayTrustedValidatorsRequest.Unmarshal(m, b)
+}
+func (m *TransferGatewayTrustedValidatorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayTrustedValidatorsRequest.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayTrustedValidatorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayTrustedValidatorsRequest.Merge(dst, src)
+}
+func (m *TransferGatewayTrustedValidatorsRequest) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayTrustedValidatorsRequest.Size(m)
+}
+func (m *TransferGatewayTrustedValidatorsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayTrustedValidatorsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayTrustedValidatorsRequest proto.InternalMessageInfo
+
+type TransferGatewayTrustedValidatorsResponse struct {
+	TrustedValidators    *TransferGatewayTrustedValidators `protobuf:"bytes,1,opt,name=trusted_validators,json=trustedValidators" json:"trusted_validators,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
+}
+
+func (m *TransferGatewayTrustedValidatorsResponse) Reset() {
+	*m = TransferGatewayTrustedValidatorsResponse{}
+}
+func (m *TransferGatewayTrustedValidatorsResponse) String() string { return proto.CompactTextString(m) }
+func (*TransferGatewayTrustedValidatorsResponse) ProtoMessage()    {}
+func (*TransferGatewayTrustedValidatorsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{52}
+}
+func (m *TransferGatewayTrustedValidatorsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayTrustedValidatorsResponse.Unmarshal(m, b)
+}
+func (m *TransferGatewayTrustedValidatorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayTrustedValidatorsResponse.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayTrustedValidatorsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayTrustedValidatorsResponse.Merge(dst, src)
+}
+func (m *TransferGatewayTrustedValidatorsResponse) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayTrustedValidatorsResponse.Size(m)
+}
+func (m *TransferGatewayTrustedValidatorsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayTrustedValidatorsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayTrustedValidatorsResponse proto.InternalMessageInfo
+
+func (m *TransferGatewayTrustedValidatorsResponse) GetTrustedValidators() *TransferGatewayTrustedValidators {
+	if m != nil {
+		return m.TrustedValidators
+	}
+	return nil
+}
+
+type TransferGatewayUpdateTrustedValidatorsRequest struct {
+	TrustedValidators    *TransferGatewayTrustedValidators `protobuf:"bytes,1,opt,name=trusted_validators,json=trustedValidators" json:"trusted_validators,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
+}
+
+func (m *TransferGatewayUpdateTrustedValidatorsRequest) Reset() {
+	*m = TransferGatewayUpdateTrustedValidatorsRequest{}
+}
+func (m *TransferGatewayUpdateTrustedValidatorsRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayUpdateTrustedValidatorsRequest) ProtoMessage() {}
+func (*TransferGatewayUpdateTrustedValidatorsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{53}
+}
+func (m *TransferGatewayUpdateTrustedValidatorsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayUpdateTrustedValidatorsRequest.Unmarshal(m, b)
+}
+func (m *TransferGatewayUpdateTrustedValidatorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayUpdateTrustedValidatorsRequest.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayUpdateTrustedValidatorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayUpdateTrustedValidatorsRequest.Merge(dst, src)
+}
+func (m *TransferGatewayUpdateTrustedValidatorsRequest) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayUpdateTrustedValidatorsRequest.Size(m)
+}
+func (m *TransferGatewayUpdateTrustedValidatorsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayUpdateTrustedValidatorsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayUpdateTrustedValidatorsRequest proto.InternalMessageInfo
+
+func (m *TransferGatewayUpdateTrustedValidatorsRequest) GetTrustedValidators() *TransferGatewayTrustedValidators {
+	if m != nil {
+		return m.TrustedValidators
+	}
+	return nil
+}
+
+type TransferGatewayUpdateValidatorAuthStrategyRequest struct {
+	AuthStrategy         ValidatorAuthStrategy `protobuf:"varint,1,opt,name=auth_strategy,json=authStrategy,proto3,enum=ValidatorAuthStrategy" json:"auth_strategy,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) Reset() {
+	*m = TransferGatewayUpdateValidatorAuthStrategyRequest{}
+}
+func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayUpdateValidatorAuthStrategyRequest) ProtoMessage() {}
+func (*TransferGatewayUpdateValidatorAuthStrategyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{54}
+}
+func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayUpdateValidatorAuthStrategyRequest.Unmarshal(m, b)
+}
+func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayUpdateValidatorAuthStrategyRequest.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayUpdateValidatorAuthStrategyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayUpdateValidatorAuthStrategyRequest.Merge(dst, src)
+}
+func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayUpdateValidatorAuthStrategyRequest.Size(m)
+}
+func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayUpdateValidatorAuthStrategyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayUpdateValidatorAuthStrategyRequest proto.InternalMessageInfo
+
+func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) GetAuthStrategy() ValidatorAuthStrategy {
+	if m != nil {
+		return m.AuthStrategy
+	}
+	return ValidatorAuthStrategy_USE_TRUSTED_VALIDATORS
+}
+
+type TransferGatewayGetValidatorAuthStrategyRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TransferGatewayGetValidatorAuthStrategyRequest) Reset() {
+	*m = TransferGatewayGetValidatorAuthStrategyRequest{}
+}
+func (m *TransferGatewayGetValidatorAuthStrategyRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayGetValidatorAuthStrategyRequest) ProtoMessage() {}
+func (*TransferGatewayGetValidatorAuthStrategyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{55}
+}
+func (m *TransferGatewayGetValidatorAuthStrategyRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyRequest.Unmarshal(m, b)
+}
+func (m *TransferGatewayGetValidatorAuthStrategyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyRequest.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayGetValidatorAuthStrategyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyRequest.Merge(dst, src)
+}
+func (m *TransferGatewayGetValidatorAuthStrategyRequest) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyRequest.Size(m)
+}
+func (m *TransferGatewayGetValidatorAuthStrategyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyRequest proto.InternalMessageInfo
+
+type TransferGatewayGetValidatorAuthStrategyResponse struct {
+	AuthStrategy         ValidatorAuthStrategy `protobuf:"varint,1,opt,name=auth_strategy,json=authStrategy,proto3,enum=ValidatorAuthStrategy" json:"auth_strategy,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *TransferGatewayGetValidatorAuthStrategyResponse) Reset() {
+	*m = TransferGatewayGetValidatorAuthStrategyResponse{}
+}
+func (m *TransferGatewayGetValidatorAuthStrategyResponse) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayGetValidatorAuthStrategyResponse) ProtoMessage() {}
+func (*TransferGatewayGetValidatorAuthStrategyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{56}
+}
+func (m *TransferGatewayGetValidatorAuthStrategyResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyResponse.Unmarshal(m, b)
+}
+func (m *TransferGatewayGetValidatorAuthStrategyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyResponse.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayGetValidatorAuthStrategyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyResponse.Merge(dst, src)
+}
+func (m *TransferGatewayGetValidatorAuthStrategyResponse) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyResponse.Size(m)
+}
+func (m *TransferGatewayGetValidatorAuthStrategyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyResponse proto.InternalMessageInfo
+
+func (m *TransferGatewayGetValidatorAuthStrategyResponse) GetAuthStrategy() ValidatorAuthStrategy {
+	if m != nil {
+		return m.AuthStrategy
+	}
+	return ValidatorAuthStrategy_USE_TRUSTED_VALIDATORS
+}
+
+type TransferGatewayGetUnclaimedContractTokensRequest struct {
+	TokenAddress         *types.Address `protobuf:"bytes,1,opt,name=token_address,json=tokenAddress" json:"token_address,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *TransferGatewayGetUnclaimedContractTokensRequest) Reset() {
+	*m = TransferGatewayGetUnclaimedContractTokensRequest{}
+}
+func (m *TransferGatewayGetUnclaimedContractTokensRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayGetUnclaimedContractTokensRequest) ProtoMessage() {}
+func (*TransferGatewayGetUnclaimedContractTokensRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{57}
+}
+func (m *TransferGatewayGetUnclaimedContractTokensRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensRequest.Unmarshal(m, b)
+}
+func (m *TransferGatewayGetUnclaimedContractTokensRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensRequest.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayGetUnclaimedContractTokensRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensRequest.Merge(dst, src)
+}
+func (m *TransferGatewayGetUnclaimedContractTokensRequest) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensRequest.Size(m)
+}
+func (m *TransferGatewayGetUnclaimedContractTokensRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensRequest proto.InternalMessageInfo
+
+func (m *TransferGatewayGetUnclaimedContractTokensRequest) GetTokenAddress() *types.Address {
+	if m != nil {
+		return m.TokenAddress
+	}
+	return nil
+}
+
+type TransferGatewayGetUnclaimedContractTokensResponse struct {
+	UnclaimedAmount      *types.BigUInt `protobuf:"bytes,1,opt,name=unclaimed_amount,json=unclaimedAmount" json:"unclaimed_amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *TransferGatewayGetUnclaimedContractTokensResponse) Reset() {
+	*m = TransferGatewayGetUnclaimedContractTokensResponse{}
+}
+func (m *TransferGatewayGetUnclaimedContractTokensResponse) String() string {
+	return proto.CompactTextString(m)
+}
+func (*TransferGatewayGetUnclaimedContractTokensResponse) ProtoMessage() {}
+func (*TransferGatewayGetUnclaimedContractTokensResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_transfer_gateway_61aae896e935d5d4, []int{58}
+}
+func (m *TransferGatewayGetUnclaimedContractTokensResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensResponse.Unmarshal(m, b)
+}
+func (m *TransferGatewayGetUnclaimedContractTokensResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensResponse.Marshal(b, m, deterministic)
+}
+func (dst *TransferGatewayGetUnclaimedContractTokensResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensResponse.Merge(dst, src)
+}
+func (m *TransferGatewayGetUnclaimedContractTokensResponse) XXX_Size() int {
+	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensResponse.Size(m)
+}
+func (m *TransferGatewayGetUnclaimedContractTokensResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensResponse proto.InternalMessageInfo
+
+func (m *TransferGatewayGetUnclaimedContractTokensResponse) GetUnclaimedAmount() *types.BigUInt {
+	if m != nil {
+		return m.UnclaimedAmount
 	}
 	return nil
 }
@@ -2584,6 +3124,7 @@ func init() {
 	proto.RegisterType((*TransferGatewayWithdrawalReceiptRequest)(nil), "TransferGatewayWithdrawalReceiptRequest")
 	proto.RegisterType((*TransferGatewayWithdrawalReceiptResponse)(nil), "TransferGatewayWithdrawalReceiptResponse")
 	proto.RegisterType((*TransferGatewayConfirmWithdrawalReceiptRequest)(nil), "TransferGatewayConfirmWithdrawalReceiptRequest")
+	proto.RegisterType((*TransferGatewayConfirmWithdrawalReceiptRequestV2)(nil), "TransferGatewayConfirmWithdrawalReceiptRequestV2")
 	proto.RegisterType((*TransferGatewayPendingWithdrawalsRequest)(nil), "TransferGatewayPendingWithdrawalsRequest")
 	proto.RegisterType((*TransferGatewayPendingWithdrawalsResponse)(nil), "TransferGatewayPendingWithdrawalsResponse")
 	proto.RegisterType((*TransferGatewayResetMainnetBlockRequest)(nil), "TransferGatewayResetMainnetBlockRequest")
@@ -2594,127 +3135,157 @@ func init() {
 	proto.RegisterType((*TransferGatewayWithdrawTokenError)(nil), "TransferGatewayWithdrawTokenError")
 	proto.RegisterType((*TransferGatewayGetUnclaimedTokensRequest)(nil), "TransferGatewayGetUnclaimedTokensRequest")
 	proto.RegisterType((*TransferGatewayGetUnclaimedTokensResponse)(nil), "TransferGatewayGetUnclaimedTokensResponse")
+	proto.RegisterType((*TransferGatewayMainnetEventTxHashInfo)(nil), "TransferGatewayMainnetEventTxHashInfo")
+	proto.RegisterType((*TransferGatewayValidatorAuthConfig)(nil), "TransferGatewayValidatorAuthConfig")
+	proto.RegisterType((*TransferGatewayTrustedValidators)(nil), "TransferGatewayTrustedValidators")
+	proto.RegisterType((*TransferGatewayTrustedValidatorsRequest)(nil), "TransferGatewayTrustedValidatorsRequest")
+	proto.RegisterType((*TransferGatewayTrustedValidatorsResponse)(nil), "TransferGatewayTrustedValidatorsResponse")
+	proto.RegisterType((*TransferGatewayUpdateTrustedValidatorsRequest)(nil), "TransferGatewayUpdateTrustedValidatorsRequest")
+	proto.RegisterType((*TransferGatewayUpdateValidatorAuthStrategyRequest)(nil), "TransferGatewayUpdateValidatorAuthStrategyRequest")
+	proto.RegisterType((*TransferGatewayGetValidatorAuthStrategyRequest)(nil), "TransferGatewayGetValidatorAuthStrategyRequest")
+	proto.RegisterType((*TransferGatewayGetValidatorAuthStrategyResponse)(nil), "TransferGatewayGetValidatorAuthStrategyResponse")
+	proto.RegisterType((*TransferGatewayGetUnclaimedContractTokensRequest)(nil), "TransferGatewayGetUnclaimedContractTokensRequest")
+	proto.RegisterType((*TransferGatewayGetUnclaimedContractTokensResponse)(nil), "TransferGatewayGetUnclaimedContractTokensResponse")
 	proto.RegisterEnum("TransferGatewayTokenKind", TransferGatewayTokenKind_name, TransferGatewayTokenKind_value)
+	proto.RegisterEnum("ValidatorAuthStrategy", ValidatorAuthStrategy_name, ValidatorAuthStrategy_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/transfer_gateway/transfer_gateway.proto", fileDescriptor_transfer_gateway_1de74002f2f42c0f)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/transfer_gateway/transfer_gateway.proto", fileDescriptor_transfer_gateway_61aae896e935d5d4)
 }
 
-var fileDescriptor_transfer_gateway_1de74002f2f42c0f = []byte{
-	// 1809 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x59, 0xcd, 0x6f, 0xdb, 0xc8,
-	0x15, 0x0f, 0x69, 0xd9, 0xb2, 0x9f, 0x1d, 0x5b, 0xe6, 0xc6, 0x59, 0xe5, 0x63, 0x63, 0xef, 0x6c,
-	0x9a, 0x38, 0x4d, 0x97, 0x4e, 0x9c, 0x06, 0x29, 0xda, 0x43, 0xd7, 0x56, 0xb4, 0xb1, 0x76, 0x93,
-	0x78, 0x31, 0x71, 0xda, 0xc5, 0x02, 0x5d, 0x82, 0x26, 0xc7, 0x12, 0x11, 0x89, 0xa3, 0x92, 0xa3,
-	0x28, 0x6e, 0xff, 0x83, 0x5e, 0x7a, 0x29, 0xb0, 0x87, 0x16, 0x68, 0xd1, 0xf6, 0x5a, 0x14, 0x3d,
-	0xb6, 0xb7, 0xa2, 0xff, 0x47, 0x0e, 0xb9, 0xf7, 0xda, 0x73, 0xc1, 0xf9, 0xa0, 0x28, 0x0e, 0x29,
-	0x4b, 0x29, 0xb6, 0x97, 0x5c, 0x0c, 0x6a, 0xe6, 0x7d, 0xcf, 0x9b, 0xf7, 0x7b, 0x6f, 0x0c, 0x47,
-	0xed, 0x80, 0x75, 0x06, 0xc7, 0xb6, 0x47, 0x7b, 0x3b, 0x5d, 0x4a, 0x7b, 0x21, 0x61, 0x43, 0x1a,
-	0xbd, 0xd8, 0x69, 0xd3, 0x8f, 0x93, 0x9f, 0x3b, 0xc7, 0x83, 0xa0, 0xcb, 0x82, 0x70, 0x87, 0x9d,
-	0xf6, 0x49, 0xbc, 0xc3, 0x22, 0x37, 0x8c, 0x4f, 0x48, 0xe4, 0xb4, 0x5d, 0x46, 0x86, 0xee, 0xa9,
-	0xb6, 0x60, 0xf7, 0x23, 0xca, 0xe8, 0xe5, 0x8f, 0x33, 0x52, 0xdb, 0xb4, 0x4d, 0x77, 0xf8, 0xf2,
-	0xf1, 0xe0, 0x84, 0xff, 0xe2, 0x3f, 0xf8, 0x97, 0x24, 0xbf, 0x73, 0x86, 0x11, 0x52, 0x79, 0xf2,
-	0x57, 0x70, 0xa0, 0xff, 0x18, 0x70, 0xe1, 0x48, 0xea, 0x7e, 0x24, 0x54, 0x3f, 0x63, 0x2e, 0x23,
-	0xd6, 0x35, 0x98, 0xa7, 0xc3, 0x90, 0x44, 0x75, 0x63, 0xcb, 0xd8, 0x5e, 0xde, 0x5d, 0xb4, 0xf7,
-	0x7c, 0x3f, 0x22, 0x71, 0x8c, 0xc5, 0xb2, 0x75, 0x0f, 0x2e, 0x76, 0xdd, 0x98, 0x39, 0x3d, 0x37,
-	0x08, 0x43, 0xc2, 0x9c, 0xe3, 0x2e, 0xf5, 0x5e, 0x38, 0xe1, 0xa0, 0x57, 0x37, 0xb7, 0x8c, 0xed,
-	0x0a, 0x7e, 0x2f, 0xd9, 0x7d, 0x22, 0x36, 0xf7, 0x93, 0xbd, 0xa7, 0x83, 0x9e, 0x85, 0xa1, 0x1e,
-	0x92, 0x57, 0xcc, 0xf1, 0x68, 0xc8, 0x22, 0xd7, 0x4b, 0xb8, 0xfb, 0xfd, 0x20, 0x6c, 0x3b, 0x81,
-	0x5f, 0x9f, 0x4b, 0xd8, 0xf6, 0x2f, 0xbd, 0x79, 0xbd, 0xb9, 0xf1, 0x94, 0xbc, 0x62, 0x0d, 0x49,
-	0xf2, 0x44, 0x50, 0xb4, 0x1e, 0xe2, 0x8d, 0xb0, 0x60, 0xd9, 0xb7, 0xee, 0xc3, 0x3a, 0xa3, 0x2f,
-	0x48, 0xe8, 0x0c, 0x03, 0xd6, 0xf1, 0x23, 0x77, 0x48, 0xa2, 0xb8, 0x5e, 0xd9, 0x9a, 0x1b, 0x33,
-	0xba, 0xc6, 0x49, 0x7e, 0x3a, 0xa2, 0x40, 0x9f, 0xc0, 0xe5, 0x9c, 0xdf, 0x87, 0x91, 0xeb, 0x75,
-	0x89, 0xf0, 0x1e, 0x41, 0xd5, 0x15, 0xac, 0x9a, 0xff, 0x6a, 0x03, 0xfd, 0xdb, 0x84, 0xad, 0x9c,
-	0x08, 0xa5, 0xc0, 0xed, 0x62, 0xe2, 0x91, 0xa0, 0xcf, 0xac, 0x5b, 0xb0, 0x2c, 0xac, 0x2b, 0x0e,
-	0x26, 0xf0, 0xcd, 0x43, 0x1e, 0xd1, 0x1d, 0x58, 0x15, 0xa4, 0x2a, 0x3a, 0x3c, 0x92, 0x59, 0xea,
-	0xf3, 0x7c, 0x5f, 0x85, 0xc0, 0xfa, 0x01, 0x08, 0x76, 0xe7, 0x45, 0x10, 0x8a, 0xf8, 0xad, 0xee,
-	0x5e, 0xb2, 0x73, 0x26, 0x1d, 0x25, 0x14, 0x9f, 0x07, 0xa1, 0x8f, 0x97, 0x98, 0xfa, 0xb4, 0xee,
-	0xc0, 0xa2, 0xe0, 0x0c, 0xfc, 0x7a, 0x45, 0x2a, 0xd9, 0x0f, 0xda, 0xcf, 0x5b, 0x21, 0xdb, 0x5f,
-	0x7e, 0xf3, 0x7a, 0xb3, 0xca, 0xb9, 0x5a, 0x0f, 0x71, 0x95, 0x93, 0xb5, 0x7c, 0xeb, 0x36, 0xac,
-	0x08, 0x0e, 0xb7, 0x47, 0x07, 0x21, 0xab, 0xcf, 0x8f, 0x73, 0x61, 0xe1, 0xe5, 0x1e, 0xdf, 0xb4,
-	0x6e, 0x41, 0x6d, 0x98, 0x46, 0xc2, 0x09, 0x69, 0xe8, 0x91, 0xfa, 0x02, 0xcf, 0x8a, 0xb5, 0xd1,
-	0xfa, 0xd3, 0x64, 0x39, 0x21, 0xa5, 0x3c, 0xee, 0x4e, 0x1c, 0xb4, 0x43, 0x97, 0x0d, 0x22, 0x52,
-	0xaf, 0x6e, 0x19, 0xdb, 0x2b, 0x78, 0x4d, 0xac, 0x3f, 0x53, 0xcb, 0xa8, 0x03, 0x37, 0x73, 0xbe,
-	0x7d, 0x41, 0x42, 0x3f, 0x08, 0xdb, 0xa3, 0xa8, 0x3f, 0x1b, 0xf4, 0x7a, 0x6e, 0x74, 0x3a, 0x4b,
-	0xd4, 0x2d, 0xa8, 0x74, 0xdc, 0xb8, 0xc3, 0x63, 0xbd, 0x82, 0xf9, 0x37, 0xfa, 0x87, 0x01, 0x57,
-	0x72, 0xaa, 0x1e, 0x53, 0xcf, 0xed, 0xee, 0x79, 0x1e, 0xf7, 0xef, 0xac, 0xbb, 0x51, 0xe4, 0xbf,
-	0x59, 0xec, 0xff, 0x17, 0x60, 0x65, 0x48, 0x23, 0x91, 0x35, 0xfc, 0x2c, 0x97, 0x77, 0x3f, 0xb4,
-	0xcf, 0x4a, 0x2f, 0xbc, 0x3e, 0xcc, 0x2f, 0xa1, 0x3f, 0x19, 0xf0, 0x41, 0x8e, 0xef, 0x53, 0x1a,
-	0x91, 0xa0, 0x1d, 0x7e, 0x0b, 0xe6, 0x3f, 0x00, 0xcb, 0x1b, 0x44, 0x11, 0x09, 0x59, 0xe6, 0xfa,
-	0x49, 0xf3, 0x47, 0x72, 0xd7, 0x25, 0xcd, 0xe8, 0xfe, 0xa1, 0x5f, 0x6a, 0xd7, 0xef, 0x28, 0x93,
-	0x40, 0xd9, 0xfc, 0x34, 0xde, 0x2a, 0x3f, 0xcd, 0x09, 0xf9, 0x89, 0xfe, 0xa9, 0x87, 0xe8, 0x79,
-	0xe8, 0x75, 0xdd, 0xa0, 0x47, 0x7c, 0x2e, 0xb9, 0xe0, 0x2e, 0x1a, 0xb3, 0xdc, 0x45, 0x73, 0x86,
-	0xbb, 0x78, 0x1f, 0xaa, 0xc2, 0xe6, 0xb8, 0x3e, 0xc7, 0xab, 0xd6, 0x15, 0xbb, 0x3c, 0x32, 0x58,
-	0xd1, 0xa2, 0xdf, 0x98, 0x9a, 0x0f, 0x9c, 0xee, 0x21, 0xe9, 0xd3, 0x38, 0x60, 0xc4, 0x7f, 0x27,
-	0x4b, 0x4f, 0x69, 0x58, 0x54, 0xea, 0x85, 0xef, 0x66, 0x58, 0xfe, 0xa5, 0x57, 0x34, 0x89, 0xcd,
-	0xcd, 0x97, 0x24, 0x64, 0xd6, 0x15, 0x58, 0x22, 0xac, 0x23, 0x40, 0x9c, 0x87, 0xa4, 0x82, 0x17,
-	0x09, 0xeb, 0x70, 0xe0, 0xb6, 0x7e, 0x08, 0x55, 0x5f, 0x64, 0x95, 0xf4, 0xff, 0x9a, 0x3d, 0x31,
-	0xf3, 0x0e, 0xce, 0x61, 0xc5, 0x60, 0x7d, 0x02, 0x30, 0xaa, 0x19, 0xb2, 0x30, 0x14, 0xb3, 0xa7,
-	0x27, 0x74, 0x70, 0x0e, 0x67, 0x78, 0xf6, 0x97, 0xa0, 0xda, 0x77, 0x4f, 0xbb, 0xd4, 0xf5, 0xd1,
-	0x1f, 0x4d, 0xf8, 0x4e, 0x31, 0x04, 0xe4, 0xda, 0x02, 0xeb, 0x22, 0x98, 0xb2, 0x74, 0x54, 0xf6,
-	0x17, 0xde, 0xbc, 0xde, 0x34, 0x5b, 0x0f, 0xb1, 0x19, 0xf8, 0xd6, 0x3d, 0xa8, 0x9d, 0x88, 0x62,
-	0x58, 0x7e, 0xa6, 0x6b, 0x92, 0x22, 0x3d, 0xd5, 0x1d, 0x58, 0xed, 0x26, 0xe5, 0x7f, 0xc4, 0x92,
-	0x2f, 0x70, 0xe7, 0xf9, 0x7e, 0xca, 0xb0, 0x0f, 0xf5, 0xbc, 0x16, 0xc7, 0x8b, 0x88, 0xcb, 0x68,
-	0x94, 0x1e, 0xae, 0x62, 0xbd, 0x98, 0xd3, 0xd6, 0x10, 0x74, 0xd6, 0x83, 0x02, 0x19, 0xec, 0x95,
-	0xc3, 0xb1, 0x6a, 0x9e, 0x63, 0xd5, 0x46, 0x8e, 0xf3, 0xe8, 0xd5, 0x41, 0x02, 0x5e, 0x8e, 0x16,
-	0x23, 0x45, 0x20, 0x55, 0xaa, 0x18, 0x5d, 0x85, 0xca, 0x49, 0x44, 0x7b, 0xda, 0x0d, 0xe0, 0xab,
-	0x56, 0x1d, 0x4c, 0x46, 0xb5, 0xd8, 0x98, 0x8c, 0xa2, 0xdf, 0x1a, 0xb0, 0xad, 0x55, 0xcf, 0x97,
-	0x24, 0x0a, 0x4e, 0x02, 0xe2, 0xe7, 0xdd, 0x68, 0xc2, 0x7b, 0x45, 0xcd, 0x9e, 0x38, 0x99, 0x8d,
-	0x37, 0xaf, 0x37, 0xd7, 0xf5, 0x46, 0x6f, 0xdd, 0xd3, 0x9a, 0xbc, 0x6d, 0xa8, 0x69, 0x51, 0x10,
-	0x88, 0xbd, 0xea, 0x8d, 0xbb, 0xff, 0x77, 0x03, 0x6e, 0xe4, 0xac, 0xfb, 0xc9, 0xb7, 0x6b, 0x1b,
-	0x82, 0xaa, 0x3a, 0xdc, 0x7c, 0xb8, 0xd4, 0x86, 0x75, 0x1d, 0x16, 0x4b, 0x93, 0x27, 0xdd, 0x41,
-	0xbf, 0x36, 0xb4, 0x16, 0x27, 0x67, 0x41, 0x83, 0x86, 0x27, 0x41, 0xd4, 0x23, 0xc5, 0x99, 0x6c,
-	0xcc, 0x9e, 0xc9, 0xe6, 0xc4, 0x4c, 0x46, 0x7f, 0x31, 0xe1, 0xfa, 0xa4, 0xcb, 0xea, 0x76, 0x93,
-	0xfe, 0xec, 0x1d, 0x05, 0x1b, 0xab, 0x06, 0x73, 0x71, 0xd0, 0xe6, 0xad, 0xed, 0x0a, 0x4e, 0x3e,
-	0xd1, 0x37, 0x86, 0xd6, 0xd7, 0xb4, 0xc2, 0x80, 0x61, 0xf2, 0xf3, 0x01, 0x89, 0xcf, 0xee, 0xbc,
-	0x10, 0x54, 0x45, 0xd7, 0x1b, 0xd7, 0xcd, 0xdc, 0x04, 0xa3, 0x36, 0xac, 0xfb, 0xf0, 0xfe, 0x49,
-	0x10, 0x15, 0x4e, 0x5e, 0x7c, 0x84, 0xc2, 0x17, 0xf8, 0x76, 0x6e, 0xf4, 0x42, 0x0d, 0xd8, 0xcc,
-	0x19, 0xb6, 0xe7, 0xfb, 0x62, 0xe4, 0x51, 0xd6, 0x6d, 0xc1, 0x82, 0x50, 0xa2, 0x99, 0x27, 0xd7,
-	0xd1, 0xa7, 0x80, 0x72, 0x42, 0x30, 0xe9, 0xd1, 0x97, 0x64, 0x56, 0x39, 0x48, 0x9b, 0x9c, 0x1e,
-	0x11, 0x26, 0x84, 0xc4, 0x52, 0x0a, 0xfa, 0x0a, 0x3e, 0x9c, 0x40, 0x13, 0xf7, 0x69, 0x18, 0x93,
-	0xa4, 0x79, 0x52, 0x01, 0x33, 0x8a, 0x9b, 0xa7, 0xcc, 0x54, 0x97, 0xc6, 0x10, 0xfd, 0xca, 0xd4,
-	0x4a, 0xd8, 0x9e, 0xef, 0xe7, 0xee, 0x9a, 0x72, 0xe7, 0xff, 0x72, 0xd3, 0xac, 0x1f, 0xc3, 0xd5,
-	0x32, 0xcc, 0x48, 0x46, 0x23, 0x7e, 0xb6, 0x2b, 0xf8, 0x52, 0x31, 0x5a, 0x3c, 0x0b, 0xda, 0x13,
-	0x01, 0xa3, 0x32, 0x09, 0x30, 0x76, 0xe1, 0xce, 0xb4, 0xe5, 0x3c, 0x3d, 0x9c, 0x5f, 0xc0, 0xdd,
-	0x19, 0x78, 0xe4, 0x61, 0x35, 0x61, 0x51, 0x7a, 0xa4, 0x4e, 0xeb, 0x96, 0x3d, 0xad, 0x14, 0x9c,
-	0xb2, 0xa2, 0x18, 0xbe, 0x57, 0x54, 0xe0, 0x4f, 0x4b, 0x6c, 0xb5, 0x1a, 0x9a, 0xda, 0x9b, 0xf6,
-	0x74, 0x08, 0x91, 0x51, 0xea, 0xe8, 0xc3, 0x67, 0x44, 0x3d, 0x12, 0xc7, 0xbc, 0x7f, 0xda, 0x77,
-	0x99, 0xd7, 0x51, 0xfa, 0xbe, 0x0f, 0x0b, 0x24, 0x59, 0x54, 0xda, 0xae, 0xda, 0x13, 0x3a, 0x2f,
-	0x2c, 0x69, 0xd1, 0x07, 0x5a, 0x83, 0x26, 0x72, 0x56, 0x06, 0xfc, 0x73, 0xb8, 0x5a, 0xbc, 0x2d,
-	0x63, 0x7b, 0x1b, 0xe6, 0xe3, 0x64, 0x41, 0x66, 0xe6, 0x86, 0x5d, 0x48, 0x2d, 0x68, 0xd0, 0x97,
-	0x5a, 0x04, 0x31, 0xe1, 0xe3, 0x8f, 0x6c, 0xe1, 0x68, 0xc4, 0xeb, 0x62, 0x1a, 0xc1, 0x6d, 0x00,
-	0x5f, 0xed, 0x28, 0xaf, 0x32, 0xb5, 0x7d, 0xb4, 0x87, 0xbe, 0x86, 0xdb, 0xc5, 0x92, 0xd3, 0x9c,
-	0x1b, 0x13, 0x3c, 0xeb, 0x98, 0x85, 0xbe, 0x31, 0xe1, 0xa3, 0x92, 0xa1, 0x98, 0x4b, 0x7e, 0x5b,
-	0xc1, 0xff, 0xc3, 0xfc, 0x96, 0xc5, 0x98, 0xb9, 0xb7, 0xc2, 0x98, 0xca, 0x24, 0x8c, 0xb9, 0x01,
-	0x4b, 0x11, 0xf1, 0x82, 0x7e, 0x40, 0x32, 0x68, 0xa4, 0x9c, 0x18, 0x6d, 0x25, 0x63, 0xff, 0x8d,
-	0x92, 0xc8, 0x3c, 0xa6, 0xb4, 0xd7, 0xa0, 0x41, 0x98, 0xa9, 0xcf, 0x52, 0x73, 0x6e, 0xb6, 0xc6,
-	0x72, 0x7d, 0x76, 0x88, 0x1e, 0xb3, 0x72, 0xae, 0xdc, 0xca, 0x3f, 0x18, 0x5a, 0x55, 0x57, 0x56,
-	0x36, 0x8f, 0x0e, 0xa6, 0x37, 0xf0, 0x2e, 0xac, 0x29, 0xf8, 0x93, 0x0f, 0xa6, 0x9a, 0x85, 0xab,
-	0x92, 0x40, 0xaa, 0x99, 0xda, 0xc4, 0x96, 0x76, 0xd3, 0xf5, 0x67, 0x97, 0xe9, 0xe0, 0x1c, 0xb5,
-	0x35, 0x94, 0x29, 0x10, 0x25, 0x2f, 0xf0, 0x8f, 0xa0, 0xaa, 0x5e, 0x7f, 0x8c, 0x69, 0x5f, 0x7f,
-	0x14, 0x07, 0xfa, 0xab, 0x01, 0xb6, 0xde, 0x38, 0x26, 0x9d, 0x62, 0xa9, 0xed, 0x33, 0x34, 0x6c,
-	0x45, 0x6f, 0x74, 0x66, 0xe1, 0x1b, 0x9d, 0x75, 0x13, 0x32, 0x4f, 0x44, 0x02, 0x7b, 0x04, 0x70,
-	0xad, 0x8e, 0x96, 0x39, 0xe8, 0xfc, 0x4c, 0x0b, 0x8d, 0xf6, 0x98, 0x97, 0x56, 0x89, 0x82, 0xc3,
-	0x36, 0x26, 0x1f, 0x36, 0x1a, 0xc2, 0xad, 0x29, 0xc4, 0xcb, 0xd0, 0x7f, 0x06, 0xcb, 0x23, 0xeb,
-	0x54, 0x7d, 0xdb, 0xb6, 0xa7, 0x7c, 0x6c, 0xc4, 0x59, 0x66, 0xf4, 0xb5, 0x96, 0x3d, 0x98, 0xc4,
-	0x64, 0xac, 0x1b, 0x1b, 0xf5, 0x15, 0x65, 0x2f, 0xe8, 0x46, 0xe9, 0x0b, 0x3a, 0xfa, 0xbd, 0x51,
-	0x06, 0x44, 0x59, 0x54, 0x69, 0x46, 0x11, 0x8d, 0x26, 0x0f, 0xf5, 0xbb, 0x30, 0xcf, 0x91, 0x47,
-	0xde, 0x9b, 0xc9, 0x20, 0x25, 0x48, 0xad, 0x8f, 0xe0, 0x3c, 0x49, 0x24, 0x3b, 0x3d, 0x12, 0xc7,
-	0x6e, 0x9b, 0xf0, 0xb3, 0x5d, 0xc2, 0x2b, 0x7c, 0xf1, 0x89, 0x58, 0x43, 0xc7, 0x1a, 0x90, 0x49,
-	0x08, 0x10, 0x46, 0x9d, 0xd5, 0x02, 0x6b, 0x3a, 0xcc, 0x02, 0x1d, 0xbf, 0x33, 0xb4, 0x6e, 0x36,
-	0x53, 0x46, 0x84, 0xa2, 0x23, 0xb8, 0xa0, 0x0e, 0xc6, 0x49, 0xc2, 0x10, 0x89, 0xb0, 0x4b, 0xbd,
-	0xc8, 0x3e, 0xb3, 0x0c, 0xe1, 0xf4, 0x65, 0xb6, 0xc9, 0x52, 0x70, 0x9f, 0xca, 0xbc, 0xbf, 0x19,
-	0xda, 0xd4, 0x94, 0xaf, 0xc5, 0xc2, 0x46, 0x1f, 0x2e, 0xa7, 0x36, 0x76, 0x29, 0xed, 0x39, 0x1e,
-	0x0d, 0xc2, 0x9c, 0xa5, 0x37, 0xed, 0xe9, 0xca, 0x3a, 0x7e, 0x7f, 0x58, 0x52, 0xef, 0xa7, 0xb2,
-	0xf9, 0xcf, 0xe5, 0x95, 0x99, 0x03, 0x98, 0x30, 0xf8, 0x2b, 0xb8, 0x98, 0x1a, 0x2c, 0xca, 0xc7,
-	0xb8, 0xb1, 0xd7, 0xed, 0x29, 0xd0, 0x19, 0xa7, 0x07, 0x33, 0x86, 0xd9, 0x53, 0x99, 0xf9, 0x99,
-	0x56, 0x37, 0x1e, 0x11, 0x36, 0xfe, 0x78, 0x1b, 0x4f, 0x5b, 0x9e, 0x5f, 0x6a, 0x45, 0xa2, 0x48,
-	0x96, 0x2c, 0x12, 0x2d, 0xa8, 0x0d, 0xd4, 0x96, 0x70, 0x5d, 0x55, 0x8a, 0x6b, 0xf6, 0xc4, 0xb7,
-	0x64, 0xbc, 0x36, 0x18, 0x17, 0xf9, 0xdd, 0xe7, 0x50, 0x2f, 0x6b, 0x2c, 0xac, 0x2a, 0xcc, 0x35,
-	0x8f, 0x0e, 0x6a, 0xe7, 0xac, 0x25, 0x98, 0x6f, 0xe2, 0xc6, 0xee, 0x9d, 0x9a, 0x61, 0x01, 0x2c,
-	0x34, 0x71, 0xe3, 0xc1, 0xee, 0xdd, 0x9a, 0x69, 0x2d, 0x43, 0x55, 0x7c, 0x7f, 0x59, 0x9b, 0xb3,
-	0x56, 0x60, 0xf1, 0xf1, 0xe1, 0xe1, 0x93, 0xc6, 0x61, 0xeb, 0x69, 0xad, 0x72, 0xbc, 0xc0, 0xff,
-	0xa3, 0x77, 0xef, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x8d, 0x09, 0xfa, 0xf4, 0x8a, 0x1c, 0x00,
-	0x00,
+var fileDescriptor_transfer_gateway_61aae896e935d5d4 = []byte{
+	// 2098 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x5a, 0xcb, 0x6f, 0xdb, 0xc8,
+	0x19, 0x0f, 0x69, 0xd9, 0xb2, 0x3f, 0xbf, 0x64, 0x26, 0x76, 0x94, 0xc7, 0xc6, 0xde, 0xd9, 0x74,
+	0x63, 0x6f, 0x1a, 0xd9, 0x71, 0x1a, 0xa4, 0xe8, 0x1e, 0xba, 0x7e, 0x68, 0x63, 0xed, 0x3a, 0x71,
+	0x30, 0x96, 0xd3, 0xc5, 0x02, 0x5d, 0x82, 0x26, 0xc7, 0x12, 0x11, 0x89, 0xa3, 0x92, 0x23, 0x3b,
+	0x6e, 0x7b, 0xe9, 0xb5, 0x97, 0x1e, 0xf7, 0xd0, 0x02, 0x2d, 0xba, 0xbd, 0x16, 0x45, 0xd1, 0x53,
+	0xdb, 0x53, 0xd1, 0xff, 0x23, 0x87, 0xdc, 0x7b, 0xed, 0xb9, 0xe0, 0xcc, 0x90, 0xa2, 0x38, 0xa4,
+	0x2c, 0x25, 0x48, 0x2f, 0xbb, 0x97, 0x40, 0x9c, 0xef, 0xf5, 0x9b, 0x6f, 0xbe, 0xf9, 0x1e, 0xe3,
+	0x40, 0xbd, 0xe1, 0xb2, 0x66, 0xf7, 0xb8, 0x62, 0xd3, 0xf6, 0x7a, 0x8b, 0xd2, 0xb6, 0x47, 0xd8,
+	0x19, 0xf5, 0x5f, 0xac, 0x37, 0xe8, 0xbd, 0xf0, 0x73, 0xfd, 0xb8, 0xeb, 0xb6, 0x98, 0xeb, 0xad,
+	0xb3, 0xf3, 0x0e, 0x09, 0xd6, 0x99, 0x6f, 0x79, 0xc1, 0x09, 0xf1, 0xcd, 0x86, 0xc5, 0xc8, 0x99,
+	0x75, 0xae, 0x2c, 0x54, 0x3a, 0x3e, 0x65, 0xf4, 0xfa, 0xbd, 0x84, 0xd6, 0x06, 0x6d, 0xd0, 0x75,
+	0xbe, 0x7c, 0xdc, 0x3d, 0xe1, 0x5f, 0xfc, 0x83, 0xff, 0x92, 0xec, 0x1b, 0x17, 0x80, 0x90, 0xc6,
+	0xc3, 0x7f, 0x85, 0x04, 0xfa, 0xaf, 0x06, 0x57, 0xea, 0xd2, 0xf6, 0x63, 0x61, 0xfa, 0x90, 0x59,
+	0x8c, 0x18, 0xb7, 0x60, 0x9c, 0x9e, 0x79, 0xc4, 0x2f, 0x6b, 0x2b, 0xda, 0xea, 0xf4, 0xe6, 0x64,
+	0x65, 0xcb, 0x71, 0x7c, 0x12, 0x04, 0x58, 0x2c, 0x1b, 0x0f, 0x60, 0xa9, 0x65, 0x05, 0xcc, 0x6c,
+	0x5b, 0xae, 0xe7, 0x11, 0x66, 0x1e, 0xb7, 0xa8, 0xfd, 0xc2, 0xf4, 0xba, 0xed, 0xb2, 0xbe, 0xa2,
+	0xad, 0x16, 0xf0, 0xe5, 0x90, 0xfa, 0x44, 0x10, 0xb7, 0x43, 0xda, 0xd3, 0x6e, 0xdb, 0xc0, 0x50,
+	0xf6, 0xc8, 0x4b, 0x66, 0xda, 0xd4, 0x63, 0xbe, 0x65, 0x87, 0xd2, 0x9d, 0x8e, 0xeb, 0x35, 0x4c,
+	0xd7, 0x29, 0x8f, 0x85, 0x62, 0xdb, 0xd7, 0x5e, 0xbf, 0x5a, 0x5e, 0x7c, 0x4a, 0x5e, 0xb2, 0x1d,
+	0xc9, 0xf2, 0x44, 0x70, 0xd4, 0x76, 0xf1, 0xa2, 0x97, 0xb1, 0xec, 0x18, 0x0f, 0x61, 0x81, 0xd1,
+	0x17, 0xc4, 0x33, 0xcf, 0x5c, 0xd6, 0x74, 0x7c, 0xeb, 0x8c, 0xf8, 0x41, 0xb9, 0xb0, 0x32, 0xd6,
+	0x07, 0xba, 0xc4, 0x59, 0x7e, 0xd2, 0xe3, 0x40, 0x9f, 0xc0, 0xf5, 0xd4, 0xbe, 0x0f, 0x7c, 0xcb,
+	0x6e, 0x11, 0xb1, 0x7b, 0x04, 0x45, 0x4b, 0x88, 0x2a, 0xfb, 0x8f, 0x08, 0xe8, 0x3f, 0x3a, 0xac,
+	0xa4, 0x54, 0x44, 0x06, 0xac, 0x16, 0x26, 0x36, 0x71, 0x3b, 0xcc, 0x58, 0x83, 0x69, 0x81, 0x2e,
+	0xdb, 0x99, 0xc0, 0x89, 0x07, 0xdc, 0xa3, 0xeb, 0x30, 0x27, 0x58, 0x23, 0xef, 0x70, 0x4f, 0x26,
+	0xb9, 0x67, 0x39, 0x3d, 0x72, 0x81, 0xf1, 0x43, 0x10, 0xe2, 0xe6, 0x0b, 0xd7, 0x13, 0xfe, 0x9b,
+	0xdb, 0xbc, 0x56, 0x49, 0x41, 0xaa, 0x87, 0x1c, 0x9f, 0xbb, 0x9e, 0x83, 0xa7, 0x58, 0xf4, 0xd3,
+	0xd8, 0x80, 0x49, 0x21, 0xe9, 0x3a, 0xe5, 0x82, 0x34, 0xb2, 0xed, 0x36, 0x8e, 0x6a, 0x1e, 0xdb,
+	0x9e, 0x7e, 0xfd, 0x6a, 0xb9, 0xc8, 0xa5, 0x6a, 0xbb, 0xb8, 0xc8, 0xd9, 0x6a, 0x8e, 0x71, 0x17,
+	0x66, 0x84, 0x84, 0xd5, 0xa6, 0x5d, 0x8f, 0x95, 0xc7, 0xfb, 0xa5, 0xb0, 0xd8, 0xe5, 0x16, 0x27,
+	0x1a, 0x6b, 0x50, 0x3a, 0x8b, 0x3d, 0x61, 0x7a, 0xd4, 0xb3, 0x49, 0x79, 0x82, 0x47, 0xc5, 0x7c,
+	0x6f, 0xfd, 0x69, 0xb8, 0x1c, 0xb2, 0x52, 0xee, 0x77, 0x33, 0x70, 0x1b, 0x9e, 0xc5, 0xba, 0x3e,
+	0x29, 0x17, 0x57, 0xb4, 0xd5, 0x19, 0x3c, 0x2f, 0xd6, 0x0f, 0xa3, 0x65, 0xd4, 0x84, 0x3b, 0xa9,
+	0xbd, 0x3d, 0x23, 0x9e, 0xe3, 0x7a, 0x8d, 0x9e, 0xd7, 0x0f, 0xbb, 0xed, 0xb6, 0xe5, 0x9f, 0x8f,
+	0xe2, 0x75, 0x03, 0x0a, 0x4d, 0x2b, 0x68, 0x72, 0x5f, 0xcf, 0x60, 0xfe, 0x1b, 0xfd, 0x43, 0x83,
+	0x1b, 0x29, 0x53, 0xfb, 0xd4, 0xb6, 0x5a, 0x5b, 0xb6, 0xcd, 0xf7, 0x77, 0xd1, 0xdd, 0xc8, 0xda,
+	0xbf, 0x9e, 0xbd, 0xff, 0x67, 0x60, 0x24, 0x58, 0x7d, 0x11, 0x35, 0xfc, 0x2c, 0xa7, 0x37, 0xdf,
+	0xaf, 0x5c, 0x14, 0x5e, 0x78, 0xe1, 0x2c, 0xbd, 0x84, 0xbe, 0xd1, 0xe0, 0xbd, 0x94, 0xdc, 0xa7,
+	0xd4, 0x27, 0x6e, 0xc3, 0x7b, 0x07, 0xf0, 0x1f, 0x81, 0x61, 0x77, 0x7d, 0x9f, 0x78, 0x2c, 0x71,
+	0xfd, 0x24, 0xfc, 0x9e, 0xde, 0x05, 0xc9, 0xd3, 0xbb, 0x7f, 0xe8, 0x17, 0xca, 0xf5, 0xab, 0x27,
+	0x02, 0x28, 0x19, 0x9f, 0xda, 0x1b, 0xc5, 0xa7, 0x3e, 0x20, 0x3e, 0xd1, 0xbf, 0x54, 0x17, 0x1d,
+	0x79, 0x76, 0xcb, 0x72, 0xdb, 0xc4, 0xe1, 0x9a, 0x33, 0xee, 0xa2, 0x36, 0xca, 0x5d, 0xd4, 0x47,
+	0xb8, 0x8b, 0x0f, 0xa1, 0x28, 0x30, 0x07, 0xe5, 0x31, 0x9e, 0xb5, 0x6e, 0x54, 0xf2, 0x3d, 0x83,
+	0x23, 0x5e, 0xf4, 0x67, 0x5d, 0xd9, 0x03, 0xe7, 0xdb, 0x25, 0x1d, 0x1a, 0xb8, 0x8c, 0x38, 0xdf,
+	0xce, 0xd4, 0x73, 0x15, 0x8a, 0xec, 0xa5, 0xc9, 0x6f, 0xf4, 0x04, 0xbf, 0xd1, 0x13, 0xec, 0xe5,
+	0x5e, 0x78, 0xa7, 0xf3, 0xfc, 0x15, 0xc5, 0xa4, 0xf7, 0x9d, 0xbf, 0xfa, 0xfc, 0xf5, 0x6f, 0x35,
+	0x07, 0xca, 0x6a, 0x5e, 0x3d, 0x25, 0x1e, 0x33, 0x6e, 0xc0, 0x14, 0x61, 0x4d, 0x51, 0xf6, 0xb9,
+	0xaf, 0x0a, 0x78, 0x92, 0xb0, 0x26, 0x2f, 0xf5, 0xc6, 0x8f, 0xa0, 0xe8, 0x88, 0x38, 0x94, 0x8e,
+	0xb9, 0x55, 0x19, 0x18, 0xab, 0x7b, 0x97, 0x70, 0x24, 0x60, 0x7c, 0x02, 0xd0, 0xcb, 0x32, 0x32,
+	0x95, 0x64, 0x8b, 0xc7, 0x47, 0xb7, 0x77, 0x09, 0x27, 0x64, 0xb6, 0xa7, 0xa0, 0xd8, 0xb1, 0xce,
+	0x5b, 0xd4, 0x72, 0xd0, 0x1f, 0x75, 0xf8, 0x5e, 0x76, 0xd1, 0x48, 0x35, 0x12, 0xc6, 0x12, 0xe8,
+	0x32, 0xd9, 0x14, 0xb6, 0x27, 0x5e, 0xbf, 0x5a, 0xd6, 0x6b, 0xbb, 0x58, 0x77, 0x1d, 0xe3, 0x01,
+	0x94, 0x4e, 0x44, 0xfa, 0xcc, 0x3f, 0xec, 0x79, 0xc9, 0x11, 0x1f, 0xf7, 0x3a, 0xcc, 0xb5, 0xc2,
+	0x82, 0xd1, 0x13, 0x49, 0xa7, 0xc4, 0x59, 0x4e, 0x8f, 0x05, 0xb6, 0xa1, 0x9c, 0xb6, 0x62, 0xda,
+	0x3e, 0xb1, 0x18, 0xf5, 0xe3, 0x53, 0x8f, 0x44, 0x97, 0x52, 0xd6, 0x76, 0x04, 0x9f, 0xf1, 0x28,
+	0x43, 0x47, 0x74, 0xb6, 0xe3, 0xfc, 0x6c, 0x17, 0x53, 0x92, 0x75, 0x71, 0xd4, 0xa6, 0xe2, 0xa3,
+	0x88, 0x41, 0x9a, 0x8c, 0x7c, 0x74, 0x13, 0x0a, 0x27, 0x3e, 0x6d, 0x2b, 0x57, 0x83, 0xaf, 0x1a,
+	0x65, 0xd0, 0x19, 0x55, 0x7c, 0xa3, 0x33, 0x8a, 0x7e, 0xab, 0xc1, 0xaa, 0x92, 0x6f, 0x4f, 0x89,
+	0xef, 0x9e, 0xb8, 0xc4, 0x49, 0x6f, 0xa3, 0x0a, 0x97, 0xb3, 0xda, 0x43, 0x71, 0x32, 0x8b, 0xaf,
+	0x5f, 0x2d, 0x2f, 0xa8, 0xad, 0xe1, 0x82, 0xad, 0xb4, 0x85, 0xab, 0x50, 0x52, 0xbc, 0x20, 0x6a,
+	0xfc, 0x9c, 0xdd, 0xbf, 0xfd, 0xbf, 0x6b, 0xf0, 0x61, 0x0a, 0xdd, 0xf3, 0x77, 0x8b, 0x0d, 0x41,
+	0x31, 0x3a, 0xdc, 0xb4, 0xbb, 0x22, 0x82, 0x71, 0x1b, 0x26, 0x73, 0x83, 0x27, 0xa6, 0xa0, 0xdf,
+	0x68, 0x4a, 0x53, 0x94, 0x42, 0xb0, 0x43, 0xbd, 0x13, 0xd7, 0x6f, 0x93, 0xec, 0x48, 0xd6, 0x46,
+	0x8f, 0x64, 0x7d, 0x60, 0x24, 0x87, 0x79, 0xf6, 0xf6, 0xa0, 0xcb, 0x6a, 0xb5, 0xc2, 0x8e, 0xee,
+	0xdb, 0x5a, 0x9e, 0x4a, 0x30, 0x16, 0xb8, 0x0d, 0x99, 0x6a, 0xc3, 0x9f, 0xe8, 0x6b, 0x4d, 0xe9,
+	0x84, 0x6a, 0x9e, 0xcb, 0x30, 0xf9, 0x59, 0x97, 0x04, 0x17, 0xf7, 0x6a, 0x08, 0x8a, 0xa2, 0x4f,
+	0x0e, 0xca, 0x7a, 0x6a, 0xe6, 0x89, 0x08, 0xc6, 0x43, 0xb8, 0x7a, 0xe2, 0xfa, 0x99, 0xb3, 0x1a,
+	0x1f, 0xba, 0xf0, 0x15, 0x4e, 0x4e, 0x0d, 0x6b, 0x68, 0x07, 0x96, 0x53, 0xc0, 0xb6, 0x1c, 0x47,
+	0x0c, 0x49, 0x11, 0xba, 0x15, 0x98, 0x10, 0x46, 0x14, 0x78, 0x72, 0x1d, 0x7d, 0x0a, 0x28, 0xa5,
+	0x04, 0x93, 0x36, 0x3d, 0x25, 0xa3, 0xea, 0x41, 0xca, 0xac, 0xf5, 0x98, 0x30, 0xa1, 0x24, 0x90,
+	0x5a, 0xd0, 0x97, 0xf0, 0xfe, 0x00, 0x9e, 0xa0, 0x43, 0xbd, 0x80, 0x84, 0xed, 0x56, 0xe4, 0x30,
+	0x2d, 0xbb, 0xdd, 0x4a, 0xcc, 0x81, 0xb1, 0x0f, 0xd1, 0xaf, 0x75, 0x25, 0x85, 0x6d, 0x39, 0x4e,
+	0xea, 0xae, 0x45, 0xdb, 0xf9, 0xbf, 0xdc, 0x34, 0xe3, 0xc7, 0x70, 0x33, 0xaf, 0x66, 0x84, 0xc3,
+	0x14, 0x3f, 0xdb, 0x19, 0x7c, 0x2d, 0xbb, 0x5a, 0x1c, 0xba, 0x8d, 0x81, 0x05, 0xa3, 0x30, 0xa8,
+	0x60, 0x6c, 0xc2, 0xc6, 0xb0, 0xe9, 0x3c, 0x3e, 0x9c, 0x9f, 0xc3, 0xfd, 0x11, 0x64, 0xe4, 0x61,
+	0x55, 0x61, 0x52, 0xee, 0x28, 0x3a, 0xad, 0xb5, 0xca, 0xb0, 0x5a, 0x70, 0x2c, 0x8a, 0x02, 0xf8,
+	0x7e, 0x56, 0x82, 0x3f, 0xcf, 0xc1, 0x6a, 0xec, 0x28, 0x66, 0xef, 0x54, 0x86, 0xab, 0x10, 0x09,
+	0xa3, 0xa6, 0x3a, 0xae, 0xfa, 0xd4, 0x26, 0x41, 0xc0, 0xfb, 0xa7, 0x6d, 0x8b, 0xd9, 0xcd, 0xc8,
+	0xde, 0x0f, 0x60, 0x82, 0x84, 0x8b, 0x91, 0xb5, 0x9b, 0x95, 0x01, 0x9d, 0x17, 0x96, 0xbc, 0xe8,
+	0x3d, 0xa5, 0x41, 0x13, 0x31, 0x2b, 0x1d, 0xfe, 0x39, 0xdc, 0xcc, 0x26, 0x4b, 0xdf, 0xde, 0x85,
+	0xf1, 0x20, 0x5c, 0x90, 0x91, 0xb9, 0x58, 0xc9, 0xe4, 0x16, 0x3c, 0xe8, 0x0b, 0xc5, 0x83, 0x98,
+	0xf0, 0x81, 0x49, 0xb6, 0x70, 0xd4, 0xe7, 0x79, 0x31, 0xf6, 0xe0, 0x2a, 0x80, 0x13, 0x51, 0xa2,
+	0x5d, 0x25, 0x72, 0x7b, 0x8f, 0x86, 0xbe, 0x82, 0xbb, 0xd9, 0x9a, 0xe3, 0x98, 0xeb, 0x53, 0x3c,
+	0xea, 0x60, 0x86, 0xbe, 0xd6, 0xe1, 0x83, 0x9c, 0x31, 0x9a, 0x6b, 0x7e, 0x53, 0xc5, 0x6f, 0x31,
+	0xf1, 0x25, 0x6b, 0xcc, 0xd8, 0x1b, 0xd5, 0x98, 0xc2, 0xa0, 0x1a, 0xf3, 0x21, 0x4c, 0xf9, 0xc4,
+	0x76, 0x3b, 0x2e, 0x49, 0x54, 0xa3, 0x68, 0x13, 0x3d, 0x12, 0xfa, 0x46, 0xed, 0x7b, 0x22, 0xcf,
+	0xec, 0x53, 0xda, 0xde, 0xa1, 0xae, 0x97, 0xc8, 0xcf, 0xd2, 0x72, 0x6a, 0x1a, 0xc7, 0x72, 0x7d,
+	0xf4, 0x12, 0xdd, 0x87, 0x72, 0x2c, 0x1f, 0xe5, 0x1f, 0x34, 0x25, 0xab, 0x47, 0x28, 0xab, 0xf5,
+	0xbd, 0xe1, 0x01, 0xde, 0x87, 0xf9, 0xa8, 0xfc, 0xc9, 0x27, 0x56, 0x05, 0xe1, 0x9c, 0x64, 0x90,
+	0x66, 0x86, 0x86, 0x58, 0x53, 0x6e, 0xba, 0xfa, 0x50, 0x33, 0x5c, 0x39, 0x47, 0x0d, 0xa5, 0xca,
+	0x64, 0xa8, 0x92, 0x17, 0xf8, 0x63, 0x28, 0x46, 0xef, 0x45, 0xda, 0xb0, 0xef, 0x45, 0x91, 0x04,
+	0xfa, 0x8b, 0x06, 0x15, 0xb5, 0x71, 0x0c, 0x3b, 0xc5, 0x5c, 0xec, 0x23, 0x34, 0x6c, 0x59, 0xaf,
+	0x7a, 0x7a, 0xe6, 0xab, 0x9e, 0x71, 0x07, 0x12, 0x8f, 0x4a, 0xa2, 0xf6, 0x88, 0xc2, 0x35, 0xd7,
+	0x5b, 0xe6, 0x45, 0xe7, 0x9f, 0x9a, 0x52, 0x75, 0x2e, 0x40, 0xfc, 0x7c, 0xf3, 0x1d, 0x61, 0xce,
+	0x88, 0xa5, 0xb1, 0xc1, 0xb1, 0x84, 0x7e, 0xaa, 0x1c, 0xac, 0xf2, 0x78, 0x19, 0xe7, 0xb8, 0x0c,
+	0xf5, 0xda, 0x05, 0xea, 0xcf, 0x60, 0x6d, 0x08, 0xf5, 0x32, 0x70, 0x3e, 0x83, 0xe9, 0x9e, 0x6f,
+	0xa3, 0xec, 0xbc, 0x5a, 0x19, 0xf2, 0x71, 0x15, 0x27, 0x85, 0xd1, 0x57, 0x4a, 0xec, 0x63, 0x12,
+	0x90, 0xbe, 0x5e, 0xb2, 0xd7, 0x15, 0xe5, 0xfd, 0xc5, 0x40, 0xcb, 0xfd, 0x8b, 0x01, 0xfa, 0xbd,
+	0x96, 0x57, 0x46, 0x93, 0x35, 0xb1, 0xea, 0xfb, 0xd4, 0x1f, 0xfc, 0x24, 0xb1, 0x09, 0xe3, 0xbc,
+	0x6e, 0xca, 0x5b, 0x3f, 0xb8, 0xc4, 0x0a, 0x56, 0xe3, 0x03, 0x98, 0x25, 0xa1, 0x66, 0xb3, 0x4d,
+	0x82, 0xc0, 0x6a, 0x10, 0x7e, 0xca, 0x53, 0x78, 0x86, 0x2f, 0x3e, 0x11, 0x6b, 0xe8, 0x58, 0x29,
+	0xc3, 0xb2, 0x80, 0x09, 0x50, 0x17, 0x35, 0xf0, 0x8a, 0x0d, 0x3d, 0xc3, 0xc6, 0xef, 0x34, 0xa5,
+	0x17, 0x4f, 0x24, 0x41, 0x61, 0xa8, 0x0e, 0x57, 0xa2, 0x83, 0x31, 0x43, 0x37, 0xf8, 0xc2, 0xed,
+	0xd2, 0x2e, 0xaa, 0x5c, 0x98, 0x44, 0x71, 0xfc, 0x12, 0x5d, 0x65, 0x71, 0x6b, 0x32, 0x14, 0xbc,
+	0xbf, 0x6a, 0xca, 0xcc, 0x97, 0xae, 0x24, 0x02, 0xa3, 0x03, 0xd7, 0x63, 0x8c, 0x2d, 0x4a, 0xdb,
+	0xa6, 0x4d, 0x5d, 0x2f, 0x85, 0xf4, 0x4e, 0x65, 0xb8, 0xa2, 0x84, 0xaf, 0x9e, 0xe5, 0x54, 0xab,
+	0xa1, 0x30, 0xff, 0x29, 0xbf, 0xae, 0xf0, 0xf2, 0x2b, 0x00, 0x7f, 0x09, 0x4b, 0x31, 0x60, 0x91,
+	0x48, 0xfa, 0xc1, 0xde, 0xae, 0x0c, 0xd1, 0x5b, 0xe0, 0xf8, 0x60, 0xfa, 0x3a, 0x8e, 0xa1, 0x60,
+	0x7e, 0xa6, 0xe4, 0x8d, 0xc7, 0x84, 0xf5, 0x3f, 0x56, 0x07, 0xc3, 0x16, 0x97, 0x53, 0x25, 0x49,
+	0x64, 0xe9, 0x92, 0x49, 0xa2, 0x06, 0xa5, 0x6e, 0x44, 0x12, 0x5b, 0x8f, 0x32, 0xc5, 0xad, 0xca,
+	0xc0, 0xb7, 0x73, 0x3c, 0xdf, 0xed, 0x57, 0x89, 0x2c, 0xe5, 0x7d, 0x29, 0x79, 0xd9, 0xc4, 0x4c,
+	0x51, 0xf3, 0x4e, 0x68, 0xaa, 0xa5, 0xd2, 0x86, 0x6f, 0xa9, 0xd0, 0xdf, 0x34, 0x65, 0xce, 0x7c,
+	0x6e, 0xb5, 0x5c, 0x27, 0x6c, 0xc5, 0xb7, 0xba, 0xac, 0xc9, 0x2b, 0x45, 0xc3, 0xf8, 0x18, 0x66,
+	0xad, 0x2e, 0x6b, 0x9a, 0x01, 0xf3, 0x2d, 0x46, 0x1a, 0xe7, 0xd2, 0xc6, 0x52, 0xa5, 0x8f, 0xf9,
+	0x50, 0x52, 0xf1, 0x8c, 0x95, 0xf8, 0x32, 0x9e, 0x81, 0xc1, 0xfc, 0x6e, 0xc0, 0x88, 0x63, 0x9e,
+	0x46, 0xec, 0x81, 0x4c, 0x27, 0x4a, 0xe9, 0xad, 0x0b, 0xce, 0x58, 0x6f, 0x80, 0x17, 0x58, 0x7a,
+	0x09, 0xed, 0x2b, 0x43, 0xad, 0x22, 0x16, 0x76, 0xd2, 0x09, 0x6b, 0x4a, 0x27, 0xdd, 0xa3, 0xa1,
+	0x35, 0x25, 0x53, 0xaa, 0x20, 0xe4, 0x6c, 0xf0, 0x4b, 0x25, 0xaa, 0x32, 0x58, 0x65, 0x20, 0x64,
+	0x6f, 0x5b, 0x7b, 0x8b, 0x6d, 0xff, 0x4a, 0x83, 0x7b, 0xe9, 0x10, 0xea, 0x38, 0x16, 0x23, 0x79,
+	0x78, 0xdf, 0x01, 0x86, 0x8e, 0x3a, 0x8e, 0x72, 0x08, 0xd9, 0x81, 0x20, 0x61, 0xbc, 0x4d, 0xf8,
+	0xa0, 0x0d, 0xa5, 0xe1, 0x7a, 0x4c, 0xd8, 0x20, 0x73, 0xc8, 0x83, 0xf5, 0xa1, 0x25, 0xe2, 0x9e,
+	0xf0, 0x2d, 0x10, 0x5a, 0x4a, 0x83, 0x95, 0xcc, 0x0f, 0xd9, 0xf3, 0xd8, 0x3d, 0x98, 0x95, 0x93,
+	0x49, 0xce, 0x9f, 0xcb, 0xc5, 0xe0, 0x22, 0xbf, 0x50, 0x53, 0x71, 0xfb, 0x20, 0x13, 0x72, 0x53,
+	0x0f, 0x92, 0xa9, 0x28, 0xa7, 0xcd, 0xef, 0x25, 0x1d, 0x31, 0x05, 0x7d, 0x74, 0x04, 0xe5, 0xbc,
+	0xc4, 0x61, 0x14, 0x61, 0xac, 0x5a, 0xdf, 0x2b, 0x5d, 0x32, 0xa6, 0x60, 0xbc, 0x8a, 0x77, 0x36,
+	0x37, 0x4a, 0x9a, 0x01, 0x30, 0x51, 0xc5, 0x3b, 0x8f, 0x36, 0xef, 0x97, 0x74, 0x63, 0x1a, 0x8a,
+	0xe2, 0xf7, 0x17, 0xa5, 0x31, 0x63, 0x06, 0x26, 0xf7, 0x0f, 0x0e, 0x9e, 0xec, 0x1c, 0xd4, 0x9e,
+	0x96, 0x0a, 0x1f, 0xed, 0xc3, 0x62, 0xa6, 0x2b, 0x8d, 0xeb, 0xb0, 0x74, 0x74, 0x58, 0x35, 0xeb,
+	0xf8, 0xe8, 0xb0, 0x5e, 0xdd, 0x35, 0x9f, 0x6f, 0xed, 0xd7, 0x76, 0xb7, 0xea, 0x07, 0xf8, 0xb0,
+	0x74, 0xc9, 0xb8, 0x0a, 0x97, 0x43, 0xda, 0xee, 0xb3, 0x83, 0xc3, 0x24, 0x41, 0x3b, 0x9e, 0xe0,
+	0xff, 0x09, 0xe3, 0xc1, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff, 0x6d, 0x08, 0x8c, 0x8c, 0x3d, 0x22,
+	0x00, 0x00,
 }
