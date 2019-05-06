@@ -54,11 +54,9 @@ const (
 )
 
 type serviceMethod struct {
-	method     reflect.Method // receiver method
-	argsType   reflect.Type   // type of the request argument
-	//nolint:unused
-	resultType reflect.Type   // type of the response argument
-	methodSig  methodSig
+	method    reflect.Method // receiver method
+	argsType  reflect.Type   // type of the request argument
+	methodSig methodSig
 }
 
 // ----------------------------------------------------------------------------
@@ -210,15 +208,4 @@ func (m *serviceMap) Get(method string) (*service, *serviceMethod, error) {
 func isExported(name string) bool {
 	rune, _ := utf8.DecodeRuneInString(name)
 	return unicode.IsUpper(rune)
-}
-
-//nolint:deadcode
-// isExportedOrBuiltin returns true if a type is exported or a builtin.
-func isExportedOrBuiltin(t reflect.Type) bool {
-	for t.Kind() == reflect.Ptr {
-		t = t.Elem()
-	}
-	// PkgPath will be non-empty even for an exported type,
-	// so we need to check the type name as well.
-	return isExported(t.Name()) || t.PkgPath() == ""
 }
