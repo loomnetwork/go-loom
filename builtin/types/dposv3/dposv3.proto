@@ -217,6 +217,10 @@ message ChangeCandidateFeeRequest {
     uint64 fee = 1;
 }
 
+message SetMinCandidateFeeRequest {
+    uint64 min_candidate_fee = 1;
+}
+
 message UpdateCandidateInfoRequest {
     string name = 1;
     string description = 2;
