@@ -13,6 +13,7 @@ message Params {
     BigUInt registration_requirement = 6;
     BigUInt crash_slashing_percentage = 7;
     BigUInt byzantine_slashing_percentage = 8;
+    uint64 min_candidate_fee = 9;
 }
 
 message State {
@@ -214,6 +215,10 @@ message RegisterCandidateRequest {
 
 message ChangeCandidateFeeRequest {
     uint64 fee = 1;
+}
+
+message SetMinCandidateFeeRequest {
+    uint64 min_candidate_fee = 1;
 }
 
 message UpdateCandidateInfoRequest {
