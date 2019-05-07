@@ -19,6 +19,11 @@ const (
 	Secp256k1SigBytes     = 65
 )
 
+// Secp256k1Signer implements the Signer interface using secp256k1 keys
+type Secp256k1Signer struct {
+	privateKey *ecdsa.PrivateKey
+}
+
 func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
 	var err error
 
