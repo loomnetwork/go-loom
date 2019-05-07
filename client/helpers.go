@@ -24,10 +24,10 @@ import (
 )
 
 const (
-	ERC721Prefix  = "\x16Withdraw ERC721:\n"
-	ERC721XPrefix = "\x15Withdraw ERC721X:\n"
-	ERC20Prefix   = "\x14Withdraw ERC20:\n"
-	ETHPrefix     = "\x13Withdraw ETH:\n"
+	ETHPrefix     = "\x0eWithdraw ETH:\n"
+	ERC20Prefix   = "\x10Withdraw ERC20:\n"
+	ERC721Prefix  = "\x11Withdraw ERC721:\n"
+	ERC721XPrefix = "\x12Withdraw ERC721X:\n"
 )
 
 var ErrTxFailed = errors.New("tx failed")
