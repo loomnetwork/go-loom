@@ -31,6 +31,9 @@ func UnprefixKey(key, prefix []byte) ([]byte, error) {
 }
 
 func HasPrefix(key, prefix []byte) bool {
+	if len(prefix) == 0 {
+		return false
+	}
 	p := append(prefix, byte(0))
 	return bytes.HasPrefix(key, p)
 }
