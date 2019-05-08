@@ -421,3 +421,15 @@ message TransferGatewayGetUnclaimedContractTokensRequest {
 message TransferGatewayGetUnclaimedContractTokensResponse {
     BigUInt unclaimed_amount = 1;
 }
+
+message TransferGatewaySubmitDepositTxHashRequest {
+    bytes tx_hash = 1;
+}
+
+message TransferGatewayClearInvalidDepositTxHashRequest {
+    bytes tx_hash = 1;
+}
+
+message TransferGatewayUnprocessedDepositTxHashesResponse {
+    repeated bytes tx_hashes = 1;
+}
