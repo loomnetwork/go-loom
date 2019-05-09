@@ -433,3 +433,7 @@ message TransferGatewayClearInvalidDepositTxHashRequest {
 message TransferGatewayUnprocessedDepositTxHashesResponse {
     repeated bytes tx_hashes = 1;
 }
+
+message TransferGatewayExtendedState {
+    repeated Address loomcoin_deposit_tx_hash_submitters = 1;
+}
