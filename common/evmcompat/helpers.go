@@ -25,6 +25,7 @@ const (
 	SignatureType_EIP712 SignatureType = 0
 	SignatureType_GETH   SignatureType = 1
 	SignatureType_TREZOR SignatureType = 2
+	SignatureType_TRON   SignatureType = 3
 )
 
 // SoliditySign signs the given data with the specified private key and returns the 65-byte signature.
@@ -94,6 +95,11 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 	case SignatureType_TREZOR:
 		hash = ssha.SoliditySHA3(
 			ssha.String("\x19Ethereum Signed Message:\n\x20"),
+			ssha.Bytes32(hash),
+		)
+	case SignatureType_TRON:
+		hash = ssha.SoliditySHA3(
+			ssha.String("\x19TRON Signed Message:\n32"),
 			ssha.Bytes32(hash),
 		)
 	default:
