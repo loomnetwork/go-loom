@@ -58,12 +58,60 @@ func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to
 	return err
 }
 
+// AddAuthorizedTronContractMapping same as AddAuthorisedContractMapping but for Tron
+func (tg *DAppChainGateway) AddAuthorizedTronContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
+	fromAddr, err := client.LoomAddressFromTronAddress(from)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
+	req := &tgtypes.TransferGatewayAddContractMappingRequest{
+		ForeignContract: fromAddr.MarshalPB(),
+		LocalContract:   to.MarshalPB(),
+	}
+	_, err = tg.contract.Call("AddAuthorizedContractMapping", req, gatewayOwner.LoomSigner, nil)
+	return err
+}
+
 // AddContractMapping creates a bi-directional mapping between a Mainnet & DAppChain contract.
 // The caller must provide the identity of the creator of the Mainnet contract, along with a Mainnet
 // hash of the tx that deployed the contract (which will be used to verify the creator address).
 func (tg *DAppChainGateway) AddContractMapping(from common.Address, to loom.Address,
 	creator *client.Identity, contractTxHash string) error {
 	fromAddr, err := client.LoomAddressFromEthereumAddress(from)
+	if err != nil {
+		return err
+	}
+	txHash, err := hex.DecodeString(strings.TrimPrefix(contractTxHash, "0x"))
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
+
+	hash := ssha.SoliditySHA3(
+		ssha.Address(from),
+		ssha.Address(common.BytesToAddress(to.Local)),
+	)
+
+	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_EIP712)
+	if err != nil {
+		return err
+	}
+
+	req := &tgtypes.TransferGatewayAddContractMappingRequest{
+		ForeignContract:           fromAddr.MarshalPB(),
+		LocalContract:             to.MarshalPB(),
+		ForeignContractCreatorSig: sig,
+		ForeignContractTxHash:     txHash,
+	}
+	_, err = tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
+	return err
+}
+
+// AddTronContractMapping same as AddContractMapping but for Tron
+func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.Address,
+	creator *client.Identity, contractTxHash string) error {
+	fromAddr, err := client.LoomAddressFromTronAddress(from)
 	if err != nil {
 		return err
 	}
