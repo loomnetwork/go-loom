@@ -8,7 +8,7 @@ SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
 # This commit sha should match the one in loomchain repo
 GETH_GIT_REV = 1fb6138d017a4309105d91f187c126cf979c93f9
 EOS_GIT_REV = 2a0f2243770a4ca745ebe30d0594a76e135d6a4d
-.PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
+.PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all lint
 
 all: examples
 
@@ -42,6 +42,24 @@ contracts/evmexample.1.0.0: proto
 
 contracts/evmproxy.1.0.0: proto
 	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmproxy/contract
+
+get_lint:
+	@echo "--> Installing lint"
+	chmod +x get_lint.sh
+	./get_lint.sh
+
+update_lint:
+	@echo "--> Updating lint"
+	./get_lint.sh
+
+lint:
+	cd $(GOPATH)/bin && chmod +x golangci-lint
+	cd $(GOPATH)/src/github.com/loomnetwork/go-loom
+	@golangci-lint run | tee goloomreport
+
+linterrors:
+	chmod +x parselintreport.sh
+	./parselintreport.sh
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
@@ -77,9 +95,6 @@ test: proto
 
 test-evm: proto
 	go test -tags "evm" -v $(PKG)/...
-
-lint:
-	golint ./...
 
 $(SSHA3_DIR):
 	git clone -q https://github.com/loomnetwork/go-solidity-sha3.git $@

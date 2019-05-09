@@ -32,15 +32,18 @@ func DeployContract(client *DAppChainRPCClient, byteCode []byte, signer auth.Sig
 	}
 	resp, err := client.CommitDeployTx(callerAddr, signer, vm.VMType_EVM, byteCode, name)
 	if err != nil {
-		return nil, []byte{}, err
+		return nil, nil, err
 	}
 	response := vm.DeployResponse{}
 	err = proto.Unmarshal(resp, &response)
 	if err != nil {
-		return nil, []byte{}, err
+		return nil, nil, err
 	}
 	data := vm.DeployResponseData{}
 	err = proto.Unmarshal(response.Output, &data)
+	if err != nil {
+		return nil, nil, err
+	}
 	return &EvmContract{
 		client:  client,
 		Address: loom.UnmarshalAddressPB(response.Contract),

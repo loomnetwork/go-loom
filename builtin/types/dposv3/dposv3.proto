@@ -13,6 +13,7 @@ message Params {
     BigUInt registration_requirement = 6;
     BigUInt crash_slashing_percentage = 7;
     BigUInt byzantine_slashing_percentage = 8;
+    uint64 min_candidate_fee = 9;
 }
 
 message State {
@@ -32,14 +33,13 @@ message InitializationState {
 
 message ValidatorStatistic {
     Address address = 1;
-    bytes pub_key = 2;
-    BigUInt whitelist_amount = 3;
-    LocktimeTier locktime_tier = 4;
-    BigUInt delegation_total = 5;
-    BigUInt slash_percentage = 6;
-    uint64 recently_missed_blocks = 7;
-    BigUInt update_whitelist_amount = 8;
-    LocktimeTier update_locktime_tier = 9;
+    BigUInt whitelist_amount = 2;
+    LocktimeTier locktime_tier = 3;
+    BigUInt delegation_total = 4;
+    BigUInt slash_percentage = 5;
+    uint64 recently_missed_blocks = 6;
+    BigUInt update_whitelist_amount = 7;
+    LocktimeTier update_locktime_tier = 8;
 }
 
 message Candidate {
@@ -77,22 +77,28 @@ enum LocktimeTier {
 }
 
 message Delegation {
-    Address validator = 1;
-    Address delegator = 2;
-    uint64 index = 3;
-    BigUInt amount = 4;
-    BigUInt update_amount = 5;
-    uint64 lock_time = 6;
-    LocktimeTier locktime_tier = 7;
+    Address delegator = 1;
+
+    Address validator = 2;
+    Address update_validator = 3;
+
+    uint64 index = 4;
+
+    BigUInt amount = 6;
+    BigUInt update_amount = 7;
+
+    LocktimeTier locktime_tier = 8;
+    LocktimeTier update_locktime_tier = 9;
+
+    uint64 lock_time = 10;
     enum DelegationState {
         BONDING = 0;
         BONDED = 1;
         UNBONDING = 2;
         REDELEGATING = 3;
     }
-    DelegationState state = 8;
-    Address update_validator = 9;
-    string referrer = 10; // wallet that sent the delegation
+    DelegationState state = 11;
+    string referrer = 12;
 }
 
 message DelegationIndex {
@@ -209,6 +215,10 @@ message RegisterCandidateRequest {
 
 message ChangeCandidateFeeRequest {
     uint64 fee = 1;
+}
+
+message SetMinCandidateFeeRequest {
+    uint64 min_candidate_fee = 1;
 }
 
 message UpdateCandidateInfoRequest {
