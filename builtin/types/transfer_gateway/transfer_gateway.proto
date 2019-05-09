@@ -427,7 +427,11 @@ message TransferGatewaySubmitDepositTxHashRequest {
 }
 
 message TransferGatewayClearInvalidDepositTxHashRequest {
-    bytes tx_hash = 1;
+    repeated bytes tx_hashes = 1;
+}
+
+message TransferGatewayUnprocessedDepositTxHashesRequest{
+
 }
 
 message TransferGatewayUnprocessedDepositTxHashesResponse {
