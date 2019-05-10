@@ -88,7 +88,7 @@ message Vote {
     string value = 2; 
 }
 
-message Candidate {
+message Proposal {
     string value = 1;
     uint64 percentage = 2; 
 }
@@ -97,18 +97,18 @@ message Config {
     string name = 1;
     enum ConfigStatus {
         VOTING = 0;
-        ELECTED = 1;
-        SET = 2;
+        SETTLED = 1;
+        ACTIVATED = 2;
     }
-    Candidate elected_candidate = 2;
+    Proposal settlement = 2;
     ConfigStatus status = 3;
     repeated Vote votes = 4;
 
     //Percentage of config enabled validators exceeds vote_threshold at this block_height
     uint64 block_height = 5;
 
-    //Value candidates with voting percentage 
-    repeated Candidate candidates = 6;
+    //Proposed values with voting percentage 
+    repeated Proposal Proposals = 6;
 
     //Minimum build number that supports this config
     uint64 build_number = 7;
