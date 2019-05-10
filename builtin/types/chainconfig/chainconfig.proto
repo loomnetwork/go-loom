@@ -82,3 +82,66 @@ message EnableFeatureResponse {
 message RemoveFeatureRequest {
     repeated string names = 1;
 }
+
+message Votes {
+    Address validator = 1;
+    string value = 2; 
+}
+
+message Config {
+    string name = 1;
+    enum ConfigStatus {
+        PENDING = 0;
+        WAITING = 1;
+        ENABLED = 2;
+        DISABLED = 3;
+    }
+    ConfigStatus status = 2;
+    repeated Votes votes = 3;
+
+    //Percentage of config enabled validators exceeds vote_threshold at this block_height
+    uint64 block_height = 4;
+
+    //Config changes status from `pending` to `waiting` with at this percentage
+    uint64 percentage = 5;
+
+    //Minimum build number that supports this config
+    uint64 build_number = 6;
+
+    //Pending feature is automatically enabled if it is supported in current build
+    bool auto_enable = 7;
+
+    //The threshold at which config becomes enabled 
+    uint64 vote_threshold = 8;
+}
+
+message AddConfigRequest {
+    string name = 1;
+    uint64 build_number = 2;
+    bool auto_enable = 3;
+    uint64 vote_threshold = 4;
+}
+
+message GetConfigRequest {
+    string name = 1;
+}
+
+message GetConfigResponse {
+    Config config = 1;
+}
+
+message ListConfigsRequest {
+}
+
+message ListConfigsResponse {
+    repeated Config configs = 1;
+}
+
+message RemoveConfigRequest {
+    repeated string names = 1;
+}
+
+message VoteConfigRequest {
+    string name = 1;
+    string value = 2;
+}
