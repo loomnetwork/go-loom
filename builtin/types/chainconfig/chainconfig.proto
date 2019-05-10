@@ -118,10 +118,9 @@ message Config {
 }
 
 message AddConfigRequest {
-    string name = 1;
+    repeated string names = 1;
     uint64 build_number = 2;
-    bool auto_enable = 3;
-    uint64 vote_threshold = 4;
+    uint64 vote_threshold = 3;
 }
 
 message GetConfigRequest {
@@ -143,7 +142,7 @@ message RemoveConfigRequest {
     repeated string names = 1;
 }
 
-message VoteConfigRequest {
+message SetConfigRequest {
     string name = 1;
     string value = 2;
 }
