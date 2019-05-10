@@ -17,7 +17,6 @@ type TronSigner struct {
 }
 
 func NewTronSigner(privateKey []byte) *TronSigner {
-	var err error
 	if privateKey == nil {
 		privKey, err := btcec.NewPrivateKey(btcec.S256())
 		if err != nil {
