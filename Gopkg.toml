@@ -51,10 +51,6 @@ ignored = [
   name = "github.com/stretchr/testify"
   version = "1.2.1"
 
-[[constraint]]
-  branch = "master"
-  name = "github.com/btcsuite/btcutil"
-
 [prune]
   go-tests = true
   unused-packages = true
