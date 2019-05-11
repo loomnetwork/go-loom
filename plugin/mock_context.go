@@ -80,6 +80,7 @@ func (c *FakeContext) shallowClone() *FakeContext {
 		Events:        c.Events,
 		ethBalances:   c.ethBalances,
 		features:      c.features,
+		config:        c.config,
 	}
 }
 
@@ -199,11 +200,7 @@ func (c *FakeContext) SetConfig(name, val string) {
 }
 
 func (c *FakeContext) ChainConfig() loom.Config {
-	return &FakeConfig{
-		dpos: &FakeDPOSConfig{
-			cfg: c.config,
-		},
-	}
+	return loom.NewChainConfig(c.config)
 }
 
 func (c *FakeContext) Message() Message {
