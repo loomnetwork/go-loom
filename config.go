@@ -21,6 +21,7 @@ type ChainConfig struct {
 
 func NewChainConfig(cfg map[string]string) Config {
 	chainConfig := &ChainConfig{}
+	chainConfig.cfg = cfg
 	chainConfig.dpos = NewDPOSConfig(cfg)
 	return chainConfig
 }

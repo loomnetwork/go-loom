@@ -97,6 +97,11 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
+// Get ChainConfig
+func (c *wrappedPluginStaticContext) ChainConfig() loom.Config {
+	return c.StaticContext.ChainConfig()
+}
+
 // Validators gives a list of validators
 func (c *wrappedPluginStaticContext) Validators() []*types.Validator {
 	return c.StaticContext.Validators()
@@ -142,6 +147,11 @@ func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []b
 // Check if feature is enabled on chain
 func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.Context.FeatureEnabled(name, defaultVal)
+}
+
+// Get ChainConfig
+func (c *wrappedPluginContext) ChainConfig() loom.Config {
+	return c.Context.ChainConfig()
 }
 
 // Validators gives a list of validators
