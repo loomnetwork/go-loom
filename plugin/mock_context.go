@@ -33,6 +33,7 @@ type FakeContext struct {
 	Events        []FEvent
 	ethBalances   map[string]*loom.BigUInt
 	features      map[string]bool
+	config        map[string]string
 }
 
 var _ Context = &FakeContext{}
@@ -62,6 +63,7 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		Events:      make([]FEvent, 0),
 		ethBalances: make(map[string]*loom.BigUInt),
 		features:    make(map[string]bool),
+		config:      make(map[string]string),
 	}
 }
 
@@ -190,6 +192,18 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 		return val
 	}
 	return defaultVal
+}
+
+func (c *FakeContext) SetConfig(name, val string) {
+	c.config[name] = val
+}
+
+func (c *FakeContext) ChainConfig() loom.Config {
+	return &FakeConfig{
+		dpos: &FakeDPOSConfig{
+			cfg: c.config,
+		},
+	}
 }
 
 func (c *FakeContext) Message() Message {

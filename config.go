@@ -1,9 +1,10 @@
 package loom
 
 type Config interface {
-	DPOS() DPOS
+	DPOS() DPOSConfig
+	GetConfig(string) string
 }
 
-type DPOS interface {
-	FreeFloor() int64
+type DPOSConfig interface {
+	FeeFloor(int64) int64
 }
