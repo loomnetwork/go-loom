@@ -441,3 +441,7 @@ message TransferGatewayUnprocessedDepositTxHashesResponse {
 message TransferGatewayExtendedState {
     repeated Address loomcoin_deposit_tx_hash_submitters = 1;
 }
+
+message TransferGatewayTxHash {
+    bytes tx_hash = 1;
+}
