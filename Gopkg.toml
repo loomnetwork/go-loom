@@ -52,8 +52,8 @@ ignored = [
   version = "1.2.1"
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/btcsuite/btcutil"
+  name = "github.com/btcsuite/btcd"
+  revision = "7d2daa5bfef28c5e282571bc06416516936115ee"
 
 [prune]
   go-tests = true
