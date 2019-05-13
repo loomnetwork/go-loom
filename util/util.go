@@ -30,6 +30,7 @@ func UnprefixKey(key, prefix []byte) ([]byte, error) {
 	return key[len(prefix)+1:], nil
 }
 
+// HasPrefix checks if the given key was prefixed with the given prefix using the PrefixKey function.
 func HasPrefix(key, prefix []byte) bool {
 	if len(prefix) == 0 {
 		return false
