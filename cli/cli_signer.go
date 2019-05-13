@@ -48,7 +48,7 @@ func GetSigner(privFile, hsmConfigFile, algo string) (auth.Signer, error) {
 
 			signer = auth.NewSigner(algo, privKey)
 		case auth.SignerTypeTron:
-			privKey, err = crypto.LoadBtecSecp256k1PrivKey(privFile)
+			privKey, err = crypto.LoadBtecSecp256k1PrivKeyByte(privFile)
 			if err != nil {
 				return nil, err
 			}
