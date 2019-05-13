@@ -2,6 +2,10 @@ syntax = "proto3";
 package user_deployer_whitelist;
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
+message InitRequest {
+    Address owner = 1;
+}
+
 message UserDeployerContracts {
     Address deployerAddr = 1;
     repeated Address contracts = 2;
