@@ -34,13 +34,8 @@ func LoadEd25519PrivKey(path string) ([]byte, error) {
 
 // LoadBtecSecp256k1PrivKey converts private key from btec secp256k1 to ecdsa
 func LoadBtecSecp256k1PrivKey(file string) (*ecdsa.PrivateKey, error) {
-	fd, err := os.Open(file)
+	buf, err := LoadBtecSecp256k1PrivKeyByte(file)
 	if err != nil {
-		return nil, err
-	}
-	defer fd.Close()
-	buf := make([]byte, 64)
-	if _, err := io.ReadFull(fd, buf); err != nil {
 		return nil, err
 	}
 	privKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), common.FromHex(string(buf)))

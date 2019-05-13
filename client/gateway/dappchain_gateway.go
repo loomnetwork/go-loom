@@ -115,10 +115,6 @@ func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.
 	if err != nil {
 		return err
 	}
-	txHash, err := hex.DecodeString(strings.TrimPrefix(contractTxHash, "0x"))
-	if err != nil {
-		return err
-	}
 	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
 
 	hash := ssha.SoliditySHA3(
@@ -126,7 +122,7 @@ func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_EIP712)
+	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_TRON)
 	if err != nil {
 		return err
 	}
@@ -135,7 +131,6 @@ func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.
 		ForeignContract:           fromAddr.MarshalPB(),
 		LocalContract:             to.MarshalPB(),
 		ForeignContractCreatorSig: sig,
-		ForeignContractTxHash:     txHash,
 	}
 	_, err = tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
 	return err
