@@ -63,8 +63,8 @@ func SolidityRecover(hash []byte, sig []byte) (common.Address, error) {
 // GenerateTypedSig signs the given data with the specified private key and returns the 66-byte signature
 // (the first byte of which is used to denote the SignatureType).
 func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureType) ([]byte, error) {
-	if sigType != SignatureType_EIP712 {
-		return nil, errors.New("signing failed, sig type not implemented")
+	if sigType != SignatureType_EIP712 && sigType != SignatureType_TRON {
+		return nil, fmt.Errorf("signing failed, sig type %v not implemented", sigType)
 	}
 
 	sig, err := SoliditySign(data, privKey)
@@ -72,7 +72,7 @@ func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureT
 		return nil, err
 	}
 	// Prefix the sig with a single byte indicating the sig type, in this case EIP712
-	typedSig := append(make([]byte, 0, 66), byte(SignatureType_EIP712))
+	typedSig := append(make([]byte, 0, 66), byte(sigType))
 	return append(typedSig, sig...), nil
 }
 
