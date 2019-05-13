@@ -49,3 +49,18 @@ message ListDeployersRequest {
 message ListDeployersResponse {
     repeated Deployer deployers = 1;
 }
+
+message SetOverrideRequest {
+    uint32 flags = 1;
+}
+
+message GetOverrideRequest {
+}
+
+message GetOverrideResponse {
+    Override override = 1;
+}
+
+message Override {
+    uint32 flags = 1;
+}
