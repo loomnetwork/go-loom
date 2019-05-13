@@ -14,7 +14,6 @@ enum Flags {
     MIGRATION = 4;
 }
 
-
 message Deployer {
     Address address = 1;
     uint32 flags = 2;
@@ -27,6 +26,11 @@ message AddDeployerRequest {
 
 message AddUserDeployerRequest {
     Address deployerAddr = 1;
+}
+
+message UserDeployerContracts {
+    Address deployerAddr = 1;
+    repeated Address contracts = 2;
 }
 
 message AddDeployerResponse {
