@@ -5,6 +5,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/spf13/cobra"
+	flag "github.com/spf13/pflag"
 
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/client"
@@ -12,13 +13,11 @@ import (
 
 type ContractCallFlags struct {
 	URI           string
-	MainnetURI    string
 	ContractAddr  string
 	ChainID       string
 	PrivFile      string
 	HsmConfigFile string
 	Algo          string
-	CallerChainID string
 }
 
 var TxFlags struct {
@@ -114,6 +113,25 @@ func StaticCallContractWithFlags(callFlags *ContractCallFlags, defaultAddr strin
 	}
 	_, err = contract.StaticCall(method, params, loom.RootAddress(callFlags.ChainID), result)
 	return err
+}
+
+// AddContractCallFlags adds flags to the given flag set that are used when calling a mutable method
+// on a Go contract.
+func AddContractCallFlags(flagSet *flag.FlagSet, callFlags *ContractCallFlags) {
+	flagSet.StringVarP(&callFlags.URI, "uri", "u", "http://localhost:46658", "DAppChain base URI")
+	flagSet.StringVar(&callFlags.ContractAddr, "contract", "", "contract address")
+	flagSet.StringVarP(&callFlags.ChainID, "chain", "c", "default", "chain ID")
+	flagSet.StringVarP(&callFlags.PrivFile, "key", "k", "", "private key file")
+	flagSet.StringVar(&callFlags.HsmConfigFile, "hsm", "", "hsm config file")
+	flagSet.StringVar(&callFlags.Algo, "algo", "ed25519", "Signing algo: ed25519, secp256k1, tron")
+}
+
+// AddContractStaticCallFlags adds flags to the given flag set that are used when calling a static
+// method on a Go contract.
+func AddContractStaticCallFlags(flagSet *flag.FlagSet, callFlags *ContractCallFlags) {
+	flagSet.StringVarP(&callFlags.URI, "uri", "u", "http://localhost:46658", "DAppChain base URI")
+	flagSet.StringVar(&callFlags.ContractAddr, "contract", "", "contract address")
+	flagSet.StringVarP(&callFlags.ChainID, "chain", "c", "default", "chain ID")
 }
 
 func contract(defaultAddr string) (*client.Contract, error) {
