@@ -2,17 +2,28 @@ syntax = "proto3";
 package user_deployer_whitelist;
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
-enum Tier {
+enum TierID {
    DEFAULT = 0;
+}
+
+message Tier {
+    TierID id = 1;
+    BigUInt fee = 2;
+    string name = 3;
+}
+
+message TierInfo {
+    repeated Tier tiers = 1;
 }
 
 message InitRequest {
     Address owner = 1;
+    TierInfo tier_info = 2;
 }
 
 message WhitelistUserDeployerRequest {
     Address deployerAddr = 1;
-    uint32 tier = 2;
+    TierID tier_id = 2;
 }
 
 message UserDeployerContracts {
