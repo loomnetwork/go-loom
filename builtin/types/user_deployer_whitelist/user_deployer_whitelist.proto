@@ -3,7 +3,7 @@ package user_deployer_whitelist;
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
 enum TierID {
-   DEFAULT = 0;
+    DEFAULT = 0;
 }
 
 message Tier {
@@ -22,11 +22,17 @@ message InitRequest {
 }
 
 message WhitelistUserDeployerRequest {
-    Address deployerAddr = 1;
-    TierID tier_id = 2;
+    Address userAddr = 1;
+    Address deployerAddr = 2;
+    TierID tier_id = 3;
 }
 
 message UserDeployerContracts {
     Address deployerAddr = 1;
     repeated Address contracts = 2;
+}
+
+message UserDeployers {
+    Address userAddr = 1;
+    repeated Address deployers = 2;
 }
