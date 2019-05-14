@@ -36,3 +36,24 @@ message UserDeployers {
     Address userAddr = 1;
     repeated Address deployers = 2;
 }
+
+message Deployer {
+    Address address = 1;
+    uint32 flags = 2;
+}
+
+message GetUserDeployersRequest {
+    Address userAddr = 1;
+}
+
+message GetUserDeployersResponse {
+    repeated Deployer deployers = 1;
+}
+
+message GetDeployedContractsRequest {
+    Address deployerAddr = 1;
+}
+
+message GetDeployedContractsResponse {
+    repeated Address contracts = 1;
+}
