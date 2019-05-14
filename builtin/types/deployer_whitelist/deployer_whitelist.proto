@@ -28,11 +28,6 @@ message AddUserDeployerRequest {
     Address deployerAddr = 1;
 }
 
-message UserDeployerContracts {
-    Address deployerAddr = 1;
-    repeated Address contracts = 2;
-}
-
 message AddDeployerResponse {
 }
 
