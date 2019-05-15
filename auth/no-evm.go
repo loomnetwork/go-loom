@@ -5,6 +5,7 @@ package auth
 import (
 	"crypto/ecdsa"
 	"fmt"
+	"github.com/eosspark/eos-go/crypto/ecc"
 )
 
 func GetTxHash(_ []byte) ([]byte, error) {
@@ -36,5 +37,17 @@ func (k *TronSigner) Sign(_ []byte) []byte {
 }
 
 func (k *TronSigner) PublicKey() []byte {
+	return nil
+}
+
+type EosSigner struct {
+	PrivateKey *ecc.PrivateKey
+}
+
+func (k *EosSigner) Sign(_ []byte) []byte {
+	return nil
+}
+
+func (k *EosSigner) PublicKey() []byte {
 	return nil
 }

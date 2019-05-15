@@ -3,10 +3,11 @@ PROTOC = protoc --plugin=./protoc-gen-gogo -I$(GOPATH)/src -I/usr/local/include
 GOGO_PROTOBUF_DIR = $(GOPATH)/src/github.com/gogo/protobuf
 HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
 GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
+EOS_DIR = $(GOPATH)/src/github.com/eosspark/eos-go
 SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
 # This commit sha should match the one in loomchain repo
 GETH_GIT_REV = 1fb6138d017a4309105d91f187c126cf979c93f9
-
+EOS_GIT_REV = 2a0f2243770a4ca745ebe30d0594a76e135d6a4d
 .PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all lint
 
 all: examples
@@ -101,6 +102,9 @@ $(SSHA3_DIR):
 $(GETH_DIR):
 	git clone -q https://github.com/loomnetwork/go-ethereum.git $@
 
+$(EOS_DIR):
+	git clone -q https://github.com/eosspark/eos-go.git $@
+
 deps-all: deps deps-evm
 
 deps:
@@ -121,8 +125,9 @@ deps:
 	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 
-deps-evm: $(SSHA3_DIR) $(GETH_DIR)
+deps-evm: $(SSHA3_DIR) $(GETH_DIR) $(EOS_DIR)
 	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
+	cd $(EOS_DIR) && git checkout master && git pull && git checkout $(EOS_GIT_REV)
 	go get \
 		github.com/loomnetwork/yubihsm-go \
 		gopkg.in/check.v1
