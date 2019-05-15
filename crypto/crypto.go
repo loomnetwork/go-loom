@@ -9,6 +9,7 @@ import (
 
 	"github.com/btcsuite/btcd/btcec"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -36,7 +37,7 @@ func LoadEd25519PrivKey(path string) ([]byte, error) {
 func LoadBtecSecp256k1PrivKey(file string) (*ecdsa.PrivateKey, error) {
 	buf, err := LoadBtecSecp256k1PrivKeyByte(file)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "failed to load btec secp256k1 private key")
 	}
 	privKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), common.FromHex(string(buf)))
 	return privKey.ToECDSA(), nil
