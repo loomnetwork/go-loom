@@ -52,14 +52,3 @@ func (k *EosSigner) PublicKey() []byte {
 	return nil
 }
 
-type EosScatterSigner struct {
-	PrivateKey *ecc.PrivateKey
-}
-
-func (k *EosScatterSigner) Sign(_ []byte) []byte {
-	return nil
-}
-
-func (k *EosScatterSigner) PublicKey() []byte {
-	return nil
-}

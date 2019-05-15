@@ -29,7 +29,6 @@ const (
 	SignatureType_GETH
 	SignatureType_TREZOR
 	SignatureType_EOS
-	SignatureType_EOS_SCATTER
 )
 
 // SoliditySign signs the given data with the specified private key and returns the 65-byte signature.
@@ -87,15 +86,13 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 
 	switch SignatureType(sig[0]) {
 	case SignatureType_EIP712:
-		err = recoverAddressFromEIP712(sig)
+		err = recoverAddressFromEIP712(sig[1:])
 	case SignatureType_GETH:
-		hash, err = recoverAddressFromGeth(hash, sig)
+		hash, err = recoverAddressFromGeth(hash, sig[1:])
 	case SignatureType_TREZOR:
-		hash, err = recoverAddressFromTrezor(hash, sig)
+		hash, err = recoverAddressFromTrezor(hash, sig[1:])
 	case SignatureType_EOS:
-		return recoverAddressFromEos(hash, sig)
-	case SignatureType_EOS_SCATTER:
-		return recoverAddressFromEosScatter(hash, sig[1:])
+		return recoverAddressFromEos(hash, sig[1:])
 	default:
 		err = fmt.Errorf("invalid signature type: %d", sig[0])
 	}
@@ -107,14 +104,14 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 }
 
 func recoverAddressFromEIP712(sig []byte) error {
-	if len(sig) != 66 {
+	if len(sig) != 65 {
 		return fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
 	}
 	return nil
 }
 
 func recoverAddressFromGeth(hash []byte, sig []byte) ([]byte, error) {
-	if len(sig) != 66 {
+	if len(sig) != 65 {
 		return nil, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
 	}
 	return ssha.SoliditySHA3(
@@ -124,7 +121,7 @@ func recoverAddressFromGeth(hash []byte, sig []byte) ([]byte, error) {
 }
 
 func recoverAddressFromTrezor(hash []byte, sig []byte) ([]byte, error) {
-	if len(sig) != 66 {
+	if len(sig) != 65 {
 		return nil, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
 	}
 	return ssha.SoliditySHA3(
@@ -135,30 +132,9 @@ func recoverAddressFromTrezor(hash []byte, sig []byte) ([]byte, error) {
 
 func recoverAddressFromEos(hash []byte, sig []byte) (common.Address, error) {
 	var signer common.Address
-	if len(sig) != 102 {
-		return signer, fmt.Errorf("eos signature must be 102 bytes, not %d bytes", len(sig))
-	}
-	signature, err := ecc.NewSignature(string(sig[1:]))
-	if err != nil {
-		return signer, fmt.Errorf("cannot unpack eos signature %v", string(sig))
-	}
-	pubKey, err := signature.PublicKey(hash)
-	if err != nil {
-		return signer, fmt.Errorf("cannot get publlic key from hash %v", string(hash))
-	}
-	btcecPubKey, err := pubKey.Key()
-	if err != nil {
-		return signer, errors.Wrapf(err, "retrieve btcec key from eos key %v", pubKey)
-	}
-	local := crypto.PubkeyToAddress(ecdsa.PublicKey(*btcecPubKey))
-	return local, nil
-}
-
-func recoverAddressFromEosScatter(hash []byte, sig []byte) (common.Address, error) {
-	var signer common.Address
 
 	if len(sig) != 107 {
-		return signer, fmt.Errorf("eos scatter signature must be 107 bytes, not %d bytes", len(sig))
+		return signer, fmt.Errorf("eos signature must be 107 bytes, not %d bytes", len(sig))
 	}
 	signature, err := ecc.NewSignature(string(sig[6:]))
 	if err != nil {
