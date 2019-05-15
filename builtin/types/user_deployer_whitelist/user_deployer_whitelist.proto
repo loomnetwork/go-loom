@@ -1,6 +1,8 @@
 syntax = "proto3";
 package user_deployer_whitelist;
 import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/loomnetwork/go-loom/builtin/types/deployer_whitelist/deployer_whitelist.proto";
+
 
 enum TierID {
     DEFAULT = 0;
@@ -37,17 +39,11 @@ message UserDeployers {
     repeated Address deployers = 2;
 }
 
-message Deployer {
-    Address address = 1;
-    uint32 flags = 2;
-}
-
 message GetUserDeployersRequest {
-    Address userAddr = 1;
 }
 
 message GetUserDeployersResponse {
-    repeated Deployer deployers = 1;
+    repeated deployer_whitelist.Deployer deployers = 1;
 }
 
 message GetDeployedContractsRequest {
