@@ -23,7 +23,7 @@ message InitRequest {
     TierInfo tier_info = 2;
 }
 
-message Contract {
+message DeployerContracts {
     Address contractAddress = 1;
     VMType vmType = 2;
 }
@@ -33,15 +33,15 @@ message WhitelistUserDeployerRequest {
     TierID tier_id = 3;
 }
 
-message UserDeployers {
+message UserDeployersMapping {
     Address userAddr = 1;
     repeated Address deployers = 2;
 }
 
-message Deployer {
+message UserDeployer {
     Address address = 1;
     uint32 flags = 2;
-    repeated Contract contracts = 3;
+    repeated DeployerContracts contracts = 3;
 }
 
 message GetUserDeployersRequest {
