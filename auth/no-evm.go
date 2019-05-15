@@ -51,4 +51,3 @@ func (k *EosSigner) Sign(_ []byte) []byte {
 func (k *EosSigner) PublicKey() []byte {
 	return nil
 }
-
