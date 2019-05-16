@@ -1,9 +1,11 @@
 syntax = "proto3";
 package user_deployer_whitelist;
 import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/loomnetwork/go-loom/builtin/types/deployer_whitelist/deployer_whitelist.proto";
+import "github.com/loomnetwork/go-loom/vm/vm.proto";
 
 enum TierID {
-   DEFAULT = 0;
+    DEFAULT = 0;
 }
 
 message Tier {
@@ -21,12 +23,38 @@ message InitRequest {
     TierInfo tier_info = 2;
 }
 
-message WhitelistUserDeployerRequest {
-    Address deployerAddr = 1;
-    TierID tier_id = 2;
+message DeployerContracts {
+    Address contractAddress = 1;
+    VMType vmType = 2;
 }
 
-message UserDeployerContracts {
+message WhitelistUserDeployerRequest {
     Address deployerAddr = 1;
-    repeated Address contracts = 2;
+    TierID tier_id = 3;
+}
+
+message UserDeployersMapping {
+    Address userAddr = 1;
+    repeated Address deployers = 2;
+}
+
+message UserDeployer {
+    Address address = 1;
+    uint32 flags = 2;
+    repeated DeployerContracts contracts = 3;
+}
+
+message GetUserDeployersRequest {
+}
+
+message GetUserDeployersResponse {
+    repeated deployer_whitelist.Deployer deployers = 1;
+}
+
+message GetDeployedContractsRequest {
+    Address deployerAddr = 1;
+}
+
+message GetDeployedContractsResponse {
+    repeated Address contractAddresses = 1;
 }
