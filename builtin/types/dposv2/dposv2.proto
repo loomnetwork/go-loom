@@ -355,6 +355,13 @@ message DposUpdateCandidateInfoEvent {
     Address address = 1;
 }
 
+message DposDelegatorClaimsRewardsEvent {
+    Address address = 1;
+    BigUInt amount = 2;
+    int64 time = 3;
+    int64 height = 4;
+}
+
 message DposDelegatorDelegatesEvent {
     Address address = 1;
     BigUInt amount = 2;

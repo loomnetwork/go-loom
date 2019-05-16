@@ -9,6 +9,8 @@ enum TransferGatewayTokenKind {
     ERC721 = 2;
     ERC721X = 3;
     LOOMCOIN = 4;
+    TRX = 5;
+    TRC20 = 6;
 }
 
 message TransferGatewayState {
@@ -142,6 +144,8 @@ message TransferGatewayUnverifiedContractCreator {
     uint64 contract_mapping_id = 1 [(gogoproto.customname)="ContractMappingID"];
     // Hash of tx that created a contract, an Oracle will use this to lookup the creator & contract
     bytes contract_tx_hash = 2;
+    // contract address if contract tx hash is not available for some chains
+    Address contract_address = 3;
 }
 
 message TransferGatewayVerifiedContractCreator {

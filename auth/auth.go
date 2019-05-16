@@ -11,6 +11,7 @@ const (
 	SignerTypeEd25519   = "ed25519"
 	SignerTypeSecp256k1 = "secp256k1"
 	SignerTypeYubiHsm   = "yubihsm"
+	SignerTypeTron      = "tron"
 )
 
 // Signer interface is used to sign transactions.
@@ -27,6 +28,8 @@ func NewSigner(signerType string, privKey interface{}) Signer {
 		return secp256k1.NewSecp256k1Signer(privKey.([]byte))
 	case SignerTypeYubiHsm:
 		return yubihsm.NewYubiHsmSigner(privKey)
+	case SignerTypeTron:
+		return NewTronSigner(privKey.([]byte))
 	default:
 		panic(fmt.Errorf("Unknown signer type %s", signerType))
 	}

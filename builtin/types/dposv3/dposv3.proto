@@ -387,3 +387,11 @@ message DposReferrerRegistersEvent {
     string name = 1;
     Address address = 2;
 }
+
+message DposDelegatorClaimsRewardsEvent {
+    Address delegator = 1;
+    Address validator = 2;
+    BigUInt amount = 3;
+    int64 time = 4;
+    int64 height = 5;
+}
