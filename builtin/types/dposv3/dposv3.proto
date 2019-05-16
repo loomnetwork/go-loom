@@ -389,8 +389,9 @@ message DposReferrerRegistersEvent {
 }
 
 message DposDelegatorClaimsRewardsEvent {
-    Address address = 1;
-    BigUInt amount = 2;
-    int64 time = 3;
-    int64 height = 4;
+    Address delegator = 1;
+    Address validator = 2;
+    BigUInt amount = 3;
+    int64 time = 4;
+    int64 height = 5;
 }
