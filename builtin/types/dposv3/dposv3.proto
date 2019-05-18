@@ -332,18 +332,18 @@ message GetStateResponse {
     State state = 1;
 }
 
-message ClaimRewardsRequest {
+message ClaimDelegatorRewardsRequest {
 }
 
-message ClaimRewardsResponse {
+message ClaimDelegatorRewardsResponse {
     BigUInt amount = 1;
 }
 
-message CheckRewardsRequest {
+message CheckDelegatorRewardsRequest {
     Address delegator = 1;
 }
 
-message CheckRewardsReponse {
+message CheckDelegatorRewardsReponse {
     BigUInt amount = 1;
 }
 
