@@ -339,6 +339,14 @@ message ClaimRewardsResponse {
     BigUInt amount = 1;
 }
 
+message CheckRewardsRequest {
+    Address delegator = 1;
+}
+
+message CheckRewardsReponse {
+    BigUInt amount = 1;
+}
+
 // EVENTS
 
 message DposElectionEvent {
