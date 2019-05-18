@@ -343,7 +343,7 @@ message CheckDelegatorRewardsRequest {
     Address delegator = 1;
 }
 
-message CheckDelegatorRewardsReponse {
+message CheckDelegatorRewardsResponse {
     BigUInt amount = 1;
 }
 
