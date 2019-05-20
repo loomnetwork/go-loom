@@ -38,7 +38,7 @@ func (x TierID) String() string {
 	return proto.EnumName(TierID_name, int32(x))
 }
 func (TierID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{0}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{0}
 }
 
 type Tier struct {
@@ -54,7 +54,7 @@ func (m *Tier) Reset()         { *m = Tier{} }
 func (m *Tier) String() string { return proto.CompactTextString(m) }
 func (*Tier) ProtoMessage()    {}
 func (*Tier) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{0}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{0}
 }
 func (m *Tier) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Tier.Unmarshal(m, b)
@@ -106,7 +106,7 @@ func (m *TierInfo) Reset()         { *m = TierInfo{} }
 func (m *TierInfo) String() string { return proto.CompactTextString(m) }
 func (*TierInfo) ProtoMessage()    {}
 func (*TierInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{1}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{1}
 }
 func (m *TierInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TierInfo.Unmarshal(m, b)
@@ -145,7 +145,7 @@ func (m *InitRequest) Reset()         { *m = InitRequest{} }
 func (m *InitRequest) String() string { return proto.CompactTextString(m) }
 func (*InitRequest) ProtoMessage()    {}
 func (*InitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{2}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{2}
 }
 func (m *InitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_InitRequest.Unmarshal(m, b)
@@ -179,7 +179,7 @@ func (m *InitRequest) GetTierInfo() *TierInfo {
 	return nil
 }
 
-type DeployerContracts struct {
+type DeployerContract struct {
 	ContractAddress      *types.Address `protobuf:"bytes,1,opt,name=contractAddress" json:"contractAddress,omitempty"`
 	VmType               vm.VMType      `protobuf:"varint,2,opt,name=vmType,proto3,enum=VMType" json:"vmType,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
@@ -187,38 +187,38 @@ type DeployerContracts struct {
 	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *DeployerContracts) Reset()         { *m = DeployerContracts{} }
-func (m *DeployerContracts) String() string { return proto.CompactTextString(m) }
-func (*DeployerContracts) ProtoMessage()    {}
-func (*DeployerContracts) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{3}
+func (m *DeployerContract) Reset()         { *m = DeployerContract{} }
+func (m *DeployerContract) String() string { return proto.CompactTextString(m) }
+func (*DeployerContract) ProtoMessage()    {}
+func (*DeployerContract) Descriptor() ([]byte, []int) {
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{3}
 }
-func (m *DeployerContracts) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeployerContracts.Unmarshal(m, b)
+func (m *DeployerContract) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DeployerContract.Unmarshal(m, b)
 }
-func (m *DeployerContracts) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeployerContracts.Marshal(b, m, deterministic)
+func (m *DeployerContract) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DeployerContract.Marshal(b, m, deterministic)
 }
-func (dst *DeployerContracts) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeployerContracts.Merge(dst, src)
+func (dst *DeployerContract) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeployerContract.Merge(dst, src)
 }
-func (m *DeployerContracts) XXX_Size() int {
-	return xxx_messageInfo_DeployerContracts.Size(m)
+func (m *DeployerContract) XXX_Size() int {
+	return xxx_messageInfo_DeployerContract.Size(m)
 }
-func (m *DeployerContracts) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeployerContracts.DiscardUnknown(m)
+func (m *DeployerContract) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeployerContract.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_DeployerContracts proto.InternalMessageInfo
+var xxx_messageInfo_DeployerContract proto.InternalMessageInfo
 
-func (m *DeployerContracts) GetContractAddress() *types.Address {
+func (m *DeployerContract) GetContractAddress() *types.Address {
 	if m != nil {
 		return m.ContractAddress
 	}
 	return nil
 }
 
-func (m *DeployerContracts) GetVmType() vm.VMType {
+func (m *DeployerContract) GetVmType() vm.VMType {
 	if m != nil {
 		return m.VmType
 	}
@@ -237,7 +237,7 @@ func (m *WhitelistUserDeployerRequest) Reset()         { *m = WhitelistUserDeplo
 func (m *WhitelistUserDeployerRequest) String() string { return proto.CompactTextString(m) }
 func (*WhitelistUserDeployerRequest) ProtoMessage()    {}
 func (*WhitelistUserDeployerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{4}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{4}
 }
 func (m *WhitelistUserDeployerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WhitelistUserDeployerRequest.Unmarshal(m, b)
@@ -271,7 +271,7 @@ func (m *WhitelistUserDeployerRequest) GetTierId() TierID {
 	return TierID_DEFAULT
 }
 
-type UserDeployersMapping struct {
+type UserState struct {
 	UserAddr             *types.Address   `protobuf:"bytes,1,opt,name=userAddr" json:"userAddr,omitempty"`
 	Deployers            []*types.Address `protobuf:"bytes,2,rep,name=deployers" json:"deployers,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
@@ -279,92 +279,92 @@ type UserDeployersMapping struct {
 	XXX_sizecache        int32            `json:"-"`
 }
 
-func (m *UserDeployersMapping) Reset()         { *m = UserDeployersMapping{} }
-func (m *UserDeployersMapping) String() string { return proto.CompactTextString(m) }
-func (*UserDeployersMapping) ProtoMessage()    {}
-func (*UserDeployersMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{5}
+func (m *UserState) Reset()         { *m = UserState{} }
+func (m *UserState) String() string { return proto.CompactTextString(m) }
+func (*UserState) ProtoMessage()    {}
+func (*UserState) Descriptor() ([]byte, []int) {
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{5}
 }
-func (m *UserDeployersMapping) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UserDeployersMapping.Unmarshal(m, b)
+func (m *UserState) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserState.Unmarshal(m, b)
 }
-func (m *UserDeployersMapping) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UserDeployersMapping.Marshal(b, m, deterministic)
+func (m *UserState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserState.Marshal(b, m, deterministic)
 }
-func (dst *UserDeployersMapping) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UserDeployersMapping.Merge(dst, src)
+func (dst *UserState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserState.Merge(dst, src)
 }
-func (m *UserDeployersMapping) XXX_Size() int {
-	return xxx_messageInfo_UserDeployersMapping.Size(m)
+func (m *UserState) XXX_Size() int {
+	return xxx_messageInfo_UserState.Size(m)
 }
-func (m *UserDeployersMapping) XXX_DiscardUnknown() {
-	xxx_messageInfo_UserDeployersMapping.DiscardUnknown(m)
+func (m *UserState) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserState.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UserDeployersMapping proto.InternalMessageInfo
+var xxx_messageInfo_UserState proto.InternalMessageInfo
 
-func (m *UserDeployersMapping) GetUserAddr() *types.Address {
+func (m *UserState) GetUserAddr() *types.Address {
 	if m != nil {
 		return m.UserAddr
 	}
 	return nil
 }
 
-func (m *UserDeployersMapping) GetDeployers() []*types.Address {
+func (m *UserState) GetDeployers() []*types.Address {
 	if m != nil {
 		return m.Deployers
 	}
 	return nil
 }
 
-type UserDeployer struct {
-	Address              *types.Address       `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	Flags                uint32               `protobuf:"varint,2,opt,name=flags,proto3" json:"flags,omitempty"`
-	Contracts            []*DeployerContracts `protobuf:"bytes,3,rep,name=contracts" json:"contracts,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+type UserDeployerState struct {
+	Address              *types.Address      `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	Flags                uint32              `protobuf:"varint,2,opt,name=flags,proto3" json:"flags,omitempty"`
+	Contracts            []*DeployerContract `protobuf:"bytes,3,rep,name=contracts" json:"contracts,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *UserDeployer) Reset()         { *m = UserDeployer{} }
-func (m *UserDeployer) String() string { return proto.CompactTextString(m) }
-func (*UserDeployer) ProtoMessage()    {}
-func (*UserDeployer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{6}
+func (m *UserDeployerState) Reset()         { *m = UserDeployerState{} }
+func (m *UserDeployerState) String() string { return proto.CompactTextString(m) }
+func (*UserDeployerState) ProtoMessage()    {}
+func (*UserDeployerState) Descriptor() ([]byte, []int) {
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{6}
 }
-func (m *UserDeployer) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UserDeployer.Unmarshal(m, b)
+func (m *UserDeployerState) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserDeployerState.Unmarshal(m, b)
 }
-func (m *UserDeployer) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UserDeployer.Marshal(b, m, deterministic)
+func (m *UserDeployerState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserDeployerState.Marshal(b, m, deterministic)
 }
-func (dst *UserDeployer) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UserDeployer.Merge(dst, src)
+func (dst *UserDeployerState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserDeployerState.Merge(dst, src)
 }
-func (m *UserDeployer) XXX_Size() int {
-	return xxx_messageInfo_UserDeployer.Size(m)
+func (m *UserDeployerState) XXX_Size() int {
+	return xxx_messageInfo_UserDeployerState.Size(m)
 }
-func (m *UserDeployer) XXX_DiscardUnknown() {
-	xxx_messageInfo_UserDeployer.DiscardUnknown(m)
+func (m *UserDeployerState) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserDeployerState.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UserDeployer proto.InternalMessageInfo
+var xxx_messageInfo_UserDeployerState proto.InternalMessageInfo
 
-func (m *UserDeployer) GetAddress() *types.Address {
+func (m *UserDeployerState) GetAddress() *types.Address {
 	if m != nil {
 		return m.Address
 	}
 	return nil
 }
 
-func (m *UserDeployer) GetFlags() uint32 {
+func (m *UserDeployerState) GetFlags() uint32 {
 	if m != nil {
 		return m.Flags
 	}
 	return 0
 }
 
-func (m *UserDeployer) GetContracts() []*DeployerContracts {
+func (m *UserDeployerState) GetContracts() []*DeployerContract {
 	if m != nil {
 		return m.Contracts
 	}
@@ -381,7 +381,7 @@ func (m *GetUserDeployersRequest) Reset()         { *m = GetUserDeployersRequest
 func (m *GetUserDeployersRequest) String() string { return proto.CompactTextString(m) }
 func (*GetUserDeployersRequest) ProtoMessage()    {}
 func (*GetUserDeployersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{7}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{7}
 }
 func (m *GetUserDeployersRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetUserDeployersRequest.Unmarshal(m, b)
@@ -412,7 +412,7 @@ func (m *GetUserDeployersResponse) Reset()         { *m = GetUserDeployersRespon
 func (m *GetUserDeployersResponse) String() string { return proto.CompactTextString(m) }
 func (*GetUserDeployersResponse) ProtoMessage()    {}
 func (*GetUserDeployersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{8}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{8}
 }
 func (m *GetUserDeployersResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetUserDeployersResponse.Unmarshal(m, b)
@@ -450,7 +450,7 @@ func (m *GetDeployedContractsRequest) Reset()         { *m = GetDeployedContract
 func (m *GetDeployedContractsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetDeployedContractsRequest) ProtoMessage()    {}
 func (*GetDeployedContractsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{9}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{9}
 }
 func (m *GetDeployedContractsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetDeployedContractsRequest.Unmarshal(m, b)
@@ -488,7 +488,7 @@ func (m *GetDeployedContractsResponse) Reset()         { *m = GetDeployedContrac
 func (m *GetDeployedContractsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetDeployedContractsResponse) ProtoMessage()    {}
 func (*GetDeployedContractsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb, []int{10}
+	return fileDescriptor_user_deployer_whitelist_732b4584d5337d3f, []int{10}
 }
 func (m *GetDeployedContractsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetDeployedContractsResponse.Unmarshal(m, b)
@@ -519,10 +519,10 @@ func init() {
 	proto.RegisterType((*Tier)(nil), "user_deployer_whitelist.Tier")
 	proto.RegisterType((*TierInfo)(nil), "user_deployer_whitelist.TierInfo")
 	proto.RegisterType((*InitRequest)(nil), "user_deployer_whitelist.InitRequest")
-	proto.RegisterType((*DeployerContracts)(nil), "user_deployer_whitelist.DeployerContracts")
+	proto.RegisterType((*DeployerContract)(nil), "user_deployer_whitelist.DeployerContract")
 	proto.RegisterType((*WhitelistUserDeployerRequest)(nil), "user_deployer_whitelist.WhitelistUserDeployerRequest")
-	proto.RegisterType((*UserDeployersMapping)(nil), "user_deployer_whitelist.UserDeployersMapping")
-	proto.RegisterType((*UserDeployer)(nil), "user_deployer_whitelist.UserDeployer")
+	proto.RegisterType((*UserState)(nil), "user_deployer_whitelist.UserState")
+	proto.RegisterType((*UserDeployerState)(nil), "user_deployer_whitelist.UserDeployerState")
 	proto.RegisterType((*GetUserDeployersRequest)(nil), "user_deployer_whitelist.GetUserDeployersRequest")
 	proto.RegisterType((*GetUserDeployersResponse)(nil), "user_deployer_whitelist.GetUserDeployersResponse")
 	proto.RegisterType((*GetDeployedContractsRequest)(nil), "user_deployer_whitelist.GetDeployedContractsRequest")
@@ -531,44 +531,44 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/user_deployer_whitelist/user_deployer_whitelist.proto", fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/user_deployer_whitelist/user_deployer_whitelist.proto", fileDescriptor_user_deployer_whitelist_732b4584d5337d3f)
 }
 
-var fileDescriptor_user_deployer_whitelist_31ba1e3b142908bb = []byte{
-	// 551 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0x7f, 0x6f, 0x12, 0x41,
-	0x10, 0xf5, 0xa0, 0xfc, 0x1a, 0x6a, 0xb5, 0x9b, 0x9a, 0x9e, 0x88, 0x16, 0x37, 0xc6, 0x10, 0xa2,
-	0x77, 0x86, 0x26, 0xc6, 0xf8, 0x87, 0xa6, 0x8a, 0x56, 0xa2, 0xfd, 0xe7, 0x02, 0xe8, 0x7f, 0x04,
-	0xb8, 0xe1, 0xd8, 0x08, 0xbb, 0xe7, 0xed, 0x52, 0xc2, 0x17, 0xf0, 0x03, 0xf8, 0x89, 0xcd, 0xdd,
-	0xde, 0x09, 0x2d, 0x1c, 0x55, 0x13, 0x42, 0x76, 0x66, 0xde, 0xce, 0x7b, 0xf3, 0x66, 0x73, 0x30,
-	0xf4, 0x98, 0x9a, 0xcc, 0x87, 0xd6, 0x48, 0xcc, 0xec, 0xa9, 0x10, 0x33, 0x8e, 0x6a, 0x21, 0x82,
-	0xef, 0xb6, 0x27, 0x9e, 0x87, 0xa1, 0x3d, 0x9c, 0xb3, 0xa9, 0x62, 0xdc, 0x56, 0x4b, 0x1f, 0xa5,
-	0x3d, 0x97, 0x18, 0xf4, 0x5d, 0xf4, 0xa7, 0x62, 0x89, 0x41, 0x7f, 0x31, 0x61, 0x0a, 0xa7, 0x4c,
-	0xaa, 0xb4, 0xbc, 0xe5, 0x07, 0x42, 0x09, 0x72, 0x9c, 0x52, 0xae, 0xbc, 0xb8, 0x81, 0x5c, 0x93,
-	0x46, 0xff, 0xba, 0x55, 0xe5, 0xdb, 0x3f, 0xc9, 0xdd, 0xa2, 0x34, 0x4d, 0x64, 0xa5, 0x71, 0x43,
-	0xe7, 0xcb, 0xf0, 0xa7, 0xb1, 0xd4, 0x83, 0xbd, 0x0e, 0xc3, 0x80, 0xd8, 0x90, 0x61, 0xae, 0x69,
-	0xd4, 0x8c, 0xfa, 0x41, 0xf3, 0xc4, 0x4a, 0x33, 0x21, 0x84, 0xb6, 0x5b, 0x4e, 0x86, 0xb9, 0xa4,
-	0x02, 0xd9, 0x31, 0xa2, 0x99, 0xa9, 0x19, 0xf5, 0x72, 0xb3, 0x68, 0xbd, 0x63, 0x5e, 0xb7, 0xcd,
-	0x95, 0x13, 0x26, 0x09, 0x81, 0x3d, 0x3e, 0x98, 0xa1, 0x99, 0xad, 0x19, 0xf5, 0x92, 0x13, 0x9d,
-	0xe9, 0x5b, 0x28, 0x46, 0xb7, 0xf9, 0x58, 0x90, 0x53, 0xc8, 0x29, 0x86, 0x81, 0x34, 0x8d, 0x5a,
-	0xb6, 0x5e, 0x6e, 0x3e, 0xdc, 0xc9, 0xe7, 0x68, 0x2c, 0x9d, 0x41, 0xb9, 0xcd, 0x99, 0x72, 0xf0,
-	0xc7, 0x1c, 0xa5, 0x22, 0x8f, 0x20, 0x27, 0x16, 0x1c, 0x83, 0x48, 0x73, 0xa8, 0xe0, 0xcc, 0x75,
-	0x03, 0x94, 0xd2, 0xd1, 0x69, 0xf2, 0x06, 0x4a, 0xe1, 0xbd, 0x3e, 0xe3, 0x63, 0x11, 0xab, 0x7c,
-	0xbc, 0x7b, 0x2e, 0x3e, 0x16, 0x4e, 0x51, 0xc5, 0x27, 0x3a, 0x81, 0xc3, 0x56, 0x0c, 0x7c, 0x2f,
-	0xb8, 0x0a, 0x06, 0x23, 0x25, 0x49, 0x13, 0xee, 0x8c, 0xe2, 0x20, 0xa6, 0xdb, 0xa0, 0xbf, 0x0e,
-	0x20, 0x27, 0x90, 0xbf, 0x9c, 0x75, 0x96, 0xbe, 0xf6, 0xea, 0xa0, 0x59, 0xb0, 0x7a, 0x17, 0x61,
-	0xe8, 0xc4, 0x69, 0xfa, 0xd3, 0x80, 0xea, 0xd7, 0x44, 0x4a, 0x57, 0x62, 0x90, 0xf0, 0x26, 0xa3,
-	0x3e, 0x83, 0xfd, 0x44, 0x73, 0xd8, 0x74, 0x83, 0xf2, 0x4a, 0x95, 0xbc, 0x82, 0x82, 0x1e, 0xdc,
-	0x8d, 0xfc, 0xff, 0x8b, 0x75, 0xe6, 0xa3, 0xa1, 0x5d, 0xea, 0xc2, 0xd1, 0x3a, 0xbd, 0xbc, 0x18,
-	0xf8, 0x3e, 0xe3, 0x1e, 0x79, 0x02, 0xc5, 0xb0, 0xc3, 0x56, 0xee, 0x3f, 0x15, 0xf2, 0x14, 0x4a,
-	0x09, 0x85, 0x34, 0x33, 0xd1, 0x62, 0x57, 0xb0, 0x55, 0x89, 0xfe, 0x32, 0x60, 0x7f, 0x9d, 0x86,
-	0x50, 0x28, 0x0c, 0x52, 0xcc, 0x4c, 0x0a, 0xe4, 0x08, 0x72, 0xe3, 0xe9, 0xc0, 0x93, 0x91, 0x87,
-	0xb7, 0x1d, 0x1d, 0x90, 0x4f, 0x50, 0x4a, 0xdc, 0x96, 0x66, 0x36, 0xa2, 0x6c, 0xa4, 0x0e, 0xbb,
-	0xb1, 0x4d, 0x67, 0x75, 0x99, 0xde, 0x87, 0xe3, 0x73, 0xbc, 0x62, 0xbe, 0x8c, 0xdd, 0xa7, 0x3d,
-	0x30, 0x37, 0x4b, 0xd2, 0x17, 0x5c, 0x22, 0x79, 0xbd, 0x3e, 0xb3, 0x7e, 0xcc, 0x55, 0x6b, 0x07,
-	0xf7, 0xba, 0x0f, 0x9f, 0xe1, 0xc1, 0x39, 0xaa, 0xb8, 0xe2, 0xae, 0x54, 0xfd, 0xcf, 0xd2, 0x69,
-	0x0f, 0xaa, 0xdb, 0x9b, 0xc5, 0x42, 0x5f, 0xc2, 0xe1, 0xb5, 0x77, 0x89, 0x89, 0xe0, 0x55, 0xcb,
-	0x4d, 0x48, 0xe3, 0x1e, 0xe4, 0xf5, 0x23, 0x21, 0x65, 0x28, 0xb4, 0x3e, 0x7c, 0x3c, 0xeb, 0x7e,
-	0xe9, 0xdc, 0xbd, 0x35, 0xcc, 0x47, 0x1f, 0x8f, 0xd3, 0xdf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x17,
-	0x22, 0xdd, 0xa7, 0x73, 0x05, 0x00, 0x00,
+var fileDescriptor_user_deployer_whitelist_732b4584d5337d3f = []byte{
+	// 547 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0xdd, 0x8e, 0xd2, 0x40,
+	0x14, 0xb6, 0xb0, 0xfc, 0x1d, 0x74, 0xdd, 0x9d, 0x68, 0xb6, 0x22, 0xba, 0x38, 0x31, 0x06, 0x37,
+	0xda, 0x1a, 0x36, 0x31, 0xc6, 0x0b, 0xcd, 0x2a, 0x4a, 0x88, 0x7a, 0x53, 0x01, 0xf5, 0x8a, 0x00,
+	0x3d, 0x74, 0x27, 0xc2, 0x4c, 0xed, 0x0c, 0x4b, 0x78, 0x01, 0x1f, 0xc1, 0xe7, 0x35, 0xed, 0xb4,
+	0xc2, 0x02, 0x65, 0xd5, 0x84, 0x90, 0x99, 0xf3, 0xf7, 0xfd, 0x9c, 0x49, 0x61, 0xe8, 0x31, 0x75,
+	0x3e, 0x1b, 0x5a, 0x23, 0x31, 0xb5, 0x27, 0x42, 0x4c, 0x39, 0xaa, 0xb9, 0x08, 0xbe, 0xdb, 0x9e,
+	0x78, 0x1a, 0x5e, 0xed, 0xe1, 0x8c, 0x4d, 0x14, 0xe3, 0xb6, 0x5a, 0xf8, 0x28, 0xed, 0x99, 0xc4,
+	0xa0, 0xef, 0xa2, 0x3f, 0x11, 0x0b, 0x0c, 0xfa, 0xf3, 0x73, 0xa6, 0x70, 0xc2, 0xa4, 0x4a, 0x8b,
+	0x5b, 0x7e, 0x20, 0x94, 0x20, 0x47, 0x29, 0xe9, 0xca, 0xb3, 0x2b, 0xc0, 0x35, 0x68, 0xf4, 0xaf,
+	0x47, 0x55, 0xbe, 0xfe, 0x13, 0xdd, 0x2d, 0x4c, 0xd3, 0x48, 0x56, 0x4e, 0xae, 0x98, 0x7c, 0x11,
+	0xfe, 0x74, 0x2d, 0xf5, 0x60, 0xaf, 0xc3, 0x30, 0x20, 0x36, 0x64, 0x98, 0x6b, 0x1a, 0x35, 0xa3,
+	0xbe, 0xdf, 0x38, 0xb6, 0xd2, 0x4c, 0x08, 0x4b, 0xdb, 0x4d, 0x27, 0xc3, 0x5c, 0x52, 0x81, 0xec,
+	0x18, 0xd1, 0xcc, 0xd4, 0x8c, 0x7a, 0xb9, 0x51, 0xb4, 0xde, 0x30, 0xaf, 0xdb, 0xe6, 0xca, 0x09,
+	0x83, 0x84, 0xc0, 0x1e, 0x1f, 0x4c, 0xd1, 0xcc, 0xd6, 0x8c, 0x7a, 0xc9, 0x89, 0xce, 0xf4, 0x35,
+	0x14, 0xa3, 0x6e, 0x3e, 0x16, 0xe4, 0x14, 0x72, 0x8a, 0x61, 0x20, 0x4d, 0xa3, 0x96, 0xad, 0x97,
+	0x1b, 0xf7, 0x76, 0xe2, 0x39, 0xba, 0x96, 0x4e, 0xa1, 0xdc, 0xe6, 0x4c, 0x39, 0xf8, 0x63, 0x86,
+	0x52, 0x91, 0xfb, 0x90, 0x13, 0x73, 0x8e, 0x41, 0xc4, 0x39, 0x64, 0x70, 0xe6, 0xba, 0x01, 0x4a,
+	0xe9, 0xe8, 0x30, 0x79, 0x05, 0xa5, 0xb0, 0xaf, 0xcf, 0xf8, 0x58, 0xc4, 0x2c, 0x1f, 0xec, 0xd6,
+	0xc5, 0xc7, 0xc2, 0x29, 0xaa, 0xf8, 0x44, 0x3d, 0x38, 0x68, 0xc6, 0x85, 0x6f, 0x05, 0x57, 0xc1,
+	0x60, 0xa4, 0x48, 0x03, 0x6e, 0x8e, 0xe2, 0x73, 0x8c, 0xb6, 0x81, 0xbe, 0x5e, 0x40, 0x8e, 0x21,
+	0x7f, 0x31, 0xed, 0x2c, 0x7c, 0x6d, 0xd5, 0x7e, 0xa3, 0x60, 0xf5, 0x3e, 0x85, 0x57, 0x27, 0x0e,
+	0xd3, 0x9f, 0x06, 0x54, 0xbf, 0x24, 0x4c, 0xba, 0x12, 0x83, 0x04, 0x36, 0x51, 0xfa, 0x04, 0xae,
+	0x27, 0x94, 0xc3, 0xa1, 0x1b, 0x90, 0x97, 0xb2, 0xe4, 0x05, 0x14, 0xb4, 0x6e, 0x37, 0xb2, 0xff,
+	0x2f, 0xb6, 0x99, 0x8f, 0x34, 0xbb, 0xf4, 0x1b, 0x94, 0x42, 0xf8, 0xcf, 0x6a, 0xa0, 0x90, 0x3c,
+	0x84, 0x62, 0xd8, 0xb6, 0x15, 0xf0, 0x4f, 0x86, 0x3c, 0x82, 0x52, 0x32, 0x57, 0x9a, 0x99, 0x68,
+	0x99, 0xcb, 0xb2, 0x65, 0x8a, 0xfe, 0x32, 0xe0, 0x70, 0x55, 0x9a, 0xc6, 0xa0, 0x50, 0x18, 0xa4,
+	0xd8, 0x98, 0x24, 0xc8, 0x2d, 0xc8, 0x8d, 0x27, 0x03, 0x4f, 0x46, 0xee, 0xdd, 0x70, 0xf4, 0x85,
+	0xb4, 0xa0, 0x94, 0xf8, 0x2c, 0xcd, 0x6c, 0x84, 0xfb, 0x38, 0x55, 0xe6, 0xfa, 0x1a, 0x9d, 0x65,
+	0x2f, 0xbd, 0x03, 0x47, 0x2d, 0xbc, 0xe4, 0xba, 0x8c, 0x6d, 0xa7, 0x3d, 0x30, 0x37, 0x53, 0xd2,
+	0x17, 0x5c, 0x22, 0x79, 0xb9, 0xaa, 0x5b, 0x3f, 0xe2, 0xaa, 0xb5, 0x03, 0x7a, 0xd5, 0x8b, 0x0f,
+	0x70, 0xb7, 0x85, 0x2a, 0xce, 0xb8, 0x09, 0x29, 0xf9, 0x5f, 0xdb, 0xa6, 0x3d, 0xa8, 0x6e, 0x1f,
+	0x16, 0x13, 0x7d, 0x0e, 0x87, 0x6b, 0x0f, 0x12, 0x13, 0xc2, 0xcb, 0x91, 0x9b, 0x25, 0x27, 0xb7,
+	0x21, 0xaf, 0x5f, 0x07, 0x29, 0x43, 0xa1, 0xf9, 0xee, 0xfd, 0x59, 0xf7, 0x63, 0xe7, 0xe0, 0xda,
+	0x30, 0x1f, 0x7d, 0x34, 0x4e, 0x7f, 0x07, 0x00, 0x00, 0xff, 0xff, 0xba, 0x40, 0x3f, 0x94, 0x6b,
+	0x05, 0x00, 0x00,
 }
