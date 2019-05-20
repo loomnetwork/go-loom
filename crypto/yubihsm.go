@@ -162,7 +162,10 @@ func (privKey *YubiHsmPrivateKey) deletePrivKey() {
 	}
 
 	// send command
-	privKey.sessionMgr.SendEncryptedCommand(command)
+	_, err = privKey.sessionMgr.SendEncryptedCommand(command)
+	if err != nil {
+		return
+	}
 
 	privKey.privKeyID = 0
 }

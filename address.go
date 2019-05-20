@@ -88,7 +88,7 @@ func UnmarshalAddressPB(pb *types.Address) Address {
 func RootAddress(chainID string) Address {
 	return Address{
 		ChainID: chainID,
-		Local:   make([]byte, 20, 20),
+		Local:   make([]byte, 20),
 	}
 }
 

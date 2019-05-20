@@ -4,10 +4,12 @@ GOGO_PROTOBUF_DIR = $(GOPATH)/src/github.com/gogo/protobuf
 HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
 GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
 SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
+BTCD_DIR = $(GOPATH)/src/github.com/btcsuite/btcd
 # This commit sha should match the one in loomchain repo
 GETH_GIT_REV = 1fb6138d017a4309105d91f187c126cf979c93f9
+BTCD_GIT_REV = 7d2daa5bfef28c5e282571bc06416516936115ee
 
-.PHONY: all evm examples example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all
+.PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all lint
 
 all: examples
 
@@ -41,6 +43,24 @@ contracts/evmexample.1.0.0: proto
 
 contracts/evmproxy.1.0.0: proto
 	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmproxy/contract
+
+get_lint:
+	@echo "--> Installing lint"
+	chmod +x get_lint.sh
+	./get_lint.sh
+
+update_lint:
+	@echo "--> Updating lint"
+	./get_lint.sh
+
+lint:
+	cd $(GOPATH)/bin && chmod +x golangci-lint
+	cd $(GOPATH)/src/github.com/loomnetwork/go-loom
+	@golangci-lint run | tee goloomreport
+
+linterrors:
+	chmod +x parselintreport.sh
+	./parselintreport.sh
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
@@ -77,9 +97,6 @@ test: proto
 test-evm: proto
 	go test -tags "evm" -v $(PKG)/...
 
-lint:
-	golint ./...
-
 $(SSHA3_DIR):
 	git clone -q https://github.com/loomnetwork/go-solidity-sha3.git $@
 
@@ -101,10 +118,12 @@ deps:
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log \
-		github.com/pkg/errors
+		github.com/pkg/errors \
+		github.com/btcsuite/btcd
 	dep ensure -vendor-only
 	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
+	cd $(BTCD_DIR) && git checkout $(BTCD_GIT_REV)
 
 deps-evm: $(SSHA3_DIR) $(GETH_DIR)
 	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)

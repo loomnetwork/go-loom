@@ -39,7 +39,10 @@ var _ Context = &FakeContext{}
 
 func createAddress(parent loom.Address, nonce uint64) loom.Address {
 	var nonceBuf bytes.Buffer
-	binary.Write(&nonceBuf, binary.BigEndian, nonce)
+	err := binary.Write(&nonceBuf, binary.BigEndian, nonce)
+	if err != nil {
+		panic(err)
+	}
 	data := util.PrefixKey(parent.Bytes(), nonceBuf.Bytes())
 	hash := sha3.Sum256(data)
 	return loom.Address{
@@ -105,12 +108,19 @@ func (c *FakeContext) WithValidators(validators []*types.Validator) *FakeContext
 func (c *FakeContext) CreateContract(contract Contract) loom.Address {
 	addr := createAddress(c.address, c.contractNonce)
 	c.contractNonce++
-	c.contracts[addr.String()] = contract
+	address := addr.String()
+	c.contracts[address] = contract
 	return addr
+
 }
 
 func (c *FakeContext) RegisterContract(contractName string, contractAddr, creatorAddr loom.Address) {
 	c.registry[contractAddr.String()] = &ContractRecord{
+		ContractName:    contractName,
+		ContractAddress: contractAddr,
+		CreatorAddress:  creatorAddr,
+	}
+	c.registry[contractName] = &ContractRecord{
 		ContractName:    contractName,
 		ContractAddress: contractAddr,
 		CreatorAddress:  creatorAddr,
@@ -173,6 +183,11 @@ func (c *FakeContext) Resolve(name string) (loom.Address, error) {
 			return loom.MustParseAddress(addrStr), nil
 		}
 	}
+	record, ok := c.registry[name]
+	if ok {
+		return record.ContractAddress, nil
+	}
+
 	return loom.Address{}, fmt.Errorf("failed  to resolve address of contract '%s'", name)
 }
 
@@ -233,10 +248,9 @@ func (c *FakeContext) recoverKey(key string, prefix []byte) ([]byte, error) {
 
 func (c *FakeContext) Range(prefix []byte) RangeData {
 	ret := make(RangeData, 0)
-
 	keyedPrefix := c.makeKey(prefix)
 	for key, value := range c.data {
-		if strings.HasPrefix(key, keyedPrefix) == true {
+		if strings.HasPrefix(key, keyedPrefix) {
 			k, err := c.recoverKey(key, prefix)
 			if err != nil {
 				panic(err)
@@ -253,7 +267,7 @@ func (c *FakeContext) Range(prefix []byte) RangeData {
 }
 
 func (c *FakeContext) Get(key []byte) []byte {
-	v, _ := c.data[c.makeKey(key)]
+	v := c.data[c.makeKey(key)]
 	return v
 }
 

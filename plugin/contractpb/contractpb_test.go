@@ -27,7 +27,8 @@ func (s *ContractContextTestSuite) TestPermissions() {
 	require := s.Require()
 	callerAddr := s.addr1
 	contractAddr := s.addr2
-	ctx := WrapPluginContext(plugin.CreateFakeContext(callerAddr, contractAddr))
+	context := plugin.CreateFakeContext(callerAddr, contractAddr)
+	ctx := WrapPluginContext(context)
 
 	perm1 := []byte("perm1")
 	perm2 := []byte("perm2")

@@ -2,12 +2,12 @@ package plugin
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/require"
 	"testing"
 
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/util"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRange(t *testing.T) {

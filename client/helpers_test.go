@@ -9,8 +9,26 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/stretchr/testify/assert"
+	"math/big"
 )
+
+func TestWithdrawalHash(t *testing.T) {
+	t.Logf("Testing withdrawal hash")
+	hash := WithdrawalHash(
+		common.HexToAddress("0x8b7495748a4aa54d98660cb51f6fa7f244568b9d"), // withdrawer
+		common.HexToAddress("0xE681fc277ef3Eed61f0d48FB87Aa2EEe9F67aBB4"), // token addr
+		common.HexToAddress("0x5D442Ef71427Fb0F57D63605F6FAf34cA8e78341"), // gateway addr
+		tgtypes.TransferGatewayTokenKind_ERC20,
+		big.NewInt(0),
+		big.NewInt(2000000000000000000),
+		big.NewInt(0),
+		true,
+	)
+	assert.Equal(t, hex.EncodeToString(hash), "ed49f376605734945e3b1ddd0ec6341a76fdcda5b47138a4afc6d4b9ea04ab05")
+
+}
 
 func TestParseSigWithoutMode(t *testing.T) {
 	t.Logf("Testing parse sigs")
