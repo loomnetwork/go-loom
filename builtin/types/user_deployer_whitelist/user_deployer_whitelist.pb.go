@@ -372,6 +372,7 @@ func (m *UserDeployerState) GetContracts() []*DeployerContract {
 }
 
 type GetUserDeployersRequest struct {
+	UserAddr             *types.Address   `protobuf:"bytes,1,opt,name=userAddr" json:"userAddr,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`

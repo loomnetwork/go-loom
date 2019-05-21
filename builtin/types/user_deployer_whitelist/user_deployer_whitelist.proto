@@ -45,6 +45,7 @@ message UserDeployerState {
 }
 
 message GetUserDeployersRequest {
+    Address userAddr = 1;
 }
 
 message GetUserDeployersResponse {
