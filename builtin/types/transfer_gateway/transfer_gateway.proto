@@ -425,3 +425,7 @@ message TransferGatewayGetUnclaimedContractTokensRequest {
 message TransferGatewayGetUnclaimedContractTokensResponse {
     BigUInt unclaimed_amount = 1;
 }
+
+message TransferGatewayNonceHasBeenReset {
+    bool isReset = 1;
+}
