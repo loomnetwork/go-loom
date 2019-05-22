@@ -332,6 +332,21 @@ message GetStateResponse {
     State state = 1;
 }
 
+message ClaimDelegatorRewardsRequest {
+}
+
+message ClaimDelegatorRewardsResponse {
+    BigUInt amount = 1;
+}
+
+message CheckDelegatorRewardsRequest {
+    Address delegator = 1;
+}
+
+message CheckDelegatorRewardsResponse {
+    BigUInt amount = 1;
+}
+
 // EVENTS
 
 message DposElectionEvent {
