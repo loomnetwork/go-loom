@@ -39,7 +39,6 @@ message UserState {
 
 message UserDeployerState {
     Address address = 1;
-    uint32 flags = 2;
     repeated DeployerContract contracts = 3;
 }
 
