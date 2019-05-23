@@ -479,7 +479,7 @@ func (m *GetDeployedContractsRequest) GetDeployerAddr() *types.Address {
 }
 
 type GetDeployedContractsResponse struct {
-	ContractAddresses    []*types.Address `protobuf:"bytes,1,rep,name=contractAddresses" json:"contractAddresses,omitempty"`
+	ContractAddresses    []*DeployerContract `protobuf:"bytes,1,rep,name=contractAddresses" json:"contractAddresses,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -509,7 +509,7 @@ func (m *GetDeployedContractsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetDeployedContractsResponse proto.InternalMessageInfo
 
-func (m *GetDeployedContractsResponse) GetContractAddresses() []*types.Address {
+func (m *GetDeployedContractsResponse) GetContractAddresses() []*DeployerContract {
 	if m != nil {
 		return m.ContractAddresses
 	}
