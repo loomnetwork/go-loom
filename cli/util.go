@@ -26,7 +26,7 @@ func ParseBytes(s string) ([]byte, error) {
 	return b, err
 }
 
-func parseAddress(s string) (loom.Address, error) {
+func parseAddress(s, chainID string) (loom.Address, error) {
 	addr, err := loom.ParseAddress(s)
 	if err == nil {
 		return addr, nil
@@ -40,12 +40,12 @@ func parseAddress(s string) (loom.Address, error) {
 		return loom.Address{}, loom.ErrInvalidAddress
 	}
 
-	return loom.Address{ChainID: TxFlags.ChainID, Local: loom.LocalAddress(b)}, nil
+	return loom.Address{ChainID: chainID, Local: loom.LocalAddress(b)}, nil
 }
 
 func ResolveAddress(s, chainID, URI string) (loom.Address, error) {
 	rpcClient := client.NewDAppChainRPCClient(chainID, URI+"/rpc", URI+"/query")
-	contractAddr, err := parseAddress(s)
+	contractAddr, err := parseAddress(s, chainID)
 	if err != nil {
 		// if address invalid, try to resolve it using registry
 		contractAddr, err = rpcClient.Resolve(s)
@@ -87,7 +87,7 @@ func getMappedAccount(mapper *client.Contract, account loom.Address) (loom.Addre
 
 func ParseAddress(address string, callFlags *ContractCallFlags) (loom.Address, error) {
 	var addr loom.Address
-	addr, err := parseAddress(address)
+	addr, err := parseAddress(address, callFlags.ChainID)
 	if err != nil {
 		return addr, errors.Wrap(err, "failed to parse address")
 	}
