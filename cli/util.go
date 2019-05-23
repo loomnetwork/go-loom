@@ -3,11 +3,15 @@ package cli
 import (
 	"encoding/base64"
 	"encoding/hex"
+	"fmt"
 	"strconv"
 	"strings"
 
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/client"
+	amtypes "github.com/loomnetwork/go-loom/builtin/types/address_mapper"
+	"github.com/pkg/errors"
+
 )
 
 func ParseBytes(s string) ([]byte, error) {
@@ -23,7 +27,7 @@ func ParseBytes(s string) ([]byte, error) {
 	return b, err
 }
 
-func ParseAddress(s string) (loom.Address, error) {
+func parseAddress(s string) (loom.Address, error) {
 	addr, err := loom.ParseAddress(s)
 	if err == nil {
 		return addr, nil
@@ -42,7 +46,7 @@ func ParseAddress(s string) (loom.Address, error) {
 
 func ResolveAddress(s, chainID, URI string) (loom.Address, error) {
 	rpcClient := client.NewDAppChainRPCClient(chainID, URI+"/rpc", URI+"/query")
-	contractAddr, err := ParseAddress(s)
+	contractAddr, err := parseAddress(s)
 	if err != nil {
 		// if address invalid, try to resolve it using registry
 		contractAddr, err = rpcClient.Resolve(s)
@@ -68,4 +72,41 @@ func ParseAmount(s string) (*loom.BigUInt, error) {
 		return nil, err
 	}
 	return sciNot(val, 18), nil
+}
+
+
+func getMappedAccount(mapper *client.Contract, account loom.Address) (loom.Address, error) {
+	req := &amtypes.AddressMapperGetMappingRequest{
+		From: account.MarshalPB(),
+	}
+	resp := &amtypes.AddressMapperGetMappingResponse{}
+	_, err := mapper.StaticCall("GetMapping", req, account, resp)
+	if err != nil {
+		return loom.Address{}, err
+	}
+	return loom.UnmarshalAddressPB(resp.To), nil
+}
+
+func ParseAddress(address string,callFlags *ContractCallFlags) (loom.Address, error) {
+	var addr loom.Address
+	addr, err := parseAddress(address)
+	if err != nil {
+		return addr, errors.Wrap(err, "failed to parse address")
+	}
+	//Resolve address if chainID does not match prefix
+	if addr.ChainID != callFlags.ChainID {
+		rpcClient := client.NewDAppChainRPCClient(callFlags.ChainID, callFlags.URI+"/rpc",
+			callFlags.URI+"/query")
+		mapperAddr, err := rpcClient.Resolve("addressmapper")
+		if err != nil {
+			return addr, errors.Wrap(err, "failed to resolve DAppChain Address Mapper address")
+		}
+		mapper := client.NewContract(rpcClient, mapperAddr.Local)
+		mappedAccount, err := getMappedAccount(mapper, addr)
+		if err != nil {
+			return addr, fmt.Errorf("No account information found for %v", addr)
+		}
+		addr = mappedAccount
+	}
+	return addr, nil
 }
