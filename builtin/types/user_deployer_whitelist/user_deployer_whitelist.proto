@@ -1,8 +1,7 @@
 syntax = "proto3";
-package user_deployer_whitelist;
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 import "github.com/loomnetwork/go-loom/builtin/types/deployer_whitelist/deployer_whitelist.proto";
-import "github.com/loomnetwork/go-loom/vm/vm.proto";
 
 enum TierID {
     DEFAULT = 0;
@@ -29,7 +28,7 @@ message DeployerContract {
 
 message WhitelistUserDeployerRequest {
     Address deployerAddr = 1;
-    TierID tier_id = 3 [(gogoproto.customname)="TierID"];
+    TierID tier_id = 2 [(gogoproto.customname)="TierID"];
 }
 
 message UserState {
