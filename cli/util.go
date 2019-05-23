@@ -8,10 +8,9 @@ import (
 	"strings"
 
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/client"
 	amtypes "github.com/loomnetwork/go-loom/builtin/types/address_mapper"
+	"github.com/loomnetwork/go-loom/client"
 	"github.com/pkg/errors"
-
 )
 
 func ParseBytes(s string) ([]byte, error) {
@@ -74,7 +73,6 @@ func ParseAmount(s string) (*loom.BigUInt, error) {
 	return sciNot(val, 18), nil
 }
 
-
 func getMappedAccount(mapper *client.Contract, account loom.Address) (loom.Address, error) {
 	req := &amtypes.AddressMapperGetMappingRequest{
 		From: account.MarshalPB(),
@@ -87,7 +85,7 @@ func getMappedAccount(mapper *client.Contract, account loom.Address) (loom.Addre
 	return loom.UnmarshalAddressPB(resp.To), nil
 }
 
-func ParseAddress(address string,callFlags *ContractCallFlags) (loom.Address, error) {
+func ParseAddress(address string, callFlags *ContractCallFlags) (loom.Address, error) {
 	var addr loom.Address
 	addr, err := parseAddress(address)
 	if err != nil {
