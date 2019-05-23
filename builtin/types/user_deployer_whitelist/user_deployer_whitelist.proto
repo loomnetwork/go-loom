@@ -1,4 +1,5 @@
 syntax = "proto3";
+package user_deployer_whitelist;
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/loomnetwork/go-loom/types/types.proto";
 import "github.com/loomnetwork/go-loom/builtin/types/deployer_whitelist/deployer_whitelist.proto";
