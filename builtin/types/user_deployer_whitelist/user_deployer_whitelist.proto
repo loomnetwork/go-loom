@@ -9,17 +9,19 @@ enum TierID {
 
 message Tier {
     TierID id = 1 [(gogoproto.customname)="TierID"];
+    BigUInt fee = 2;
+    string name = 3;
+}
+
+message InitialTier {
+    TierID id = 1 [(gogoproto.customname)="TierID"];
     uint64 fee = 2;
     string name = 3;
 }
 
-message TierInfo {
-    repeated Tier tiers = 1;
-}
-
 message InitRequest {
     Address owner = 1;
-    TierInfo tier_info = 2;
+    repeated InitialTier tier = 2;
 }
 
 message DeployerContract {
