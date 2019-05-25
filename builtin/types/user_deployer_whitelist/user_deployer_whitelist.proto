@@ -13,7 +13,7 @@ message Tier {
     string name = 3;
 }
 
-message InitialTier {
+message TierInfo {
     TierID id = 1 [(gogoproto.customname)="TierID"];
     uint64 fee = 2;
     string name = 3;
@@ -21,7 +21,7 @@ message InitialTier {
 
 message InitRequest {
     Address owner = 1;
-    repeated InitialTier tier_info = 2;
+    repeated TierInfo tier_info = 2;
 }
 
 message DeployerContract {
