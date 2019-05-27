@@ -26,7 +26,9 @@ func ParseBytes(s string) ([]byte, error) {
 	return b, err
 }
 
-func parseAddress(s, chainID string) (loom.Address, error) {
+// ParseAddress attempts to parse the given string into an address, if the resulting address doesn't
+// have a chain ID the given chain ID will be used instead.
+func ParseAddress(s, chainID string) (loom.Address, error) {
 	addr, err := loom.ParseAddress(s)
 	if err == nil {
 		return addr, nil
@@ -43,9 +45,11 @@ func parseAddress(s, chainID string) (loom.Address, error) {
 	return loom.Address{ChainID: chainID, Local: loom.LocalAddress(b)}, nil
 }
 
+// ResolveAddress attempts to parse the given string into an address, if that fails it assumes the
+// string corresponds to a contract name and attempts to obtain the corresponding contract address.
 func ResolveAddress(s, chainID, URI string) (loom.Address, error) {
 	rpcClient := client.NewDAppChainRPCClient(chainID, URI+"/rpc", URI+"/query")
-	contractAddr, err := parseAddress(s, chainID)
+	contractAddr, err := ParseAddress(s, chainID)
 	if err != nil {
 		// if address invalid, try to resolve it using registry
 		contractAddr, err = rpcClient.Resolve(s)
@@ -85,16 +89,17 @@ func getMappedAccount(mapper *client.Contract, account loom.Address) (loom.Addre
 	return loom.UnmarshalAddressPB(resp.To), nil
 }
 
-func ParseAddress(address string, callFlags *ContractCallFlags) (loom.Address, error) {
-	var addr loom.Address
-	addr, err := parseAddress(address, callFlags.ChainID)
+// ResolveAccountAddress attempts to parse the given string into the address of a user account.
+// If the chain ID on the parsed address doesn't match the chain ID specified in chainFlags then
+// the address is resolved to an on-chain address via the address mapper.
+func ResolveAccountAddress(address string, chainFlags *ContractCallFlags) (loom.Address, error) {
+	addr, err := ParseAddress(address, chainFlags.ChainID)
 	if err != nil {
 		return addr, errors.Wrap(err, "failed to parse address")
 	}
-	//Resolve address if chainID does not match prefix
-	if addr.ChainID != callFlags.ChainID {
-		rpcClient := client.NewDAppChainRPCClient(callFlags.ChainID, callFlags.URI+"/rpc",
-			callFlags.URI+"/query")
+	// Resolve address if chainID doesn't match
+	if addr.ChainID != chainFlags.ChainID {
+		rpcClient := client.NewDAppChainRPCClient(chainFlags.ChainID, chainFlags.URI+"/rpc", chainFlags.URI+"/query")
 		mapperAddr, err := rpcClient.Resolve("addressmapper")
 		if err != nil {
 			return addr, errors.Wrap(err, "failed to resolve DAppChain Address Mapper address")
