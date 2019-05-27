@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
 import "github.com/loomnetwork/go-loom/vm/vm.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option csharp_namespace = "Loom.Client.Internal.Protobuf";
 
@@ -77,19 +78,19 @@ message EventData {
     Address caller = 2;
     Address address = 3;
     string plugin_name = 4;
-    uint64 block_height = 5;
+    uint64 block_height = 5 [(gogoproto.jsontag) = "block_height,string,omitempty"];
     bytes encoded_body = 6;
     bytes original_request = 7;
     bytes tx_hash = 8;
-    uint64 transaction_index = 9;
+    uint64 transaction_index = 9 [(gogoproto.jsontag) = "transaction_index,string,omitempty"];
     bytes block_hash = 10;
-    int64 block_time = 11;
+    int64 block_time = 11 [(gogoproto.jsontag) = "block_time,string,omitempty"];
 }
 
 message ContractEventsResult {
     repeated EventData events = 1;
-    uint64 from_block = 2;
-    uint64 to_block = 3; 
+    uint64 from_block = 2 [(gogoproto.jsontag) = "from_block,string,omitempty"];
+    uint64 to_block = 3 [(gogoproto.jsontag) = "to_block,string,omitempty"]; 
 }
 
 message EvmTxReceiptList {
