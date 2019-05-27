@@ -41,6 +41,7 @@ message UserState {
 message UserDeployerState {
     Address address = 1;
     repeated DeployerContract contracts = 2;
+    TierID tierId = 3;
 }
 
 message GetUserDeployersRequest {
@@ -48,7 +49,8 @@ message GetUserDeployersRequest {
 }
 
 message GetUserDeployersResponse {
-    repeated Address deployers = 1;
+    repeated UserDeployerState deployers = 1;
+
 }
 
 message GetDeployedContractsRequest {
