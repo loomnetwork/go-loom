@@ -24,10 +24,6 @@ message AddDeployerRequest {
     uint32 flags = 2;
 }
 
-message AddUserDeployerResponse {
-    Deployer deployer = 1;
-}
-
 message AddUserDeployerRequest {
     Address deployerAddr = 1;
 }
