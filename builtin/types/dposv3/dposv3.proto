@@ -385,8 +385,9 @@ message DposDelegatorRedelegatesEvent {
 }
 
 message DposDelegatorConsolidatesEvent {
-    Address address = 1;
-    Address validator = 2;
+    Delegation new_delegation = 1;
+    repeated Delegation consolidated_delegations = 2;
+    int64 unconsolidated_delegations_count = 3;
 }
 
 message DposDelegatorUnbondsEvent {
