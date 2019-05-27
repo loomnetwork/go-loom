@@ -381,9 +381,7 @@ message DposDelegatorDelegatesEvent {
 }
 
 message DposDelegatorRedelegatesEvent {
-    Address address = 1;
-    BigUInt amount = 2;
-    string referrer = 3;
+    Delegation delegation = 1;
 }
 
 message DposDelegatorConsolidatesEvent {
