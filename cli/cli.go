@@ -31,6 +31,7 @@ var TxFlags struct {
 	CallerChainID string
 }
 
+// ContractCallCommand is deprecated in favor of CallContractWithFlags / StaticCallContractWithFlags
 func ContractCallCommand(name string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "call",
