@@ -390,8 +390,7 @@ message DposDelegatorConsolidatesEvent {
 }
 
 message DposDelegatorUnbondsEvent {
-    Address address = 1;
-    BigUInt amount = 2;
+    Delegation delegation = 1;
 }
 
 message DposReferrerRegistersEvent {
