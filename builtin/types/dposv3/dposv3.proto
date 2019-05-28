@@ -404,6 +404,4 @@ message DposDelegatorClaimsRewardsEvent {
     repeated Address validators = 2;
     repeated BigUInt amounts = 3;
     BigUInt total_rewards_claimed = 4;
-    int64 time = 5;
-    int64 height = 6;
 }
