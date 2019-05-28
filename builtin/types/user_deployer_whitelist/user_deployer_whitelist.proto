@@ -41,7 +41,7 @@ message UserState {
 message UserDeployerState {
     Address address = 1;
     repeated DeployerContract contracts = 2;
-    TierID tierId = 3;
+    TierID tier_id = 3 [(gogoproto.customname)="TierID"];
 }
 
 message GetUserDeployersRequest {
