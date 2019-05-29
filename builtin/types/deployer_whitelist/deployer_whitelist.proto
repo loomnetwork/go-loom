@@ -20,19 +20,19 @@ message Deployer {
 }
 
 message AddDeployerRequest {
-    Address deployerAddr = 1;
+    Address deployer_addr = 1;
     uint32 flags = 2;
 }
 
 message AddUserDeployerRequest {
-    Address deployerAddr = 1;
+    Address deployer_addr = 1;
 }
 
 message AddDeployerResponse {
 }
 
 message GetDeployerRequest {
-    Address deployerAddr = 1;
+    Address deployer_addr = 1;
 }
 
 message GetDeployerResponse {
@@ -40,7 +40,7 @@ message GetDeployerResponse {
 }
 
 message RemoveDeployerRequest {
-    Address deployerAddr = 1;
+    Address deployer_addr = 1;
 }
 
 message RemoveDeployerResponse {
