@@ -25,16 +25,16 @@ message InitRequest {
 }
 
 message DeployerContract {
-    Address contractAddress = 1;
+    Address contract_address = 1;
 }
 
 message WhitelistUserDeployerRequest {
-    Address deployerAddr = 1;
+    Address deployer_addr = 1;
     TierID tier_id = 2 [(gogoproto.customname)="TierID"];
 }
 
 message UserState {
-    Address userAddr = 1;
+    Address user_addr = 1;
     repeated Address deployers = 2;
 }
 
@@ -45,7 +45,7 @@ message UserDeployerState {
 }
 
 message GetUserDeployersRequest {
-    Address userAddr = 1;
+    Address user_addr = 1;
 }
 
 message GetUserDeployersResponse {
@@ -54,9 +54,9 @@ message GetUserDeployersResponse {
 }
 
 message GetDeployedContractsRequest {
-    Address deployerAddr = 1;
+    Address deployer_addr = 1;
 }
 
 message GetDeployedContractsResponse {
-    repeated DeployerContract contractAddresses = 1;
+    repeated DeployerContract contract_addresses = 1;
 }
