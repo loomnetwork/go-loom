@@ -31,6 +31,10 @@ type TronSigner struct {
 	PrivateKey *ecdsa.PrivateKey
 }
 
+func NewTronSigner(privateKey []byte) *TronSigner {
+	panic("EVM build isn't activated")
+}
+
 func (k *TronSigner) Sign(_ []byte) []byte {
 	return nil
 }

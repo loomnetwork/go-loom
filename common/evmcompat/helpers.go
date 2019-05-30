@@ -25,6 +25,7 @@ const (
 	SignatureType_EIP712 SignatureType = 0
 	SignatureType_GETH   SignatureType = 1
 	SignatureType_TREZOR SignatureType = 2
+	SignatureType_TRON   SignatureType = 3
 )
 
 // SoliditySign signs the given data with the specified private key and returns the 65-byte signature.
@@ -62,8 +63,8 @@ func SolidityRecover(hash []byte, sig []byte) (common.Address, error) {
 // GenerateTypedSig signs the given data with the specified private key and returns the 66-byte signature
 // (the first byte of which is used to denote the SignatureType).
 func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureType) ([]byte, error) {
-	if sigType != SignatureType_EIP712 {
-		return nil, errors.New("signing failed, sig type not implemented")
+	if sigType != SignatureType_EIP712 && sigType != SignatureType_TRON {
+		return nil, fmt.Errorf("signing failed, sig type %v not implemented", sigType)
 	}
 
 	sig, err := SoliditySign(data, privKey)
@@ -71,7 +72,7 @@ func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureT
 		return nil, err
 	}
 	// Prefix the sig with a single byte indicating the sig type, in this case EIP712
-	typedSig := append(make([]byte, 0, 66), byte(SignatureType_EIP712))
+	typedSig := append(make([]byte, 0, 66), byte(sigType))
 	return append(typedSig, sig...), nil
 }
 
@@ -94,6 +95,11 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 	case SignatureType_TREZOR:
 		hash = ssha.SoliditySHA3(
 			ssha.String("\x19Ethereum Signed Message:\n\x20"),
+			ssha.Bytes32(hash),
+		)
+	case SignatureType_TRON:
+		hash = ssha.SoliditySHA3(
+			ssha.String("\x19TRON Signed Message:\n32"),
 			ssha.Bytes32(hash),
 		)
 	default:

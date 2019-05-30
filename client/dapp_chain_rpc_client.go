@@ -426,6 +426,32 @@ func (c *DAppChainRPCClient) GetEvmTxReceipt(txHash []byte) (ptypes.EvmTxReceipt
 	return receipt, err
 }
 
+func (c *DAppChainRPCClient) GetContractEvents(fromBlock, toBlock uint64, contractName string) (ptypes.ContractEventsResult, error) {
+	var result ptypes.ContractEventsResult
+	params := map[string]interface{}{
+		"fromBlock": strconv.FormatUint(fromBlock, 10),
+		"toBlock":   strconv.FormatUint(toBlock, 10),
+		"contract":  contractName,
+	}
+	if err := c.queryClient.Call("contractevents", params, c.getNextRequestID(), &result); err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
+func (c *DAppChainRPCClient) GetBlockHeight() (uint64, error) {
+	var result string
+	params := map[string]interface{}{}
+	if err := c.queryClient.Call("getblockheight", params, c.getNextRequestID(), &result); err != nil {
+		return 0, err
+	}
+	n, err := strconv.ParseUint(result, 10, 64)
+	if err != nil {
+		return 0, err
+	}
+	return n, nil
+}
+
 func (c *DAppChainRPCClient) CommitDeployTx(
 	from loom.Address,
 	signer auth.Signer,
