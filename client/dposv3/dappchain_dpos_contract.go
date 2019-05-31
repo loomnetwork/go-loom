@@ -63,8 +63,10 @@ func (dpos *DAppChainDPOSContract) TimeUntilElections(identity *client.Identity)
 	return resp.TimeUntilElection, nil
 }
 
-func (dpos *DAppChainDPOSContract) GetRewardsDelegation(identity *client.Identity) (*dpostypes.Delegation, error) {
-	req := &dpostypes.CheckRewardDelegationRequest{}
+func (dpos *DAppChainDPOSContract) GetRewardsDelegation(identity *client.Identity, address loom.Address) (*dpostypes.Delegation, error) {
+	req := &dpostypes.CheckRewardDelegationRequest{
+		ValidatorAddress: address
+	}
 	var resp dpostypes.CheckRewardDelegationResponse
 	_, err := dpos.contract.StaticCall("CheckRewardDelegation", req, identity.LoomAddr, &resp)
 	if err != nil {
