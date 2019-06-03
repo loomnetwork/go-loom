@@ -31,6 +31,10 @@ message CallTx {
     string contract_version = 4;
 }
 
+message EthTx {
+    bytes ethereum_transaction = 1;
+}
+
 message MigrationTx {
     uint32 id = 1 [(gogoproto.customname)="ID"];
 }
