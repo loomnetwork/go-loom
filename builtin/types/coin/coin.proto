@@ -25,13 +25,14 @@ message InitialAccount {
 
 message InitRequest {
     repeated InitialAccount accounts = 1;
-    double deflation_factor = 2 [(gogoproto.customname)="DeflationFactor"];
-    uint64 base_minting_amount = 3 [(gogoproto.customname)="BaseMintingAmount"];
+    Policy policy = 2;
 }
 
-message DeflationInfo {
-    double deflation_factor = 1 [(gogoproto.customname)="DeflationFactor"];
-    BigUInt base_minting_amount = 2 [(gogoproto.customname)="BaseMintingAmount"];
+message Policy {
+    uint64 deflation_factor_numerator = 1 [(gogoproto.customname)="DeflationFactorNumerator"];
+    uint64 deflation_factor_denominator = 2 [(gogoproto.customname)="DeflationFactorDenominator"];
+    uint64 base_minting_amount = 3 [(gogoproto.customname)="BaseMintingAmount"];
+    Address minting_account = 4 [(gogoproto.customname)="MintingAccount"];
 }
 
 message MintToGatewayRequest {
