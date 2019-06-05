@@ -14,6 +14,7 @@ message Params {
     BigUInt crash_slashing_percentage = 7;
     BigUInt byzantine_slashing_percentage = 8;
     uint64 min_candidate_fee = 9;
+    uint64 downtime_period = 10;
 }
 
 message State {
@@ -203,6 +204,15 @@ message CheckRewardDelegationResponse {
     Delegation delegation = 1;
 }
 
+message DowntimeRecordRequest {
+    Address validator = 1;
+}
+
+message DowntimeRecordResponse {
+    repeated uint64 periods = 1;
+    uint64 period_length = 2;
+}
+
 message RegisterCandidateRequest {
     bytes pub_key = 1;
     uint64 fee = 2;
@@ -302,6 +312,10 @@ message RegisterReferrerRequest {
 
 message SetElectionCycleRequest {
     int64 election_cycle = 1;
+}
+
+message SetDowntimePeriodRequest {
+    uint64 downtime_period = 1;
 }
 
 message SetMaxYearlyRewardRequest {
