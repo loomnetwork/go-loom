@@ -25,15 +25,17 @@ message InitialAccount {
 
 message InitRequest {
     repeated InitialAccount accounts = 1;
-    double deflation_factor = 2 [(gogoproto.customname)="DeflationFactor"];
-    uint64 base_minting_amount = 3 [(gogoproto.customname)="BaseMintingAmount"];
-    Address minting_account = 4 [(gogoproto.customname)="MintingAccount"];
+    uint64 deflation_factor = 2 [(gogoproto.customname)="DeflationFactor"];
+    uint64 deflation_factor_decimals = 3 [(gogoproto.customname)="DeflationFactorDecimals"];
+    uint64 base_minting_amount = 4 [(gogoproto.customname)="BaseMintingAmount"];
+    Address minting_account = 5 [(gogoproto.customname)="MintingAccount"];
 }
 
 message Policy {
-    double deflation_factor = 1 [(gogoproto.customname)="DeflationFactor"];
-    BigUInt base_minting_amount = 2 [(gogoproto.customname)="BaseMintingAmount"];
-    Address minting_account = 3 [(gogoproto.customname)="MintingAccount"];
+    uint64 deflation_factor = 1 [(gogoproto.customname)="DeflationFactor"];
+    uint64 deflation_factor_decimals = 2 [(gogoproto.customname)="DeflationFactorDecimals"];
+    BigUInt base_minting_amount = 3 [(gogoproto.customname)="BaseMintingAmount"];
+    Address minting_account = 4 [(gogoproto.customname)="MintingAccount"];
 }
 
 message MintToGatewayRequest {
