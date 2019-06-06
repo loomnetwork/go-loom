@@ -446,6 +446,6 @@ message TransferGatewayExtendedState {
     repeated Address deposit_tx_hash_submitters = 1;
 }
 
-message TransferGatewayTxHash {
+message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
 }
