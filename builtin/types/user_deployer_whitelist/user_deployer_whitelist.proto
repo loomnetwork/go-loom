@@ -75,6 +75,6 @@ message GetTierInfoResponse {
 
 message ModifyTierInfoRequest {
     TierID id = 1 [(gogoproto.customname)="TierID"];
-    uint64 fee = 2;
+    BigUInt fee = 2;
     string name = 3;
 }
