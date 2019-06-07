@@ -14,6 +14,7 @@ message Params {
     BigUInt crash_slashing_percentage = 7;
     BigUInt byzantine_slashing_percentage = 8;
     uint64 min_candidate_fee = 9;
+    uint64 downtime_period = 10;
 }
 
 message State {
@@ -203,6 +204,15 @@ message CheckRewardDelegationResponse {
     Delegation delegation = 1;
 }
 
+message DowntimeRecordRequest {
+    Address validator = 1;
+}
+
+message DowntimeRecordResponse {
+    repeated uint64 periods = 1;
+    uint64 period_length = 2;
+}
+
 message RegisterCandidateRequest {
     bytes pub_key = 1;
     uint64 fee = 2;
@@ -304,6 +314,10 @@ message SetElectionCycleRequest {
     int64 election_cycle = 1;
 }
 
+message SetDowntimePeriodRequest {
+    uint64 downtime_period = 1;
+}
+
 message SetMaxYearlyRewardRequest {
     BigUInt max_yearly_reward = 1;
 }
@@ -377,25 +391,21 @@ message DposUpdateCandidateInfoEvent {
 }
 
 message DposDelegatorDelegatesEvent {
-    Address address = 1;
-    BigUInt amount = 2;
-    string referrer = 3;
+    Delegation delegation = 1;
 }
 
 message DposDelegatorRedelegatesEvent {
-    Address address = 1;
-    BigUInt amount = 2;
-    string referrer = 3;
+    Delegation delegation = 1;
 }
 
 message DposDelegatorConsolidatesEvent {
-    Address address = 1;
-    Address validator = 2;
+    Delegation new_delegation = 1;
+    repeated Delegation consolidated_delegations = 2;
+    int64 unconsolidated_delegations_count = 3;
 }
 
 message DposDelegatorUnbondsEvent {
-    Address address = 1;
-    BigUInt amount = 2;
+    Delegation delegation = 1;
 }
 
 message DposReferrerRegistersEvent {
@@ -405,8 +415,7 @@ message DposReferrerRegistersEvent {
 
 message DposDelegatorClaimsRewardsEvent {
     Address delegator = 1;
-    Address validator = 2;
-    BigUInt amount = 3;
-    int64 time = 4;
-    int64 height = 5;
+    repeated Address validators = 2;
+    repeated BigUInt amounts = 3;
+    BigUInt total_rewards_claimed = 4;
 }
