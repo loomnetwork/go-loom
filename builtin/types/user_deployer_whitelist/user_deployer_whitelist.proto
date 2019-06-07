@@ -33,6 +33,10 @@ message WhitelistUserDeployerRequest {
     TierID tier_id = 2 [(gogoproto.customname)="TierID"];
 }
 
+message RemoveUserDeployerRequest {
+    Address deployer_addr = 1;
+}
+
 message UserState {
     Address user_addr = 1;
     repeated Address deployers = 2;
