@@ -27,7 +27,8 @@ message AddDeployerRequest {
 message AddUserDeployerRequest {
     Address deployer_addr = 1;
 }
-message removeUserDeployerRequest {
+
+message RemoveUserDeployerRequest {
     Address deployer_addr = 1;
 }
 
