@@ -28,6 +28,10 @@ message AddUserDeployerRequest {
     Address deployer_addr = 1;
 }
 
+message RemoveUserDeployerRequest {
+    Address deployer_addr = 1;
+}
+
 message AddDeployerResponse {
 }
 

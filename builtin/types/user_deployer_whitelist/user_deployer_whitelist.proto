@@ -33,6 +33,10 @@ message WhitelistUserDeployerRequest {
     TierID tier_id = 2 [(gogoproto.customname)="TierID"];
 }
 
+message RemoveUserDeployerRequest {
+    Address deployer_addr = 1;
+}
+
 message UserState {
     Address user_addr = 1;
     repeated Address deployers = 2;
@@ -59,4 +63,18 @@ message GetDeployedContractsRequest {
 
 message GetDeployedContractsResponse {
     repeated DeployerContract contract_addresses = 1;
+}
+
+message GetTierInfoRequest {
+    TierID id = 1 [(gogoproto.customname)="TierID"];
+}
+
+message GetTierInfoResponse {
+    Tier tier = 1;
+}
+
+message SetTierInfoRequest {
+    TierID id = 1 [(gogoproto.customname)="TierID"];
+    BigUInt fee = 2;
+    string name = 3;
 }
