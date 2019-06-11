@@ -426,3 +426,27 @@ message TransferGatewayGetUnclaimedContractTokensRequest {
 message TransferGatewayGetUnclaimedContractTokensResponse {
     BigUInt unclaimed_amount = 1;
 }
+
+message TransferGatewaySubmitDepositTxHashRequest {
+    bytes tx_hash = 1;
+}
+
+message TransferGatewayClearInvalidDepositTxHashRequest {
+    repeated bytes tx_hashes = 1;
+}
+
+message TransferGatewayUnprocessedDepositTxHashesRequest{
+
+}
+
+message TransferGatewayUnprocessedDepositTxHashesResponse {
+    repeated bytes tx_hashes = 1;
+}
+
+message TransferGatewayExtendedState {
+    repeated Address deposit_tx_hash_submitters = 1;
+}
+
+message TransferGatewayHotWalletTxHash {
+    bytes tx_hash = 1;
+}
