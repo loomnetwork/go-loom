@@ -122,7 +122,7 @@ deps:
 		github.com/pkg/errors \
 		github.com/btcsuite/btcd
 	dep ensure -vendor-only
-	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
+	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1 --force
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
 	cd $(BTCD_DIR) && git checkout $(BTCD_GIT_REV)
 
