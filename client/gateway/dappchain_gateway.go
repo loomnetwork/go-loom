@@ -420,6 +420,10 @@ func ConnectToDAppChainTronGateway(loomClient *client.DAppChainRPCClient, events
 	return connectToDAppChainGateway(loomClient, eventsURI, "tron-gateway")
 }
 
+func ConnectToDAppChainBinanceGateway(loomClient *client.DAppChainRPCClient, eventsURI string) (*DAppChainGateway, error) {
+	return connectToDAppChainGateway(loomClient, eventsURI, "binance-gateway")
+}
+
 func connectToDAppChainGateway(loomClient *client.DAppChainRPCClient, eventsURI string, name string) (*DAppChainGateway, error) {
 	gatewayAddr, err := loomClient.Resolve(name)
 	if err != nil {
