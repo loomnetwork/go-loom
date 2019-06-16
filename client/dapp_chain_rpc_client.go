@@ -485,10 +485,11 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 func (c *DAppChainRPCClient) CommitMigrationTx(
 	from loom.Address,
 	signer auth.Signer,
-	id uint32,
+	id uint32, inputparams *vm.MigrationParameters,
 ) ([]byte, error) {
 	migrationTxBytes, err := proto.Marshal(&vm.MigrationTx{
-		ID: id,
+		ID:              id,
+		MigrationParams: inputparams,
 	})
 	if err != nil {
 		return nil, err
