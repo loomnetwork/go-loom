@@ -31,8 +31,18 @@ message CallTx {
     string contract_version = 4;
 }
 
+
+message MigrationParameters {
+uint64 DeflationFactorNumerator = 1; //Deflation Factor Numerator
+uint64 DeflationFactorDenominator = 2; //Deflation Factor Denominator
+uint64 BaseMintingAmount = 3; //Base Minting Amount
+string MintingAccount = 4;
+}
+
+
 message MigrationTx {
     uint32 id = 1 [(gogoproto.customname)="ID"];
+    MigrationParameters migration_params = 2 [(gogoproto.customname)="MigrationParams"];
 }
 
 message DeployResponse {
