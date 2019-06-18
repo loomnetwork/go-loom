@@ -205,23 +205,17 @@ func (tg *DAppChainGateway) WithdrawLoom(identity *client.Identity, amount *big.
 	return err
 }
 
-func (tg *DAppChainGateway) WithdrawLoomBinance(identity *client.Identity, amount *big.Int, mainnetLoomCoinAddress common.Address, receipent common.Address) error {
+func (tg *DAppChainGateway) WithdrawLoomToBinanceDex(identity *client.Identity, amount *big.Int, mainnetRecipientAddress common.Address) error {
 	req := &tgtypes.TransferGatewayWithdrawLoomCoinRequest{
-		TokenContract: loom.Address{
-			ChainID: "binance",
-			// Local:   mainnetLoomCoinAddress.Bytes(),
-		}.MarshalPB(),
-		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 		Recipient: loom.Address{
 			ChainID: "binance",
-			Local:   receipent.Bytes(),
+			Local:   mainnetRecipientAddress.Bytes(),
 		}.MarshalPB(),
+		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
 	_, err := tg.contract.Call("WithdrawLoomCoin", req, identity.LoomSigner, nil)
 	return err
 }
-
-
 
 func (tg *DAppChainGateway) WithdrawETH(identity *client.Identity, amount *big.Int, mainnetGateway common.Address) error {
 	req := &tgtypes.TransferGatewayWithdrawETHRequest{
