@@ -44,7 +44,7 @@ message TransferGatewayWithdrawalReceipt {
     bytes oracle_signature = 7;
     // Generic memo for withdrawal receipt
     string memo = 8;
-    // TransactionHash on Binance chain
+    // Mainnet tx hash
     bytes tx_hash = 9;
 }
 
@@ -57,7 +57,7 @@ message TransferGatewayPendingWithdrawalSummary {
     BigUInt token_amount = 3;
     // Generic memo for withdrawal receipt
     string memo = 4;
-    // TransactionHash on Binance chain
+    // Mainnet tx hash
     bytes tx_hash = 5;
 }
 
