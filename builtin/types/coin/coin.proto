@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 message Economy {
     BigUInt total_supply = 1;
@@ -24,6 +25,13 @@ message InitialAccount {
 
 message InitRequest {
     repeated InitialAccount accounts = 1;
+    double deflation_factor = 2 [(gogoproto.customname)="DeflationFactor"];
+    uint64 base_minting_amount = 3 [(gogoproto.customname)="BaseMintingAmount"];
+}
+
+message DeflationInfo {
+    double deflation_factor = 1 [(gogoproto.customname)="DeflationFactor"];
+    BigUInt base_minting_amount = 2 [(gogoproto.customname)="BaseMintingAmount"];
 }
 
 message MintToGatewayRequest {
@@ -34,7 +42,6 @@ message BurnRequest {
     Address owner = 1;
     BigUInt amount = 2;
 }
-
 
 // ERC20 messages
 // See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
