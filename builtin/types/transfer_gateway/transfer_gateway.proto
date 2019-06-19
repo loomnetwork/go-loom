@@ -476,17 +476,20 @@ message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
 }
 
+//Request for fetching Contract Mapping for given Address
 message TransferGatewayGetContractMappingRequest {
     Address from = 1;
 }
 
 message TransferGatewayGetContractMappingResponse {
-    TransferGatewayContractAddressMapping mapping = 1;
+    Address mappedAddress = 1;
+    string status = 2;
 }
 
 message TransferGatewayListContractMappingRequest {
 }
 
 message TransferGatewayListContractMappingResponse {
-    repeated TransferGatewayContractAddressMapping mapping = 1;
+    repeated TransferGatewayContractAddressMapping confimed_mappings = 1;
+    repeated TransferGatewayPendingContractMapping pending_mappings = 2;
 }
