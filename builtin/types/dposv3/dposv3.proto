@@ -209,8 +209,13 @@ message DowntimeRecordRequest {
 }
 
 message DowntimeRecordResponse {
-    repeated uint64 periods = 1;
+    repeated DowntimeRecord downtime_records = 1;
     uint64 period_length = 2;
+}
+
+message DowntimeRecord {
+    Address validator = 1;
+    repeated uint64 periods = 2;
 }
 
 message RegisterCandidateRequest {
