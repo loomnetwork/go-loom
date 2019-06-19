@@ -116,6 +116,15 @@ func (c *MainnetGatewayClient) ToggleToken(validatorKey *ecdsa.PrivateKey, token
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
+func (c *MainnetGatewayClient) ToggleAllowAnyToken(validatorKey *ecdsa.PrivateKey, allow bool) error {
+	opts := bind.NewKeyedTransactor(validatorKey)
+	tx, err := c.contract.ToggleAllowAnyToken(opts, allow)
+	if err != nil {
+		return err
+	}
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {
 	contractAddr := common.HexToAddress(gatewayAddr)
 	contract, err := NewMainnetGatewayContract(contractAddr, ethClient)
