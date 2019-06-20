@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 message Economy {
     BigUInt total_supply = 1;
@@ -29,10 +28,10 @@ message InitRequest {
 }
 
 message Policy {
-    uint64 deflation_factor_numerator = 1 [(gogoproto.customname)="DeflationFactorNumerator"];
-    uint64 deflation_factor_denominator = 2 [(gogoproto.customname)="DeflationFactorDenominator"];
-    uint64 base_minting_amount = 3 [(gogoproto.customname)="BaseMintingAmount"];
-    Address minting_account = 4 [(gogoproto.customname)="MintingAccount"];
+    uint64 deflation_factor_numerator = 1;
+    uint64 deflation_factor_denominator = 2;
+    uint64 base_minting_amount = 3;
+    Address minting_account = 4;
 }
 
 message MintToGatewayRequest {
@@ -100,4 +99,16 @@ message TransferFromRequest {
 
 message TransferFromResponse {
 
+}
+
+message TransferEvent {
+    Address from = 1;
+    Address to = 2;
+    BigUInt amount = 3;
+}
+
+message ApprovalEvent {
+    Address from = 1;
+    Address spender = 2;
+    BigUInt amount = 3;
 }
