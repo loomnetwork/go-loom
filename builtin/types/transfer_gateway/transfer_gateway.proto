@@ -72,7 +72,7 @@ message TransferGatewayPendingWithdrawalSummary {
     // Mainnet tx status
     TransferGatewayTxStatus tx_status = 6;
     // Mainnet address of token contract
-    Address token_contract = 6;
+    Address token_contract = 7;
 }
 
 message TransferGatewayLocalAccount {
