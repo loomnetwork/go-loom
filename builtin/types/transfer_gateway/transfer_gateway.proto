@@ -15,6 +15,13 @@ enum TransferGatewayTokenKind {
     BEP2 = 8;
 }
 
+enum TransferGatewayTxStatus {
+    PENDING = 0;
+    PROCESSED = 1;
+    CONFIRMED = 2;
+    REJECTED = 3;
+}
+
 message TransferGatewayState {
     Address owner = 1;
     // Last Mainnet block processed by the Transfer Gateway contract
@@ -47,6 +54,8 @@ message TransferGatewayWithdrawalReceipt {
     string memo = 8;
     // Mainnet tx hash
     bytes tx_hash = 9;
+    // Mainnet tx status
+    TransferGatewayTxStatus tx_status = 10;
 }
 
 message TransferGatewayPendingWithdrawalSummary {
@@ -60,6 +69,8 @@ message TransferGatewayPendingWithdrawalSummary {
     string memo = 4;
     // Mainnet tx hash
     bytes tx_hash = 5;
+    // Mainnet tx status
+    TransferGatewayTxStatus tx_status = 6;
     // Mainnet address of token contract
     Address token_contract = 6;
 }
@@ -333,6 +344,8 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
     bytes oracle_signature = 2;
     // 32-byte hash of the withdrawal details
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
+    // withdrawal status
+    TransferGatewayTxStatus withdrawal_status = 4;
 }
 
 message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
