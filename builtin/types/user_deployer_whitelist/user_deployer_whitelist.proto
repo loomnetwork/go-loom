@@ -11,12 +11,16 @@ message Tier {
     TierID id = 1 [(gogoproto.customname)="TierID"];
     BigUInt fee = 2;
     string name = 3;
+    uint64 block_range = 4;
+    uint64 max_tx = 5;
 }
 
 message TierInfo {
     TierID id = 1 [(gogoproto.customname)="TierID"];
     uint64 fee = 2;
     string name = 3;
+    uint64 block_range = 4;
+    uint64 max_tx = 5;
 }
 
 message InitRequest {
@@ -77,4 +81,6 @@ message SetTierInfoRequest {
     TierID id = 1 [(gogoproto.customname)="TierID"];
     BigUInt fee = 2;
     string name = 3;
+    uint64 block_range = 4;
+    uint64 max_tx = 5;
 }
