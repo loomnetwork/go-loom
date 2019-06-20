@@ -489,7 +489,7 @@ func (c *DAppChainRPCClient) CommitMigrationTx(
 ) ([]byte, error) {
 	migrationTxBytes, err := proto.Marshal(&vm.MigrationTx{
 		ID:              id,
-		MigrationParams: inputparams,
+		Input: inputparams,
 	})
 	if err != nil {
 		return nil, err
