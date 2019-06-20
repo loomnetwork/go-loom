@@ -483,7 +483,7 @@ message TransferGatewayGetContractMappingRequest {
 
 message TransferGatewayGetContractMappingResponse {
     Address mappedAddress = 1;
-    string status = 2;
+    bool is_pending = 2;
 }
 
 message TransferGatewayListContractMappingRequest {
