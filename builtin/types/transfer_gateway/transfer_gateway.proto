@@ -357,6 +357,8 @@ message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
 message TransferGatewayPendingWithdrawalsRequest {
     // Address of Mainnet Gateway contract
     Address mainnet_gateway = 1;
+    // Status of withdrawal transaction
+    TransferGatewayTxStatus tx_status = 2;
 }
 
 message TransferGatewayPendingWithdrawalsResponse {
