@@ -475,3 +475,18 @@ message TransferGatewayExtendedState {
 message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
 }
+
+message TransferGatewayGetContractMappingRequest {
+    Address from = 1;
+}
+
+message TransferGatewayGetContractMappingResponse {
+    TransferGatewayContractAddressMapping mapping = 1;
+}
+
+message TransferGatewayListContractMappingRequest {
+}
+
+message TransferGatewayListContractMappingResponse {
+    repeated TransferGatewayContractAddressMapping mapping = 1;
+}
