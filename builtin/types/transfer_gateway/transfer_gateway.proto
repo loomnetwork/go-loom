@@ -478,3 +478,11 @@ message TransferGatewayExtendedState {
 message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
 }
+
+message TransferGatewayResubmitWithdrawalRequest {
+}
+
+message TransferGatewayResubmitWithdrawalError {
+    TransferGatewayWithdrawalReceipt withdrawal_receipt = 1;
+    string error_message = 2;
+}
