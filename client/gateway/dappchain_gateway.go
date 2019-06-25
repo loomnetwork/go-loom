@@ -205,6 +205,18 @@ func (tg *DAppChainGateway) WithdrawLoom(identity *client.Identity, amount *big.
 	return err
 }
 
+func (tg *DAppChainGateway) WithdrawLoomToBinanceDex(identity *client.Identity, amount *big.Int, mainnetRecipientAddress common.Address) error {
+	req := &tgtypes.TransferGatewayWithdrawLoomCoinRequest{
+		Recipient: loom.Address{
+			ChainID: "binance",
+			Local:   mainnetRecipientAddress.Bytes(),
+		}.MarshalPB(),
+		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
+	}
+	_, err := tg.contract.Call("WithdrawLoomCoin", req, identity.LoomSigner, nil)
+	return err
+}
+
 func (tg *DAppChainGateway) WithdrawETH(identity *client.Identity, amount *big.Int, mainnetGateway common.Address) error {
 	req := &tgtypes.TransferGatewayWithdrawETHRequest{
 		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
@@ -418,6 +430,10 @@ func ConnectToDAppChainGateway(loomClient *client.DAppChainRPCClient, eventsURI 
 
 func ConnectToDAppChainTronGateway(loomClient *client.DAppChainRPCClient, eventsURI string) (*DAppChainGateway, error) {
 	return connectToDAppChainGateway(loomClient, eventsURI, "tron-gateway")
+}
+
+func ConnectToDAppChainBinanceGateway(loomClient *client.DAppChainRPCClient, eventsURI string) (*DAppChainGateway, error) {
+	return connectToDAppChainGateway(loomClient, eventsURI, "binance-gateway")
 }
 
 func connectToDAppChainGateway(loomClient *client.DAppChainRPCClient, eventsURI string, name string) (*DAppChainGateway, error) {
