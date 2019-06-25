@@ -82,3 +82,14 @@ func LoomAddressFromTronAddress(tronAddr common.Address) (loom.Address, error) {
 		Local:   addrBytes,
 	}, nil
 }
+
+func LoomAddressFromBinanceAddress(ethAddr common.Address) (loom.Address, error) {
+	addrBytes, err := loom.LocalAddressFromHexString(ethAddr.Hex())
+	if err != nil {
+		return loom.Address{}, err
+	}
+	return loom.Address{
+		ChainID: "binance",
+		Local:   addrBytes,
+	}, nil
+}
