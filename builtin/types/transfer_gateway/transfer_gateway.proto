@@ -482,7 +482,7 @@ message TransferGatewayGetContractMappingRequest {
 }
 
 message TransferGatewayGetContractMappingResponse {
-    Address mappedAddress = 1;
+    Address mapped_address = 1;
     bool is_pending = 2;
     bool found = 3;
 }
