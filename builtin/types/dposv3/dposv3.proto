@@ -345,6 +345,10 @@ message SetSlashingPercentagesRequest {
     BigUInt byzantine_slashing_percentage = 2;
 }
 
+message UnjailRequest {
+    Address validator = 1;
+}
+
 message GetStateRequest {
 }
 
@@ -382,6 +386,9 @@ message DposJailEvent {
     Address validator = 1;
 }
 
+message DposUnjailEvent {
+    Address validator = 1;
+}
 
 message DposCandidateRegistersEvent {
     Address address = 1;
