@@ -12,6 +12,7 @@ enum TransferGatewayTokenKind {
     TRX = 5;
     TRC20 = 6;
     BNBLoomToken = 7;
+    BEP2 = 8;
 }
 
 enum TransferGatewayTxStatus {
@@ -70,6 +71,8 @@ message TransferGatewayPendingWithdrawalSummary {
     bytes tx_hash = 5;
     // Mainnet tx status
     TransferGatewayTxStatus tx_status = 6;
+    // Mainnet address of token contract
+    Address token_contract = 7;
 }
 
 message TransferGatewayLocalAccount {
