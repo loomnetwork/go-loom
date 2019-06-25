@@ -83,8 +83,8 @@ func LoomAddressFromTronAddress(tronAddr common.Address) (loom.Address, error) {
 	}, nil
 }
 
-func LoomAddressFromBinanceAddress(ethAddr common.Address) (loom.Address, error) {
-	addrBytes, err := loom.LocalAddressFromHexString(ethAddr.Hex())
+func LoomAddressFromBinanceAddress(binanceAddr common.Address) (loom.Address, error) {
+	addrBytes, err := loom.LocalAddressFromHexString(binanceAddr.Hex())
 	if err != nil {
 		return loom.Address{}, err
 	}
