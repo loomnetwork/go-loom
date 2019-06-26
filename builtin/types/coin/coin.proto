@@ -28,10 +28,11 @@ message InitRequest {
 }
 
 message Policy {
-    uint64 deflation_factor_numerator = 1;
-    uint64 deflation_factor_denominator = 2;
-    uint64 base_minting_amount = 3;
-    Address minting_account = 4;
+    uint64 change_ratio_numerator = 1;
+    uint64 change_ratio_denominator = 2;
+    uint64 total_supply = 3;
+    uint64 blocks_generated_per_year = 4;
+    Address minting_account = 5;
 }
 
 message MintToGatewayRequest {
