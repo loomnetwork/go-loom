@@ -167,6 +167,16 @@ func (tg *DAppChainGateway) WithdrawERC20(identity *client.Identity, amount *big
 	return err
 }
 
+func (tg *DAppChainGateway) WithdrawBEP2(identity *client.Identity, amount *big.Int, contract loom.Address) error {
+	req := &tgtypes.TransferGatewayWithdrawTokenRequest{
+		TokenKind:     tgtypes.TransferGatewayTokenKind_BEP2,
+		TokenAmount:   &types.BigUInt{Value: *loom.NewBigUInt(amount)},
+		TokenContract: contract.MarshalPB(),
+	}
+	_, err := tg.contract.Call("WithdrawToken", req, identity.LoomSigner, nil)
+	return err
+}
+
 func (tg *DAppChainGateway) WithdrawLoom(identity *client.Identity, amount *big.Int, mainnetLoomCoinAddress common.Address) error {
 	req := &tgtypes.TransferGatewayWithdrawLoomCoinRequest{
 		TokenContract: loom.Address{
