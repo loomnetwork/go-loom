@@ -100,11 +100,11 @@ message GetValidatorInfoResponse {
     ValidatorInfo validator =1;
 }
 
-message ListValidatorInfoRequest {
+message ListValidatorsInfoRequest {
 
 }
 
-message ListValidatorInfoResponse {
+message ListValidatorsInfoResponse {
     repeated ValidatorInfo validators =1;
 }
 
