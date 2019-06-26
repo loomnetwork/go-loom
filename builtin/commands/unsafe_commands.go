@@ -3,7 +3,6 @@ package commands
 import (
 	"errors"
 	"strconv"
-	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -11,14 +10,17 @@ import (
 	"github.com/loomnetwork/go-loom/cli"
 )
 
-const GatewayName = "gateway"
-const LoomGatewayName = "loomcoin-gateway"
+const (
+	GatewayName        = "gateway"
+	LoomGatewayName    = "loomcoin-gateway"
+	BinanceGatewayName = "binance-gateway"
+)
 
 func UnsafeResetBlockCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "unsafe-reset-last-eth-block <blockNumber> <gatewayType>",
 		Short: "WARNING: Resets the Ethereum block number used by the Gateway to sync with Ethereum",
-		Args:  cobra.MinimumNArgs(0),
+		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var block uint64
 			var err error
@@ -32,12 +34,15 @@ func UnsafeResetBlockCmd() *cobra.Command {
 			}
 
 			var name string
-			if len(args) <= 1 || (strings.Compare(args[1], GatewayName) == 0) {
+			switch args[1] {
+			case GatewayName:
 				name = GatewayName
-			} else if strings.Compare(args[1], LoomGatewayName) == 0 {
+			case LoomGatewayName:
 				name = LoomGatewayName
-			} else {
-				errors.New("Invalid gateway name")
+			case BinanceGatewayName:
+				name = BinanceGatewayName
+			default:
+				return errors.New("invalid gateway name")
 			}
 
 			return cli.CallContract(name, "ResetMainnetBlock", &tgtypes.TransferGatewayResetMainnetBlockRequest{
