@@ -478,6 +478,8 @@ message TransferGatewayExtendedState {
 message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
 }
+
+//Request for fetching Contract Mapping for given Address
 message TransferGatewayGetContractMappingRequest {
     Address from = 1;
 }
