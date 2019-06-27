@@ -83,10 +83,6 @@ func LoomAddressFromTronAddress(tronAddr common.Address) (loom.Address, error) {
 	}, nil
 }
 
-func LoomAddressFromBinanceAddress(binanceAddr common.Address) (loom.Address, error) {
-	addrBytes, err := loom.LocalAddressFromHexString(binanceAddr.Hex())
-	if err != nil {
-		return loom.Address{}, err
-	}
-	return loom.Address{ChainID: "binance", Local: binanceAddr.Bytes()}, nil
+func LoomAddressFromBinanceAddress(binanceAddr common.Address) loom.Address {
+	return loom.Address{ChainID: "binance", Local: binanceAddr.Bytes()}
 }

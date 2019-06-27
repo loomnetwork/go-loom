@@ -75,15 +75,11 @@ func (tg *DAppChainGateway) AddAuthorizedTronContractMapping(from common.Address
 
 // AddAuthorizedBinanceContractMapping same as AddAuthorisedContractMapping but for Binance dex
 func (tg *DAppChainGateway) AddAuthorizedBinanceContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
-	fromAddr, err := client.LoomAddressFromBinanceAddress(from)
-	if err != nil {
-		return err
-	}
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
-		ForeignContract: fromAddr.MarshalPB(),
+		ForeignContract: client.LoomAddressFromBinanceAddress(from).MarshalPB(),
 		LocalContract:   to.MarshalPB(),
 	}
-	_, err = tg.contract.Call("AddAuthorizedContractMapping", req, gatewayOwner.LoomSigner, nil)
+	_, err := tg.contract.Call("AddAuthorizedContractMapping", req, gatewayOwner.LoomSigner, nil)
 	return err
 }
 
