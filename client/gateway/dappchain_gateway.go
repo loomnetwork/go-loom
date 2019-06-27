@@ -79,7 +79,6 @@ func (tg *DAppChainGateway) AddAuthorizedBinanceContractMapping(from common.Addr
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
 		ForeignContract: fromAddr.MarshalPB(),
 		LocalContract:   to.MarshalPB(),
