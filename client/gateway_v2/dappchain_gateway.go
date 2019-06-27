@@ -168,14 +168,15 @@ func (tg *DAppChainGateway) WithdrawERC20(identity *client.Identity, amount *big
 }
 
 func (tg *DAppChainGateway) WithdrawBEP2(identity *client.Identity, amount *big.Int, contract loom.Address, mainnetRecipientAddress common.Address) error {
+	recipient, err := client.LoomAddressFromBinanceAddress(mainnetRecipientAddress)
+	if err != nil {
+		return err
+	}
 	req := &tgtypes.TransferGatewayWithdrawTokenRequest{
 		TokenKind:     tgtypes.TransferGatewayTokenKind_BEP2,
 		TokenAmount:   &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 		TokenContract: contract.MarshalPB(),
-		Recipient: loom.Address{
-			ChainID: "binance",
-			Local:   mainnetRecipientAddress.Bytes(),
-		}.MarshalPB(),
+		Recipient:     recipient.MarshalPB(),
 	}
 	_, err := tg.contract.Call("WithdrawToken", req, identity.LoomSigner, nil)
 	return err
