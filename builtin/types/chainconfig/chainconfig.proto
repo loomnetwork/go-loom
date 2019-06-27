@@ -51,7 +51,8 @@ message Feature {
 
 message ValidatorInfo{
     Address address = 1; 
-    uint64 build_number =2;
+    uint64 build_number = 2;
+    uint64 updated_at = 3;
 }
 
 message Params {
@@ -107,5 +108,3 @@ message ListValidatorsInfoRequest {
 message ListValidatorsInfoResponse {
     repeated ValidatorInfo validators =1;
 }
-
-
