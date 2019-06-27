@@ -88,8 +88,5 @@ func LoomAddressFromBinanceAddress(binanceAddr common.Address) (loom.Address, er
 	if err != nil {
 		return loom.Address{}, err
 	}
-	return loom.Address{
-		ChainID: "binance",
-		Local:   addrBytes,
-	}, nil
+	return loom.Address{ChainID: "binance", Local: binanceAddr.Bytes()}, nil
 }
