@@ -98,7 +98,7 @@ message GetValidatorInfoRequest {
 }
 
 message GetValidatorInfoResponse {
-    ValidatorInfo validator =1;
+    ValidatorInfo validator = 1;
 }
 
 message ListValidatorsInfoRequest {
@@ -106,5 +106,5 @@ message ListValidatorsInfoRequest {
 }
 
 message ListValidatorsInfoResponse {
-    repeated ValidatorInfo validators =1;
+    repeated ValidatorInfo validators = 1;
 }
