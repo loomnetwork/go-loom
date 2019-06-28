@@ -505,3 +505,11 @@ message TransferGatewayResubmitWithdrawalError {
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 1;
     string error_message = 2;
 }
+
+message TransferGatewayBinanceState{
+    int64 transfer_fee = 1;
+}
+
+message TransferGatewayUpdateBinanceTransferFeeRequest{
+    int64 transfer_fee = 1;
+}
