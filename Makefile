@@ -4,8 +4,10 @@ GOGO_PROTOBUF_DIR = $(GOPATH)/src/github.com/gogo/protobuf
 HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
 GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
 SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
+BTCD_DIR = $(GOPATH)/src/github.com/btcsuite/btcd
 # This commit sha should match the one in loomchain repo
 GETH_GIT_REV = 1fb6138d017a4309105d91f187c126cf979c93f9
+BTCD_GIT_REV = 7d2daa5bfef28c5e282571bc06416516936115ee
 
 .PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all lint
 
@@ -83,6 +85,7 @@ proto: \
 	builtin/types/deployer_whitelist/deployer_whitelist.pb.go \
 	builtin/types/transfer_gateway/transfer_gateway.pb.go \
 	builtin/types/transfer_gateway/v1/transfer_gateway.pb.go \
+	builtin/types/user_deployer_whitelist/user_deployer_whitelist.pb.go \
 	testdata/test.pb.go \
 	examples/types/types.pb.go \
 	examples/plugins/lottery/lottery.pb.go \
@@ -116,10 +119,12 @@ deps:
 		github.com/hashicorp/go-plugin \
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log \
-		github.com/pkg/errors
+		github.com/pkg/errors \
+		github.com/btcsuite/btcd
 	dep ensure -vendor-only
 	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
+	cd $(BTCD_DIR) && git checkout $(BTCD_GIT_REV)
 
 deps-evm: $(SSHA3_DIR) $(GETH_DIR)
 	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
@@ -141,6 +146,7 @@ clean:
 		builtin/types/karma/karma.pb.go \
 		builtin/types/chainconfig/chainconfig.pb.go \
 		builtin/types/deployer_whitelist/deployer_whitelist.pb.go \
+		builtin/types/user_deployer_whitelist/user_deployer_whitelist.pb.go \
 		testdata/test.pb.go \
 		examples/types/types.pb.go \
 		examples/plugins/evmexample/types/types.pb.go \

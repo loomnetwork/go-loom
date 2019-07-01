@@ -123,6 +123,11 @@ func (c *FakeContext) RegisterContract(contractName string, contractAddr, creato
 		ContractAddress: contractAddr,
 		CreatorAddress:  creatorAddr,
 	}
+	c.registry[contractName] = &ContractRecord{
+		ContractName:    contractName,
+		ContractAddress: contractAddr,
+		CreatorAddress:  creatorAddr,
+	}
 }
 
 func (c *FakeContext) Call(addr loom.Address, input []byte) ([]byte, error) {
@@ -181,6 +186,11 @@ func (c *FakeContext) Resolve(name string) (loom.Address, error) {
 			return loom.MustParseAddress(addrStr), nil
 		}
 	}
+	record, ok := c.registry[name]
+	if ok {
+		return record.ContractAddress, nil
+	}
+
 	return loom.Address{}, fmt.Errorf("failed  to resolve address of contract '%s'", name)
 }
 

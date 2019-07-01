@@ -45,7 +45,7 @@ func (x LocktimeTier) String() string {
 	return proto.EnumName(LocktimeTier_name, int32(x))
 }
 func (LocktimeTier) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{0}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{0}
 }
 
 type Candidate_CandidateState int32
@@ -74,7 +74,7 @@ func (x Candidate_CandidateState) String() string {
 	return proto.EnumName(Candidate_CandidateState_name, int32(x))
 }
 func (Candidate_CandidateState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{4, 0}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{4, 0}
 }
 
 type Delegation_DelegationState int32
@@ -103,7 +103,7 @@ func (x Delegation_DelegationState) String() string {
 	return proto.EnumName(Delegation_DelegationState_name, int32(x))
 }
 func (Delegation_DelegationState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{7, 0}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{7, 0}
 }
 
 type Params struct {
@@ -116,6 +116,7 @@ type Params struct {
 	CrashSlashingPercentage     *types.BigUInt `protobuf:"bytes,7,opt,name=crash_slashing_percentage,json=crashSlashingPercentage" json:"crash_slashing_percentage,omitempty"`
 	ByzantineSlashingPercentage *types.BigUInt `protobuf:"bytes,8,opt,name=byzantine_slashing_percentage,json=byzantineSlashingPercentage" json:"byzantine_slashing_percentage,omitempty"`
 	MinCandidateFee             uint64         `protobuf:"varint,9,opt,name=min_candidate_fee,json=minCandidateFee,proto3" json:"min_candidate_fee,omitempty"`
+	DowntimePeriod              uint64         `protobuf:"varint,10,opt,name=downtime_period,json=downtimePeriod,proto3" json:"downtime_period,omitempty"`
 	XXX_NoUnkeyedLiteral        struct{}       `json:"-"`
 	XXX_unrecognized            []byte         `json:"-"`
 	XXX_sizecache               int32          `json:"-"`
@@ -125,7 +126,7 @@ func (m *Params) Reset()         { *m = Params{} }
 func (m *Params) String() string { return proto.CompactTextString(m) }
 func (*Params) ProtoMessage()    {}
 func (*Params) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{0}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{0}
 }
 func (m *Params) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Params.Unmarshal(m, b)
@@ -208,6 +209,13 @@ func (m *Params) GetMinCandidateFee() uint64 {
 	return 0
 }
 
+func (m *Params) GetDowntimePeriod() uint64 {
+	if m != nil {
+		return m.DowntimePeriod
+	}
+	return 0
+}
+
 type State struct {
 	Params                    *Params            `protobuf:"bytes,1,opt,name=params" json:"params,omitempty"`
 	Validators                []*types.Validator `protobuf:"bytes,2,rep,name=validators" json:"validators,omitempty"`
@@ -223,7 +231,7 @@ func (m *State) Reset()         { *m = State{} }
 func (m *State) String() string { return proto.CompactTextString(m) }
 func (*State) ProtoMessage()    {}
 func (*State) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{1}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{1}
 }
 func (m *State) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_State.Unmarshal(m, b)
@@ -292,7 +300,7 @@ func (m *InitializationState) Reset()         { *m = InitializationState{} }
 func (m *InitializationState) String() string { return proto.CompactTextString(m) }
 func (*InitializationState) ProtoMessage()    {}
 func (*InitializationState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{2}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{2}
 }
 func (m *InitializationState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_InitializationState.Unmarshal(m, b)
@@ -349,6 +357,7 @@ type ValidatorStatistic struct {
 	RecentlyMissedBlocks  uint64         `protobuf:"varint,6,opt,name=recently_missed_blocks,json=recentlyMissedBlocks,proto3" json:"recently_missed_blocks,omitempty"`
 	UpdateWhitelistAmount *types.BigUInt `protobuf:"bytes,7,opt,name=update_whitelist_amount,json=updateWhitelistAmount" json:"update_whitelist_amount,omitempty"`
 	UpdateLocktimeTier    LocktimeTier   `protobuf:"varint,8,opt,name=update_locktime_tier,json=updateLocktimeTier,proto3,enum=dposv3.LocktimeTier" json:"update_locktime_tier,omitempty"`
+	Jailed                bool           `protobuf:"varint,9,opt,name=jailed,proto3" json:"jailed,omitempty"`
 	XXX_NoUnkeyedLiteral  struct{}       `json:"-"`
 	XXX_unrecognized      []byte         `json:"-"`
 	XXX_sizecache         int32          `json:"-"`
@@ -358,7 +367,7 @@ func (m *ValidatorStatistic) Reset()         { *m = ValidatorStatistic{} }
 func (m *ValidatorStatistic) String() string { return proto.CompactTextString(m) }
 func (*ValidatorStatistic) ProtoMessage()    {}
 func (*ValidatorStatistic) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{3}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{3}
 }
 func (m *ValidatorStatistic) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidatorStatistic.Unmarshal(m, b)
@@ -434,6 +443,13 @@ func (m *ValidatorStatistic) GetUpdateLocktimeTier() LocktimeTier {
 	return LocktimeTier_TIER_ZERO
 }
 
+func (m *ValidatorStatistic) GetJailed() bool {
+	if m != nil {
+		return m.Jailed
+	}
+	return false
+}
+
 type Candidate struct {
 	Address               *types.Address           `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
 	PubKey                []byte                   `protobuf:"bytes,2,opt,name=pub_key,json=pubKey,proto3" json:"pub_key,omitempty"`
@@ -453,7 +469,7 @@ func (m *Candidate) Reset()         { *m = Candidate{} }
 func (m *Candidate) String() string { return proto.CompactTextString(m) }
 func (*Candidate) ProtoMessage()    {}
 func (*Candidate) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{4}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{4}
 }
 func (m *Candidate) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Candidate.Unmarshal(m, b)
@@ -548,7 +564,7 @@ func (m *CandidateStatistic) Reset()         { *m = CandidateStatistic{} }
 func (m *CandidateStatistic) String() string { return proto.CompactTextString(m) }
 func (*CandidateStatistic) ProtoMessage()    {}
 func (*CandidateStatistic) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{5}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{5}
 }
 func (m *CandidateStatistic) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CandidateStatistic.Unmarshal(m, b)
@@ -593,7 +609,7 @@ func (m *CandidateList) Reset()         { *m = CandidateList{} }
 func (m *CandidateList) String() string { return proto.CompactTextString(m) }
 func (*CandidateList) ProtoMessage()    {}
 func (*CandidateList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{6}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{6}
 }
 func (m *CandidateList) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CandidateList.Unmarshal(m, b)
@@ -641,7 +657,7 @@ func (m *Delegation) Reset()         { *m = Delegation{} }
 func (m *Delegation) String() string { return proto.CompactTextString(m) }
 func (*Delegation) ProtoMessage()    {}
 func (*Delegation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{7}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{7}
 }
 func (m *Delegation) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Delegation.Unmarshal(m, b)
@@ -751,7 +767,7 @@ func (m *DelegationIndex) Reset()         { *m = DelegationIndex{} }
 func (m *DelegationIndex) String() string { return proto.CompactTextString(m) }
 func (*DelegationIndex) ProtoMessage()    {}
 func (*DelegationIndex) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{8}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{8}
 }
 func (m *DelegationIndex) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelegationIndex.Unmarshal(m, b)
@@ -803,7 +819,7 @@ func (m *DelegationList) Reset()         { *m = DelegationList{} }
 func (m *DelegationList) String() string { return proto.CompactTextString(m) }
 func (*DelegationList) ProtoMessage()    {}
 func (*DelegationList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{9}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{9}
 }
 func (m *DelegationList) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelegationList.Unmarshal(m, b)
@@ -842,7 +858,7 @@ func (m *DPOSInitRequest) Reset()         { *m = DPOSInitRequest{} }
 func (m *DPOSInitRequest) String() string { return proto.CompactTextString(m) }
 func (*DPOSInitRequest) ProtoMessage()    {}
 func (*DPOSInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{10}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{10}
 }
 func (m *DPOSInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DPOSInitRequest.Unmarshal(m, b)
@@ -890,7 +906,7 @@ func (m *DelegateRequest) Reset()         { *m = DelegateRequest{} }
 func (m *DelegateRequest) String() string { return proto.CompactTextString(m) }
 func (*DelegateRequest) ProtoMessage()    {}
 func (*DelegateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{11}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{11}
 }
 func (m *DelegateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelegateRequest.Unmarshal(m, b)
@@ -954,7 +970,7 @@ func (m *RedelegateRequest) Reset()         { *m = RedelegateRequest{} }
 func (m *RedelegateRequest) String() string { return proto.CompactTextString(m) }
 func (*RedelegateRequest) ProtoMessage()    {}
 func (*RedelegateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{12}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{12}
 }
 func (m *RedelegateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RedelegateRequest.Unmarshal(m, b)
@@ -1027,7 +1043,7 @@ func (m *ConsolidateDelegationsRequest) Reset()         { *m = ConsolidateDelega
 func (m *ConsolidateDelegationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ConsolidateDelegationsRequest) ProtoMessage()    {}
 func (*ConsolidateDelegationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{13}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{13}
 }
 func (m *ConsolidateDelegationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConsolidateDelegationsRequest.Unmarshal(m, b)
@@ -1067,7 +1083,7 @@ func (m *UnbondRequest) Reset()         { *m = UnbondRequest{} }
 func (m *UnbondRequest) String() string { return proto.CompactTextString(m) }
 func (*UnbondRequest) ProtoMessage()    {}
 func (*UnbondRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{14}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{14}
 }
 func (m *UnbondRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UnbondRequest.Unmarshal(m, b)
@@ -1121,7 +1137,7 @@ func (m *WhitelistCandidateRequest) Reset()         { *m = WhitelistCandidateReq
 func (m *WhitelistCandidateRequest) String() string { return proto.CompactTextString(m) }
 func (*WhitelistCandidateRequest) ProtoMessage()    {}
 func (*WhitelistCandidateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{15}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{15}
 }
 func (m *WhitelistCandidateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WhitelistCandidateRequest.Unmarshal(m, b)
@@ -1173,7 +1189,7 @@ func (m *RemoveWhitelistedCandidateRequest) Reset()         { *m = RemoveWhiteli
 func (m *RemoveWhitelistedCandidateRequest) String() string { return proto.CompactTextString(m) }
 func (*RemoveWhitelistedCandidateRequest) ProtoMessage()    {}
 func (*RemoveWhitelistedCandidateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{16}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{16}
 }
 func (m *RemoveWhitelistedCandidateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RemoveWhitelistedCandidateRequest.Unmarshal(m, b)
@@ -1213,7 +1229,7 @@ func (m *ChangeWhitelistInfoRequest) Reset()         { *m = ChangeWhitelistInfoR
 func (m *ChangeWhitelistInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*ChangeWhitelistInfoRequest) ProtoMessage()    {}
 func (*ChangeWhitelistInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{17}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{17}
 }
 func (m *ChangeWhitelistInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChangeWhitelistInfoRequest.Unmarshal(m, b)
@@ -1266,7 +1282,7 @@ func (m *CheckDelegationRequest) Reset()         { *m = CheckDelegationRequest{}
 func (m *CheckDelegationRequest) String() string { return proto.CompactTextString(m) }
 func (*CheckDelegationRequest) ProtoMessage()    {}
 func (*CheckDelegationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{18}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{18}
 }
 func (m *CheckDelegationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckDelegationRequest.Unmarshal(m, b)
@@ -1313,7 +1329,7 @@ func (m *CheckDelegationResponse) Reset()         { *m = CheckDelegationResponse
 func (m *CheckDelegationResponse) String() string { return proto.CompactTextString(m) }
 func (*CheckDelegationResponse) ProtoMessage()    {}
 func (*CheckDelegationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{19}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{19}
 }
 func (m *CheckDelegationResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckDelegationResponse.Unmarshal(m, b)
@@ -1364,7 +1380,7 @@ func (m *CheckRewardsRequest) Reset()         { *m = CheckRewardsRequest{} }
 func (m *CheckRewardsRequest) String() string { return proto.CompactTextString(m) }
 func (*CheckRewardsRequest) ProtoMessage()    {}
 func (*CheckRewardsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{20}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{20}
 }
 func (m *CheckRewardsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckRewardsRequest.Unmarshal(m, b)
@@ -1395,7 +1411,7 @@ func (m *CheckRewardsResponse) Reset()         { *m = CheckRewardsResponse{} }
 func (m *CheckRewardsResponse) String() string { return proto.CompactTextString(m) }
 func (*CheckRewardsResponse) ProtoMessage()    {}
 func (*CheckRewardsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{21}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{21}
 }
 func (m *CheckRewardsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckRewardsResponse.Unmarshal(m, b)
@@ -1433,7 +1449,7 @@ func (m *TotalDelegationRequest) Reset()         { *m = TotalDelegationRequest{}
 func (m *TotalDelegationRequest) String() string { return proto.CompactTextString(m) }
 func (*TotalDelegationRequest) ProtoMessage()    {}
 func (*TotalDelegationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{22}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{22}
 }
 func (m *TotalDelegationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TotalDelegationRequest.Unmarshal(m, b)
@@ -1472,7 +1488,7 @@ func (m *TotalDelegationResponse) Reset()         { *m = TotalDelegationResponse
 func (m *TotalDelegationResponse) String() string { return proto.CompactTextString(m) }
 func (*TotalDelegationResponse) ProtoMessage()    {}
 func (*TotalDelegationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{23}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{23}
 }
 func (m *TotalDelegationResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TotalDelegationResponse.Unmarshal(m, b)
@@ -1517,7 +1533,7 @@ func (m *CheckAllDelegationsRequest) Reset()         { *m = CheckAllDelegationsR
 func (m *CheckAllDelegationsRequest) String() string { return proto.CompactTextString(m) }
 func (*CheckAllDelegationsRequest) ProtoMessage()    {}
 func (*CheckAllDelegationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{24}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{24}
 }
 func (m *CheckAllDelegationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckAllDelegationsRequest.Unmarshal(m, b)
@@ -1557,7 +1573,7 @@ func (m *CheckAllDelegationsResponse) Reset()         { *m = CheckAllDelegations
 func (m *CheckAllDelegationsResponse) String() string { return proto.CompactTextString(m) }
 func (*CheckAllDelegationsResponse) ProtoMessage()    {}
 func (*CheckAllDelegationsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{25}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{25}
 }
 func (m *CheckAllDelegationsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckAllDelegationsResponse.Unmarshal(m, b)
@@ -1609,7 +1625,7 @@ func (m *CheckRewardDelegationRequest) Reset()         { *m = CheckRewardDelegat
 func (m *CheckRewardDelegationRequest) String() string { return proto.CompactTextString(m) }
 func (*CheckRewardDelegationRequest) ProtoMessage()    {}
 func (*CheckRewardDelegationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{26}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{26}
 }
 func (m *CheckRewardDelegationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckRewardDelegationRequest.Unmarshal(m, b)
@@ -1647,7 +1663,7 @@ func (m *CheckRewardDelegationResponse) Reset()         { *m = CheckRewardDelega
 func (m *CheckRewardDelegationResponse) String() string { return proto.CompactTextString(m) }
 func (*CheckRewardDelegationResponse) ProtoMessage()    {}
 func (*CheckRewardDelegationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{27}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{27}
 }
 func (m *CheckRewardDelegationResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckRewardDelegationResponse.Unmarshal(m, b)
@@ -1674,6 +1690,136 @@ func (m *CheckRewardDelegationResponse) GetDelegation() *Delegation {
 	return nil
 }
 
+type DowntimeRecordRequest struct {
+	Validator            *types.Address `protobuf:"bytes,1,opt,name=validator" json:"validator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *DowntimeRecordRequest) Reset()         { *m = DowntimeRecordRequest{} }
+func (m *DowntimeRecordRequest) String() string { return proto.CompactTextString(m) }
+func (*DowntimeRecordRequest) ProtoMessage()    {}
+func (*DowntimeRecordRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{28}
+}
+func (m *DowntimeRecordRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DowntimeRecordRequest.Unmarshal(m, b)
+}
+func (m *DowntimeRecordRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DowntimeRecordRequest.Marshal(b, m, deterministic)
+}
+func (dst *DowntimeRecordRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DowntimeRecordRequest.Merge(dst, src)
+}
+func (m *DowntimeRecordRequest) XXX_Size() int {
+	return xxx_messageInfo_DowntimeRecordRequest.Size(m)
+}
+func (m *DowntimeRecordRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DowntimeRecordRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DowntimeRecordRequest proto.InternalMessageInfo
+
+func (m *DowntimeRecordRequest) GetValidator() *types.Address {
+	if m != nil {
+		return m.Validator
+	}
+	return nil
+}
+
+type DowntimeRecordResponse struct {
+	DowntimeRecords      []*DowntimeRecord `protobuf:"bytes,1,rep,name=downtime_records,json=downtimeRecords" json:"downtime_records,omitempty"`
+	PeriodLength         uint64            `protobuf:"varint,2,opt,name=period_length,json=periodLength,proto3" json:"period_length,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *DowntimeRecordResponse) Reset()         { *m = DowntimeRecordResponse{} }
+func (m *DowntimeRecordResponse) String() string { return proto.CompactTextString(m) }
+func (*DowntimeRecordResponse) ProtoMessage()    {}
+func (*DowntimeRecordResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{29}
+}
+func (m *DowntimeRecordResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DowntimeRecordResponse.Unmarshal(m, b)
+}
+func (m *DowntimeRecordResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DowntimeRecordResponse.Marshal(b, m, deterministic)
+}
+func (dst *DowntimeRecordResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DowntimeRecordResponse.Merge(dst, src)
+}
+func (m *DowntimeRecordResponse) XXX_Size() int {
+	return xxx_messageInfo_DowntimeRecordResponse.Size(m)
+}
+func (m *DowntimeRecordResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DowntimeRecordResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DowntimeRecordResponse proto.InternalMessageInfo
+
+func (m *DowntimeRecordResponse) GetDowntimeRecords() []*DowntimeRecord {
+	if m != nil {
+		return m.DowntimeRecords
+	}
+	return nil
+}
+
+func (m *DowntimeRecordResponse) GetPeriodLength() uint64 {
+	if m != nil {
+		return m.PeriodLength
+	}
+	return 0
+}
+
+type DowntimeRecord struct {
+	Validator            *types.Address `protobuf:"bytes,1,opt,name=validator" json:"validator,omitempty"`
+	Periods              []uint64       `protobuf:"varint,2,rep,packed,name=periods" json:"periods,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *DowntimeRecord) Reset()         { *m = DowntimeRecord{} }
+func (m *DowntimeRecord) String() string { return proto.CompactTextString(m) }
+func (*DowntimeRecord) ProtoMessage()    {}
+func (*DowntimeRecord) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{30}
+}
+func (m *DowntimeRecord) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DowntimeRecord.Unmarshal(m, b)
+}
+func (m *DowntimeRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DowntimeRecord.Marshal(b, m, deterministic)
+}
+func (dst *DowntimeRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DowntimeRecord.Merge(dst, src)
+}
+func (m *DowntimeRecord) XXX_Size() int {
+	return xxx_messageInfo_DowntimeRecord.Size(m)
+}
+func (m *DowntimeRecord) XXX_DiscardUnknown() {
+	xxx_messageInfo_DowntimeRecord.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DowntimeRecord proto.InternalMessageInfo
+
+func (m *DowntimeRecord) GetValidator() *types.Address {
+	if m != nil {
+		return m.Validator
+	}
+	return nil
+}
+
+func (m *DowntimeRecord) GetPeriods() []uint64 {
+	if m != nil {
+		return m.Periods
+	}
+	return nil
+}
+
 type RegisterCandidateRequest struct {
 	PubKey                []byte   `protobuf:"bytes,1,opt,name=pub_key,json=pubKey,proto3" json:"pub_key,omitempty"`
 	Fee                   uint64   `protobuf:"varint,2,opt,name=fee,proto3" json:"fee,omitempty"`
@@ -1691,7 +1837,7 @@ func (m *RegisterCandidateRequest) Reset()         { *m = RegisterCandidateReque
 func (m *RegisterCandidateRequest) String() string { return proto.CompactTextString(m) }
 func (*RegisterCandidateRequest) ProtoMessage()    {}
 func (*RegisterCandidateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{28}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{31}
 }
 func (m *RegisterCandidateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegisterCandidateRequest.Unmarshal(m, b)
@@ -1771,7 +1917,7 @@ func (m *ChangeCandidateFeeRequest) Reset()         { *m = ChangeCandidateFeeReq
 func (m *ChangeCandidateFeeRequest) String() string { return proto.CompactTextString(m) }
 func (*ChangeCandidateFeeRequest) ProtoMessage()    {}
 func (*ChangeCandidateFeeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{29}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{32}
 }
 func (m *ChangeCandidateFeeRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChangeCandidateFeeRequest.Unmarshal(m, b)
@@ -1809,7 +1955,7 @@ func (m *SetMinCandidateFeeRequest) Reset()         { *m = SetMinCandidateFeeReq
 func (m *SetMinCandidateFeeRequest) String() string { return proto.CompactTextString(m) }
 func (*SetMinCandidateFeeRequest) ProtoMessage()    {}
 func (*SetMinCandidateFeeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{30}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{33}
 }
 func (m *SetMinCandidateFeeRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetMinCandidateFeeRequest.Unmarshal(m, b)
@@ -1850,7 +1996,7 @@ func (m *UpdateCandidateInfoRequest) Reset()         { *m = UpdateCandidateInfoR
 func (m *UpdateCandidateInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateCandidateInfoRequest) ProtoMessage()    {}
 func (*UpdateCandidateInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{31}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{34}
 }
 func (m *UpdateCandidateInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateCandidateInfoRequest.Unmarshal(m, b)
@@ -1908,7 +2054,7 @@ func (m *UnregisterCandidateRequest) Reset()         { *m = UnregisterCandidateR
 func (m *UnregisterCandidateRequest) String() string { return proto.CompactTextString(m) }
 func (*UnregisterCandidateRequest) ProtoMessage()    {}
 func (*UnregisterCandidateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{32}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{35}
 }
 func (m *UnregisterCandidateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UnregisterCandidateRequest.Unmarshal(m, b)
@@ -1938,7 +2084,7 @@ func (m *TimeUntilElectionRequest) Reset()         { *m = TimeUntilElectionReque
 func (m *TimeUntilElectionRequest) String() string { return proto.CompactTextString(m) }
 func (*TimeUntilElectionRequest) ProtoMessage()    {}
 func (*TimeUntilElectionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{33}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{36}
 }
 func (m *TimeUntilElectionRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TimeUntilElectionRequest.Unmarshal(m, b)
@@ -1969,7 +2115,7 @@ func (m *TimeUntilElectionResponse) Reset()         { *m = TimeUntilElectionResp
 func (m *TimeUntilElectionResponse) String() string { return proto.CompactTextString(m) }
 func (*TimeUntilElectionResponse) ProtoMessage()    {}
 func (*TimeUntilElectionResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{34}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{37}
 }
 func (m *TimeUntilElectionResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TimeUntilElectionResponse.Unmarshal(m, b)
@@ -2006,7 +2152,7 @@ func (m *ListValidatorsRequest) Reset()         { *m = ListValidatorsRequest{} }
 func (m *ListValidatorsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsRequest) ProtoMessage()    {}
 func (*ListValidatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{35}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{38}
 }
 func (m *ListValidatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsRequest.Unmarshal(m, b)
@@ -2037,7 +2183,7 @@ func (m *ListValidatorsResponse) Reset()         { *m = ListValidatorsResponse{}
 func (m *ListValidatorsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsResponse) ProtoMessage()    {}
 func (*ListValidatorsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{36}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{39}
 }
 func (m *ListValidatorsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsResponse.Unmarshal(m, b)
@@ -2074,7 +2220,7 @@ func (m *ListCandidatesRequest) Reset()         { *m = ListCandidatesRequest{} }
 func (m *ListCandidatesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListCandidatesRequest) ProtoMessage()    {}
 func (*ListCandidatesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{37}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{40}
 }
 func (m *ListCandidatesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListCandidatesRequest.Unmarshal(m, b)
@@ -2105,7 +2251,7 @@ func (m *ListCandidatesResponse) Reset()         { *m = ListCandidatesResponse{}
 func (m *ListCandidatesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListCandidatesResponse) ProtoMessage()    {}
 func (*ListCandidatesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{38}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{41}
 }
 func (m *ListCandidatesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListCandidatesResponse.Unmarshal(m, b)
@@ -2143,7 +2289,7 @@ func (m *ListDelegationsRequest) Reset()         { *m = ListDelegationsRequest{}
 func (m *ListDelegationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListDelegationsRequest) ProtoMessage()    {}
 func (*ListDelegationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{39}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{42}
 }
 func (m *ListDelegationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListDelegationsRequest.Unmarshal(m, b)
@@ -2182,7 +2328,7 @@ func (m *ListDelegationsResponse) Reset()         { *m = ListDelegationsResponse
 func (m *ListDelegationsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListDelegationsResponse) ProtoMessage()    {}
 func (*ListDelegationsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{40}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{43}
 }
 func (m *ListDelegationsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListDelegationsResponse.Unmarshal(m, b)
@@ -2226,7 +2372,7 @@ func (m *ListAllDelegationsRequest) Reset()         { *m = ListAllDelegationsReq
 func (m *ListAllDelegationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListAllDelegationsRequest) ProtoMessage()    {}
 func (*ListAllDelegationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{41}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{44}
 }
 func (m *ListAllDelegationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListAllDelegationsRequest.Unmarshal(m, b)
@@ -2257,7 +2403,7 @@ func (m *ListAllDelegationsResponse) Reset()         { *m = ListAllDelegationsRe
 func (m *ListAllDelegationsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListAllDelegationsResponse) ProtoMessage()    {}
 func (*ListAllDelegationsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{42}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{45}
 }
 func (m *ListAllDelegationsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListAllDelegationsResponse.Unmarshal(m, b)
@@ -2299,7 +2445,7 @@ func (m *BatchRequest) Reset()         { *m = BatchRequest{} }
 func (m *BatchRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchRequest) ProtoMessage()    {}
 func (*BatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{43}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{46}
 }
 func (m *BatchRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BatchRequest.Unmarshal(m, b)
@@ -2418,7 +2564,7 @@ func (m *BatchRequestMeta) Reset()         { *m = BatchRequestMeta{} }
 func (m *BatchRequestMeta) String() string { return proto.CompactTextString(m) }
 func (*BatchRequestMeta) ProtoMessage()    {}
 func (*BatchRequestMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{44}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{47}
 }
 func (m *BatchRequestMeta) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BatchRequestMeta.Unmarshal(m, b)
@@ -2472,7 +2618,7 @@ func (m *RequestBatchTally) Reset()         { *m = RequestBatchTally{} }
 func (m *RequestBatchTally) String() string { return proto.CompactTextString(m) }
 func (*RequestBatchTally) ProtoMessage()    {}
 func (*RequestBatchTally) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{45}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{48}
 }
 func (m *RequestBatchTally) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RequestBatchTally.Unmarshal(m, b)
@@ -2524,7 +2670,7 @@ func (m *RequestBatch) Reset()         { *m = RequestBatch{} }
 func (m *RequestBatch) String() string { return proto.CompactTextString(m) }
 func (*RequestBatch) ProtoMessage()    {}
 func (*RequestBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{46}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{49}
 }
 func (m *RequestBatch) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RequestBatch.Unmarshal(m, b)
@@ -2561,7 +2707,7 @@ func (m *GetRequestBatchTallyRequest) Reset()         { *m = GetRequestBatchTall
 func (m *GetRequestBatchTallyRequest) String() string { return proto.CompactTextString(m) }
 func (*GetRequestBatchTallyRequest) ProtoMessage()    {}
 func (*GetRequestBatchTallyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{47}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{50}
 }
 func (m *GetRequestBatchTallyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetRequestBatchTallyRequest.Unmarshal(m, b)
@@ -2593,7 +2739,7 @@ func (m *RegisterReferrerRequest) Reset()         { *m = RegisterReferrerRequest
 func (m *RegisterReferrerRequest) String() string { return proto.CompactTextString(m) }
 func (*RegisterReferrerRequest) ProtoMessage()    {}
 func (*RegisterReferrerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{48}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{51}
 }
 func (m *RegisterReferrerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegisterReferrerRequest.Unmarshal(m, b)
@@ -2638,7 +2784,7 @@ func (m *SetElectionCycleRequest) Reset()         { *m = SetElectionCycleRequest
 func (m *SetElectionCycleRequest) String() string { return proto.CompactTextString(m) }
 func (*SetElectionCycleRequest) ProtoMessage()    {}
 func (*SetElectionCycleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{49}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{52}
 }
 func (m *SetElectionCycleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetElectionCycleRequest.Unmarshal(m, b)
@@ -2665,6 +2811,44 @@ func (m *SetElectionCycleRequest) GetElectionCycle() int64 {
 	return 0
 }
 
+type SetDowntimePeriodRequest struct {
+	DowntimePeriod       uint64   `protobuf:"varint,1,opt,name=downtime_period,json=downtimePeriod,proto3" json:"downtime_period,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetDowntimePeriodRequest) Reset()         { *m = SetDowntimePeriodRequest{} }
+func (m *SetDowntimePeriodRequest) String() string { return proto.CompactTextString(m) }
+func (*SetDowntimePeriodRequest) ProtoMessage()    {}
+func (*SetDowntimePeriodRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{53}
+}
+func (m *SetDowntimePeriodRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SetDowntimePeriodRequest.Unmarshal(m, b)
+}
+func (m *SetDowntimePeriodRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SetDowntimePeriodRequest.Marshal(b, m, deterministic)
+}
+func (dst *SetDowntimePeriodRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetDowntimePeriodRequest.Merge(dst, src)
+}
+func (m *SetDowntimePeriodRequest) XXX_Size() int {
+	return xxx_messageInfo_SetDowntimePeriodRequest.Size(m)
+}
+func (m *SetDowntimePeriodRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetDowntimePeriodRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetDowntimePeriodRequest proto.InternalMessageInfo
+
+func (m *SetDowntimePeriodRequest) GetDowntimePeriod() uint64 {
+	if m != nil {
+		return m.DowntimePeriod
+	}
+	return 0
+}
+
 type SetMaxYearlyRewardRequest struct {
 	MaxYearlyReward      *types.BigUInt `protobuf:"bytes,1,opt,name=max_yearly_reward,json=maxYearlyReward" json:"max_yearly_reward,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
@@ -2676,7 +2860,7 @@ func (m *SetMaxYearlyRewardRequest) Reset()         { *m = SetMaxYearlyRewardReq
 func (m *SetMaxYearlyRewardRequest) String() string { return proto.CompactTextString(m) }
 func (*SetMaxYearlyRewardRequest) ProtoMessage()    {}
 func (*SetMaxYearlyRewardRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{50}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{54}
 }
 func (m *SetMaxYearlyRewardRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetMaxYearlyRewardRequest.Unmarshal(m, b)
@@ -2714,7 +2898,7 @@ func (m *SetRegistrationRequirementRequest) Reset()         { *m = SetRegistrati
 func (m *SetRegistrationRequirementRequest) String() string { return proto.CompactTextString(m) }
 func (*SetRegistrationRequirementRequest) ProtoMessage()    {}
 func (*SetRegistrationRequirementRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{51}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{55}
 }
 func (m *SetRegistrationRequirementRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetRegistrationRequirementRequest.Unmarshal(m, b)
@@ -2752,7 +2936,7 @@ func (m *SetValidatorCountRequest) Reset()         { *m = SetValidatorCountReque
 func (m *SetValidatorCountRequest) String() string { return proto.CompactTextString(m) }
 func (*SetValidatorCountRequest) ProtoMessage()    {}
 func (*SetValidatorCountRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{52}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{56}
 }
 func (m *SetValidatorCountRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetValidatorCountRequest.Unmarshal(m, b)
@@ -2790,7 +2974,7 @@ func (m *SetOracleAddressRequest) Reset()         { *m = SetOracleAddressRequest
 func (m *SetOracleAddressRequest) String() string { return proto.CompactTextString(m) }
 func (*SetOracleAddressRequest) ProtoMessage()    {}
 func (*SetOracleAddressRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{53}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{57}
 }
 func (m *SetOracleAddressRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetOracleAddressRequest.Unmarshal(m, b)
@@ -2829,7 +3013,7 @@ func (m *SetSlashingPercentagesRequest) Reset()         { *m = SetSlashingPercen
 func (m *SetSlashingPercentagesRequest) String() string { return proto.CompactTextString(m) }
 func (*SetSlashingPercentagesRequest) ProtoMessage()    {}
 func (*SetSlashingPercentagesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{54}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{58}
 }
 func (m *SetSlashingPercentagesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetSlashingPercentagesRequest.Unmarshal(m, b)
@@ -2863,6 +3047,44 @@ func (m *SetSlashingPercentagesRequest) GetByzantineSlashingPercentage() *types.
 	return nil
 }
 
+type UnjailRequest struct {
+	Validator            *types.Address `protobuf:"bytes,1,opt,name=validator" json:"validator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *UnjailRequest) Reset()         { *m = UnjailRequest{} }
+func (m *UnjailRequest) String() string { return proto.CompactTextString(m) }
+func (*UnjailRequest) ProtoMessage()    {}
+func (*UnjailRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{59}
+}
+func (m *UnjailRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UnjailRequest.Unmarshal(m, b)
+}
+func (m *UnjailRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UnjailRequest.Marshal(b, m, deterministic)
+}
+func (dst *UnjailRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UnjailRequest.Merge(dst, src)
+}
+func (m *UnjailRequest) XXX_Size() int {
+	return xxx_messageInfo_UnjailRequest.Size(m)
+}
+func (m *UnjailRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UnjailRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UnjailRequest proto.InternalMessageInfo
+
+func (m *UnjailRequest) GetValidator() *types.Address {
+	if m != nil {
+		return m.Validator
+	}
+	return nil
+}
+
 type GetStateRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -2873,7 +3095,7 @@ func (m *GetStateRequest) Reset()         { *m = GetStateRequest{} }
 func (m *GetStateRequest) String() string { return proto.CompactTextString(m) }
 func (*GetStateRequest) ProtoMessage()    {}
 func (*GetStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{55}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{60}
 }
 func (m *GetStateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetStateRequest.Unmarshal(m, b)
@@ -2904,7 +3126,7 @@ func (m *GetStateResponse) Reset()         { *m = GetStateResponse{} }
 func (m *GetStateResponse) String() string { return proto.CompactTextString(m) }
 func (*GetStateResponse) ProtoMessage()    {}
 func (*GetStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{56}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{61}
 }
 func (m *GetStateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetStateResponse.Unmarshal(m, b)
@@ -2931,6 +3153,150 @@ func (m *GetStateResponse) GetState() *State {
 	return nil
 }
 
+type ClaimDelegatorRewardsRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ClaimDelegatorRewardsRequest) Reset()         { *m = ClaimDelegatorRewardsRequest{} }
+func (m *ClaimDelegatorRewardsRequest) String() string { return proto.CompactTextString(m) }
+func (*ClaimDelegatorRewardsRequest) ProtoMessage()    {}
+func (*ClaimDelegatorRewardsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{62}
+}
+func (m *ClaimDelegatorRewardsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ClaimDelegatorRewardsRequest.Unmarshal(m, b)
+}
+func (m *ClaimDelegatorRewardsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ClaimDelegatorRewardsRequest.Marshal(b, m, deterministic)
+}
+func (dst *ClaimDelegatorRewardsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ClaimDelegatorRewardsRequest.Merge(dst, src)
+}
+func (m *ClaimDelegatorRewardsRequest) XXX_Size() int {
+	return xxx_messageInfo_ClaimDelegatorRewardsRequest.Size(m)
+}
+func (m *ClaimDelegatorRewardsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ClaimDelegatorRewardsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ClaimDelegatorRewardsRequest proto.InternalMessageInfo
+
+type ClaimDelegatorRewardsResponse struct {
+	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ClaimDelegatorRewardsResponse) Reset()         { *m = ClaimDelegatorRewardsResponse{} }
+func (m *ClaimDelegatorRewardsResponse) String() string { return proto.CompactTextString(m) }
+func (*ClaimDelegatorRewardsResponse) ProtoMessage()    {}
+func (*ClaimDelegatorRewardsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{63}
+}
+func (m *ClaimDelegatorRewardsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ClaimDelegatorRewardsResponse.Unmarshal(m, b)
+}
+func (m *ClaimDelegatorRewardsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ClaimDelegatorRewardsResponse.Marshal(b, m, deterministic)
+}
+func (dst *ClaimDelegatorRewardsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ClaimDelegatorRewardsResponse.Merge(dst, src)
+}
+func (m *ClaimDelegatorRewardsResponse) XXX_Size() int {
+	return xxx_messageInfo_ClaimDelegatorRewardsResponse.Size(m)
+}
+func (m *ClaimDelegatorRewardsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ClaimDelegatorRewardsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ClaimDelegatorRewardsResponse proto.InternalMessageInfo
+
+func (m *ClaimDelegatorRewardsResponse) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+type CheckDelegatorRewardsRequest struct {
+	Delegator            *types.Address `protobuf:"bytes,1,opt,name=delegator" json:"delegator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *CheckDelegatorRewardsRequest) Reset()         { *m = CheckDelegatorRewardsRequest{} }
+func (m *CheckDelegatorRewardsRequest) String() string { return proto.CompactTextString(m) }
+func (*CheckDelegatorRewardsRequest) ProtoMessage()    {}
+func (*CheckDelegatorRewardsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{64}
+}
+func (m *CheckDelegatorRewardsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CheckDelegatorRewardsRequest.Unmarshal(m, b)
+}
+func (m *CheckDelegatorRewardsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CheckDelegatorRewardsRequest.Marshal(b, m, deterministic)
+}
+func (dst *CheckDelegatorRewardsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CheckDelegatorRewardsRequest.Merge(dst, src)
+}
+func (m *CheckDelegatorRewardsRequest) XXX_Size() int {
+	return xxx_messageInfo_CheckDelegatorRewardsRequest.Size(m)
+}
+func (m *CheckDelegatorRewardsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CheckDelegatorRewardsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CheckDelegatorRewardsRequest proto.InternalMessageInfo
+
+func (m *CheckDelegatorRewardsRequest) GetDelegator() *types.Address {
+	if m != nil {
+		return m.Delegator
+	}
+	return nil
+}
+
+type CheckDelegatorRewardsResponse struct {
+	Amount               *types.BigUInt `protobuf:"bytes,1,opt,name=amount" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *CheckDelegatorRewardsResponse) Reset()         { *m = CheckDelegatorRewardsResponse{} }
+func (m *CheckDelegatorRewardsResponse) String() string { return proto.CompactTextString(m) }
+func (*CheckDelegatorRewardsResponse) ProtoMessage()    {}
+func (*CheckDelegatorRewardsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{65}
+}
+func (m *CheckDelegatorRewardsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CheckDelegatorRewardsResponse.Unmarshal(m, b)
+}
+func (m *CheckDelegatorRewardsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CheckDelegatorRewardsResponse.Marshal(b, m, deterministic)
+}
+func (dst *CheckDelegatorRewardsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CheckDelegatorRewardsResponse.Merge(dst, src)
+}
+func (m *CheckDelegatorRewardsResponse) XXX_Size() int {
+	return xxx_messageInfo_CheckDelegatorRewardsResponse.Size(m)
+}
+func (m *CheckDelegatorRewardsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CheckDelegatorRewardsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CheckDelegatorRewardsResponse proto.InternalMessageInfo
+
+func (m *CheckDelegatorRewardsResponse) GetAmount() *types.BigUInt {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
 type DposElectionEvent struct {
 	BlockNumber          uint64   `protobuf:"varint,1,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -2942,7 +3308,7 @@ func (m *DposElectionEvent) Reset()         { *m = DposElectionEvent{} }
 func (m *DposElectionEvent) String() string { return proto.CompactTextString(m) }
 func (*DposElectionEvent) ProtoMessage()    {}
 func (*DposElectionEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{57}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{66}
 }
 func (m *DposElectionEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposElectionEvent.Unmarshal(m, b)
@@ -2981,7 +3347,7 @@ func (m *DposSlashEvent) Reset()         { *m = DposSlashEvent{} }
 func (m *DposSlashEvent) String() string { return proto.CompactTextString(m) }
 func (*DposSlashEvent) ProtoMessage()    {}
 func (*DposSlashEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{58}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{67}
 }
 func (m *DposSlashEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposSlashEvent.Unmarshal(m, b)
@@ -3015,6 +3381,82 @@ func (m *DposSlashEvent) GetSlashPercentage() *types.BigUInt {
 	return nil
 }
 
+type DposJailEvent struct {
+	Validator            *types.Address `protobuf:"bytes,1,opt,name=validator" json:"validator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *DposJailEvent) Reset()         { *m = DposJailEvent{} }
+func (m *DposJailEvent) String() string { return proto.CompactTextString(m) }
+func (*DposJailEvent) ProtoMessage()    {}
+func (*DposJailEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{68}
+}
+func (m *DposJailEvent) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DposJailEvent.Unmarshal(m, b)
+}
+func (m *DposJailEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DposJailEvent.Marshal(b, m, deterministic)
+}
+func (dst *DposJailEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DposJailEvent.Merge(dst, src)
+}
+func (m *DposJailEvent) XXX_Size() int {
+	return xxx_messageInfo_DposJailEvent.Size(m)
+}
+func (m *DposJailEvent) XXX_DiscardUnknown() {
+	xxx_messageInfo_DposJailEvent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DposJailEvent proto.InternalMessageInfo
+
+func (m *DposJailEvent) GetValidator() *types.Address {
+	if m != nil {
+		return m.Validator
+	}
+	return nil
+}
+
+type DposUnjailEvent struct {
+	Validator            *types.Address `protobuf:"bytes,1,opt,name=validator" json:"validator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *DposUnjailEvent) Reset()         { *m = DposUnjailEvent{} }
+func (m *DposUnjailEvent) String() string { return proto.CompactTextString(m) }
+func (*DposUnjailEvent) ProtoMessage()    {}
+func (*DposUnjailEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{69}
+}
+func (m *DposUnjailEvent) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DposUnjailEvent.Unmarshal(m, b)
+}
+func (m *DposUnjailEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DposUnjailEvent.Marshal(b, m, deterministic)
+}
+func (dst *DposUnjailEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DposUnjailEvent.Merge(dst, src)
+}
+func (m *DposUnjailEvent) XXX_Size() int {
+	return xxx_messageInfo_DposUnjailEvent.Size(m)
+}
+func (m *DposUnjailEvent) XXX_DiscardUnknown() {
+	xxx_messageInfo_DposUnjailEvent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DposUnjailEvent proto.InternalMessageInfo
+
+func (m *DposUnjailEvent) GetValidator() *types.Address {
+	if m != nil {
+		return m.Validator
+	}
+	return nil
+}
+
 type DposCandidateRegistersEvent struct {
 	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
 	Fee                  uint64         `protobuf:"varint,2,opt,name=fee,proto3" json:"fee,omitempty"`
@@ -3027,7 +3469,7 @@ func (m *DposCandidateRegistersEvent) Reset()         { *m = DposCandidateRegist
 func (m *DposCandidateRegistersEvent) String() string { return proto.CompactTextString(m) }
 func (*DposCandidateRegistersEvent) ProtoMessage()    {}
 func (*DposCandidateRegistersEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{59}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{70}
 }
 func (m *DposCandidateRegistersEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposCandidateRegistersEvent.Unmarshal(m, b)
@@ -3072,7 +3514,7 @@ func (m *DposCandidateUnregistersEvent) Reset()         { *m = DposCandidateUnre
 func (m *DposCandidateUnregistersEvent) String() string { return proto.CompactTextString(m) }
 func (*DposCandidateUnregistersEvent) ProtoMessage()    {}
 func (*DposCandidateUnregistersEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{60}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{71}
 }
 func (m *DposCandidateUnregistersEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposCandidateUnregistersEvent.Unmarshal(m, b)
@@ -3111,7 +3553,7 @@ func (m *DposCandidateFeeChangeEvent) Reset()         { *m = DposCandidateFeeCha
 func (m *DposCandidateFeeChangeEvent) String() string { return proto.CompactTextString(m) }
 func (*DposCandidateFeeChangeEvent) ProtoMessage()    {}
 func (*DposCandidateFeeChangeEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{61}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{72}
 }
 func (m *DposCandidateFeeChangeEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposCandidateFeeChangeEvent.Unmarshal(m, b)
@@ -3156,7 +3598,7 @@ func (m *DposUpdateCandidateInfoEvent) Reset()         { *m = DposUpdateCandidat
 func (m *DposUpdateCandidateInfoEvent) String() string { return proto.CompactTextString(m) }
 func (*DposUpdateCandidateInfoEvent) ProtoMessage()    {}
 func (*DposUpdateCandidateInfoEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{62}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{73}
 }
 func (m *DposUpdateCandidateInfoEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposUpdateCandidateInfoEvent.Unmarshal(m, b)
@@ -3184,19 +3626,17 @@ func (m *DposUpdateCandidateInfoEvent) GetAddress() *types.Address {
 }
 
 type DposDelegatorDelegatesEvent struct {
-	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
-	Referrer             string         `protobuf:"bytes,3,opt,name=referrer,proto3" json:"referrer,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Delegation           *Delegation `protobuf:"bytes,1,opt,name=delegation" json:"delegation,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *DposDelegatorDelegatesEvent) Reset()         { *m = DposDelegatorDelegatesEvent{} }
 func (m *DposDelegatorDelegatesEvent) String() string { return proto.CompactTextString(m) }
 func (*DposDelegatorDelegatesEvent) ProtoMessage()    {}
 func (*DposDelegatorDelegatesEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{63}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{74}
 }
 func (m *DposDelegatorDelegatesEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposDelegatorDelegatesEvent.Unmarshal(m, b)
@@ -3216,41 +3656,25 @@ func (m *DposDelegatorDelegatesEvent) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DposDelegatorDelegatesEvent proto.InternalMessageInfo
 
-func (m *DposDelegatorDelegatesEvent) GetAddress() *types.Address {
+func (m *DposDelegatorDelegatesEvent) GetDelegation() *Delegation {
 	if m != nil {
-		return m.Address
+		return m.Delegation
 	}
 	return nil
-}
-
-func (m *DposDelegatorDelegatesEvent) GetAmount() *types.BigUInt {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
-}
-
-func (m *DposDelegatorDelegatesEvent) GetReferrer() string {
-	if m != nil {
-		return m.Referrer
-	}
-	return ""
 }
 
 type DposDelegatorRedelegatesEvent struct {
-	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
-	Referrer             string         `protobuf:"bytes,3,opt,name=referrer,proto3" json:"referrer,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Delegation           *Delegation `protobuf:"bytes,1,opt,name=delegation" json:"delegation,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *DposDelegatorRedelegatesEvent) Reset()         { *m = DposDelegatorRedelegatesEvent{} }
 func (m *DposDelegatorRedelegatesEvent) String() string { return proto.CompactTextString(m) }
 func (*DposDelegatorRedelegatesEvent) ProtoMessage()    {}
 func (*DposDelegatorRedelegatesEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{64}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{75}
 }
 func (m *DposDelegatorRedelegatesEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposDelegatorRedelegatesEvent.Unmarshal(m, b)
@@ -3270,40 +3694,27 @@ func (m *DposDelegatorRedelegatesEvent) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DposDelegatorRedelegatesEvent proto.InternalMessageInfo
 
-func (m *DposDelegatorRedelegatesEvent) GetAddress() *types.Address {
+func (m *DposDelegatorRedelegatesEvent) GetDelegation() *Delegation {
 	if m != nil {
-		return m.Address
+		return m.Delegation
 	}
 	return nil
-}
-
-func (m *DposDelegatorRedelegatesEvent) GetAmount() *types.BigUInt {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
-}
-
-func (m *DposDelegatorRedelegatesEvent) GetReferrer() string {
-	if m != nil {
-		return m.Referrer
-	}
-	return ""
 }
 
 type DposDelegatorConsolidatesEvent struct {
-	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	Validator            *types.Address `protobuf:"bytes,2,opt,name=validator" json:"validator,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	NewDelegation                  *Delegation   `protobuf:"bytes,1,opt,name=new_delegation,json=newDelegation" json:"new_delegation,omitempty"`
+	ConsolidatedDelegations        []*Delegation `protobuf:"bytes,2,rep,name=consolidated_delegations,json=consolidatedDelegations" json:"consolidated_delegations,omitempty"`
+	UnconsolidatedDelegationsCount int64         `protobuf:"varint,3,opt,name=unconsolidated_delegations_count,json=unconsolidatedDelegationsCount,proto3" json:"unconsolidated_delegations_count,omitempty"`
+	XXX_NoUnkeyedLiteral           struct{}      `json:"-"`
+	XXX_unrecognized               []byte        `json:"-"`
+	XXX_sizecache                  int32         `json:"-"`
 }
 
 func (m *DposDelegatorConsolidatesEvent) Reset()         { *m = DposDelegatorConsolidatesEvent{} }
 func (m *DposDelegatorConsolidatesEvent) String() string { return proto.CompactTextString(m) }
 func (*DposDelegatorConsolidatesEvent) ProtoMessage()    {}
 func (*DposDelegatorConsolidatesEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{65}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{76}
 }
 func (m *DposDelegatorConsolidatesEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposDelegatorConsolidatesEvent.Unmarshal(m, b)
@@ -3323,33 +3734,39 @@ func (m *DposDelegatorConsolidatesEvent) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DposDelegatorConsolidatesEvent proto.InternalMessageInfo
 
-func (m *DposDelegatorConsolidatesEvent) GetAddress() *types.Address {
+func (m *DposDelegatorConsolidatesEvent) GetNewDelegation() *Delegation {
 	if m != nil {
-		return m.Address
+		return m.NewDelegation
 	}
 	return nil
 }
 
-func (m *DposDelegatorConsolidatesEvent) GetValidator() *types.Address {
+func (m *DposDelegatorConsolidatesEvent) GetConsolidatedDelegations() []*Delegation {
 	if m != nil {
-		return m.Validator
+		return m.ConsolidatedDelegations
 	}
 	return nil
+}
+
+func (m *DposDelegatorConsolidatesEvent) GetUnconsolidatedDelegationsCount() int64 {
+	if m != nil {
+		return m.UnconsolidatedDelegationsCount
+	}
+	return 0
 }
 
 type DposDelegatorUnbondsEvent struct {
-	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	Amount               *types.BigUInt `protobuf:"bytes,2,opt,name=amount" json:"amount,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Delegation           *Delegation `protobuf:"bytes,1,opt,name=delegation" json:"delegation,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *DposDelegatorUnbondsEvent) Reset()         { *m = DposDelegatorUnbondsEvent{} }
 func (m *DposDelegatorUnbondsEvent) String() string { return proto.CompactTextString(m) }
 func (*DposDelegatorUnbondsEvent) ProtoMessage()    {}
 func (*DposDelegatorUnbondsEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{66}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{77}
 }
 func (m *DposDelegatorUnbondsEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposDelegatorUnbondsEvent.Unmarshal(m, b)
@@ -3369,16 +3786,9 @@ func (m *DposDelegatorUnbondsEvent) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DposDelegatorUnbondsEvent proto.InternalMessageInfo
 
-func (m *DposDelegatorUnbondsEvent) GetAddress() *types.Address {
+func (m *DposDelegatorUnbondsEvent) GetDelegation() *Delegation {
 	if m != nil {
-		return m.Address
-	}
-	return nil
-}
-
-func (m *DposDelegatorUnbondsEvent) GetAmount() *types.BigUInt {
-	if m != nil {
-		return m.Amount
+		return m.Delegation
 	}
 	return nil
 }
@@ -3395,7 +3805,7 @@ func (m *DposReferrerRegistersEvent) Reset()         { *m = DposReferrerRegister
 func (m *DposReferrerRegistersEvent) String() string { return proto.CompactTextString(m) }
 func (*DposReferrerRegistersEvent) ProtoMessage()    {}
 func (*DposReferrerRegistersEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dposv3_86526ba75562846c, []int{67}
+	return fileDescriptor_dposv3_23752595fe527cef, []int{78}
 }
 func (m *DposReferrerRegistersEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DposReferrerRegistersEvent.Unmarshal(m, b)
@@ -3429,6 +3839,68 @@ func (m *DposReferrerRegistersEvent) GetAddress() *types.Address {
 	return nil
 }
 
+type DposDelegatorClaimsRewardsEvent struct {
+	Delegator            *types.Address   `protobuf:"bytes,1,opt,name=delegator" json:"delegator,omitempty"`
+	Validators           []*types.Address `protobuf:"bytes,2,rep,name=validators" json:"validators,omitempty"`
+	Amounts              []*types.BigUInt `protobuf:"bytes,3,rep,name=amounts" json:"amounts,omitempty"`
+	TotalRewardsClaimed  *types.BigUInt   `protobuf:"bytes,4,opt,name=total_rewards_claimed,json=totalRewardsClaimed" json:"total_rewards_claimed,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *DposDelegatorClaimsRewardsEvent) Reset()         { *m = DposDelegatorClaimsRewardsEvent{} }
+func (m *DposDelegatorClaimsRewardsEvent) String() string { return proto.CompactTextString(m) }
+func (*DposDelegatorClaimsRewardsEvent) ProtoMessage()    {}
+func (*DposDelegatorClaimsRewardsEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_dposv3_23752595fe527cef, []int{79}
+}
+func (m *DposDelegatorClaimsRewardsEvent) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DposDelegatorClaimsRewardsEvent.Unmarshal(m, b)
+}
+func (m *DposDelegatorClaimsRewardsEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DposDelegatorClaimsRewardsEvent.Marshal(b, m, deterministic)
+}
+func (dst *DposDelegatorClaimsRewardsEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DposDelegatorClaimsRewardsEvent.Merge(dst, src)
+}
+func (m *DposDelegatorClaimsRewardsEvent) XXX_Size() int {
+	return xxx_messageInfo_DposDelegatorClaimsRewardsEvent.Size(m)
+}
+func (m *DposDelegatorClaimsRewardsEvent) XXX_DiscardUnknown() {
+	xxx_messageInfo_DposDelegatorClaimsRewardsEvent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DposDelegatorClaimsRewardsEvent proto.InternalMessageInfo
+
+func (m *DposDelegatorClaimsRewardsEvent) GetDelegator() *types.Address {
+	if m != nil {
+		return m.Delegator
+	}
+	return nil
+}
+
+func (m *DposDelegatorClaimsRewardsEvent) GetValidators() []*types.Address {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
+func (m *DposDelegatorClaimsRewardsEvent) GetAmounts() []*types.BigUInt {
+	if m != nil {
+		return m.Amounts
+	}
+	return nil
+}
+
+func (m *DposDelegatorClaimsRewardsEvent) GetTotalRewardsClaimed() *types.BigUInt {
+	if m != nil {
+		return m.TotalRewardsClaimed
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Params)(nil), "dposv3.Params")
 	proto.RegisterType((*State)(nil), "dposv3.State")
@@ -3458,6 +3930,9 @@ func init() {
 	proto.RegisterType((*CheckAllDelegationsResponse)(nil), "dposv3.CheckAllDelegationsResponse")
 	proto.RegisterType((*CheckRewardDelegationRequest)(nil), "dposv3.CheckRewardDelegationRequest")
 	proto.RegisterType((*CheckRewardDelegationResponse)(nil), "dposv3.CheckRewardDelegationResponse")
+	proto.RegisterType((*DowntimeRecordRequest)(nil), "dposv3.DowntimeRecordRequest")
+	proto.RegisterType((*DowntimeRecordResponse)(nil), "dposv3.DowntimeRecordResponse")
+	proto.RegisterType((*DowntimeRecord)(nil), "dposv3.DowntimeRecord")
 	proto.RegisterType((*RegisterCandidateRequest)(nil), "dposv3.RegisterCandidateRequest")
 	proto.RegisterType((*ChangeCandidateFeeRequest)(nil), "dposv3.ChangeCandidateFeeRequest")
 	proto.RegisterType((*SetMinCandidateFeeRequest)(nil), "dposv3.SetMinCandidateFeeRequest")
@@ -3480,15 +3955,23 @@ func init() {
 	proto.RegisterType((*GetRequestBatchTallyRequest)(nil), "dposv3.GetRequestBatchTallyRequest")
 	proto.RegisterType((*RegisterReferrerRequest)(nil), "dposv3.RegisterReferrerRequest")
 	proto.RegisterType((*SetElectionCycleRequest)(nil), "dposv3.SetElectionCycleRequest")
+	proto.RegisterType((*SetDowntimePeriodRequest)(nil), "dposv3.SetDowntimePeriodRequest")
 	proto.RegisterType((*SetMaxYearlyRewardRequest)(nil), "dposv3.SetMaxYearlyRewardRequest")
 	proto.RegisterType((*SetRegistrationRequirementRequest)(nil), "dposv3.SetRegistrationRequirementRequest")
 	proto.RegisterType((*SetValidatorCountRequest)(nil), "dposv3.SetValidatorCountRequest")
 	proto.RegisterType((*SetOracleAddressRequest)(nil), "dposv3.SetOracleAddressRequest")
 	proto.RegisterType((*SetSlashingPercentagesRequest)(nil), "dposv3.SetSlashingPercentagesRequest")
+	proto.RegisterType((*UnjailRequest)(nil), "dposv3.UnjailRequest")
 	proto.RegisterType((*GetStateRequest)(nil), "dposv3.GetStateRequest")
 	proto.RegisterType((*GetStateResponse)(nil), "dposv3.GetStateResponse")
+	proto.RegisterType((*ClaimDelegatorRewardsRequest)(nil), "dposv3.ClaimDelegatorRewardsRequest")
+	proto.RegisterType((*ClaimDelegatorRewardsResponse)(nil), "dposv3.ClaimDelegatorRewardsResponse")
+	proto.RegisterType((*CheckDelegatorRewardsRequest)(nil), "dposv3.CheckDelegatorRewardsRequest")
+	proto.RegisterType((*CheckDelegatorRewardsResponse)(nil), "dposv3.CheckDelegatorRewardsResponse")
 	proto.RegisterType((*DposElectionEvent)(nil), "dposv3.DposElectionEvent")
 	proto.RegisterType((*DposSlashEvent)(nil), "dposv3.DposSlashEvent")
+	proto.RegisterType((*DposJailEvent)(nil), "dposv3.DposJailEvent")
+	proto.RegisterType((*DposUnjailEvent)(nil), "dposv3.DposUnjailEvent")
 	proto.RegisterType((*DposCandidateRegistersEvent)(nil), "dposv3.DposCandidateRegistersEvent")
 	proto.RegisterType((*DposCandidateUnregistersEvent)(nil), "dposv3.DposCandidateUnregistersEvent")
 	proto.RegisterType((*DposCandidateFeeChangeEvent)(nil), "dposv3.DposCandidateFeeChangeEvent")
@@ -3498,167 +3981,186 @@ func init() {
 	proto.RegisterType((*DposDelegatorConsolidatesEvent)(nil), "dposv3.DposDelegatorConsolidatesEvent")
 	proto.RegisterType((*DposDelegatorUnbondsEvent)(nil), "dposv3.DposDelegatorUnbondsEvent")
 	proto.RegisterType((*DposReferrerRegistersEvent)(nil), "dposv3.DposReferrerRegistersEvent")
+	proto.RegisterType((*DposDelegatorClaimsRewardsEvent)(nil), "dposv3.DposDelegatorClaimsRewardsEvent")
 	proto.RegisterEnum("dposv3.LocktimeTier", LocktimeTier_name, LocktimeTier_value)
 	proto.RegisterEnum("dposv3.Candidate_CandidateState", Candidate_CandidateState_name, Candidate_CandidateState_value)
 	proto.RegisterEnum("dposv3.Delegation_DelegationState", Delegation_DelegationState_name, Delegation_DelegationState_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/dposv3/dposv3.proto", fileDescriptor_dposv3_86526ba75562846c)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/dposv3/dposv3.proto", fileDescriptor_dposv3_23752595fe527cef)
 }
 
-var fileDescriptor_dposv3_86526ba75562846c = []byte{
-	// 2423 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x3a, 0xcd, 0x6e, 0x1b, 0xc9,
-	0xd1, 0x1e, 0x92, 0xa2, 0xc4, 0x92, 0x48, 0x91, 0xad, 0x1f, 0x52, 0x92, 0xf5, 0x7d, 0x72, 0x2f,
-	0xe2, 0x18, 0xce, 0x5a, 0xca, 0xca, 0x5e, 0x67, 0x77, 0x91, 0x83, 0x25, 0x8a, 0x92, 0x15, 0xcb,
-	0x92, 0x77, 0x48, 0x79, 0x11, 0x23, 0xc8, 0x60, 0x48, 0xb6, 0xa9, 0x81, 0x87, 0x33, 0xcc, 0x4c,
-	0xcb, 0x92, 0xf6, 0x90, 0x45, 0x80, 0x20, 0xc7, 0xe4, 0x90, 0x53, 0x0e, 0xb9, 0xed, 0x21, 0x40,
-	0x0e, 0x09, 0x90, 0x63, 0xde, 0x22, 0x2f, 0x90, 0x77, 0xc8, 0x13, 0x04, 0xdd, 0x33, 0x3d, 0xd3,
-	0xf3, 0x47, 0xd1, 0x5e, 0x39, 0xd8, 0x8b, 0x34, 0xdd, 0x55, 0x5d, 0x5d, 0x5d, 0x5d, 0x55, 0x5d,
-	0x3f, 0x84, 0x27, 0x03, 0x83, 0x9e, 0x9d, 0x77, 0x37, 0x7b, 0xf6, 0x70, 0xcb, 0xb4, 0xed, 0xa1,
-	0x45, 0xe8, 0x85, 0xed, 0xbc, 0xd9, 0x1a, 0xd8, 0x0f, 0xd8, 0x70, 0xab, 0x7b, 0x6e, 0x98, 0xd4,
-	0xb0, 0xb6, 0xe8, 0xd5, 0x88, 0xb8, 0x5b, 0xfd, 0x91, 0xed, 0xbe, 0x7d, 0xe8, 0xff, 0xdb, 0x1c,
-	0x39, 0x36, 0xb5, 0x51, 0xd1, 0x1b, 0xad, 0xfe, 0xf8, 0x1a, 0x4a, 0x1e, 0x05, 0xfe, 0xd7, 0x5b,
-	0x89, 0xff, 0x50, 0x80, 0xe2, 0x0b, 0xdd, 0xd1, 0x87, 0x2e, 0xfa, 0x21, 0xcc, 0xbf, 0xd5, 0x4d,
-	0xa3, 0xaf, 0x53, 0xdb, 0xd1, 0x7a, 0xf6, 0xb9, 0x45, 0x1b, 0xca, 0x86, 0x72, 0xaf, 0xa0, 0x56,
-	0x82, 0xe9, 0x26, 0x9b, 0x45, 0xdb, 0xb0, 0x44, 0x4c, 0xd2, 0xa3, 0x86, 0x6d, 0x69, 0xbd, 0xab,
-	0x9e, 0x49, 0x34, 0x93, 0x58, 0x03, 0x7a, 0xd6, 0xc8, 0x6d, 0x28, 0xf7, 0xf2, 0xea, 0x82, 0x00,
-	0x36, 0x19, 0xec, 0x88, 0x83, 0xd0, 0x4f, 0x61, 0xa9, 0x67, 0x1b, 0x96, 0xd6, 0xb3, 0x2d, 0xea,
-	0xe8, 0x3d, 0xaa, 0xe9, 0xfd, 0xbe, 0x43, 0x5c, 0xb7, 0x91, 0xdf, 0x50, 0xee, 0xcd, 0x6e, 0xcf,
-	0x6c, 0xee, 0x78, 0x63, 0x75, 0x81, 0xa1, 0x35, 0x7d, 0x2c, 0x7f, 0x12, 0x6d, 0x41, 0xc5, 0x76,
-	0x74, 0xb6, 0x93, 0x58, 0x56, 0x88, 0x2d, 0x2b, 0x7b, 0x70, 0xb1, 0xe0, 0x11, 0xd4, 0x86, 0xfa,
-	0xa5, 0x76, 0x45, 0x74, 0xc7, 0xbc, 0xd2, 0x1c, 0x72, 0xa1, 0x3b, 0xfd, 0xc6, 0x94, 0xbf, 0x66,
-	0xd7, 0x18, 0x9c, 0x1e, 0x5a, 0x54, 0x9d, 0x1f, 0xea, 0x97, 0x3f, 0xe7, 0x18, 0x2a, 0x47, 0x40,
-	0x4d, 0x68, 0x38, 0x64, 0x60, 0xb8, 0xd4, 0xd1, 0xf9, 0xe1, 0x1c, 0xf2, 0xab, 0x73, 0xc3, 0x21,
-	0x43, 0x62, 0xd1, 0x46, 0x31, 0xb6, 0xb8, 0x2e, 0x63, 0xaa, 0x21, 0x22, 0xda, 0x83, 0x95, 0x9e,
-	0xa3, 0xbb, 0x67, 0x9a, 0x6b, 0xea, 0xee, 0x99, 0x61, 0x0d, 0xb4, 0x11, 0x71, 0x7a, 0xc4, 0xa2,
-	0xfa, 0x80, 0x34, 0xa6, 0xe3, 0x54, 0x38, 0x6a, 0xdb, 0xc7, 0x7c, 0x11, 0x20, 0xa2, 0x23, 0x58,
-	0xef, 0x5e, 0x7d, 0xad, 0x5b, 0xd4, 0xb0, 0x48, 0x2a, 0xa5, 0x99, 0x18, 0xa5, 0xb5, 0x00, 0x3d,
-	0x85, 0xda, 0x7d, 0xa8, 0x0d, 0x99, 0xf0, 0x75, 0xab, 0xcf, 0x2e, 0x92, 0x68, 0xaf, 0x09, 0x69,
-	0x94, 0xf8, 0xe5, 0xce, 0x0f, 0x0d, 0xab, 0x29, 0xe6, 0xf7, 0x09, 0xc1, 0x7f, 0xca, 0xc1, 0x54,
-	0x9b, 0xea, 0x94, 0xa0, 0xbb, 0x50, 0x1c, 0x71, 0xd5, 0xe0, 0x7a, 0x30, 0xbb, 0x5d, 0xd9, 0xf4,
-	0x95, 0xce, 0x53, 0x18, 0xd5, 0x87, 0xa2, 0xfb, 0x00, 0x81, 0x86, 0xb8, 0x8d, 0xdc, 0x46, 0xfe,
-	0xde, 0xec, 0x36, 0x6c, 0xbe, 0x14, 0x53, 0xaa, 0x04, 0x45, 0x1f, 0x03, 0x32, 0x75, 0x97, 0x6a,
-	0x81, 0x02, 0x51, 0x63, 0x48, 0xb8, 0x12, 0xe4, 0xd5, 0x2a, 0x83, 0xb4, 0x7c, 0x40, 0xc7, 0x18,
-	0x12, 0xf4, 0x14, 0xd6, 0xa8, 0x4d, 0x75, 0x53, 0x0b, 0x15, 0xb3, 0x4f, 0x4c, 0x32, 0xe0, 0x42,
-	0x0f, 0x95, 0x40, 0xc8, 0x60, 0x85, 0x23, 0x07, 0x1b, 0xef, 0x85, 0xa8, 0xec, 0x56, 0x3c, 0x4a,
-	0x9e, 0x2e, 0x68, 0x7d, 0x76, 0x77, 0x46, 0xf7, 0x9c, 0x41, 0x13, 0x8a, 0x51, 0xe7, 0xa8, 0x9e,
-	0x52, 0xec, 0x49, 0x88, 0xf8, 0xdf, 0x0a, 0x2c, 0x1c, 0x5a, 0x06, 0x35, 0x74, 0xd3, 0xf8, 0x9a,
-	0x53, 0xf6, 0x24, 0xf5, 0x11, 0x4c, 0xb9, 0xec, 0xc3, 0x17, 0x54, 0x59, 0x08, 0x8a, 0x43, 0x55,
-	0x0f, 0x86, 0x3e, 0x01, 0x08, 0x2e, 0x40, 0x88, 0xa9, 0x26, 0x30, 0x83, 0x2b, 0x50, 0x25, 0x24,
-	0xf4, 0x08, 0x66, 0xe5, 0xf3, 0xe6, 0xf9, 0x1a, 0x24, 0xd6, 0x84, 0xe7, 0x53, 0x65, 0x34, 0xf4,
-	0x05, 0x00, 0xdb, 0xd1, 0x70, 0xa9, 0xd1, 0x63, 0x42, 0x62, 0x8b, 0x56, 0xc5, 0xa2, 0x40, 0x3a,
-	0x6d, 0x81, 0xa2, 0x4a, 0xd8, 0xf8, 0x5f, 0x79, 0x40, 0x49, 0x14, 0x84, 0x61, 0x5a, 0x58, 0x9e,
-	0x12, 0xb3, 0x3c, 0x01, 0x40, 0x0f, 0xa1, 0x7a, 0x71, 0x66, 0x50, 0x62, 0x1a, 0x2e, 0xd5, 0xf4,
-	0x21, 0x77, 0x20, 0xb9, 0xb8, 0xc9, 0x05, 0x18, 0x3b, 0x1c, 0x01, 0x7d, 0x0e, 0x65, 0xd3, 0xee,
-	0xbd, 0x61, 0x5a, 0xa0, 0x51, 0x83, 0x38, 0x5c, 0x15, 0x2a, 0xdb, 0x8b, 0x82, 0xdd, 0x23, 0x1f,
-	0xd8, 0x31, 0x88, 0xa3, 0xce, 0x99, 0xd2, 0x88, 0xed, 0x17, 0x9e, 0x5a, 0xe3, 0x57, 0x96, 0xd0,
-	0x88, 0xf9, 0x10, 0xa3, 0xc3, 0x10, 0xd8, 0x22, 0x6e, 0x4d, 0xb2, 0x29, 0x25, 0xfc, 0x02, 0xc7,
-	0x90, 0xcc, 0xe7, 0x11, 0x2c, 0x3b, 0x84, 0x0d, 0xcc, 0x2b, 0x6d, 0x68, 0xb8, 0x2e, 0xe9, 0x6b,
-	0x5d, 0xc6, 0x8a, 0xcb, 0xbd, 0x42, 0x41, 0x5d, 0x14, 0xd0, 0xe7, 0x1c, 0xb8, 0xcb, 0x61, 0xe8,
-	0x09, 0xd4, 0xcf, 0x47, 0xdc, 0xda, 0x12, 0x62, 0x89, 0xbb, 0x81, 0x25, 0x0f, 0xf1, 0xab, 0x98,
-	0x70, 0xf6, 0x61, 0xd1, 0xa7, 0x10, 0x95, 0xd1, 0xcc, 0x18, 0x19, 0x21, 0x6f, 0x85, 0x3c, 0x87,
-	0xff, 0x98, 0x87, 0x52, 0xa0, 0x60, 0x13, 0xdd, 0x65, 0x1d, 0xa6, 0x47, 0xe7, 0x5d, 0xed, 0x0d,
-	0xb9, 0xe2, 0x57, 0x38, 0xa7, 0x16, 0x47, 0xe7, 0xdd, 0x67, 0xe4, 0x0a, 0x55, 0x21, 0xcf, 0x7c,
-	0x47, 0x9e, 0x9f, 0x9b, 0x7d, 0x32, 0x54, 0x8b, 0x5c, 0x70, 0x8f, 0x52, 0xe0, 0xb3, 0x45, 0x8b,
-	0x5c, 0xec, 0x13, 0x82, 0x1e, 0x0b, 0xa3, 0x98, 0xe2, 0xec, 0x6e, 0x24, 0x54, 0x3d, 0xfc, 0x8a,
-	0xd8, 0x09, 0x82, 0x82, 0xa5, 0x0f, 0x09, 0x97, 0x6d, 0x49, 0xe5, 0xdf, 0x68, 0x83, 0x19, 0x82,
-	0xdb, 0x73, 0x8c, 0x11, 0x37, 0xd8, 0x69, 0x0e, 0x92, 0xa7, 0x50, 0x03, 0xa6, 0x2f, 0x48, 0xd7,
-	0x35, 0xa8, 0xe7, 0x1a, 0x4b, 0xaa, 0x18, 0xa2, 0xc7, 0x50, 0x67, 0x6f, 0x81, 0x43, 0x5e, 0x13,
-	0xc7, 0xd1, 0x4d, 0xf9, 0xe6, 0x3d, 0x17, 0xb8, 0x34, 0xd4, 0x2f, 0x55, 0x1f, 0x1a, 0xde, 0x3a,
-	0xfe, 0x25, 0x54, 0xa2, 0x0c, 0xa2, 0x0a, 0x80, 0xda, 0x3a, 0x38, 0x6c, 0x77, 0x5a, 0x6a, 0x6b,
-	0xaf, 0x7a, 0x0b, 0xd5, 0xa0, 0x7c, 0x7a, 0x2c, 0x66, 0x0e, 0x8f, 0x0f, 0xaa, 0x0a, 0xaa, 0xc3,
-	0xc2, 0xce, 0xee, 0xc9, 0x69, 0x47, 0xeb, 0x9c, 0x68, 0xcd, 0xa7, 0x3b, 0xc7, 0x07, 0x2d, 0x6d,
-	0xbf, 0xd5, 0xaa, 0xe6, 0x50, 0x15, 0xe6, 0xf8, 0xf8, 0xf0, 0xf8, 0x80, 0xcf, 0xe4, 0xf1, 0x37,
-	0x80, 0x22, 0xf4, 0x3d, 0x4b, 0xfb, 0x0c, 0x4a, 0x81, 0x39, 0xfa, 0xf7, 0x33, 0xce, 0x76, 0x43,
-	0x64, 0xb4, 0x05, 0xa5, 0xc0, 0x75, 0xf8, 0x86, 0x97, 0xe2, 0x5e, 0x42, 0x1c, 0xbc, 0x0b, 0xe5,
-	0x60, 0xfe, 0xc8, 0x70, 0x69, 0xcc, 0x43, 0x29, 0x13, 0x78, 0x28, 0xfc, 0xcf, 0x02, 0x40, 0xe8,
-	0x87, 0xd0, 0x5d, 0x28, 0xf9, 0x16, 0x67, 0x3b, 0x09, 0xed, 0x0a, 0x41, 0x0c, 0x2f, 0x70, 0xe9,
-	0x81, 0x93, 0x08, 0xf0, 0x02, 0x10, 0x33, 0x57, 0xdf, 0x02, 0x42, 0xf4, 0x78, 0xc4, 0x30, 0xef,
-	0x61, 0x04, 0xc2, 0x41, 0x8b, 0x30, 0x65, 0x58, 0x7d, 0x72, 0xe9, 0xeb, 0xa3, 0x37, 0x40, 0x1b,
-	0x50, 0xf4, 0xad, 0x2f, 0xfe, 0x94, 0xfb, 0xf3, 0xe8, 0x01, 0x94, 0xfd, 0xcd, 0x32, 0xcc, 0x74,
-	0xce, 0x03, 0x67, 0xb9, 0xae, 0x99, 0x89, 0x5d, 0x57, 0x96, 0x61, 0x97, 0xde, 0xcd, 0xb0, 0xd1,
-	0x1a, 0x94, 0x18, 0x01, 0xef, 0x11, 0x05, 0x7e, 0xda, 0x19, 0x36, 0xc1, 0x1f, 0xcf, 0xcf, 0x84,
-	0xfd, 0xcd, 0x72, 0xaa, 0x38, 0xf9, 0x6c, 0x48, 0x9f, 0x11, 0x0b, 0x5c, 0x85, 0x19, 0xcf, 0x5a,
-	0x88, 0xd3, 0x98, 0xe3, 0xc6, 0x14, 0x8c, 0xf1, 0x33, 0x98, 0x8f, 0xad, 0x42, 0xb3, 0x30, 0xbd,
-	0x7b, 0x72, 0xbc, 0xc7, 0x0c, 0xe0, 0x16, 0x02, 0x28, 0xb2, 0x41, 0x6b, 0xaf, 0xaa, 0xa0, 0x32,
-	0x94, 0x4e, 0x8f, 0x05, 0x88, 0x9b, 0x80, 0xda, 0xda, 0x6b, 0x1d, 0xb5, 0x0e, 0x76, 0x3a, 0x6c,
-	0x26, 0x8f, 0x2f, 0x64, 0x62, 0x87, 0xfc, 0x9a, 0x22, 0x9a, 0xa1, 0x64, 0x6b, 0x46, 0x44, 0xd3,
-	0x72, 0xd9, 0x9a, 0x16, 0x28, 0x43, 0x5e, 0x52, 0x06, 0xfc, 0x0c, 0x2a, 0xe1, 0xc6, 0x5c, 0xf7,
-	0x3f, 0x8f, 0x3e, 0xb5, 0x9e, 0xf2, 0xd7, 0x93, 0x32, 0xe3, 0x5c, 0x46, 0xde, 0x5b, 0x4c, 0x60,
-	0x7e, 0xef, 0xc5, 0x49, 0x9b, 0x05, 0x06, 0x2c, 0x10, 0x24, 0x2e, 0xfd, 0x10, 0xa1, 0x13, 0xfe,
-	0xab, 0x12, 0x48, 0x8b, 0x88, 0x7d, 0x3e, 0x85, 0x5a, 0x18, 0x1a, 0x65, 0x79, 0xf5, 0x6a, 0x80,
-	0x22, 0xc2, 0xe3, 0xd0, 0x16, 0x72, 0x19, 0xb6, 0xf0, 0x51, 0xda, 0xbb, 0x5c, 0x88, 0xa9, 0xb1,
-	0xac, 0x27, 0x85, 0x98, 0x9e, 0xfc, 0x3e, 0x07, 0x35, 0x95, 0xf4, 0x6f, 0x86, 0xdf, 0x5d, 0x68,
-	0xbc, 0xb6, 0x9d, 0x21, 0x71, 0xb4, 0xe4, 0xea, 0xf8, 0xdd, 0x2f, 0x7b, 0x98, 0x2f, 0xe3, 0x34,
-	0x52, 0x15, 0x41, 0x92, 0x44, 0x21, 0x43, 0x12, 0xf7, 0xa1, 0xc6, 0xde, 0xb7, 0xa8, 0x34, 0xa6,
-	0xbc, 0xd8, 0xd9, 0x22, 0x17, 0x47, 0x59, 0x02, 0x29, 0xc6, 0x04, 0xf2, 0x12, 0xd6, 0x9b, 0xb6,
-	0xe5, 0xda, 0x9c, 0x2d, 0x22, 0xc5, 0xa6, 0xdf, 0x4d, 0x36, 0xf8, 0xd7, 0x50, 0x3e, 0xb5, 0xba,
-	0xb6, 0xd5, 0xff, 0xe0, 0x3a, 0x91, 0x6e, 0x4a, 0x7f, 0x53, 0x60, 0x25, 0x08, 0x5c, 0xc2, 0x47,
-	0x22, 0x64, 0x26, 0xcc, 0x3a, 0x32, 0x99, 0x09, 0x50, 0x26, 0x67, 0xe6, 0xfd, 0x03, 0x47, 0xfc,
-	0x0a, 0xee, 0xa8, 0x64, 0x68, 0xbf, 0x0d, 0xe3, 0x2d, 0xd2, 0xbf, 0x21, 0xc6, 0xf1, 0xdf, 0x15,
-	0x58, 0x6d, 0x9e, 0xe9, 0xd6, 0x20, 0x24, 0x7e, 0x68, 0xbd, 0xb6, 0xbf, 0xcf, 0xe2, 0xf8, 0x9d,
-	0x02, 0xcb, 0xcd, 0x33, 0xd2, 0x7b, 0x23, 0xe5, 0x13, 0xdf, 0x4d, 0x95, 0x3e, 0x85, 0x5a, 0xe0,
-	0x80, 0x33, 0xed, 0xb4, 0x1a, 0xa0, 0x08, 0xd9, 0x7d, 0xab, 0x40, 0x3d, 0xc1, 0x88, 0x3b, 0xb2,
-	0x2d, 0x97, 0x48, 0x12, 0x50, 0x32, 0x24, 0xf0, 0x09, 0xcc, 0x5f, 0x10, 0x63, 0x70, 0x46, 0x49,
-	0x3f, 0x2b, 0xfb, 0xa8, 0x08, 0x04, 0xff, 0x05, 0x7f, 0xaf, 0xf4, 0x0a, 0x2f, 0xc1, 0x02, 0xe7,
-	0xd2, 0xcb, 0x0f, 0x85, 0xf9, 0xe2, 0x5f, 0xc0, 0x62, 0x74, 0xda, 0xe7, 0x7c, 0x6c, 0xe6, 0xa9,
-	0x4c, 0x9a, 0x79, 0x9e, 0xc0, 0x32, 0x4f, 0x60, 0x52, 0xef, 0x28, 0x29, 0x6c, 0xe5, 0x5a, 0x61,
-	0x5b, 0x50, 0x4f, 0x10, 0xfc, 0x80, 0xb2, 0xc6, 0x6d, 0x66, 0x17, 0xa4, 0xf7, 0x66, 0xc7, 0x34,
-	0xd3, 0x7d, 0xdf, 0xfb, 0x1c, 0xe2, 0x2f, 0x0a, 0xac, 0xa5, 0x52, 0xfd, 0xfe, 0x69, 0xcd, 0x29,
-	0xdc, 0x96, 0xd4, 0xe3, 0xa6, 0x4c, 0x0d, 0xb7, 0x61, 0x3d, 0x83, 0xac, 0x2f, 0x82, 0x6d, 0x80,
-	0x90, 0x0d, 0x9f, 0x60, 0x1a, 0xb3, 0x12, 0x16, 0xfe, 0x8f, 0x02, 0x0d, 0x95, 0x97, 0xb7, 0x88,
-	0x93, 0x70, 0x8c, 0x52, 0x6a, 0xa8, 0xa4, 0xa5, 0x86, 0xb9, 0x30, 0x35, 0x14, 0x99, 0x5c, 0x3e,
-	0x3b, 0x93, 0x2b, 0x8c, 0xcd, 0xe4, 0xa6, 0xa2, 0x99, 0x5c, 0x22, 0x28, 0x29, 0xa6, 0x04, 0x25,
-	0x63, 0xd2, 0xbd, 0xe9, 0x71, 0xe9, 0xde, 0x03, 0x58, 0xf1, 0x1c, 0xb7, 0x5c, 0x0d, 0x13, 0x87,
-	0xf6, 0xcf, 0xa6, 0x04, 0x67, 0xc3, 0x07, 0xb0, 0xd2, 0x26, 0xf4, 0x79, 0xb4, 0x78, 0x26, 0xd0,
-	0x53, 0xeb, 0x6d, 0x4a, 0x7a, 0xbd, 0xed, 0x5b, 0x05, 0x56, 0x4f, 0x79, 0x68, 0x1f, 0x4c, 0xcb,
-	0x2f, 0x86, 0x90, 0xa1, 0x92, 0x2d, 0xc3, 0xdc, 0x58, 0x19, 0xe6, 0x27, 0xce, 0x86, 0x0b, 0xe3,
-	0xc4, 0x73, 0x1b, 0x56, 0x4f, 0x2d, 0x27, 0x43, 0x29, 0xf0, 0x2a, 0x34, 0x58, 0xce, 0x71, 0x6a,
-	0x51, 0xc3, 0x14, 0x15, 0x3c, 0x01, 0x7b, 0x06, 0x2b, 0x29, 0x30, 0x5f, 0x3d, 0x37, 0x61, 0x81,
-	0x5f, 0xe7, 0x39, 0x83, 0x06, 0x55, 0x41, 0x7e, 0xda, 0xbc, 0x5a, 0xa3, 0xf1, 0x75, 0xb8, 0x0e,
-	0x4b, 0x2c, 0x5c, 0x0f, 0xa2, 0xbb, 0xc0, 0xfd, 0x76, 0x60, 0x39, 0x0e, 0xf0, 0xb7, 0x88, 0x96,
-	0xc3, 0x94, 0x77, 0x2a, 0x87, 0xf9, 0xdb, 0x05, 0xe7, 0x8d, 0x6f, 0x27, 0x03, 0xc2, 0xed, 0x12,
-	0x49, 0xf4, 0x6a, 0x22, 0x89, 0x96, 0xb6, 0x93, 0xb2, 0xe9, 0x27, 0x1e, 0xd5, 0x14, 0x07, 0x79,
-	0x57, 0x4e, 0xee, 0x13, 0x69, 0x51, 0x98, 0xd3, 0xff, 0x56, 0x81, 0x7a, 0x82, 0x84, 0xcf, 0xd9,
-	0xa3, 0xb4, 0x14, 0xe7, 0xda, 0x6a, 0x62, 0x5a, 0x99, 0x2d, 0x77, 0x4d, 0x99, 0x0d, 0xaf, 0xc1,
-	0x0a, 0xe3, 0x22, 0xd5, 0xd9, 0xe3, 0x3e, 0xac, 0xa6, 0x01, 0x7d, 0x2e, 0xf7, 0xa1, 0xc2, 0x4b,
-	0x65, 0x8e, 0x3f, 0x21, 0x18, 0xfd, 0xff, 0x20, 0x94, 0x49, 0x3f, 0x9e, 0x5a, 0x66, 0xcb, 0xc4,
-	0xc8, 0xc5, 0x7f, 0x56, 0x60, 0x6e, 0x57, 0xa7, 0xbd, 0x33, 0x21, 0xc2, 0x0e, 0x2c, 0x84, 0x85,
-	0xb8, 0xb8, 0x30, 0xef, 0x08, 0xea, 0x99, 0xa1, 0xec, 0xd3, 0x5b, 0x2a, 0xba, 0x48, 0x00, 0xd1,
-	0xc7, 0x50, 0x18, 0x12, 0xaa, 0xfb, 0x22, 0x69, 0x08, 0x32, 0xf2, 0xce, 0xcf, 0x09, 0xd5, 0x55,
-	0x8e, 0xb5, 0x5b, 0x82, 0xe9, 0x91, 0x7e, 0x65, 0xda, 0x7a, 0x1f, 0x0f, 0xa1, 0x1a, 0x47, 0x42,
-	0x77, 0x60, 0x8e, 0x17, 0x16, 0x35, 0xeb, 0x7c, 0xd8, 0x25, 0x8e, 0xef, 0x32, 0x66, 0xf9, 0xdc,
-	0x31, 0x9f, 0x42, 0x2b, 0x30, 0x43, 0x2f, 0x35, 0x2f, 0x0e, 0xf7, 0x5c, 0xed, 0x34, 0xbd, 0xf4,
-	0x52, 0x67, 0x5e, 0x0d, 0x18, 0x68, 0x72, 0x8c, 0x3e, 0x63, 0xda, 0x03, 0x0e, 0x64, 0x6e, 0xa6,
-	0xe6, 0x6f, 0xc5, 0xb7, 0xed, 0xe8, 0xa6, 0x79, 0x85, 0x1e, 0xc2, 0x32, 0x2f, 0xc7, 0xbb, 0x84,
-	0x58, 0x5a, 0xca, 0xd6, 0x0b, 0x0c, 0xda, 0x26, 0xc4, 0xda, 0x95, 0x58, 0xf8, 0x91, 0x5f, 0xc3,
-	0xe7, 0x8b, 0x62, 0xcc, 0xcc, 0x8b, 0x05, 0x1d, 0x9f, 0xa9, 0x07, 0xb0, 0x10, 0x22, 0xc7, 0xd9,
-	0xab, 0x0a, 0xec, 0x23, 0xc1, 0xe6, 0x17, 0x30, 0x27, 0x73, 0x89, 0xee, 0xc3, 0x54, 0x97, 0x7d,
-	0xf8, 0x4a, 0xb0, 0x98, 0x26, 0x5f, 0xd5, 0x43, 0xc1, 0xeb, 0xb0, 0x76, 0x40, 0x68, 0xe2, 0x90,
-	0x42, 0xed, 0xbe, 0x84, 0xba, 0x78, 0xd4, 0x54, 0x3f, 0x29, 0x1b, 0xe7, 0x64, 0xa5, 0x32, 0x69,
-	0x2e, 0xa3, 0x4c, 0x8a, 0x9f, 0x40, 0xbd, 0x4d, 0x82, 0x96, 0x05, 0xef, 0x77, 0x09, 0x92, 0x3f,
-	0x80, 0x4a, 0xb4, 0x49, 0xe6, 0xfb, 0xb4, 0x72, 0xa4, 0x3b, 0x86, 0xbf, 0xf4, 0x9e, 0x91, 0x68,
-	0x23, 0x4a, 0xd0, 0x48, 0xed, 0x62, 0x29, 0xd7, 0x74, 0xb1, 0xf0, 0x19, 0xdc, 0x69, 0x33, 0x31,
-	0xa4, 0xb6, 0xa7, 0x04, 0xe9, 0x71, 0xad, 0x2e, 0x65, 0xc2, 0x56, 0x17, 0x6e, 0x42, 0xa3, 0x4d,
-	0x42, 0x97, 0xcb, 0xbb, 0x83, 0x62, 0x83, 0x8c, 0x6e, 0x62, 0x3e, 0xde, 0x4d, 0xc4, 0x3f, 0xe3,
-	0x32, 0x3c, 0x91, 0xdb, 0x77, 0x82, 0x46, 0xb2, 0xed, 0xa7, 0x8c, 0x6d, 0xfb, 0xe1, 0x7f, 0x28,
-	0xb0, 0xde, 0x26, 0x34, 0xd9, 0x01, 0x0b, 0x48, 0x8e, 0xed, 0xce, 0x29, 0x37, 0xd6, 0x9d, 0xcb,
-	0xbd, 0x43, 0x77, 0x0e, 0xd7, 0x60, 0xfe, 0x80, 0x50, 0xaf, 0x02, 0xe7, 0xeb, 0xea, 0x4f, 0xa0,
-	0x1a, 0x4e, 0xf9, 0x8e, 0x71, 0x92, 0x26, 0x13, 0x7e, 0x0c, 0xb5, 0xbd, 0x91, 0xed, 0x0a, 0x95,
-	0x6c, 0xbd, 0x25, 0x16, 0x9d, 0xc0, 0xad, 0xe0, 0x21, 0x54, 0xd8, 0x3a, 0xce, 0x9d, 0xb7, 0x68,
-	0xd2, 0x42, 0x5c, 0x5a, 0x47, 0x25, 0x77, 0x4d, 0x47, 0x05, 0xb7, 0x61, 0x8d, 0x6d, 0x27, 0xf9,
-	0x58, 0xcf, 0x30, 0x5d, 0x6f, 0xef, 0x49, 0x5a, 0x14, 0x89, 0x70, 0x13, 0x37, 0x61, 0x3d, 0x42,
-	0x34, 0x8c, 0x57, 0x26, 0x27, 0x8b, 0x5f, 0xc5, 0x38, 0xdb, 0x27, 0xc4, 0x0b, 0x0b, 0x27, 0xe7,
-	0x4c, 0xea, 0x88, 0xe4, 0xe4, 0x8e, 0x08, 0xde, 0x85, 0xdb, 0x8c, 0x76, 0x4a, 0xb4, 0x37, 0x39,
-	0x7f, 0xdf, 0x78, 0xfc, 0xed, 0x89, 0x54, 0x48, 0x54, 0x04, 0xdf, 0x41, 0x72, 0xd7, 0x57, 0x13,
-	0xe4, 0x3a, 0x56, 0x3e, 0x56, 0xc7, 0xfa, 0x8d, 0xe2, 0x89, 0x39, 0xe0, 0x20, 0xac, 0xf2, 0xfd,
-	0xcf, 0x78, 0x30, 0xe1, 0xff, 0x22, 0x2c, 0x48, 0x85, 0xb5, 0x77, 0xe0, 0x61, 0xc2, 0x26, 0x04,
-	0xd6, 0x61, 0x25, 0xb2, 0x9b, 0x57, 0x6e, 0xbb, 0xc9, 0xc3, 0xe2, 0x0e, 0xac, 0xb2, 0x2d, 0xc2,
-	0x77, 0x29, 0xa2, 0xb7, 0xef, 0xf9, 0x3c, 0xdd, 0x3f, 0x84, 0xb9, 0x48, 0x79, 0xb2, 0x0c, 0xa5,
-	0xce, 0x61, 0x4b, 0xd5, 0x5e, 0xb5, 0xd4, 0x93, 0xea, 0x2d, 0x34, 0x07, 0x33, 0x7c, 0x78, 0x72,
-	0xdc, 0xaa, 0x2a, 0xc1, 0xa8, 0xf3, 0xd5, 0x49, 0x35, 0x87, 0x2a, 0x00, 0xde, 0xe8, 0xa9, 0xda,
-	0x6a, 0x55, 0xf3, 0xdd, 0x22, 0xff, 0xb9, 0xc8, 0xc3, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0x9e,
-	0x58, 0x6f, 0x5b, 0xac, 0x22, 0x00, 0x00,
+var fileDescriptor_dposv3_23752595fe527cef = []byte{
+	// 2706 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x1a, 0xcb, 0x6e, 0x1b, 0xc9,
+	0xd1, 0x43, 0x52, 0x0f, 0x96, 0x44, 0x8a, 0x6c, 0x59, 0x22, 0x25, 0x59, 0xbb, 0x72, 0x2f, 0xb2,
+	0x31, 0x9c, 0xb5, 0x95, 0xb5, 0xbd, 0x0f, 0x2f, 0x16, 0x88, 0x25, 0x92, 0x96, 0xb5, 0x96, 0x25,
+	0xef, 0x90, 0xf2, 0x22, 0x8b, 0x20, 0x83, 0x21, 0xd9, 0xa6, 0x66, 0x3d, 0x9c, 0x61, 0x66, 0x46,
+	0xa6, 0xb5, 0x87, 0x24, 0x87, 0x20, 0xc7, 0x5c, 0x72, 0xca, 0x21, 0xb7, 0x1c, 0x02, 0xe4, 0x90,
+	0x00, 0xb9, 0x04, 0xc8, 0x77, 0xe4, 0x9c, 0x7b, 0x8e, 0x41, 0x3e, 0x20, 0xe8, 0xd7, 0x4c, 0xcf,
+	0x83, 0x34, 0xfd, 0x58, 0x60, 0x2f, 0xd2, 0x74, 0x57, 0x75, 0x75, 0x75, 0x75, 0x55, 0x75, 0x3d,
+	0x08, 0xf7, 0x06, 0x56, 0x70, 0x76, 0xde, 0xbd, 0xd9, 0x73, 0x87, 0xbb, 0xb6, 0xeb, 0x0e, 0x1d,
+	0x12, 0x8c, 0x5d, 0xef, 0xd9, 0xee, 0xc0, 0xbd, 0x41, 0x87, 0xbb, 0xdd, 0x73, 0xcb, 0x0e, 0x2c,
+	0x67, 0x37, 0xb8, 0x18, 0x11, 0x7f, 0xb7, 0x3f, 0x72, 0xfd, 0xe7, 0xb7, 0xc5, 0xbf, 0x9b, 0x23,
+	0xcf, 0x0d, 0x5c, 0x34, 0xcf, 0x47, 0x9b, 0x3f, 0x7e, 0x09, 0x25, 0x4e, 0x81, 0xfd, 0xe5, 0x2b,
+	0xf1, 0x3f, 0x0a, 0x30, 0xff, 0xd8, 0xf4, 0xcc, 0xa1, 0x8f, 0x7e, 0x08, 0x2b, 0xcf, 0x4d, 0xdb,
+	0xea, 0x9b, 0x81, 0xeb, 0x19, 0x3d, 0xf7, 0xdc, 0x09, 0xea, 0xda, 0x8e, 0x76, 0xad, 0xa0, 0x97,
+	0xc3, 0xe9, 0x06, 0x9d, 0x45, 0xb7, 0x60, 0x8d, 0xd8, 0xa4, 0x17, 0x58, 0xae, 0x63, 0xf4, 0x2e,
+	0x7a, 0x36, 0x31, 0x6c, 0xe2, 0x0c, 0x82, 0xb3, 0x7a, 0x6e, 0x47, 0xbb, 0x96, 0xd7, 0x57, 0x25,
+	0xb0, 0x41, 0x61, 0x47, 0x0c, 0x84, 0x3e, 0x87, 0xb5, 0x9e, 0x6b, 0x39, 0x46, 0xcf, 0x75, 0x02,
+	0xcf, 0xec, 0x05, 0x86, 0xd9, 0xef, 0x7b, 0xc4, 0xf7, 0xeb, 0xf9, 0x1d, 0xed, 0xda, 0xd2, 0xad,
+	0xc5, 0x9b, 0x7b, 0x7c, 0xac, 0xaf, 0x52, 0xb4, 0x86, 0xc0, 0x12, 0x93, 0x68, 0x17, 0xca, 0xae,
+	0x67, 0xd2, 0x9d, 0xe4, 0xb2, 0x42, 0x62, 0x59, 0x89, 0xc3, 0xe5, 0x82, 0x3b, 0x50, 0x1d, 0x9a,
+	0x2f, 0x8c, 0x0b, 0x62, 0x7a, 0xf6, 0x85, 0xe1, 0x91, 0xb1, 0xe9, 0xf5, 0xeb, 0x73, 0x62, 0xcd,
+	0xbe, 0x35, 0x38, 0x3d, 0x74, 0x02, 0x7d, 0x65, 0x68, 0xbe, 0xf8, 0x29, 0xc3, 0xd0, 0x19, 0x02,
+	0x6a, 0x40, 0xdd, 0x23, 0x03, 0xcb, 0x0f, 0x3c, 0x93, 0x1d, 0xce, 0x23, 0xbf, 0x38, 0xb7, 0x3c,
+	0x32, 0x24, 0x4e, 0x50, 0x9f, 0x4f, 0x2c, 0xae, 0xa9, 0x98, 0x7a, 0x84, 0x88, 0x9a, 0xb0, 0xd1,
+	0xf3, 0x4c, 0xff, 0xcc, 0xf0, 0x6d, 0xd3, 0x3f, 0xb3, 0x9c, 0x81, 0x31, 0x22, 0x5e, 0x8f, 0x38,
+	0x81, 0x39, 0x20, 0xf5, 0x85, 0x24, 0x15, 0x86, 0xda, 0x16, 0x98, 0x8f, 0x43, 0x44, 0x74, 0x04,
+	0xdb, 0xdd, 0x8b, 0x6f, 0x4d, 0x27, 0xb0, 0x1c, 0x92, 0x49, 0x69, 0x31, 0x41, 0x69, 0x2b, 0x44,
+	0xcf, 0xa0, 0x76, 0x1d, 0xaa, 0x43, 0x2a, 0x7c, 0xd3, 0xe9, 0xd3, 0x8b, 0x24, 0xc6, 0x53, 0x42,
+	0xea, 0x45, 0x76, 0xb9, 0x2b, 0x43, 0xcb, 0x69, 0xc8, 0xf9, 0xfb, 0x84, 0x50, 0x35, 0xe8, 0xbb,
+	0x63, 0x27, 0xb0, 0x86, 0x84, 0xee, 0x67, 0xb9, 0xfd, 0x3a, 0x70, 0x35, 0x90, 0xd3, 0x8f, 0xd9,
+	0x2c, 0xfe, 0x43, 0x0e, 0xe6, 0xda, 0x81, 0x19, 0x10, 0xf4, 0x3e, 0xcc, 0x8f, 0x98, 0x0e, 0x31,
+	0x85, 0x59, 0xba, 0x55, 0xbe, 0x29, 0xb4, 0x93, 0x6b, 0x96, 0x2e, 0xa0, 0xe8, 0x3a, 0x40, 0xa8,
+	0x4a, 0x7e, 0x3d, 0xb7, 0x93, 0xbf, 0xb6, 0x74, 0x0b, 0x6e, 0x3e, 0x91, 0x53, 0xba, 0x02, 0x45,
+	0x1f, 0x00, 0xb2, 0x4d, 0x3f, 0x30, 0x42, 0x4d, 0xa3, 0x3b, 0x33, 0x6d, 0xc9, 0xeb, 0x15, 0x0a,
+	0x69, 0x09, 0x40, 0xc7, 0x1a, 0x12, 0xf4, 0x00, 0xb6, 0x02, 0x37, 0x30, 0x6d, 0x23, 0xd2, 0xe0,
+	0x3e, 0xb1, 0xc9, 0x80, 0xdd, 0x4e, 0xa4, 0x2d, 0x52, 0x58, 0x1b, 0x0c, 0x39, 0xdc, 0xb8, 0x19,
+	0xa1, 0xd2, 0xeb, 0xe3, 0x94, 0xb8, 0xd2, 0x18, 0x7d, 0x7a, 0xc9, 0x56, 0xf7, 0x9c, 0x42, 0x53,
+	0x1a, 0x54, 0x63, 0xa8, 0x5c, 0x7b, 0x9a, 0x0a, 0x22, 0xfe, 0xb7, 0x06, 0xab, 0x87, 0x8e, 0x15,
+	0x58, 0xa6, 0x6d, 0x7d, 0xcb, 0x28, 0x73, 0x49, 0xbd, 0x07, 0x73, 0x3e, 0xfd, 0x10, 0x82, 0x2a,
+	0x49, 0x41, 0x31, 0xa8, 0xce, 0x61, 0xe8, 0x43, 0x80, 0xf0, 0xa6, 0xa4, 0x98, 0xaa, 0x12, 0x33,
+	0xbc, 0x2b, 0x5d, 0x41, 0x42, 0x77, 0x60, 0x49, 0x3d, 0x6f, 0x9e, 0xad, 0x41, 0x72, 0x4d, 0x74,
+	0x3e, 0x5d, 0x45, 0x43, 0x9f, 0x01, 0xd0, 0x1d, 0x2d, 0x3f, 0xb0, 0x7a, 0x54, 0x48, 0x74, 0xd1,
+	0xa6, 0x5c, 0x14, 0x4a, 0xa7, 0x2d, 0x51, 0x74, 0x05, 0x1b, 0xff, 0x27, 0x0f, 0x28, 0x8d, 0x82,
+	0x30, 0x2c, 0x48, 0x13, 0xd5, 0x12, 0x26, 0x2a, 0x01, 0xe8, 0x36, 0x54, 0xc6, 0x67, 0x56, 0x40,
+	0x6c, 0xcb, 0x0f, 0x0c, 0x73, 0xc8, 0x3c, 0x4d, 0x2e, 0x69, 0x9b, 0x21, 0xc6, 0x1e, 0x43, 0x40,
+	0x77, 0xa1, 0x64, 0xbb, 0xbd, 0x67, 0x4c, 0x2d, 0x03, 0x8b, 0x78, 0x4c, 0x15, 0xca, 0xb7, 0x2e,
+	0x4b, 0x76, 0x8f, 0x04, 0xb0, 0x63, 0x11, 0x4f, 0x5f, 0xb6, 0x95, 0x11, 0xdd, 0x2f, 0x3a, 0xb5,
+	0xc1, 0xae, 0x2c, 0xa5, 0x11, 0x2b, 0x11, 0x46, 0x87, 0x22, 0xd0, 0x45, 0xcc, 0xec, 0x54, 0x9b,
+	0x4b, 0x39, 0x10, 0x86, 0xa1, 0xd8, 0xd9, 0x1d, 0x58, 0xf7, 0x08, 0x1d, 0xd8, 0x17, 0xc6, 0xd0,
+	0xf2, 0x7d, 0xd2, 0x37, 0xba, 0x94, 0x15, 0x9f, 0xb9, 0x8f, 0x82, 0x7e, 0x59, 0x42, 0x1f, 0x31,
+	0xe0, 0x3e, 0x83, 0xa1, 0x7b, 0x50, 0x3b, 0x1f, 0x31, 0xb3, 0x4c, 0x89, 0x25, 0xe9, 0x2f, 0xd6,
+	0x38, 0xe2, 0x57, 0x09, 0xe1, 0xdc, 0x87, 0xcb, 0x82, 0x42, 0x5c, 0x46, 0x8b, 0x53, 0x64, 0x84,
+	0xf8, 0x0a, 0x75, 0x0e, 0xad, 0xc3, 0xfc, 0x37, 0xa6, 0x65, 0x93, 0x3e, 0x73, 0x0e, 0x8b, 0xba,
+	0x18, 0xe1, 0xdf, 0xe7, 0xa1, 0x18, 0x2a, 0xde, 0x4c, 0x77, 0x5c, 0x83, 0x85, 0xd1, 0x79, 0xd7,
+	0x78, 0x46, 0x2e, 0xd8, 0xd5, 0x2e, 0xeb, 0xf3, 0xa3, 0xf3, 0xee, 0x43, 0x72, 0x81, 0x2a, 0x90,
+	0xa7, 0xce, 0x27, 0xcf, 0xe4, 0x41, 0x3f, 0x29, 0xaa, 0x43, 0xc6, 0xcc, 0x25, 0x15, 0xd8, 0xec,
+	0xbc, 0x43, 0xc6, 0xd4, 0x13, 0x7d, 0x2c, 0x8d, 0x65, 0x8e, 0x1d, 0x63, 0x27, 0x65, 0x02, 0xd1,
+	0x57, 0xcc, 0x7e, 0x10, 0x14, 0x1c, 0x73, 0x48, 0x98, 0xcc, 0x8b, 0x3a, 0xfb, 0x46, 0x3b, 0xd4,
+	0x40, 0xfc, 0x9e, 0x67, 0x8d, 0x98, 0x21, 0x2f, 0x30, 0x90, 0x3a, 0x85, 0xea, 0xb0, 0x30, 0x26,
+	0x5d, 0xdf, 0x0a, 0xb8, 0x6f, 0x2d, 0xea, 0x72, 0x88, 0x3e, 0x86, 0x1a, 0x7d, 0x4c, 0x3c, 0xf2,
+	0x94, 0x78, 0x9e, 0x69, 0xab, 0x1a, 0xc1, 0x7d, 0xe8, 0xda, 0xd0, 0x7c, 0xa1, 0x0b, 0x68, 0xa4,
+	0x0d, 0xf8, 0xe7, 0x50, 0x8e, 0x33, 0x88, 0xca, 0x00, 0x7a, 0xeb, 0xe0, 0xb0, 0xdd, 0x69, 0xe9,
+	0xad, 0x66, 0xe5, 0x12, 0xaa, 0x42, 0xe9, 0xf4, 0x58, 0xce, 0x1c, 0x1e, 0x1f, 0x54, 0x34, 0x54,
+	0x83, 0xd5, 0xbd, 0xfd, 0x93, 0xd3, 0x8e, 0xd1, 0x39, 0x31, 0x1a, 0x0f, 0xf6, 0x8e, 0x0f, 0x5a,
+	0xc6, 0xfd, 0x56, 0xab, 0x92, 0x43, 0x15, 0x58, 0x66, 0xe3, 0xc3, 0xe3, 0x03, 0x36, 0x93, 0xc7,
+	0xbf, 0x02, 0x14, 0xa3, 0xcf, 0x2d, 0xf0, 0x53, 0x28, 0x86, 0x66, 0x2a, 0xee, 0x67, 0x9a, 0x4d,
+	0x47, 0xc8, 0x68, 0x17, 0x8a, 0xa1, 0x4b, 0x11, 0x06, 0x99, 0xe1, 0x76, 0x22, 0x1c, 0xbc, 0x0f,
+	0xa5, 0x70, 0xfe, 0xc8, 0xf2, 0x83, 0x84, 0xe7, 0xd2, 0x66, 0xf0, 0x5c, 0xf8, 0x9f, 0x05, 0x80,
+	0xc8, 0x3f, 0xa1, 0xf7, 0xa1, 0x28, 0x2c, 0xd1, 0xf5, 0x52, 0xda, 0x15, 0x81, 0x28, 0x5e, 0xe8,
+	0xea, 0x43, 0xe7, 0x11, 0xe2, 0x85, 0x20, 0x6a, 0xc6, 0xc2, 0x32, 0x22, 0xf4, 0x64, 0xc8, 0xb1,
+	0xc2, 0x31, 0x42, 0xe1, 0xa0, 0xcb, 0x30, 0x67, 0x39, 0x7d, 0xf2, 0x42, 0xe8, 0x23, 0x1f, 0xa0,
+	0x1d, 0x98, 0x17, 0x56, 0x99, 0x8c, 0x05, 0xc4, 0x3c, 0xba, 0x01, 0x25, 0xb1, 0xd9, 0x04, 0xf3,
+	0x5d, 0xe6, 0xe0, 0x49, 0x2e, 0x6d, 0x71, 0x66, 0x97, 0x36, 0xc9, 0xe0, 0x8b, 0xaf, 0x68, 0xf0,
+	0x5b, 0x50, 0xa4, 0x04, 0xf8, 0xe3, 0xca, 0x9f, 0xf9, 0x45, 0x3a, 0xc1, 0x1e, 0xd5, 0x4f, 0xa5,
+	0xfd, 0x2d, 0x31, 0xaa, 0x38, 0xfd, 0x9c, 0x28, 0x9f, 0x31, 0x0b, 0xdc, 0x84, 0x45, 0x6e, 0x2d,
+	0xc4, 0xab, 0x2f, 0x33, 0x63, 0x0a, 0xc7, 0xf8, 0x21, 0xac, 0x24, 0x56, 0xa1, 0x25, 0x58, 0xd8,
+	0x3f, 0x39, 0x6e, 0x52, 0x03, 0xb8, 0x84, 0x00, 0xe6, 0xe9, 0xa0, 0xd5, 0xac, 0x68, 0xa8, 0x04,
+	0xc5, 0xd3, 0x63, 0x09, 0x62, 0x26, 0xa0, 0xb7, 0x9a, 0xad, 0xa3, 0xd6, 0xc1, 0x5e, 0x87, 0xce,
+	0xe4, 0xf1, 0x58, 0x25, 0x76, 0xc8, 0xae, 0x29, 0xa6, 0x19, 0xda, 0x64, 0xcd, 0x88, 0x69, 0x5a,
+	0x6e, 0xb2, 0xa6, 0x85, 0xca, 0x90, 0x57, 0x94, 0x01, 0x3f, 0x84, 0x72, 0xb4, 0x31, 0xd3, 0xfd,
+	0xbb, 0xf1, 0x27, 0x98, 0x2b, 0x7f, 0x2d, 0x2d, 0x33, 0xc6, 0x65, 0xec, 0x1d, 0xc6, 0x04, 0x56,
+	0x9a, 0x8f, 0x4f, 0xda, 0x34, 0x60, 0xa0, 0x91, 0x24, 0xf1, 0x83, 0xef, 0x22, 0xa4, 0xc2, 0x7f,
+	0xd1, 0x42, 0x69, 0x11, 0xb9, 0xcf, 0x47, 0x50, 0x8d, 0x42, 0xa6, 0x49, 0x5e, 0xbd, 0x12, 0xa2,
+	0xc8, 0xf8, 0x3a, 0xb2, 0x85, 0xdc, 0x04, 0x5b, 0x78, 0x2f, 0xeb, 0xbd, 0x2e, 0x24, 0xd4, 0x58,
+	0xd5, 0x93, 0x42, 0x42, 0x4f, 0x7e, 0x97, 0x83, 0xaa, 0x4e, 0xfa, 0x6f, 0x87, 0xdf, 0x7d, 0xa8,
+	0x3f, 0x75, 0xbd, 0x21, 0xf1, 0x8c, 0xf4, 0xea, 0xe4, 0xdd, 0xaf, 0x73, 0xcc, 0x27, 0x49, 0x1a,
+	0x99, 0x8a, 0xa0, 0x48, 0xa2, 0x30, 0x41, 0x12, 0xd7, 0xa1, 0x4a, 0xdf, 0xb7, 0xb8, 0x34, 0xe6,
+	0x78, 0xf0, 0xed, 0x90, 0xf1, 0xd1, 0x24, 0x81, 0xcc, 0x27, 0x04, 0xf2, 0x04, 0xb6, 0x1b, 0xae,
+	0xe3, 0xbb, 0x8c, 0x2d, 0xa2, 0xc4, 0xac, 0x6f, 0x26, 0x1b, 0xfc, 0x4b, 0x28, 0x9d, 0x3a, 0x5d,
+	0xd7, 0xe9, 0x7f, 0xe7, 0x3a, 0x91, 0x6d, 0x4a, 0x7f, 0xd5, 0x60, 0x23, 0x0c, 0x68, 0xa2, 0x47,
+	0x22, 0x62, 0x26, 0x4a, 0x5b, 0x26, 0x32, 0x13, 0xa2, 0xcc, 0xce, 0xcc, 0xeb, 0x07, 0x94, 0xf8,
+	0x6b, 0xb8, 0xaa, 0x93, 0xa1, 0xfb, 0x3c, 0x8a, 0xc3, 0x48, 0xff, 0x2d, 0x31, 0x8e, 0xff, 0xa6,
+	0xc1, 0x66, 0xe3, 0xcc, 0x74, 0x06, 0x11, 0xf1, 0x43, 0xe7, 0xa9, 0xfb, 0x7d, 0x16, 0xc7, 0x6f,
+	0x35, 0x58, 0x6f, 0x9c, 0x91, 0xde, 0x33, 0x25, 0xcf, 0x78, 0x33, 0x55, 0xfa, 0x08, 0xaa, 0xa1,
+	0x03, 0x9e, 0x68, 0xa7, 0x95, 0x10, 0x45, 0xca, 0xee, 0x4f, 0x1a, 0xd4, 0x52, 0x8c, 0xf8, 0x23,
+	0xd7, 0xf1, 0x89, 0x22, 0x01, 0x6d, 0x82, 0x04, 0x3e, 0x84, 0x95, 0x31, 0xb1, 0x06, 0x67, 0x01,
+	0xe9, 0x4f, 0xca, 0x4a, 0xca, 0x12, 0x41, 0xbc, 0xe0, 0xaf, 0x95, 0x76, 0xe1, 0x35, 0x58, 0x65,
+	0x5c, 0xf2, 0xbc, 0x51, 0x9a, 0x2f, 0xfe, 0x19, 0x5c, 0x8e, 0x4f, 0x0b, 0xce, 0xa7, 0x66, 0xa4,
+	0xda, 0xac, 0x19, 0xe9, 0x09, 0xac, 0xb3, 0xc4, 0x26, 0xf3, 0x8e, 0xd2, 0xc2, 0xd6, 0x5e, 0x2a,
+	0x6c, 0x07, 0x6a, 0x29, 0x82, 0xdf, 0xa1, 0xac, 0x71, 0x9b, 0xda, 0x05, 0xe9, 0x3d, 0xdb, 0xb3,
+	0xed, 0x6c, 0xdf, 0xf7, 0x3a, 0x87, 0xf8, 0xb3, 0x06, 0x5b, 0x99, 0x54, 0xbf, 0x7f, 0x5a, 0x73,
+	0x0a, 0x57, 0x14, 0xf5, 0x78, 0x5b, 0xa6, 0x86, 0xdb, 0xb0, 0x3d, 0x81, 0xac, 0x10, 0xc1, 0x2d,
+	0x80, 0x88, 0x0d, 0x41, 0x30, 0x8b, 0x59, 0x05, 0x0b, 0xff, 0x04, 0xd6, 0x9a, 0xa2, 0x58, 0xa4,
+	0x93, 0x9e, 0xeb, 0xf5, 0xa3, 0xb0, 0x66, 0xa6, 0xe0, 0x0c, 0xff, 0x5a, 0x83, 0xf5, 0x24, 0x05,
+	0xc1, 0xcf, 0x1e, 0x54, 0xc2, 0xfa, 0x94, 0xc7, 0x40, 0x32, 0xd8, 0x5a, 0x0f, 0xb9, 0x8a, 0xaf,
+	0x0c, 0xeb, 0x59, 0x7c, 0xec, 0xd3, 0xd8, 0x84, 0x57, 0xb6, 0xd4, 0xc2, 0x65, 0x41, 0x5f, 0xe6,
+	0x93, 0xbc, 0x62, 0x89, 0x75, 0x28, 0xc7, 0xe9, 0xcc, 0x1c, 0x59, 0xd6, 0x61, 0x81, 0x53, 0xe2,
+	0x01, 0x59, 0x41, 0x97, 0x43, 0xfc, 0x5f, 0x0d, 0xea, 0x3a, 0xab, 0x1b, 0x12, 0x2f, 0xf5, 0x60,
+	0x28, 0x29, 0xb3, 0x96, 0x95, 0x32, 0xe7, 0xa2, 0x94, 0x59, 0x66, 0xb8, 0xf9, 0xc9, 0x19, 0x6e,
+	0x61, 0x6a, 0x86, 0x3b, 0x17, 0xcf, 0x70, 0x53, 0xc1, 0xda, 0x7c, 0x46, 0xb0, 0x36, 0x25, 0x0d,
+	0x5e, 0x98, 0x96, 0x06, 0xdf, 0x80, 0x0d, 0xfe, 0xa0, 0xa9, 0x65, 0x46, 0x79, 0x68, 0x71, 0x36,
+	0x2d, 0x3c, 0x1b, 0x3e, 0x80, 0x8d, 0x36, 0x09, 0x1e, 0xc5, 0xab, 0x92, 0x12, 0x3d, 0xb3, 0x90,
+	0xa9, 0x65, 0x16, 0x32, 0xe9, 0x6b, 0xb0, 0x79, 0xca, 0x52, 0x9e, 0x70, 0x5a, 0x7d, 0x49, 0xa5,
+	0x0c, 0xb5, 0xc9, 0x32, 0xcc, 0x4d, 0x95, 0x61, 0x7e, 0xe6, 0x2a, 0x41, 0x61, 0x9a, 0x78, 0xae,
+	0xc0, 0xe6, 0xa9, 0xe3, 0x4d, 0x50, 0x0a, 0xbc, 0x09, 0x75, 0x9a, 0x8b, 0x9d, 0x3a, 0x81, 0x65,
+	0xcb, 0x8a, 0xa7, 0x84, 0x3d, 0x84, 0x8d, 0x0c, 0x98, 0x30, 0x93, 0x9b, 0xb0, 0xca, 0xae, 0xf3,
+	0x9c, 0x42, 0xc3, 0x2a, 0x2a, 0x3b, 0x6d, 0x5e, 0xaf, 0x06, 0xc9, 0x75, 0xb8, 0x06, 0x6b, 0x34,
+	0x8d, 0x09, 0xa3, 0xde, 0xf0, 0x59, 0xea, 0xc0, 0x7a, 0x12, 0x20, 0xb6, 0x88, 0x97, 0x0f, 0xb5,
+	0x57, 0x2a, 0x1f, 0x8a, 0xed, 0xc2, 0xf3, 0x26, 0xb7, 0x53, 0x01, 0xd1, 0x76, 0xa9, 0xe2, 0xc2,
+	0x66, 0xaa, 0xb8, 0xa0, 0x6c, 0xa7, 0x54, 0x19, 0xee, 0x71, 0xaa, 0x19, 0x0f, 0xc7, 0xfb, 0x6a,
+	0xd1, 0x23, 0x65, 0xd4, 0x51, 0xad, 0xe3, 0x37, 0x1a, 0xd4, 0x52, 0x24, 0x04, 0x67, 0x77, 0xb2,
+	0x52, 0xbf, 0x97, 0x56, 0x5f, 0xb3, 0xca, 0x92, 0xb9, 0x97, 0x94, 0x25, 0xf1, 0x16, 0x6c, 0x50,
+	0x2e, 0x32, 0x1f, 0x41, 0xdc, 0x87, 0xcd, 0x2c, 0xa0, 0xe0, 0xf2, 0x3e, 0x94, 0x59, 0x69, 0xd1,
+	0x13, 0x13, 0x92, 0xd1, 0x77, 0xc3, 0x10, 0x2f, 0xfb, 0x78, 0x7a, 0x89, 0x2e, 0x93, 0x23, 0x1f,
+	0xff, 0x51, 0x83, 0xe5, 0x7d, 0x33, 0xe8, 0x9d, 0x49, 0x11, 0x76, 0x60, 0x35, 0x2a, 0x5c, 0x26,
+	0x85, 0x79, 0x55, 0x52, 0x9f, 0x18, 0xe2, 0x3f, 0xb8, 0xa4, 0xa3, 0x71, 0x0a, 0x88, 0x3e, 0x80,
+	0xc2, 0x90, 0x04, 0xa6, 0x10, 0x49, 0x5d, 0x92, 0x51, 0x77, 0x7e, 0x44, 0x02, 0x53, 0x67, 0x58,
+	0xfb, 0x45, 0x58, 0x18, 0x99, 0x17, 0xb6, 0x6b, 0xf6, 0xf1, 0x10, 0x2a, 0x49, 0x24, 0x74, 0x15,
+	0x96, 0x59, 0x21, 0xd6, 0x70, 0xce, 0x87, 0x5d, 0xe2, 0x09, 0x97, 0xb1, 0xc4, 0xe6, 0x8e, 0xd9,
+	0x14, 0xda, 0x80, 0xc5, 0xe0, 0x85, 0xc1, 0xf3, 0x13, 0xee, 0x6a, 0x17, 0x82, 0x17, 0xbc, 0xa4,
+	0xc0, 0xaa, 0x24, 0x03, 0x43, 0xcd, 0x5d, 0x16, 0x6d, 0x77, 0xc0, 0x80, 0xd4, 0xcd, 0x54, 0xc5,
+	0x56, 0x6c, 0xdb, 0x8e, 0x69, 0xdb, 0x17, 0xe8, 0x36, 0xac, 0xb3, 0xf6, 0x85, 0x4f, 0x88, 0x63,
+	0x64, 0x6c, 0xbd, 0x4a, 0xa1, 0x6d, 0x42, 0x9c, 0x7d, 0x85, 0x85, 0x1f, 0x89, 0x9e, 0x07, 0x5b,
+	0x94, 0x60, 0x66, 0x45, 0x2e, 0xe8, 0x08, 0xa6, 0x6e, 0xc0, 0x6a, 0x84, 0x9c, 0x64, 0xaf, 0x22,
+	0xb1, 0x8f, 0x24, 0x9b, 0x9f, 0xc1, 0xb2, 0xca, 0x25, 0xba, 0x0e, 0x73, 0x5d, 0xfa, 0x21, 0x94,
+	0xe0, 0x72, 0x96, 0x7c, 0x75, 0x8e, 0x82, 0xb7, 0x61, 0xeb, 0x80, 0x04, 0xa9, 0x43, 0x4a, 0xb5,
+	0xfb, 0x12, 0x6a, 0xf2, 0x51, 0xd3, 0x45, 0xb2, 0x3a, 0xcd, 0xc9, 0x2a, 0xe5, 0xe3, 0xdc, 0x84,
+	0xf2, 0x31, 0xbe, 0x07, 0xb5, 0x36, 0x09, 0x5b, 0x3c, 0xac, 0x91, 0x28, 0x49, 0xfe, 0x00, 0xca,
+	0xf1, 0xee, 0xa3, 0xf0, 0x69, 0xa5, 0x58, 0xdb, 0x11, 0x37, 0xa0, 0xde, 0x26, 0x41, 0x33, 0xd6,
+	0xb2, 0x92, 0x24, 0x32, 0x5a, 0x5c, 0x5a, 0x66, 0x8b, 0xeb, 0x4b, 0xfe, 0x16, 0xc5, 0xdb, 0x84,
+	0x92, 0x4a, 0x66, 0x8f, 0x51, 0x7b, 0x49, 0x8f, 0x11, 0x9f, 0xc1, 0xd5, 0x36, 0x95, 0x65, 0x66,
+	0xf3, 0x50, 0x92, 0x9e, 0xd6, 0x88, 0xd4, 0x66, 0x6c, 0x44, 0x0a, 0x09, 0x3c, 0x89, 0xf5, 0x6e,
+	0x15, 0x09, 0x64, 0xf5, 0x7a, 0xf3, 0xc9, 0x5e, 0x2f, 0xfe, 0x82, 0x5d, 0xc4, 0x89, 0xda, 0x5c,
+	0x95, 0x34, 0xd2, 0x4d, 0x59, 0x6d, 0x6a, 0x53, 0x16, 0xff, 0x5d, 0x83, 0xed, 0x36, 0x09, 0xd2,
+	0xfd, 0xc9, 0x90, 0xe4, 0xd4, 0xde, 0xa9, 0xf6, 0xd6, 0x7a, 0xa7, 0xb9, 0x57, 0xe8, 0x9d, 0xe2,
+	0x4f, 0xa0, 0x74, 0xea, 0x7c, 0x63, 0x5a, 0xf6, 0xab, 0xc6, 0xb0, 0x55, 0x58, 0x39, 0x20, 0x01,
+	0xaf, 0x8b, 0x0a, 0x4b, 0xf9, 0x04, 0x2a, 0xd1, 0x94, 0x70, 0xcb, 0xb3, 0xb4, 0x04, 0xf1, 0x3b,
+	0x70, 0xa5, 0x61, 0x9b, 0xd6, 0xb0, 0x29, 0x13, 0x98, 0x44, 0xee, 0xb8, 0x07, 0xdb, 0x13, 0xe0,
+	0xb3, 0x26, 0x32, 0xf8, 0xbe, 0xc8, 0x2f, 0x26, 0x6c, 0x31, 0x6b, 0x65, 0x9e, 0xb1, 0x92, 0x4d,
+	0x67, 0x66, 0x56, 0x3e, 0x86, 0x6a, 0x73, 0xe4, 0xfa, 0xd2, 0xfc, 0x5b, 0xcf, 0x89, 0x13, 0xcc,
+	0xe0, 0xc2, 0xf1, 0x10, 0xca, 0x74, 0x1d, 0xbb, 0x44, 0xbe, 0x68, 0xd6, 0x90, 0x3d, 0xab, 0xdb,
+	0x97, 0x7b, 0x49, 0xb7, 0x8f, 0x6a, 0x06, 0xdd, 0xee, 0x0b, 0xd3, 0xb2, 0x5f, 0x69, 0x37, 0x7c,
+	0x17, 0x56, 0xe8, 0x42, 0xae, 0x56, 0xaf, 0xb6, 0xb4, 0x0d, 0x5b, 0x74, 0xa9, 0xf2, 0x86, 0x72,
+	0xc7, 0xeb, 0x73, 0x32, 0xb3, 0xb4, 0xe6, 0x52, 0xe9, 0x04, 0x6e, 0xc0, 0x76, 0x8c, 0x68, 0x14,
+	0x8f, 0xce, 0x4e, 0x16, 0x7f, 0x9d, 0xe0, 0xec, 0x3e, 0x21, 0x3c, 0xec, 0x9f, 0x9d, 0x33, 0xa5,
+	0x13, 0x98, 0x53, 0x3b, 0x81, 0x78, 0x1f, 0xae, 0x30, 0x81, 0xa5, 0xa3, 0xf9, 0xd9, 0xf9, 0xfb,
+	0x92, 0xf3, 0x17, 0xaa, 0xa5, 0xac, 0x84, 0x8b, 0x23, 0xbe, 0x4e, 0x9a, 0xdb, 0xe6, 0x72, 0x53,
+	0x34, 0xbd, 0xff, 0xe6, 0x44, 0xff, 0xa7, 0xc1, 0x3b, 0x31, 0xaa, 0x4a, 0xd1, 0x57, 0x90, 0xbd,
+	0x0b, 0x65, 0x2a, 0xa7, 0x99, 0x48, 0x97, 0x1c, 0x32, 0x56, 0xfa, 0x6b, 0x8f, 0xa0, 0xde, 0x8b,
+	0xe8, 0xf5, 0x63, 0xbf, 0x92, 0xc8, 0x4d, 0x8c, 0x5b, 0x6b, 0xea, 0x1a, 0xf5, 0xd7, 0x12, 0x0f,
+	0x60, 0xe7, 0xdc, 0x99, 0x44, 0x50, 0x3c, 0x2c, 0xfc, 0x37, 0x1b, 0xef, 0xc4, 0xf1, 0x14, 0x22,
+	0xfc, 0xa1, 0x39, 0x81, 0x8d, 0xd8, 0xa9, 0x79, 0x49, 0xfa, 0x0d, 0xe4, 0xd8, 0x81, 0x4d, 0x4a,
+	0x30, 0x8a, 0x48, 0x62, 0x1a, 0xfd, 0xba, 0x81, 0xc9, 0xbf, 0x34, 0x78, 0x37, 0x7e, 0x3b, 0xd4,
+	0xed, 0xfa, 0xc2, 0xc7, 0x85, 0xb6, 0x3c, 0x53, 0x0f, 0xf3, 0x5a, 0x46, 0xef, 0x26, 0x42, 0x54,
+	0x7f, 0x0c, 0x43, 0x39, 0x63, 0xae, 0x51, 0x56, 0x8b, 0x22, 0xaf, 0x24, 0x01, 0xe8, 0x73, 0x58,
+	0x53, 0xcb, 0x84, 0xbe, 0xd1, 0xa3, 0x9c, 0x91, 0x7e, 0xaa, 0x2f, 0xb1, 0xaa, 0x94, 0x08, 0xfd,
+	0x06, 0x47, 0xba, 0x7e, 0x08, 0xcb, 0xb1, 0x46, 0x44, 0x09, 0x8a, 0x9d, 0xc3, 0x96, 0x6e, 0x7c,
+	0xdd, 0xd2, 0x4f, 0x2a, 0x97, 0xd0, 0x32, 0x2c, 0xb2, 0xe1, 0xc9, 0x71, 0xab, 0xa2, 0x85, 0xa3,
+	0xce, 0x57, 0x27, 0x95, 0x1c, 0x2a, 0x03, 0xf0, 0xd1, 0x03, 0xbd, 0xd5, 0xaa, 0xe4, 0xbb, 0xf3,
+	0xec, 0x97, 0x65, 0xb7, 0xff, 0x1f, 0x00, 0x00, 0xff, 0xff, 0xc3, 0xe3, 0xd9, 0xcb, 0xd7, 0x26,
+	0x00, 0x00,
 }

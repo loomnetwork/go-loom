@@ -9,7 +9,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/loomnetwork/go-loom"
+	loom "github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
 )
 
@@ -70,4 +70,19 @@ func LoomAddressFromEthereumAddress(ethAddr common.Address) (loom.Address, error
 		ChainID: "eth",
 		Local:   addrBytes,
 	}, nil
+}
+
+func LoomAddressFromTronAddress(tronAddr common.Address) (loom.Address, error) {
+	addrBytes, err := loom.LocalAddressFromHexString(tronAddr.Hex())
+	if err != nil {
+		return loom.Address{}, err
+	}
+	return loom.Address{
+		ChainID: "tron",
+		Local:   addrBytes,
+	}, nil
+}
+
+func LoomAddressFromBinanceAddress(binanceAddr common.Address) loom.Address {
+	return loom.Address{ChainID: "binance", Local: binanceAddr.Bytes()}
 }

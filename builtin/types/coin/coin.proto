@@ -93,3 +93,15 @@ message TransferFromRequest {
 message TransferFromResponse {
 
 }
+
+message TransferEvent {
+    Address from = 1;
+    Address to = 2;
+    BigUInt amount = 3;
+}
+
+message ApprovalEvent {
+    Address from = 1;
+    Address spender = 2;
+    BigUInt amount = 3;
+}

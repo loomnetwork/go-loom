@@ -167,11 +167,34 @@ func (tg *DAppChainGateway) WithdrawERC20(identity *client.Identity, amount *big
 	return err
 }
 
+func (tg *DAppChainGateway) WithdrawBEP2(identity *client.Identity, amount *big.Int, contract loom.Address, mainnetRecipientAddress common.Address) error {
+	req := &tgtypes.TransferGatewayWithdrawTokenRequest{
+		TokenKind:     tgtypes.TransferGatewayTokenKind_BEP2,
+		TokenAmount:   &types.BigUInt{Value: *loom.NewBigUInt(amount)},
+		TokenContract: contract.MarshalPB(),
+		Recipient:     client.LoomAddressFromBinanceAddress(mainnetRecipientAddress).MarshalPB(),
+	}
+	_, err := tg.contract.Call("WithdrawToken", req, identity.LoomSigner, nil)
+	return err
+}
+
 func (tg *DAppChainGateway) WithdrawLoom(identity *client.Identity, amount *big.Int, mainnetLoomCoinAddress common.Address) error {
 	req := &tgtypes.TransferGatewayWithdrawLoomCoinRequest{
 		TokenContract: loom.Address{
 			ChainID: "eth",
 			Local:   mainnetLoomCoinAddress.Bytes(),
+		}.MarshalPB(),
+		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
+	}
+	_, err := tg.contract.Call("WithdrawLoomCoin", req, identity.LoomSigner, nil)
+	return err
+}
+
+func (tg *DAppChainGateway) WithdrawLoomToBinanceDex(identity *client.Identity, amount *big.Int, mainnetRecipientAddress common.Address) error {
+	req := &tgtypes.TransferGatewayWithdrawLoomCoinRequest{
+		Recipient: loom.Address{
+			ChainID: "binance",
+			Local:   mainnetRecipientAddress.Bytes(),
 		}.MarshalPB(),
 		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
@@ -383,6 +406,14 @@ func ConnectToDAppChainLoomGateway(loomClient *client.DAppChainRPCClient, events
 
 func ConnectToDAppChainGateway(loomClient *client.DAppChainRPCClient, eventsURI string) (*DAppChainGateway, error) {
 	return connectToDAppChainGateway(loomClient, eventsURI, "gateway")
+}
+
+func ConnectToDAppChainTronGateway(loomClient *client.DAppChainRPCClient, eventsURI string) (*DAppChainGateway, error) {
+	return connectToDAppChainGateway(loomClient, eventsURI, "tron-gateway")
+}
+
+func ConnectToDAppChainBinanceGateway(loomClient *client.DAppChainRPCClient, eventsURI string) (*DAppChainGateway, error) {
+	return connectToDAppChainGateway(loomClient, eventsURI, "binance-gateway")
 }
 
 func connectToDAppChainGateway(loomClient *client.DAppChainRPCClient, eventsURI string, name string) (*DAppChainGateway, error) {
