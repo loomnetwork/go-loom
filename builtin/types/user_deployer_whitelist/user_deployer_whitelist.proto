@@ -12,7 +12,7 @@ message Tier {
     BigUInt fee = 2;
     string name = 3;
     uint64 block_range = 4;
-    uint64 max_tx = 5;
+    uint64 max_txs = 5;
 }
 
 message TierInfo {
@@ -20,7 +20,7 @@ message TierInfo {
     uint64 fee = 2;
     string name = 3;
     uint64 block_range = 4;
-    uint64 max_tx = 5;
+    uint64 max_txs = 5;
 }
 
 message InitRequest {
@@ -82,5 +82,5 @@ message SetTierInfoRequest {
     BigUInt fee = 2;
     string name = 3;
     uint64 block_range = 4;
-    uint64 max_tx = 5;
+    uint64 max_txs = 5;
 }
