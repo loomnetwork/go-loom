@@ -30,6 +30,8 @@ message TransferGatewayState {
     uint64 next_contract_mapping_id = 3 [(gogoproto.customname)="NextContractMappingID"];
     // Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
     repeated Address token_withdrawers = 4;
+    // Binance Dex transfer fee. This will be used for binance gateway
+    BigUInt transfer_fee = 5;
 }
 
 message TransferGatewayOracleState {
@@ -506,10 +508,6 @@ message TransferGatewayResubmitWithdrawalError {
     string error_message = 2;
 }
 
-message TransferGatewayBinanceState{
-    int64 transfer_fee = 1;
-}
-
 message TransferGatewayUpdateBinanceTransferFeeRequest{
-    int64 transfer_fee = 1;
+    BigUInt transfer_fee = 1;
 }
