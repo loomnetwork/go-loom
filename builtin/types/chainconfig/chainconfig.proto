@@ -121,6 +121,7 @@ message AddConfigRequest {
     repeated string names = 1;
     uint64 build_number = 2;
     uint64 vote_threshold = 3;
+    string value = 4;
 }
 
 message GetConfigRequest {
