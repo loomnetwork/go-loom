@@ -24,6 +24,9 @@ func PrefixKey(keys ...[]byte) []byte {
 }
 
 func UnprefixKey(key, prefix []byte) ([]byte, error) {
+	if len(prefix) == 0 {
+		return key, nil
+	}
 	if len(prefix)+1 > len(key) {
 		return nil, fmt.Errorf("prefix %s longer than key %s", string(prefix), string(key))
 	}
@@ -33,7 +36,7 @@ func UnprefixKey(key, prefix []byte) ([]byte, error) {
 // HasPrefix checks if the given key was prefixed with the given prefix using the PrefixKey function.
 func HasPrefix(key, prefix []byte) bool {
 	if len(prefix) == 0 {
-		return false
+		return true
 	}
 	p := append(prefix, byte(0))
 	return bytes.HasPrefix(key, p)
