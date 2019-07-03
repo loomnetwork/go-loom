@@ -120,6 +120,7 @@ deps:
 		github.com/stretchr/testify/assert \
 		github.com/go-kit/kit/log \
 		github.com/pkg/errors \
+		github.com/certusone/yubihsm-go \
 		github.com/btcsuite/btcd
 	dep ensure -vendor-only
 	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
@@ -129,7 +130,7 @@ deps:
 deps-evm: $(SSHA3_DIR) $(GETH_DIR)
 	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
 	go get \
-		github.com/loomnetwork/yubihsm-go \
+		github.com/certusone/yubihsm-go \
 		gopkg.in/check.v1
 
 
