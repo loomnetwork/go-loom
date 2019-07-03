@@ -49,6 +49,12 @@ message Feature {
     bool auto_enable = 7;
 }
 
+message ValidatorInfo{
+    Address address = 1; 
+    uint64 build_number = 2;
+    uint64 updated_at = 3;
+}
+
 message Params {
     uint64 vote_threshold = 1;
     uint64 num_block_confirmations = 2;
@@ -81,4 +87,24 @@ message EnableFeatureResponse {
 
 message RemoveFeatureRequest {
     repeated string names = 1;
+}
+
+message SetValidatorInfoRequest {
+    uint64 build_number = 1;
+}
+
+message GetValidatorInfoRequest {
+    Address address = 1;
+}
+
+message GetValidatorInfoResponse {
+    ValidatorInfo validator = 1;
+}
+
+message ListValidatorsInfoRequest {
+
+}
+
+message ListValidatorsInfoResponse {
+    repeated ValidatorInfo validators = 1;
 }
