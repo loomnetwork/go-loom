@@ -53,7 +53,13 @@ type JSONRPCClient struct {
 }
 
 func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
+	if !strings.Contains(host, "://") {
+		return func(_ string, _ string) (net.Conn, error) {
+			return nil, fmt.Errorf("Unsupported protocol scheme: %s", host)
+		}
+	}
 	u, err := url.Parse(host)
+	fmt.Printf("U : %+v \n", u)
 	// default to tcp if nothing specified
 	protocol := u.Scheme
 	if err != nil {
@@ -61,9 +67,11 @@ func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
 			return nil, fmt.Errorf("Invalid host: %s", host)
 		}
 	}
-	if protocol == "http" {
+	fmt.Println("Protocol1 :_", protocol)
+	if protocol == "http" || len(protocol) == 0 {
 		protocol = "tcp"
 	}
+	fmt.Println("Protocol2 :_", protocol)
 	return func(p, a string) (net.Conn, error) {
 		return net.Dial(protocol, u.Host)
 	}
