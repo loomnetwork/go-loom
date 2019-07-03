@@ -12,6 +12,7 @@ enum TransferGatewayTokenKind {
     TRX = 5;
     TRC20 = 6;
     BNBLoomToken = 7;
+    BEP2 = 8;
 }
 
 enum TransferGatewayTxStatus {
@@ -29,6 +30,8 @@ message TransferGatewayState {
     uint64 next_contract_mapping_id = 3 [(gogoproto.customname)="NextContractMappingID"];
     // Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
     repeated Address token_withdrawers = 4;
+    // Binance Dex transfer fee. This will be used for binance gateway
+    BigUInt transfer_fee = 5;
 }
 
 message TransferGatewayOracleState {
@@ -70,6 +73,8 @@ message TransferGatewayPendingWithdrawalSummary {
     bytes tx_hash = 5;
     // Mainnet tx status
     TransferGatewayTxStatus tx_status = 6;
+    // Mainnet address of token contract
+    Address token_contract = 7;
 }
 
 message TransferGatewayLocalAccount {
@@ -474,4 +479,35 @@ message TransferGatewayExtendedState {
 
 message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
+}
+
+//Request for fetching Contract Mapping for given Address
+message TransferGatewayGetContractMappingRequest {
+    Address from = 1;
+}
+
+message TransferGatewayGetContractMappingResponse {
+    Address mapped_address = 1;
+    bool is_pending = 2;
+    bool found = 3;
+}
+
+message TransferGatewayListContractMappingRequest {
+}
+
+message TransferGatewayListContractMappingResponse {
+    repeated TransferGatewayContractAddressMapping confimed_mappings = 1;
+    repeated TransferGatewayPendingContractMapping pending_mappings = 2;
+}
+
+message TransferGatewayResubmitWithdrawalRequest {
+}
+
+message TransferGatewayResubmitWithdrawalError {
+    TransferGatewayWithdrawalReceipt withdrawal_receipt = 1;
+    string error_message = 2;
+}
+
+message TransferGatewayUpdateBinanceTransferFeeRequest{
+    BigUInt transfer_fee = 1;
 }

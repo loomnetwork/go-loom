@@ -73,6 +73,16 @@ func (tg *DAppChainGateway) AddAuthorizedTronContractMapping(from common.Address
 	return err
 }
 
+// AddAuthorizedBinanceContractMapping same as AddAuthorisedContractMapping but for Binance dex
+func (tg *DAppChainGateway) AddAuthorizedBinanceContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
+	req := &tgtypes.TransferGatewayAddContractMappingRequest{
+		ForeignContract: client.LoomAddressFromBinanceAddress(from).MarshalPB(),
+		LocalContract:   to.MarshalPB(),
+	}
+	_, err := tg.contract.Call("AddAuthorizedContractMapping", req, gatewayOwner.LoomSigner, nil)
+	return err
+}
+
 // AddContractMapping creates a bi-directional mapping between a Mainnet & DAppChain contract.
 // The caller must provide the identity of the creator of the Mainnet contract, along with a Mainnet
 // hash of the tx that deployed the contract (which will be used to verify the creator address).
@@ -214,6 +224,17 @@ func (tg *DAppChainGateway) WithdrawLoomToBinanceDex(identity *client.Identity, 
 		Amount: &types.BigUInt{Value: *loom.NewBigUInt(amount)},
 	}
 	_, err := tg.contract.Call("WithdrawLoomCoin", req, identity.LoomSigner, nil)
+	return err
+}
+
+func (tg *DAppChainGateway) WithdrawBEP2(identity *client.Identity, amount *big.Int, contract loom.Address, mainnetRecipientAddress common.Address) error {
+	req := &tgtypes.TransferGatewayWithdrawTokenRequest{
+		TokenKind:     tgtypes.TransferGatewayTokenKind_BEP2,
+		TokenAmount:   &types.BigUInt{Value: *loom.NewBigUInt(amount)},
+		TokenContract: contract.MarshalPB(),
+		Recipient:     client.LoomAddressFromBinanceAddress(mainnetRecipientAddress).MarshalPB(),
+	}
+	_, err := tg.contract.Call("WithdrawToken", req, identity.LoomSigner, nil)
 	return err
 }
 
