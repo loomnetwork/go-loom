@@ -50,10 +50,12 @@ message UserDeployerState {
     Address address = 1;
     repeated DeployerContract contracts = 2;
     TierID tier_id = 3 [(gogoproto.customname)="TierID"];
+    bool active = 4;
 }
 
 message GetUserDeployersRequest {
     Address user_addr = 1;
+    bool include_inactive = 2;
 }
 
 message GetUserDeployersResponse {
