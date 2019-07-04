@@ -45,7 +45,7 @@ func (x Feature_FeatureStatus) String() string {
 	return proto.EnumName(Feature_FeatureStatus_name, int32(x))
 }
 func (Feature_FeatureStatus) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{5, 0}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{5, 0}
 }
 
 type Config_ConfigStatus int32
@@ -71,7 +71,7 @@ func (x Config_ConfigStatus) String() string {
 	return proto.EnumName(Config_ConfigStatus_name, int32(x))
 }
 func (Config_ConfigStatus) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{17, 0}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{18, 0}
 }
 
 type InitRequest struct {
@@ -87,7 +87,7 @@ func (m *InitRequest) Reset()         { *m = InitRequest{} }
 func (m *InitRequest) String() string { return proto.CompactTextString(m) }
 func (*InitRequest) ProtoMessage()    {}
 func (*InitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{0}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{0}
 }
 func (m *InitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_InitRequest.Unmarshal(m, b)
@@ -139,7 +139,7 @@ func (m *GetFeatureRequest) Reset()         { *m = GetFeatureRequest{} }
 func (m *GetFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*GetFeatureRequest) ProtoMessage()    {}
 func (*GetFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{1}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{1}
 }
 func (m *GetFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetFeatureRequest.Unmarshal(m, b)
@@ -179,7 +179,7 @@ func (m *AddFeatureRequest) Reset()         { *m = AddFeatureRequest{} }
 func (m *AddFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*AddFeatureRequest) ProtoMessage()    {}
 func (*AddFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{2}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{2}
 }
 func (m *AddFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddFeatureRequest.Unmarshal(m, b)
@@ -230,7 +230,7 @@ func (m *AddFeatureResponse) Reset()         { *m = AddFeatureResponse{} }
 func (m *AddFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*AddFeatureResponse) ProtoMessage()    {}
 func (*AddFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{3}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{3}
 }
 func (m *AddFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddFeatureResponse.Unmarshal(m, b)
@@ -261,7 +261,7 @@ func (m *GetFeatureResponse) Reset()         { *m = GetFeatureResponse{} }
 func (m *GetFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*GetFeatureResponse) ProtoMessage()    {}
 func (*GetFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{4}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{4}
 }
 func (m *GetFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetFeatureResponse.Unmarshal(m, b)
@@ -309,7 +309,7 @@ func (m *Feature) Reset()         { *m = Feature{} }
 func (m *Feature) String() string { return proto.CompactTextString(m) }
 func (*Feature) ProtoMessage()    {}
 func (*Feature) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{5}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{5}
 }
 func (m *Feature) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Feature.Unmarshal(m, b)
@@ -378,6 +378,60 @@ func (m *Feature) GetAutoEnable() bool {
 	return false
 }
 
+type ValidatorInfo struct {
+	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	BuildNumber          uint64         `protobuf:"varint,2,opt,name=build_number,json=buildNumber,proto3" json:"build_number,omitempty"`
+	UpdatedAt            uint64         `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ValidatorInfo) Reset()         { *m = ValidatorInfo{} }
+func (m *ValidatorInfo) String() string { return proto.CompactTextString(m) }
+func (*ValidatorInfo) ProtoMessage()    {}
+func (*ValidatorInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{6}
+}
+func (m *ValidatorInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ValidatorInfo.Unmarshal(m, b)
+}
+func (m *ValidatorInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ValidatorInfo.Marshal(b, m, deterministic)
+}
+func (dst *ValidatorInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidatorInfo.Merge(dst, src)
+}
+func (m *ValidatorInfo) XXX_Size() int {
+	return xxx_messageInfo_ValidatorInfo.Size(m)
+}
+func (m *ValidatorInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidatorInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidatorInfo proto.InternalMessageInfo
+
+func (m *ValidatorInfo) GetAddress() *types.Address {
+	if m != nil {
+		return m.Address
+	}
+	return nil
+}
+
+func (m *ValidatorInfo) GetBuildNumber() uint64 {
+	if m != nil {
+		return m.BuildNumber
+	}
+	return 0
+}
+
+func (m *ValidatorInfo) GetUpdatedAt() uint64 {
+	if m != nil {
+		return m.UpdatedAt
+	}
+	return 0
+}
+
 type Params struct {
 	VoteThreshold         uint64   `protobuf:"varint,1,opt,name=vote_threshold,json=voteThreshold,proto3" json:"vote_threshold,omitempty"`
 	NumBlockConfirmations uint64   `protobuf:"varint,2,opt,name=num_block_confirmations,json=numBlockConfirmations,proto3" json:"num_block_confirmations,omitempty"`
@@ -390,7 +444,7 @@ func (m *Params) Reset()         { *m = Params{} }
 func (m *Params) String() string { return proto.CompactTextString(m) }
 func (*Params) ProtoMessage()    {}
 func (*Params) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{6}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{7}
 }
 func (m *Params) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Params.Unmarshal(m, b)
@@ -435,7 +489,7 @@ func (m *SetParamsRequest) Reset()         { *m = SetParamsRequest{} }
 func (m *SetParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*SetParamsRequest) ProtoMessage()    {}
 func (*SetParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{7}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{8}
 }
 func (m *SetParamsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetParamsRequest.Unmarshal(m, b)
@@ -472,7 +526,7 @@ func (m *GetParamsRequest) Reset()         { *m = GetParamsRequest{} }
 func (m *GetParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetParamsRequest) ProtoMessage()    {}
 func (*GetParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{8}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{9}
 }
 func (m *GetParamsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetParamsRequest.Unmarshal(m, b)
@@ -503,7 +557,7 @@ func (m *GetParamsResponse) Reset()         { *m = GetParamsResponse{} }
 func (m *GetParamsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetParamsResponse) ProtoMessage()    {}
 func (*GetParamsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{9}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{10}
 }
 func (m *GetParamsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetParamsResponse.Unmarshal(m, b)
@@ -540,7 +594,7 @@ func (m *ListFeaturesRequest) Reset()         { *m = ListFeaturesRequest{} }
 func (m *ListFeaturesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesRequest) ProtoMessage()    {}
 func (*ListFeaturesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{10}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{11}
 }
 func (m *ListFeaturesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesRequest.Unmarshal(m, b)
@@ -571,7 +625,7 @@ func (m *ListFeaturesResponse) Reset()         { *m = ListFeaturesResponse{} }
 func (m *ListFeaturesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesResponse) ProtoMessage()    {}
 func (*ListFeaturesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{11}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{12}
 }
 func (m *ListFeaturesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesResponse.Unmarshal(m, b)
@@ -609,7 +663,7 @@ func (m *EnableFeatureRequest) Reset()         { *m = EnableFeatureRequest{} }
 func (m *EnableFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*EnableFeatureRequest) ProtoMessage()    {}
 func (*EnableFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{12}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{13}
 }
 func (m *EnableFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnableFeatureRequest.Unmarshal(m, b)
@@ -646,7 +700,7 @@ func (m *EnableFeatureResponse) Reset()         { *m = EnableFeatureResponse{} }
 func (m *EnableFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*EnableFeatureResponse) ProtoMessage()    {}
 func (*EnableFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{13}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{14}
 }
 func (m *EnableFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnableFeatureResponse.Unmarshal(m, b)
@@ -677,7 +731,7 @@ func (m *RemoveFeatureRequest) Reset()         { *m = RemoveFeatureRequest{} }
 func (m *RemoveFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*RemoveFeatureRequest) ProtoMessage()    {}
 func (*RemoveFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{14}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{15}
 }
 func (m *RemoveFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RemoveFeatureRequest.Unmarshal(m, b)
@@ -716,7 +770,7 @@ func (m *Vote) Reset()         { *m = Vote{} }
 func (m *Vote) String() string { return proto.CompactTextString(m) }
 func (*Vote) ProtoMessage()    {}
 func (*Vote) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{15}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{16}
 }
 func (m *Vote) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Vote.Unmarshal(m, b)
@@ -762,7 +816,7 @@ func (m *Proposal) Reset()         { *m = Proposal{} }
 func (m *Proposal) String() string { return proto.CompactTextString(m) }
 func (*Proposal) ProtoMessage()    {}
 func (*Proposal) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{16}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{17}
 }
 func (m *Proposal) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Proposal.Unmarshal(m, b)
@@ -818,7 +872,7 @@ func (m *Config) Reset()         { *m = Config{} }
 func (m *Config) String() string { return proto.CompactTextString(m) }
 func (*Config) ProtoMessage()    {}
 func (*Config) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{17}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{18}
 }
 func (m *Config) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Config.Unmarshal(m, b)
@@ -908,7 +962,7 @@ func (m *AddConfigRequest) Reset()         { *m = AddConfigRequest{} }
 func (m *AddConfigRequest) String() string { return proto.CompactTextString(m) }
 func (*AddConfigRequest) ProtoMessage()    {}
 func (*AddConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{18}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{19}
 }
 func (m *AddConfigRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddConfigRequest.Unmarshal(m, b)
@@ -967,7 +1021,7 @@ func (m *GetConfigRequest) Reset()         { *m = GetConfigRequest{} }
 func (m *GetConfigRequest) String() string { return proto.CompactTextString(m) }
 func (*GetConfigRequest) ProtoMessage()    {}
 func (*GetConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{19}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{20}
 }
 func (m *GetConfigRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetConfigRequest.Unmarshal(m, b)
@@ -1005,7 +1059,7 @@ func (m *GetConfigResponse) Reset()         { *m = GetConfigResponse{} }
 func (m *GetConfigResponse) String() string { return proto.CompactTextString(m) }
 func (*GetConfigResponse) ProtoMessage()    {}
 func (*GetConfigResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{20}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{21}
 }
 func (m *GetConfigResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetConfigResponse.Unmarshal(m, b)
@@ -1042,7 +1096,7 @@ func (m *ListConfigsRequest) Reset()         { *m = ListConfigsRequest{} }
 func (m *ListConfigsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListConfigsRequest) ProtoMessage()    {}
 func (*ListConfigsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{21}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{22}
 }
 func (m *ListConfigsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListConfigsRequest.Unmarshal(m, b)
@@ -1073,7 +1127,7 @@ func (m *ListConfigsResponse) Reset()         { *m = ListConfigsResponse{} }
 func (m *ListConfigsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListConfigsResponse) ProtoMessage()    {}
 func (*ListConfigsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{22}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{23}
 }
 func (m *ListConfigsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListConfigsResponse.Unmarshal(m, b)
@@ -1111,7 +1165,7 @@ func (m *RemoveConfigRequest) Reset()         { *m = RemoveConfigRequest{} }
 func (m *RemoveConfigRequest) String() string { return proto.CompactTextString(m) }
 func (*RemoveConfigRequest) ProtoMessage()    {}
 func (*RemoveConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{23}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{24}
 }
 func (m *RemoveConfigRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RemoveConfigRequest.Unmarshal(m, b)
@@ -1150,7 +1204,7 @@ func (m *SetConfigRequest) Reset()         { *m = SetConfigRequest{} }
 func (m *SetConfigRequest) String() string { return proto.CompactTextString(m) }
 func (*SetConfigRequest) ProtoMessage()    {}
 func (*SetConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{24}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{25}
 }
 func (m *SetConfigRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetConfigRequest.Unmarshal(m, b)
@@ -1195,7 +1249,7 @@ func (m *ConfigValueRequest) Reset()         { *m = ConfigValueRequest{} }
 func (m *ConfigValueRequest) String() string { return proto.CompactTextString(m) }
 func (*ConfigValueRequest) ProtoMessage()    {}
 func (*ConfigValueRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{25}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{26}
 }
 func (m *ConfigValueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConfigValueRequest.Unmarshal(m, b)
@@ -1234,7 +1288,7 @@ func (m *ConfigValueResponse) Reset()         { *m = ConfigValueResponse{} }
 func (m *ConfigValueResponse) String() string { return proto.CompactTextString(m) }
 func (*ConfigValueResponse) ProtoMessage()    {}
 func (*ConfigValueResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_57b62891228a1ab5, []int{26}
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{27}
 }
 func (m *ConfigValueResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConfigValueResponse.Unmarshal(m, b)
@@ -1268,6 +1322,188 @@ func (m *ConfigValueResponse) GetValue() string {
 	return ""
 }
 
+type SetValidatorInfoRequest struct {
+	BuildNumber          uint64   `protobuf:"varint,1,opt,name=build_number,json=buildNumber,proto3" json:"build_number,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetValidatorInfoRequest) Reset()         { *m = SetValidatorInfoRequest{} }
+func (m *SetValidatorInfoRequest) String() string { return proto.CompactTextString(m) }
+func (*SetValidatorInfoRequest) ProtoMessage()    {}
+func (*SetValidatorInfoRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{28}
+}
+func (m *SetValidatorInfoRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SetValidatorInfoRequest.Unmarshal(m, b)
+}
+func (m *SetValidatorInfoRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SetValidatorInfoRequest.Marshal(b, m, deterministic)
+}
+func (dst *SetValidatorInfoRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetValidatorInfoRequest.Merge(dst, src)
+}
+func (m *SetValidatorInfoRequest) XXX_Size() int {
+	return xxx_messageInfo_SetValidatorInfoRequest.Size(m)
+}
+func (m *SetValidatorInfoRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetValidatorInfoRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetValidatorInfoRequest proto.InternalMessageInfo
+
+func (m *SetValidatorInfoRequest) GetBuildNumber() uint64 {
+	if m != nil {
+		return m.BuildNumber
+	}
+	return 0
+}
+
+type GetValidatorInfoRequest struct {
+	Address              *types.Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *GetValidatorInfoRequest) Reset()         { *m = GetValidatorInfoRequest{} }
+func (m *GetValidatorInfoRequest) String() string { return proto.CompactTextString(m) }
+func (*GetValidatorInfoRequest) ProtoMessage()    {}
+func (*GetValidatorInfoRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{29}
+}
+func (m *GetValidatorInfoRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetValidatorInfoRequest.Unmarshal(m, b)
+}
+func (m *GetValidatorInfoRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetValidatorInfoRequest.Marshal(b, m, deterministic)
+}
+func (dst *GetValidatorInfoRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetValidatorInfoRequest.Merge(dst, src)
+}
+func (m *GetValidatorInfoRequest) XXX_Size() int {
+	return xxx_messageInfo_GetValidatorInfoRequest.Size(m)
+}
+func (m *GetValidatorInfoRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetValidatorInfoRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetValidatorInfoRequest proto.InternalMessageInfo
+
+func (m *GetValidatorInfoRequest) GetAddress() *types.Address {
+	if m != nil {
+		return m.Address
+	}
+	return nil
+}
+
+type GetValidatorInfoResponse struct {
+	Validator            *ValidatorInfo `protobuf:"bytes,1,opt,name=validator" json:"validator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *GetValidatorInfoResponse) Reset()         { *m = GetValidatorInfoResponse{} }
+func (m *GetValidatorInfoResponse) String() string { return proto.CompactTextString(m) }
+func (*GetValidatorInfoResponse) ProtoMessage()    {}
+func (*GetValidatorInfoResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{30}
+}
+func (m *GetValidatorInfoResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetValidatorInfoResponse.Unmarshal(m, b)
+}
+func (m *GetValidatorInfoResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetValidatorInfoResponse.Marshal(b, m, deterministic)
+}
+func (dst *GetValidatorInfoResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetValidatorInfoResponse.Merge(dst, src)
+}
+func (m *GetValidatorInfoResponse) XXX_Size() int {
+	return xxx_messageInfo_GetValidatorInfoResponse.Size(m)
+}
+func (m *GetValidatorInfoResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetValidatorInfoResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetValidatorInfoResponse proto.InternalMessageInfo
+
+func (m *GetValidatorInfoResponse) GetValidator() *ValidatorInfo {
+	if m != nil {
+		return m.Validator
+	}
+	return nil
+}
+
+type ListValidatorsInfoRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListValidatorsInfoRequest) Reset()         { *m = ListValidatorsInfoRequest{} }
+func (m *ListValidatorsInfoRequest) String() string { return proto.CompactTextString(m) }
+func (*ListValidatorsInfoRequest) ProtoMessage()    {}
+func (*ListValidatorsInfoRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{31}
+}
+func (m *ListValidatorsInfoRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListValidatorsInfoRequest.Unmarshal(m, b)
+}
+func (m *ListValidatorsInfoRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListValidatorsInfoRequest.Marshal(b, m, deterministic)
+}
+func (dst *ListValidatorsInfoRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListValidatorsInfoRequest.Merge(dst, src)
+}
+func (m *ListValidatorsInfoRequest) XXX_Size() int {
+	return xxx_messageInfo_ListValidatorsInfoRequest.Size(m)
+}
+func (m *ListValidatorsInfoRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListValidatorsInfoRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListValidatorsInfoRequest proto.InternalMessageInfo
+
+type ListValidatorsInfoResponse struct {
+	Validators           []*ValidatorInfo `protobuf:"bytes,1,rep,name=validators" json:"validators,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *ListValidatorsInfoResponse) Reset()         { *m = ListValidatorsInfoResponse{} }
+func (m *ListValidatorsInfoResponse) String() string { return proto.CompactTextString(m) }
+func (*ListValidatorsInfoResponse) ProtoMessage()    {}
+func (*ListValidatorsInfoResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{32}
+}
+func (m *ListValidatorsInfoResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListValidatorsInfoResponse.Unmarshal(m, b)
+}
+func (m *ListValidatorsInfoResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListValidatorsInfoResponse.Marshal(b, m, deterministic)
+}
+func (dst *ListValidatorsInfoResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListValidatorsInfoResponse.Merge(dst, src)
+}
+func (m *ListValidatorsInfoResponse) XXX_Size() int {
+	return xxx_messageInfo_ListValidatorsInfoResponse.Size(m)
+}
+func (m *ListValidatorsInfoResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListValidatorsInfoResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListValidatorsInfoResponse proto.InternalMessageInfo
+
+func (m *ListValidatorsInfoResponse) GetValidators() []*ValidatorInfo {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*InitRequest)(nil), "chainconfig.InitRequest")
 	proto.RegisterType((*GetFeatureRequest)(nil), "chainconfig.GetFeatureRequest")
@@ -1275,6 +1511,7 @@ func init() {
 	proto.RegisterType((*AddFeatureResponse)(nil), "chainconfig.AddFeatureResponse")
 	proto.RegisterType((*GetFeatureResponse)(nil), "chainconfig.GetFeatureResponse")
 	proto.RegisterType((*Feature)(nil), "chainconfig.Feature")
+	proto.RegisterType((*ValidatorInfo)(nil), "chainconfig.ValidatorInfo")
 	proto.RegisterType((*Params)(nil), "chainconfig.Params")
 	proto.RegisterType((*SetParamsRequest)(nil), "chainconfig.SetParamsRequest")
 	proto.RegisterType((*GetParamsRequest)(nil), "chainconfig.GetParamsRequest")
@@ -1296,69 +1533,81 @@ func init() {
 	proto.RegisterType((*SetConfigRequest)(nil), "chainconfig.SetConfigRequest")
 	proto.RegisterType((*ConfigValueRequest)(nil), "chainconfig.ConfigValueRequest")
 	proto.RegisterType((*ConfigValueResponse)(nil), "chainconfig.ConfigValueResponse")
+	proto.RegisterType((*SetValidatorInfoRequest)(nil), "chainconfig.SetValidatorInfoRequest")
+	proto.RegisterType((*GetValidatorInfoRequest)(nil), "chainconfig.GetValidatorInfoRequest")
+	proto.RegisterType((*GetValidatorInfoResponse)(nil), "chainconfig.GetValidatorInfoResponse")
+	proto.RegisterType((*ListValidatorsInfoRequest)(nil), "chainconfig.ListValidatorsInfoRequest")
+	proto.RegisterType((*ListValidatorsInfoResponse)(nil), "chainconfig.ListValidatorsInfoResponse")
 	proto.RegisterEnum("chainconfig.Feature_FeatureStatus", Feature_FeatureStatus_name, Feature_FeatureStatus_value)
 	proto.RegisterEnum("chainconfig.Config_ConfigStatus", Config_ConfigStatus_name, Config_ConfigStatus_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_57b62891228a1ab5)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_e963fa18c3295ccb)
 }
 
-var fileDescriptor_chainconfig_57b62891228a1ab5 = []byte{
-	// 874 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x56, 0x5d, 0x8f, 0xda, 0x46,
-	0x14, 0xad, 0xd7, 0x60, 0xe0, 0xb2, 0x1b, 0xb1, 0xb3, 0xac, 0x62, 0xf5, 0x21, 0xa5, 0x23, 0x35,
-	0x41, 0x4a, 0x02, 0xd1, 0x46, 0x8d, 0xaa, 0xaa, 0x52, 0x42, 0x16, 0xba, 0xa1, 0x8a, 0xb6, 0x2b,
-	0x2f, 0xda, 0x3e, 0x22, 0x83, 0x27, 0x60, 0xc5, 0xf6, 0x50, 0xcf, 0x78, 0xa3, 0xfe, 0x83, 0x3e,
-	0xf4, 0xa1, 0x3f, 0xad, 0x3f, 0xa9, 0x9a, 0x0f, 0x1b, 0x1b, 0x3b, 0x85, 0x2a, 0x2f, 0x8b, 0xef,
-	0xb9, 0x67, 0xae, 0xef, 0x9c, 0xb9, 0x67, 0xbc, 0xf0, 0xcb, 0xca, 0xe7, 0xeb, 0x64, 0x31, 0x58,
-	0xd2, 0x70, 0x18, 0x50, 0x1a, 0x46, 0x84, 0x7f, 0xa2, 0xf1, 0xc7, 0xe1, 0x8a, 0x3e, 0x17, 0xe1,
-	0x70, 0x91, 0xf8, 0x01, 0xf7, 0xa3, 0x21, 0xff, 0x63, 0x43, 0xd8, 0x70, 0xb9, 0x76, 0xfd, 0x68,
-	0x49, 0xa3, 0x0f, 0xfe, 0x2a, 0xff, 0x3c, 0xd8, 0xc4, 0x94, 0x53, 0xd4, 0xce, 0x41, 0x5f, 0xbf,
-	0xd8, 0x53, 0x58, 0x15, 0x94, 0x7f, 0xd5, 0x72, 0xfc, 0x97, 0x01, 0xed, 0x69, 0xe4, 0x73, 0x87,
-	0xfc, 0x9e, 0x10, 0xc6, 0xd1, 0x23, 0xa8, 0xd3, 0x4f, 0x11, 0x89, 0x6d, 0xa3, 0x67, 0xf4, 0xdb,
-	0x17, 0xcd, 0xc1, 0xc8, 0xf3, 0x62, 0xc2, 0x98, 0xa3, 0x60, 0xf4, 0x14, 0xac, 0x8d, 0x1b, 0xbb,
-	0x21, 0xb3, 0x8f, 0x24, 0xe1, 0x6c, 0x90, 0x6f, 0xe9, 0x46, 0xa6, 0x1c, 0x4d, 0x41, 0x2f, 0xa0,
-	0xf9, 0x81, 0xb8, 0x3c, 0x89, 0x09, 0xb3, 0xcd, 0x9e, 0xd9, 0x6f, 0x5f, 0x74, 0x0b, 0xf4, 0x9f,
-	0x55, 0xd2, 0xc9, 0x58, 0xf8, 0x09, 0x9c, 0x5e, 0x11, 0x9e, 0xe2, 0xba, 0x27, 0x04, 0xb5, 0xc8,
-	0x0d, 0x89, 0x6c, 0xa9, 0xe5, 0xc8, 0x67, 0x1c, 0xc2, 0xe9, 0xc8, 0xf3, 0x76, 0x88, 0x5d, 0xa8,
-	0x8b, 0x24, 0xb3, 0x8d, 0x9e, 0xd9, 0x6f, 0x39, 0x2a, 0x40, 0xdf, 0xc2, 0xb1, 0x10, 0xd4, 0x9b,
-	0x47, 0x49, 0xb8, 0x20, 0xb1, 0x6c, 0xbc, 0xe6, 0xb4, 0x25, 0x76, 0x2d, 0x21, 0xf4, 0x0d, 0xb4,
-	0xdd, 0x84, 0xd3, 0x39, 0x89, 0xdc, 0x45, 0x40, 0x6c, 0xb3, 0x67, 0xf4, 0x9b, 0x0e, 0x08, 0x68,
-	0x22, 0x11, 0xdc, 0x05, 0x94, 0x7f, 0x1d, 0xdb, 0xd0, 0x88, 0x11, 0x3c, 0x06, 0x94, 0xef, 0x56,
-	0xa1, 0x68, 0x00, 0x0d, 0xbd, 0x1f, 0x2d, 0x62, 0xf5, 0xa6, 0x53, 0x12, 0xfe, 0xe7, 0x08, 0x1a,
-	0x1a, 0xac, 0xda, 0x2a, 0xfa, 0x11, 0x2c, 0xc6, 0x5d, 0x9e, 0x28, 0xc9, 0x1f, 0x5c, 0xe0, 0xaa,
-	0x72, 0xe9, 0xef, 0xad, 0x64, 0x3a, 0x7a, 0x05, 0xea, 0x03, 0xdc, 0xbb, 0x81, 0xef, 0xb9, 0x9c,
-	0xc6, 0xe9, 0x19, 0x6c, 0xcf, 0x34, 0x97, 0x93, 0x2a, 0x05, 0x74, 0xf9, 0x71, 0xbe, 0x26, 0xfe,
-	0x6a, 0xcd, 0xed, 0x9a, 0x56, 0x49, 0x60, 0xef, 0x24, 0x84, 0x1e, 0x01, 0x6c, 0x48, 0xbc, 0x24,
-	0x11, 0x77, 0x57, 0xc4, 0xae, 0x4b, 0x42, 0x0e, 0x29, 0x09, 0x6d, 0xed, 0x15, 0xba, 0x51, 0x12,
-	0x7a, 0x0c, 0x27, 0x85, 0x9d, 0xa0, 0x36, 0x34, 0x6e, 0x26, 0xd7, 0xe3, 0xe9, 0xf5, 0x55, 0xe7,
-	0x2b, 0x11, 0xfc, 0x36, 0x9a, 0xce, 0x44, 0x60, 0x88, 0x60, 0x72, 0x3d, 0x7a, 0xfb, 0x7e, 0x32,
-	0xee, 0x1c, 0xa1, 0x63, 0x68, 0x8e, 0xa7, 0xb7, 0x2a, 0x32, 0xf1, 0x0a, 0x2c, 0x35, 0x8a, 0xe8,
-	0x3b, 0x78, 0x70, 0x4f, 0x39, 0x99, 0xf3, 0x75, 0x4c, 0xd8, 0x9a, 0x06, 0x9e, 0x94, 0xb6, 0xe6,
-	0x9c, 0x08, 0x74, 0x96, 0x82, 0xe8, 0x15, 0x3c, 0x8c, 0x92, 0x70, 0xae, 0x14, 0x90, 0xca, 0xc6,
-	0xa1, 0xcb, 0x7d, 0x1a, 0x31, 0x3d, 0x2e, 0xe7, 0x51, 0x12, 0xbe, 0x15, 0xd9, 0xcb, 0x7c, 0x12,
-	0xbf, 0x86, 0xce, 0x2d, 0xe1, 0x7a, 0xec, 0xf5, 0x14, 0x6e, 0x2d, 0x62, 0xec, 0xb5, 0x08, 0x46,
-	0xd0, 0xb9, 0xda, 0x29, 0x80, 0xdf, 0x48, 0x13, 0xa4, 0x98, 0x9e, 0xaa, 0xff, 0x55, 0xf5, 0x1c,
-	0xce, 0xde, 0xfb, 0x2c, 0x9d, 0xcc, 0xac, 0xf0, 0x3b, 0xe8, 0x16, 0x61, 0x5d, 0x3b, 0xef, 0x53,
-	0xe3, 0x20, 0x9f, 0x3e, 0x83, 0xae, 0x3a, 0xb0, 0x43, 0x1c, 0x88, 0x1f, 0xc2, 0xf9, 0x0e, 0x5b,
-	0x1b, 0xe8, 0x19, 0x74, 0x1d, 0x12, 0xd2, 0xfb, 0xc3, 0xca, 0x8c, 0xa1, 0x76, 0x47, 0x39, 0x41,
-	0x8f, 0xa1, 0x95, 0x0d, 0x6e, 0xe9, 0x9e, 0xda, 0xa6, 0x44, 0x95, 0x7b, 0x37, 0x48, 0x88, 0x3c,
-	0xc2, 0x96, 0xa3, 0x02, 0xfc, 0x06, 0x9a, 0x37, 0x31, 0xdd, 0x50, 0xe6, 0x06, 0x5b, 0x86, 0x91,
-	0x63, 0xec, 0xcc, 0xf9, 0xd1, 0xee, 0x9c, 0xe3, 0xbf, 0x4d, 0xb0, 0xe4, 0x18, 0xac, 0x2a, 0xfd,
-	0xfa, 0x3d, 0x00, 0x23, 0x9c, 0x07, 0x24, 0x24, 0x11, 0xd7, 0xd7, 0xe4, 0x79, 0xf1, 0xb4, 0xf4,
-	0xfb, 0x9d, 0x1c, 0x11, 0xfd, 0x90, 0xd9, 0xdc, 0x94, 0x36, 0xef, 0x15, 0x96, 0x5c, 0xe6, 0x7f,
-	0x76, 0x4c, 0xfe, 0x04, 0xea, 0x62, 0x9a, 0x99, 0x5d, 0x93, 0x67, 0x77, 0x5a, 0x58, 0x28, 0x14,
-	0x73, 0x54, 0xbe, 0xe4, 0xf1, 0x7a, 0xd9, 0xe3, 0x2f, 0xa1, 0xb5, 0xd1, 0xdd, 0x31, 0xdb, 0x92,
-	0xf5, 0x3e, 0xd3, 0xfb, 0x96, 0x57, 0x32, 0x7e, 0xa3, 0x6c, 0xfc, 0xb2, 0x0f, 0x9b, 0x15, 0x3e,
-	0xc4, 0xaf, 0xe0, 0x38, 0xbf, 0x45, 0x04, 0x60, 0xdd, 0xfd, 0x3a, 0xcb, 0xcc, 0x7f, 0x3b, 0x99,
-	0xcd, 0x84, 0xc3, 0x0d, 0x74, 0x02, 0xad, 0xd1, 0xe5, 0x6c, 0x7a, 0x37, 0x9a, 0x09, 0xfb, 0xe3,
-	0x3f, 0x0d, 0xe8, 0x8c, 0x3c, 0x4f, 0xad, 0xfd, 0xe2, 0xcf, 0x41, 0xb9, 0x59, 0xb3, 0xea, 0xd2,
-	0xc8, 0xa6, 0xa7, 0x96, 0x9f, 0xaf, 0xc7, 0xd2, 0xd1, 0xc5, 0x4e, 0xaa, 0xbe, 0x60, 0xca, 0xe5,
-	0x29, 0x6f, 0xeb, 0x72, 0xa5, 0x73, 0xa5, 0xcb, 0x35, 0x59, 0x53, 0xc4, 0x47, 0x49, 0xd8, 0x59,
-	0xa1, 0x99, 0xc9, 0xc7, 0xca, 0xfb, 0x19, 0xaa, 0x2b, 0x3f, 0x87, 0x86, 0x5a, 0x96, 0x5a, 0xbc,
-	0xb2, 0x74, 0xca, 0xc1, 0x4f, 0xe1, 0x4c, 0x39, 0xf3, 0x00, 0x49, 0xf1, 0x4f, 0xf2, 0x16, 0xdc,
-	0xbb, 0xe5, 0xcf, 0x18, 0xb2, 0x0f, 0x48, 0x2d, 0xbd, 0x13, 0xe1, 0x7f, 0x49, 0xf6, 0x1a, 0xce,
-	0x0a, 0x4c, 0xbd, 0xb5, 0x83, 0x5f, 0xb5, 0xb0, 0xe4, 0x3f, 0x3d, 0x2f, 0xff, 0x0d, 0x00, 0x00,
-	0xff, 0xff, 0x5e, 0xd9, 0xf0, 0x87, 0x81, 0x09, 0x00, 0x00,
+var fileDescriptor_chainconfig_e963fa18c3295ccb = []byte{
+	// 985 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x56, 0x6d, 0x6f, 0x1a, 0x47,
+	0x10, 0xee, 0x99, 0xf7, 0xc1, 0x8e, 0xf0, 0x1a, 0xcb, 0x57, 0x57, 0x4d, 0xe9, 0x4a, 0x4d, 0x90,
+	0x92, 0x40, 0xe4, 0xa8, 0x51, 0x14, 0xa5, 0x4a, 0x88, 0xa1, 0x0e, 0x55, 0xe4, 0x5a, 0x07, 0xa2,
+	0xfd, 0x86, 0x0e, 0x6e, 0x0d, 0xa7, 0x70, 0xb7, 0xf4, 0x76, 0xcf, 0x51, 0xff, 0x41, 0x3f, 0xf4,
+	0x43, 0x7f, 0x5a, 0x7f, 0x52, 0xb5, 0x2f, 0x77, 0xdc, 0x71, 0x67, 0x9b, 0x2a, 0x5f, 0x80, 0x7d,
+	0xe6, 0xd9, 0xd9, 0x99, 0xd9, 0x79, 0x66, 0x81, 0x5f, 0x16, 0x2e, 0x5f, 0x86, 0xb3, 0xce, 0x9c,
+	0x7a, 0xdd, 0x15, 0xa5, 0x9e, 0x4f, 0xf8, 0x67, 0x1a, 0x7c, 0xea, 0x2e, 0xe8, 0x33, 0xb1, 0xec,
+	0xce, 0x42, 0x77, 0xc5, 0x5d, 0xbf, 0xcb, 0xff, 0x5c, 0x13, 0xd6, 0x9d, 0x2f, 0x6d, 0xd7, 0x9f,
+	0x53, 0xff, 0xda, 0x5d, 0x24, 0x7f, 0x77, 0xd6, 0x01, 0xe5, 0x14, 0xd5, 0x13, 0xd0, 0xe9, 0xf3,
+	0x7b, 0x1c, 0x2b, 0x87, 0xf2, 0x53, 0x6d, 0xc7, 0x7f, 0x1b, 0x50, 0x1f, 0xfa, 0x2e, 0xb7, 0xc8,
+	0x1f, 0x21, 0x61, 0x1c, 0x3d, 0x84, 0x12, 0xfd, 0xec, 0x93, 0xc0, 0x34, 0x5a, 0x46, 0xbb, 0x7e,
+	0x56, 0xed, 0xf4, 0x1c, 0x27, 0x20, 0x8c, 0x59, 0x0a, 0x46, 0x4f, 0xa0, 0xbc, 0xb6, 0x03, 0xdb,
+	0x63, 0xe6, 0x9e, 0x24, 0x1c, 0x75, 0x92, 0x21, 0x5d, 0x49, 0x93, 0xa5, 0x29, 0xe8, 0x39, 0x54,
+	0xaf, 0x89, 0xcd, 0xc3, 0x80, 0x30, 0xb3, 0xd0, 0x2a, 0xb4, 0xeb, 0x67, 0xcd, 0x14, 0xfd, 0x67,
+	0x65, 0xb4, 0x62, 0x16, 0x7e, 0x0c, 0x87, 0x17, 0x84, 0x47, 0xb8, 0x8e, 0x09, 0x41, 0xd1, 0xb7,
+	0x3d, 0x22, 0x43, 0xaa, 0x59, 0xf2, 0x37, 0xf6, 0xe0, 0xb0, 0xe7, 0x38, 0x5b, 0xc4, 0x26, 0x94,
+	0x84, 0x91, 0x99, 0x46, 0xab, 0xd0, 0xae, 0x59, 0x6a, 0x81, 0xbe, 0x87, 0x7d, 0x51, 0x50, 0x67,
+	0xea, 0x87, 0xde, 0x8c, 0x04, 0x32, 0xf0, 0xa2, 0x55, 0x97, 0xd8, 0xa5, 0x84, 0xd0, 0x77, 0x50,
+	0xb7, 0x43, 0x4e, 0xa7, 0xc4, 0xb7, 0x67, 0x2b, 0x62, 0x16, 0x5a, 0x46, 0xbb, 0x6a, 0x81, 0x80,
+	0x06, 0x12, 0xc1, 0x4d, 0x40, 0xc9, 0xe3, 0xd8, 0x9a, 0xfa, 0x8c, 0xe0, 0x3e, 0xa0, 0x64, 0xb4,
+	0x0a, 0x45, 0x1d, 0xa8, 0xe8, 0x7c, 0x74, 0x11, 0xf3, 0x93, 0x8e, 0x48, 0xf8, 0xdf, 0x3d, 0xa8,
+	0x68, 0x30, 0x2f, 0x55, 0xf4, 0x1a, 0xca, 0x8c, 0xdb, 0x3c, 0x54, 0x25, 0x7f, 0x70, 0x86, 0xf3,
+	0xdc, 0x45, 0xdf, 0x23, 0xc9, 0xb4, 0xf4, 0x0e, 0xd4, 0x06, 0xb8, 0xb1, 0x57, 0xae, 0x63, 0x73,
+	0x1a, 0x44, 0x77, 0xb0, 0xb9, 0xd3, 0x84, 0x4d, 0x56, 0x69, 0x45, 0xe7, 0x9f, 0xa6, 0x4b, 0xe2,
+	0x2e, 0x96, 0xdc, 0x2c, 0xea, 0x2a, 0x09, 0xec, 0x83, 0x84, 0xd0, 0x43, 0x80, 0x35, 0x09, 0xe6,
+	0xc4, 0xe7, 0xf6, 0x82, 0x98, 0x25, 0x49, 0x48, 0x20, 0x99, 0x42, 0x97, 0xef, 0x2d, 0x74, 0x25,
+	0x53, 0xe8, 0x3e, 0x1c, 0xa4, 0x32, 0x41, 0x75, 0xa8, 0x5c, 0x0d, 0x2e, 0xfb, 0xc3, 0xcb, 0x8b,
+	0xc6, 0x57, 0x62, 0xf1, 0x5b, 0x6f, 0x38, 0x16, 0x0b, 0x43, 0x2c, 0x06, 0x97, 0xbd, 0xf7, 0x1f,
+	0x07, 0xfd, 0xc6, 0x1e, 0xda, 0x87, 0x6a, 0x7f, 0x38, 0x52, 0xab, 0x02, 0x0e, 0xe1, 0x60, 0x12,
+	0xa5, 0x36, 0xf4, 0xaf, 0x29, 0xc2, 0x50, 0xb1, 0x55, 0xd2, 0x99, 0xc6, 0x8e, 0x0c, 0xbb, 0xf4,
+	0xc9, 0xb7, 0x00, 0xe1, 0xda, 0xb1, 0x39, 0x71, 0xa6, 0x36, 0x97, 0x6d, 0x52, 0xb4, 0x6a, 0x1a,
+	0xe9, 0x71, 0xbc, 0x80, 0xb2, 0x52, 0x00, 0xfa, 0x01, 0x1e, 0xdc, 0x50, 0x4e, 0xa6, 0x7c, 0x19,
+	0x10, 0xb6, 0xa4, 0x2b, 0x47, 0x1e, 0x5b, 0xb4, 0x0e, 0x04, 0x3a, 0x8e, 0x40, 0xf4, 0x12, 0x4e,
+	0xfc, 0xd0, 0x9b, 0xaa, 0xc2, 0xcb, 0x0b, 0x0d, 0x3c, 0x9b, 0xbb, 0xd4, 0x67, 0xfa, 0xf4, 0x63,
+	0x3f, 0xf4, 0xde, 0x0b, 0xeb, 0x79, 0xd2, 0x88, 0xdf, 0x42, 0x63, 0x44, 0xb8, 0x56, 0x9b, 0x6e,
+	0xfe, 0x8d, 0x32, 0x8d, 0x7b, 0x95, 0x89, 0x11, 0x34, 0x2e, 0xb6, 0x1c, 0xe0, 0x77, 0x52, 0x7b,
+	0x11, 0xa6, 0x9b, 0xf9, 0x7f, 0x79, 0x3d, 0x86, 0xa3, 0x8f, 0x2e, 0x8b, 0x04, 0x11, 0x3b, 0xfe,
+	0x00, 0xcd, 0x34, 0xac, 0x7d, 0x27, 0xc7, 0x83, 0xb1, 0xd3, 0x78, 0x78, 0x0a, 0x4d, 0xd5, 0x27,
+	0xbb, 0x08, 0x1f, 0x9f, 0xc0, 0xf1, 0x16, 0x5b, 0xeb, 0xf6, 0x29, 0x34, 0x2d, 0xe2, 0xd1, 0x9b,
+	0xdd, 0xdc, 0xf4, 0xa1, 0x38, 0xa1, 0x9c, 0xa0, 0x47, 0x50, 0x8b, 0xf5, 0x92, 0xe9, 0xa2, 0x8d,
+	0x49, 0x78, 0xb9, 0xb1, 0x57, 0x21, 0x91, 0x57, 0x58, 0xb3, 0xd4, 0x02, 0xbf, 0x83, 0xea, 0x55,
+	0x40, 0xd7, 0x94, 0xd9, 0xab, 0x0d, 0xc3, 0x48, 0x30, 0xb6, 0xe4, 0xb5, 0xb7, 0x2d, 0x2f, 0xfc,
+	0x4f, 0x01, 0xca, 0xb2, 0x0d, 0x16, 0xb9, 0x63, 0xe2, 0x47, 0x00, 0x46, 0x38, 0x5f, 0x11, 0x8f,
+	0xf8, 0x5c, 0x4f, 0xe7, 0xe3, 0xf4, 0x6d, 0xe9, 0xf3, 0xad, 0x04, 0x11, 0xbd, 0x8a, 0xa7, 0x4b,
+	0x41, 0x4e, 0x97, 0x56, 0x6a, 0xcb, 0x79, 0xf2, 0x6b, 0x6b, 0xb6, 0x3c, 0x86, 0x92, 0xe8, 0x66,
+	0x66, 0x16, 0xe5, 0xdd, 0x1d, 0xa6, 0x36, 0x8a, 0x8a, 0x59, 0xca, 0x9e, 0x19, 0x2d, 0xa5, 0xec,
+	0x68, 0x79, 0x01, 0xb5, 0xb5, 0x8e, 0x8e, 0x99, 0x65, 0xe9, 0xef, 0x96, 0xd8, 0x37, 0xbc, 0x8c,
+	0x60, 0x2b, 0x59, 0xc1, 0x66, 0x75, 0x58, 0xcd, 0xd1, 0x21, 0x7e, 0x09, 0xfb, 0xc9, 0x14, 0x11,
+	0x40, 0x79, 0xf2, 0xeb, 0x38, 0x9e, 0x39, 0xa3, 0xc1, 0x78, 0x2c, 0x06, 0x8b, 0x81, 0x0e, 0xa0,
+	0xd6, 0x3b, 0x1f, 0x0f, 0x27, 0xbd, 0xb1, 0x98, 0x3a, 0xf8, 0x2f, 0x03, 0x1a, 0x3d, 0xc7, 0x51,
+	0x7b, 0xbf, 0xf8, 0x15, 0xca, 0x06, 0x5b, 0xc8, 0x1b, 0x1a, 0x71, 0xf7, 0x14, 0x93, 0xfd, 0xf5,
+	0x48, 0x2a, 0x3a, 0x1d, 0x49, 0xde, 0xc3, 0xa9, 0x54, 0x1e, 0xf1, 0x36, 0x2a, 0x57, 0x75, 0xce,
+	0x55, 0xb9, 0x26, 0x6b, 0x8a, 0x78, 0x0b, 0x85, 0x9c, 0x15, 0x1a, 0x8b, 0xbc, 0xaf, 0xb4, 0x1f,
+	0xa3, 0xda, 0xf3, 0x33, 0xa8, 0xa8, 0x6d, 0x91, 0xc4, 0x73, 0x5d, 0x47, 0x1c, 0xfc, 0x04, 0x8e,
+	0x94, 0x32, 0x77, 0x28, 0x29, 0x7e, 0x23, 0xa7, 0xe0, 0xbd, 0x29, 0xdf, 0x22, 0xc8, 0x36, 0x20,
+	0xb5, 0x75, 0x22, 0x96, 0x77, 0x95, 0xec, 0x2d, 0x1c, 0xa5, 0x98, 0x3a, 0xb5, 0xdd, 0x8f, 0x7a,
+	0x03, 0x27, 0x23, 0xc2, 0x53, 0x2f, 0x52, 0x74, 0xde, 0x76, 0x5b, 0x18, 0x99, 0xb6, 0xc0, 0x3f,
+	0xc1, 0xc9, 0xc5, 0x2d, 0xbb, 0x77, 0x78, 0xd6, 0xf0, 0x18, 0xcc, 0xec, 0x76, 0x9d, 0xc2, 0xab,
+	0xec, 0x48, 0x3b, 0x4d, 0xcb, 0x38, 0xb5, 0x6d, 0x43, 0xc6, 0xdf, 0xc0, 0xd7, 0xe2, 0xba, 0x63,
+	0x3b, 0x4b, 0x84, 0x85, 0x7f, 0x87, 0xd3, 0x3c, 0xa3, 0x3e, 0xf4, 0x75, 0xea, 0x3f, 0x89, 0xea,
+	0x8a, 0xbb, 0x4e, 0x4d, 0xb0, 0x67, 0x65, 0xf9, 0xaf, 0xf5, 0xc5, 0x7f, 0x01, 0x00, 0x00, 0xff,
+	0xff, 0xd2, 0xd7, 0xdc, 0x9d, 0x42, 0x0b, 0x00, 0x00,
 }
