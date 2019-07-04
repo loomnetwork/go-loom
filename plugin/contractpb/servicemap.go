@@ -199,7 +199,7 @@ func (m *serviceMap) Get(method string) (*service, *serviceMethod, error) {
 	}
 	serviceMethod := service.methods[parts[1]]
 	if serviceMethod == nil {
-		return nil, nil, ErrMethodNotFound
+		return nil, nil, errors.New("Method " + method + " Not found")
 	}
 	return service, serviceMethod, nil
 }
