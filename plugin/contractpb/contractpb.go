@@ -10,6 +10,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 
 	"github.com/loomnetwork/go-loom"
+	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
 	"github.com/loomnetwork/go-loom/plugin"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
@@ -33,7 +34,7 @@ type StaticContext interface {
 	GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
 	FeatureEnabled(name string, defaultVal bool) bool
-	ChainConfig() loom.Config
+	Config() *cctypes.Config
 	Validators() []*types.Validator
 
 	// ContractRecord retrieves the contract meta data stored in the Registry.
@@ -98,8 +99,8 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 }
 
 // Get ChainConfig
-func (c *wrappedPluginStaticContext) ChainConfig() loom.Config {
-	return c.StaticContext.ChainConfig()
+func (c *wrappedPluginStaticContext) Config() *cctypes.Config {
+	return c.StaticContext.Config()
 }
 
 // Validators gives a list of validators
@@ -149,9 +150,9 @@ func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool
 	return c.Context.FeatureEnabled(name, defaultVal)
 }
 
-// Get ChainConfig
-func (c *wrappedPluginContext) ChainConfig() loom.Config {
-	return c.Context.ChainConfig()
+// Get Config
+func (c *wrappedPluginContext) Config() *cctypes.Config {
+	return c.Context.Config()
 }
 
 // Validators gives a list of validators

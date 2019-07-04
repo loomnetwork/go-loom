@@ -45,33 +45,7 @@ func (x Feature_FeatureStatus) String() string {
 	return proto.EnumName(Feature_FeatureStatus_name, int32(x))
 }
 func (Feature_FeatureStatus) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{5, 0}
-}
-
-type Config_ConfigStatus int32
-
-const (
-	Config_VOTING    Config_ConfigStatus = 0
-	Config_SETTLED   Config_ConfigStatus = 1
-	Config_ACTIVATED Config_ConfigStatus = 2
-)
-
-var Config_ConfigStatus_name = map[int32]string{
-	0: "VOTING",
-	1: "SETTLED",
-	2: "ACTIVATED",
-}
-var Config_ConfigStatus_value = map[string]int32{
-	"VOTING":    0,
-	"SETTLED":   1,
-	"ACTIVATED": 2,
-}
-
-func (x Config_ConfigStatus) String() string {
-	return proto.EnumName(Config_ConfigStatus_name, int32(x))
-}
-func (Config_ConfigStatus) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{18, 0}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{5, 0}
 }
 
 type InitRequest struct {
@@ -87,7 +61,7 @@ func (m *InitRequest) Reset()         { *m = InitRequest{} }
 func (m *InitRequest) String() string { return proto.CompactTextString(m) }
 func (*InitRequest) ProtoMessage()    {}
 func (*InitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{0}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{0}
 }
 func (m *InitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_InitRequest.Unmarshal(m, b)
@@ -139,7 +113,7 @@ func (m *GetFeatureRequest) Reset()         { *m = GetFeatureRequest{} }
 func (m *GetFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*GetFeatureRequest) ProtoMessage()    {}
 func (*GetFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{1}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{1}
 }
 func (m *GetFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetFeatureRequest.Unmarshal(m, b)
@@ -179,7 +153,7 @@ func (m *AddFeatureRequest) Reset()         { *m = AddFeatureRequest{} }
 func (m *AddFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*AddFeatureRequest) ProtoMessage()    {}
 func (*AddFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{2}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{2}
 }
 func (m *AddFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddFeatureRequest.Unmarshal(m, b)
@@ -230,7 +204,7 @@ func (m *AddFeatureResponse) Reset()         { *m = AddFeatureResponse{} }
 func (m *AddFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*AddFeatureResponse) ProtoMessage()    {}
 func (*AddFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{3}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{3}
 }
 func (m *AddFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddFeatureResponse.Unmarshal(m, b)
@@ -261,7 +235,7 @@ func (m *GetFeatureResponse) Reset()         { *m = GetFeatureResponse{} }
 func (m *GetFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*GetFeatureResponse) ProtoMessage()    {}
 func (*GetFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{4}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{4}
 }
 func (m *GetFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetFeatureResponse.Unmarshal(m, b)
@@ -309,7 +283,7 @@ func (m *Feature) Reset()         { *m = Feature{} }
 func (m *Feature) String() string { return proto.CompactTextString(m) }
 func (*Feature) ProtoMessage()    {}
 func (*Feature) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{5}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{5}
 }
 func (m *Feature) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Feature.Unmarshal(m, b)
@@ -391,7 +365,7 @@ func (m *ValidatorInfo) Reset()         { *m = ValidatorInfo{} }
 func (m *ValidatorInfo) String() string { return proto.CompactTextString(m) }
 func (*ValidatorInfo) ProtoMessage()    {}
 func (*ValidatorInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{6}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{6}
 }
 func (m *ValidatorInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidatorInfo.Unmarshal(m, b)
@@ -444,7 +418,7 @@ func (m *Params) Reset()         { *m = Params{} }
 func (m *Params) String() string { return proto.CompactTextString(m) }
 func (*Params) ProtoMessage()    {}
 func (*Params) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{7}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{7}
 }
 func (m *Params) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Params.Unmarshal(m, b)
@@ -489,7 +463,7 @@ func (m *SetParamsRequest) Reset()         { *m = SetParamsRequest{} }
 func (m *SetParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*SetParamsRequest) ProtoMessage()    {}
 func (*SetParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{8}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{8}
 }
 func (m *SetParamsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetParamsRequest.Unmarshal(m, b)
@@ -526,7 +500,7 @@ func (m *GetParamsRequest) Reset()         { *m = GetParamsRequest{} }
 func (m *GetParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetParamsRequest) ProtoMessage()    {}
 func (*GetParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{9}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{9}
 }
 func (m *GetParamsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetParamsRequest.Unmarshal(m, b)
@@ -557,7 +531,7 @@ func (m *GetParamsResponse) Reset()         { *m = GetParamsResponse{} }
 func (m *GetParamsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetParamsResponse) ProtoMessage()    {}
 func (*GetParamsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{10}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{10}
 }
 func (m *GetParamsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetParamsResponse.Unmarshal(m, b)
@@ -594,7 +568,7 @@ func (m *ListFeaturesRequest) Reset()         { *m = ListFeaturesRequest{} }
 func (m *ListFeaturesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesRequest) ProtoMessage()    {}
 func (*ListFeaturesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{11}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{11}
 }
 func (m *ListFeaturesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesRequest.Unmarshal(m, b)
@@ -625,7 +599,7 @@ func (m *ListFeaturesResponse) Reset()         { *m = ListFeaturesResponse{} }
 func (m *ListFeaturesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesResponse) ProtoMessage()    {}
 func (*ListFeaturesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{12}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{12}
 }
 func (m *ListFeaturesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesResponse.Unmarshal(m, b)
@@ -663,7 +637,7 @@ func (m *EnableFeatureRequest) Reset()         { *m = EnableFeatureRequest{} }
 func (m *EnableFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*EnableFeatureRequest) ProtoMessage()    {}
 func (*EnableFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{13}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{13}
 }
 func (m *EnableFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnableFeatureRequest.Unmarshal(m, b)
@@ -700,7 +674,7 @@ func (m *EnableFeatureResponse) Reset()         { *m = EnableFeatureResponse{} }
 func (m *EnableFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*EnableFeatureResponse) ProtoMessage()    {}
 func (*EnableFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{14}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{14}
 }
 func (m *EnableFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnableFeatureResponse.Unmarshal(m, b)
@@ -731,7 +705,7 @@ func (m *RemoveFeatureRequest) Reset()         { *m = RemoveFeatureRequest{} }
 func (m *RemoveFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*RemoveFeatureRequest) ProtoMessage()    {}
 func (*RemoveFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{15}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{15}
 }
 func (m *RemoveFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RemoveFeatureRequest.Unmarshal(m, b)
@@ -758,121 +732,56 @@ func (m *RemoveFeatureRequest) GetNames() []string {
 	return nil
 }
 
-type Vote struct {
-	Validator            *types.Address `protobuf:"bytes,1,opt,name=validator" json:"validator,omitempty"`
-	Value                string         `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
-}
-
-func (m *Vote) Reset()         { *m = Vote{} }
-func (m *Vote) String() string { return proto.CompactTextString(m) }
-func (*Vote) ProtoMessage()    {}
-func (*Vote) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{16}
-}
-func (m *Vote) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Vote.Unmarshal(m, b)
-}
-func (m *Vote) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Vote.Marshal(b, m, deterministic)
-}
-func (dst *Vote) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Vote.Merge(dst, src)
-}
-func (m *Vote) XXX_Size() int {
-	return xxx_messageInfo_Vote.Size(m)
-}
-func (m *Vote) XXX_DiscardUnknown() {
-	xxx_messageInfo_Vote.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Vote proto.InternalMessageInfo
-
-func (m *Vote) GetValidator() *types.Address {
-	if m != nil {
-		return m.Validator
-	}
-	return nil
-}
-
-func (m *Vote) GetValue() string {
-	if m != nil {
-		return m.Value
-	}
-	return ""
-}
-
-type Proposal struct {
-	Value                string   `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
-	Percentage           uint64   `protobuf:"varint,2,opt,name=percentage,proto3" json:"percentage,omitempty"`
+type AppStoreConfig struct {
+	DeletedVmKeys        uint64   `protobuf:"varint,1,opt,name=deleted_vm_keys,json=deletedVmKeys,proto3" json:"deleted_vm_keys,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Proposal) Reset()         { *m = Proposal{} }
-func (m *Proposal) String() string { return proto.CompactTextString(m) }
-func (*Proposal) ProtoMessage()    {}
-func (*Proposal) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{17}
+func (m *AppStoreConfig) Reset()         { *m = AppStoreConfig{} }
+func (m *AppStoreConfig) String() string { return proto.CompactTextString(m) }
+func (*AppStoreConfig) ProtoMessage()    {}
+func (*AppStoreConfig) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{16}
 }
-func (m *Proposal) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Proposal.Unmarshal(m, b)
+func (m *AppStoreConfig) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_AppStoreConfig.Unmarshal(m, b)
 }
-func (m *Proposal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Proposal.Marshal(b, m, deterministic)
+func (m *AppStoreConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_AppStoreConfig.Marshal(b, m, deterministic)
 }
-func (dst *Proposal) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Proposal.Merge(dst, src)
+func (dst *AppStoreConfig) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AppStoreConfig.Merge(dst, src)
 }
-func (m *Proposal) XXX_Size() int {
-	return xxx_messageInfo_Proposal.Size(m)
+func (m *AppStoreConfig) XXX_Size() int {
+	return xxx_messageInfo_AppStoreConfig.Size(m)
 }
-func (m *Proposal) XXX_DiscardUnknown() {
-	xxx_messageInfo_Proposal.DiscardUnknown(m)
+func (m *AppStoreConfig) XXX_DiscardUnknown() {
+	xxx_messageInfo_AppStoreConfig.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Proposal proto.InternalMessageInfo
+var xxx_messageInfo_AppStoreConfig proto.InternalMessageInfo
 
-func (m *Proposal) GetValue() string {
+func (m *AppStoreConfig) GetDeletedVmKeys() uint64 {
 	if m != nil {
-		return m.Value
-	}
-	return ""
-}
-
-func (m *Proposal) GetPercentage() uint64 {
-	if m != nil {
-		return m.Percentage
+		return m.DeletedVmKeys
 	}
 	return 0
 }
 
 type Config struct {
-	Name       string              `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Settlement *Proposal           `protobuf:"bytes,2,opt,name=settlement" json:"settlement,omitempty"`
-	Status     Config_ConfigStatus `protobuf:"varint,3,opt,name=status,proto3,enum=chainconfig.Config_ConfigStatus" json:"status,omitempty"`
-	Votes      []*Vote             `protobuf:"bytes,4,rep,name=votes" json:"votes,omitempty"`
-	// Percentage of config enabled validators exceeds vote_threshold at this block_height
-	BlockHeight uint64 `protobuf:"varint,5,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
-	// Proposed values with voting percentage
-	Proposals []*Proposal `protobuf:"bytes,6,rep,name=proposals" json:"proposals,omitempty"`
-	// Minimum build number that supports this config
-	BuildNumber uint64 `protobuf:"varint,7,opt,name=build_number,json=buildNumber,proto3" json:"build_number,omitempty"`
-	// The threshold at which config becomes active
-	VoteThreshold        uint64   `protobuf:"varint,8,opt,name=vote_threshold,json=voteThreshold,proto3" json:"vote_threshold,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	AppStoreConfig       *AppStoreConfig `protobuf:"bytes,5,opt,name=app_store_config,json=appStoreConfig" json:"app_store_config,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *Config) Reset()         { *m = Config{} }
 func (m *Config) String() string { return proto.CompactTextString(m) }
 func (*Config) ProtoMessage()    {}
 func (*Config) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{18}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{17}
 }
 func (m *Config) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Config.Unmarshal(m, b)
@@ -892,434 +801,125 @@ func (m *Config) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Config proto.InternalMessageInfo
 
-func (m *Config) GetName() string {
+func (m *Config) GetAppStoreConfig() *AppStoreConfig {
+	if m != nil {
+		return m.AppStoreConfig
+	}
+	return nil
+}
+
+type SetCfgSettingRequest struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetCfgSettingRequest) Reset()         { *m = SetCfgSettingRequest{} }
+func (m *SetCfgSettingRequest) String() string { return proto.CompactTextString(m) }
+func (*SetCfgSettingRequest) ProtoMessage()    {}
+func (*SetCfgSettingRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{18}
+}
+func (m *SetCfgSettingRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SetCfgSettingRequest.Unmarshal(m, b)
+}
+func (m *SetCfgSettingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SetCfgSettingRequest.Marshal(b, m, deterministic)
+}
+func (dst *SetCfgSettingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetCfgSettingRequest.Merge(dst, src)
+}
+func (m *SetCfgSettingRequest) XXX_Size() int {
+	return xxx_messageInfo_SetCfgSettingRequest.Size(m)
+}
+func (m *SetCfgSettingRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetCfgSettingRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetCfgSettingRequest proto.InternalMessageInfo
+
+func (m *SetCfgSettingRequest) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *Config) GetSettlement() *Proposal {
-	if m != nil {
-		return m.Settlement
-	}
-	return nil
-}
-
-func (m *Config) GetStatus() Config_ConfigStatus {
-	if m != nil {
-		return m.Status
-	}
-	return Config_VOTING
-}
-
-func (m *Config) GetVotes() []*Vote {
-	if m != nil {
-		return m.Votes
-	}
-	return nil
-}
-
-func (m *Config) GetBlockHeight() uint64 {
-	if m != nil {
-		return m.BlockHeight
-	}
-	return 0
-}
-
-func (m *Config) GetProposals() []*Proposal {
-	if m != nil {
-		return m.Proposals
-	}
-	return nil
-}
-
-func (m *Config) GetBuildNumber() uint64 {
-	if m != nil {
-		return m.BuildNumber
-	}
-	return 0
-}
-
-func (m *Config) GetVoteThreshold() uint64 {
-	if m != nil {
-		return m.VoteThreshold
-	}
-	return 0
-}
-
-type AddConfigRequest struct {
-	Names                []string `protobuf:"bytes,1,rep,name=names" json:"names,omitempty"`
-	BuildNumber          uint64   `protobuf:"varint,2,opt,name=build_number,json=buildNumber,proto3" json:"build_number,omitempty"`
-	VoteThreshold        uint64   `protobuf:"varint,3,opt,name=vote_threshold,json=voteThreshold,proto3" json:"vote_threshold,omitempty"`
-	Value                string   `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *AddConfigRequest) Reset()         { *m = AddConfigRequest{} }
-func (m *AddConfigRequest) String() string { return proto.CompactTextString(m) }
-func (*AddConfigRequest) ProtoMessage()    {}
-func (*AddConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{19}
-}
-func (m *AddConfigRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_AddConfigRequest.Unmarshal(m, b)
-}
-func (m *AddConfigRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_AddConfigRequest.Marshal(b, m, deterministic)
-}
-func (dst *AddConfigRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddConfigRequest.Merge(dst, src)
-}
-func (m *AddConfigRequest) XXX_Size() int {
-	return xxx_messageInfo_AddConfigRequest.Size(m)
-}
-func (m *AddConfigRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddConfigRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_AddConfigRequest proto.InternalMessageInfo
-
-func (m *AddConfigRequest) GetNames() []string {
-	if m != nil {
-		return m.Names
-	}
-	return nil
-}
-
-func (m *AddConfigRequest) GetBuildNumber() uint64 {
-	if m != nil {
-		return m.BuildNumber
-	}
-	return 0
-}
-
-func (m *AddConfigRequest) GetVoteThreshold() uint64 {
-	if m != nil {
-		return m.VoteThreshold
-	}
-	return 0
-}
-
-func (m *AddConfigRequest) GetValue() string {
+func (m *SetCfgSettingRequest) GetValue() string {
 	if m != nil {
 		return m.Value
 	}
 	return ""
 }
 
-type GetConfigRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+type GetCfgSettingRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetConfigRequest) Reset()         { *m = GetConfigRequest{} }
-func (m *GetConfigRequest) String() string { return proto.CompactTextString(m) }
-func (*GetConfigRequest) ProtoMessage()    {}
-func (*GetConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{20}
+func (m *GetCfgSettingRequest) Reset()         { *m = GetCfgSettingRequest{} }
+func (m *GetCfgSettingRequest) String() string { return proto.CompactTextString(m) }
+func (*GetCfgSettingRequest) ProtoMessage()    {}
+func (*GetCfgSettingRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{19}
 }
-func (m *GetConfigRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetConfigRequest.Unmarshal(m, b)
+func (m *GetCfgSettingRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCfgSettingRequest.Unmarshal(m, b)
 }
-func (m *GetConfigRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetConfigRequest.Marshal(b, m, deterministic)
+func (m *GetCfgSettingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCfgSettingRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetConfigRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetConfigRequest.Merge(dst, src)
+func (dst *GetCfgSettingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCfgSettingRequest.Merge(dst, src)
 }
-func (m *GetConfigRequest) XXX_Size() int {
-	return xxx_messageInfo_GetConfigRequest.Size(m)
+func (m *GetCfgSettingRequest) XXX_Size() int {
+	return xxx_messageInfo_GetCfgSettingRequest.Size(m)
 }
-func (m *GetConfigRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetConfigRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetConfigRequest proto.InternalMessageInfo
-
-func (m *GetConfigRequest) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
+func (m *GetCfgSettingRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCfgSettingRequest.DiscardUnknown(m)
 }
 
-type GetConfigResponse struct {
+var xxx_messageInfo_GetCfgSettingRequest proto.InternalMessageInfo
+
+type GetCfgSettingResponse struct {
 	Config               *Config  `protobuf:"bytes,1,opt,name=config" json:"config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetConfigResponse) Reset()         { *m = GetConfigResponse{} }
-func (m *GetConfigResponse) String() string { return proto.CompactTextString(m) }
-func (*GetConfigResponse) ProtoMessage()    {}
-func (*GetConfigResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{21}
+func (m *GetCfgSettingResponse) Reset()         { *m = GetCfgSettingResponse{} }
+func (m *GetCfgSettingResponse) String() string { return proto.CompactTextString(m) }
+func (*GetCfgSettingResponse) ProtoMessage()    {}
+func (*GetCfgSettingResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{20}
 }
-func (m *GetConfigResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetConfigResponse.Unmarshal(m, b)
+func (m *GetCfgSettingResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCfgSettingResponse.Unmarshal(m, b)
 }
-func (m *GetConfigResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetConfigResponse.Marshal(b, m, deterministic)
+func (m *GetCfgSettingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCfgSettingResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetConfigResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetConfigResponse.Merge(dst, src)
+func (dst *GetCfgSettingResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCfgSettingResponse.Merge(dst, src)
 }
-func (m *GetConfigResponse) XXX_Size() int {
-	return xxx_messageInfo_GetConfigResponse.Size(m)
+func (m *GetCfgSettingResponse) XXX_Size() int {
+	return xxx_messageInfo_GetCfgSettingResponse.Size(m)
 }
-func (m *GetConfigResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetConfigResponse.DiscardUnknown(m)
+func (m *GetCfgSettingResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCfgSettingResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetConfigResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetCfgSettingResponse proto.InternalMessageInfo
 
-func (m *GetConfigResponse) GetConfig() *Config {
+func (m *GetCfgSettingResponse) GetConfig() *Config {
 	if m != nil {
 		return m.Config
 	}
 	return nil
-}
-
-type ListConfigsRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ListConfigsRequest) Reset()         { *m = ListConfigsRequest{} }
-func (m *ListConfigsRequest) String() string { return proto.CompactTextString(m) }
-func (*ListConfigsRequest) ProtoMessage()    {}
-func (*ListConfigsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{22}
-}
-func (m *ListConfigsRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ListConfigsRequest.Unmarshal(m, b)
-}
-func (m *ListConfigsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ListConfigsRequest.Marshal(b, m, deterministic)
-}
-func (dst *ListConfigsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListConfigsRequest.Merge(dst, src)
-}
-func (m *ListConfigsRequest) XXX_Size() int {
-	return xxx_messageInfo_ListConfigsRequest.Size(m)
-}
-func (m *ListConfigsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListConfigsRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ListConfigsRequest proto.InternalMessageInfo
-
-type ListConfigsResponse struct {
-	Configs              []*Config `protobuf:"bytes,1,rep,name=configs" json:"configs,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
-	XXX_unrecognized     []byte    `json:"-"`
-	XXX_sizecache        int32     `json:"-"`
-}
-
-func (m *ListConfigsResponse) Reset()         { *m = ListConfigsResponse{} }
-func (m *ListConfigsResponse) String() string { return proto.CompactTextString(m) }
-func (*ListConfigsResponse) ProtoMessage()    {}
-func (*ListConfigsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{23}
-}
-func (m *ListConfigsResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ListConfigsResponse.Unmarshal(m, b)
-}
-func (m *ListConfigsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ListConfigsResponse.Marshal(b, m, deterministic)
-}
-func (dst *ListConfigsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListConfigsResponse.Merge(dst, src)
-}
-func (m *ListConfigsResponse) XXX_Size() int {
-	return xxx_messageInfo_ListConfigsResponse.Size(m)
-}
-func (m *ListConfigsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListConfigsResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ListConfigsResponse proto.InternalMessageInfo
-
-func (m *ListConfigsResponse) GetConfigs() []*Config {
-	if m != nil {
-		return m.Configs
-	}
-	return nil
-}
-
-type RemoveConfigRequest struct {
-	Names                []string `protobuf:"bytes,1,rep,name=names" json:"names,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *RemoveConfigRequest) Reset()         { *m = RemoveConfigRequest{} }
-func (m *RemoveConfigRequest) String() string { return proto.CompactTextString(m) }
-func (*RemoveConfigRequest) ProtoMessage()    {}
-func (*RemoveConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{24}
-}
-func (m *RemoveConfigRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RemoveConfigRequest.Unmarshal(m, b)
-}
-func (m *RemoveConfigRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RemoveConfigRequest.Marshal(b, m, deterministic)
-}
-func (dst *RemoveConfigRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RemoveConfigRequest.Merge(dst, src)
-}
-func (m *RemoveConfigRequest) XXX_Size() int {
-	return xxx_messageInfo_RemoveConfigRequest.Size(m)
-}
-func (m *RemoveConfigRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_RemoveConfigRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_RemoveConfigRequest proto.InternalMessageInfo
-
-func (m *RemoveConfigRequest) GetNames() []string {
-	if m != nil {
-		return m.Names
-	}
-	return nil
-}
-
-type SetConfigRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *SetConfigRequest) Reset()         { *m = SetConfigRequest{} }
-func (m *SetConfigRequest) String() string { return proto.CompactTextString(m) }
-func (*SetConfigRequest) ProtoMessage()    {}
-func (*SetConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{25}
-}
-func (m *SetConfigRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SetConfigRequest.Unmarshal(m, b)
-}
-func (m *SetConfigRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SetConfigRequest.Marshal(b, m, deterministic)
-}
-func (dst *SetConfigRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SetConfigRequest.Merge(dst, src)
-}
-func (m *SetConfigRequest) XXX_Size() int {
-	return xxx_messageInfo_SetConfigRequest.Size(m)
-}
-func (m *SetConfigRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_SetConfigRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_SetConfigRequest proto.InternalMessageInfo
-
-func (m *SetConfigRequest) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *SetConfigRequest) GetValue() string {
-	if m != nil {
-		return m.Value
-	}
-	return ""
-}
-
-type ConfigValueRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ConfigValueRequest) Reset()         { *m = ConfigValueRequest{} }
-func (m *ConfigValueRequest) String() string { return proto.CompactTextString(m) }
-func (*ConfigValueRequest) ProtoMessage()    {}
-func (*ConfigValueRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{26}
-}
-func (m *ConfigValueRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ConfigValueRequest.Unmarshal(m, b)
-}
-func (m *ConfigValueRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ConfigValueRequest.Marshal(b, m, deterministic)
-}
-func (dst *ConfigValueRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ConfigValueRequest.Merge(dst, src)
-}
-func (m *ConfigValueRequest) XXX_Size() int {
-	return xxx_messageInfo_ConfigValueRequest.Size(m)
-}
-func (m *ConfigValueRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ConfigValueRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ConfigValueRequest proto.InternalMessageInfo
-
-func (m *ConfigValueRequest) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-type ConfigValueResponse struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ConfigValueResponse) Reset()         { *m = ConfigValueResponse{} }
-func (m *ConfigValueResponse) String() string { return proto.CompactTextString(m) }
-func (*ConfigValueResponse) ProtoMessage()    {}
-func (*ConfigValueResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{27}
-}
-func (m *ConfigValueResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ConfigValueResponse.Unmarshal(m, b)
-}
-func (m *ConfigValueResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ConfigValueResponse.Marshal(b, m, deterministic)
-}
-func (dst *ConfigValueResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ConfigValueResponse.Merge(dst, src)
-}
-func (m *ConfigValueResponse) XXX_Size() int {
-	return xxx_messageInfo_ConfigValueResponse.Size(m)
-}
-func (m *ConfigValueResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_ConfigValueResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ConfigValueResponse proto.InternalMessageInfo
-
-func (m *ConfigValueResponse) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *ConfigValueResponse) GetValue() string {
-	if m != nil {
-		return m.Value
-	}
-	return ""
 }
 
 type SetValidatorInfoRequest struct {
@@ -1333,7 +933,7 @@ func (m *SetValidatorInfoRequest) Reset()         { *m = SetValidatorInfoRequest
 func (m *SetValidatorInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*SetValidatorInfoRequest) ProtoMessage()    {}
 func (*SetValidatorInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{28}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{21}
 }
 func (m *SetValidatorInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetValidatorInfoRequest.Unmarshal(m, b)
@@ -1371,7 +971,7 @@ func (m *GetValidatorInfoRequest) Reset()         { *m = GetValidatorInfoRequest
 func (m *GetValidatorInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*GetValidatorInfoRequest) ProtoMessage()    {}
 func (*GetValidatorInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{29}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{22}
 }
 func (m *GetValidatorInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetValidatorInfoRequest.Unmarshal(m, b)
@@ -1409,7 +1009,7 @@ func (m *GetValidatorInfoResponse) Reset()         { *m = GetValidatorInfoRespon
 func (m *GetValidatorInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*GetValidatorInfoResponse) ProtoMessage()    {}
 func (*GetValidatorInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{30}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{23}
 }
 func (m *GetValidatorInfoResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetValidatorInfoResponse.Unmarshal(m, b)
@@ -1446,7 +1046,7 @@ func (m *ListValidatorsInfoRequest) Reset()         { *m = ListValidatorsInfoReq
 func (m *ListValidatorsInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsInfoRequest) ProtoMessage()    {}
 func (*ListValidatorsInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{31}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{24}
 }
 func (m *ListValidatorsInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsInfoRequest.Unmarshal(m, b)
@@ -1477,7 +1077,7 @@ func (m *ListValidatorsInfoResponse) Reset()         { *m = ListValidatorsInfoRe
 func (m *ListValidatorsInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsInfoResponse) ProtoMessage()    {}
 func (*ListValidatorsInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_e963fa18c3295ccb, []int{32}
+	return fileDescriptor_chainconfig_3d345bb8321a7b89, []int{25}
 }
 func (m *ListValidatorsInfoResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsInfoResponse.Unmarshal(m, b)
@@ -1521,93 +1121,75 @@ func init() {
 	proto.RegisterType((*EnableFeatureRequest)(nil), "chainconfig.EnableFeatureRequest")
 	proto.RegisterType((*EnableFeatureResponse)(nil), "chainconfig.EnableFeatureResponse")
 	proto.RegisterType((*RemoveFeatureRequest)(nil), "chainconfig.RemoveFeatureRequest")
-	proto.RegisterType((*Vote)(nil), "chainconfig.Vote")
-	proto.RegisterType((*Proposal)(nil), "chainconfig.Proposal")
+	proto.RegisterType((*AppStoreConfig)(nil), "chainconfig.AppStoreConfig")
 	proto.RegisterType((*Config)(nil), "chainconfig.Config")
-	proto.RegisterType((*AddConfigRequest)(nil), "chainconfig.AddConfigRequest")
-	proto.RegisterType((*GetConfigRequest)(nil), "chainconfig.GetConfigRequest")
-	proto.RegisterType((*GetConfigResponse)(nil), "chainconfig.GetConfigResponse")
-	proto.RegisterType((*ListConfigsRequest)(nil), "chainconfig.ListConfigsRequest")
-	proto.RegisterType((*ListConfigsResponse)(nil), "chainconfig.ListConfigsResponse")
-	proto.RegisterType((*RemoveConfigRequest)(nil), "chainconfig.RemoveConfigRequest")
-	proto.RegisterType((*SetConfigRequest)(nil), "chainconfig.SetConfigRequest")
-	proto.RegisterType((*ConfigValueRequest)(nil), "chainconfig.ConfigValueRequest")
-	proto.RegisterType((*ConfigValueResponse)(nil), "chainconfig.ConfigValueResponse")
+	proto.RegisterType((*SetCfgSettingRequest)(nil), "chainconfig.SetCfgSettingRequest")
+	proto.RegisterType((*GetCfgSettingRequest)(nil), "chainconfig.GetCfgSettingRequest")
+	proto.RegisterType((*GetCfgSettingResponse)(nil), "chainconfig.GetCfgSettingResponse")
 	proto.RegisterType((*SetValidatorInfoRequest)(nil), "chainconfig.SetValidatorInfoRequest")
 	proto.RegisterType((*GetValidatorInfoRequest)(nil), "chainconfig.GetValidatorInfoRequest")
 	proto.RegisterType((*GetValidatorInfoResponse)(nil), "chainconfig.GetValidatorInfoResponse")
 	proto.RegisterType((*ListValidatorsInfoRequest)(nil), "chainconfig.ListValidatorsInfoRequest")
 	proto.RegisterType((*ListValidatorsInfoResponse)(nil), "chainconfig.ListValidatorsInfoResponse")
 	proto.RegisterEnum("chainconfig.Feature_FeatureStatus", Feature_FeatureStatus_name, Feature_FeatureStatus_value)
-	proto.RegisterEnum("chainconfig.Config_ConfigStatus", Config_ConfigStatus_name, Config_ConfigStatus_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_e963fa18c3295ccb)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_3d345bb8321a7b89)
 }
 
-var fileDescriptor_chainconfig_e963fa18c3295ccb = []byte{
-	// 985 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x56, 0x6d, 0x6f, 0x1a, 0x47,
-	0x10, 0xee, 0x99, 0xf7, 0xc1, 0x8e, 0xf0, 0x1a, 0xcb, 0x57, 0x57, 0x4d, 0xe9, 0x4a, 0x4d, 0x90,
-	0x92, 0x40, 0xe4, 0xa8, 0x51, 0x14, 0xa5, 0x4a, 0x88, 0xa1, 0x0e, 0x55, 0xe4, 0x5a, 0x07, 0xa2,
-	0xfd, 0x86, 0x0e, 0x6e, 0x0d, 0xa7, 0x70, 0xb7, 0xf4, 0x76, 0xcf, 0x51, 0xff, 0x41, 0x3f, 0xf4,
-	0x43, 0x7f, 0x5a, 0x7f, 0x52, 0xb5, 0x2f, 0x77, 0xdc, 0x71, 0x67, 0x9b, 0x2a, 0x5f, 0x80, 0x7d,
-	0xe6, 0xd9, 0xd9, 0x99, 0xd9, 0x79, 0x66, 0x81, 0x5f, 0x16, 0x2e, 0x5f, 0x86, 0xb3, 0xce, 0x9c,
-	0x7a, 0xdd, 0x15, 0xa5, 0x9e, 0x4f, 0xf8, 0x67, 0x1a, 0x7c, 0xea, 0x2e, 0xe8, 0x33, 0xb1, 0xec,
-	0xce, 0x42, 0x77, 0xc5, 0x5d, 0xbf, 0xcb, 0xff, 0x5c, 0x13, 0xd6, 0x9d, 0x2f, 0x6d, 0xd7, 0x9f,
-	0x53, 0xff, 0xda, 0x5d, 0x24, 0x7f, 0x77, 0xd6, 0x01, 0xe5, 0x14, 0xd5, 0x13, 0xd0, 0xe9, 0xf3,
-	0x7b, 0x1c, 0x2b, 0x87, 0xf2, 0x53, 0x6d, 0xc7, 0x7f, 0x1b, 0x50, 0x1f, 0xfa, 0x2e, 0xb7, 0xc8,
-	0x1f, 0x21, 0x61, 0x1c, 0x3d, 0x84, 0x12, 0xfd, 0xec, 0x93, 0xc0, 0x34, 0x5a, 0x46, 0xbb, 0x7e,
-	0x56, 0xed, 0xf4, 0x1c, 0x27, 0x20, 0x8c, 0x59, 0x0a, 0x46, 0x4f, 0xa0, 0xbc, 0xb6, 0x03, 0xdb,
-	0x63, 0xe6, 0x9e, 0x24, 0x1c, 0x75, 0x92, 0x21, 0x5d, 0x49, 0x93, 0xa5, 0x29, 0xe8, 0x39, 0x54,
-	0xaf, 0x89, 0xcd, 0xc3, 0x80, 0x30, 0xb3, 0xd0, 0x2a, 0xb4, 0xeb, 0x67, 0xcd, 0x14, 0xfd, 0x67,
-	0x65, 0xb4, 0x62, 0x16, 0x7e, 0x0c, 0x87, 0x17, 0x84, 0x47, 0xb8, 0x8e, 0x09, 0x41, 0xd1, 0xb7,
-	0x3d, 0x22, 0x43, 0xaa, 0x59, 0xf2, 0x37, 0xf6, 0xe0, 0xb0, 0xe7, 0x38, 0x5b, 0xc4, 0x26, 0x94,
-	0x84, 0x91, 0x99, 0x46, 0xab, 0xd0, 0xae, 0x59, 0x6a, 0x81, 0xbe, 0x87, 0x7d, 0x51, 0x50, 0x67,
-	0xea, 0x87, 0xde, 0x8c, 0x04, 0x32, 0xf0, 0xa2, 0x55, 0x97, 0xd8, 0xa5, 0x84, 0xd0, 0x77, 0x50,
-	0xb7, 0x43, 0x4e, 0xa7, 0xc4, 0xb7, 0x67, 0x2b, 0x62, 0x16, 0x5a, 0x46, 0xbb, 0x6a, 0x81, 0x80,
-	0x06, 0x12, 0xc1, 0x4d, 0x40, 0xc9, 0xe3, 0xd8, 0x9a, 0xfa, 0x8c, 0xe0, 0x3e, 0xa0, 0x64, 0xb4,
-	0x0a, 0x45, 0x1d, 0xa8, 0xe8, 0x7c, 0x74, 0x11, 0xf3, 0x93, 0x8e, 0x48, 0xf8, 0xdf, 0x3d, 0xa8,
-	0x68, 0x30, 0x2f, 0x55, 0xf4, 0x1a, 0xca, 0x8c, 0xdb, 0x3c, 0x54, 0x25, 0x7f, 0x70, 0x86, 0xf3,
-	0xdc, 0x45, 0xdf, 0x23, 0xc9, 0xb4, 0xf4, 0x0e, 0xd4, 0x06, 0xb8, 0xb1, 0x57, 0xae, 0x63, 0x73,
-	0x1a, 0x44, 0x77, 0xb0, 0xb9, 0xd3, 0x84, 0x4d, 0x56, 0x69, 0x45, 0xe7, 0x9f, 0xa6, 0x4b, 0xe2,
-	0x2e, 0x96, 0xdc, 0x2c, 0xea, 0x2a, 0x09, 0xec, 0x83, 0x84, 0xd0, 0x43, 0x80, 0x35, 0x09, 0xe6,
-	0xc4, 0xe7, 0xf6, 0x82, 0x98, 0x25, 0x49, 0x48, 0x20, 0x99, 0x42, 0x97, 0xef, 0x2d, 0x74, 0x25,
-	0x53, 0xe8, 0x3e, 0x1c, 0xa4, 0x32, 0x41, 0x75, 0xa8, 0x5c, 0x0d, 0x2e, 0xfb, 0xc3, 0xcb, 0x8b,
-	0xc6, 0x57, 0x62, 0xf1, 0x5b, 0x6f, 0x38, 0x16, 0x0b, 0x43, 0x2c, 0x06, 0x97, 0xbd, 0xf7, 0x1f,
-	0x07, 0xfd, 0xc6, 0x1e, 0xda, 0x87, 0x6a, 0x7f, 0x38, 0x52, 0xab, 0x02, 0x0e, 0xe1, 0x60, 0x12,
-	0xa5, 0x36, 0xf4, 0xaf, 0x29, 0xc2, 0x50, 0xb1, 0x55, 0xd2, 0x99, 0xc6, 0x8e, 0x0c, 0xbb, 0xf4,
-	0xc9, 0xb7, 0x00, 0xe1, 0xda, 0xb1, 0x39, 0x71, 0xa6, 0x36, 0x97, 0x6d, 0x52, 0xb4, 0x6a, 0x1a,
-	0xe9, 0x71, 0xbc, 0x80, 0xb2, 0x52, 0x00, 0xfa, 0x01, 0x1e, 0xdc, 0x50, 0x4e, 0xa6, 0x7c, 0x19,
-	0x10, 0xb6, 0xa4, 0x2b, 0x47, 0x1e, 0x5b, 0xb4, 0x0e, 0x04, 0x3a, 0x8e, 0x40, 0xf4, 0x12, 0x4e,
-	0xfc, 0xd0, 0x9b, 0xaa, 0xc2, 0xcb, 0x0b, 0x0d, 0x3c, 0x9b, 0xbb, 0xd4, 0x67, 0xfa, 0xf4, 0x63,
-	0x3f, 0xf4, 0xde, 0x0b, 0xeb, 0x79, 0xd2, 0x88, 0xdf, 0x42, 0x63, 0x44, 0xb8, 0x56, 0x9b, 0x6e,
-	0xfe, 0x8d, 0x32, 0x8d, 0x7b, 0x95, 0x89, 0x11, 0x34, 0x2e, 0xb6, 0x1c, 0xe0, 0x77, 0x52, 0x7b,
-	0x11, 0xa6, 0x9b, 0xf9, 0x7f, 0x79, 0x3d, 0x86, 0xa3, 0x8f, 0x2e, 0x8b, 0x04, 0x11, 0x3b, 0xfe,
-	0x00, 0xcd, 0x34, 0xac, 0x7d, 0x27, 0xc7, 0x83, 0xb1, 0xd3, 0x78, 0x78, 0x0a, 0x4d, 0xd5, 0x27,
-	0xbb, 0x08, 0x1f, 0x9f, 0xc0, 0xf1, 0x16, 0x5b, 0xeb, 0xf6, 0x29, 0x34, 0x2d, 0xe2, 0xd1, 0x9b,
-	0xdd, 0xdc, 0xf4, 0xa1, 0x38, 0xa1, 0x9c, 0xa0, 0x47, 0x50, 0x8b, 0xf5, 0x92, 0xe9, 0xa2, 0x8d,
-	0x49, 0x78, 0xb9, 0xb1, 0x57, 0x21, 0x91, 0x57, 0x58, 0xb3, 0xd4, 0x02, 0xbf, 0x83, 0xea, 0x55,
-	0x40, 0xd7, 0x94, 0xd9, 0xab, 0x0d, 0xc3, 0x48, 0x30, 0xb6, 0xe4, 0xb5, 0xb7, 0x2d, 0x2f, 0xfc,
-	0x4f, 0x01, 0xca, 0xb2, 0x0d, 0x16, 0xb9, 0x63, 0xe2, 0x47, 0x00, 0x46, 0x38, 0x5f, 0x11, 0x8f,
-	0xf8, 0x5c, 0x4f, 0xe7, 0xe3, 0xf4, 0x6d, 0xe9, 0xf3, 0xad, 0x04, 0x11, 0xbd, 0x8a, 0xa7, 0x4b,
-	0x41, 0x4e, 0x97, 0x56, 0x6a, 0xcb, 0x79, 0xf2, 0x6b, 0x6b, 0xb6, 0x3c, 0x86, 0x92, 0xe8, 0x66,
-	0x66, 0x16, 0xe5, 0xdd, 0x1d, 0xa6, 0x36, 0x8a, 0x8a, 0x59, 0xca, 0x9e, 0x19, 0x2d, 0xa5, 0xec,
-	0x68, 0x79, 0x01, 0xb5, 0xb5, 0x8e, 0x8e, 0x99, 0x65, 0xe9, 0xef, 0x96, 0xd8, 0x37, 0xbc, 0x8c,
-	0x60, 0x2b, 0x59, 0xc1, 0x66, 0x75, 0x58, 0xcd, 0xd1, 0x21, 0x7e, 0x09, 0xfb, 0xc9, 0x14, 0x11,
-	0x40, 0x79, 0xf2, 0xeb, 0x38, 0x9e, 0x39, 0xa3, 0xc1, 0x78, 0x2c, 0x06, 0x8b, 0x81, 0x0e, 0xa0,
-	0xd6, 0x3b, 0x1f, 0x0f, 0x27, 0xbd, 0xb1, 0x98, 0x3a, 0xf8, 0x2f, 0x03, 0x1a, 0x3d, 0xc7, 0x51,
-	0x7b, 0xbf, 0xf8, 0x15, 0xca, 0x06, 0x5b, 0xc8, 0x1b, 0x1a, 0x71, 0xf7, 0x14, 0x93, 0xfd, 0xf5,
-	0x48, 0x2a, 0x3a, 0x1d, 0x49, 0xde, 0xc3, 0xa9, 0x54, 0x1e, 0xf1, 0x36, 0x2a, 0x57, 0x75, 0xce,
-	0x55, 0xb9, 0x26, 0x6b, 0x8a, 0x78, 0x0b, 0x85, 0x9c, 0x15, 0x1a, 0x8b, 0xbc, 0xaf, 0xb4, 0x1f,
-	0xa3, 0xda, 0xf3, 0x33, 0xa8, 0xa8, 0x6d, 0x91, 0xc4, 0x73, 0x5d, 0x47, 0x1c, 0xfc, 0x04, 0x8e,
-	0x94, 0x32, 0x77, 0x28, 0x29, 0x7e, 0x23, 0xa7, 0xe0, 0xbd, 0x29, 0xdf, 0x22, 0xc8, 0x36, 0x20,
-	0xb5, 0x75, 0x22, 0x96, 0x77, 0x95, 0xec, 0x2d, 0x1c, 0xa5, 0x98, 0x3a, 0xb5, 0xdd, 0x8f, 0x7a,
-	0x03, 0x27, 0x23, 0xc2, 0x53, 0x2f, 0x52, 0x74, 0xde, 0x76, 0x5b, 0x18, 0x99, 0xb6, 0xc0, 0x3f,
-	0xc1, 0xc9, 0xc5, 0x2d, 0xbb, 0x77, 0x78, 0xd6, 0xf0, 0x18, 0xcc, 0xec, 0x76, 0x9d, 0xc2, 0xab,
-	0xec, 0x48, 0x3b, 0x4d, 0xcb, 0x38, 0xb5, 0x6d, 0x43, 0xc6, 0xdf, 0xc0, 0xd7, 0xe2, 0xba, 0x63,
-	0x3b, 0x4b, 0x84, 0x85, 0x7f, 0x87, 0xd3, 0x3c, 0xa3, 0x3e, 0xf4, 0x75, 0xea, 0x3f, 0x89, 0xea,
-	0x8a, 0xbb, 0x4e, 0x4d, 0xb0, 0x67, 0x65, 0xf9, 0xaf, 0xf5, 0xc5, 0x7f, 0x01, 0x00, 0x00, 0xff,
-	0xff, 0xd2, 0xd7, 0xdc, 0x9d, 0x42, 0x0b, 0x00, 0x00,
+var fileDescriptor_chainconfig_3d345bb8321a7b89 = []byte{
+	// 823 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xff, 0x6f, 0xdb, 0x44,
+	0x14, 0xc7, 0x4d, 0x9a, 0x34, 0x2f, 0x6b, 0xc9, 0x6e, 0x29, 0x0d, 0x9d, 0x18, 0xe5, 0x24, 0x20,
+	0x12, 0x23, 0x99, 0x8a, 0x84, 0xa6, 0x09, 0xc4, 0xb2, 0x25, 0x64, 0x81, 0xa9, 0x4c, 0x4e, 0x35,
+	0xf8, 0xcd, 0xba, 0xc4, 0xaf, 0x8e, 0x55, 0xfb, 0xce, 0xf8, 0xce, 0x99, 0xfa, 0x3f, 0xf0, 0xc7,
+	0xf1, 0x27, 0x21, 0x9f, 0xcf, 0x8d, 0x9d, 0x84, 0x36, 0xfb, 0xa5, 0xf5, 0xfb, 0xbc, 0x77, 0xef,
+	0xde, 0x97, 0xcf, 0xe7, 0x02, 0xbf, 0x79, 0xbe, 0x5a, 0x24, 0xb3, 0xde, 0x5c, 0x84, 0xfd, 0x40,
+	0x88, 0x90, 0xa3, 0xfa, 0x20, 0xe2, 0xeb, 0xbe, 0x27, 0xbe, 0x4f, 0xcd, 0xfe, 0x2c, 0xf1, 0x03,
+	0xe5, 0xf3, 0xbe, 0xba, 0x89, 0x50, 0xf6, 0xe7, 0x0b, 0xe6, 0xf3, 0xb9, 0xe0, 0x57, 0xbe, 0x57,
+	0xfc, 0xee, 0x45, 0xb1, 0x50, 0x82, 0x34, 0x0b, 0xd0, 0xe9, 0xb3, 0x7b, 0x12, 0x67, 0x09, 0xf5,
+	0xdf, 0xec, 0x38, 0xfd, 0xc7, 0x82, 0xe6, 0x84, 0xfb, 0xca, 0xc6, 0xbf, 0x13, 0x94, 0x8a, 0x3c,
+	0x81, 0x7d, 0xf1, 0x81, 0x63, 0xdc, 0xb1, 0xce, 0xac, 0x6e, 0xf3, 0xfc, 0xa0, 0x37, 0x70, 0xdd,
+	0x18, 0xa5, 0xb4, 0x33, 0x98, 0x7c, 0x07, 0xb5, 0x88, 0xc5, 0x2c, 0x94, 0x9d, 0x3d, 0x1d, 0xf0,
+	0xa8, 0x57, 0x2c, 0xe9, 0x9d, 0x76, 0xd9, 0x26, 0x84, 0x3c, 0x83, 0x83, 0x2b, 0x64, 0x2a, 0x89,
+	0x51, 0x76, 0x2a, 0x67, 0x95, 0x6e, 0xf3, 0xbc, 0x5d, 0x0a, 0xff, 0x35, 0x73, 0xda, 0xb7, 0x51,
+	0xf4, 0x5b, 0x78, 0x38, 0x46, 0x95, 0xe3, 0xa6, 0x26, 0x02, 0x55, 0xce, 0x42, 0xd4, 0x25, 0x35,
+	0x6c, 0xfd, 0x4d, 0x43, 0x78, 0x38, 0x70, 0xdd, 0xb5, 0xc0, 0x36, 0xec, 0xa7, 0x4e, 0xd9, 0xb1,
+	0xce, 0x2a, 0xdd, 0x86, 0x9d, 0x19, 0xe4, 0x2b, 0x78, 0x90, 0x0e, 0xd4, 0x75, 0x78, 0x12, 0xce,
+	0x30, 0xd6, 0x85, 0x57, 0xed, 0xa6, 0xc6, 0x2e, 0x34, 0x44, 0xbe, 0x84, 0x26, 0x4b, 0x94, 0x70,
+	0x90, 0xb3, 0x59, 0x80, 0x9d, 0xca, 0x99, 0xd5, 0x3d, 0xb0, 0x21, 0x85, 0x46, 0x1a, 0xa1, 0x6d,
+	0x20, 0xc5, 0xeb, 0x64, 0x24, 0xb8, 0x44, 0x3a, 0x04, 0x52, 0xac, 0x36, 0x43, 0x49, 0x0f, 0xea,
+	0xa6, 0x1f, 0x33, 0xc4, 0xed, 0x4d, 0xe7, 0x41, 0xf4, 0xdf, 0x3d, 0xa8, 0x1b, 0x70, 0x5b, 0xab,
+	0xe4, 0x05, 0xd4, 0xa4, 0x62, 0x2a, 0xc9, 0x46, 0x7e, 0x74, 0x4e, 0xb7, 0xa5, 0xcb, 0xff, 0x4f,
+	0x75, 0xa4, 0x6d, 0x4e, 0x90, 0x2e, 0xc0, 0x92, 0x05, 0xbe, 0xcb, 0x94, 0x88, 0xf3, 0x1d, 0xac,
+	0x76, 0x5a, 0xf0, 0xe9, 0x29, 0x05, 0x62, 0x7e, 0xed, 0x2c, 0xd0, 0xf7, 0x16, 0xaa, 0x53, 0x35,
+	0x53, 0x4a, 0xb1, 0x37, 0x1a, 0x22, 0x4f, 0x00, 0x22, 0x8c, 0xe7, 0xc8, 0x15, 0xf3, 0xb0, 0xb3,
+	0xaf, 0x03, 0x0a, 0xc8, 0xc6, 0xa0, 0x6b, 0xf7, 0x0e, 0xba, 0xbe, 0x31, 0xe8, 0x21, 0x1c, 0x96,
+	0x3a, 0x21, 0x4d, 0xa8, 0xbf, 0x1b, 0x5d, 0x0c, 0x27, 0x17, 0xe3, 0xd6, 0x27, 0xa9, 0xf1, 0xe7,
+	0x60, 0x72, 0x99, 0x1a, 0x56, 0x6a, 0x8c, 0x2e, 0x06, 0xaf, 0xde, 0x8e, 0x86, 0xad, 0x3d, 0xf2,
+	0x00, 0x0e, 0x86, 0x93, 0x69, 0x66, 0x55, 0x68, 0x02, 0x87, 0xef, 0xf3, 0xd6, 0x26, 0xfc, 0x4a,
+	0x10, 0x0a, 0x75, 0x96, 0x35, 0xbd, 0x41, 0xec, 0xdc, 0xb1, 0x0b, 0x4f, 0xbe, 0x00, 0x48, 0x22,
+	0x97, 0x29, 0x74, 0x1d, 0xa6, 0x34, 0x4d, 0xaa, 0x76, 0xc3, 0x20, 0x03, 0x45, 0x3d, 0xa8, 0x65,
+	0x0a, 0x20, 0x5f, 0xc3, 0xd1, 0x52, 0x28, 0x74, 0xd4, 0x22, 0x46, 0xb9, 0x10, 0x81, 0xab, 0xaf,
+	0xad, 0xda, 0x87, 0x29, 0x7a, 0x99, 0x83, 0xe4, 0x47, 0x38, 0xe1, 0x49, 0xe8, 0x64, 0x83, 0xd7,
+	0x0b, 0x8d, 0x43, 0xa6, 0x7c, 0xc1, 0xa5, 0xb9, 0xfd, 0x98, 0x27, 0xe1, 0xab, 0xd4, 0xfb, 0xba,
+	0xe8, 0xa4, 0xbf, 0x40, 0x6b, 0x8a, 0xca, 0xa8, 0xcd, 0x90, 0x7f, 0xa5, 0x4c, 0xeb, 0x5e, 0x65,
+	0x52, 0x02, 0xad, 0xf1, 0x5a, 0x02, 0xfa, 0x52, 0x6b, 0x2f, 0xc7, 0x0c, 0x99, 0x3f, 0x2a, 0xeb,
+	0x31, 0x3c, 0x7a, 0xeb, 0xcb, 0x5c, 0x10, 0xb7, 0x89, 0xdf, 0x40, 0xbb, 0x0c, 0x9b, 0xdc, 0xc5,
+	0xe7, 0xc1, 0xda, 0xe9, 0x79, 0x78, 0x0a, 0xed, 0x8c, 0x27, 0xbb, 0x08, 0x9f, 0x9e, 0xc0, 0xf1,
+	0x5a, 0xb4, 0xd1, 0xed, 0x53, 0x68, 0xdb, 0x18, 0x8a, 0xe5, 0x6e, 0x69, 0x9e, 0xc3, 0xd1, 0x20,
+	0x8a, 0xa6, 0x4a, 0xc4, 0xa8, 0xb7, 0xe0, 0x91, 0x6f, 0xe0, 0x53, 0x17, 0x03, 0x4c, 0x69, 0xb0,
+	0x0c, 0x9d, 0x6b, 0xbc, 0x91, 0xf9, 0x7a, 0x0d, 0xfc, 0x3e, 0xfc, 0x1d, 0x6f, 0x24, 0xfd, 0x03,
+	0x6a, 0xe6, 0xc4, 0x08, 0x5a, 0x2c, 0x8a, 0x1c, 0x99, 0x26, 0xc9, 0x16, 0xed, 0x69, 0x01, 0x35,
+	0xcf, 0x1f, 0x97, 0x5a, 0x2e, 0x5f, 0x64, 0x1f, 0xb1, 0x92, 0x4d, 0x5f, 0x42, 0x7b, 0x8a, 0xea,
+	0xf5, 0x95, 0x37, 0x45, 0xa5, 0x7c, 0xee, 0xdd, 0xf1, 0x42, 0xa6, 0xcd, 0x2c, 0x59, 0x90, 0xa0,
+	0x66, 0x52, 0xc3, 0xce, 0x0c, 0xfa, 0x19, 0xb4, 0xc7, 0x5b, 0x32, 0xd0, 0x21, 0x1c, 0xaf, 0xe1,
+	0x2b, 0x02, 0x98, 0x7a, 0xb7, 0x11, 0xc0, 0xd4, 0x69, 0x42, 0xe8, 0x4f, 0x70, 0x32, 0x45, 0x55,
+	0x92, 0x5e, 0x5e, 0xe2, 0xba, 0xba, 0xac, 0x0d, 0x75, 0xd1, 0x9f, 0xe1, 0x64, 0xfc, 0x3f, 0xa7,
+	0x77, 0xd0, 0x2f, 0xbd, 0x84, 0xce, 0xe6, 0x71, 0xd3, 0xc5, 0x73, 0x68, 0xdc, 0xbe, 0x75, 0x26,
+	0xc3, 0x69, 0xa9, 0x91, 0xf2, 0xb1, 0x55, 0x30, 0x7d, 0x0c, 0x9f, 0xa7, 0xe4, 0xbd, 0xf5, 0xcb,
+	0x42, 0x59, 0xf4, 0x2f, 0x38, 0xdd, 0xe6, 0x34, 0x97, 0xbe, 0x28, 0x3d, 0xbe, 0x19, 0xc3, 0xef,
+	0xba, 0xb5, 0x10, 0x3d, 0xab, 0xe9, 0x9f, 0xe7, 0x1f, 0xfe, 0x0b, 0x00, 0x00, 0xff, 0xff, 0x03,
+	0x9d, 0x2d, 0x42, 0x2b, 0x08, 0x00, 0x00,
 }

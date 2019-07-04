@@ -9,6 +9,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
+	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
@@ -209,8 +210,8 @@ func (c *FakeContext) SetConfig(name, val string) {
 	c.config[name] = val
 }
 
-func (c *FakeContext) ChainConfig() loom.Config {
-	return loom.NewChainConfig(c.config)
+func (c *FakeContext) Config() *cctypes.Config {
+	return &cctypes.Config{}
 }
 
 func (c *FakeContext) Message() Message {

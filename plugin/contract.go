@@ -4,6 +4,7 @@ import (
 	"time"
 
 	loom "github.com/loomnetwork/go-loom"
+	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 )
@@ -73,7 +74,7 @@ type StaticContext interface {
 	GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error)
 	ContractAddress() loom.Address
 	FeatureEnabled(name string, defaultVal bool) bool
-	ChainConfig() loom.Config
+	Config() *cctypes.Config
 	Validators() []*types.Validator
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
