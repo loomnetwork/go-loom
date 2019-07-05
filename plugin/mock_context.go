@@ -210,7 +210,7 @@ func (c *FakeContext) SetConfig(name, val string) {
 	c.config[name] = val
 }
 
-func (c *FakeContext) Config() *cctypes.Config {
+func (c *FakeContext) Config(version uint64) *cctypes.Config {
 	return &cctypes.Config{}
 }
 

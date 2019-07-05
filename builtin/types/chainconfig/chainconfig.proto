@@ -89,23 +89,53 @@ message RemoveFeatureRequest {
     repeated string names = 1;
 }
 
+message CfgSetting {
+    string name = 1;
+    string value = 2;
+    enum CfgSettingStatus {
+        PENDING = 0;
+        ACTIVATED = 1;
+    }
+    CfgSettingStatus status = 3;
+    //Version of config that supports this setting
+    uint64 version = 4;
+}
+
 message AppStoreConfig {
     uint64 deleted_vm_keys = 1;
 }
 
 message Config {
-    AppStoreConfig app_store_config = 5;
+    uint64 version = 1;
+    AppStoreConfig app_store_config = 2;
 }
 
 message SetCfgSettingRequest {
     string name = 1;
     string value = 2;
+    uint64 version = 3;
 }
 
 message GetCfgSettingRequest {
+    string name = 1;
 }
 
 message GetCfgSettingResponse {
+    CfgSetting cfg_setting = 1;
+}
+
+message ListCfgSettingsRequest {
+}
+
+message ListCfgSettingsResponse {
+    repeated CfgSetting cfg_settings = 1;
+}
+
+message ChainConfigRequest {
+    uint64 version = 1;
+}
+
+message ChainConfigResponse {
     Config config = 1;
 }
 
