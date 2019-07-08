@@ -55,12 +55,12 @@ type JSONRPCClient struct {
 func newHTTPDialer(host string) func(string, string) (net.Conn, error) {
 	u, err := url.Parse(host)
 	// default to tcp if nothing specified
-	protocol := u.Scheme
-	if err != nil {
+	if err != nil || u == nil {
 		return func(_ string, _ string) (net.Conn, error) {
 			return nil, fmt.Errorf("Invalid host: %s", host)
 		}
 	}
+	protocol := u.Scheme
 	if protocol == "http" {
 		protocol = "tcp"
 	}

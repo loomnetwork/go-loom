@@ -12,12 +12,12 @@ import (
 	"math/rand"
 	"time"
 
+	yubihsm "github.com/certusone/yubihsm-go"
+	"github.com/certusone/yubihsm-go/commands"
+	"github.com/certusone/yubihsm-go/connector"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	loom "github.com/loomnetwork/go-loom"
-	yubihsm "github.com/loomnetwork/yubihsm-go"
-	"github.com/loomnetwork/yubihsm-go/commands"
-	"github.com/loomnetwork/yubihsm-go/connector"
 )
 
 const (
