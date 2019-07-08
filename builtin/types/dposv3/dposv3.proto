@@ -289,10 +289,10 @@ message ListAllDelegationsResponse {
     repeated ListDelegationsResponse list_responses = 1;
 }
 
-message ListReferrersRequest{
+message ListRerferrersRequest{
 }
 
-message ListReferrersResponse{
+message ListRerferrersResponse{
     repeated Referrer referrers = 1;
 }
 
