@@ -215,7 +215,7 @@ func (c *FakeContext) RemoveCfgSetting(cfgSettingName string) {
 }
 
 func (c *FakeContext) Config() *cctypes.Config {
-	config := defaultConfig()
+	config := mockDefaultConfig()
 	for _, cfgSetting := range c.config {
 		if cfgSetting.Version <= config.Version {
 			mockSetConfig(config, cfgSetting.Name, cfgSetting.Value)

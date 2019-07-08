@@ -73,12 +73,3 @@ func mockSetField(field *reflect.Value, value string) error {
 	}
 	return nil
 }
-
-func defaultConfig() *cctypes.Config {
-	return &cctypes.Config{
-		Version: uint64(cfgSettingVersion),
-		AppStoreConfig: &cctypes.AppStoreConfig{
-			DeletedVmKeys: 50,
-		},
-	}
-}
