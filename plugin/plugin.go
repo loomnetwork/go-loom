@@ -192,8 +192,8 @@ func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.FeatureEnabled(name, defaultVal)
 }
 
-func (c *GRPCContext) Config(version uint64) *cctypes.Config {
-	return c.Config(version)
+func (c *GRPCContext) Config() *cctypes.Config {
+	return c.Config()
 }
 
 func (c *GRPCContext) Validators() []*ltypes.Validator {

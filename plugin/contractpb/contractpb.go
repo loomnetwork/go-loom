@@ -34,7 +34,7 @@ type StaticContext interface {
 	GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
 	FeatureEnabled(name string, defaultVal bool) bool
-	Config(version uint64) *cctypes.Config
+	Config() *cctypes.Config
 	Validators() []*types.Validator
 
 	// ContractRecord retrieves the contract meta data stored in the Registry.
@@ -99,8 +99,8 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 }
 
 // Get ChainConfig
-func (c *wrappedPluginStaticContext) Config(version uint64) *cctypes.Config {
-	return c.StaticContext.Config(version)
+func (c *wrappedPluginStaticContext) Config() *cctypes.Config {
+	return c.StaticContext.Config()
 }
 
 // Validators gives a list of validators
@@ -151,8 +151,8 @@ func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool
 }
 
 // Get Config
-func (c *wrappedPluginContext) Config(version uint64) *cctypes.Config {
-	return c.Context.Config(version)
+func (c *wrappedPluginContext) Config() *cctypes.Config {
+	return c.Context.Config()
 }
 
 // Validators gives a list of validators

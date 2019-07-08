@@ -95,6 +95,7 @@ message CfgSetting {
     enum CfgSettingStatus {
         PENDING = 0;
         ACTIVATED = 1;
+        REMOVING = 2;
     }
     CfgSettingStatus status = 3;
     //Version of config that supports this setting
@@ -116,6 +117,10 @@ message SetCfgSettingRequest {
     uint64 version = 3;
 }
 
+message RemoveCfgSettingRequest {
+    string name = 1;
+}
+
 message GetCfgSettingRequest {
     string name = 1;
 }
@@ -132,7 +137,6 @@ message ListCfgSettingsResponse {
 }
 
 message ChainConfigRequest {
-    uint64 version = 1;
 }
 
 message ChainConfigResponse {
