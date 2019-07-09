@@ -191,8 +191,8 @@ func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.FeatureEnabled(name, defaultVal)
 }
 
-func (c *GRPCContext) GetEnabledFeatures() []string {
-	return c.GetEnabledFeatures()
+func (c *GRPCContext) EnabledFeatures() []string {
+	return c.EnabledFeatures()
 }
 
 func (c *GRPCContext) Validators() []*ltypes.Validator {
