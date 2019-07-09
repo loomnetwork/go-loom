@@ -73,7 +73,7 @@ type StaticContext interface {
 	GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error)
 	ContractAddress() loom.Address
 	FeatureEnabled(name string, defaultVal bool) bool
-	GetEnabledFeatures() []string
+	EnabledFeatures() []string
 	Validators() []*types.Validator
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
