@@ -202,8 +202,7 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return defaultVal
 }
 
-
-func (c *FakeContext) GetEnabledFeatures() []string{
+func (c *FakeContext) GetEnabledFeatures() []string {
 	return nil
 }
 
