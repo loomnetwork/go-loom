@@ -4,7 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/grpc-ecosystem/go-grpc-prometheus"
+	"net"
+	"net/http"
+	"os"
+	"time"
+
+	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
@@ -13,10 +18,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
-	"net"
-	"net/http"
-	"os"
-	"time"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
