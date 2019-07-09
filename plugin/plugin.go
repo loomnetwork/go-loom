@@ -4,12 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net"
-	"net/http"
-	"os"
-	"time"
-
-	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/plugin/types"
@@ -18,6 +13,10 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
+	"net"
+	"net/http"
+	"os"
+	"time"
 )
 
 // Handshake is a common handshake that is shared by plugin and host.
@@ -189,6 +188,10 @@ func (c *GRPCContext) Emit(data []byte) {
 
 func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.FeatureEnabled(name, defaultVal)
+}
+
+func (c *GRPCContext) GetEnabledFeatures() []string {
+	return c.GetEnabledFeatures()
 }
 
 func (c *GRPCContext) Validators() []*ltypes.Validator {
