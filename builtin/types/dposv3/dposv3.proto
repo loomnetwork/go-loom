@@ -350,6 +350,11 @@ message UnjailRequest {
     Address validator = 1;
 }
 
+message SetJailOfflineValidator {
+    Address validator = 1;
+    bool jailed = 2;
+}
+
 message GetStateRequest {
 }
 
