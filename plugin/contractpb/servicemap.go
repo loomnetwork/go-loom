@@ -30,7 +30,6 @@ var (
 
 var (
 	ErrServiceNotFound = errors.New("service not found")
-	ErrMethodNotFound  = errors.New("method not found")
 )
 
 // ----------------------------------------------------------------------------
