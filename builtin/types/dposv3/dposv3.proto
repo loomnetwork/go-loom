@@ -15,6 +15,7 @@ message Params {
     BigUInt byzantine_slashing_percentage = 8;
     uint64 min_candidate_fee = 9;
     uint64 downtime_period = 10;
+    bool jail_offline_validator = 11;
 }
 
 message State {
