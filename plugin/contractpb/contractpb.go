@@ -34,7 +34,7 @@ type StaticContext interface {
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
 	FeatureEnabled(name string, defaultVal bool) bool
 	Validators() []*types.Validator
-
+	GetEnabledFeatures() []string
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
 	ContractRecord(contractAddr loom.Address) (*plugin.ContractRecord, error)
@@ -96,6 +96,16 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
+// FeatureEnabled checks whether the feature is enabled on chain
+func (c *wrappedPluginStaticContext) GetEnabledFeatures() []string {
+	return c.StaticContext.GetEnabledFeatures()
+}
+
+// FeatureEnabled checks whether the feature is enabled on chain
+func (c *wrappedPluginStaticContext) Enabled(name string, defaultVal bool) bool {
+	return c.StaticContext.FeatureEnabled(name, defaultVal)
+}
+
 // Validators gives a list of validators
 func (c *wrappedPluginStaticContext) Validators() []*types.Validator {
 	return c.StaticContext.Validators()
@@ -141,6 +151,11 @@ func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []b
 // Check if feature is enabled on chain
 func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.Context.FeatureEnabled(name, defaultVal)
+}
+
+// Check if feature is enabled on chain
+func (c *wrappedPluginContext) GetEnabledFeatures() []string {
+	return c.Context.GetEnabledFeatures()
 }
 
 // Validators gives a list of validators
