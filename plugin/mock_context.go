@@ -202,6 +202,10 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return defaultVal
 }
 
+func (c *FakeContext) EnabledFeatures() []string {
+	return nil
+}
+
 func (c *FakeContext) Message() Message {
 	return Message{
 		Sender: c.caller,
