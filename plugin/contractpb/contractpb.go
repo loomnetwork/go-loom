@@ -96,14 +96,9 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
-// FeatureEnabled checks whether the feature is enabled on chain
+// EnabledFeatures returns list of features stored in StoreState
 func (c *wrappedPluginStaticContext) EnabledFeatures() []string {
 	return c.StaticContext.EnabledFeatures()
-}
-
-// FeatureEnabled checks whether the feature is enabled on chain
-func (c *wrappedPluginStaticContext) Enabled(name string, defaultVal bool) bool {
-	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
 // Validators gives a list of validators
