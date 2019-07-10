@@ -96,7 +96,7 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
-// EnabledFeatures returns list of features stored in StoreState
+// EnabledFeatures returns a list of the currently activated feature flags.
 func (c *wrappedPluginStaticContext) EnabledFeatures() []string {
 	return c.StaticContext.EnabledFeatures()
 }
@@ -148,7 +148,7 @@ func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool
 	return c.Context.FeatureEnabled(name, defaultVal)
 }
 
-// Check if feature is enabled on chain
+// EnabledFeatures returns a list of the currently activated feature flags.
 func (c *wrappedPluginContext) EnabledFeatures() []string {
 	return c.Context.EnabledFeatures()
 }
