@@ -351,8 +351,7 @@ message UnjailRequest {
 }
 
 message SetJailOfflineValidatorRequest {
-    Address validator = 1;
-    bool jailed = 2;
+    bool jailed = 1;
 }
 
 message GetStateRequest {
