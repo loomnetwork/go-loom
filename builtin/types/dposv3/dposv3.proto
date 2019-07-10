@@ -16,7 +16,7 @@ message Params {
     uint64 min_candidate_fee = 9;
     uint64 downtime_period = 10;
     BigUInt max_downtime_percentage = 11;
-    bool jail_offline_validator = 12;
+    bool jail_offline_validators = 12;
 }
 
 message State {
@@ -356,7 +356,7 @@ message UnjailRequest {
 }
 
 message EnableValidatorJailingRequest {
-    bool jailed = 1;
+    bool jail_offline_validators = 1;
 }
 
 message GetStateRequest {
