@@ -15,6 +15,7 @@ message Params {
     BigUInt byzantine_slashing_percentage = 8;
     uint64 min_candidate_fee = 9;
     uint64 downtime_period = 10;
+    BigUInt max_downtime_percentage = 11;
 }
 
 message State {
@@ -355,6 +356,10 @@ message SetOracleAddressRequest {
 message SetSlashingPercentagesRequest {
     BigUInt crash_slashing_percentage = 1;
     BigUInt byzantine_slashing_percentage = 2;
+}
+
+message SetMaxDowntimePercentageRequest {
+    BigUInt max_downtime_percentage = 1;
 }
 
 message UnjailRequest {
