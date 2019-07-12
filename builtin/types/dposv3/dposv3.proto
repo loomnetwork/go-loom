@@ -114,6 +114,11 @@ message DelegationList {
     repeated DelegationIndex delegations = 1;
 }
 
+message Referrer {
+    Address referrer_address = 1;
+    string name = 2;
+}
+
 message DPOSInitRequest {
     Params params = 1;
     repeated Validator validators = 2;
@@ -283,6 +288,13 @@ message ListAllDelegationsRequest {
 
 message ListAllDelegationsResponse {
     repeated ListDelegationsResponse list_responses = 1;
+}
+
+message ListReferrersRequest{
+}
+
+message ListReferrersResponse{
+    repeated Referrer referrers = 1;
 }
 
 // Oracle request batch
