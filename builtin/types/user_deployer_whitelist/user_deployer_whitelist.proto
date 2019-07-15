@@ -84,3 +84,8 @@ message SetTierInfoRequest {
     uint64 block_range = 4;
     uint64 max_txs = 5;
 }
+
+message SwapUserDeployerRequest {
+    Address oldDeployerAddr = 1;
+    Address newDeployerAddr = 2;
+}
