@@ -17,7 +17,7 @@ message Params {
     uint64 downtime_period = 10;
     BigUInt max_downtime_percentage = 11;
     bool jail_offline_validators = 12;
-    Address voucher_token_address = 12;
+    Address voucher_token_address = 13;
 }
 
 message State {
