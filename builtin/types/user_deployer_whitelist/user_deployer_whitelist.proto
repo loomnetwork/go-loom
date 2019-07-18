@@ -86,6 +86,6 @@ message SetTierInfoRequest {
 }
 
 message SwapUserDeployerRequest {
-    Address oldDeployerAddr = 1;
-    Address newDeployerAddr = 2;
+    Address old_deployer_addr = 1;
+    Address new_deployer_addr = 2;
 }
