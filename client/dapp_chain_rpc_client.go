@@ -15,6 +15,7 @@ import (
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
+	"github.com/loomnetwork/loomchain/registry"
 	"github.com/pkg/errors"
 )
 
@@ -439,11 +440,11 @@ func (c *DAppChainRPCClient) GetContractEvents(fromBlock, toBlock uint64, contra
 	return result, nil
 }
 
-func (c *DAppChainRPCClient) GetContractRecord(contract loom.Address) (ptypes.ContractRecordResponse, error) {
+func (c *DAppChainRPCClient) GetContractRecord(contract loom.Address) (registry.Record, error) {
 	params := map[string]interface{}{
 		"contract": contract.String(),
 	}
-	var record ptypes.ContractRecordResponse
+	var record registry.Record
 	if err := c.queryClient.Call("contractrecord", params, c.getNextRequestID(), &record); err != nil {
 		return record, err
 	}
