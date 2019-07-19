@@ -93,6 +93,16 @@ func (tg *DAppChainGateway) AddContractMapping(from common.Address, to loom.Addr
 	return err
 }
 
+// GetContractMapping attempts to find a pending or confirmed mappings for the given contract address.
+func (tg *DAppChainGateway) GetContractMapping(identity *client.Identity, from loom.Address) (*tgtypes.TransferGatewayGetContractMappingResponse, error){
+	req := &tgtypes.TransferGatewayAddContractMappingRequest{
+		From: from.MarshalPB()
+	}
+	var resp tgtypes.TransferGatewayGetContractMappingResponse
+	_, err := tg.contract.StaticCall("GetContractMapping", req, identity.LoomAddr, &resp)
+	return resp, err
+}
+
 func (tg *DAppChainGateway) GetTrustedValidators(identity *client.Identity) (*tgtypes.TransferGatewayTrustedValidators, error) {
 	req := &tgtypes.TransferGatewayTrustedValidatorsRequest{}
 	var resp tgtypes.TransferGatewayTrustedValidatorsResponse
