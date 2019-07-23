@@ -146,6 +146,34 @@ func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.
 	return err
 }
 
+// AddBinanceContractMapping same as AddContractMapping but for Binance
+func (tg *DAppChainGateway) AddBinanceContractMapping(from common.Address, to loom.Address,
+	creator *client.Identity, contractTxHash string) error {
+	fromAddr, err := client.LoomAddressFromEthereumAddress(from)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
+
+	hash := ssha.SoliditySHA3(
+		ssha.Address(from),
+		ssha.Address(common.BytesToAddress(to.Local)),
+	)
+
+	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_BINANCE)
+	if err != nil {
+		return err
+	}
+
+	req := &tgtypes.TransferGatewayAddContractMappingRequest{
+		ForeignContract:           fromAddr.MarshalPB(),
+		LocalContract:             to.MarshalPB(),
+		ForeignContractCreatorSig: sig,
+	}
+	_, err = tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
+	return err
+}
+
 func (tg *DAppChainGateway) WithdrawERC721(
 	identity *client.Identity, tokenID *big.Int, contract loom.Address, recipient *common.Address,
 ) error {

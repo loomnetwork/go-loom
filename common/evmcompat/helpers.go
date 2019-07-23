@@ -5,6 +5,8 @@ package evmcompat
 import (
 	"bytes"
 	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
@@ -15,17 +17,20 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/ethereum/go-ethereum/crypto/sha3"
 	ssha "github.com/miguelmota/go-solidity-sha3"
+	"golang.org/x/crypto/ripemd160"
 )
 
 type SignatureType uint8
 
 const (
-	SignatureType_EIP712 SignatureType = 0
-	SignatureType_GETH   SignatureType = 1
-	SignatureType_TREZOR SignatureType = 2
-	SignatureType_TRON   SignatureType = 3
+	SignatureType_EIP712  SignatureType = 0
+	SignatureType_GETH    SignatureType = 1
+	SignatureType_TREZOR  SignatureType = 2
+	SignatureType_TRON    SignatureType = 3
+	SignatureType_BINANCE SignatureType = 4
 )
 
 // SoliditySign signs the given data with the specified private key and returns the 65-byte signature.
@@ -60,10 +65,46 @@ func SolidityRecover(hash []byte, sig []byte) (common.Address, error) {
 	return signer, nil
 }
 
+// BitcoinRecover recovers the Ethereum address from the signed hash and the 65-byte signature.
+func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
+	if len(sig) != 65 {
+		return common.Address{}, fmt.Errorf("signature must be 65 bytes, got %d bytes", len(sig))
+	}
+	stdSig := make([]byte, 65)
+	copy(stdSig[:], sig[:])
+	stdSig[len(sig)-1] -= 27
+
+	var signer common.Address
+	pubKey, err := crypto.Ecrecover(hash, stdSig)
+	if err != nil {
+		return signer, err
+	}
+
+	x, y := elliptic.Unmarshal(crypto.S256(), pubKey)
+	pubKeyBytes := secp256k1.CompressPubkey(x, y)
+	signer = BitcoinAddress(pubKeyBytes)
+
+	return signer, nil
+}
+
+// BitcoinAddress returns a Bitcoin style addresses: RIPEMD160(SHA256(pubkey))
+// Taken from: https://github.com/tendermint/tendermint/blob/master/crypto/secp256k1/secp256k1.go
+func BitcoinAddress(pubKey []byte) common.Address {
+	hasherSHA256 := sha256.New()
+	hasherSHA256.Write(pubKey[:]) // does not error
+	sha := hasherSHA256.Sum(nil)
+
+	hasherRIPEMD160 := ripemd160.New()
+	hasherRIPEMD160.Write(sha) // does not error
+	return common.BytesToAddress(hasherRIPEMD160.Sum(nil))
+}
+
 // GenerateTypedSig signs the given data with the specified private key and returns the 66-byte signature
 // (the first byte of which is used to denote the SignatureType).
 func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureType) ([]byte, error) {
-	if sigType != SignatureType_EIP712 && sigType != SignatureType_TRON {
+	switch sigType {
+	case SignatureType_EIP712, SignatureType_TRON, SignatureType_BINANCE:
+	default:
 		return nil, fmt.Errorf("signing failed, sig type %v not implemented", sigType)
 	}
 
@@ -102,6 +143,8 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error)
 			ssha.String("\x19TRON Signed Message:\n32"),
 			ssha.Bytes32(hash),
 		)
+	case SignatureType_BINANCE:
+		return BitcoinRecover(hash, sig[1:])
 	default:
 		return signer, fmt.Errorf("invalid signature type: %d", sig[0])
 	}
