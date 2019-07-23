@@ -190,7 +190,7 @@ message TransferGatewayContractMappingConfirmed {
     Address local_contract = 2;
 }
 
-message TransferGatewayContractMappingRecjected {
+message TransferGatewayContractMappingRejected {
   // Address of corresponding contract on the local blockchain
   Address local_contract = 1;
   // Address of expected contract on a foreign blockchain
