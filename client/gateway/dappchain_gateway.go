@@ -148,11 +148,8 @@ func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.
 
 // AddBinanceContractMapping same as AddContractMapping but for Binance
 func (tg *DAppChainGateway) AddBinanceContractMapping(from common.Address, to loom.Address,
-	creator *client.Identity, contractTxHash string) error {
-	fromAddr, err := client.LoomAddressFromEthereumAddress(from)
-	if err != nil {
-		return err
-	}
+	creator *client.Identity) error {
+	fromAddr := client.LoomAddressFromBinanceAddress(from)
 	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
 
 	hash := ssha.SoliditySHA3(
