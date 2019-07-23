@@ -82,7 +82,7 @@ func TestCompareAddress(t *testing.T) {
 	// get pubkey address by secp256k1 signer
 	key, _ := hex.DecodeString(TestEthereumPrivKey)
 	signer := NewSecp256k1Signer(key)
-	ethAddr2 := crypto.PubkeyToAddress(signer.privateKey.PublicKey)
+	ethAddr2 := crypto.PubkeyToAddress(signer.PrivateKey.PublicKey)
 
 	if !bytes.Equal(ethAddr1.Bytes(), ethAddr2.Bytes()) {
 		t.Fatal("public key address isn't mismatched")
