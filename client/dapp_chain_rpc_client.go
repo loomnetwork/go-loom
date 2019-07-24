@@ -525,6 +525,7 @@ func (c *DAppChainRPCClient) CommitMigrationTx(
 		Id:   3,
 		Data: msgBytes,
 	}
+
 	return c.CommitTx2(from, signer, tx)
 }
 
@@ -575,5 +576,6 @@ func (c *DAppChainRPCClient) CommitCallTx2(
 		Id:   2,
 		Data: msgBytes,
 	}
+
 	return c.CommitTx2(caller, signer, tx)
 }
