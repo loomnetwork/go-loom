@@ -21,7 +21,7 @@ const (
 
 // Secp256k1Signer implements the Signer interface using secp256k1 keys
 type Secp256k1Signer struct {
-	PrivateKey *ecdsa.PrivateKey
+	privateKey *ecdsa.PrivateKey
 }
 
 func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
@@ -29,7 +29,7 @@ func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
 
 	secp256k1Signer := &Secp256k1Signer{}
 	if privateKey == nil {
-		secp256k1Signer.PrivateKey, err = ecdsa.GenerateKey(secp256k1.S256(), rand.Reader)
+		secp256k1Signer.privateKey, err = ecdsa.GenerateKey(secp256k1.S256(), rand.Reader)
 		if err != nil {
 			panic(err)
 		}
@@ -39,7 +39,7 @@ func NewSecp256k1Signer(privateKey []byte) *Secp256k1Signer {
 		}
 
 		hexPrivKey := hex.EncodeToString(privateKey)
-		secp256k1Signer.PrivateKey, err = crypto.HexToECDSA(hexPrivKey)
+		secp256k1Signer.privateKey, err = crypto.HexToECDSA(hexPrivKey)
 		if err != nil {
 			panic(err)
 		}
@@ -76,7 +76,7 @@ func VerifyBytes(pubKey []byte, msg []byte, sig []byte) bool {
 }
 
 func (s *Secp256k1Signer) Sign(msg []byte) []byte {
-	privKeyBytes := ecdsaToBytes(s.PrivateKey)
+	privKeyBytes := ecdsaToBytes(s.privateKey)
 
 	hash := sha256.Sum256(msg)
 	sigBytes, err := secp256k1.Sign(hash[:], privKeyBytes[:])
@@ -88,7 +88,7 @@ func (s *Secp256k1Signer) Sign(msg []byte) []byte {
 }
 
 func (s *Secp256k1Signer) PublicKey() []byte {
-	return secp256k1.CompressPubkey(s.PrivateKey.X, s.PrivateKey.Y)
+	return secp256k1.CompressPubkey(s.privateKey.X, s.privateKey.Y)
 }
 
 func (s *Secp256k1Signer) verifyBytes(msg []byte, sig []byte) bool {
