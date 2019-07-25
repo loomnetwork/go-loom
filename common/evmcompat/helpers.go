@@ -119,11 +119,23 @@ func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureT
 
 // RecoverAddressFromTypedSig recovers the Ethereum address from a signed hash and a 66-byte signature
 // (the first byte of which is expected to denote the SignatureType).
-func RecoverAddressFromTypedSig(hash []byte, sig []byte) (common.Address, error) {
+// allowedSigTypes is for the caller to check if the function is allowed the given list of SignatureTypes
+func RecoverAddressFromTypedSig(hash []byte, sig []byte, allowedSigTypes []SignatureType) (common.Address, error) {
 	var signer common.Address
 
 	if len(sig) != 66 {
 		return signer, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
+	}
+
+	var isSigTypeAllowed bool
+	for _, sigType := range allowedSigTypes {
+		if SignatureType(sig[0]) == sigType {
+			isSigTypeAllowed = true
+			break
+		}
+	}
+	if !isSigTypeAllowed {
+		return signer, fmt.Errorf("signature type %v is not allowed", SignatureType(sig[0]))
 	}
 
 	switch SignatureType(sig[0]) {
