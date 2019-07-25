@@ -15,7 +15,7 @@ import (
 )
 
 type BinanceSigner struct {
-	PrivateKey *ecdsa.PrivateKey
+	privateKey *ecdsa.PrivateKey
 }
 
 func NewBinanceSigner(privateKey []byte) *BinanceSigner {
@@ -23,7 +23,7 @@ func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 
 	binanceSigner := &BinanceSigner{}
 	if privateKey == nil {
-		binanceSigner.PrivateKey, err = ecdsa.GenerateKey(secp256k1.S256(), rand.Reader)
+		binanceSigner.privateKey, err = ecdsa.GenerateKey(secp256k1.S256(), rand.Reader)
 		if err != nil {
 			panic(err)
 		}
@@ -33,7 +33,7 @@ func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 		}
 
 		hexPrivKey := hex.EncodeToString(privateKey)
-		binanceSigner.PrivateKey, err = crypto.HexToECDSA(hexPrivKey)
+		binanceSigner.privateKey, err = crypto.HexToECDSA(hexPrivKey)
 		if err != nil {
 			panic(err)
 		}
@@ -44,7 +44,7 @@ func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 func (s *BinanceSigner) Sign(txBytes []byte) []byte {
 	signature, err := evmcompat.GenerateTypedSig(
 		sha3.SoliditySHA3(txBytes),
-		s.PrivateKey,
+		s.privateKey,
 		evmcompat.SignatureType_BINANCE,
 	)
 	if err != nil {
@@ -54,5 +54,5 @@ func (s *BinanceSigner) Sign(txBytes []byte) []byte {
 }
 
 func (s *BinanceSigner) PublicKey() []byte {
-	return secp256k1.CompressPubkey(s.PrivateKey.X, s.PrivateKey.Y)
+	return secp256k1.CompressPubkey(s.privateKey.X, s.privateKey.Y)
 }
