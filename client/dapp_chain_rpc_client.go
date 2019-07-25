@@ -439,6 +439,17 @@ func (c *DAppChainRPCClient) GetContractEvents(fromBlock, toBlock uint64, contra
 	return result, nil
 }
 
+func (c *DAppChainRPCClient) GetContractRecord(contract loom.Address) (ptypes.ContractRecordResponse, error) {
+	params := map[string]interface{}{
+		"contract": contract.String(),
+	}
+	var record ptypes.ContractRecordResponse
+	if err := c.queryClient.Call("contractrecord", params, c.getNextRequestID(), &record); err != nil {
+		return record, err
+	}
+	return record, nil
+}
+
 func (c *DAppChainRPCClient) GetBlockHeight() (uint64, error) {
 	var result string
 	params := map[string]interface{}{}
