@@ -19,6 +19,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/ethereum/go-ethereum/crypto/sha3"
+	"github.com/loomnetwork/go-loom/plugin/contractpb"
 	ssha "github.com/miguelmota/go-solidity-sha3"
 	"golang.org/x/crypto/ripemd160"
 )
@@ -334,4 +335,22 @@ func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, 
 		return strings.ToLower(stringConverted), stringCount + 1, nil
 	}
 	return typeString, stringCount, nil
+}
+
+func GetAllowedSignatureTypes(ctx contractpb.StaticContext) []SignatureType {
+	var allowedSigTypes []SignatureType
+	// AuthSigTxFeature is in the form 'auth:sigtx:..' e.g. auth:sigtx:default, auth:sigtx:eth
+	if ctx.FeatureEnabled("auth:sigtx:default", false) {
+		allowedSigTypes = append(allowedSigTypes, SignatureType_EIP712)
+	}
+	if ctx.FeatureEnabled("auth:sigtx:eth", false) {
+		allowedSigTypes = append(allowedSigTypes, SignatureType_GETH)
+	}
+	if ctx.FeatureEnabled("auth:sigtx:tron", false) {
+		allowedSigTypes = append(allowedSigTypes, SignatureType_TRON)
+	}
+	if ctx.FeatureEnabled("auth:sigtx:binance", false) {
+		allowedSigTypes = append(allowedSigTypes, SignatureType_BINANCE)
+	}
+	return allowedSigTypes
 }
