@@ -9,9 +9,9 @@ import (
 	"strconv"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/crypto/sha3"
 	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
+	"golang.org/x/crypto/sha3"
 )
 
 type LoomTx struct {
@@ -93,7 +93,7 @@ func (l *LoomTx) rlpEncodeWithSha3() ([]byte, error) {
 	if err != nil {
 		return []byte{}, err
 	}
-	d := sha3.NewKeccak256()
+	d := sha3.NewLegacyKeccak256()
 	d.Write(hash)
 	return d.Sum(nil), nil
 }
