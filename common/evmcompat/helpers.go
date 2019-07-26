@@ -338,11 +338,9 @@ func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, 
 }
 
 func GetAllowedSignatureTypes(ctx contractpb.StaticContext) []SignatureType {
-	var allowedSigTypes []SignatureType
-	// AuthSigTxFeature is in the form 'auth:sigtx:..' e.g. auth:sigtx:default, auth:sigtx:eth
-	if ctx.FeatureEnabled("auth:sigtx:default", false) {
-		allowedSigTypes = append(allowedSigTypes, SignatureType_EIP712)
-	}
+	// always allow SignatureType_EIP712 by default
+	allowedSigTypes := []SignatureType{SignatureType_EIP712}
+	// AuthSigTxFeature is in the form 'auth:sigtx:..' e.g. auth:sigtx:eth, auth:sigtx:tron, auth:sigtx:binance
 	if ctx.FeatureEnabled("auth:sigtx:eth", false) {
 		allowedSigTypes = append(allowedSigTypes, SignatureType_GETH)
 	}
