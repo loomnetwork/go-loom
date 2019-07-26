@@ -43,18 +43,18 @@ func (k *TronSigner) PublicKey() []byte {
 	return nil
 }
 
-type BianceSigner struct {
+type BinanceSigner struct {
 	PrivateKey *ecdsa.PrivateKey
 }
 
-func NewBinanceSigner(privateKey []byte) *BianceSigner {
+func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 	panic("EVM build isn't activated")
 }
 
-func (k *BianceSigner) Sign(_ []byte) []byte {
+func (k *BinanceSigner) Sign(_ []byte) []byte {
 	return nil
 }
 
-func (k *BianceSigner) PublicKey() []byte {
+func (k *BinanceSigner) PublicKey() []byte {
 	return nil
 }
