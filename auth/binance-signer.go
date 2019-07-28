@@ -18,6 +18,8 @@ type BinanceSigner struct {
 	privateKey *ecdsa.PrivateKey
 }
 
+// NewBinanceSigner creates a new signer that can be used to sign txs & messages using the given
+// secp256k1 private key. If the given private key is nil a new random key will be generated.
 func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 	var err error
 

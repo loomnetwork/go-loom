@@ -19,7 +19,6 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/ethereum/go-ethereum/crypto/sha3"
-	"github.com/loomnetwork/go-loom/plugin/contractpb"
 	ssha "github.com/miguelmota/go-solidity-sha3"
 	"golang.org/x/crypto/ripemd160"
 )
@@ -88,7 +87,7 @@ func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
 	return signer, nil
 }
 
-// BitcoinAddress returns a Bitcoin style addresses: RIPEMD160(SHA256(pubkey))
+// BitcoinAddress generates a Bitcoin style address from the given public key using RIPEMD160(SHA256(pubkey))
 // Taken from: https://github.com/tendermint/tendermint/blob/master/crypto/secp256k1/secp256k1.go
 func BitcoinAddress(pubKey []byte) common.Address {
 	hasherSHA256 := sha256.New()
@@ -118,14 +117,12 @@ func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureT
 	return append(typedSig, sig...), nil
 }
 
-// RecoverAddressFromTypedSig recovers the Ethereum address from a signed hash and a 66-byte signature
+// RecoverAddressFromTypedSig recovers the public address of the signer from a signed hash and a 66-byte signature
 // (the first byte of which is expected to denote the SignatureType).
-// allowedSigTypes is for the caller to check if the function is allowed the given list of SignatureTypes
+// allowedSigTypes should be used to specify which signature types are acceptable.
 func RecoverAddressFromTypedSig(hash []byte, sig []byte, allowedSigTypes []SignatureType) (common.Address, error) {
-	var signer common.Address
-
 	if len(sig) != 66 {
-		return signer, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
+		return common.Address{}, fmt.Errorf("signature must be 66 bytes, not %d bytes", len(sig))
 	}
 
 	var isSigTypeAllowed bool
@@ -136,7 +133,7 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte, allowedSigTypes []Signa
 		}
 	}
 	if !isSigTypeAllowed {
-		return signer, fmt.Errorf("signature type %v is not allowed", SignatureType(sig[0]))
+		return common.Address{}, fmt.Errorf("signature type %v is not allowed", SignatureType(sig[0]))
 	}
 
 	switch SignatureType(sig[0]) {
@@ -159,11 +156,10 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte, allowedSigTypes []Signa
 	case SignatureType_BINANCE:
 		return BitcoinRecover(hash, sig[1:])
 	default:
-		return signer, fmt.Errorf("invalid signature type: %d", sig[0])
+		return common.Address{}, fmt.Errorf("invalid signature type: %d", sig[0])
 	}
 
-	signer, err := SolidityRecover(hash, sig[1:])
-	return signer, err
+	return SolidityRecover(hash, sig[1:])
 }
 
 //TODO in future all interfaces and not do conversions from strings
@@ -335,20 +331,4 @@ func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, 
 		return strings.ToLower(stringConverted), stringCount + 1, nil
 	}
 	return typeString, stringCount, nil
-}
-
-func GetAllowedSignatureTypes(ctx contractpb.StaticContext) []SignatureType {
-	// always allow SignatureType_EIP712 by default
-	allowedSigTypes := []SignatureType{SignatureType_EIP712}
-	// AuthSigTxFeature is in the form 'auth:sigtx:..' e.g. auth:sigtx:eth, auth:sigtx:tron, auth:sigtx:binance
-	if ctx.FeatureEnabled("auth:sigtx:eth", false) {
-		allowedSigTypes = append(allowedSigTypes, SignatureType_GETH)
-	}
-	if ctx.FeatureEnabled("auth:sigtx:tron", false) {
-		allowedSigTypes = append(allowedSigTypes, SignatureType_TRON)
-	}
-	if ctx.FeatureEnabled("auth:sigtx:binance", false) {
-		allowedSigTypes = append(allowedSigTypes, SignatureType_BINANCE)
-	}
-	return allowedSigTypes
 }
