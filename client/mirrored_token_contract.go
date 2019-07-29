@@ -3,11 +3,12 @@
 package client
 
 import (
+	"strings"
+
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
-	"strings"
 )
 
 type MirroredTokenContract struct {
