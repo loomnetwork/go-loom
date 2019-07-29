@@ -461,7 +461,7 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 	code []byte,
 	name string,
 ) ([]byte, error) {
-	return c.CommitDeployTx2(
+	return c.CommitDeployTxWithValue(
 		from,
 		signer,
 		vmType,
@@ -471,7 +471,7 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 	)
 }
 
-func (c *DAppChainRPCClient) CommitDeployTx2(
+func (c *DAppChainRPCClient) CommitDeployTxWithValue(
 	from loom.Address,
 	signer auth.Signer,
 	vmType vm.VMType,
@@ -536,7 +536,7 @@ func (c *DAppChainRPCClient) CommitCallTx(
 	vmType vm.VMType,
 	input []byte,
 ) ([]byte, error) {
-	return c.CommitCallTx2(
+	return c.CommitCallTxWithValue(
 		caller,
 		contract,
 		signer,
@@ -546,7 +546,7 @@ func (c *DAppChainRPCClient) CommitCallTx(
 	)
 }
 
-func (c *DAppChainRPCClient) CommitCallTx2(
+func (c *DAppChainRPCClient) CommitCallTxWithValue(
 	caller loom.Address,
 	contract loom.Address,
 	signer auth.Signer,
