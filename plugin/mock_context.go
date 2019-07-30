@@ -10,6 +10,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
 	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
+	"github.com/loomnetwork/go-loom/config"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
@@ -34,7 +35,7 @@ type FakeContext struct {
 	Events        []FEvent
 	ethBalances   map[string]*loom.BigUInt
 	features      map[string]bool
-	config        map[string]*cctypes.CfgSetting
+	config        map[string]*cctypes.Setting
 }
 
 var _ Context = &FakeContext{}
@@ -64,7 +65,7 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		Events:      make([]FEvent, 0),
 		ethBalances: make(map[string]*loom.BigUInt),
 		features:    make(map[string]bool),
-		config:      make(map[string]*cctypes.CfgSetting),
+		config:      make(map[string]*cctypes.Setting),
 	}
 }
 
@@ -206,22 +207,20 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return defaultVal
 }
 
-func (c *FakeContext) SetCfgSetting(cfgSetting *cctypes.CfgSetting) {
+func (c *FakeContext) SetSetting(cfgSetting *cctypes.Setting) {
 	c.config[cfgSetting.Name] = cfgSetting
 }
 
-func (c *FakeContext) RemoveCfgSetting(cfgSettingName string) {
+func (c *FakeContext) RemoveSetting(cfgSettingName string) {
 	delete(c.config, cfgSettingName)
 }
 
-func (c *FakeContext) Config() *cctypes.Config {
-	config := mockDefaultConfig()
-	for _, cfgSetting := range c.config {
-		if cfgSetting.Version <= config.Version {
-			mockSetConfig(config, cfgSetting.Name, cfgSetting.Value)
-		}
+func (c *FakeContext) Config() *config.Config {
+	cfg := config.DefaultConfig()
+	for _, setting := range c.config {
+		config.SetConfig(cfg, setting.Name, setting.Value)
 	}
-	return config
+	return cfg
 }
 
 func (c *FakeContext) EnabledFeatures() []string {

@@ -89,17 +89,17 @@ message RemoveFeatureRequest {
     repeated string names = 1;
 }
 
-message CfgSetting {
-    string name = 1;
+message Setting {
+    string name = 1; 
     string value = 2;
-    enum CfgSettingStatus {
+    enum SettingStatus {
         PENDING = 0;
-        ACTIVATED = 1;
-        REMOVING = 2;
+        WAITING = 1;
+        ACTIVATED = 2;
     }
-    CfgSettingStatus status = 3;
-    //Version of config that supports this setting
-    uint64 version = 4;
+    SettingStatus status = 3;
+    // Build number that support this config
+    uint64 build_number = 4;
 }
 
 message AppStoreConfig {
@@ -107,33 +107,28 @@ message AppStoreConfig {
 }
 
 message Config {
-    uint64 version = 1;
     AppStoreConfig app_store_config = 2;
 }
 
-message SetCfgSettingRequest {
+message SetSettingRequest {
     string name = 1;
     string value = 2;
-    uint64 version = 3;
+    uint64 build_number = 3;
 }
 
-message RemoveCfgSettingRequest {
+message GetSettingRequest {
     string name = 1;
 }
 
-message GetCfgSettingRequest {
-    string name = 1;
+message GetSettingResponse {
+    Setting setting = 1;
 }
 
-message GetCfgSettingResponse {
-    CfgSetting cfg_setting = 1;
+message ListSettingsRequest {
 }
 
-message ListCfgSettingsRequest {
-}
-
-message ListCfgSettingsResponse {
-    repeated CfgSetting cfg_settings = 1;
+message ListSettingsResponse {
+    repeated Setting settings = 1;
 }
 
 message ChainConfigRequest {

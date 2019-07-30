@@ -1,4 +1,4 @@
-package plugin
+package config
 
 import (
 	"errors"
@@ -16,20 +16,28 @@ var (
 	ErrConfigWrongType = errors.New("[Application] wrong variable type")
 )
 
-var (
-	cfgSettingVersion = 1
-)
+type AppStoreConfig struct {
+	NumEVMKeysToPrune uint64
+}
 
-func mockDefaultConfig() *cctypes.Config {
-	return &cctypes.Config{
-		Version: uint64(cfgSettingVersion),
-		AppStoreConfig: &cctypes.AppStoreConfig{
-			DeletedVmKeys: 50,
+type Config struct {
+	ConfigProtobuf *cctypes.Config
+	AppStoreConfig AppStoreConfig
+}
+
+func (config *Config) Protobuf() *cctypes.Config {
+	return config.ConfigProtobuf
+}
+
+func DefaultConfig() *Config {
+	return &Config{
+		AppStoreConfig: AppStoreConfig{
+			NumEVMKeysToPrune: 50,
 		},
 	}
 }
 
-func mockSetConfig(config *cctypes.Config, key, value string) error {
+func SetConfig(config *Config, key, value string) error {
 	fieldNames := strings.Split(key, ".")
 	if len(fieldNames) > 2 {
 		return ErrConfigNotFound
@@ -43,15 +51,15 @@ func mockSetConfig(config *cctypes.Config, key, value string) error {
 		structInterface := reflect.Indirect(cfgInterface).FieldByName(fieldNames[0])
 		field = reflect.Indirect(structInterface).FieldByName(fieldNames[1])
 	}
-	return mockSetField(&field, value)
+	return setField(&field, value)
 }
 
-func mockSetField(field *reflect.Value, value string) error {
+func setField(field *reflect.Value, value string) error {
 	switch field.Kind() {
 	case reflect.String:
 		field.SetString(value)
 	case reflect.Uint64:
-		val, err := strconv.ParseInt(value, 10, 64)
+		val, err := strconv.ParseUint(value, 10, 64)
 		if err != nil || val < 0 {
 			return ErrConfigWrongType
 		}
