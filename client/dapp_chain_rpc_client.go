@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/hex"
 	"fmt"
+	"math/big"
 	"strings"
 	"time"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom"
 	"github.com/loomnetwork/go-loom/auth"
+	"github.com/loomnetwork/go-loom/common"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
@@ -439,6 +441,17 @@ func (c *DAppChainRPCClient) GetContractEvents(fromBlock, toBlock uint64, contra
 	return result, nil
 }
 
+func (c *DAppChainRPCClient) GetContractRecord(contract loom.Address) (ptypes.ContractRecordResponse, error) {
+	params := map[string]interface{}{
+		"contract": contract.String(),
+	}
+	var record ptypes.ContractRecordResponse
+	if err := c.queryClient.Call("contractrecord", params, c.getNextRequestID(), &record); err != nil {
+		return record, err
+	}
+	return record, nil
+}
+
 func (c *DAppChainRPCClient) GetBlockHeight() (uint64, error) {
 	var result string
 	params := map[string]interface{}{}
@@ -459,10 +472,29 @@ func (c *DAppChainRPCClient) CommitDeployTx(
 	code []byte,
 	name string,
 ) ([]byte, error) {
+	return c.CommitDeployTxWithValue(
+		from,
+		signer,
+		vmType,
+		code,
+		name,
+		big.NewInt(0),
+	)
+}
+
+func (c *DAppChainRPCClient) CommitDeployTxWithValue(
+	from loom.Address,
+	signer auth.Signer,
+	vmType vm.VMType,
+	code []byte,
+	name string,
+	value *big.Int,
+) ([]byte, error) {
 	deployTxBytes, err := proto.Marshal(&vm.DeployTx{
 		VmType: vmType,
 		Code:   code,
 		Name:   name,
+		Value:  &types.BigUInt{Value: common.BigUInt{value}},
 	})
 	if err != nil {
 		return nil, err
@@ -504,6 +536,7 @@ func (c *DAppChainRPCClient) CommitMigrationTx(
 		Id:   3,
 		Data: msgBytes,
 	}
+
 	return c.CommitTx2(from, signer, tx)
 }
 
@@ -514,9 +547,28 @@ func (c *DAppChainRPCClient) CommitCallTx(
 	vmType vm.VMType,
 	input []byte,
 ) ([]byte, error) {
+	return c.CommitCallTxWithValue(
+		caller,
+		contract,
+		signer,
+		vmType,
+		input,
+		big.NewInt(0),
+	)
+}
+
+func (c *DAppChainRPCClient) CommitCallTxWithValue(
+	caller loom.Address,
+	contract loom.Address,
+	signer auth.Signer,
+	vmType vm.VMType,
+	input []byte,
+	value *big.Int,
+) ([]byte, error) {
 	callTxBytes, err := proto.Marshal(&vm.CallTx{
 		VmType: vm.VMType(vmType),
 		Input:  input,
+		Value:  &types.BigUInt{Value: common.BigUInt{value}},
 	})
 	if err != nil {
 		return nil, err
@@ -535,5 +587,6 @@ func (c *DAppChainRPCClient) CommitCallTx(
 		Id:   2,
 		Data: msgBytes,
 	}
+
 	return c.CommitTx2(caller, signer, tx)
 }

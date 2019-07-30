@@ -36,7 +36,7 @@ type StaticContext interface {
 	FeatureEnabled(name string, defaultVal bool) bool
 	Config() *cctypes.Config
 	Validators() []*types.Validator
-
+	EnabledFeatures() []string
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
 	ContractRecord(contractAddr loom.Address) (*plugin.ContractRecord, error)
@@ -103,6 +103,11 @@ func (c *wrappedPluginStaticContext) Config() *cctypes.Config {
 	return c.StaticContext.Config()
 }
 
+// EnabledFeatures returns a list of the currently activated feature flags.
+func (c *wrappedPluginStaticContext) EnabledFeatures() []string {
+	return c.StaticContext.EnabledFeatures()
+}
+
 // Validators gives a list of validators
 func (c *wrappedPluginStaticContext) Validators() []*types.Validator {
 	return c.StaticContext.Validators()
@@ -153,6 +158,11 @@ func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool
 // Get Config
 func (c *wrappedPluginContext) Config() *cctypes.Config {
 	return c.Context.Config()
+}
+
+// EnabledFeatures returns a list of the currently activated feature flags.
+func (c *wrappedPluginContext) EnabledFeatures() []string {
+	return c.Context.EnabledFeatures()
 }
 
 // Validators gives a list of validators

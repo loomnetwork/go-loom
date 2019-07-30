@@ -224,6 +224,10 @@ func (c *FakeContext) Config() *cctypes.Config {
 	return config
 }
 
+func (c *FakeContext) EnabledFeatures() []string {
+	return nil
+}
+
 func (c *FakeContext) Message() Message {
 	return Message{
 		Sender: c.caller,

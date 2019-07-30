@@ -196,6 +196,10 @@ func (c *GRPCContext) Config() *cctypes.Config {
 	return c.Config()
 }
 
+func (c *GRPCContext) EnabledFeatures() []string {
+	return c.EnabledFeatures()
+}
+
 func (c *GRPCContext) Validators() []*ltypes.Validator {
 	return c.Validators()
 }

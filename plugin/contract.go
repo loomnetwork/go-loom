@@ -75,6 +75,7 @@ type StaticContext interface {
 	ContractAddress() loom.Address
 	FeatureEnabled(name string, defaultVal bool) bool
 	Config() *cctypes.Config
+	EnabledFeatures() []string
 	Validators() []*types.Validator
 	// ContractRecord retrieves the contract meta data stored in the Registry.
 	// NOTE: This method requires Registry v2.
