@@ -103,7 +103,7 @@ message Setting {
 }
 
 message AppStoreConfig {
-    uint64 deleted_vm_keys = 1;
+    uint64 num_evm_keys_to_prune = 1;
 }
 
 message Config {

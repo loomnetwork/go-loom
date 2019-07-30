@@ -16,24 +16,13 @@ var (
 	ErrConfigWrongType = errors.New("[Application] wrong variable type")
 )
 
-type AppStoreConfig struct {
-	NumEVMKeysToPrune uint64
-}
-
 type Config struct {
 	ConfigProtobuf *cctypes.Config
-	AppStoreConfig AppStoreConfig
 }
 
-func (config *Config) Protobuf() *cctypes.Config {
-	return config.ConfigProtobuf
-}
-
-func DefaultConfig() *Config {
+func NewConfig(configProtobuf *cctypes.Config) *Config {
 	return &Config{
-		AppStoreConfig: AppStoreConfig{
-			NumEVMKeysToPrune: 50,
-		},
+		ConfigProtobuf: configProtobuf,
 	}
 }
 
@@ -44,10 +33,10 @@ func SetConfig(config *Config, key, value string) error {
 	}
 	var field reflect.Value
 	if len(fieldNames) == 1 {
-		cfgInterface := reflect.ValueOf(config)
+		cfgInterface := reflect.ValueOf(config.ConfigProtobuf)
 		field = reflect.Indirect(cfgInterface).FieldByName(fieldNames[0])
 	} else if len(fieldNames) == 2 {
-		cfgInterface := reflect.ValueOf(config)
+		cfgInterface := reflect.ValueOf(config.ConfigProtobuf)
 		structInterface := reflect.Indirect(cfgInterface).FieldByName(fieldNames[0])
 		field = reflect.Indirect(structInterface).FieldByName(fieldNames[1])
 	}

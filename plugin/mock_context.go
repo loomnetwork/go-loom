@@ -216,11 +216,7 @@ func (c *FakeContext) RemoveSetting(cfgSettingName string) {
 }
 
 func (c *FakeContext) Config() *config.Config {
-	cfg := config.DefaultConfig()
-	for _, setting := range c.config {
-		config.SetConfig(cfg, setting.Name, setting.Value)
-	}
-	return cfg
+	return nil
 }
 
 func (c *FakeContext) EnabledFeatures() []string {
