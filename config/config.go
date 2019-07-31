@@ -55,6 +55,18 @@ func (c *Config) Protobuf() (*cctypes.Config, error) {
 	return &config, nil
 }
 
+func (c *Config) Update(configProtobuf *cctypes.Config) error {
+	str, err := json.Marshal(configProtobuf)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(str, &c)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
 		AppStoreConfig: &cctypes.AppStoreConfig{

@@ -92,14 +92,8 @@ message RemoveFeatureRequest {
 message Setting {
     string name = 1; 
     string value = 2;
-    enum SettingStatus {
-        PENDING = 0;
-        WAITING = 1;
-        ACTIVATED = 2;
-    }
-    SettingStatus status = 3;
     // Build number that support this config
-    uint64 build_number = 4;
+    uint64 build_number = 3;
 }
 
 message AppStoreConfig {
