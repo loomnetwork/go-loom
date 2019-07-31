@@ -6,7 +6,6 @@ import (
 	"crypto/ecdsa"
 
 	"github.com/btcsuite/btcd/btcec"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
 	sha3 "github.com/miguelmota/go-solidity-sha3"
@@ -25,7 +24,7 @@ func NewTronSigner(privateKey []byte) *TronSigner {
 		return &TronSigner{PrivateKey: privKey.ToECDSA()}
 	}
 
-	privKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), common.FromHex(string(privateKey)))
+	privKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), privateKey)
 	return &TronSigner{PrivateKey: privKey.ToECDSA()}
 }
 

@@ -11,10 +11,12 @@ import (
 	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/gogo/protobuf/jsonpb"
 	"github.com/gogo/protobuf/proto"
 	"github.com/gorilla/websocket"
 	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/auth"
 	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/client"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
@@ -141,10 +143,8 @@ func (tg *DAppChainGateway) AddTronContractMapping(
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_TRON)
-	if err != nil {
-		return err
-	}
+	signer := auth.NewTronSigner(crypto.FromECDSA(creator.MainnetPrivKey))
+	sig := signer.Sign(hash)
 
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
 		ForeignContract:           fromAddr.MarshalPB(),
@@ -167,17 +167,15 @@ func (tg *DAppChainGateway) AddBinanceContractMapping(
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_BINANCE)
-	if err != nil {
-		return err
-	}
+	signer := auth.NewBinanceSigner(crypto.FromECDSA(creator.MainnetPrivKey))
+	sig := signer.Sign(hash)
 
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
 		ForeignContract:           fromAddr.MarshalPB(),
 		LocalContract:             to.MarshalPB(),
 		ForeignContractCreatorSig: sig,
 	}
-	_, err = tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
+	_, err := tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
 	return err
 }
 
