@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encoding/json"
 	"errors"
 	"reflect"
 	"strconv"
@@ -16,29 +17,75 @@ var (
 	ErrConfigWrongType = errors.New("[Application] wrong variable type")
 )
 
+var (
+	ConfigKey = []byte("config")
+)
+
+type AppStoreConfig struct {
+	NumEvmKeysToPrune uint64 `json:"num_evm_keys_to_prune"`
+}
 type Config struct {
-	ConfigProtobuf *cctypes.Config
+	AppStoreConfig AppStoreConfig `json:"app_store_config"`
 }
 
+// NewConfig returns pointer to new config object
 func NewConfig(configProtobuf *cctypes.Config) *Config {
-	return &Config{
-		ConfigProtobuf: configProtobuf,
+	str, err := json.Marshal(configProtobuf)
+	if err != nil {
+		panic(err)
+	}
+	var config Config
+	err = json.Unmarshal(str, &config)
+	if err != nil {
+		panic(err)
+	}
+	return &config
+}
+
+func (c *Config) Protobuf() (*cctypes.Config, error) {
+	str, err := json.Marshal(c)
+	if err != nil {
+		return nil, err
+	}
+	var config cctypes.Config
+	err = json.Unmarshal(str, &config)
+	if err != nil {
+		return nil, err
+	}
+	return &config, nil
+}
+
+func DefaultConfig() *cctypes.Config {
+	return &cctypes.Config{
+		AppStoreConfig: &cctypes.AppStoreConfig{
+			NumEvmKeysToPrune: 50,
+		},
 	}
 }
 
-func SetConfig(config *Config, key, value string) error {
+// SetConfig sets value to config field
+func SetConfig(config *cctypes.Config, key, value string) error {
 	fieldNames := strings.Split(key, ".")
 	if len(fieldNames) > 2 {
 		return ErrConfigNotFound
 	}
 	var field reflect.Value
 	if len(fieldNames) == 1 {
-		cfgInterface := reflect.ValueOf(config.ConfigProtobuf)
-		field = reflect.Indirect(cfgInterface).FieldByName(fieldNames[0])
+		configInterface := reflect.ValueOf(config)
+		field = reflect.Indirect(configInterface).FieldByName(fieldNames[0])
+		if !field.IsValid() {
+			return ErrConfigNotFound
+		}
 	} else if len(fieldNames) == 2 {
-		cfgInterface := reflect.ValueOf(config.ConfigProtobuf)
-		structInterface := reflect.Indirect(cfgInterface).FieldByName(fieldNames[0])
+		configInterface := reflect.ValueOf(config)
+		structInterface := reflect.Indirect(configInterface).FieldByName(fieldNames[0])
+		if !structInterface.IsValid() {
+			return ErrConfigNotFound
+		}
 		field = reflect.Indirect(structInterface).FieldByName(fieldNames[1])
+		if !field.IsValid() {
+			return ErrConfigNotFound
+		}
 	}
 	return setField(&field, value)
 }
