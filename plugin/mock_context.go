@@ -35,7 +35,7 @@ type FakeContext struct {
 	Events        []FEvent
 	ethBalances   map[string]*loom.BigUInt
 	features      map[string]bool
-	config        map[string]*cctypes.Setting
+	config        *config.Config
 }
 
 var _ Context = &FakeContext{}
@@ -65,7 +65,7 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		Events:      make([]FEvent, 0),
 		ethBalances: make(map[string]*loom.BigUInt),
 		features:    make(map[string]bool),
-		config:      make(map[string]*cctypes.Setting),
+		config:      config.NewConfig(config.DefaultConfig()),
 	}
 }
 
@@ -207,16 +207,20 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return defaultVal
 }
 
-func (c *FakeContext) SetSetting(cfgSetting *cctypes.Setting) {
-	c.config[cfgSetting.Name] = cfgSetting
-}
-
-func (c *FakeContext) RemoveSetting(cfgSettingName string) {
-	delete(c.config, cfgSettingName)
+func (c *FakeContext) SetConfig(setting *cctypes.Setting) error {
+	configProtobuf, err := c.config.Protobuf()
+	if err != nil {
+		return err
+	}
+	if err := config.SetConfig(configProtobuf, setting.Name, setting.Value); err != nil {
+		return err
+	}
+	c.config.Update(configProtobuf)
+	return nil
 }
 
 func (c *FakeContext) Config() *config.Config {
-	return nil
+	return c.config
 }
 
 func (c *FakeContext) EnabledFeatures() []string {
