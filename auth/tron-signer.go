@@ -33,7 +33,7 @@ func (k *TronSigner) Sign(txBytes []byte) []byte {
 	signature, err := evmcompat.GenerateTypedSig(
 		sha3.SoliditySHA3(
 			sha3.String("\x19TRON Signed Message:\n32"),
-			sha3.SoliditySHA3(txBytes),
+			txBytes,
 		),
 		k.PrivateKey,
 		evmcompat.SignatureType_TRON,
