@@ -124,7 +124,6 @@ message DPOSInitRequest {
     Params params = 1;
     repeated Validator validators = 2;
     bool init_candidates = 3;
-    string chain_id = 4;
 }
 
 message DelegateRequest {
