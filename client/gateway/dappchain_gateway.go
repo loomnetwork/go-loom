@@ -180,7 +180,7 @@ func (tg *DAppChainGateway) AddBinanceContractMapping(
 		LocalContract:             to.MarshalPB(),
 		ForeignContractCreatorSig: sig,
 	}
-	_, err := tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
+	_, err = tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
 	return err
 }
 

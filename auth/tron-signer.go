@@ -46,11 +46,3 @@ func (k *TronSigner) Sign(txBytes []byte) []byte {
 func (k *TronSigner) PublicKey() []byte {
 	return crypto.FromECDSAPub(&k.PrivateKey.PublicKey)
 }
-
-func VerifyTronSignature(pubKey, hash, signature []byte) bool {
-	msg := sha3.SoliditySHA3(
-		sha3.String("\x19TRON Signed Message:\n32"),
-		hash,
-	)
-	return crypto.VerifySignature(pubKey, msg, signature)
-}
