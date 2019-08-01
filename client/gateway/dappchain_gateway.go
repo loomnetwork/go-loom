@@ -143,8 +143,13 @@ func (tg *DAppChainGateway) AddTronContractMapping(
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	signer := auth.NewTronSigner(crypto.FromECDSA(creator.MainnetPrivKey))
-	sig := signer.Sign(hash)
+	sig, err := evmcompat.GenerateTypedSig(
+		auth.PrefixHeader(hash, evmcompat.SignatureType_TRON),
+		creator.MainnetPrivKey,
+		evmcompat.SignatureType_TRON)
+	if err != nil {
+		return err
+	}
 
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
 		ForeignContract:           fromAddr.MarshalPB(),
