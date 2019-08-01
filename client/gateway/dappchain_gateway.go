@@ -11,12 +11,10 @@ import (
 	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/gogo/protobuf/jsonpb"
 	"github.com/gogo/protobuf/proto"
 	"github.com/gorilla/websocket"
 	loom "github.com/loomnetwork/go-loom"
-	"github.com/loomnetwork/go-loom/auth"
 	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/client"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
@@ -172,8 +170,10 @@ func (tg *DAppChainGateway) AddBinanceContractMapping(
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	signer := auth.NewBinanceSigner(crypto.FromECDSA(creator.MainnetPrivKey))
-	sig := signer.Sign(hash)
+	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_BINANCE)
+	if err != nil {
+		return err
+	}
 
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
 		ForeignContract:           fromAddr.MarshalPB(),
