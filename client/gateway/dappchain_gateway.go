@@ -144,7 +144,7 @@ func (tg *DAppChainGateway) AddTronContractMapping(
 	)
 
 	sig, err := evmcompat.GenerateTypedSig(
-		auth.PrefixHeader(hash, evmcompat.SignatureType_TRON),
+		evmcompat.PrefixHeader(hash, evmcompat.SignatureType_TRON),
 		creator.MainnetPrivKey,
 		evmcompat.SignatureType_TRON)
 	if err != nil {
