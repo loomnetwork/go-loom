@@ -141,7 +141,10 @@ func (tg *DAppChainGateway) AddTronContractMapping(
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_TRON)
+	sig, err := evmcompat.GenerateTypedSig(
+		evmcompat.PrefixHeader(hash, evmcompat.SignatureType_TRON),
+		creator.MainnetPrivKey,
+		evmcompat.SignatureType_TRON)
 	if err != nil {
 		return err
 	}
