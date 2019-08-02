@@ -16,6 +16,7 @@ message Params {
     uint64 min_candidate_fee = 9;
     uint64 downtime_period = 10;
     BigUInt max_downtime_percentage = 11;
+    bool jail_offline_validators = 12;
 }
 
 message State {
@@ -114,9 +115,15 @@ message DelegationList {
     repeated DelegationIndex delegations = 1;
 }
 
+message Referrer {
+    Address referrer_address = 1;
+    string name = 2;
+}
+
 message DPOSInitRequest {
     Params params = 1;
     repeated Validator validators = 2;
+    bool init_candidates = 3;
 }
 
 message DelegateRequest {
@@ -285,6 +292,13 @@ message ListAllDelegationsResponse {
     repeated ListDelegationsResponse list_responses = 1;
 }
 
+message ListReferrersRequest{
+}
+
+message ListReferrersResponse{
+    repeated Referrer referrers = 1;
+}
+
 // Oracle request batch
 message BatchRequest {
     oneof payload {
@@ -352,6 +366,10 @@ message SetMaxDowntimePercentageRequest {
 
 message UnjailRequest {
     Address validator = 1;
+}
+
+message EnableValidatorJailingRequest {
+    bool jail_offline_validators = 1;
 }
 
 message GetStateRequest {

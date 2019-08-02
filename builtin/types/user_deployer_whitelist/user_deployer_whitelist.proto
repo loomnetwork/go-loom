@@ -50,10 +50,12 @@ message UserDeployerState {
     Address address = 1;
     repeated DeployerContract contracts = 2;
     TierID tier_id = 3 [(gogoproto.customname)="TierID"];
+    bool inactive = 4;
 }
 
 message GetUserDeployersRequest {
     Address user_addr = 1;
+    bool include_inactive = 2;
 }
 
 message GetUserDeployersResponse {
@@ -83,4 +85,9 @@ message SetTierInfoRequest {
     string name = 3;
     uint64 block_range = 4;
     uint64 max_txs = 5;
+}
+
+message SwapUserDeployerRequest {
+    Address old_deployer_addr = 1;
+    Address new_deployer_addr = 2;
 }
