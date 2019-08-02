@@ -307,6 +307,21 @@ message BatchRequest {
     BatchRequestMeta meta = 2;
 }
 
+message MintVoucherRequest {
+    BigUInt amount = 1;
+}
+
+message MintVoucherResponse {
+}
+
+message MintVoucherERC20Request {
+    BigUInt amount = 1;
+    Address token_address = 2;
+}
+
+message MintVoucherERC20Response {
+}
+
 message BatchRequestMeta {
     uint64 block_number = 1;
     uint64 tx_index = 2;
