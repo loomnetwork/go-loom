@@ -332,3 +332,15 @@ func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, 
 	}
 	return typeString, stringCount, nil
 }
+
+// PrefixHeader creates a new hash with prefixed header
+func PrefixHeader(hash []byte, sigType SignatureType) []byte {
+	switch sigType {
+	case SignatureType_TRON:
+		return ssha.SoliditySHA3(
+			ssha.String("\x19TRON Signed Message:\n32"),
+			hash,
+		)
+	}
+	return hash
+}
