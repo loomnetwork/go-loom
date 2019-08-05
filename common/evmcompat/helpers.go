@@ -5,7 +5,6 @@ package evmcompat
 import (
 	"bytes"
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -65,6 +64,17 @@ func SolidityRecover(hash []byte, sig []byte) (common.Address, error) {
 	return signer, nil
 }
 
+// Secp256k1Sign signs the given data with the specified private key and returns the 65-byte signature.
+// The signature is in a format that's compatible with the ecverify() Solidity function.
+func Secp256k1Sign(data []byte, privKey *ecdsa.PrivateKey) ([]byte, error) {
+	privKeyBytes := crypto.FromECDSA(privKey)
+	sig, err := secp256k1.Sign(data, privKeyBytes)
+	if err != nil {
+		return nil, err
+	}
+	return sig, nil
+}
+
 // BitcoinRecover recovers the Ethereum address from the signed hash and the 65-byte signature.
 func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
 	if len(sig) != 65 {
@@ -72,16 +82,14 @@ func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
 	}
 	stdSig := make([]byte, 65)
 	copy(stdSig[:], sig[:])
-	stdSig[len(sig)-1] -= 27
 
 	var signer common.Address
-	pubKey, err := crypto.Ecrecover(hash, stdSig)
+	pubKey, err := crypto.SigToPub(hash, stdSig)
 	if err != nil {
 		return signer, err
 	}
 
-	x, y := elliptic.Unmarshal(crypto.S256(), pubKey)
-	pubKeyBytes := secp256k1.CompressPubkey(x, y)
+	pubKeyBytes := secp256k1.CompressPubkey(pubKey.X, pubKey.Y)
 	signer = BitcoinAddress(pubKeyBytes)
 
 	return signer, nil
@@ -102,13 +110,17 @@ func BitcoinAddress(pubKey []byte) common.Address {
 // GenerateTypedSig signs the given data with the specified private key and returns the 66-byte signature
 // (the first byte of which is used to denote the SignatureType).
 func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureType) ([]byte, error) {
+	signFn := SoliditySign
 	switch sigType {
-	case SignatureType_EIP712, SignatureType_TRON, SignatureType_BINANCE:
+	case SignatureType_EIP712, SignatureType_TRON:
+	case SignatureType_BINANCE:
+		// Binance signs a message using secp256k1
+		signFn = Secp256k1Sign
 	default:
 		return nil, fmt.Errorf("signing failed, sig type %v not implemented", sigType)
 	}
 
-	sig, err := SoliditySign(data, privKey)
+	sig, err := signFn(data, privKey)
 	if err != nil {
 		return nil, err
 	}

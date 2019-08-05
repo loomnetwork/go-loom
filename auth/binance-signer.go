@@ -5,13 +5,13 @@ package auth
 import (
 	"crypto/ecdsa"
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/hex"
 	"errors"
 
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
-	sha3 "github.com/miguelmota/go-solidity-sha3"
 )
 
 type BinanceSigner struct {
@@ -44,15 +44,14 @@ func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 }
 
 func (s *BinanceSigner) Sign(txBytes []byte) []byte {
-	signature, err := evmcompat.GenerateTypedSig(
-		sha3.SoliditySHA3(txBytes),
-		s.privateKey,
-		evmcompat.SignatureType_BINANCE,
-	)
+	hash := sha256.Sum256(txBytes)
+	sigBytes, err := secp256k1.Sign(hash[:], crypto.FromECDSA(s.privateKey))
 	if err != nil {
 		panic(err)
 	}
-	return signature
+
+	typedSig := append(make([]byte, 0, 66), byte(evmcompat.SignatureType_BINANCE))
+	return append(typedSig, sigBytes...)
 }
 
 func (s *BinanceSigner) PublicKey() []byte {
