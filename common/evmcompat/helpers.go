@@ -342,3 +342,8 @@ func PrefixHeader(hash []byte, sigType SignatureType) []byte {
 	}
 	return hash
 }
+
+func GenSHA256(hash []byte) []byte {
+	sum := sha256.Sum256(hash)
+	return sum[:]
+}

@@ -170,7 +170,9 @@ func (tg *DAppChainGateway) AddBinanceContractMapping(
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_BINANCE)
+	sig, err := evmcompat.GenerateTypedSig(evmcompat.GenSHA256(hash),
+		creator.MainnetPrivKey,
+		evmcompat.SignatureType_BINANCE)
 	if err != nil {
 		return err
 	}

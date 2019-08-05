@@ -5,7 +5,6 @@ package auth
 import (
 	"crypto/ecdsa"
 	"crypto/rand"
-	"crypto/sha256"
 	"encoding/hex"
 	"errors"
 
@@ -44,9 +43,8 @@ func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 }
 
 func (s *BinanceSigner) Sign(txBytes []byte) []byte {
-	hash := sha256.Sum256(txBytes)
 	signature, err := evmcompat.GenerateTypedSig(
-		hash[:],
+		evmcompat.GenSHA256(txBytes),
 		s.privateKey,
 		evmcompat.SignatureType_BINANCE,
 	)
