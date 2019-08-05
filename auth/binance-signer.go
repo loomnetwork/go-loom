@@ -45,13 +45,15 @@ func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 
 func (s *BinanceSigner) Sign(txBytes []byte) []byte {
 	hash := sha256.Sum256(txBytes)
-	sigBytes, err := secp256k1.Sign(hash[:], crypto.FromECDSA(s.privateKey))
+	signature, err := evmcompat.GenerateTypedSig(
+		hash[:],
+		s.privateKey,
+		evmcompat.SignatureType_BINANCE,
+	)
 	if err != nil {
 		panic(err)
 	}
-
-	typedSig := append(make([]byte, 0, 66), byte(evmcompat.SignatureType_BINANCE))
-	return append(typedSig, sigBytes...)
+	return signature
 }
 
 func (s *BinanceSigner) PublicKey() []byte {

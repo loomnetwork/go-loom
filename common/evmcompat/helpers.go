@@ -64,17 +64,6 @@ func SolidityRecover(hash []byte, sig []byte) (common.Address, error) {
 	return signer, nil
 }
 
-// Secp256k1Sign signs the given data with the specified private key and returns the 65-byte signature.
-// The signature is in a format that's compatible with the ecverify() Solidity function.
-func Secp256k1Sign(data []byte, privKey *ecdsa.PrivateKey) ([]byte, error) {
-	privKeyBytes := crypto.FromECDSA(privKey)
-	sig, err := secp256k1.Sign(data, privKeyBytes)
-	if err != nil {
-		return nil, err
-	}
-	return sig, nil
-}
-
 // BitcoinRecover recovers the Ethereum address from the signed hash and the 65-byte signature.
 func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
 	if len(sig) != 65 {
@@ -82,6 +71,7 @@ func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
 	}
 	stdSig := make([]byte, 65)
 	copy(stdSig[:], sig[:])
+	stdSig[len(sig)-1] -= 27
 
 	var signer common.Address
 	pubKey, err := crypto.SigToPub(hash, stdSig)
@@ -110,17 +100,13 @@ func BitcoinAddress(pubKey []byte) common.Address {
 // GenerateTypedSig signs the given data with the specified private key and returns the 66-byte signature
 // (the first byte of which is used to denote the SignatureType).
 func GenerateTypedSig(data []byte, privKey *ecdsa.PrivateKey, sigType SignatureType) ([]byte, error) {
-	signFn := SoliditySign
 	switch sigType {
-	case SignatureType_EIP712, SignatureType_TRON:
-	case SignatureType_BINANCE:
-		// Binance signs a message using secp256k1
-		signFn = Secp256k1Sign
+	case SignatureType_EIP712, SignatureType_TRON, SignatureType_BINANCE:
 	default:
 		return nil, fmt.Errorf("signing failed, sig type %v not implemented", sigType)
 	}
 
-	sig, err := signFn(data, privKey)
+	sig, err := SoliditySign(data, privKey)
 	if err != nil {
 		return nil, err
 	}
@@ -166,6 +152,8 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte, allowedSigTypes []Signa
 			ssha.Bytes32(hash),
 		)
 	case SignatureType_BINANCE:
+		// sum := sha256.Sum256(hash)
+		fmt.Printf("sig: %x\n", sig)
 		return BitcoinRecover(hash, sig[1:])
 	default:
 		return common.Address{}, fmt.Errorf("invalid signature type: %d", sig[0])
