@@ -152,8 +152,6 @@ func RecoverAddressFromTypedSig(hash []byte, sig []byte, allowedSigTypes []Signa
 			ssha.Bytes32(hash),
 		)
 	case SignatureType_BINANCE:
-		// sum := sha256.Sum256(hash)
-		fmt.Printf("sig: %x\n", sig)
 		return BitcoinRecover(hash, sig[1:])
 	default:
 		return common.Address{}, fmt.Errorf("invalid signature type: %d", sig[0])
