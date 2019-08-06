@@ -343,7 +343,12 @@ func PrefixHeader(hash []byte, sigType SignatureType) []byte {
 	return hash
 }
 
-func GenSHA256(hash []byte) []byte {
-	sum := sha256.Sum256(hash)
-	return sum[:]
+// GenSHA256 creates sha256 hash from the concatinated bytes of messages
+func GenSHA256(msgs ...[]byte) []byte {
+	var v []byte
+	for _, msg := range msgs {
+		v = append(v, msg...)
+	}
+	hash := sha256.Sum256(v)
+	return hash[:]
 }
