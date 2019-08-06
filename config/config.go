@@ -75,7 +75,7 @@ func DefaultConfig() *cctypes.Config {
 	}
 }
 
-// SetConfig sets value to config field
+// SetConfigSetting sets value to config field
 func SetConfigSetting(config *cctypes.Config, key, value string) error {
 	fieldNames := strings.Split(key, ".")
 	if len(fieldNames) > 2 {

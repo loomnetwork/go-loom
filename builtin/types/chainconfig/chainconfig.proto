@@ -104,7 +104,7 @@ message Config {
     AppStore app_store = 2;
 }
 
-message SetActionRequest {
+message SetSettingRequest {
     string name = 1;
     string value = 2;
     uint64 build_number = 3;
