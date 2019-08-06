@@ -98,7 +98,7 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
-// Get ChainConfig
+// Config returns the current on-chain config
 func (c *wrappedPluginStaticContext) Config() *config.Config {
 	return c.StaticContext.Config()
 }
@@ -155,7 +155,7 @@ func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool
 	return c.Context.FeatureEnabled(name, defaultVal)
 }
 
-// Get Config
+// Config returns the current on-chain config
 func (c *wrappedPluginContext) Config() *config.Config {
 	return c.Context.Config()
 }

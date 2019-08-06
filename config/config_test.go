@@ -19,12 +19,12 @@ func TestConfigTestSuite(t *testing.T) {
 func (t *ConfigTestSuite) SetupTest() {
 }
 
-func (t *ConfigTestSuite) TestSetConfig() {
+func (t *ConfigTestSuite) TestSetConfigSetting() {
 	require := t.Require()
 	config := &cctypes.Config{
 		AppStoreConfig: &cctypes.AppStoreConfig{},
 	}
-	err := SetConfig(config, "AppStoreConfig.NumEvmKeysToPrune", "50")
+	err := SetConfigSetting(config, "AppStoreConfig.NumEvmKeysToPrune", "50")
 	require.NoError(err)
 	require.Equal(config.AppStoreConfig.NumEvmKeysToPrune, uint64(50))
 	err = SetConfig(config, "ABC.NumEvmKeysToPrune", "50")

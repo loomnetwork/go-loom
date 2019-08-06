@@ -207,12 +207,12 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return defaultVal
 }
 
-func (c *FakeContext) SetConfig(setting *cctypes.Setting) error {
+func (c *FakeContext) SetConfigSetting(action *cctypes.Action) error {
 	configProtobuf, err := c.config.Protobuf()
 	if err != nil {
 		return err
 	}
-	if err := config.SetConfig(configProtobuf, setting.Name, setting.Value); err != nil {
+	if err := config.SetConfigSetting(configProtobuf, action.Name, action.Value); err != nil {
 		return err
 	}
 	c.config.Update(configProtobuf)

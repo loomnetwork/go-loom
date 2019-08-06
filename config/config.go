@@ -11,21 +11,21 @@ import (
 )
 
 var (
-	// ErrConfigNotFound indicates that a config does not exist
-	ErrConfigNotFound = errors.New("[Application] config not found")
-	// ErrConfigWrongType returned when types of value and config variable mismatch
-	ErrConfigWrongType = errors.New("[Application] wrong variable type")
+	// ErrSettingNotFound indicates that a config does not exist
+	ErrSettingNotFound = errors.New("[Application] config not found")
+	// ErrInvalidSettingType returned when types of value and config variable mismatch
+	ErrInvalidSettingType = errors.New("[Application] wrong variable type")
 )
 
 var (
 	ConfigKey = []byte("config")
 )
 
-type AppStoreConfig struct {
+type AppStore struct {
 	NumEvmKeysToPrune uint64 `json:"num_evm_keys_to_prune"`
 }
 type Config struct {
-	AppStoreConfig AppStoreConfig `json:"app_store_config"`
+	AppStore AppStore `json:"app_store"`
 }
 
 // NewConfig returns pointer to new config object
@@ -69,34 +69,34 @@ func (c *Config) Update(configProtobuf *cctypes.Config) error {
 
 func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
-		AppStoreConfig: &cctypes.AppStoreConfig{
+		AppStore: &cctypes.AppStore{
 			NumEvmKeysToPrune: 50,
 		},
 	}
 }
 
 // SetConfig sets value to config field
-func SetConfig(config *cctypes.Config, key, value string) error {
+func SetConfigSetting(config *cctypes.Config, key, value string) error {
 	fieldNames := strings.Split(key, ".")
 	if len(fieldNames) > 2 {
-		return ErrConfigNotFound
+		return ErrSettingNotFound
 	}
 	var field reflect.Value
 	if len(fieldNames) == 1 {
 		configInterface := reflect.ValueOf(config)
 		field = reflect.Indirect(configInterface).FieldByName(fieldNames[0])
 		if !field.IsValid() {
-			return ErrConfigNotFound
+			return ErrSettingNotFound
 		}
 	} else if len(fieldNames) == 2 {
 		configInterface := reflect.ValueOf(config)
 		structInterface := reflect.Indirect(configInterface).FieldByName(fieldNames[0])
 		if !structInterface.IsValid() {
-			return ErrConfigNotFound
+			return ErrSettingNotFound
 		}
 		field = reflect.Indirect(structInterface).FieldByName(fieldNames[1])
 		if !field.IsValid() {
-			return ErrConfigNotFound
+			return ErrSettingNotFound
 		}
 	}
 	return setField(&field, value)
@@ -109,23 +109,23 @@ func setField(field *reflect.Value, value string) error {
 	case reflect.Uint64:
 		val, err := strconv.ParseUint(value, 10, 64)
 		if err != nil || val < 0 {
-			return ErrConfigWrongType
+			return ErrInvalidSettingType
 		}
 		field.SetUint(uint64(val))
 	case reflect.Int64:
 		val, err := strconv.ParseInt(value, 10, 64)
 		if err != nil {
-			return ErrConfigWrongType
+			return ErrInvalidSettingType
 		}
 		field.SetInt(val)
 	case reflect.Bool:
 		val, err := strconv.ParseBool(value)
 		if err != nil {
-			return ErrConfigWrongType
+			return ErrInvalidSettingType
 		}
 		field.SetBool(val)
 	default:
-		return ErrConfigWrongType
+		return ErrInvalidSettingType
 	}
 	return nil
 }

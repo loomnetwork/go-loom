@@ -89,40 +89,32 @@ message RemoveFeatureRequest {
     repeated string names = 1;
 }
 
-message Setting {
+message Action {
     string name = 1; 
     string value = 2;
     // Build number that support this config
     uint64 build_number = 3;
 }
 
-message AppStoreConfig {
+message AppStore {
     uint64 num_evm_keys_to_prune = 1;
 }
 
 message Config {
-    AppStoreConfig app_store_config = 2;
+    AppStore app_store = 2;
 }
 
-message SetSettingRequest {
+message SetActionRequest {
     string name = 1;
     string value = 2;
     uint64 build_number = 3;
 }
 
-message GetSettingRequest {
-    string name = 1;
+message ListPendingActionsRequest {
 }
 
-message GetSettingResponse {
-    Setting setting = 1;
-}
-
-message ListSettingsRequest {
-}
-
-message ListSettingsResponse {
-    repeated Setting settings = 1;
+message ListPendingActionsResponse {
+    repeated Action actions = 1;
 }
 
 message ChainConfigRequest {
