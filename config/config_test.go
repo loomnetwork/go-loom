@@ -22,23 +22,23 @@ func (t *ConfigTestSuite) SetupTest() {
 func (t *ConfigTestSuite) TestSetConfigSetting() {
 	require := t.Require()
 	config := &cctypes.Config{
-		AppStoreConfig: &cctypes.AppStoreConfig{},
+		AppStore: &cctypes.AppStore{},
 	}
-	err := SetConfigSetting(config, "AppStoreConfig.NumEvmKeysToPrune", "50")
+	err := SetConfigSetting(config, "AppStore.NumEvmKeysToPrune", "50")
 	require.NoError(err)
-	require.Equal(config.AppStoreConfig.NumEvmKeysToPrune, uint64(50))
-	err = SetConfig(config, "ABC.NumEvmKeysToPrune", "50")
-	require.Equal(ErrConfigNotFound, err)
-	err = SetConfig(config, "asbcd", "50")
-	require.Equal(ErrConfigNotFound, err)
-	err = SetConfig(config, "AppStoreConfig.NumEvmKeysToPrune", "true")
-	require.Equal(ErrConfigWrongType, err)
+	require.Equal(config.AppStore.NumEvmKeysToPrune, uint64(50))
+	err = SetConfigSetting(config, "ABC.NumEvmKeysToPrune", "50")
+	require.Equal(ErrSettingNotFound, err)
+	err = SetConfigSetting(config, "asbcd", "50")
+	require.Equal(ErrSettingNotFound, err)
+	err = SetConfigSetting(config, "AppStore.NumEvmKeysToPrune", "true")
+	require.Equal(ErrInvalidSettingType, err)
 }
 
 func (t *ConfigTestSuite) TestStructConvertion() {
 	require := t.Require()
 	configProtobuf := &cctypes.Config{
-		AppStoreConfig: &cctypes.AppStoreConfig{
+		AppStore: &cctypes.AppStore{
 			NumEvmKeysToPrune: 50,
 		},
 	}
@@ -47,5 +47,5 @@ func (t *ConfigTestSuite) TestStructConvertion() {
 	var config Config
 	err = json.Unmarshal(str, &config)
 	require.NoError(err)
-	require.Equal(uint64(50), config.AppStoreConfig.NumEvmKeysToPrune)
+	require.Equal(uint64(50), config.AppStore.NumEvmKeysToPrune)
 }
