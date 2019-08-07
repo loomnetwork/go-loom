@@ -1,7 +1,6 @@
 package config
 
 import (
-	"encoding/json"
 	"errors"
 	"reflect"
 	"strconv"
@@ -16,56 +15,6 @@ var (
 	// ErrInvalidSettingType returned when types of value and config variable mismatch
 	ErrInvalidSettingType = errors.New("[Application] wrong variable type")
 )
-
-var (
-	ConfigKey = []byte("config")
-)
-
-type AppStore struct {
-	NumEvmKeysToPrune uint64 `json:"num_evm_keys_to_prune"`
-}
-type Config struct {
-	AppStore AppStore `json:"app_store"`
-}
-
-// NewConfig returns pointer to new config object
-func NewConfig(configProtobuf *cctypes.Config) *Config {
-	str, err := json.Marshal(configProtobuf)
-	if err != nil {
-		panic(err)
-	}
-	var config Config
-	err = json.Unmarshal(str, &config)
-	if err != nil {
-		panic(err)
-	}
-	return &config
-}
-
-func (c *Config) Protobuf() (*cctypes.Config, error) {
-	str, err := json.Marshal(c)
-	if err != nil {
-		return nil, err
-	}
-	var config cctypes.Config
-	err = json.Unmarshal(str, &config)
-	if err != nil {
-		return nil, err
-	}
-	return &config, nil
-}
-
-func (c *Config) Update(configProtobuf *cctypes.Config) error {
-	str, err := json.Marshal(configProtobuf)
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(str, &c)
-	if err != nil {
-		return err
-	}
-	return nil
-}
 
 func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
