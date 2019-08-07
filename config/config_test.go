@@ -1,7 +1,6 @@
 package config
 
 import (
-	"encoding/json"
 	"testing"
 
 	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
@@ -33,19 +32,4 @@ func (t *ConfigTestSuite) TestSetConfigSetting() {
 	require.Equal(ErrSettingNotFound, err)
 	err = SetConfigSetting(config, "AppStore.NumEvmKeysToPrune", "true")
 	require.Equal(ErrInvalidSettingType, err)
-}
-
-func (t *ConfigTestSuite) TestStructConvertion() {
-	require := t.Require()
-	configProtobuf := &cctypes.Config{
-		AppStore: &cctypes.AppStore{
-			NumEvmKeysToPrune: 50,
-		},
-	}
-	str, err := json.Marshal(configProtobuf)
-	require.NoError(err)
-	var config Config
-	err = json.Unmarshal(str, &config)
-	require.NoError(err)
-	require.Equal(uint64(50), config.AppStore.NumEvmKeysToPrune)
 }
