@@ -5,7 +5,6 @@ package evmcompat
 import (
 	"bytes"
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -75,13 +74,12 @@ func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
 	stdSig[len(sig)-1] -= 27
 
 	var signer common.Address
-	pubKey, err := crypto.Ecrecover(hash, stdSig)
+	pubKey, err := crypto.SigToPub(hash, stdSig)
 	if err != nil {
 		return signer, err
 	}
 
-	x, y := elliptic.Unmarshal(crypto.S256(), pubKey)
-	pubKeyBytes := secp256k1.CompressPubkey(x, y)
+	pubKeyBytes := secp256k1.CompressPubkey(pubKey.X, pubKey.Y)
 	signer = BitcoinAddress(pubKeyBytes)
 
 	return signer, nil
@@ -343,4 +341,14 @@ func PrefixHeader(hash []byte, sigType SignatureType) []byte {
 		)
 	}
 	return hash
+}
+
+// GenSHA256 creates sha256 hash from the concatinated bytes of messages
+func GenSHA256(msgs ...[]byte) []byte {
+	var v []byte
+	for _, msg := range msgs {
+		v = append(v, msg...)
+	}
+	hash := sha256.Sum256(v)
+	return hash[:]
 }

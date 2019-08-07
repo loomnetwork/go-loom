@@ -165,7 +165,7 @@ func (tg *DAppChainGateway) AddBinanceContractMapping(
 	fromAddr := client.LoomAddressFromBinanceAddress(from)
 	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
 
-	hash := ssha.SoliditySHA3(
+	hash := evmcompat.GenSHA256(
 		ssha.Address(from),
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
