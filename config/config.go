@@ -2,11 +2,15 @@ package config
 
 import (
 	"errors"
+	"math/big"
 	"reflect"
 	"strconv"
 	"strings"
 
+	"github.com/loomnetwork/go-loom"
+
 	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
+	"github.com/loomnetwork/go-loom/types"
 )
 
 var (
@@ -67,12 +71,14 @@ func setField(field *reflect.Value, value string) error {
 			return ErrInvalidSettingType
 		}
 		field.SetInt(val)
-	case reflect.Bool:
-		val, err := strconv.ParseBool(value)
-		if err != nil {
+	case reflect.Ptr:
+		bigIntAmount := big.NewInt(0)
+		if _, ok := bigIntAmount.SetString(value, 0); !ok {
 			return ErrInvalidSettingType
 		}
-		field.SetBool(val)
+		bigUintAmount := loom.NewBigUInt(bigIntAmount)
+		protoBigUint := &types.BigUInt{Value: *bigUintAmount}
+		field.Elem().Set(reflect.ValueOf(*protoBigUint))
 	default:
 		return ErrInvalidSettingType
 	}
