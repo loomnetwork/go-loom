@@ -17,6 +17,7 @@ message Params {
     uint64 downtime_period = 10;
     BigUInt max_downtime_percentage = 11;
     bool jail_offline_validators = 12;
+    Address voucher_token_address = 13;
 }
 
 message State {
@@ -307,6 +308,13 @@ message BatchRequest {
     BatchRequestMeta meta = 2;
 }
 
+message MintVoucherRequest {
+    BigUInt amount = 1;
+}
+
+message MintVoucherResponse {
+}
+
 message BatchRequestMeta {
     uint64 block_number = 1;
     uint64 tx_index = 2;
@@ -459,4 +467,8 @@ message DposDelegatorClaimsRewardsEvent {
     repeated Address validators = 2;
     repeated BigUInt amounts = 3;
     BigUInt total_rewards_claimed = 4;
+}
+
+message AddVoucherTokenAddressRequest {
+   Address voucher_token_address = 1;
 }
