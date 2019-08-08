@@ -11,7 +11,6 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/loomnetwork/go-loom/common/evmcompat"
-	sha3 "github.com/miguelmota/go-solidity-sha3"
 )
 
 type BinanceSigner struct {
@@ -45,7 +44,7 @@ func NewBinanceSigner(privateKey []byte) *BinanceSigner {
 
 func (s *BinanceSigner) Sign(txBytes []byte) []byte {
 	signature, err := evmcompat.GenerateTypedSig(
-		sha3.SoliditySHA3(txBytes),
+		evmcompat.GenSHA256(txBytes),
 		s.privateKey,
 		evmcompat.SignatureType_BINANCE,
 	)

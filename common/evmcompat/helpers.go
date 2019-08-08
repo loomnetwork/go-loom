@@ -5,7 +5,6 @@ package evmcompat
 import (
 	"bytes"
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -75,13 +74,12 @@ func BitcoinRecover(hash []byte, sig []byte) (common.Address, error) {
 	stdSig[len(sig)-1] -= 27
 
 	var signer common.Address
-	pubKey, err := crypto.Ecrecover(hash, stdSig)
+	pubKey, err := crypto.SigToPub(hash, stdSig)
 	if err != nil {
 		return signer, err
 	}
 
-	x, y := elliptic.Unmarshal(crypto.S256(), pubKey)
-	pubKeyBytes := secp256k1.CompressPubkey(x, y)
+	pubKeyBytes := secp256k1.CompressPubkey(pubKey.X, pubKey.Y)
 	signer = BitcoinAddress(pubKeyBytes)
 
 	return signer, nil
@@ -331,4 +329,26 @@ func parseNextValueFromSolidityHexStr(partialData, typeString, dataLeft string, 
 		return strings.ToLower(stringConverted), stringCount + 1, nil
 	}
 	return typeString, stringCount, nil
+}
+
+// PrefixHeader creates a new hash with prefixed header
+func PrefixHeader(hash []byte, sigType SignatureType) []byte {
+	switch sigType {
+	case SignatureType_TRON:
+		return ssha.SoliditySHA3(
+			ssha.String("\x19TRON Signed Message:\n32"),
+			hash,
+		)
+	}
+	return hash
+}
+
+// GenSHA256 creates sha256 hash from the concatinated bytes of messages
+func GenSHA256(msgs ...[]byte) []byte {
+	var v []byte
+	for _, msg := range msgs {
+		v = append(v, msg...)
+	}
+	hash := sha256.Sum256(v)
+	return hash[:]
 }
