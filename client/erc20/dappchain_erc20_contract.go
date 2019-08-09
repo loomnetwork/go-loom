@@ -30,6 +30,16 @@ func (c *DAppChainERC20Contract) Approve(identity *client.Identity, to loom.Addr
 	return c.CallEVM("approve", identity.LoomSigner, toAddr, amount)
 }
 
+func (c *DAppChainERC20Contract) Transfer(identity *client.Identity, to loom.Address, amount *big.Int) error {
+	toAddr := common.BytesToAddress(to.Local)
+	return c.CallEVM("transfer", identity.LoomSigner, toAddr, amount)
+}
+
+func (c *DAppChainERC20Contract) MintTo(identity *client.Identity, to loom.Address, amount *big.Int) error {
+	toAddr := common.BytesToAddress(to.Local)
+	return c.CallEVM("mintTo", identity.LoomSigner, toAddr, amount)
+}
+
 /**
   Functions to connect / deploy the ERC20 contracts
 */
@@ -52,3 +62,4 @@ func ConnectERC20ToDAppChain(
 	}
 	return &DAppChainERC20Contract{contract}, nil
 }
+
