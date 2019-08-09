@@ -108,8 +108,6 @@ func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *bi
 func (c *MainnetGatewayClient) WithdrawMintableERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) error {
 	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC20, big.NewInt(0), amount)
 
-	// let hash = soliditySha3(TokenKind.ERC721, alice, nonce, gateway.address, soliditySha3(new_uid, erc721.address))
-
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return err
