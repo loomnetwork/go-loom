@@ -16,7 +16,7 @@ import (
 )
 
 // MainnetGatewayContractABI is the input ABI used to generate the binding from.
-const MainnetGatewayContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ETHReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721Received\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenTypes\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XBatchReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"ERC20Received\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"kind\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"TokenWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loomCoinAddress\",\"type\":\"address\"}],\"name\":\"LoomCoinReceived\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721X\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"_valIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawETH\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_types\",\"type\":\"uint256[]\"},{\"name\":\"_amounts\",\"type\":\"uint256[]\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XBatchReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getETH\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721X\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const MainnetGatewayContractABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawMintableERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"vmc\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ETHReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721Received\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenTypes\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XBatchReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"kind\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"TokenWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loomCoinAddress\",\"type\":\"address\"}],\"name\":\"LoomCoinReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"ERC20Received\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721X\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawETH\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_types\",\"type\":\"uint256[]\"},{\"name\":\"_amounts\",\"type\":\"uint256[]\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XBatchReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getETH\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721X\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawMintableERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // MainnetGatewayContract is an auto generated Go binding around an Ethereum contract.
 type MainnetGatewayContract struct {
@@ -316,6 +316,32 @@ func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) Nonces(arg0 
 	return _MainnetGatewayContract.Contract.Nonces(&_MainnetGatewayContract.CallOpts, arg0)
 }
 
+// Vmc is a free data retrieval call binding the contract method 0x20cc8e51.
+//
+// Solidity: function vmc() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractCaller) Vmc(opts *bind.CallOpts) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _MainnetGatewayContract.contract.Call(opts, out, "vmc")
+	return *ret0, err
+}
+
+// Vmc is a free data retrieval call binding the contract method 0x20cc8e51.
+//
+// Solidity: function vmc() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractSession) Vmc() (common.Address, error) {
+	return _MainnetGatewayContract.Contract.Vmc(&_MainnetGatewayContract.CallOpts)
+}
+
+// Vmc is a free data retrieval call binding the contract method 0x20cc8e51.
+//
+// Solidity: function vmc() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) Vmc() (common.Address, error) {
+	return _MainnetGatewayContract.Contract.Vmc(&_MainnetGatewayContract.CallOpts)
+}
+
 // DepositERC20 is a paid mutator transaction binding the contract method 0x392d661c.
 //
 // Solidity: function depositERC20(amount uint256, contractAddress address) returns()
@@ -402,86 +428,128 @@ func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) OnERC721
 
 // WithdrawERC20 is a paid mutator transaction binding the contract method 0xb0116dc7.
 //
-// Solidity: function withdrawERC20(amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC20(opts *bind.TransactOpts, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC20", amount, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC20(amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC20(opts *bind.TransactOpts, amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC20", amount, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC20 is a paid mutator transaction binding the contract method 0xb0116dc7.
 //
-// Solidity: function withdrawERC20(amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC20(amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC20(amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC20(amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC20 is a paid mutator transaction binding the contract method 0xb0116dc7.
 //
-// Solidity: function withdrawERC20(amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC20(amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC20(amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC20(amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC721 is a paid mutator transaction binding the contract method 0x03c0fe3a.
 //
-// Solidity: function withdrawERC721(uid uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721(opts *bind.TransactOpts, uid *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721", uid, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC721(uid uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721(opts *bind.TransactOpts, uid *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721", uid, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC721 is a paid mutator transaction binding the contract method 0x03c0fe3a.
 //
-// Solidity: function withdrawERC721(uid uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721(uid *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC721(uid uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721(uid *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC721 is a paid mutator transaction binding the contract method 0x03c0fe3a.
 //
-// Solidity: function withdrawERC721(uid uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721(uid *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC721(uid uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721(uid *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC721X is a paid mutator transaction binding the contract method 0xced7c92a.
 //
-// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721X(opts *bind.TransactOpts, tokenId *big.Int, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721X", tokenId, amount, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawERC721X(opts *bind.TransactOpts, tokenId *big.Int, amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawERC721X", tokenId, amount, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC721X is a paid mutator transaction binding the contract method 0xced7c92a.
 //
-// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawERC721X is a paid mutator transaction binding the contract method 0xced7c92a.
 //
-// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, contractAddress common.Address, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, contractAddress, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawERC721X(tokenId uint256, amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawERC721X(tokenId *big.Int, amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawERC721X(&_MainnetGatewayContract.TransactOpts, tokenId, amount, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawETH is a paid mutator transaction binding the contract method 0xda293eb3.
 //
-// Solidity: function withdrawETH(amount uint256, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawETH(opts *bind.TransactOpts, amount *big.Int, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.contract.Transact(opts, "withdrawETH", amount, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawETH(amount uint256, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawETH(opts *bind.TransactOpts, amount *big.Int, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawETH", amount, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawETH is a paid mutator transaction binding the contract method 0xda293eb3.
 //
-// Solidity: function withdrawETH(amount uint256, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawETH(amount *big.Int, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawETH(amount uint256, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawETH(amount *big.Int, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, _signersIndexes, _v, _r, _s)
 }
 
 // WithdrawETH is a paid mutator transaction binding the contract method 0xda293eb3.
 //
-// Solidity: function withdrawETH(amount uint256, _valIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawETH(amount *big.Int, _valIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, _valIndexes, _v, _r, _s)
+// Solidity: function withdrawETH(amount uint256, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawETH(amount *big.Int, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawETH(&_MainnetGatewayContract.TransactOpts, amount, _signersIndexes, _v, _r, _s)
+}
+
+// WithdrawMintableERC20 is a paid mutator transaction binding the contract method 0x0267cc62.
+//
+// Solidity: function withdrawMintableERC20(amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawMintableERC20(opts *bind.TransactOpts, amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawMintableERC20", amount, contractAddress, _signersIndexes, _v, _r, _s)
+}
+
+// WithdrawMintableERC20 is a paid mutator transaction binding the contract method 0x0267cc62.
+//
+// Solidity: function withdrawMintableERC20(amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawMintableERC20(amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawMintableERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _signersIndexes, _v, _r, _s)
+}
+
+// WithdrawMintableERC20 is a paid mutator transaction binding the contract method 0x0267cc62.
+//
+// Solidity: function withdrawMintableERC20(amount uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawMintableERC20(amount *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawMintableERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress, _signersIndexes, _v, _r, _s)
+}
+
+// WithdrawMintableERC721 is a paid mutator transaction binding the contract method 0x05bbfeb7.
+//
+// Solidity: function withdrawMintableERC721(uid uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) WithdrawMintableERC721(opts *bind.TransactOpts, uid *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "withdrawMintableERC721", uid, contractAddress, _signersIndexes, _v, _r, _s)
+}
+
+// WithdrawMintableERC721 is a paid mutator transaction binding the contract method 0x05bbfeb7.
+//
+// Solidity: function withdrawMintableERC721(uid uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) WithdrawMintableERC721(uid *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawMintableERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _signersIndexes, _v, _r, _s)
+}
+
+// WithdrawMintableERC721 is a paid mutator transaction binding the contract method 0x05bbfeb7.
+//
+// Solidity: function withdrawMintableERC721(uid uint256, contractAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) WithdrawMintableERC721(uid *big.Int, contractAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.WithdrawMintableERC721(&_MainnetGatewayContract.TransactOpts, uid, contractAddress, _signersIndexes, _v, _r, _s)
 }
 
 // MainnetGatewayContractERC20ReceivedIterator is returned from FilterERC20Received and is used to iterate over the raw logs and unpacked data for ERC20Received events raised by the MainnetGatewayContract contract.
