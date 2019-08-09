@@ -123,6 +123,7 @@ message Referrer {
 message DPOSInitRequest {
     Params params = 1;
     repeated Validator validators = 2;
+    bool init_candidates = 3;
 }
 
 message DelegateRequest {
