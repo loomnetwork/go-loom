@@ -61,10 +61,10 @@ func setField(field *reflect.Value, value string) error {
 		field.SetString(value)
 	case reflect.Uint64:
 		val, err := strconv.ParseUint(value, 10, 64)
-		if err != nil || val < 0 {
+		if err != nil {
 			return ErrInvalidSettingType
 		}
-		field.SetUint(uint64(val))
+		field.SetUint(val)
 	case reflect.Int64:
 		val, err := strconv.ParseInt(value, 10, 64)
 		if err != nil {
