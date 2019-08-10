@@ -3,7 +3,6 @@ package config
 import (
 	"testing"
 
-	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -20,9 +19,7 @@ func (t *ConfigTestSuite) SetupTest() {
 
 func (t *ConfigTestSuite) TestSetConfigSetting() {
 	require := t.Require()
-	config := &cctypes.Config{
-		AppStore: &cctypes.AppStore{},
-	}
+	config := DefaultConfig()
 	err := SetConfigSetting(config, "AppStore.NumEvmKeysToPrune", "50")
 	require.NoError(err)
 	require.Equal(config.AppStore.NumEvmKeysToPrune, uint64(50))
@@ -32,4 +29,5 @@ func (t *ConfigTestSuite) TestSetConfigSetting() {
 	require.Equal(ErrSettingNotFound, err)
 	err = SetConfigSetting(config, "AppStore.NumEvmKeysToPrune", "true")
 	require.Equal(ErrInvalidSettingType, err)
+
 }

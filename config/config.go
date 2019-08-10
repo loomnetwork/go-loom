@@ -14,9 +14,9 @@ import (
 )
 
 var (
-	// ErrSettingNotFound indicates that a config does not exist
-	ErrSettingNotFound = errors.New("[Application] config not found")
-	// ErrInvalidSettingType returned when types of value and config variable mismatch
+	// ErrSettingNotFound indicates that a setting does not exist
+	ErrSettingNotFound = errors.New("[Application] setting not found")
+	// ErrInvalidSettingType returned when types of value and setting variable mismatch
 	ErrInvalidSettingType = errors.New("[Application] wrong variable type")
 )
 
@@ -78,6 +78,9 @@ func setField(field *reflect.Value, value string) error {
 		}
 		bigUintAmount := loom.NewBigUInt(bigIntAmount)
 		protoBigUint := &types.BigUInt{Value: *bigUintAmount}
+		if field.Elem().Type() != reflect.TypeOf(*protoBigUint) {
+			return ErrInvalidSettingType
+		}
 		field.Elem().Set(reflect.ValueOf(*protoBigUint))
 	default:
 		return ErrInvalidSettingType
