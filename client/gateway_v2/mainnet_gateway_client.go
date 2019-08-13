@@ -105,35 +105,6 @@ func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *bi
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) WithdrawMintableERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) error {
-	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC20, big.NewInt(0), amount)
-
-	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
-	if err != nil {
-		return err
-	}
-
-	tx, err := c.contract.WithdrawMintableERC20(client.DefaultTransactOptsForIdentity(caller), amount, tokenAddr, valIndexes, v, r, s)
-	if err != nil {
-		return err
-	}
-	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
-}
-
-func (c *MainnetGatewayClient) WithdrawMintableERC721(caller *client.Identity, tokenID *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) error {
-	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC721, tokenID, big.NewInt(0))
-	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
-	if err != nil {
-		return err
-	}
-
-	tx, err := c.contract.WithdrawMintableERC721(client.DefaultTransactOptsForIdentity(caller), tokenID, tokenAddr, valIndexes, v, r, s)
-	if err != nil {
-		return err
-	}
-	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
-}
-
 // WithdrawETH sends a tx to the Mainnet Gateway to withdraw the specified amount of ETH,
 // and returns the tx fee.
 func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.Int, sigs []byte, validators []common.Address) (*big.Int, error) {
