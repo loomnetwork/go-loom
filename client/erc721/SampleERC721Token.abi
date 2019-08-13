@@ -3,7 +3,7 @@
     "constant": true,
     "inputs": [
       {
-        "name": "_interfaceId",
+        "name": "interfaceId",
         "type": "bytes4"
       }
     ],
@@ -36,7 +36,7 @@
     "constant": true,
     "inputs": [
       {
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -55,11 +55,11 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_to",
+        "name": "to",
         "type": "address"
       },
       {
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -70,60 +70,18 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "gateway",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "InterfaceId_ERC165",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes4"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
     "inputs": [
       {
-        "name": "_from",
+        "name": "from",
         "type": "address"
       },
       {
-        "name": "_to",
+        "name": "to",
         "type": "address"
       },
       {
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -134,41 +92,18 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "name": "_index",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenOfOwnerByIndex",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
     "inputs": [
       {
-        "name": "_from",
+        "name": "from",
         "type": "address"
       },
       {
-        "name": "_to",
+        "name": "to",
         "type": "address"
       },
       {
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -182,45 +117,7 @@
     "constant": true,
     "inputs": [
       {
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "exists",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_index",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenByIndex",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -239,7 +136,7 @@
     "constant": true,
     "inputs": [
       {
-        "name": "_owner",
+        "name": "owner",
         "type": "address"
       }
     ],
@@ -272,11 +169,34 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_to",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "addMinter",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceMinter",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "to",
         "type": "address"
       },
       {
-        "name": "_approved",
+        "name": "approved",
         "type": "bool"
       }
     ],
@@ -287,18 +207,37 @@
     "type": "function"
   },
   {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isMinter",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
     "inputs": [
       {
-        "name": "_from",
+        "name": "from",
         "type": "address"
       },
       {
-        "name": "_to",
+        "name": "to",
         "type": "address"
       },
       {
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
@@ -316,30 +255,11 @@
     "constant": true,
     "inputs": [
       {
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenURI",
-    "outputs": [
-      {
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_owner",
+        "name": "owner",
         "type": "address"
       },
       {
-        "name": "_operator",
+        "name": "operator",
         "type": "address"
       }
     ],
@@ -369,18 +289,90 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "name": "validator",
+        "type": "address"
+      }
+    ],
+    "name": "ValidatorAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "validator",
+        "type": "address"
+      }
+    ],
+    "name": "ValidatorRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "gateway",
+        "type": "address"
+      }
+    ],
+    "name": "GatewayAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "gateway",
+        "type": "address"
+      }
+    ],
+    "name": "GatewayRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
-        "name": "_from",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "MinterAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "MinterRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "from",
         "type": "address"
       },
       {
         "indexed": true,
-        "name": "_to",
+        "name": "to",
         "type": "address"
       },
       {
         "indexed": true,
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -392,17 +384,17 @@
     "inputs": [
       {
         "indexed": true,
-        "name": "_owner",
+        "name": "owner",
         "type": "address"
       },
       {
         "indexed": true,
-        "name": "_approved",
+        "name": "approved",
         "type": "address"
       },
       {
         "indexed": true,
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -414,17 +406,17 @@
     "inputs": [
       {
         "indexed": true,
-        "name": "_owner",
+        "name": "owner",
         "type": "address"
       },
       {
         "indexed": true,
-        "name": "_operator",
+        "name": "operator",
         "type": "address"
       },
       {
         "indexed": false,
-        "name": "_approved",
+        "name": "approved",
         "type": "bool"
       }
     ],
@@ -435,14 +427,116 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_uid",
+        "name": "_address",
+        "type": "address"
+      },
+      {
+        "name": "_tokenId",
         "type": "uint256"
       }
     ],
-    "name": "mintToGateway",
+    "name": "mintTo",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "mint",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newValidator",
+        "type": "address"
+      }
+    ],
+    "name": "addValidator",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "validator",
+        "type": "address"
+      }
+    ],
+    "name": "removeValidator",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_gateway",
+        "type": "address"
+      }
+    ],
+    "name": "addGateway",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_gateway",
+        "type": "address"
+      }
+    ],
+    "name": "removeGateway",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "exists",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   }
 ]
