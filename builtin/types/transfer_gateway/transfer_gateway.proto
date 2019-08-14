@@ -190,6 +190,20 @@ message TransferGatewayContractMappingConfirmed {
     Address local_contract = 2;
 }
 
+message TransferGatewayContractMappingRejected {
+  // Address of corresponding contract on the local blockchain
+  Address local_contract = 1;
+  // Address of expected contract on a foreign blockchain
+  Address expected_foreign_contract = 2;
+  // Address of expected contract creator on a foreign blockchain
+  Address expected_creator = 3;
+  // Address of actual contract on a foreign blockchain
+  Address actual_foreign_contract = 4;
+  // Address of actual contract creator on a foreign blockchain
+  Address actual_creator = 5;
+  string error_message = 6;
+}
+
 // Emitted when a withdrawal to the Mainnet Gateway has been signed.
 // This event contains all the required data to complete a toke withdrawal via the Mainnet Gateway.
 message TransferGatewayTokenWithdrawalSigned {
