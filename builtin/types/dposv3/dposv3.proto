@@ -406,11 +406,16 @@ message DposSlashEvent {
 }
 
 message DposSlashDelegationEvent {
+    Delegation delegation = 1;
+    BigUInt slash_amount = 2;
+    BigUInt slash_percentage = 3;
+}
+
+message DposSlashWhitelistAmountEvent {
     Address validator = 1;
-    BigUInt delegation_amount = 2;
+    BigUInt whitelist_amount = 2;
     BigUInt slash_amount = 3;
     BigUInt slash_percentage = 4;
-    bool whitelist_delegation = 5;
 }
 
 message DposJailEvent {
