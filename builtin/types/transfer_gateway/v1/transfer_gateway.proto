@@ -211,6 +211,7 @@ message TransferGatewayProcessEventBatchRequest {
 }
 
 message TransferGatewayStateRequest {
+  TransferGatewayState state = 1;
 }
 
 message TransferGatewayStateResponse {
