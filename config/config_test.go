@@ -38,13 +38,13 @@ func (t *ConfigTestSuite) TestSetConfigSetting() {
 	err = MockSetConfigSetting(config, "MockAppStoreConfig.MockData2", "-50")
 	require.Equal(ErrInvalidSettingType, err)
 	// Set positive value to uint64, expect value change
-	err = MockSetConfigSetting(config, "MockAppStoreConfig.MockData2", "50")
+	MockSetConfigSetting(config, "MockAppStoreConfig.MockData2", "50")
 	require.Equal(config.MockAppStoreConfig.MockData2, uint64(50))
 	// Set string to string, expect value change
-	err = MockSetConfigSetting(config, "MockAppStoreConfig.MockData3", "stringgggggg")
+	MockSetConfigSetting(config, "MockAppStoreConfig.MockData3", "stringgggggg")
 	require.Equal(config.MockAppStoreConfig.MockData3, "stringgggggg")
 	// Set int to BigUInt, expect value change
-	err = MockSetConfigSetting(config, "MockAppStoreConfig.MockData4", "5555555")
+	MockSetConfigSetting(config, "MockAppStoreConfig.MockData4", "5555555")
 	expectedValue := &types.BigUInt{Value: *loom.NewBigUIntFromInt(5555555)}
 	require.Equal(config.MockAppStoreConfig.MockData4.String(), expectedValue.String())
 	// Set int to pointer, expect error
