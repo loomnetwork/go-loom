@@ -22,7 +22,7 @@ var (
 
 func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
-		AppStore: &cctypes.AppStore{
+		AppStore: &cctypes.AppStoreConfig{
 			NumEvmKeysToPrune: 50,
 		},
 	}

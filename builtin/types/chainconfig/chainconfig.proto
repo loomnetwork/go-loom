@@ -96,12 +96,12 @@ message Action {
     uint64 build_number = 3;
 }
 
-message AppStore {
+message AppStoreConfig {
     uint64 num_evm_keys_to_prune = 1;
 }
 
 message Config {
-    AppStore app_store = 2;
+    AppStoreConfig app_store = 2;
 }
 
 message SetSettingRequest {
