@@ -31,7 +31,7 @@ func DefaultConfig() *cctypes.Config {
 // SetConfigSetting sets value of a config field.
 // The key can consist of one or two elements, e.g. "fieldA", "sectionA.fieldB".
 // The value string should be parsable into a string, integer, or a BigUInt.
-func SetConfigSetting(config *cctypes.Config, key, value string) error {
+func SetConfigSetting(config interface{}, key, value string) error {
 	fieldNames := strings.Split(key, ".")
 	if len(fieldNames) > 2 {
 		return ErrSettingNotFound
