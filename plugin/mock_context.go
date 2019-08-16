@@ -207,8 +207,8 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return defaultVal
 }
 
-func (c *FakeContext) SetConfigSetting(action *cctypes.Action) error {
-	if err := config.SetConfigSetting(c.config, action.Name, action.Value); err != nil {
+func (c *FakeContext) SetConfigSetting(name, value string) error {
+	if err := config.SetConfigSetting(c.config, name, value); err != nil {
 		return err
 	}
 	return nil
