@@ -287,11 +287,14 @@ message TransferGatewayProcessEventBatchRequest {
 }
 
 message TransferGatewayStateRequest {
-    TransferGatewayState state = 1;
 }
 
 message TransferGatewayStateResponse {
     TransferGatewayState state = 1;
+}
+
+message TransferGatewayUpdateMainnetGatewayRequest {
+    Address mainnet_gateway_address = 1;
 }
 
 // Recovery
