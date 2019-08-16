@@ -370,7 +370,7 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
     // withdrawal status
     TransferGatewayTxStatus withdrawal_status = 4;
-    // Mainnet Gateway address
+    // Mainnet Gateway/Wallet address
     Address mainnet_gateway_address = 5;
 }
 
