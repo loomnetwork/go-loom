@@ -52,7 +52,7 @@ func (c *MainnetERC20Client) Transfer(caller *client.Identity, to common.Address
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetERC20Client) Minto(caller *client.Identity, to common.Address, amount *big.Int) error {
+func (c *MainnetERC20Client) MintTo(caller *client.Identity, to common.Address, amount *big.Int) error {
 	tx, err := c.contract.MintTo(client.DefaultTransactOptsForIdentity(caller), to, amount)
 	if err != nil {
 		return err
