@@ -405,6 +405,22 @@ message DposSlashEvent {
     BigUInt slash_percentage = 2;
 }
 
+message DposSlashDelegationEvent {
+    Address validator = 1;
+    Address delegator = 2;
+    BigUInt delegation_amount = 3;
+    uint64  delegation_index = 4;
+    BigUInt slash_amount = 5;
+    BigUInt slash_percentage = 6;
+}
+
+message DposSlashWhitelistAmountEvent {
+    Address validator = 1;
+    BigUInt whitelist_amount = 2;
+    BigUInt slash_amount = 3;
+    BigUInt slash_percentage = 4;
+}
+
 message DposJailEvent {
     Address validator = 1;
 }
