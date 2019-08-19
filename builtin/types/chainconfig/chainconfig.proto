@@ -89,11 +89,11 @@ message RemoveFeatureRequest {
     repeated string names = 1;
 }
 
+// An action represents a pending change to the on-chain config.
 message Action {
-    string name = 1; 
-    string value = 2;
-    // Build number that support this config
-    uint64 build_number = 3;
+    string name = 1; // Key matching the config setting that should be changed.
+    string value = 2; // The new value for the config setting.
+    uint64 build_number = 3; // Minimum build number required for this change to take effect.
 }
 
 message AppStoreConfig {
