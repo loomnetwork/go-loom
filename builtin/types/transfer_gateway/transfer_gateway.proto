@@ -22,6 +22,11 @@ enum TransferGatewayTxStatus {
     REJECTED = 3;
 }
 
+enum ContractTypes {
+    NORMAL = 0;
+    MINTABLE = 1;
+}
+
 message TransferGatewayState {
     Address owner = 1;
     // Last Mainnet block processed by the Transfer Gateway contract
@@ -525,3 +530,18 @@ message TransferGatewayResubmitWithdrawalError {
 message TransferGatewayUpdateBinanceTransferFeeRequest{
     BigUInt transfer_fee = 1;
 }
+
+message TransferGatewayAddContractTypeMappingRequest {
+    Address contract_address = 1;
+    ContractTypes contract_type = 2;
+}
+
+message TransferGatewayContractTypeMappingRequest {
+    Address contract_address = 1;
+}
+
+message TransferGatewayContractTypeMappingResponse {
+    Address contract_address = 1;
+    ContractTypes contract_type = 2;
+}
+
