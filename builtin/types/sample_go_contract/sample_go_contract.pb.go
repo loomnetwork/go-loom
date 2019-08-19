@@ -19,85 +19,85 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-type TestingInitRequest struct {
+type SampleGoContractInitRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TestingInitRequest) Reset()         { *m = TestingInitRequest{} }
-func (m *TestingInitRequest) String() string { return proto.CompactTextString(m) }
-func (*TestingInitRequest) ProtoMessage()    {}
-func (*TestingInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_sample_go_contract_fa10c41debb31dd8, []int{0}
+func (m *SampleGoContractInitRequest) Reset()         { *m = SampleGoContractInitRequest{} }
+func (m *SampleGoContractInitRequest) String() string { return proto.CompactTextString(m) }
+func (*SampleGoContractInitRequest) ProtoMessage()    {}
+func (*SampleGoContractInitRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_sample_go_contract_52cdfc5560053bb3, []int{0}
 }
-func (m *TestingInitRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TestingInitRequest.Unmarshal(m, b)
+func (m *SampleGoContractInitRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SampleGoContractInitRequest.Unmarshal(m, b)
 }
-func (m *TestingInitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TestingInitRequest.Marshal(b, m, deterministic)
+func (m *SampleGoContractInitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SampleGoContractInitRequest.Marshal(b, m, deterministic)
 }
-func (dst *TestingInitRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TestingInitRequest.Merge(dst, src)
+func (dst *SampleGoContractInitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SampleGoContractInitRequest.Merge(dst, src)
 }
-func (m *TestingInitRequest) XXX_Size() int {
-	return xxx_messageInfo_TestingInitRequest.Size(m)
+func (m *SampleGoContractInitRequest) XXX_Size() int {
+	return xxx_messageInfo_SampleGoContractInitRequest.Size(m)
 }
-func (m *TestingInitRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_TestingInitRequest.DiscardUnknown(m)
+func (m *SampleGoContractInitRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SampleGoContractInitRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TestingInitRequest proto.InternalMessageInfo
+var xxx_messageInfo_SampleGoContractInitRequest proto.InternalMessageInfo
 
-type TestingNestedEvmRequest struct {
+type SampleGoContractNestedEvmRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TestingNestedEvmRequest) Reset()         { *m = TestingNestedEvmRequest{} }
-func (m *TestingNestedEvmRequest) String() string { return proto.CompactTextString(m) }
-func (*TestingNestedEvmRequest) ProtoMessage()    {}
-func (*TestingNestedEvmRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_sample_go_contract_fa10c41debb31dd8, []int{1}
+func (m *SampleGoContractNestedEvmRequest) Reset()         { *m = SampleGoContractNestedEvmRequest{} }
+func (m *SampleGoContractNestedEvmRequest) String() string { return proto.CompactTextString(m) }
+func (*SampleGoContractNestedEvmRequest) ProtoMessage()    {}
+func (*SampleGoContractNestedEvmRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_sample_go_contract_52cdfc5560053bb3, []int{1}
 }
-func (m *TestingNestedEvmRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TestingNestedEvmRequest.Unmarshal(m, b)
+func (m *SampleGoContractNestedEvmRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SampleGoContractNestedEvmRequest.Unmarshal(m, b)
 }
-func (m *TestingNestedEvmRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TestingNestedEvmRequest.Marshal(b, m, deterministic)
+func (m *SampleGoContractNestedEvmRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SampleGoContractNestedEvmRequest.Marshal(b, m, deterministic)
 }
-func (dst *TestingNestedEvmRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TestingNestedEvmRequest.Merge(dst, src)
+func (dst *SampleGoContractNestedEvmRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SampleGoContractNestedEvmRequest.Merge(dst, src)
 }
-func (m *TestingNestedEvmRequest) XXX_Size() int {
-	return xxx_messageInfo_TestingNestedEvmRequest.Size(m)
+func (m *SampleGoContractNestedEvmRequest) XXX_Size() int {
+	return xxx_messageInfo_SampleGoContractNestedEvmRequest.Size(m)
 }
-func (m *TestingNestedEvmRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_TestingNestedEvmRequest.DiscardUnknown(m)
+func (m *SampleGoContractNestedEvmRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SampleGoContractNestedEvmRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TestingNestedEvmRequest proto.InternalMessageInfo
-
-func init() {
-	proto.RegisterType((*TestingInitRequest)(nil), "TestingInitRequest")
-	proto.RegisterType((*TestingNestedEvmRequest)(nil), "TestingNestedEvmRequest")
-}
+var xxx_messageInfo_SampleGoContractNestedEvmRequest proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/sample_go_contract/sample_go_contract.proto", fileDescriptor_sample_go_contract_fa10c41debb31dd8)
+	proto.RegisterType((*SampleGoContractInitRequest)(nil), "SampleGoContractInitRequest")
+	proto.RegisterType((*SampleGoContractNestedEvmRequest)(nil), "SampleGoContractNestedEvmRequest")
 }
 
-var fileDescriptor_sample_go_contract_fa10c41debb31dd8 = []byte{
-	// 149 bytes of a gzipped FileDescriptorProto
+func init() {
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/sample_go_contract/sample_go_contract.proto", fileDescriptor_sample_go_contract_52cdfc5560053bb3)
+}
+
+var fileDescriptor_sample_go_contract_52cdfc5560053bb3 = []byte{
+	// 150 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x8a, 0x48, 0xcf, 0x2c, 0xc9,
 	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,
 	0x2f, 0xca, 0xd6, 0x4f, 0xcf, 0xd7, 0x05, 0x71, 0xf5, 0x93, 0x4a, 0x33, 0x73, 0x4a, 0x32, 0xf3,
 	0xf4, 0x4b, 0x2a, 0x0b, 0x52, 0x8b, 0xf5, 0x8b, 0x13, 0x73, 0x0b, 0x72, 0x52, 0xe3, 0xd3, 0xf3,
 	0xe3, 0x93, 0xf3, 0xf3, 0x4a, 0x8a, 0x12, 0x93, 0x4b, 0xb0, 0x08, 0xe9, 0x15, 0x14, 0xe5, 0x97,
-	0xe4, 0x4b, 0x19, 0x10, 0x30, 0x19, 0x62, 0x22, 0x98, 0x84, 0xe8, 0x50, 0x12, 0xe1, 0x12, 0x0a,
-	0x49, 0x2d, 0x2e, 0xc9, 0xcc, 0x4b, 0xf7, 0xcc, 0xcb, 0x2c, 0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d,
-	0x2e, 0x51, 0x92, 0xe4, 0x12, 0x87, 0x8a, 0xfa, 0xa5, 0x16, 0x97, 0xa4, 0xa6, 0xb8, 0x96, 0xe5,
-	0x42, 0xa5, 0x92, 0xd8, 0xc0, 0xfa, 0x8c, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x33, 0xaf, 0xb5,
-	0x39, 0xc5, 0x00, 0x00, 0x00,
+	0xe4, 0x4b, 0x19, 0x10, 0x30, 0x19, 0x62, 0x22, 0x98, 0x84, 0xe8, 0x50, 0x92, 0xe5, 0x92, 0x0e,
+	0x06, 0x9b, 0xe6, 0x9e, 0xef, 0x0c, 0x35, 0xcb, 0x33, 0x2f, 0xb3, 0x24, 0x28, 0xb5, 0xb0, 0x34,
+	0xb5, 0xb8, 0x44, 0x49, 0x89, 0x4b, 0x01, 0x5d, 0xda, 0x2f, 0xb5, 0xb8, 0x24, 0x35, 0xc5, 0xb5,
+	0x2c, 0x17, 0xaa, 0x26, 0x89, 0x0d, 0x6c, 0x92, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xf4, 0x48,
+	0x93, 0xf8, 0xd7, 0x00, 0x00, 0x00,
 }

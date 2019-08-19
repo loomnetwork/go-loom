@@ -2,8 +2,8 @@ syntax = "proto3";
 
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
-message TestingInitRequest {
+message SampleGoContractInitRequest {
 }
 
-message TestingNestedEvmRequest {
+message SampleGoContractNestedEvmRequest {
 }
