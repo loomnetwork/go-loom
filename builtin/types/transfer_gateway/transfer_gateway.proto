@@ -32,6 +32,8 @@ message TransferGatewayState {
     repeated Address token_withdrawers = 4;
     // Binance Dex transfer fee. This will be used for binance gateway
     BigUInt transfer_fee = 5;
+    // Mainnet Gateway address
+    Address mainnet_gateway_address = 6;
 }
 
 message TransferGatewayOracleState {
@@ -275,11 +277,13 @@ message TransferGatewayUnverifiedContractCreatorsResponse {
 
 message TransferGatewayVerifyContractCreatorsRequest {
     repeated TransferGatewayVerifiedContractCreator creators = 1;
+    Address mainnet_gateway_address = 2;
 }
 
 // Batch of events from the Gateway on Ethereum mainnet
 message TransferGatewayProcessEventBatchRequest {
     repeated TransferGatewayMainnetEvent events = 1;
+    Address mainnet_gateway_address = 2;
 }
 
 message TransferGatewayStateRequest {
@@ -287,6 +291,10 @@ message TransferGatewayStateRequest {
 
 message TransferGatewayStateResponse {
     TransferGatewayState state = 1;
+}
+
+message TransferGatewayUpdateMainnetGatewayRequest {
+    Address mainnet_gateway_address = 1;
 }
 
 // Recovery
@@ -362,6 +370,8 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
     // withdrawal status
     TransferGatewayTxStatus withdrawal_status = 4;
+    // Mainnet Gateway/Wallet address
+    Address mainnet_gateway_address = 5;
 }
 
 message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
@@ -477,6 +487,7 @@ message TransferGatewaySubmitDepositTxHashRequest {
 
 message TransferGatewayClearInvalidDepositTxHashRequest {
     repeated bytes tx_hashes = 1;
+    Address mainnet_gateway_address = 2;
 }
 
 message TransferGatewayUnprocessedDepositTxHashesRequest{
