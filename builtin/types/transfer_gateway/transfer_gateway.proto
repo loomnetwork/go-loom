@@ -531,17 +531,26 @@ message TransferGatewayUpdateBinanceTransferFeeRequest{
     BigUInt transfer_fee = 1;
 }
 
-message TransferGatewayAddContractTypeMappingRequest {
-    Address contract_address = 1;
+message TransferGatewayAddContractTypeRequest {
+    Address foreign_contract = 1;
     ContractTypes contract_type = 2;
 }
 
-message TransferGatewayContractTypeMappingRequest {
-    Address contract_address = 1;
+message TransferGatewayGetContractTypeRequest {
+    Address foreign_contract = 1;
 }
 
-message TransferGatewayContractTypeMappingResponse {
-    Address contract_address = 1;
+message TransferGatewayGetContractTypeResponse {
+    Address foreign_contract = 1;
     ContractTypes contract_type = 2;
 }
 
+message TransferGatewayContractType {
+    Address foreign_contract_address = 1;
+    ContractTypes contract_type = 2;
+}
+
+message TransferGatewayContractTypeConfirmed {
+    Address foreign_contract = 1;
+    ContractTypes contract_type = 2;
+}
