@@ -32,6 +32,8 @@ message TransferGatewayState {
     repeated Address token_withdrawers = 4;
     // Binance Dex transfer fee. This will be used for binance gateway
     BigUInt transfer_fee = 5;
+    // Mainnet Gateway address
+    Address mainnet_gateway_address = 6;
 }
 
 message TransferGatewayOracleState {
@@ -190,6 +192,20 @@ message TransferGatewayContractMappingConfirmed {
     Address local_contract = 2;
 }
 
+message TransferGatewayContractMappingRejected {
+  // Address of corresponding contract on the local blockchain
+  Address local_contract = 1;
+  // Address of expected contract on a foreign blockchain
+  Address expected_foreign_contract = 2;
+  // Address of expected contract creator on a foreign blockchain
+  Address expected_creator = 3;
+  // Address of actual contract on a foreign blockchain
+  Address actual_foreign_contract = 4;
+  // Address of actual contract creator on a foreign blockchain
+  Address actual_creator = 5;
+  string error_message = 6;
+}
+
 // Emitted when a withdrawal to the Mainnet Gateway has been signed.
 // This event contains all the required data to complete a toke withdrawal via the Mainnet Gateway.
 message TransferGatewayTokenWithdrawalSigned {
@@ -261,11 +277,13 @@ message TransferGatewayUnverifiedContractCreatorsResponse {
 
 message TransferGatewayVerifyContractCreatorsRequest {
     repeated TransferGatewayVerifiedContractCreator creators = 1;
+    Address mainnet_gateway_address = 2;
 }
 
 // Batch of events from the Gateway on Ethereum mainnet
 message TransferGatewayProcessEventBatchRequest {
     repeated TransferGatewayMainnetEvent events = 1;
+    Address mainnet_gateway_address = 2;
 }
 
 message TransferGatewayStateRequest {
@@ -273,6 +291,10 @@ message TransferGatewayStateRequest {
 
 message TransferGatewayStateResponse {
     TransferGatewayState state = 1;
+}
+
+message TransferGatewayUpdateMainnetGatewayRequest {
+    Address mainnet_gateway_address = 1;
 }
 
 // Recovery
@@ -348,6 +370,8 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
     // withdrawal status
     TransferGatewayTxStatus withdrawal_status = 4;
+    // Mainnet Gateway/Wallet address
+    Address mainnet_gateway_address = 5;
 }
 
 message TransferGatewayConfirmWithdrawalReceiptRequestV2 {
@@ -463,6 +487,7 @@ message TransferGatewaySubmitDepositTxHashRequest {
 
 message TransferGatewayClearInvalidDepositTxHashRequest {
     repeated bytes tx_hashes = 1;
+    Address mainnet_gateway_address = 2;
 }
 
 message TransferGatewayUnprocessedDepositTxHashesRequest{

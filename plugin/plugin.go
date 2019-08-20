@@ -12,6 +12,7 @@ import (
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	extplugin "github.com/hashicorp/go-plugin"
 	"github.com/loomnetwork/go-loom"
+	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
 	"github.com/loomnetwork/go-loom/plugin/types"
 	ltypes "github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/vm"
@@ -189,6 +190,10 @@ func (c *GRPCContext) Emit(data []byte) {
 
 func (c *GRPCContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.FeatureEnabled(name, defaultVal)
+}
+
+func (c *GRPCContext) Config() *cctypes.Config {
+	return c.Config()
 }
 
 func (c *GRPCContext) EnabledFeatures() []string {

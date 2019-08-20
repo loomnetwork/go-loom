@@ -10,6 +10,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 
 	"github.com/loomnetwork/go-loom"
+	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
 	"github.com/loomnetwork/go-loom/plugin"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
@@ -33,6 +34,7 @@ type StaticContext interface {
 	GetEvmTxReceipt([]byte) (ptypes.EvmTxReceipt, error)
 	HasPermissionFor(addr loom.Address, token []byte, roles []string) (bool, []string)
 	FeatureEnabled(name string, defaultVal bool) bool
+	Config() *cctypes.Config
 	Validators() []*types.Validator
 	EnabledFeatures() []string
 	// ContractRecord retrieves the contract meta data stored in the Registry.
@@ -96,6 +98,11 @@ func (c *wrappedPluginStaticContext) FeatureEnabled(name string, defaultVal bool
 	return c.StaticContext.FeatureEnabled(name, defaultVal)
 }
 
+// Config returns the current on-chain config
+func (c *wrappedPluginStaticContext) Config() *cctypes.Config {
+	return c.StaticContext.Config()
+}
+
 // EnabledFeatures returns a list of the currently activated feature flags.
 func (c *wrappedPluginStaticContext) EnabledFeatures() []string {
 	return c.StaticContext.EnabledFeatures()
@@ -146,6 +153,11 @@ func (c *wrappedPluginContext) RevokePermissionFrom(addr loom.Address, token []b
 // Check if feature is enabled on chain
 func (c *wrappedPluginContext) FeatureEnabled(name string, defaultVal bool) bool {
 	return c.Context.FeatureEnabled(name, defaultVal)
+}
+
+// Config returns the current on-chain config
+func (c *wrappedPluginContext) Config() *cctypes.Config {
+	return c.Context.Config()
 }
 
 // EnabledFeatures returns a list of the currently activated feature flags.

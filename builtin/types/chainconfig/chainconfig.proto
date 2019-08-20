@@ -89,6 +89,41 @@ message RemoveFeatureRequest {
     repeated string names = 1;
 }
 
+// An action represents a pending change to the on-chain config.
+message Action {
+    string name = 1; // Key matching the config setting that should be changed.
+    string value = 2; // The new value for the config setting.
+    uint64 build_number = 3; // Minimum build number required for this change to take effect.
+}
+
+message AppStoreConfig {
+    uint64 num_evm_keys_to_prune = 1;
+}
+
+message Config {
+    AppStoreConfig app_store = 2;
+}
+
+message SetSettingRequest {
+    string name = 1;
+    string value = 2;
+    uint64 build_number = 3;
+}
+
+message ListPendingActionsRequest {
+}
+
+message ListPendingActionsResponse {
+    repeated Action actions = 1;
+}
+
+message ChainConfigRequest {
+}
+
+message ChainConfigResponse {
+    Config config = 1;
+}
+
 message SetValidatorInfoRequest {
     uint64 build_number = 1;
 }
