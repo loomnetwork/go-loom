@@ -9,6 +9,8 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	loom "github.com/loomnetwork/go-loom"
+	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
+	"github.com/loomnetwork/go-loom/config"
 	ptypes "github.com/loomnetwork/go-loom/plugin/types"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/loomnetwork/go-loom/util"
@@ -33,6 +35,7 @@ type FakeContext struct {
 	Events        []FEvent
 	ethBalances   map[string]*loom.BigUInt
 	features      map[string]bool
+	config        *cctypes.Config
 }
 
 var _ Context = &FakeContext{}
@@ -62,6 +65,7 @@ func CreateFakeContext(caller, address loom.Address) *FakeContext {
 		Events:      make([]FEvent, 0),
 		ethBalances: make(map[string]*loom.BigUInt),
 		features:    make(map[string]bool),
+		config:      config.DefaultConfig(),
 	}
 }
 
@@ -78,6 +82,7 @@ func (c *FakeContext) shallowClone() *FakeContext {
 		Events:        c.Events,
 		ethBalances:   c.ethBalances,
 		features:      c.features,
+		config:        c.config,
 	}
 }
 
@@ -200,6 +205,17 @@ func (c *FakeContext) FeatureEnabled(name string, defaultVal bool) bool {
 		return val
 	}
 	return defaultVal
+}
+
+func (c *FakeContext) SetConfigSetting(name, value string) error {
+	if err := config.SetConfigSetting(c.config, name, value); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *FakeContext) Config() *cctypes.Config {
+	return c.config
 }
 
 func (c *FakeContext) EnabledFeatures() []string {
