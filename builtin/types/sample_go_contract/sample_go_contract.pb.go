@@ -6,7 +6,7 @@ package sample_go_contract
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import _ "github.com/loomnetwork/go-loom/types"
+import types "github.com/loomnetwork/go-loom/types"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -29,7 +29,7 @@ func (m *SampleGoContractInitRequest) Reset()         { *m = SampleGoContractIni
 func (m *SampleGoContractInitRequest) String() string { return proto.CompactTextString(m) }
 func (*SampleGoContractInitRequest) ProtoMessage()    {}
 func (*SampleGoContractInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_sample_go_contract_52cdfc5560053bb3, []int{0}
+	return fileDescriptor_sample_go_contract_04496e8aaf20d709, []int{0}
 }
 func (m *SampleGoContractInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SampleGoContractInitRequest.Unmarshal(m, b)
@@ -59,7 +59,7 @@ func (m *SampleGoContractNestedEvmRequest) Reset()         { *m = SampleGoContra
 func (m *SampleGoContractNestedEvmRequest) String() string { return proto.CompactTextString(m) }
 func (*SampleGoContractNestedEvmRequest) ProtoMessage()    {}
 func (*SampleGoContractNestedEvmRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_sample_go_contract_52cdfc5560053bb3, []int{1}
+	return fileDescriptor_sample_go_contract_04496e8aaf20d709, []int{1}
 }
 func (m *SampleGoContractNestedEvmRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SampleGoContractNestedEvmRequest.Unmarshal(m, b)
@@ -79,17 +79,64 @@ func (m *SampleGoContractNestedEvmRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_SampleGoContractNestedEvmRequest proto.InternalMessageInfo
 
+type SampleGoContractNestedEvm2Request struct {
+	TestEvent            *types.Address `protobuf:"bytes,1,opt,name=test_event,json=testEvent" json:"test_event,omitempty"`
+	ChainTestEvent       *types.Address `protobuf:"bytes,2,opt,name=chain_test_event,json=chainTestEvent" json:"chain_test_event,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *SampleGoContractNestedEvm2Request) Reset()         { *m = SampleGoContractNestedEvm2Request{} }
+func (m *SampleGoContractNestedEvm2Request) String() string { return proto.CompactTextString(m) }
+func (*SampleGoContractNestedEvm2Request) ProtoMessage()    {}
+func (*SampleGoContractNestedEvm2Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_sample_go_contract_04496e8aaf20d709, []int{2}
+}
+func (m *SampleGoContractNestedEvm2Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SampleGoContractNestedEvm2Request.Unmarshal(m, b)
+}
+func (m *SampleGoContractNestedEvm2Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SampleGoContractNestedEvm2Request.Marshal(b, m, deterministic)
+}
+func (dst *SampleGoContractNestedEvm2Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SampleGoContractNestedEvm2Request.Merge(dst, src)
+}
+func (m *SampleGoContractNestedEvm2Request) XXX_Size() int {
+	return xxx_messageInfo_SampleGoContractNestedEvm2Request.Size(m)
+}
+func (m *SampleGoContractNestedEvm2Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_SampleGoContractNestedEvm2Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SampleGoContractNestedEvm2Request proto.InternalMessageInfo
+
+func (m *SampleGoContractNestedEvm2Request) GetTestEvent() *types.Address {
+	if m != nil {
+		return m.TestEvent
+	}
+	return nil
+}
+
+func (m *SampleGoContractNestedEvm2Request) GetChainTestEvent() *types.Address {
+	if m != nil {
+		return m.ChainTestEvent
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*SampleGoContractInitRequest)(nil), "SampleGoContractInitRequest")
 	proto.RegisterType((*SampleGoContractNestedEvmRequest)(nil), "SampleGoContractNestedEvmRequest")
+	proto.RegisterType((*SampleGoContractNestedEvm2Request)(nil), "SampleGoContractNestedEvm2Request")
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/sample_go_contract/sample_go_contract.proto", fileDescriptor_sample_go_contract_52cdfc5560053bb3)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/sample_go_contract/sample_go_contract.proto", fileDescriptor_sample_go_contract_04496e8aaf20d709)
 }
 
-var fileDescriptor_sample_go_contract_52cdfc5560053bb3 = []byte{
-	// 150 bytes of a gzipped FileDescriptorProto
+var fileDescriptor_sample_go_contract_04496e8aaf20d709 = []byte{
+	// 218 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x8a, 0x48, 0xcf, 0x2c, 0xc9,
 	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xcf, 0xc9, 0xcf, 0xcf, 0xcd, 0x4b, 0x2d, 0x29, 0xcf,
 	0x2f, 0xca, 0xd6, 0x4f, 0xcf, 0xd7, 0x05, 0x71, 0xf5, 0x93, 0x4a, 0x33, 0x73, 0x4a, 0x32, 0xf3,
@@ -98,6 +145,10 @@ var fileDescriptor_sample_go_contract_52cdfc5560053bb3 = []byte{
 	0xe4, 0x4b, 0x19, 0x10, 0x30, 0x19, 0x62, 0x22, 0x98, 0x84, 0xe8, 0x50, 0x92, 0xe5, 0x92, 0x0e,
 	0x06, 0x9b, 0xe6, 0x9e, 0xef, 0x0c, 0x35, 0xcb, 0x33, 0x2f, 0xb3, 0x24, 0x28, 0xb5, 0xb0, 0x34,
 	0xb5, 0xb8, 0x44, 0x49, 0x89, 0x4b, 0x01, 0x5d, 0xda, 0x2f, 0xb5, 0xb8, 0x24, 0x35, 0xc5, 0xb5,
-	0x2c, 0x17, 0xaa, 0x26, 0x89, 0x0d, 0x6c, 0x92, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xf4, 0x48,
-	0x93, 0xf8, 0xd7, 0x00, 0x00, 0x00,
+	0x2c, 0x17, 0xa6, 0xa6, 0x81, 0x91, 0x4b, 0x11, 0xa7, 0x22, 0x23, 0xa8, 0x2a, 0x21, 0x75, 0x2e,
+	0xae, 0x92, 0xd4, 0xe2, 0x92, 0xf8, 0xd4, 0xb2, 0xd4, 0xbc, 0x12, 0x09, 0x46, 0x05, 0x46, 0x0d,
+	0x6e, 0x23, 0x0e, 0x3d, 0xc7, 0x94, 0x94, 0xa2, 0xd4, 0xe2, 0xe2, 0x20, 0x4e, 0x90, 0x9c, 0x2b,
+	0x48, 0x4a, 0xc8, 0x88, 0x4b, 0x20, 0x39, 0x23, 0x31, 0x33, 0x2f, 0x1e, 0x49, 0x39, 0x13, 0x9a,
+	0x72, 0x3e, 0xb0, 0x8a, 0x10, 0x98, 0x9e, 0x24, 0x36, 0xb0, 0x67, 0x8c, 0x01, 0x01, 0x00, 0x00,
+	0xff, 0xff, 0xa8, 0x3a, 0x39, 0xe9, 0x5a, 0x01, 0x00, 0x00,
 }

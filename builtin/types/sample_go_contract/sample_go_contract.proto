@@ -7,3 +7,8 @@ message SampleGoContractInitRequest {
 
 message SampleGoContractNestedEvmRequest {
 }
+
+message SampleGoContractNestedEvm2Request {
+    Address test_event = 1;
+    Address chain_test_event = 2;
+}
