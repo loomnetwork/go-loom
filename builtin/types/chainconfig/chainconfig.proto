@@ -100,8 +100,13 @@ message AppStoreConfig {
     uint64 num_evm_keys_to_prune = 1;
 }
 
+message EvmConfig {
+    uint64 gas_limit = 1;
+}
+
 message Config {
     AppStoreConfig app_store = 2;
+    EvmConfig evm = 3;
 }
 
 message SetSettingRequest {
