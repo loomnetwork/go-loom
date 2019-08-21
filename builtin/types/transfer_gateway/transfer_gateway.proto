@@ -32,7 +32,7 @@ message TransferGatewayState {
     repeated Address token_withdrawers = 4;
     // Binance Dex transfer fee. This will be used for binance gateway
     BigUInt transfer_fee = 5;
-    // Mainnet Gateway address	
+    // Mainnet Gateway address
     Address mainnet_gateway_address = 6;
 }
 
@@ -293,8 +293,8 @@ message TransferGatewayStateResponse {
     TransferGatewayState state = 1;
 }
 
-message TransferGatewayUpdateMainnetGatewayRequest {	
-    Address mainnet_gateway_address = 1;	
+message TransferGatewayUpdateMainnetGatewayRequest {
+    Address mainnet_gateway_address = 1;
 }
 
 // Recovery
@@ -370,7 +370,7 @@ message TransferGatewayConfirmWithdrawalReceiptRequest {
     bytes withdrawal_hash = 3; // TODO: figure out if there's any point passing this around
     // withdrawal status
     TransferGatewayTxStatus withdrawal_status = 4;
-    // Mainnet Gateway/Wallet address	
+    // Mainnet Gateway/Wallet address
     Address mainnet_gateway_address = 5;
 }
 
