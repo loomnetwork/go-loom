@@ -61,7 +61,7 @@ func (x TransferGatewayTokenKind) String() string {
 	return proto.EnumName(TransferGatewayTokenKind_name, int32(x))
 }
 func (TransferGatewayTokenKind) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{0}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{0}
 }
 
 type TransferGatewayTxStatus int32
@@ -90,7 +90,7 @@ func (x TransferGatewayTxStatus) String() string {
 	return proto.EnumName(TransferGatewayTxStatus_name, int32(x))
 }
 func (TransferGatewayTxStatus) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{1}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{1}
 }
 
 type ValidatorAuthStrategy int32
@@ -113,7 +113,7 @@ func (x ValidatorAuthStrategy) String() string {
 	return proto.EnumName(ValidatorAuthStrategy_name, int32(x))
 }
 func (ValidatorAuthStrategy) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{2}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{2}
 }
 
 type TransferGatewayState struct {
@@ -125,8 +125,7 @@ type TransferGatewayState struct {
 	// Token owners that have initiated (but have not as yet completed) a withdrawal to Mainnet.
 	TokenWithdrawers []*types.Address `protobuf:"bytes,4,rep,name=token_withdrawers,json=tokenWithdrawers" json:"token_withdrawers,omitempty"`
 	// Binance Dex transfer fee. This will be used for binance gateway
-	TransferFee *types.BigUInt `protobuf:"bytes,5,opt,name=transfer_fee,json=transferFee" json:"transfer_fee,omitempty"`
-	// Mainnet Gateway address
+	TransferFee           *types.BigUInt `protobuf:"bytes,5,opt,name=transfer_fee,json=transferFee" json:"transfer_fee,omitempty"`
 	MainnetGatewayAddress *types.Address `protobuf:"bytes,6,opt,name=mainnet_gateway_address,json=mainnetGatewayAddress" json:"mainnet_gateway_address,omitempty"`
 	XXX_NoUnkeyedLiteral  struct{}       `json:"-"`
 	XXX_unrecognized      []byte         `json:"-"`
@@ -137,7 +136,7 @@ func (m *TransferGatewayState) Reset()         { *m = TransferGatewayState{} }
 func (m *TransferGatewayState) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayState) ProtoMessage()    {}
 func (*TransferGatewayState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{0}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{0}
 }
 func (m *TransferGatewayState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayState.Unmarshal(m, b)
@@ -211,7 +210,7 @@ func (m *TransferGatewayOracleState) Reset()         { *m = TransferGatewayOracl
 func (m *TransferGatewayOracleState) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayOracleState) ProtoMessage()    {}
 func (*TransferGatewayOracleState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{1}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{1}
 }
 func (m *TransferGatewayOracleState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayOracleState.Unmarshal(m, b)
@@ -266,7 +265,7 @@ func (m *TransferGatewayWithdrawalReceipt) Reset()         { *m = TransferGatewa
 func (m *TransferGatewayWithdrawalReceipt) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceipt) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceipt) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{2}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{2}
 }
 func (m *TransferGatewayWithdrawalReceipt) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceipt.Unmarshal(m, b)
@@ -382,7 +381,7 @@ func (m *TransferGatewayPendingWithdrawalSummary) Reset() {
 func (m *TransferGatewayPendingWithdrawalSummary) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalSummary) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalSummary) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{3}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{3}
 }
 func (m *TransferGatewayPendingWithdrawalSummary) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalSummary.Unmarshal(m, b)
@@ -464,7 +463,7 @@ func (m *TransferGatewayLocalAccount) Reset()         { *m = TransferGatewayLoca
 func (m *TransferGatewayLocalAccount) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayLocalAccount) ProtoMessage()    {}
 func (*TransferGatewayLocalAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{4}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{4}
 }
 func (m *TransferGatewayLocalAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayLocalAccount.Unmarshal(m, b)
@@ -522,7 +521,7 @@ func (m *TransferGatewayForeignAccount) Reset()         { *m = TransferGatewayFo
 func (m *TransferGatewayForeignAccount) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayForeignAccount) ProtoMessage()    {}
 func (*TransferGatewayForeignAccount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{5}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{5}
 }
 func (m *TransferGatewayForeignAccount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayForeignAccount.Unmarshal(m, b)
@@ -575,7 +574,7 @@ func (m *TransferGatewayTokenAmount) Reset()         { *m = TransferGatewayToken
 func (m *TransferGatewayTokenAmount) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenAmount) ProtoMessage()    {}
 func (*TransferGatewayTokenAmount) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{6}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{6}
 }
 func (m *TransferGatewayTokenAmount) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenAmount.Unmarshal(m, b)
@@ -627,7 +626,7 @@ func (m *TransferGatewayUnclaimedToken) Reset()         { *m = TransferGatewayUn
 func (m *TransferGatewayUnclaimedToken) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayUnclaimedToken) ProtoMessage()    {}
 func (*TransferGatewayUnclaimedToken) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{7}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{7}
 }
 func (m *TransferGatewayUnclaimedToken) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnclaimedToken.Unmarshal(m, b)
@@ -690,7 +689,7 @@ func (m *TransferGatewayTokenDeposited) Reset()         { *m = TransferGatewayTo
 func (m *TransferGatewayTokenDeposited) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenDeposited) ProtoMessage()    {}
 func (*TransferGatewayTokenDeposited) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{8}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{8}
 }
 func (m *TransferGatewayTokenDeposited) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenDeposited.Unmarshal(m, b)
@@ -774,7 +773,7 @@ func (m *TransferGatewayTokenWithdrawn) Reset()         { *m = TransferGatewayTo
 func (m *TransferGatewayTokenWithdrawn) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenWithdrawn) ProtoMessage()    {}
 func (*TransferGatewayTokenWithdrawn) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{9}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{9}
 }
 func (m *TransferGatewayTokenWithdrawn) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawn.Unmarshal(m, b)
@@ -851,7 +850,7 @@ func (m *TransferGatewayMainnetEvent) Reset()         { *m = TransferGatewayMain
 func (m *TransferGatewayMainnetEvent) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayMainnetEvent) ProtoMessage()    {}
 func (*TransferGatewayMainnetEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{10}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{10}
 }
 func (m *TransferGatewayMainnetEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayMainnetEvent.Unmarshal(m, b)
@@ -1006,7 +1005,7 @@ func (m *TransferGatewayPendingContractMapping) Reset()         { *m = TransferG
 func (m *TransferGatewayPendingContractMapping) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingContractMapping) ProtoMessage()    {}
 func (*TransferGatewayPendingContractMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{11}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{11}
 }
 func (m *TransferGatewayPendingContractMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingContractMapping.Unmarshal(m, b)
@@ -1075,7 +1074,7 @@ func (m *TransferGatewayContractAddressMapping) Reset()         { *m = TransferG
 func (m *TransferGatewayContractAddressMapping) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayContractAddressMapping) ProtoMessage()    {}
 func (*TransferGatewayContractAddressMapping) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{12}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{12}
 }
 func (m *TransferGatewayContractAddressMapping) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayContractAddressMapping.Unmarshal(m, b)
@@ -1126,7 +1125,7 @@ func (m *TransferGatewayUnverifiedContractCreator) Reset() {
 func (m *TransferGatewayUnverifiedContractCreator) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayUnverifiedContractCreator) ProtoMessage()    {}
 func (*TransferGatewayUnverifiedContractCreator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{13}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{13}
 }
 func (m *TransferGatewayUnverifiedContractCreator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreator.Unmarshal(m, b)
@@ -1182,7 +1181,7 @@ func (m *TransferGatewayVerifiedContractCreator) Reset() {
 func (m *TransferGatewayVerifiedContractCreator) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayVerifiedContractCreator) ProtoMessage()    {}
 func (*TransferGatewayVerifiedContractCreator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{14}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{14}
 }
 func (m *TransferGatewayVerifiedContractCreator) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayVerifiedContractCreator.Unmarshal(m, b)
@@ -1239,7 +1238,7 @@ func (m *TransferGatewayContractMappingConfirmed) Reset() {
 func (m *TransferGatewayContractMappingConfirmed) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayContractMappingConfirmed) ProtoMessage()    {}
 func (*TransferGatewayContractMappingConfirmed) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{15}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{15}
 }
 func (m *TransferGatewayContractMappingConfirmed) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayContractMappingConfirmed.Unmarshal(m, b)
@@ -1296,7 +1295,7 @@ func (m *TransferGatewayContractMappingRejected) Reset() {
 func (m *TransferGatewayContractMappingRejected) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayContractMappingRejected) ProtoMessage()    {}
 func (*TransferGatewayContractMappingRejected) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{16}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{16}
 }
 func (m *TransferGatewayContractMappingRejected) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayContractMappingRejected.Unmarshal(m, b)
@@ -1381,7 +1380,7 @@ func (m *TransferGatewayTokenWithdrawalSigned) Reset()         { *m = TransferGa
 func (m *TransferGatewayTokenWithdrawalSigned) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTokenWithdrawalSigned) ProtoMessage()    {}
 func (*TransferGatewayTokenWithdrawalSigned) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{17}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{17}
 }
 func (m *TransferGatewayTokenWithdrawalSigned) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTokenWithdrawalSigned.Unmarshal(m, b)
@@ -1462,7 +1461,7 @@ func (m *TransferGatewayInitRequest) Reset()         { *m = TransferGatewayInitR
 func (m *TransferGatewayInitRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayInitRequest) ProtoMessage()    {}
 func (*TransferGatewayInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{18}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{18}
 }
 func (m *TransferGatewayInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayInitRequest.Unmarshal(m, b)
@@ -1514,7 +1513,7 @@ func (m *TransferGatewayAddOracleRequest) Reset()         { *m = TransferGateway
 func (m *TransferGatewayAddOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayAddOracleRequest) ProtoMessage()    {}
 func (*TransferGatewayAddOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{19}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{19}
 }
 func (m *TransferGatewayAddOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayAddOracleRequest.Unmarshal(m, b)
@@ -1552,7 +1551,7 @@ func (m *TransferGatewayRemoveOracleRequest) Reset()         { *m = TransferGate
 func (m *TransferGatewayRemoveOracleRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayRemoveOracleRequest) ProtoMessage()    {}
 func (*TransferGatewayRemoveOracleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{20}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{20}
 }
 func (m *TransferGatewayRemoveOracleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayRemoveOracleRequest.Unmarshal(m, b)
@@ -1589,7 +1588,7 @@ func (m *TransferGatewayGetOraclesRequest) Reset()         { *m = TransferGatewa
 func (m *TransferGatewayGetOraclesRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetOraclesRequest) ProtoMessage()    {}
 func (*TransferGatewayGetOraclesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{21}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{21}
 }
 func (m *TransferGatewayGetOraclesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetOraclesRequest.Unmarshal(m, b)
@@ -1620,7 +1619,7 @@ func (m *TransferGatewayGetOraclesResponse) Reset()         { *m = TransferGatew
 func (m *TransferGatewayGetOraclesResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetOraclesResponse) ProtoMessage()    {}
 func (*TransferGatewayGetOraclesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{22}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{22}
 }
 func (m *TransferGatewayGetOraclesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetOraclesResponse.Unmarshal(m, b)
@@ -1667,7 +1666,7 @@ func (m *TransferGatewayAddContractMappingRequest) Reset() {
 func (m *TransferGatewayAddContractMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayAddContractMappingRequest) ProtoMessage()    {}
 func (*TransferGatewayAddContractMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{23}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{23}
 }
 func (m *TransferGatewayAddContractMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayAddContractMappingRequest.Unmarshal(m, b)
@@ -1729,7 +1728,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsRequest) String() string {
 }
 func (*TransferGatewayUnverifiedContractCreatorsRequest) ProtoMessage() {}
 func (*TransferGatewayUnverifiedContractCreatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{24}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{24}
 }
 func (m *TransferGatewayUnverifiedContractCreatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsRequest.Unmarshal(m, b)
@@ -1764,7 +1763,7 @@ func (m *TransferGatewayUnverifiedContractCreatorsResponse) String() string {
 }
 func (*TransferGatewayUnverifiedContractCreatorsResponse) ProtoMessage() {}
 func (*TransferGatewayUnverifiedContractCreatorsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{25}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{25}
 }
 func (m *TransferGatewayUnverifiedContractCreatorsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnverifiedContractCreatorsResponse.Unmarshal(m, b)
@@ -1807,7 +1806,7 @@ func (m *TransferGatewayVerifyContractCreatorsRequest) String() string {
 }
 func (*TransferGatewayVerifyContractCreatorsRequest) ProtoMessage() {}
 func (*TransferGatewayVerifyContractCreatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{26}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{26}
 }
 func (m *TransferGatewayVerifyContractCreatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayVerifyContractCreatorsRequest.Unmarshal(m, b)
@@ -1856,7 +1855,7 @@ func (m *TransferGatewayProcessEventBatchRequest) Reset() {
 func (m *TransferGatewayProcessEventBatchRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayProcessEventBatchRequest) ProtoMessage()    {}
 func (*TransferGatewayProcessEventBatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{27}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{27}
 }
 func (m *TransferGatewayProcessEventBatchRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayProcessEventBatchRequest.Unmarshal(m, b)
@@ -1900,7 +1899,7 @@ func (m *TransferGatewayStateRequest) Reset()         { *m = TransferGatewayStat
 func (m *TransferGatewayStateRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateRequest) ProtoMessage()    {}
 func (*TransferGatewayStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{28}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{28}
 }
 func (m *TransferGatewayStateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayStateRequest.Unmarshal(m, b)
@@ -1931,7 +1930,7 @@ func (m *TransferGatewayStateResponse) Reset()         { *m = TransferGatewaySta
 func (m *TransferGatewayStateResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayStateResponse) ProtoMessage()    {}
 func (*TransferGatewayStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{29}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{29}
 }
 func (m *TransferGatewayStateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayStateResponse.Unmarshal(m, b)
@@ -1973,7 +1972,7 @@ func (m *TransferGatewayUpdateMainnetGatewayRequest) String() string {
 }
 func (*TransferGatewayUpdateMainnetGatewayRequest) ProtoMessage() {}
 func (*TransferGatewayUpdateMainnetGatewayRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{30}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{30}
 }
 func (m *TransferGatewayUpdateMainnetGatewayRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUpdateMainnetGatewayRequest.Unmarshal(m, b)
@@ -2017,7 +2016,7 @@ func (m *TransferGatewayReclaimDepositorTokensRequest) String() string {
 }
 func (*TransferGatewayReclaimDepositorTokensRequest) ProtoMessage() {}
 func (*TransferGatewayReclaimDepositorTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{31}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{31}
 }
 func (m *TransferGatewayReclaimDepositorTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimDepositorTokensRequest.Unmarshal(m, b)
@@ -2061,7 +2060,7 @@ func (m *TransferGatewayReclaimContractTokensRequest) String() string {
 }
 func (*TransferGatewayReclaimContractTokensRequest) ProtoMessage() {}
 func (*TransferGatewayReclaimContractTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{32}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{32}
 }
 func (m *TransferGatewayReclaimContractTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimContractTokensRequest.Unmarshal(m, b)
@@ -2110,7 +2109,7 @@ func (m *TransferGatewayWithdrawTokenRequest) Reset()         { *m = TransferGat
 func (m *TransferGatewayWithdrawTokenRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawTokenRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawTokenRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{33}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{33}
 }
 func (m *TransferGatewayWithdrawTokenRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawTokenRequest.Unmarshal(m, b)
@@ -2186,7 +2185,7 @@ func (m *TransferGatewayWithdrawLoomCoinRequest) Reset() {
 func (m *TransferGatewayWithdrawLoomCoinRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawLoomCoinRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawLoomCoinRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{34}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{34}
 }
 func (m *TransferGatewayWithdrawLoomCoinRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawLoomCoinRequest.Unmarshal(m, b)
@@ -2247,7 +2246,7 @@ func (m *TransferGatewayWithdrawETHRequest) Reset()         { *m = TransferGatew
 func (m *TransferGatewayWithdrawETHRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawETHRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawETHRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{35}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{35}
 }
 func (m *TransferGatewayWithdrawETHRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawETHRequest.Unmarshal(m, b)
@@ -2301,7 +2300,7 @@ func (m *TransferGatewayWithdrawalReceiptRequest) Reset() {
 func (m *TransferGatewayWithdrawalReceiptRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptRequest) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{36}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{36}
 }
 func (m *TransferGatewayWithdrawalReceiptRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptRequest.Unmarshal(m, b)
@@ -2341,7 +2340,7 @@ func (m *TransferGatewayWithdrawalReceiptResponse) Reset() {
 func (m *TransferGatewayWithdrawalReceiptResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawalReceiptResponse) ProtoMessage()    {}
 func (*TransferGatewayWithdrawalReceiptResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{37}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{37}
 }
 func (m *TransferGatewayWithdrawalReceiptResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawalReceiptResponse.Unmarshal(m, b)
@@ -2392,7 +2391,7 @@ func (m *TransferGatewayConfirmWithdrawalReceiptRequest) String() string {
 }
 func (*TransferGatewayConfirmWithdrawalReceiptRequest) ProtoMessage() {}
 func (*TransferGatewayConfirmWithdrawalReceiptRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{38}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{38}
 }
 func (m *TransferGatewayConfirmWithdrawalReceiptRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequest.Unmarshal(m, b)
@@ -2467,7 +2466,7 @@ func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) String() string {
 }
 func (*TransferGatewayConfirmWithdrawalReceiptRequestV2) ProtoMessage() {}
 func (*TransferGatewayConfirmWithdrawalReceiptRequestV2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{39}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{39}
 }
 func (m *TransferGatewayConfirmWithdrawalReceiptRequestV2) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayConfirmWithdrawalReceiptRequestV2.Unmarshal(m, b)
@@ -2524,7 +2523,7 @@ func (m *TransferGatewayPendingWithdrawalsRequest) Reset() {
 func (m *TransferGatewayPendingWithdrawalsRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalsRequest) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{40}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{40}
 }
 func (m *TransferGatewayPendingWithdrawalsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsRequest.Unmarshal(m, b)
@@ -2571,7 +2570,7 @@ func (m *TransferGatewayPendingWithdrawalsResponse) Reset() {
 func (m *TransferGatewayPendingWithdrawalsResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayPendingWithdrawalsResponse) ProtoMessage()    {}
 func (*TransferGatewayPendingWithdrawalsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{41}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{41}
 }
 func (m *TransferGatewayPendingWithdrawalsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayPendingWithdrawalsResponse.Unmarshal(m, b)
@@ -2611,7 +2610,7 @@ func (m *TransferGatewayResetMainnetBlockRequest) Reset() {
 func (m *TransferGatewayResetMainnetBlockRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayResetMainnetBlockRequest) ProtoMessage()    {}
 func (*TransferGatewayResetMainnetBlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{42}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{42}
 }
 func (m *TransferGatewayResetMainnetBlockRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayResetMainnetBlockRequest.Unmarshal(m, b)
@@ -2653,7 +2652,7 @@ func (m *TransferGatewayProcessMainnetEventError) Reset() {
 func (m *TransferGatewayProcessMainnetEventError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayProcessMainnetEventError) ProtoMessage()    {}
 func (*TransferGatewayProcessMainnetEventError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{43}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{43}
 }
 func (m *TransferGatewayProcessMainnetEventError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayProcessMainnetEventError.Unmarshal(m, b)
@@ -2706,7 +2705,7 @@ func (m *TransferGatewayReclaimError) Reset()         { *m = TransferGatewayRecl
 func (m *TransferGatewayReclaimError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayReclaimError) ProtoMessage()    {}
 func (*TransferGatewayReclaimError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{44}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{44}
 }
 func (m *TransferGatewayReclaimError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayReclaimError.Unmarshal(m, b)
@@ -2752,7 +2751,7 @@ func (m *TransferGatewayWithdrawETHError) Reset()         { *m = TransferGateway
 func (m *TransferGatewayWithdrawETHError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawETHError) ProtoMessage()    {}
 func (*TransferGatewayWithdrawETHError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{45}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{45}
 }
 func (m *TransferGatewayWithdrawETHError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawETHError.Unmarshal(m, b)
@@ -2798,7 +2797,7 @@ func (m *TransferGatewayWithdrawLoomCoinError) Reset()         { *m = TransferGa
 func (m *TransferGatewayWithdrawLoomCoinError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawLoomCoinError) ProtoMessage()    {}
 func (*TransferGatewayWithdrawLoomCoinError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{46}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{46}
 }
 func (m *TransferGatewayWithdrawLoomCoinError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawLoomCoinError.Unmarshal(m, b)
@@ -2844,7 +2843,7 @@ func (m *TransferGatewayWithdrawTokenError) Reset()         { *m = TransferGatew
 func (m *TransferGatewayWithdrawTokenError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayWithdrawTokenError) ProtoMessage()    {}
 func (*TransferGatewayWithdrawTokenError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{47}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{47}
 }
 func (m *TransferGatewayWithdrawTokenError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayWithdrawTokenError.Unmarshal(m, b)
@@ -2891,7 +2890,7 @@ func (m *TransferGatewayGetUnclaimedTokensRequest) Reset() {
 func (m *TransferGatewayGetUnclaimedTokensRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetUnclaimedTokensRequest) ProtoMessage()    {}
 func (*TransferGatewayGetUnclaimedTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{48}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{48}
 }
 func (m *TransferGatewayGetUnclaimedTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetUnclaimedTokensRequest.Unmarshal(m, b)
@@ -2931,7 +2930,7 @@ func (m *TransferGatewayGetUnclaimedTokensResponse) Reset() {
 func (m *TransferGatewayGetUnclaimedTokensResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetUnclaimedTokensResponse) ProtoMessage()    {}
 func (*TransferGatewayGetUnclaimedTokensResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{49}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{49}
 }
 func (m *TransferGatewayGetUnclaimedTokensResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetUnclaimedTokensResponse.Unmarshal(m, b)
@@ -2969,7 +2968,7 @@ func (m *TransferGatewayMainnetEventTxHashInfo) Reset()         { *m = TransferG
 func (m *TransferGatewayMainnetEventTxHashInfo) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayMainnetEventTxHashInfo) ProtoMessage()    {}
 func (*TransferGatewayMainnetEventTxHashInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{50}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{50}
 }
 func (m *TransferGatewayMainnetEventTxHashInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayMainnetEventTxHashInfo.Unmarshal(m, b)
@@ -3008,7 +3007,7 @@ func (m *TransferGatewayValidatorAuthConfig) Reset()         { *m = TransferGate
 func (m *TransferGatewayValidatorAuthConfig) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayValidatorAuthConfig) ProtoMessage()    {}
 func (*TransferGatewayValidatorAuthConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{51}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{51}
 }
 func (m *TransferGatewayValidatorAuthConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayValidatorAuthConfig.Unmarshal(m, b)
@@ -3053,7 +3052,7 @@ func (m *TransferGatewayTrustedValidators) Reset()         { *m = TransferGatewa
 func (m *TransferGatewayTrustedValidators) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTrustedValidators) ProtoMessage()    {}
 func (*TransferGatewayTrustedValidators) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{52}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{52}
 }
 func (m *TransferGatewayTrustedValidators) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTrustedValidators.Unmarshal(m, b)
@@ -3092,7 +3091,7 @@ func (m *TransferGatewayTrustedValidatorsRequest) Reset() {
 func (m *TransferGatewayTrustedValidatorsRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTrustedValidatorsRequest) ProtoMessage()    {}
 func (*TransferGatewayTrustedValidatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{53}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{53}
 }
 func (m *TransferGatewayTrustedValidatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTrustedValidatorsRequest.Unmarshal(m, b)
@@ -3125,7 +3124,7 @@ func (m *TransferGatewayTrustedValidatorsResponse) Reset() {
 func (m *TransferGatewayTrustedValidatorsResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayTrustedValidatorsResponse) ProtoMessage()    {}
 func (*TransferGatewayTrustedValidatorsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{54}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{54}
 }
 func (m *TransferGatewayTrustedValidatorsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayTrustedValidatorsResponse.Unmarshal(m, b)
@@ -3167,7 +3166,7 @@ func (m *TransferGatewayUpdateTrustedValidatorsRequest) String() string {
 }
 func (*TransferGatewayUpdateTrustedValidatorsRequest) ProtoMessage() {}
 func (*TransferGatewayUpdateTrustedValidatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{55}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{55}
 }
 func (m *TransferGatewayUpdateTrustedValidatorsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUpdateTrustedValidatorsRequest.Unmarshal(m, b)
@@ -3209,7 +3208,7 @@ func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) String() string {
 }
 func (*TransferGatewayUpdateValidatorAuthStrategyRequest) ProtoMessage() {}
 func (*TransferGatewayUpdateValidatorAuthStrategyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{56}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{56}
 }
 func (m *TransferGatewayUpdateValidatorAuthStrategyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUpdateValidatorAuthStrategyRequest.Unmarshal(m, b)
@@ -3250,7 +3249,7 @@ func (m *TransferGatewayGetValidatorAuthStrategyRequest) String() string {
 }
 func (*TransferGatewayGetValidatorAuthStrategyRequest) ProtoMessage() {}
 func (*TransferGatewayGetValidatorAuthStrategyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{57}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{57}
 }
 func (m *TransferGatewayGetValidatorAuthStrategyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyRequest.Unmarshal(m, b)
@@ -3285,7 +3284,7 @@ func (m *TransferGatewayGetValidatorAuthStrategyResponse) String() string {
 }
 func (*TransferGatewayGetValidatorAuthStrategyResponse) ProtoMessage() {}
 func (*TransferGatewayGetValidatorAuthStrategyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{58}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{58}
 }
 func (m *TransferGatewayGetValidatorAuthStrategyResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetValidatorAuthStrategyResponse.Unmarshal(m, b)
@@ -3327,7 +3326,7 @@ func (m *TransferGatewayGetUnclaimedContractTokensRequest) String() string {
 }
 func (*TransferGatewayGetUnclaimedContractTokensRequest) ProtoMessage() {}
 func (*TransferGatewayGetUnclaimedContractTokensRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{59}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{59}
 }
 func (m *TransferGatewayGetUnclaimedContractTokensRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensRequest.Unmarshal(m, b)
@@ -3369,7 +3368,7 @@ func (m *TransferGatewayGetUnclaimedContractTokensResponse) String() string {
 }
 func (*TransferGatewayGetUnclaimedContractTokensResponse) ProtoMessage() {}
 func (*TransferGatewayGetUnclaimedContractTokensResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{60}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{60}
 }
 func (m *TransferGatewayGetUnclaimedContractTokensResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetUnclaimedContractTokensResponse.Unmarshal(m, b)
@@ -3409,7 +3408,7 @@ func (m *TransferGatewaySubmitDepositTxHashRequest) Reset() {
 func (m *TransferGatewaySubmitDepositTxHashRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewaySubmitDepositTxHashRequest) ProtoMessage()    {}
 func (*TransferGatewaySubmitDepositTxHashRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{61}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{61}
 }
 func (m *TransferGatewaySubmitDepositTxHashRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewaySubmitDepositTxHashRequest.Unmarshal(m, b)
@@ -3452,7 +3451,7 @@ func (m *TransferGatewayClearInvalidDepositTxHashRequest) String() string {
 }
 func (*TransferGatewayClearInvalidDepositTxHashRequest) ProtoMessage() {}
 func (*TransferGatewayClearInvalidDepositTxHashRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{62}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{62}
 }
 func (m *TransferGatewayClearInvalidDepositTxHashRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayClearInvalidDepositTxHashRequest.Unmarshal(m, b)
@@ -3500,7 +3499,7 @@ func (m *TransferGatewayUnprocessedDepositTxHashesRequest) String() string {
 }
 func (*TransferGatewayUnprocessedDepositTxHashesRequest) ProtoMessage() {}
 func (*TransferGatewayUnprocessedDepositTxHashesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{63}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{63}
 }
 func (m *TransferGatewayUnprocessedDepositTxHashesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnprocessedDepositTxHashesRequest.Unmarshal(m, b)
@@ -3535,7 +3534,7 @@ func (m *TransferGatewayUnprocessedDepositTxHashesResponse) String() string {
 }
 func (*TransferGatewayUnprocessedDepositTxHashesResponse) ProtoMessage() {}
 func (*TransferGatewayUnprocessedDepositTxHashesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{64}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{64}
 }
 func (m *TransferGatewayUnprocessedDepositTxHashesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUnprocessedDepositTxHashesResponse.Unmarshal(m, b)
@@ -3573,7 +3572,7 @@ func (m *TransferGatewayExtendedState) Reset()         { *m = TransferGatewayExt
 func (m *TransferGatewayExtendedState) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayExtendedState) ProtoMessage()    {}
 func (*TransferGatewayExtendedState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{65}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{65}
 }
 func (m *TransferGatewayExtendedState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayExtendedState.Unmarshal(m, b)
@@ -3611,7 +3610,7 @@ func (m *TransferGatewayHotWalletTxHash) Reset()         { *m = TransferGatewayH
 func (m *TransferGatewayHotWalletTxHash) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayHotWalletTxHash) ProtoMessage()    {}
 func (*TransferGatewayHotWalletTxHash) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{66}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{66}
 }
 func (m *TransferGatewayHotWalletTxHash) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayHotWalletTxHash.Unmarshal(m, b)
@@ -3652,7 +3651,7 @@ func (m *TransferGatewayGetContractMappingRequest) Reset() {
 func (m *TransferGatewayGetContractMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetContractMappingRequest) ProtoMessage()    {}
 func (*TransferGatewayGetContractMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{67}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{67}
 }
 func (m *TransferGatewayGetContractMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetContractMappingRequest.Unmarshal(m, b)
@@ -3694,7 +3693,7 @@ func (m *TransferGatewayGetContractMappingResponse) Reset() {
 func (m *TransferGatewayGetContractMappingResponse) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayGetContractMappingResponse) ProtoMessage()    {}
 func (*TransferGatewayGetContractMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{68}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{68}
 }
 func (m *TransferGatewayGetContractMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayGetContractMappingResponse.Unmarshal(m, b)
@@ -3747,7 +3746,7 @@ func (m *TransferGatewayListContractMappingRequest) Reset() {
 func (m *TransferGatewayListContractMappingRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayListContractMappingRequest) ProtoMessage()    {}
 func (*TransferGatewayListContractMappingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{69}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{69}
 }
 func (m *TransferGatewayListContractMappingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayListContractMappingRequest.Unmarshal(m, b)
@@ -3783,7 +3782,7 @@ func (m *TransferGatewayListContractMappingResponse) String() string {
 }
 func (*TransferGatewayListContractMappingResponse) ProtoMessage() {}
 func (*TransferGatewayListContractMappingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{70}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{70}
 }
 func (m *TransferGatewayListContractMappingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayListContractMappingResponse.Unmarshal(m, b)
@@ -3829,7 +3828,7 @@ func (m *TransferGatewayResubmitWithdrawalRequest) Reset() {
 func (m *TransferGatewayResubmitWithdrawalRequest) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayResubmitWithdrawalRequest) ProtoMessage()    {}
 func (*TransferGatewayResubmitWithdrawalRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{71}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{71}
 }
 func (m *TransferGatewayResubmitWithdrawalRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayResubmitWithdrawalRequest.Unmarshal(m, b)
@@ -3863,7 +3862,7 @@ func (m *TransferGatewayResubmitWithdrawalError) Reset() {
 func (m *TransferGatewayResubmitWithdrawalError) String() string { return proto.CompactTextString(m) }
 func (*TransferGatewayResubmitWithdrawalError) ProtoMessage()    {}
 func (*TransferGatewayResubmitWithdrawalError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{72}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{72}
 }
 func (m *TransferGatewayResubmitWithdrawalError) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayResubmitWithdrawalError.Unmarshal(m, b)
@@ -3912,7 +3911,7 @@ func (m *TransferGatewayUpdateBinanceTransferFeeRequest) String() string {
 }
 func (*TransferGatewayUpdateBinanceTransferFeeRequest) ProtoMessage() {}
 func (*TransferGatewayUpdateBinanceTransferFeeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_0bf842b8d269b72c, []int{73}
+	return fileDescriptor_transfer_gateway_4f43374ff14d935f, []int{73}
 }
 func (m *TransferGatewayUpdateBinanceTransferFeeRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TransferGatewayUpdateBinanceTransferFeeRequest.Unmarshal(m, b)
@@ -3937,230 +3936,6 @@ func (m *TransferGatewayUpdateBinanceTransferFeeRequest) GetTransferFee() *types
 		return m.TransferFee
 	}
 	return nil
-}
-
-type TransferGatewayAddContractTypeRequest struct {
-	ForeignContract      *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract" json:"foreign_contract,omitempty"`
-	ContractType         ContractTypes  `protobuf:"varint,2,opt,name=contract_type,json=contractType,proto3,enum=ContractTypes" json:"contract_type,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
-}
-
-func (m *TransferGatewayAddContractTypeRequest) Reset()         { *m = TransferGatewayAddContractTypeRequest{} }
-func (m *TransferGatewayAddContractTypeRequest) String() string { return proto.CompactTextString(m) }
-func (*TransferGatewayAddContractTypeRequest) ProtoMessage()    {}
-func (*TransferGatewayAddContractTypeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_adee99e1b4a4d9b9, []int{73}
-}
-func (m *TransferGatewayAddContractTypeRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TransferGatewayAddContractTypeRequest.Unmarshal(m, b)
-}
-func (m *TransferGatewayAddContractTypeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TransferGatewayAddContractTypeRequest.Marshal(b, m, deterministic)
-}
-func (dst *TransferGatewayAddContractTypeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayAddContractTypeRequest.Merge(dst, src)
-}
-func (m *TransferGatewayAddContractTypeRequest) XXX_Size() int {
-	return xxx_messageInfo_TransferGatewayAddContractTypeRequest.Size(m)
-}
-func (m *TransferGatewayAddContractTypeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_TransferGatewayAddContractTypeRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_TransferGatewayAddContractTypeRequest proto.InternalMessageInfo
-
-func (m *TransferGatewayAddContractTypeRequest) GetForeignContract() *types.Address {
-	if m != nil {
-		return m.ForeignContract
-	}
-	return nil
-}
-
-func (m *TransferGatewayAddContractTypeRequest) GetContractType() ContractTypes {
-	if m != nil {
-		return m.ContractType
-	}
-	return ContractTypes_NORMAL
-}
-
-type TransferGatewayGetContractTypeRequest struct {
-	ForeignContract      *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract" json:"foreign_contract,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
-}
-
-func (m *TransferGatewayGetContractTypeRequest) Reset()         { *m = TransferGatewayGetContractTypeRequest{} }
-func (m *TransferGatewayGetContractTypeRequest) String() string { return proto.CompactTextString(m) }
-func (*TransferGatewayGetContractTypeRequest) ProtoMessage()    {}
-func (*TransferGatewayGetContractTypeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_adee99e1b4a4d9b9, []int{74}
-}
-func (m *TransferGatewayGetContractTypeRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TransferGatewayGetContractTypeRequest.Unmarshal(m, b)
-}
-func (m *TransferGatewayGetContractTypeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TransferGatewayGetContractTypeRequest.Marshal(b, m, deterministic)
-}
-func (dst *TransferGatewayGetContractTypeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayGetContractTypeRequest.Merge(dst, src)
-}
-func (m *TransferGatewayGetContractTypeRequest) XXX_Size() int {
-	return xxx_messageInfo_TransferGatewayGetContractTypeRequest.Size(m)
-}
-func (m *TransferGatewayGetContractTypeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_TransferGatewayGetContractTypeRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_TransferGatewayGetContractTypeRequest proto.InternalMessageInfo
-
-func (m *TransferGatewayGetContractTypeRequest) GetForeignContract() *types.Address {
-	if m != nil {
-		return m.ForeignContract
-	}
-	return nil
-}
-
-type TransferGatewayGetContractTypeResponse struct {
-	ForeignContract      *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract" json:"foreign_contract,omitempty"`
-	ContractType         ContractTypes  `protobuf:"varint,2,opt,name=contract_type,json=contractType,proto3,enum=ContractTypes" json:"contract_type,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
-}
-
-func (m *TransferGatewayGetContractTypeResponse) Reset() {
-	*m = TransferGatewayGetContractTypeResponse{}
-}
-func (m *TransferGatewayGetContractTypeResponse) String() string { return proto.CompactTextString(m) }
-func (*TransferGatewayGetContractTypeResponse) ProtoMessage()    {}
-func (*TransferGatewayGetContractTypeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_adee99e1b4a4d9b9, []int{75}
-}
-func (m *TransferGatewayGetContractTypeResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TransferGatewayGetContractTypeResponse.Unmarshal(m, b)
-}
-func (m *TransferGatewayGetContractTypeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TransferGatewayGetContractTypeResponse.Marshal(b, m, deterministic)
-}
-func (dst *TransferGatewayGetContractTypeResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayGetContractTypeResponse.Merge(dst, src)
-}
-func (m *TransferGatewayGetContractTypeResponse) XXX_Size() int {
-	return xxx_messageInfo_TransferGatewayGetContractTypeResponse.Size(m)
-}
-func (m *TransferGatewayGetContractTypeResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_TransferGatewayGetContractTypeResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_TransferGatewayGetContractTypeResponse proto.InternalMessageInfo
-
-func (m *TransferGatewayGetContractTypeResponse) GetForeignContract() *types.Address {
-	if m != nil {
-		return m.ForeignContract
-	}
-	return nil
-}
-
-func (m *TransferGatewayGetContractTypeResponse) GetContractType() ContractTypes {
-	if m != nil {
-		return m.ContractType
-	}
-	return ContractTypes_NORMAL
-}
-
-type TransferGatewayContractType struct {
-	ForeignContractAddress *types.Address `protobuf:"bytes,1,opt,name=foreign_contract_address,json=foreignContractAddress" json:"foreign_contract_address,omitempty"`
-	ContractType           ContractTypes  `protobuf:"varint,2,opt,name=contract_type,json=contractType,proto3,enum=ContractTypes" json:"contract_type,omitempty"`
-	XXX_NoUnkeyedLiteral   struct{}       `json:"-"`
-	XXX_unrecognized       []byte         `json:"-"`
-	XXX_sizecache          int32          `json:"-"`
-}
-
-func (m *TransferGatewayContractType) Reset()         { *m = TransferGatewayContractType{} }
-func (m *TransferGatewayContractType) String() string { return proto.CompactTextString(m) }
-func (*TransferGatewayContractType) ProtoMessage()    {}
-func (*TransferGatewayContractType) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_adee99e1b4a4d9b9, []int{76}
-}
-func (m *TransferGatewayContractType) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TransferGatewayContractType.Unmarshal(m, b)
-}
-func (m *TransferGatewayContractType) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TransferGatewayContractType.Marshal(b, m, deterministic)
-}
-func (dst *TransferGatewayContractType) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayContractType.Merge(dst, src)
-}
-func (m *TransferGatewayContractType) XXX_Size() int {
-	return xxx_messageInfo_TransferGatewayContractType.Size(m)
-}
-func (m *TransferGatewayContractType) XXX_DiscardUnknown() {
-	xxx_messageInfo_TransferGatewayContractType.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_TransferGatewayContractType proto.InternalMessageInfo
-
-func (m *TransferGatewayContractType) GetForeignContractAddress() *types.Address {
-	if m != nil {
-		return m.ForeignContractAddress
-	}
-	return nil
-}
-
-func (m *TransferGatewayContractType) GetContractType() ContractTypes {
-	if m != nil {
-		return m.ContractType
-	}
-	return ContractTypes_NORMAL
-}
-
-type TransferGatewayContractTypeConfirmed struct {
-	ForeignContract      *types.Address `protobuf:"bytes,1,opt,name=foreign_contract,json=foreignContract" json:"foreign_contract,omitempty"`
-	ContractType         ContractTypes  `protobuf:"varint,2,opt,name=contract_type,json=contractType,proto3,enum=ContractTypes" json:"contract_type,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
-}
-
-func (m *TransferGatewayContractTypeConfirmed) Reset()         { *m = TransferGatewayContractTypeConfirmed{} }
-func (m *TransferGatewayContractTypeConfirmed) String() string { return proto.CompactTextString(m) }
-func (*TransferGatewayContractTypeConfirmed) ProtoMessage()    {}
-func (*TransferGatewayContractTypeConfirmed) Descriptor() ([]byte, []int) {
-	return fileDescriptor_transfer_gateway_adee99e1b4a4d9b9, []int{77}
-}
-func (m *TransferGatewayContractTypeConfirmed) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TransferGatewayContractTypeConfirmed.Unmarshal(m, b)
-}
-func (m *TransferGatewayContractTypeConfirmed) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TransferGatewayContractTypeConfirmed.Marshal(b, m, deterministic)
-}
-func (dst *TransferGatewayContractTypeConfirmed) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferGatewayContractTypeConfirmed.Merge(dst, src)
-}
-func (m *TransferGatewayContractTypeConfirmed) XXX_Size() int {
-	return xxx_messageInfo_TransferGatewayContractTypeConfirmed.Size(m)
-}
-func (m *TransferGatewayContractTypeConfirmed) XXX_DiscardUnknown() {
-	xxx_messageInfo_TransferGatewayContractTypeConfirmed.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_TransferGatewayContractTypeConfirmed proto.InternalMessageInfo
-
-func (m *TransferGatewayContractTypeConfirmed) GetForeignContract() *types.Address {
-	if m != nil {
-		return m.ForeignContract
-	}
-	return nil
-}
-
-func (m *TransferGatewayContractTypeConfirmed) GetContractType() ContractTypes {
-	if m != nil {
-		return m.ContractType
-	}
-	return ContractTypes_NORMAL
 }
 
 func init() {
@@ -4238,22 +4013,16 @@ func init() {
 	proto.RegisterType((*TransferGatewayResubmitWithdrawalRequest)(nil), "TransferGatewayResubmitWithdrawalRequest")
 	proto.RegisterType((*TransferGatewayResubmitWithdrawalError)(nil), "TransferGatewayResubmitWithdrawalError")
 	proto.RegisterType((*TransferGatewayUpdateBinanceTransferFeeRequest)(nil), "TransferGatewayUpdateBinanceTransferFeeRequest")
-	proto.RegisterType((*TransferGatewayAddContractTypeRequest)(nil), "TransferGatewayAddContractTypeRequest")
-	proto.RegisterType((*TransferGatewayGetContractTypeRequest)(nil), "TransferGatewayGetContractTypeRequest")
-	proto.RegisterType((*TransferGatewayGetContractTypeResponse)(nil), "TransferGatewayGetContractTypeResponse")
-	proto.RegisterType((*TransferGatewayContractType)(nil), "TransferGatewayContractType")
-	proto.RegisterType((*TransferGatewayContractTypeConfirmed)(nil), "TransferGatewayContractTypeConfirmed")
 	proto.RegisterEnum("TransferGatewayTokenKind", TransferGatewayTokenKind_name, TransferGatewayTokenKind_value)
 	proto.RegisterEnum("TransferGatewayTxStatus", TransferGatewayTxStatus_name, TransferGatewayTxStatus_value)
-	proto.RegisterEnum("ContractTypes", ContractTypes_name, ContractTypes_value)
 	proto.RegisterEnum("ValidatorAuthStrategy", ValidatorAuthStrategy_name, ValidatorAuthStrategy_value)
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/transfer_gateway/transfer_gateway.proto", fileDescriptor_transfer_gateway_0bf842b8d269b72c)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/transfer_gateway/transfer_gateway.proto", fileDescriptor_transfer_gateway_4f43374ff14d935f)
 }
 
-var fileDescriptor_transfer_gateway_0bf842b8d269b72c = []byte{
+var fileDescriptor_transfer_gateway_4f43374ff14d935f = []byte{
 	// 2753 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x3a, 0xcb, 0x73, 0xdc, 0x48,
 	0xf9, 0x91, 0x66, 0xec, 0xb1, 0xbf, 0xf8, 0x31, 0xd6, 0xc6, 0xf1, 0xe4, 0xb1, 0x49, 0x56, 0xbb,
