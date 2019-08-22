@@ -100,7 +100,12 @@ message AppStoreConfig {
     uint64 num_evm_keys_to_prune = 1;
 }
 
+message EvmConfig {
+    uint64 gas_limit = 1;
+}
+
 message Config {
+    EvmConfig evm = 1;
     AppStoreConfig app_store = 2;
 }
 
@@ -137,7 +142,6 @@ message GetValidatorInfoResponse {
 }
 
 message ListValidatorsInfoRequest {
-
 }
 
 message ListValidatorsInfoResponse {
