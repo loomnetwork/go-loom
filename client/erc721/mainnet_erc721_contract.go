@@ -48,10 +48,6 @@ func (c *MainnetERC721Client) OwnerOf(tokenID *big.Int) (common.Address, error) 
 	return c.contract.OwnerOf(nil, tokenID)
 }
 
-func (c *MainnetERC721Client) Exists(tokenID *big.Int) (bool, error) {
-	return c.contract.Exists(nil, tokenID)
-}
-
 func (c *MainnetERC721Client) MintTo(caller *client.Identity, to common.Address, amount *big.Int) error {
 	tx, err := c.contract.MintTo(client.DefaultTransactOptsForIdentity(caller), to, amount)
 	if err != nil {
