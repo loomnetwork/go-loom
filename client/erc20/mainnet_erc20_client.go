@@ -52,6 +52,14 @@ func (c *MainnetERC20Client) Transfer(caller *client.Identity, to common.Address
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
+func (c *MainnetERC20Client) MintTo(caller *client.Identity, to common.Address, amount *big.Int) error {
+	tx, err := c.contract.MintTo(client.DefaultTransactOptsForIdentity(caller), to, amount)
+	if err != nil {
+		return err
+	}
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
 func ConnectToMainnetERC20(ethClient *ethclient.Client, contractAddr string) (*MainnetERC20Client, error) {
 	contractAddress := common.HexToAddress(contractAddr)
 	contract, err := NewERC20(contractAddress, ethClient)
