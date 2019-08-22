@@ -31,10 +31,6 @@ message CallTx {
     string contract_version = 4;
 }
 
-message MigrationTxID {
-  uint32 id = 1 [(gogoproto.customname)="ID"];
-}
-
 message MigrationTx {
     uint32 id = 1 [(gogoproto.customname)="ID"];
     bytes input = 2;
