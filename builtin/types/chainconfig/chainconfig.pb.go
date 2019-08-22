@@ -45,7 +45,7 @@ func (x Feature_FeatureStatus) String() string {
 	return proto.EnumName(Feature_FeatureStatus_name, int32(x))
 }
 func (Feature_FeatureStatus) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{5, 0}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{5, 0}
 }
 
 type InitRequest struct {
@@ -61,7 +61,7 @@ func (m *InitRequest) Reset()         { *m = InitRequest{} }
 func (m *InitRequest) String() string { return proto.CompactTextString(m) }
 func (*InitRequest) ProtoMessage()    {}
 func (*InitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{0}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{0}
 }
 func (m *InitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_InitRequest.Unmarshal(m, b)
@@ -113,7 +113,7 @@ func (m *GetFeatureRequest) Reset()         { *m = GetFeatureRequest{} }
 func (m *GetFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*GetFeatureRequest) ProtoMessage()    {}
 func (*GetFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{1}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{1}
 }
 func (m *GetFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetFeatureRequest.Unmarshal(m, b)
@@ -153,7 +153,7 @@ func (m *AddFeatureRequest) Reset()         { *m = AddFeatureRequest{} }
 func (m *AddFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*AddFeatureRequest) ProtoMessage()    {}
 func (*AddFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{2}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{2}
 }
 func (m *AddFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddFeatureRequest.Unmarshal(m, b)
@@ -204,7 +204,7 @@ func (m *AddFeatureResponse) Reset()         { *m = AddFeatureResponse{} }
 func (m *AddFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*AddFeatureResponse) ProtoMessage()    {}
 func (*AddFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{3}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{3}
 }
 func (m *AddFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddFeatureResponse.Unmarshal(m, b)
@@ -235,7 +235,7 @@ func (m *GetFeatureResponse) Reset()         { *m = GetFeatureResponse{} }
 func (m *GetFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*GetFeatureResponse) ProtoMessage()    {}
 func (*GetFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{4}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{4}
 }
 func (m *GetFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetFeatureResponse.Unmarshal(m, b)
@@ -283,7 +283,7 @@ func (m *Feature) Reset()         { *m = Feature{} }
 func (m *Feature) String() string { return proto.CompactTextString(m) }
 func (*Feature) ProtoMessage()    {}
 func (*Feature) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{5}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{5}
 }
 func (m *Feature) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Feature.Unmarshal(m, b)
@@ -365,7 +365,7 @@ func (m *ValidatorInfo) Reset()         { *m = ValidatorInfo{} }
 func (m *ValidatorInfo) String() string { return proto.CompactTextString(m) }
 func (*ValidatorInfo) ProtoMessage()    {}
 func (*ValidatorInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{6}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{6}
 }
 func (m *ValidatorInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidatorInfo.Unmarshal(m, b)
@@ -418,7 +418,7 @@ func (m *Params) Reset()         { *m = Params{} }
 func (m *Params) String() string { return proto.CompactTextString(m) }
 func (*Params) ProtoMessage()    {}
 func (*Params) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{7}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{7}
 }
 func (m *Params) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Params.Unmarshal(m, b)
@@ -463,7 +463,7 @@ func (m *SetParamsRequest) Reset()         { *m = SetParamsRequest{} }
 func (m *SetParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*SetParamsRequest) ProtoMessage()    {}
 func (*SetParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{8}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{8}
 }
 func (m *SetParamsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetParamsRequest.Unmarshal(m, b)
@@ -500,7 +500,7 @@ func (m *GetParamsRequest) Reset()         { *m = GetParamsRequest{} }
 func (m *GetParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetParamsRequest) ProtoMessage()    {}
 func (*GetParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{9}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{9}
 }
 func (m *GetParamsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetParamsRequest.Unmarshal(m, b)
@@ -531,7 +531,7 @@ func (m *GetParamsResponse) Reset()         { *m = GetParamsResponse{} }
 func (m *GetParamsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetParamsResponse) ProtoMessage()    {}
 func (*GetParamsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{10}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{10}
 }
 func (m *GetParamsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetParamsResponse.Unmarshal(m, b)
@@ -568,7 +568,7 @@ func (m *ListFeaturesRequest) Reset()         { *m = ListFeaturesRequest{} }
 func (m *ListFeaturesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesRequest) ProtoMessage()    {}
 func (*ListFeaturesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{11}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{11}
 }
 func (m *ListFeaturesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesRequest.Unmarshal(m, b)
@@ -599,7 +599,7 @@ func (m *ListFeaturesResponse) Reset()         { *m = ListFeaturesResponse{} }
 func (m *ListFeaturesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesResponse) ProtoMessage()    {}
 func (*ListFeaturesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{12}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{12}
 }
 func (m *ListFeaturesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesResponse.Unmarshal(m, b)
@@ -637,7 +637,7 @@ func (m *EnableFeatureRequest) Reset()         { *m = EnableFeatureRequest{} }
 func (m *EnableFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*EnableFeatureRequest) ProtoMessage()    {}
 func (*EnableFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{13}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{13}
 }
 func (m *EnableFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnableFeatureRequest.Unmarshal(m, b)
@@ -674,7 +674,7 @@ func (m *EnableFeatureResponse) Reset()         { *m = EnableFeatureResponse{} }
 func (m *EnableFeatureResponse) String() string { return proto.CompactTextString(m) }
 func (*EnableFeatureResponse) ProtoMessage()    {}
 func (*EnableFeatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{14}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{14}
 }
 func (m *EnableFeatureResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnableFeatureResponse.Unmarshal(m, b)
@@ -705,7 +705,7 @@ func (m *RemoveFeatureRequest) Reset()         { *m = RemoveFeatureRequest{} }
 func (m *RemoveFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*RemoveFeatureRequest) ProtoMessage()    {}
 func (*RemoveFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{15}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{15}
 }
 func (m *RemoveFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RemoveFeatureRequest.Unmarshal(m, b)
@@ -746,7 +746,7 @@ func (m *Action) Reset()         { *m = Action{} }
 func (m *Action) String() string { return proto.CompactTextString(m) }
 func (*Action) ProtoMessage()    {}
 func (*Action) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{16}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{16}
 }
 func (m *Action) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Action.Unmarshal(m, b)
@@ -798,7 +798,7 @@ func (m *AppStoreConfig) Reset()         { *m = AppStoreConfig{} }
 func (m *AppStoreConfig) String() string { return proto.CompactTextString(m) }
 func (*AppStoreConfig) ProtoMessage()    {}
 func (*AppStoreConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{17}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{17}
 }
 func (m *AppStoreConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AppStoreConfig.Unmarshal(m, b)
@@ -836,7 +836,7 @@ func (m *EvmConfig) Reset()         { *m = EvmConfig{} }
 func (m *EvmConfig) String() string { return proto.CompactTextString(m) }
 func (*EvmConfig) ProtoMessage()    {}
 func (*EvmConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{18}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{18}
 }
 func (m *EvmConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EvmConfig.Unmarshal(m, b)
@@ -875,7 +875,7 @@ func (m *Config) Reset()         { *m = Config{} }
 func (m *Config) String() string { return proto.CompactTextString(m) }
 func (*Config) ProtoMessage()    {}
 func (*Config) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{19}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{19}
 }
 func (m *Config) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Config.Unmarshal(m, b)
@@ -922,7 +922,7 @@ func (m *SetSettingRequest) Reset()         { *m = SetSettingRequest{} }
 func (m *SetSettingRequest) String() string { return proto.CompactTextString(m) }
 func (*SetSettingRequest) ProtoMessage()    {}
 func (*SetSettingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{20}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{20}
 }
 func (m *SetSettingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetSettingRequest.Unmarshal(m, b)
@@ -973,7 +973,7 @@ func (m *ListPendingActionsRequest) Reset()         { *m = ListPendingActionsReq
 func (m *ListPendingActionsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListPendingActionsRequest) ProtoMessage()    {}
 func (*ListPendingActionsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{21}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{21}
 }
 func (m *ListPendingActionsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListPendingActionsRequest.Unmarshal(m, b)
@@ -1004,7 +1004,7 @@ func (m *ListPendingActionsResponse) Reset()         { *m = ListPendingActionsRe
 func (m *ListPendingActionsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListPendingActionsResponse) ProtoMessage()    {}
 func (*ListPendingActionsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{22}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{22}
 }
 func (m *ListPendingActionsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListPendingActionsResponse.Unmarshal(m, b)
@@ -1041,7 +1041,7 @@ func (m *ChainConfigRequest) Reset()         { *m = ChainConfigRequest{} }
 func (m *ChainConfigRequest) String() string { return proto.CompactTextString(m) }
 func (*ChainConfigRequest) ProtoMessage()    {}
 func (*ChainConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{23}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{23}
 }
 func (m *ChainConfigRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChainConfigRequest.Unmarshal(m, b)
@@ -1072,7 +1072,7 @@ func (m *ChainConfigResponse) Reset()         { *m = ChainConfigResponse{} }
 func (m *ChainConfigResponse) String() string { return proto.CompactTextString(m) }
 func (*ChainConfigResponse) ProtoMessage()    {}
 func (*ChainConfigResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{24}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{24}
 }
 func (m *ChainConfigResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChainConfigResponse.Unmarshal(m, b)
@@ -1110,7 +1110,7 @@ func (m *SetValidatorInfoRequest) Reset()         { *m = SetValidatorInfoRequest
 func (m *SetValidatorInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*SetValidatorInfoRequest) ProtoMessage()    {}
 func (*SetValidatorInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{25}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{25}
 }
 func (m *SetValidatorInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetValidatorInfoRequest.Unmarshal(m, b)
@@ -1148,7 +1148,7 @@ func (m *GetValidatorInfoRequest) Reset()         { *m = GetValidatorInfoRequest
 func (m *GetValidatorInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*GetValidatorInfoRequest) ProtoMessage()    {}
 func (*GetValidatorInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{26}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{26}
 }
 func (m *GetValidatorInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetValidatorInfoRequest.Unmarshal(m, b)
@@ -1186,7 +1186,7 @@ func (m *GetValidatorInfoResponse) Reset()         { *m = GetValidatorInfoRespon
 func (m *GetValidatorInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*GetValidatorInfoResponse) ProtoMessage()    {}
 func (*GetValidatorInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{27}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{27}
 }
 func (m *GetValidatorInfoResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetValidatorInfoResponse.Unmarshal(m, b)
@@ -1223,7 +1223,7 @@ func (m *ListValidatorsInfoRequest) Reset()         { *m = ListValidatorsInfoReq
 func (m *ListValidatorsInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsInfoRequest) ProtoMessage()    {}
 func (*ListValidatorsInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{28}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{28}
 }
 func (m *ListValidatorsInfoRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsInfoRequest.Unmarshal(m, b)
@@ -1254,7 +1254,7 @@ func (m *ListValidatorsInfoResponse) Reset()         { *m = ListValidatorsInfoRe
 func (m *ListValidatorsInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsInfoResponse) ProtoMessage()    {}
 func (*ListValidatorsInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_73c09585941f8dc4, []int{29}
+	return fileDescriptor_chainconfig_ab04981d8efa5858, []int{29}
 }
 func (m *ListValidatorsInfoResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListValidatorsInfoResponse.Unmarshal(m, b)
@@ -1316,10 +1316,10 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_73c09585941f8dc4)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_ab04981d8efa5858)
 }
 
-var fileDescriptor_chainconfig_73c09585941f8dc4 = []byte{
+var fileDescriptor_chainconfig_ab04981d8efa5858 = []byte{
 	// 915 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0x6d, 0x4f, 0xe3, 0x46,
 	0x10, 0x6e, 0x48, 0xc8, 0xcb, 0xe4, 0x40, 0xb0, 0x84, 0x92, 0x82, 0x7a, 0xa5, 0x2b, 0x55, 0x8d,
