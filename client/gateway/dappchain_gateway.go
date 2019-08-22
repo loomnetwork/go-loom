@@ -43,8 +43,11 @@ type DAppChainGateway struct {
 	Address loom.Address
 }
 
-// AddAuthorisedContractMapping creates a bi-directional mapping between a Mainnet & DAppChain contract without creating a pending mapping
-func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
+// AddAuthorisedContractMapping creates a bi-directional mapping between a Mainnet & DAppChain
+// contract without creating a pending mapping
+func (tg *DAppChainGateway) AddAuthorizedContractMapping(
+	from common.Address, to loom.Address, gatewayOwner *client.Identity,
+) error {
 	fromAddr, err := client.LoomAddressFromEthereumAddress(from)
 	if err != nil {
 		return err
@@ -59,7 +62,9 @@ func (tg *DAppChainGateway) AddAuthorizedContractMapping(from common.Address, to
 }
 
 // AddAuthorizedTronContractMapping same as AddAuthorisedContractMapping but for Tron
-func (tg *DAppChainGateway) AddAuthorizedTronContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
+func (tg *DAppChainGateway) AddAuthorizedTronContractMapping(
+	from common.Address, to loom.Address, gatewayOwner *client.Identity,
+) error {
 	fromAddr, err := client.LoomAddressFromTronAddress(from)
 	if err != nil {
 		return err
@@ -74,7 +79,9 @@ func (tg *DAppChainGateway) AddAuthorizedTronContractMapping(from common.Address
 }
 
 // AddAuthorizedBinanceContractMapping same as AddAuthorisedContractMapping but for Binance dex
-func (tg *DAppChainGateway) AddAuthorizedBinanceContractMapping(from common.Address, to loom.Address, gatewayOwner *client.Identity) error {
+func (tg *DAppChainGateway) AddAuthorizedBinanceContractMapping(
+	from common.Address, to loom.Address, gatewayOwner *client.Identity,
+) error {
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
 		ForeignContract: client.LoomAddressFromBinanceAddress(from).MarshalPB(),
 		LocalContract:   to.MarshalPB(),
@@ -86,8 +93,9 @@ func (tg *DAppChainGateway) AddAuthorizedBinanceContractMapping(from common.Addr
 // AddContractMapping creates a bi-directional mapping between a Mainnet & DAppChain contract.
 // The caller must provide the identity of the creator of the Mainnet contract, along with a Mainnet
 // hash of the tx that deployed the contract (which will be used to verify the creator address).
-func (tg *DAppChainGateway) AddContractMapping(from common.Address, to loom.Address,
-	creator *client.Identity, contractTxHash string) error {
+func (tg *DAppChainGateway) AddContractMapping(
+	from common.Address, to loom.Address, creator *client.Identity, contractTxHash string,
+) error {
 	fromAddr, err := client.LoomAddressFromEthereumAddress(from)
 	if err != nil {
 		return err
@@ -119,8 +127,9 @@ func (tg *DAppChainGateway) AddContractMapping(from common.Address, to loom.Addr
 }
 
 // AddTronContractMapping same as AddContractMapping but for Tron
-func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.Address,
-	creator *client.Identity, contractTxHash string) error {
+func (tg *DAppChainGateway) AddTronContractMapping(
+	from common.Address, to loom.Address, creator *client.Identity, contractTxHash string,
+) error {
 	fromAddr, err := client.LoomAddressFromTronAddress(from)
 	if err != nil {
 		return err
@@ -132,7 +141,36 @@ func (tg *DAppChainGateway) AddTronContractMapping(from common.Address, to loom.
 		ssha.Address(common.BytesToAddress(to.Local)),
 	)
 
-	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_TRON)
+	sig, err := evmcompat.GenerateTypedSig(
+		evmcompat.PrefixHeader(hash, evmcompat.SignatureType_TRON),
+		creator.MainnetPrivKey,
+		evmcompat.SignatureType_TRON)
+	if err != nil {
+		return err
+	}
+
+	req := &tgtypes.TransferGatewayAddContractMappingRequest{
+		ForeignContract:           fromAddr.MarshalPB(),
+		LocalContract:             to.MarshalPB(),
+		ForeignContractCreatorSig: sig,
+	}
+	_, err = tg.contract.Call("AddContractMapping", req, creator.LoomSigner, nil)
+	return err
+}
+
+// AddBinanceContractMapping same as AddContractMapping but for Binance
+func (tg *DAppChainGateway) AddBinanceContractMapping(
+	from common.Address, to loom.Address, creator *client.Identity,
+) error {
+	fromAddr := client.LoomAddressFromBinanceAddress(from)
+	fmt.Printf("Mapping contract %v to %v\n", fromAddr, to)
+
+	hash := evmcompat.GenSHA256(
+		ssha.Address(from),
+		ssha.Address(common.BytesToAddress(to.Local)),
+	)
+
+	sig, err := evmcompat.GenerateTypedSig(hash, creator.MainnetPrivKey, evmcompat.SignatureType_BINANCE)
 	if err != nil {
 		return err
 	}

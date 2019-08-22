@@ -30,7 +30,6 @@ var (
 
 var (
 	ErrServiceNotFound = errors.New("service not found")
-	ErrMethodNotFound  = errors.New("method not found")
 )
 
 // ----------------------------------------------------------------------------
@@ -199,7 +198,7 @@ func (m *serviceMap) Get(method string) (*service, *serviceMethod, error) {
 	}
 	serviceMethod := service.methods[parts[1]]
 	if serviceMethod == nil {
-		return nil, nil, ErrMethodNotFound
+		return nil, nil, fmt.Errorf("contract method '%s' not found", method)
 	}
 	return service, serviceMethod, nil
 }
