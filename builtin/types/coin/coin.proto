@@ -24,6 +24,17 @@ message InitialAccount {
 
 message InitRequest {
     repeated InitialAccount accounts = 1;
+    Policy policy = 2;
+}
+
+message Policy {
+    uint64 change_ratio_numerator = 1;
+    uint64 change_ratio_denominator = 2;
+    uint64 base_percentage = 3;
+    uint64 total_supply = 4;
+    uint64 blocks_generated_per_year = 5;
+    Address minting_account = 6;
+    string operator = 7;
 }
 
 message MintToGatewayRequest {
@@ -34,7 +45,6 @@ message BurnRequest {
     Address owner = 1;
     BigUInt amount = 2;
 }
-
 
 // ERC20 messages
 // See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
