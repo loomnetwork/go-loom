@@ -105,8 +105,8 @@ message EvmConfig {
 }
 
 message Config {
+    EvmConfig evm = 1;
     AppStoreConfig app_store = 2;
-    EvmConfig evm = 3;
 }
 
 message SetSettingRequest {
