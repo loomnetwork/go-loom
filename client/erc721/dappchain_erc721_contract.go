@@ -48,6 +48,11 @@ func (c *DAppChainERC721Contract) TransferFrom(from *client.Identity, to *client
 	return c.CallEVM("transferFrom", from.LoomSigner, fromAddr, toAddr, tokenID)
 }
 
+func (c *DAppChainERC721Contract) MintTo(identity *client.Identity, to loom.Address, tokenID *big.Int) error {
+	toAddr := common.BytesToAddress(to.Local)
+	return c.CallEVM("mintTo", identity.LoomSigner, toAddr, tokenID)
+}
+
 /**
   Connectors
 */
