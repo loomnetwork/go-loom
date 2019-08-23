@@ -16,7 +16,7 @@ import (
 )
 
 // MainnetGatewayContractABI is the input ABI used to generate the binding from.
-const MainnetGatewayContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"vmc\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ETHReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721Received\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenTypes\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XBatchReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"kind\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"TokenWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loomCoinAddress\",\"type\":\"address\"}],\"name\":\"LoomCoinReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"ERC20Received\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721X\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawETH\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_types\",\"type\":\"uint256[]\"},{\"name\":\"_amounts\",\"type\":\"uint256[]\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XBatchReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getETH\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721X\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const MainnetGatewayContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"vmc\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowAnyToken\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"depositERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"enable\",\"type\":\"bool\"}],\"name\":\"enableGateway\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC20\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenAddress\",\"type\":\"address\"},{\"name\":\"allow\",\"type\":\"bool\"}],\"name\":\"toggleAllowToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getGatewayEnabled\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"allow\",\"type\":\"bool\"}],\"name\":\"toggleAllowAnyToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenAddress\",\"type\":\"address\"}],\"name\":\"isTokenAllowed\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_vmc\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ETHReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721Received\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenTypes\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ERC721XBatchReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"kind\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"TokenWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loomCoinAddress\",\"type\":\"address\"}],\"name\":\"LoomCoinReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"ERC20Received\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721X\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawERC721\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"withdrawETH\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_types\",\"type\":\"uint256[]\"},{\"name\":\"_amounts\",\"type\":\"uint256[]\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721XBatchReceived\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_uid\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getETH\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"uid\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"getERC721X\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // MainnetGatewayContract is an auto generated Go binding around an Ethereum contract.
 type MainnetGatewayContract struct {
@@ -160,6 +160,58 @@ func (_MainnetGatewayContract *MainnetGatewayContractTransactorRaw) Transact(opt
 	return _MainnetGatewayContract.Contract.contract.Transact(opts, method, params...)
 }
 
+// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
+//
+// Solidity: function allowedTokens( address) constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCaller) AllowedTokens(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _MainnetGatewayContract.contract.Call(opts, out, "allowedTokens", arg0)
+	return *ret0, err
+}
+
+// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
+//
+// Solidity: function allowedTokens( address) constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractSession) AllowedTokens(arg0 common.Address) (bool, error) {
+	return _MainnetGatewayContract.Contract.AllowedTokens(&_MainnetGatewayContract.CallOpts, arg0)
+}
+
+// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
+//
+// Solidity: function allowedTokens( address) constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) AllowedTokens(arg0 common.Address) (bool, error) {
+	return _MainnetGatewayContract.Contract.AllowedTokens(&_MainnetGatewayContract.CallOpts, arg0)
+}
+
+// GetAllowAnyToken is a free data retrieval call binding the contract method 0x2fc85c52.
+//
+// Solidity: function getAllowAnyToken() constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCaller) GetAllowAnyToken(opts *bind.CallOpts) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _MainnetGatewayContract.contract.Call(opts, out, "getAllowAnyToken")
+	return *ret0, err
+}
+
+// GetAllowAnyToken is a free data retrieval call binding the contract method 0x2fc85c52.
+//
+// Solidity: function getAllowAnyToken() constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractSession) GetAllowAnyToken() (bool, error) {
+	return _MainnetGatewayContract.Contract.GetAllowAnyToken(&_MainnetGatewayContract.CallOpts)
+}
+
+// GetAllowAnyToken is a free data retrieval call binding the contract method 0x2fc85c52.
+//
+// Solidity: function getAllowAnyToken() constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) GetAllowAnyToken() (bool, error) {
+	return _MainnetGatewayContract.Contract.GetAllowAnyToken(&_MainnetGatewayContract.CallOpts)
+}
+
 // GetERC20 is a free data retrieval call binding the contract method 0x4e0dc557.
 //
 // Solidity: function getERC20(contractAddress address) constant returns(uint256)
@@ -264,6 +316,84 @@ func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) GetETH() (*b
 	return _MainnetGatewayContract.Contract.GetETH(&_MainnetGatewayContract.CallOpts)
 }
 
+// GetGatewayEnabled is a free data retrieval call binding the contract method 0xe32f3751.
+//
+// Solidity: function getGatewayEnabled() constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCaller) GetGatewayEnabled(opts *bind.CallOpts) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _MainnetGatewayContract.contract.Call(opts, out, "getGatewayEnabled")
+	return *ret0, err
+}
+
+// GetGatewayEnabled is a free data retrieval call binding the contract method 0xe32f3751.
+//
+// Solidity: function getGatewayEnabled() constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractSession) GetGatewayEnabled() (bool, error) {
+	return _MainnetGatewayContract.Contract.GetGatewayEnabled(&_MainnetGatewayContract.CallOpts)
+}
+
+// GetGatewayEnabled is a free data retrieval call binding the contract method 0xe32f3751.
+//
+// Solidity: function getGatewayEnabled() constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) GetGatewayEnabled() (bool, error) {
+	return _MainnetGatewayContract.Contract.GetGatewayEnabled(&_MainnetGatewayContract.CallOpts)
+}
+
+// GetOwner is a free data retrieval call binding the contract method 0x893d20e8.
+//
+// Solidity: function getOwner() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractCaller) GetOwner(opts *bind.CallOpts) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _MainnetGatewayContract.contract.Call(opts, out, "getOwner")
+	return *ret0, err
+}
+
+// GetOwner is a free data retrieval call binding the contract method 0x893d20e8.
+//
+// Solidity: function getOwner() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractSession) GetOwner() (common.Address, error) {
+	return _MainnetGatewayContract.Contract.GetOwner(&_MainnetGatewayContract.CallOpts)
+}
+
+// GetOwner is a free data retrieval call binding the contract method 0x893d20e8.
+//
+// Solidity: function getOwner() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) GetOwner() (common.Address, error) {
+	return _MainnetGatewayContract.Contract.GetOwner(&_MainnetGatewayContract.CallOpts)
+}
+
+// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
+//
+// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCaller) IsTokenAllowed(opts *bind.CallOpts, tokenAddress common.Address) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _MainnetGatewayContract.contract.Call(opts, out, "isTokenAllowed", tokenAddress)
+	return *ret0, err
+}
+
+// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
+//
+// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractSession) IsTokenAllowed(tokenAddress common.Address) (bool, error) {
+	return _MainnetGatewayContract.Contract.IsTokenAllowed(&_MainnetGatewayContract.CallOpts, tokenAddress)
+}
+
+// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
+//
+// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
+func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) IsTokenAllowed(tokenAddress common.Address) (bool, error) {
+	return _MainnetGatewayContract.Contract.IsTokenAllowed(&_MainnetGatewayContract.CallOpts, tokenAddress)
+}
+
 // LoomAddress is a free data retrieval call binding the contract method 0x37179db8.
 //
 // Solidity: function loomAddress() constant returns(address)
@@ -316,6 +446,32 @@ func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) Nonces(arg0 
 	return _MainnetGatewayContract.Contract.Nonces(&_MainnetGatewayContract.CallOpts, arg0)
 }
 
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _MainnetGatewayContract.contract.Call(opts, out, "owner")
+	return *ret0, err
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractSession) Owner() (common.Address, error) {
+	return _MainnetGatewayContract.Contract.Owner(&_MainnetGatewayContract.CallOpts)
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() constant returns(address)
+func (_MainnetGatewayContract *MainnetGatewayContractCallerSession) Owner() (common.Address, error) {
+	return _MainnetGatewayContract.Contract.Owner(&_MainnetGatewayContract.CallOpts)
+}
+
 // Vmc is a free data retrieval call binding the contract method 0x20cc8e51.
 //
 // Solidity: function vmc() constant returns(address)
@@ -361,6 +517,27 @@ func (_MainnetGatewayContract *MainnetGatewayContractSession) DepositERC20(amoun
 // Solidity: function depositERC20(amount uint256, contractAddress address) returns()
 func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) DepositERC20(amount *big.Int, contractAddress common.Address) (*types.Transaction, error) {
 	return _MainnetGatewayContract.Contract.DepositERC20(&_MainnetGatewayContract.TransactOpts, amount, contractAddress)
+}
+
+// EnableGateway is a paid mutator transaction binding the contract method 0x41c25c4a.
+//
+// Solidity: function enableGateway(enable bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) EnableGateway(opts *bind.TransactOpts, enable bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "enableGateway", enable)
+}
+
+// EnableGateway is a paid mutator transaction binding the contract method 0x41c25c4a.
+//
+// Solidity: function enableGateway(enable bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) EnableGateway(enable bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.EnableGateway(&_MainnetGatewayContract.TransactOpts, enable)
+}
+
+// EnableGateway is a paid mutator transaction binding the contract method 0x41c25c4a.
+//
+// Solidity: function enableGateway(enable bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) EnableGateway(enable bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.EnableGateway(&_MainnetGatewayContract.TransactOpts, enable)
 }
 
 // OnERC721Received is a paid mutator transaction binding the contract method 0x150b7a02.
@@ -424,6 +601,48 @@ func (_MainnetGatewayContract *MainnetGatewayContractSession) OnERC721XReceived(
 // Solidity: function onERC721XReceived(_operator address, _from address, _tokenId uint256, _amount uint256, _data bytes) returns(bytes4)
 func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) OnERC721XReceived(_operator common.Address, _from common.Address, _tokenId *big.Int, _amount *big.Int, _data []byte) (*types.Transaction, error) {
 	return _MainnetGatewayContract.Contract.OnERC721XReceived(&_MainnetGatewayContract.TransactOpts, _operator, _from, _tokenId, _amount, _data)
+}
+
+// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
+//
+// Solidity: function toggleAllowAnyToken(allow bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) ToggleAllowAnyToken(opts *bind.TransactOpts, allow bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "toggleAllowAnyToken", allow)
+}
+
+// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
+//
+// Solidity: function toggleAllowAnyToken(allow bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) ToggleAllowAnyToken(allow bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.ToggleAllowAnyToken(&_MainnetGatewayContract.TransactOpts, allow)
+}
+
+// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
+//
+// Solidity: function toggleAllowAnyToken(allow bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) ToggleAllowAnyToken(allow bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.ToggleAllowAnyToken(&_MainnetGatewayContract.TransactOpts, allow)
+}
+
+// ToggleAllowToken is a paid mutator transaction binding the contract method 0xb82730ab.
+//
+// Solidity: function toggleAllowToken(tokenAddress address, allow bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactor) ToggleAllowToken(opts *bind.TransactOpts, tokenAddress common.Address, allow bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.contract.Transact(opts, "toggleAllowToken", tokenAddress, allow)
+}
+
+// ToggleAllowToken is a paid mutator transaction binding the contract method 0xb82730ab.
+//
+// Solidity: function toggleAllowToken(tokenAddress address, allow bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractSession) ToggleAllowToken(tokenAddress common.Address, allow bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.ToggleAllowToken(&_MainnetGatewayContract.TransactOpts, tokenAddress, allow)
+}
+
+// ToggleAllowToken is a paid mutator transaction binding the contract method 0xb82730ab.
+//
+// Solidity: function toggleAllowToken(tokenAddress address, allow bool) returns()
+func (_MainnetGatewayContract *MainnetGatewayContractTransactorSession) ToggleAllowToken(tokenAddress common.Address, allow bool) (*types.Transaction, error) {
+	return _MainnetGatewayContract.Contract.ToggleAllowToken(&_MainnetGatewayContract.TransactOpts, tokenAddress, allow)
 }
 
 // WithdrawERC20 is a paid mutator transaction binding the contract method 0xb0116dc7.

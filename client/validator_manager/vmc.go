@@ -16,7 +16,7 @@ import (
 )
 
 // ValidatorManagerContractABI is the input ABI used to generate the binding from.
-const ValidatorManagerContractABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"validators\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"powers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_denom\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"nonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_num\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalPower\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_validators\",\"type\":\"address[]\"},{\"name\":\"_powers\",\"type\":\"uint64[]\"},{\"name\":\"_threshold_num\",\"type\":\"uint8\"},{\"name\":\"_threshold_denom\",\"type\":\"uint8\"},{\"name\":\"_loomAddress\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_validators\",\"type\":\"address[]\"},{\"indexed\":false,\"name\":\"_powers\",\"type\":\"uint64[]\"}],\"name\":\"ValidatorSetChanged\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"getPowers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getValidators\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowAnyToken\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_loomAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"setLoom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_num\",\"type\":\"uint8\"},{\"name\":\"_denom\",\"type\":\"uint8\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"setQuorum\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newValidators\",\"type\":\"address[]\"},{\"name\":\"_newPowers\",\"type\":\"uint64[]\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"rotateValidators\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"_signersIndex\",\"type\":\"uint256\"},{\"name\":\"_v\",\"type\":\"uint8\"},{\"name\":\"_r\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"bytes32\"}],\"name\":\"signedByValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"checkThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenAddress\",\"type\":\"address\"}],\"name\":\"isTokenAllowed\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"allow\",\"type\":\"bool\"}],\"name\":\"toggleAllowAnyToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenAddress\",\"type\":\"address\"},{\"name\":\"allow\",\"type\":\"bool\"}],\"name\":\"toggleAllowToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"enable\",\"type\":\"bool\"}],\"name\":\"enableGateway\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getGatewayEnabled\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const ValidatorManagerContractABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"validators\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"powers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_denom\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"nonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_num\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalPower\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_validators\",\"type\":\"address[]\"},{\"name\":\"_powers\",\"type\":\"uint64[]\"},{\"name\":\"_threshold_num\",\"type\":\"uint8\"},{\"name\":\"_threshold_denom\",\"type\":\"uint8\"},{\"name\":\"_loomAddress\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_validators\",\"type\":\"address[]\"},{\"indexed\":false,\"name\":\"_powers\",\"type\":\"uint64[]\"}],\"name\":\"ValidatorSetChanged\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"getPowers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getValidators\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_loomAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"setLoom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_num\",\"type\":\"uint8\"},{\"name\":\"_denom\",\"type\":\"uint8\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"setQuorum\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newValidators\",\"type\":\"address[]\"},{\"name\":\"_newPowers\",\"type\":\"uint64[]\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"rotateValidators\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"_signersIndex\",\"type\":\"uint256\"},{\"name\":\"_v\",\"type\":\"uint8\"},{\"name\":\"_r\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"bytes32\"}],\"name\":\"signedByValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"checkThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // ValidatorManagerContract is an auto generated Go binding around an Ethereum contract.
 type ValidatorManagerContract struct {
@@ -160,32 +160,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractTransactorRaw) Transact
 	return _ValidatorManagerContract.Contract.contract.Transact(opts, method, params...)
 }
 
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) AllowedTokens(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "allowedTokens", arg0)
-	return *ret0, err
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) AllowedTokens(arg0 common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.AllowedTokens(&_ValidatorManagerContract.CallOpts, arg0)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) AllowedTokens(arg0 common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.AllowedTokens(&_ValidatorManagerContract.CallOpts, arg0)
-}
-
 // CheckThreshold is a free data retrieval call binding the contract method 0x0fba29c3.
 //
 // Solidity: function checkThreshold(_message bytes32, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
@@ -208,84 +182,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractSession) CheckThreshold
 // Solidity: function checkThreshold(_message bytes32, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
 func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) CheckThreshold(_message [32]byte, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) error {
 	return _ValidatorManagerContract.Contract.CheckThreshold(&_ValidatorManagerContract.CallOpts, _message, _signersIndexes, _v, _r, _s)
-}
-
-// GetAllowAnyToken is a free data retrieval call binding the contract method 0x2fc85c52.
-//
-// Solidity: function getAllowAnyToken() constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) GetAllowAnyToken(opts *bind.CallOpts) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "getAllowAnyToken")
-	return *ret0, err
-}
-
-// GetAllowAnyToken is a free data retrieval call binding the contract method 0x2fc85c52.
-//
-// Solidity: function getAllowAnyToken() constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) GetAllowAnyToken() (bool, error) {
-	return _ValidatorManagerContract.Contract.GetAllowAnyToken(&_ValidatorManagerContract.CallOpts)
-}
-
-// GetAllowAnyToken is a free data retrieval call binding the contract method 0x2fc85c52.
-//
-// Solidity: function getAllowAnyToken() constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) GetAllowAnyToken() (bool, error) {
-	return _ValidatorManagerContract.Contract.GetAllowAnyToken(&_ValidatorManagerContract.CallOpts)
-}
-
-// GetGatewayEnabled is a free data retrieval call binding the contract method 0xe32f3751.
-//
-// Solidity: function getGatewayEnabled() constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) GetGatewayEnabled(opts *bind.CallOpts) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "getGatewayEnabled")
-	return *ret0, err
-}
-
-// GetGatewayEnabled is a free data retrieval call binding the contract method 0xe32f3751.
-//
-// Solidity: function getGatewayEnabled() constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) GetGatewayEnabled() (bool, error) {
-	return _ValidatorManagerContract.Contract.GetGatewayEnabled(&_ValidatorManagerContract.CallOpts)
-}
-
-// GetGatewayEnabled is a free data retrieval call binding the contract method 0xe32f3751.
-//
-// Solidity: function getGatewayEnabled() constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) GetGatewayEnabled() (bool, error) {
-	return _ValidatorManagerContract.Contract.GetGatewayEnabled(&_ValidatorManagerContract.CallOpts)
-}
-
-// GetOwner is a free data retrieval call binding the contract method 0x893d20e8.
-//
-// Solidity: function getOwner() constant returns(address)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) GetOwner(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "getOwner")
-	return *ret0, err
-}
-
-// GetOwner is a free data retrieval call binding the contract method 0x893d20e8.
-//
-// Solidity: function getOwner() constant returns(address)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) GetOwner() (common.Address, error) {
-	return _ValidatorManagerContract.Contract.GetOwner(&_ValidatorManagerContract.CallOpts)
-}
-
-// GetOwner is a free data retrieval call binding the contract method 0x893d20e8.
-//
-// Solidity: function getOwner() constant returns(address)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) GetOwner() (common.Address, error) {
-	return _ValidatorManagerContract.Contract.GetOwner(&_ValidatorManagerContract.CallOpts)
 }
 
 // GetPowers is a free data retrieval call binding the contract method 0xff13a1ac.
@@ -340,32 +236,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) GetValid
 	return _ValidatorManagerContract.Contract.GetValidators(&_ValidatorManagerContract.CallOpts)
 }
 
-// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
-//
-// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) IsTokenAllowed(opts *bind.CallOpts, tokenAddress common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "isTokenAllowed", tokenAddress)
-	return *ret0, err
-}
-
-// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
-//
-// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) IsTokenAllowed(tokenAddress common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.IsTokenAllowed(&_ValidatorManagerContract.CallOpts, tokenAddress)
-}
-
-// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
-//
-// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) IsTokenAllowed(tokenAddress common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.IsTokenAllowed(&_ValidatorManagerContract.CallOpts, tokenAddress)
-}
-
 // LoomAddress is a free data retrieval call binding the contract method 0x37179db8.
 //
 // Solidity: function loomAddress() constant returns(address)
@@ -416,32 +286,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractSession) Nonce() (*big.
 // Solidity: function nonce() constant returns(uint256)
 func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) Nonce() (*big.Int, error) {
 	return _ValidatorManagerContract.Contract.Nonce(&_ValidatorManagerContract.CallOpts)
-}
-
-// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
-//
-// Solidity: function owner() constant returns(address)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "owner")
-	return *ret0, err
-}
-
-// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
-//
-// Solidity: function owner() constant returns(address)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) Owner() (common.Address, error) {
-	return _ValidatorManagerContract.Contract.Owner(&_ValidatorManagerContract.CallOpts)
-}
-
-// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
-//
-// Solidity: function owner() constant returns(address)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) Owner() (common.Address, error) {
-	return _ValidatorManagerContract.Contract.Owner(&_ValidatorManagerContract.CallOpts)
 }
 
 // Powers is a free data retrieval call binding the contract method 0x40c1bfab.
@@ -598,27 +442,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) Validato
 	return _ValidatorManagerContract.Contract.Validators(&_ValidatorManagerContract.CallOpts, arg0)
 }
 
-// EnableGateway is a paid mutator transaction binding the contract method 0x41c25c4a.
-//
-// Solidity: function enableGateway(enable bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactor) EnableGateway(opts *bind.TransactOpts, enable bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.contract.Transact(opts, "enableGateway", enable)
-}
-
-// EnableGateway is a paid mutator transaction binding the contract method 0x41c25c4a.
-//
-// Solidity: function enableGateway(enable bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) EnableGateway(enable bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.EnableGateway(&_ValidatorManagerContract.TransactOpts, enable)
-}
-
-// EnableGateway is a paid mutator transaction binding the contract method 0x41c25c4a.
-//
-// Solidity: function enableGateway(enable bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) EnableGateway(enable bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.EnableGateway(&_ValidatorManagerContract.TransactOpts, enable)
-}
-
 // RotateValidators is a paid mutator transaction binding the contract method 0xeb2eb0ef.
 //
 // Solidity: function rotateValidators(_newValidators address[], _newPowers uint64[], _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
@@ -680,48 +503,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractSession) SetQuorum(_num
 // Solidity: function setQuorum(_num uint8, _denom uint8, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
 func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) SetQuorum(_num uint8, _denom uint8, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
 	return _ValidatorManagerContract.Contract.SetQuorum(&_ValidatorManagerContract.TransactOpts, _num, _denom, _signersIndexes, _v, _r, _s)
-}
-
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
-//
-// Solidity: function toggleAllowAnyToken(allow bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactor) ToggleAllowAnyToken(opts *bind.TransactOpts, allow bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.contract.Transact(opts, "toggleAllowAnyToken", allow)
-}
-
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
-//
-// Solidity: function toggleAllowAnyToken(allow bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) ToggleAllowAnyToken(allow bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowAnyToken(&_ValidatorManagerContract.TransactOpts, allow)
-}
-
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0xe402fbc8.
-//
-// Solidity: function toggleAllowAnyToken(allow bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) ToggleAllowAnyToken(allow bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowAnyToken(&_ValidatorManagerContract.TransactOpts, allow)
-}
-
-// ToggleAllowToken is a paid mutator transaction binding the contract method 0xb82730ab.
-//
-// Solidity: function toggleAllowToken(tokenAddress address, allow bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactor) ToggleAllowToken(opts *bind.TransactOpts, tokenAddress common.Address, allow bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.contract.Transact(opts, "toggleAllowToken", tokenAddress, allow)
-}
-
-// ToggleAllowToken is a paid mutator transaction binding the contract method 0xb82730ab.
-//
-// Solidity: function toggleAllowToken(tokenAddress address, allow bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) ToggleAllowToken(tokenAddress common.Address, allow bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowToken(&_ValidatorManagerContract.TransactOpts, tokenAddress, allow)
-}
-
-// ToggleAllowToken is a paid mutator transaction binding the contract method 0xb82730ab.
-//
-// Solidity: function toggleAllowToken(tokenAddress address, allow bool) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) ToggleAllowToken(tokenAddress common.Address, allow bool) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowToken(&_ValidatorManagerContract.TransactOpts, tokenAddress, allow)
 }
 
 // ValidatorManagerContractValidatorSetChangedIterator is returned from FilterValidatorSetChanged and is used to iterate over the raw logs and unpacked data for ValidatorSetChanged events raised by the ValidatorManagerContract contract.
