@@ -481,23 +481,6 @@ message TransferGatewayGetUnclaimedContractTokensResponse {
     BigUInt unclaimed_amount = 1;
 }
 
-message TransferGatewaySubmitDepositTxHashRequest {
-    bytes tx_hash = 1;
-}
-
-message TransferGatewayClearInvalidDepositTxHashRequest {
-    repeated bytes tx_hashes = 1;
-    Address mainnet_gateway_address = 2;
-}
-
-message TransferGatewayUnprocessedDepositTxHashesRequest{
-
-}
-
-message TransferGatewayUnprocessedDepositTxHashesResponse {
-    repeated bytes tx_hashes = 1;
-}
-
 message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
 }
