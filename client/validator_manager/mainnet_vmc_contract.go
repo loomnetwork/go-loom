@@ -45,6 +45,14 @@ func (c *MainnetVMCClient) ToggleAllowAnyToken(caller *client.Identity, allow bo
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
+func (c *MainnetVMCClient) EnableGateway(caller *client.Identity, enable bool, validatorIndex *big.Int) error {
+	tx, err := c.contract.EnableGateway(client.DefaultTransactOptsForIdentity(caller), enable, validatorIndex)
+	if err != nil {
+		return err
+	}
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
 func (c *MainnetVMCClient) RotateValidators(caller *client.Identity, newValidators []common.Address, newPowers []uint64, sigs []byte) error {
 	// Calculate the msg hash
 	hash, err := c.calculateHash(newValidators, newPowers)
