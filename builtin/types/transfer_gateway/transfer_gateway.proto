@@ -498,10 +498,6 @@ message TransferGatewayUnprocessedDepositTxHashesResponse {
     repeated bytes tx_hashes = 1;
 }
 
-message TransferGatewayExtendedState {
-    repeated Address deposit_tx_hash_submitters = 1;
-}
-
 message TransferGatewayHotWalletTxHash {
     bytes tx_hash = 1;
 }
