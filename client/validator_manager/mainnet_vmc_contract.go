@@ -4,7 +4,6 @@ package validator_manager
 
 import (
 	"context"
-	"math/big"
 	"time"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -29,24 +28,24 @@ func (c *MainnetVMCClient) GetValidators() ([]common.Address, error) {
 	return c.contract.GetValidators(nil)
 }
 
-func (c *MainnetVMCClient) ToggleAllowToken(caller *client.Identity, tokenContract common.Address, allow bool, validatorIndex *big.Int) error {
-	tx, err := c.contract.ToggleAllowToken(client.DefaultTransactOptsForIdentity(caller), tokenContract, allow, validatorIndex)
+func (c *MainnetVMCClient) ToggleAllowToken(caller *client.Identity, tokenContract common.Address, allow bool) error {
+	tx, err := c.contract.ToggleAllowToken(client.DefaultTransactOptsForIdentity(caller), tokenContract, allow)
 	if err != nil {
 		return err
 	}
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetVMCClient) ToggleAllowAnyToken(caller *client.Identity, allow bool, validatorIndex *big.Int) error {
-	tx, err := c.contract.ToggleAllowAnyToken(client.DefaultTransactOptsForIdentity(caller), allow, validatorIndex)
+func (c *MainnetVMCClient) ToggleAllowAnyToken(caller *client.Identity, allow bool) error {
+	tx, err := c.contract.ToggleAllowAnyToken(client.DefaultTransactOptsForIdentity(caller), allow)
 	if err != nil {
 		return err
 	}
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetVMCClient) EnableGateway(caller *client.Identity, enable bool, validatorIndex *big.Int) error {
-	tx, err := c.contract.EnableGateway(client.DefaultTransactOptsForIdentity(caller), enable, validatorIndex)
+func (c *MainnetVMCClient) EnableGateway(caller *client.Identity, enable bool) error {
+	tx, err := c.contract.EnableGateway(client.DefaultTransactOptsForIdentity(caller), enable)
 	if err != nil {
 		return err
 	}
