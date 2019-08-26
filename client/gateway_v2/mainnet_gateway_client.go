@@ -130,6 +130,30 @@ func (c *MainnetGatewayClient) withdrawalHash(withdrawer common.Address, tokenAd
 	return client.ToEthereumSignedMessage(hash)
 }
 
+func (c *MainnetGatewayClient) ToggleAllowToken(caller *client.Identity, tokenContract common.Address, allow bool) error {
+	tx, err := c.contract.ToggleAllowToken(client.DefaultTransactOptsForIdentity(caller), tokenContract, allow)
+	if err != nil {
+		return err
+	}
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
+func (c *MainnetGatewayClient) ToggleAllowAnyToken(caller *client.Identity, allow bool) error {
+	tx, err := c.contract.ToggleAllowAnyToken(client.DefaultTransactOptsForIdentity(caller), allow)
+	if err != nil {
+		return err
+	}
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
+func (c *MainnetGatewayClient) EnableGateway(caller *client.Identity, enable bool) error {
+	tx, err := c.contract.EnableGateway(client.DefaultTransactOptsForIdentity(caller), enable)
+	if err != nil {
+		return err
+	}
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {
 	contractAddr := common.HexToAddress(gatewayAddr)
 	contract, err := NewMainnetGatewayContract(contractAddr, ethClient)
