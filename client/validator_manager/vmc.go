@@ -16,7 +16,7 @@ import (
 )
 
 // ValidatorManagerContractABI is the input ABI used to generate the binding from.
-const ValidatorManagerContractABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"validators\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x35aa2e44\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x37179db8\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"powers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x40c1bfab\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_denom\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x57d717d1\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x7ecebe00\"},{\"constant\":true,\"inputs\":[],\"name\":\"nonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xaffed0e0\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_num\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xc57829d2\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalPower\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xdb3ad22c\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xe744092e\"},{\"inputs\":[{\"name\":\"_validators\",\"type\":\"address[]\"},{\"name\":\"_powers\",\"type\":\"uint64[]\"},{\"name\":\"_threshold_num\",\"type\":\"uint8\"},{\"name\":\"_threshold_denom\",\"type\":\"uint8\"},{\"name\":\"_loomAddress\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\",\"signature\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_validators\",\"type\":\"address[]\"},{\"indexed\":false,\"name\":\"_powers\",\"type\":\"uint64[]\"}],\"name\":\"ValidatorSetChanged\",\"type\":\"event\",\"signature\":\"0x323c51e0ad42c317ff3b00c6ce354d799a4b5eaf3a25cf3169cf2efd339d4d54\"},{\"constant\":true,\"inputs\":[],\"name\":\"getPowers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xff13a1ac\"},{\"constant\":true,\"inputs\":[],\"name\":\"getValidators\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xb7ab4db5\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newValidators\",\"type\":\"address[]\"},{\"name\":\"_newPowers\",\"type\":\"uint64[]\"},{\"name\":\"_signIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"rotateValidators\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xeb2eb0ef\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"signersIndex\",\"type\":\"uint256\"},{\"name\":\"_v\",\"type\":\"uint8\"},{\"name\":\"_r\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"bytes32\"}],\"name\":\"signedByValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xc47c479a\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"signersIndex\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"checkThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x0fba29c3\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenAddress\",\"type\":\"address\"}],\"name\":\"isTokenAllowed\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0xf9eaee0d\"},{\"constant\":false,\"inputs\":[{\"name\":\"allow\",\"type\":\"bool\"},{\"name\":\"validatorIndex\",\"type\":\"uint256\"}],\"name\":\"toggleAllowAnyToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0x1a6be287\"},{\"constant\":false,\"inputs\":[{\"name\":\"tokenAddress\",\"type\":\"address\"},{\"name\":\"allow\",\"type\":\"bool\"},{\"name\":\"validatorIndex\",\"type\":\"uint256\"}],\"name\":\"toggleAllowToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xe3ece440\"}]"
+const ValidatorManagerContractABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"validators\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"loomAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"powers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_denom\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"nonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"threshold_num\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalPower\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_validators\",\"type\":\"address[]\"},{\"name\":\"_powers\",\"type\":\"uint64[]\"},{\"name\":\"_threshold_num\",\"type\":\"uint8\"},{\"name\":\"_threshold_denom\",\"type\":\"uint8\"},{\"name\":\"_loomAddress\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_validators\",\"type\":\"address[]\"},{\"indexed\":false,\"name\":\"_powers\",\"type\":\"uint64[]\"}],\"name\":\"ValidatorSetChanged\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"getPowers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getValidators\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_loomAddress\",\"type\":\"address\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"setLoom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_num\",\"type\":\"uint8\"},{\"name\":\"_denom\",\"type\":\"uint8\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"setQuorum\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newValidators\",\"type\":\"address[]\"},{\"name\":\"_newPowers\",\"type\":\"uint64[]\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"rotateValidators\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"_signersIndex\",\"type\":\"uint256\"},{\"name\":\"_v\",\"type\":\"uint8\"},{\"name\":\"_r\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"bytes32\"}],\"name\":\"signedByValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_message\",\"type\":\"bytes32\"},{\"name\":\"_signersIndexes\",\"type\":\"uint256[]\"},{\"name\":\"_v\",\"type\":\"uint8[]\"},{\"name\":\"_r\",\"type\":\"bytes32[]\"},{\"name\":\"_s\",\"type\":\"bytes32[]\"}],\"name\":\"checkThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // ValidatorManagerContract is an auto generated Go binding around an Ethereum contract.
 type ValidatorManagerContract struct {
@@ -160,54 +160,28 @@ func (_ValidatorManagerContract *ValidatorManagerContractTransactorRaw) Transact
 	return _ValidatorManagerContract.Contract.contract.Transact(opts, method, params...)
 }
 
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) AllowedTokens(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "allowedTokens", arg0)
-	return *ret0, err
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) AllowedTokens(arg0 common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.AllowedTokens(&_ValidatorManagerContract.CallOpts, arg0)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) AllowedTokens(arg0 common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.AllowedTokens(&_ValidatorManagerContract.CallOpts, arg0)
-}
-
 // CheckThreshold is a free data retrieval call binding the contract method 0x0fba29c3.
 //
-// Solidity: function checkThreshold(_message bytes32, signersIndex uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) CheckThreshold(opts *bind.CallOpts, _message [32]byte, signersIndex []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) error {
+// Solidity: function checkThreshold(_message bytes32, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
+func (_ValidatorManagerContract *ValidatorManagerContractCaller) CheckThreshold(opts *bind.CallOpts, _message [32]byte, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) error {
 	var ()
 	out := &[]interface{}{}
-	err := _ValidatorManagerContract.contract.Call(opts, out, "checkThreshold", _message, signersIndex, _v, _r, _s)
+	err := _ValidatorManagerContract.contract.Call(opts, out, "checkThreshold", _message, _signersIndexes, _v, _r, _s)
 	return err
 }
 
 // CheckThreshold is a free data retrieval call binding the contract method 0x0fba29c3.
 //
-// Solidity: function checkThreshold(_message bytes32, signersIndex uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) CheckThreshold(_message [32]byte, signersIndex []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) error {
-	return _ValidatorManagerContract.Contract.CheckThreshold(&_ValidatorManagerContract.CallOpts, _message, signersIndex, _v, _r, _s)
+// Solidity: function checkThreshold(_message bytes32, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
+func (_ValidatorManagerContract *ValidatorManagerContractSession) CheckThreshold(_message [32]byte, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) error {
+	return _ValidatorManagerContract.Contract.CheckThreshold(&_ValidatorManagerContract.CallOpts, _message, _signersIndexes, _v, _r, _s)
 }
 
 // CheckThreshold is a free data retrieval call binding the contract method 0x0fba29c3.
 //
-// Solidity: function checkThreshold(_message bytes32, signersIndex uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) CheckThreshold(_message [32]byte, signersIndex []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) error {
-	return _ValidatorManagerContract.Contract.CheckThreshold(&_ValidatorManagerContract.CallOpts, _message, signersIndex, _v, _r, _s)
+// Solidity: function checkThreshold(_message bytes32, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) constant returns()
+func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) CheckThreshold(_message [32]byte, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) error {
+	return _ValidatorManagerContract.Contract.CheckThreshold(&_ValidatorManagerContract.CallOpts, _message, _signersIndexes, _v, _r, _s)
 }
 
 // GetPowers is a free data retrieval call binding the contract method 0xff13a1ac.
@@ -262,32 +236,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) GetValid
 	return _ValidatorManagerContract.Contract.GetValidators(&_ValidatorManagerContract.CallOpts)
 }
 
-// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
-//
-// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) IsTokenAllowed(opts *bind.CallOpts, tokenAddress common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "isTokenAllowed", tokenAddress)
-	return *ret0, err
-}
-
-// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
-//
-// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) IsTokenAllowed(tokenAddress common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.IsTokenAllowed(&_ValidatorManagerContract.CallOpts, tokenAddress)
-}
-
-// IsTokenAllowed is a free data retrieval call binding the contract method 0xf9eaee0d.
-//
-// Solidity: function isTokenAllowed(tokenAddress address) constant returns(bool)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) IsTokenAllowed(tokenAddress common.Address) (bool, error) {
-	return _ValidatorManagerContract.Contract.IsTokenAllowed(&_ValidatorManagerContract.CallOpts, tokenAddress)
-}
-
 // LoomAddress is a free data retrieval call binding the contract method 0x37179db8.
 //
 // Solidity: function loomAddress() constant returns(address)
@@ -340,32 +288,6 @@ func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) Nonce() 
 	return _ValidatorManagerContract.Contract.Nonce(&_ValidatorManagerContract.CallOpts)
 }
 
-// Nonces is a free data retrieval call binding the contract method 0x7ecebe00.
-//
-// Solidity: function nonces( address) constant returns(uint256)
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) Nonces(opts *bind.CallOpts, arg0 common.Address) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
-	err := _ValidatorManagerContract.contract.Call(opts, out, "nonces", arg0)
-	return *ret0, err
-}
-
-// Nonces is a free data retrieval call binding the contract method 0x7ecebe00.
-//
-// Solidity: function nonces( address) constant returns(uint256)
-func (_ValidatorManagerContract *ValidatorManagerContractSession) Nonces(arg0 common.Address) (*big.Int, error) {
-	return _ValidatorManagerContract.Contract.Nonces(&_ValidatorManagerContract.CallOpts, arg0)
-}
-
-// Nonces is a free data retrieval call binding the contract method 0x7ecebe00.
-//
-// Solidity: function nonces( address) constant returns(uint256)
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) Nonces(arg0 common.Address) (*big.Int, error) {
-	return _ValidatorManagerContract.Contract.Nonces(&_ValidatorManagerContract.CallOpts, arg0)
-}
-
 // Powers is a free data retrieval call binding the contract method 0x40c1bfab.
 //
 // Solidity: function powers( uint256) constant returns(uint64)
@@ -394,26 +316,26 @@ func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) Powers(a
 
 // SignedByValidator is a free data retrieval call binding the contract method 0xc47c479a.
 //
-// Solidity: function signedByValidator(_message bytes32, signersIndex uint256, _v uint8, _r bytes32, _s bytes32) constant returns()
-func (_ValidatorManagerContract *ValidatorManagerContractCaller) SignedByValidator(opts *bind.CallOpts, _message [32]byte, signersIndex *big.Int, _v uint8, _r [32]byte, _s [32]byte) error {
+// Solidity: function signedByValidator(_message bytes32, _signersIndex uint256, _v uint8, _r bytes32, _s bytes32) constant returns()
+func (_ValidatorManagerContract *ValidatorManagerContractCaller) SignedByValidator(opts *bind.CallOpts, _message [32]byte, _signersIndex *big.Int, _v uint8, _r [32]byte, _s [32]byte) error {
 	var ()
 	out := &[]interface{}{}
-	err := _ValidatorManagerContract.contract.Call(opts, out, "signedByValidator", _message, signersIndex, _v, _r, _s)
+	err := _ValidatorManagerContract.contract.Call(opts, out, "signedByValidator", _message, _signersIndex, _v, _r, _s)
 	return err
 }
 
 // SignedByValidator is a free data retrieval call binding the contract method 0xc47c479a.
 //
-// Solidity: function signedByValidator(_message bytes32, signersIndex uint256, _v uint8, _r bytes32, _s bytes32) constant returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) SignedByValidator(_message [32]byte, signersIndex *big.Int, _v uint8, _r [32]byte, _s [32]byte) error {
-	return _ValidatorManagerContract.Contract.SignedByValidator(&_ValidatorManagerContract.CallOpts, _message, signersIndex, _v, _r, _s)
+// Solidity: function signedByValidator(_message bytes32, _signersIndex uint256, _v uint8, _r bytes32, _s bytes32) constant returns()
+func (_ValidatorManagerContract *ValidatorManagerContractSession) SignedByValidator(_message [32]byte, _signersIndex *big.Int, _v uint8, _r [32]byte, _s [32]byte) error {
+	return _ValidatorManagerContract.Contract.SignedByValidator(&_ValidatorManagerContract.CallOpts, _message, _signersIndex, _v, _r, _s)
 }
 
 // SignedByValidator is a free data retrieval call binding the contract method 0xc47c479a.
 //
-// Solidity: function signedByValidator(_message bytes32, signersIndex uint256, _v uint8, _r bytes32, _s bytes32) constant returns()
-func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) SignedByValidator(_message [32]byte, signersIndex *big.Int, _v uint8, _r [32]byte, _s [32]byte) error {
-	return _ValidatorManagerContract.Contract.SignedByValidator(&_ValidatorManagerContract.CallOpts, _message, signersIndex, _v, _r, _s)
+// Solidity: function signedByValidator(_message bytes32, _signersIndex uint256, _v uint8, _r bytes32, _s bytes32) constant returns()
+func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) SignedByValidator(_message [32]byte, _signersIndex *big.Int, _v uint8, _r [32]byte, _s [32]byte) error {
+	return _ValidatorManagerContract.Contract.SignedByValidator(&_ValidatorManagerContract.CallOpts, _message, _signersIndex, _v, _r, _s)
 }
 
 // ThresholdDenom is a free data retrieval call binding the contract method 0x57d717d1.
@@ -522,65 +444,65 @@ func (_ValidatorManagerContract *ValidatorManagerContractCallerSession) Validato
 
 // RotateValidators is a paid mutator transaction binding the contract method 0xeb2eb0ef.
 //
-// Solidity: function rotateValidators(_newValidators address[], _newPowers uint64[], _signIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactor) RotateValidators(opts *bind.TransactOpts, _newValidators []common.Address, _newPowers []uint64, _signIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _ValidatorManagerContract.contract.Transact(opts, "rotateValidators", _newValidators, _newPowers, _signIndexes, _v, _r, _s)
+// Solidity: function rotateValidators(_newValidators address[], _newPowers uint64[], _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractTransactor) RotateValidators(opts *bind.TransactOpts, _newValidators []common.Address, _newPowers []uint64, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.contract.Transact(opts, "rotateValidators", _newValidators, _newPowers, _signersIndexes, _v, _r, _s)
 }
 
 // RotateValidators is a paid mutator transaction binding the contract method 0xeb2eb0ef.
 //
-// Solidity: function rotateValidators(_newValidators address[], _newPowers uint64[], _signIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) RotateValidators(_newValidators []common.Address, _newPowers []uint64, _signIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.RotateValidators(&_ValidatorManagerContract.TransactOpts, _newValidators, _newPowers, _signIndexes, _v, _r, _s)
+// Solidity: function rotateValidators(_newValidators address[], _newPowers uint64[], _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractSession) RotateValidators(_newValidators []common.Address, _newPowers []uint64, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.Contract.RotateValidators(&_ValidatorManagerContract.TransactOpts, _newValidators, _newPowers, _signersIndexes, _v, _r, _s)
 }
 
 // RotateValidators is a paid mutator transaction binding the contract method 0xeb2eb0ef.
 //
-// Solidity: function rotateValidators(_newValidators address[], _newPowers uint64[], _signIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) RotateValidators(_newValidators []common.Address, _newPowers []uint64, _signIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.RotateValidators(&_ValidatorManagerContract.TransactOpts, _newValidators, _newPowers, _signIndexes, _v, _r, _s)
+// Solidity: function rotateValidators(_newValidators address[], _newPowers uint64[], _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) RotateValidators(_newValidators []common.Address, _newPowers []uint64, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.Contract.RotateValidators(&_ValidatorManagerContract.TransactOpts, _newValidators, _newPowers, _signersIndexes, _v, _r, _s)
 }
 
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0x1a6be287.
+// SetLoom is a paid mutator transaction binding the contract method 0x9b963722.
 //
-// Solidity: function toggleAllowAnyToken(allow bool, validatorIndex uint256) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactor) ToggleAllowAnyToken(opts *bind.TransactOpts, allow bool, validatorIndex *big.Int) (*types.Transaction, error) {
-	return _ValidatorManagerContract.contract.Transact(opts, "toggleAllowAnyToken", allow, validatorIndex)
+// Solidity: function setLoom(_loomAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractTransactor) SetLoom(opts *bind.TransactOpts, _loomAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.contract.Transact(opts, "setLoom", _loomAddress, _signersIndexes, _v, _r, _s)
 }
 
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0x1a6be287.
+// SetLoom is a paid mutator transaction binding the contract method 0x9b963722.
 //
-// Solidity: function toggleAllowAnyToken(allow bool, validatorIndex uint256) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) ToggleAllowAnyToken(allow bool, validatorIndex *big.Int) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowAnyToken(&_ValidatorManagerContract.TransactOpts, allow, validatorIndex)
+// Solidity: function setLoom(_loomAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractSession) SetLoom(_loomAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.Contract.SetLoom(&_ValidatorManagerContract.TransactOpts, _loomAddress, _signersIndexes, _v, _r, _s)
 }
 
-// ToggleAllowAnyToken is a paid mutator transaction binding the contract method 0x1a6be287.
+// SetLoom is a paid mutator transaction binding the contract method 0x9b963722.
 //
-// Solidity: function toggleAllowAnyToken(allow bool, validatorIndex uint256) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) ToggleAllowAnyToken(allow bool, validatorIndex *big.Int) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowAnyToken(&_ValidatorManagerContract.TransactOpts, allow, validatorIndex)
+// Solidity: function setLoom(_loomAddress address, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) SetLoom(_loomAddress common.Address, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.Contract.SetLoom(&_ValidatorManagerContract.TransactOpts, _loomAddress, _signersIndexes, _v, _r, _s)
 }
 
-// ToggleAllowToken is a paid mutator transaction binding the contract method 0xe3ece440.
+// SetQuorum is a paid mutator transaction binding the contract method 0x0d8618ce.
 //
-// Solidity: function toggleAllowToken(tokenAddress address, allow bool, validatorIndex uint256) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactor) ToggleAllowToken(opts *bind.TransactOpts, tokenAddress common.Address, allow bool, validatorIndex *big.Int) (*types.Transaction, error) {
-	return _ValidatorManagerContract.contract.Transact(opts, "toggleAllowToken", tokenAddress, allow, validatorIndex)
+// Solidity: function setQuorum(_num uint8, _denom uint8, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractTransactor) SetQuorum(opts *bind.TransactOpts, _num uint8, _denom uint8, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.contract.Transact(opts, "setQuorum", _num, _denom, _signersIndexes, _v, _r, _s)
 }
 
-// ToggleAllowToken is a paid mutator transaction binding the contract method 0xe3ece440.
+// SetQuorum is a paid mutator transaction binding the contract method 0x0d8618ce.
 //
-// Solidity: function toggleAllowToken(tokenAddress address, allow bool, validatorIndex uint256) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractSession) ToggleAllowToken(tokenAddress common.Address, allow bool, validatorIndex *big.Int) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowToken(&_ValidatorManagerContract.TransactOpts, tokenAddress, allow, validatorIndex)
+// Solidity: function setQuorum(_num uint8, _denom uint8, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractSession) SetQuorum(_num uint8, _denom uint8, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.Contract.SetQuorum(&_ValidatorManagerContract.TransactOpts, _num, _denom, _signersIndexes, _v, _r, _s)
 }
 
-// ToggleAllowToken is a paid mutator transaction binding the contract method 0xe3ece440.
+// SetQuorum is a paid mutator transaction binding the contract method 0x0d8618ce.
 //
-// Solidity: function toggleAllowToken(tokenAddress address, allow bool, validatorIndex uint256) returns()
-func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) ToggleAllowToken(tokenAddress common.Address, allow bool, validatorIndex *big.Int) (*types.Transaction, error) {
-	return _ValidatorManagerContract.Contract.ToggleAllowToken(&_ValidatorManagerContract.TransactOpts, tokenAddress, allow, validatorIndex)
+// Solidity: function setQuorum(_num uint8, _denom uint8, _signersIndexes uint256[], _v uint8[], _r bytes32[], _s bytes32[]) returns()
+func (_ValidatorManagerContract *ValidatorManagerContractTransactorSession) SetQuorum(_num uint8, _denom uint8, _signersIndexes []*big.Int, _v []uint8, _r [][32]byte, _s [][32]byte) (*types.Transaction, error) {
+	return _ValidatorManagerContract.Contract.SetQuorum(&_ValidatorManagerContract.TransactOpts, _num, _denom, _signersIndexes, _v, _r, _s)
 }
 
 // ValidatorManagerContractValidatorSetChangedIterator is returned from FilterValidatorSetChanged and is used to iterate over the raw logs and unpacked data for ValidatorSetChanged events raised by the ValidatorManagerContract contract.

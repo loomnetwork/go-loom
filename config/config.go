@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"math"
 	"math/big"
 	"reflect"
 	"strconv"
@@ -24,6 +25,9 @@ func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
 		AppStore: &cctypes.AppStoreConfig{
 			NumEvmKeysToPrune: 50,
+		},
+		Evm: &cctypes.EvmConfig{
+			GasLimit: math.MaxUint64,
 		},
 	}
 }
