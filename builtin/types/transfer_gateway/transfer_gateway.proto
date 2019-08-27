@@ -284,6 +284,7 @@ message TransferGatewayVerifyContractCreatorsRequest {
 message TransferGatewayProcessEventBatchRequest {
     repeated TransferGatewayMainnetEvent events = 1;
     Address mainnet_gateway_address = 2;
+    Address mainnet_hot_wallet_address = 3;
 }
 
 message TransferGatewayStateRequest {
@@ -479,6 +480,14 @@ message TransferGatewayGetUnclaimedContractTokensRequest {
 
 message TransferGatewayGetUnclaimedContractTokensResponse {
     BigUInt unclaimed_amount = 1;
+}
+
+message TransferGatewayHotWalletState {
+    Address mainnet_hot_wallet_address = 1;
+}
+
+message TransferGatewayUpdateMainnetHotWalletRequest {
+    Address mainnet_hot_wallet_address = 1;
 }
 
 message TransferGatewayHotWalletTxHash {
