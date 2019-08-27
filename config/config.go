@@ -20,11 +20,12 @@ var (
 	ErrInvalidSettingType = errors.New("[Application] wrong variable type")
 )
 
+// DefaultConfig returns an on-chain config instance with all reference fields initialized to
+// non-nil values (this is needed for the reflection code in SetConfigSetting to work, for now...)
 func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
-		AppStore: &cctypes.AppStoreConfig{
-			NumEvmKeysToPrune: 50,
-		},
+		AppStore: &cctypes.AppStoreConfig{},
+		Evm:      &cctypes.EvmConfig{},
 	}
 }
 

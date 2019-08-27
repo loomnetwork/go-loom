@@ -48,6 +48,14 @@ func (c *MainnetERC721Client) OwnerOf(tokenID *big.Int) (common.Address, error) 
 	return c.contract.OwnerOf(nil, tokenID)
 }
 
+func (c *MainnetERC721Client) MintTo(caller *client.Identity, to common.Address, amount *big.Int) error {
+	tx, err := c.contract.MintTo(client.DefaultTransactOptsForIdentity(caller), to, amount)
+	if err != nil {
+		return err
+	}
+	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
 func ConnectToMainnetERC721(ethClient *ethclient.Client, contractAddr string) (*MainnetERC721Client, error) {
 	contractAddress := common.HexToAddress(contractAddr)
 	contract, err := NewERC721(contractAddress, ethClient)
