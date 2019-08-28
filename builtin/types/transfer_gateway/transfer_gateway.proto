@@ -34,6 +34,8 @@ message TransferGatewayState {
     BigUInt transfer_fee = 5;
     // Mainnet Gateway address
     Address mainnet_gateway_address = 6;
+    // Mainnet Hot Wallet address
+    Address mainnet_hot_wallet_address = 7;
 }
 
 message TransferGatewayOracleState {
@@ -480,10 +482,6 @@ message TransferGatewayGetUnclaimedContractTokensRequest {
 
 message TransferGatewayGetUnclaimedContractTokensResponse {
     BigUInt unclaimed_amount = 1;
-}
-
-message TransferGatewayHotWalletState {
-    Address mainnet_hot_wallet_address = 1;
 }
 
 message TransferGatewayUpdateMainnetHotWalletRequest {
