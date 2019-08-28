@@ -509,6 +509,7 @@ message TransferGatewaySubmitHotWalletDepositTxHashRequest {
 
 message TransferGatewayClearInvalidHotWalletDepositTxHashRequest {
     repeated bytes tx_hashes = 1;
+    Address mainnet_hot_wallet_address = 2;
 }
 
 //Request for fetching Contract Mapping for given Address
