@@ -333,6 +333,20 @@
   },
   {
     "constant": true,
+    "inputs": [],
+    "name": "deployer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
     "inputs": [
       {
         "name": "_owner",
@@ -440,6 +454,24 @@
       }
     ],
     "name": "mintToGateway",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_address",
+        "type": "address"
+      },
+      {
+        "name": "_uid",
+        "type": "uint256"
+      }
+    ],
+    "name": "mintTo",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

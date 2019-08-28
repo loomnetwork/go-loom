@@ -4,7 +4,6 @@ package validator_manager
 
 import (
 	"context"
-	"math/big"
 	"time"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -29,21 +28,7 @@ func (c *MainnetVMCClient) GetValidators() ([]common.Address, error) {
 	return c.contract.GetValidators(nil)
 }
 
-func (c *MainnetVMCClient) ToggleAllowToken(caller *client.Identity, tokenContract common.Address, allow bool, validatorIndex *big.Int) error {
-	tx, err := c.contract.ToggleAllowToken(client.DefaultTransactOptsForIdentity(caller), tokenContract, allow, validatorIndex)
-	if err != nil {
-		return err
-	}
-	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
-}
 
-func (c *MainnetVMCClient) ToggleAllowAnyToken(caller *client.Identity, allow bool, validatorIndex *big.Int) error {
-	tx, err := c.contract.ToggleAllowAnyToken(client.DefaultTransactOptsForIdentity(caller), allow, validatorIndex)
-	if err != nil {
-		return err
-	}
-	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
-}
 
 func (c *MainnetVMCClient) RotateValidators(caller *client.Identity, newValidators []common.Address, newPowers []uint64, sigs []byte) error {
 	// Calculate the msg hash

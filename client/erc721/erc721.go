@@ -15,20 +15,8 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
-// Reference imports to suppress errors if they are not otherwise used.
-var (
-	_ = big.NewInt
-	_ = strings.NewReader
-	_ = ethereum.NotFound
-	_ = abi.U256
-	_ = bind.Bind
-	_ = common.Big1
-	_ = types.BloomLookup
-	_ = event.NewSubscription
-)
-
 // ERC721ABI is the input ABI used to generate the binding from.
-const ERC721ABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"_interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"InterfaceId_ERC165\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"exists\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_name\",\"type\":\"string\"},{\"name\":\"_symbol\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_to\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"_owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_approved\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"_owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"tokenOfOwnerByIndex\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"tokenByIndex\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const ERC721ABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"owner\",\"type\":\"address\"},{\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"tokenOfOwnerByIndex\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"tokenByIndex\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"account\",\"type\":\"address\"}],\"name\":\"addMinter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceMinter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"account\",\"type\":\"address\"}],\"name\":\"isMinter\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"owner\",\"type\":\"address\"},{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_gateway\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"ValidatorAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"ValidatorRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"gateway\",\"type\":\"address\"}],\"name\":\"GatewayAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"gateway\",\"type\":\"address\"}],\"name\":\"GatewayRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"account\",\"type\":\"address\"}],\"name\":\"MinterAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"account\",\"type\":\"address\"}],\"name\":\"MinterRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"approved\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"_address\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"mintTo\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newValidator\",\"type\":\"address\"}],\"name\":\"addValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"removeValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_gateway\",\"type\":\"address\"}],\"name\":\"addGateway\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_gateway\",\"type\":\"address\"}],\"name\":\"removeGateway\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"exists\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // ERC721 is an auto generated Go binding around an Ethereum contract.
 type ERC721 struct {
@@ -172,56 +160,30 @@ func (_ERC721 *ERC721TransactorRaw) Transact(opts *bind.TransactOpts, method str
 	return _ERC721.Contract.contract.Transact(opts, method, params...)
 }
 
-// InterfaceIdERC165 is a free data retrieval call binding the contract method 0x19fa8f50.
-//
-// Solidity: function InterfaceId_ERC165() constant returns(bytes4)
-func (_ERC721 *ERC721Caller) InterfaceIdERC165(opts *bind.CallOpts) ([4]byte, error) {
-	var (
-		ret0 = new([4]byte)
-	)
-	out := ret0
-	err := _ERC721.contract.Call(opts, out, "InterfaceId_ERC165")
-	return *ret0, err
-}
-
-// InterfaceIdERC165 is a free data retrieval call binding the contract method 0x19fa8f50.
-//
-// Solidity: function InterfaceId_ERC165() constant returns(bytes4)
-func (_ERC721 *ERC721Session) InterfaceIdERC165() ([4]byte, error) {
-	return _ERC721.Contract.InterfaceIdERC165(&_ERC721.CallOpts)
-}
-
-// InterfaceIdERC165 is a free data retrieval call binding the contract method 0x19fa8f50.
-//
-// Solidity: function InterfaceId_ERC165() constant returns(bytes4)
-func (_ERC721 *ERC721CallerSession) InterfaceIdERC165() ([4]byte, error) {
-	return _ERC721.Contract.InterfaceIdERC165(&_ERC721.CallOpts)
-}
-
 // BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
 //
-// Solidity: function balanceOf(_owner address) constant returns(uint256)
-func (_ERC721 *ERC721Caller) BalanceOf(opts *bind.CallOpts, _owner common.Address) (*big.Int, error) {
+// Solidity: function balanceOf(owner address) constant returns(uint256)
+func (_ERC721 *ERC721Caller) BalanceOf(opts *bind.CallOpts, owner common.Address) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "balanceOf", _owner)
+	err := _ERC721.contract.Call(opts, out, "balanceOf", owner)
 	return *ret0, err
 }
 
 // BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
 //
-// Solidity: function balanceOf(_owner address) constant returns(uint256)
-func (_ERC721 *ERC721Session) BalanceOf(_owner common.Address) (*big.Int, error) {
-	return _ERC721.Contract.BalanceOf(&_ERC721.CallOpts, _owner)
+// Solidity: function balanceOf(owner address) constant returns(uint256)
+func (_ERC721 *ERC721Session) BalanceOf(owner common.Address) (*big.Int, error) {
+	return _ERC721.Contract.BalanceOf(&_ERC721.CallOpts, owner)
 }
 
 // BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
 //
-// Solidity: function balanceOf(_owner address) constant returns(uint256)
-func (_ERC721 *ERC721CallerSession) BalanceOf(_owner common.Address) (*big.Int, error) {
-	return _ERC721.Contract.BalanceOf(&_ERC721.CallOpts, _owner)
+// Solidity: function balanceOf(owner address) constant returns(uint256)
+func (_ERC721 *ERC721CallerSession) BalanceOf(owner common.Address) (*big.Int, error) {
+	return _ERC721.Contract.BalanceOf(&_ERC721.CallOpts, owner)
 }
 
 // Exists is a free data retrieval call binding the contract method 0x4f558e79.
@@ -252,54 +214,80 @@ func (_ERC721 *ERC721CallerSession) Exists(_tokenId *big.Int) (bool, error) {
 
 // GetApproved is a free data retrieval call binding the contract method 0x081812fc.
 //
-// Solidity: function getApproved(_tokenId uint256) constant returns(address)
-func (_ERC721 *ERC721Caller) GetApproved(opts *bind.CallOpts, _tokenId *big.Int) (common.Address, error) {
+// Solidity: function getApproved(tokenId uint256) constant returns(address)
+func (_ERC721 *ERC721Caller) GetApproved(opts *bind.CallOpts, tokenId *big.Int) (common.Address, error) {
 	var (
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "getApproved", _tokenId)
+	err := _ERC721.contract.Call(opts, out, "getApproved", tokenId)
 	return *ret0, err
 }
 
 // GetApproved is a free data retrieval call binding the contract method 0x081812fc.
 //
-// Solidity: function getApproved(_tokenId uint256) constant returns(address)
-func (_ERC721 *ERC721Session) GetApproved(_tokenId *big.Int) (common.Address, error) {
-	return _ERC721.Contract.GetApproved(&_ERC721.CallOpts, _tokenId)
+// Solidity: function getApproved(tokenId uint256) constant returns(address)
+func (_ERC721 *ERC721Session) GetApproved(tokenId *big.Int) (common.Address, error) {
+	return _ERC721.Contract.GetApproved(&_ERC721.CallOpts, tokenId)
 }
 
 // GetApproved is a free data retrieval call binding the contract method 0x081812fc.
 //
-// Solidity: function getApproved(_tokenId uint256) constant returns(address)
-func (_ERC721 *ERC721CallerSession) GetApproved(_tokenId *big.Int) (common.Address, error) {
-	return _ERC721.Contract.GetApproved(&_ERC721.CallOpts, _tokenId)
+// Solidity: function getApproved(tokenId uint256) constant returns(address)
+func (_ERC721 *ERC721CallerSession) GetApproved(tokenId *big.Int) (common.Address, error) {
+	return _ERC721.Contract.GetApproved(&_ERC721.CallOpts, tokenId)
 }
 
 // IsApprovedForAll is a free data retrieval call binding the contract method 0xe985e9c5.
 //
-// Solidity: function isApprovedForAll(_owner address, _operator address) constant returns(bool)
-func (_ERC721 *ERC721Caller) IsApprovedForAll(opts *bind.CallOpts, _owner common.Address, _operator common.Address) (bool, error) {
+// Solidity: function isApprovedForAll(owner address, operator address) constant returns(bool)
+func (_ERC721 *ERC721Caller) IsApprovedForAll(opts *bind.CallOpts, owner common.Address, operator common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "isApprovedForAll", _owner, _operator)
+	err := _ERC721.contract.Call(opts, out, "isApprovedForAll", owner, operator)
 	return *ret0, err
 }
 
 // IsApprovedForAll is a free data retrieval call binding the contract method 0xe985e9c5.
 //
-// Solidity: function isApprovedForAll(_owner address, _operator address) constant returns(bool)
-func (_ERC721 *ERC721Session) IsApprovedForAll(_owner common.Address, _operator common.Address) (bool, error) {
-	return _ERC721.Contract.IsApprovedForAll(&_ERC721.CallOpts, _owner, _operator)
+// Solidity: function isApprovedForAll(owner address, operator address) constant returns(bool)
+func (_ERC721 *ERC721Session) IsApprovedForAll(owner common.Address, operator common.Address) (bool, error) {
+	return _ERC721.Contract.IsApprovedForAll(&_ERC721.CallOpts, owner, operator)
 }
 
 // IsApprovedForAll is a free data retrieval call binding the contract method 0xe985e9c5.
 //
-// Solidity: function isApprovedForAll(_owner address, _operator address) constant returns(bool)
-func (_ERC721 *ERC721CallerSession) IsApprovedForAll(_owner common.Address, _operator common.Address) (bool, error) {
-	return _ERC721.Contract.IsApprovedForAll(&_ERC721.CallOpts, _owner, _operator)
+// Solidity: function isApprovedForAll(owner address, operator address) constant returns(bool)
+func (_ERC721 *ERC721CallerSession) IsApprovedForAll(owner common.Address, operator common.Address) (bool, error) {
+	return _ERC721.Contract.IsApprovedForAll(&_ERC721.CallOpts, owner, operator)
+}
+
+// IsMinter is a free data retrieval call binding the contract method 0xaa271e1a.
+//
+// Solidity: function isMinter(account address) constant returns(bool)
+func (_ERC721 *ERC721Caller) IsMinter(opts *bind.CallOpts, account common.Address) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _ERC721.contract.Call(opts, out, "isMinter", account)
+	return *ret0, err
+}
+
+// IsMinter is a free data retrieval call binding the contract method 0xaa271e1a.
+//
+// Solidity: function isMinter(account address) constant returns(bool)
+func (_ERC721 *ERC721Session) IsMinter(account common.Address) (bool, error) {
+	return _ERC721.Contract.IsMinter(&_ERC721.CallOpts, account)
+}
+
+// IsMinter is a free data retrieval call binding the contract method 0xaa271e1a.
+//
+// Solidity: function isMinter(account address) constant returns(bool)
+func (_ERC721 *ERC721CallerSession) IsMinter(account common.Address) (bool, error) {
+	return _ERC721.Contract.IsMinter(&_ERC721.CallOpts, account)
 }
 
 // Name is a free data retrieval call binding the contract method 0x06fdde03.
@@ -330,54 +318,54 @@ func (_ERC721 *ERC721CallerSession) Name() (string, error) {
 
 // OwnerOf is a free data retrieval call binding the contract method 0x6352211e.
 //
-// Solidity: function ownerOf(_tokenId uint256) constant returns(address)
-func (_ERC721 *ERC721Caller) OwnerOf(opts *bind.CallOpts, _tokenId *big.Int) (common.Address, error) {
+// Solidity: function ownerOf(tokenId uint256) constant returns(address)
+func (_ERC721 *ERC721Caller) OwnerOf(opts *bind.CallOpts, tokenId *big.Int) (common.Address, error) {
 	var (
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "ownerOf", _tokenId)
+	err := _ERC721.contract.Call(opts, out, "ownerOf", tokenId)
 	return *ret0, err
 }
 
 // OwnerOf is a free data retrieval call binding the contract method 0x6352211e.
 //
-// Solidity: function ownerOf(_tokenId uint256) constant returns(address)
-func (_ERC721 *ERC721Session) OwnerOf(_tokenId *big.Int) (common.Address, error) {
-	return _ERC721.Contract.OwnerOf(&_ERC721.CallOpts, _tokenId)
+// Solidity: function ownerOf(tokenId uint256) constant returns(address)
+func (_ERC721 *ERC721Session) OwnerOf(tokenId *big.Int) (common.Address, error) {
+	return _ERC721.Contract.OwnerOf(&_ERC721.CallOpts, tokenId)
 }
 
 // OwnerOf is a free data retrieval call binding the contract method 0x6352211e.
 //
-// Solidity: function ownerOf(_tokenId uint256) constant returns(address)
-func (_ERC721 *ERC721CallerSession) OwnerOf(_tokenId *big.Int) (common.Address, error) {
-	return _ERC721.Contract.OwnerOf(&_ERC721.CallOpts, _tokenId)
+// Solidity: function ownerOf(tokenId uint256) constant returns(address)
+func (_ERC721 *ERC721CallerSession) OwnerOf(tokenId *big.Int) (common.Address, error) {
+	return _ERC721.Contract.OwnerOf(&_ERC721.CallOpts, tokenId)
 }
 
 // SupportsInterface is a free data retrieval call binding the contract method 0x01ffc9a7.
 //
-// Solidity: function supportsInterface(_interfaceId bytes4) constant returns(bool)
-func (_ERC721 *ERC721Caller) SupportsInterface(opts *bind.CallOpts, _interfaceId [4]byte) (bool, error) {
+// Solidity: function supportsInterface(interfaceId bytes4) constant returns(bool)
+func (_ERC721 *ERC721Caller) SupportsInterface(opts *bind.CallOpts, interfaceId [4]byte) (bool, error) {
 	var (
 		ret0 = new(bool)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "supportsInterface", _interfaceId)
+	err := _ERC721.contract.Call(opts, out, "supportsInterface", interfaceId)
 	return *ret0, err
 }
 
 // SupportsInterface is a free data retrieval call binding the contract method 0x01ffc9a7.
 //
-// Solidity: function supportsInterface(_interfaceId bytes4) constant returns(bool)
-func (_ERC721 *ERC721Session) SupportsInterface(_interfaceId [4]byte) (bool, error) {
-	return _ERC721.Contract.SupportsInterface(&_ERC721.CallOpts, _interfaceId)
+// Solidity: function supportsInterface(interfaceId bytes4) constant returns(bool)
+func (_ERC721 *ERC721Session) SupportsInterface(interfaceId [4]byte) (bool, error) {
+	return _ERC721.Contract.SupportsInterface(&_ERC721.CallOpts, interfaceId)
 }
 
 // SupportsInterface is a free data retrieval call binding the contract method 0x01ffc9a7.
 //
-// Solidity: function supportsInterface(_interfaceId bytes4) constant returns(bool)
-func (_ERC721 *ERC721CallerSession) SupportsInterface(_interfaceId [4]byte) (bool, error) {
-	return _ERC721.Contract.SupportsInterface(&_ERC721.CallOpts, _interfaceId)
+// Solidity: function supportsInterface(interfaceId bytes4) constant returns(bool)
+func (_ERC721 *ERC721CallerSession) SupportsInterface(interfaceId [4]byte) (bool, error) {
+	return _ERC721.Contract.SupportsInterface(&_ERC721.CallOpts, interfaceId)
 }
 
 // Symbol is a free data retrieval call binding the contract method 0x95d89b41.
@@ -408,80 +396,80 @@ func (_ERC721 *ERC721CallerSession) Symbol() (string, error) {
 
 // TokenByIndex is a free data retrieval call binding the contract method 0x4f6ccce7.
 //
-// Solidity: function tokenByIndex(_index uint256) constant returns(uint256)
-func (_ERC721 *ERC721Caller) TokenByIndex(opts *bind.CallOpts, _index *big.Int) (*big.Int, error) {
+// Solidity: function tokenByIndex(index uint256) constant returns(uint256)
+func (_ERC721 *ERC721Caller) TokenByIndex(opts *bind.CallOpts, index *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "tokenByIndex", _index)
+	err := _ERC721.contract.Call(opts, out, "tokenByIndex", index)
 	return *ret0, err
 }
 
 // TokenByIndex is a free data retrieval call binding the contract method 0x4f6ccce7.
 //
-// Solidity: function tokenByIndex(_index uint256) constant returns(uint256)
-func (_ERC721 *ERC721Session) TokenByIndex(_index *big.Int) (*big.Int, error) {
-	return _ERC721.Contract.TokenByIndex(&_ERC721.CallOpts, _index)
+// Solidity: function tokenByIndex(index uint256) constant returns(uint256)
+func (_ERC721 *ERC721Session) TokenByIndex(index *big.Int) (*big.Int, error) {
+	return _ERC721.Contract.TokenByIndex(&_ERC721.CallOpts, index)
 }
 
 // TokenByIndex is a free data retrieval call binding the contract method 0x4f6ccce7.
 //
-// Solidity: function tokenByIndex(_index uint256) constant returns(uint256)
-func (_ERC721 *ERC721CallerSession) TokenByIndex(_index *big.Int) (*big.Int, error) {
-	return _ERC721.Contract.TokenByIndex(&_ERC721.CallOpts, _index)
+// Solidity: function tokenByIndex(index uint256) constant returns(uint256)
+func (_ERC721 *ERC721CallerSession) TokenByIndex(index *big.Int) (*big.Int, error) {
+	return _ERC721.Contract.TokenByIndex(&_ERC721.CallOpts, index)
 }
 
 // TokenOfOwnerByIndex is a free data retrieval call binding the contract method 0x2f745c59.
 //
-// Solidity: function tokenOfOwnerByIndex(_owner address, _index uint256) constant returns(uint256)
-func (_ERC721 *ERC721Caller) TokenOfOwnerByIndex(opts *bind.CallOpts, _owner common.Address, _index *big.Int) (*big.Int, error) {
+// Solidity: function tokenOfOwnerByIndex(owner address, index uint256) constant returns(uint256)
+func (_ERC721 *ERC721Caller) TokenOfOwnerByIndex(opts *bind.CallOpts, owner common.Address, index *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "tokenOfOwnerByIndex", _owner, _index)
+	err := _ERC721.contract.Call(opts, out, "tokenOfOwnerByIndex", owner, index)
 	return *ret0, err
 }
 
 // TokenOfOwnerByIndex is a free data retrieval call binding the contract method 0x2f745c59.
 //
-// Solidity: function tokenOfOwnerByIndex(_owner address, _index uint256) constant returns(uint256)
-func (_ERC721 *ERC721Session) TokenOfOwnerByIndex(_owner common.Address, _index *big.Int) (*big.Int, error) {
-	return _ERC721.Contract.TokenOfOwnerByIndex(&_ERC721.CallOpts, _owner, _index)
+// Solidity: function tokenOfOwnerByIndex(owner address, index uint256) constant returns(uint256)
+func (_ERC721 *ERC721Session) TokenOfOwnerByIndex(owner common.Address, index *big.Int) (*big.Int, error) {
+	return _ERC721.Contract.TokenOfOwnerByIndex(&_ERC721.CallOpts, owner, index)
 }
 
 // TokenOfOwnerByIndex is a free data retrieval call binding the contract method 0x2f745c59.
 //
-// Solidity: function tokenOfOwnerByIndex(_owner address, _index uint256) constant returns(uint256)
-func (_ERC721 *ERC721CallerSession) TokenOfOwnerByIndex(_owner common.Address, _index *big.Int) (*big.Int, error) {
-	return _ERC721.Contract.TokenOfOwnerByIndex(&_ERC721.CallOpts, _owner, _index)
+// Solidity: function tokenOfOwnerByIndex(owner address, index uint256) constant returns(uint256)
+func (_ERC721 *ERC721CallerSession) TokenOfOwnerByIndex(owner common.Address, index *big.Int) (*big.Int, error) {
+	return _ERC721.Contract.TokenOfOwnerByIndex(&_ERC721.CallOpts, owner, index)
 }
 
 // TokenURI is a free data retrieval call binding the contract method 0xc87b56dd.
 //
-// Solidity: function tokenURI(_tokenId uint256) constant returns(string)
-func (_ERC721 *ERC721Caller) TokenURI(opts *bind.CallOpts, _tokenId *big.Int) (string, error) {
+// Solidity: function tokenURI(tokenId uint256) constant returns(string)
+func (_ERC721 *ERC721Caller) TokenURI(opts *bind.CallOpts, tokenId *big.Int) (string, error) {
 	var (
 		ret0 = new(string)
 	)
 	out := ret0
-	err := _ERC721.contract.Call(opts, out, "tokenURI", _tokenId)
+	err := _ERC721.contract.Call(opts, out, "tokenURI", tokenId)
 	return *ret0, err
 }
 
 // TokenURI is a free data retrieval call binding the contract method 0xc87b56dd.
 //
-// Solidity: function tokenURI(_tokenId uint256) constant returns(string)
-func (_ERC721 *ERC721Session) TokenURI(_tokenId *big.Int) (string, error) {
-	return _ERC721.Contract.TokenURI(&_ERC721.CallOpts, _tokenId)
+// Solidity: function tokenURI(tokenId uint256) constant returns(string)
+func (_ERC721 *ERC721Session) TokenURI(tokenId *big.Int) (string, error) {
+	return _ERC721.Contract.TokenURI(&_ERC721.CallOpts, tokenId)
 }
 
 // TokenURI is a free data retrieval call binding the contract method 0xc87b56dd.
 //
-// Solidity: function tokenURI(_tokenId uint256) constant returns(string)
-func (_ERC721 *ERC721CallerSession) TokenURI(_tokenId *big.Int) (string, error) {
-	return _ERC721.Contract.TokenURI(&_ERC721.CallOpts, _tokenId)
+// Solidity: function tokenURI(tokenId uint256) constant returns(string)
+func (_ERC721 *ERC721CallerSession) TokenURI(tokenId *big.Int) (string, error) {
+	return _ERC721.Contract.TokenURI(&_ERC721.CallOpts, tokenId)
 }
 
 // TotalSupply is a free data retrieval call binding the contract method 0x18160ddd.
@@ -510,88 +498,256 @@ func (_ERC721 *ERC721CallerSession) TotalSupply() (*big.Int, error) {
 	return _ERC721.Contract.TotalSupply(&_ERC721.CallOpts)
 }
 
-// Approve is a paid mutator transaction binding the contract method 0x095ea7b3.
+// AddGateway is a paid mutator transaction binding the contract method 0x68bb3795.
 //
-// Solidity: function approve(_to address, _tokenId uint256) returns()
-func (_ERC721 *ERC721Transactor) Approve(opts *bind.TransactOpts, _to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
-	return _ERC721.contract.Transact(opts, "approve", _to, _tokenId)
+// Solidity: function addGateway(_gateway address) returns()
+func (_ERC721 *ERC721Transactor) AddGateway(opts *bind.TransactOpts, _gateway common.Address) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "addGateway", _gateway)
+}
+
+// AddGateway is a paid mutator transaction binding the contract method 0x68bb3795.
+//
+// Solidity: function addGateway(_gateway address) returns()
+func (_ERC721 *ERC721Session) AddGateway(_gateway common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.AddGateway(&_ERC721.TransactOpts, _gateway)
+}
+
+// AddGateway is a paid mutator transaction binding the contract method 0x68bb3795.
+//
+// Solidity: function addGateway(_gateway address) returns()
+func (_ERC721 *ERC721TransactorSession) AddGateway(_gateway common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.AddGateway(&_ERC721.TransactOpts, _gateway)
+}
+
+// AddMinter is a paid mutator transaction binding the contract method 0x983b2d56.
+//
+// Solidity: function addMinter(account address) returns()
+func (_ERC721 *ERC721Transactor) AddMinter(opts *bind.TransactOpts, account common.Address) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "addMinter", account)
+}
+
+// AddMinter is a paid mutator transaction binding the contract method 0x983b2d56.
+//
+// Solidity: function addMinter(account address) returns()
+func (_ERC721 *ERC721Session) AddMinter(account common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.AddMinter(&_ERC721.TransactOpts, account)
+}
+
+// AddMinter is a paid mutator transaction binding the contract method 0x983b2d56.
+//
+// Solidity: function addMinter(account address) returns()
+func (_ERC721 *ERC721TransactorSession) AddMinter(account common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.AddMinter(&_ERC721.TransactOpts, account)
+}
+
+// AddValidator is a paid mutator transaction binding the contract method 0x4d238c8e.
+//
+// Solidity: function addValidator(newValidator address) returns()
+func (_ERC721 *ERC721Transactor) AddValidator(opts *bind.TransactOpts, newValidator common.Address) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "addValidator", newValidator)
+}
+
+// AddValidator is a paid mutator transaction binding the contract method 0x4d238c8e.
+//
+// Solidity: function addValidator(newValidator address) returns()
+func (_ERC721 *ERC721Session) AddValidator(newValidator common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.AddValidator(&_ERC721.TransactOpts, newValidator)
+}
+
+// AddValidator is a paid mutator transaction binding the contract method 0x4d238c8e.
+//
+// Solidity: function addValidator(newValidator address) returns()
+func (_ERC721 *ERC721TransactorSession) AddValidator(newValidator common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.AddValidator(&_ERC721.TransactOpts, newValidator)
 }
 
 // Approve is a paid mutator transaction binding the contract method 0x095ea7b3.
 //
-// Solidity: function approve(_to address, _tokenId uint256) returns()
-func (_ERC721 *ERC721Session) Approve(_to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
-	return _ERC721.Contract.Approve(&_ERC721.TransactOpts, _to, _tokenId)
+// Solidity: function approve(to address, tokenId uint256) returns()
+func (_ERC721 *ERC721Transactor) Approve(opts *bind.TransactOpts, to common.Address, tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "approve", to, tokenId)
 }
 
 // Approve is a paid mutator transaction binding the contract method 0x095ea7b3.
 //
-// Solidity: function approve(_to address, _tokenId uint256) returns()
-func (_ERC721 *ERC721TransactorSession) Approve(_to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
-	return _ERC721.Contract.Approve(&_ERC721.TransactOpts, _to, _tokenId)
+// Solidity: function approve(to address, tokenId uint256) returns()
+func (_ERC721 *ERC721Session) Approve(to common.Address, tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.Approve(&_ERC721.TransactOpts, to, tokenId)
+}
+
+// Approve is a paid mutator transaction binding the contract method 0x095ea7b3.
+//
+// Solidity: function approve(to address, tokenId uint256) returns()
+func (_ERC721 *ERC721TransactorSession) Approve(to common.Address, tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.Approve(&_ERC721.TransactOpts, to, tokenId)
+}
+
+// Mint is a paid mutator transaction binding the contract method 0x40c10f19.
+//
+// Solidity: function mint(_to address, _tokenId uint256) returns(bool)
+func (_ERC721 *ERC721Transactor) Mint(opts *bind.TransactOpts, _to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "mint", _to, _tokenId)
+}
+
+// Mint is a paid mutator transaction binding the contract method 0x40c10f19.
+//
+// Solidity: function mint(_to address, _tokenId uint256) returns(bool)
+func (_ERC721 *ERC721Session) Mint(_to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.Mint(&_ERC721.TransactOpts, _to, _tokenId)
+}
+
+// Mint is a paid mutator transaction binding the contract method 0x40c10f19.
+//
+// Solidity: function mint(_to address, _tokenId uint256) returns(bool)
+func (_ERC721 *ERC721TransactorSession) Mint(_to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.Mint(&_ERC721.TransactOpts, _to, _tokenId)
+}
+
+// MintTo is a paid mutator transaction binding the contract method 0x449a52f8.
+//
+// Solidity: function mintTo(_address address, _tokenId uint256) returns()
+func (_ERC721 *ERC721Transactor) MintTo(opts *bind.TransactOpts, _address common.Address, _tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "mintTo", _address, _tokenId)
+}
+
+// MintTo is a paid mutator transaction binding the contract method 0x449a52f8.
+//
+// Solidity: function mintTo(_address address, _tokenId uint256) returns()
+func (_ERC721 *ERC721Session) MintTo(_address common.Address, _tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.MintTo(&_ERC721.TransactOpts, _address, _tokenId)
+}
+
+// MintTo is a paid mutator transaction binding the contract method 0x449a52f8.
+//
+// Solidity: function mintTo(_address address, _tokenId uint256) returns()
+func (_ERC721 *ERC721TransactorSession) MintTo(_address common.Address, _tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.MintTo(&_ERC721.TransactOpts, _address, _tokenId)
+}
+
+// RemoveGateway is a paid mutator transaction binding the contract method 0x8a885e35.
+//
+// Solidity: function removeGateway(_gateway address) returns()
+func (_ERC721 *ERC721Transactor) RemoveGateway(opts *bind.TransactOpts, _gateway common.Address) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "removeGateway", _gateway)
+}
+
+// RemoveGateway is a paid mutator transaction binding the contract method 0x8a885e35.
+//
+// Solidity: function removeGateway(_gateway address) returns()
+func (_ERC721 *ERC721Session) RemoveGateway(_gateway common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.RemoveGateway(&_ERC721.TransactOpts, _gateway)
+}
+
+// RemoveGateway is a paid mutator transaction binding the contract method 0x8a885e35.
+//
+// Solidity: function removeGateway(_gateway address) returns()
+func (_ERC721 *ERC721TransactorSession) RemoveGateway(_gateway common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.RemoveGateway(&_ERC721.TransactOpts, _gateway)
+}
+
+// RemoveValidator is a paid mutator transaction binding the contract method 0x40a141ff.
+//
+// Solidity: function removeValidator(validator address) returns()
+func (_ERC721 *ERC721Transactor) RemoveValidator(opts *bind.TransactOpts, validator common.Address) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "removeValidator", validator)
+}
+
+// RemoveValidator is a paid mutator transaction binding the contract method 0x40a141ff.
+//
+// Solidity: function removeValidator(validator address) returns()
+func (_ERC721 *ERC721Session) RemoveValidator(validator common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.RemoveValidator(&_ERC721.TransactOpts, validator)
+}
+
+// RemoveValidator is a paid mutator transaction binding the contract method 0x40a141ff.
+//
+// Solidity: function removeValidator(validator address) returns()
+func (_ERC721 *ERC721TransactorSession) RemoveValidator(validator common.Address) (*types.Transaction, error) {
+	return _ERC721.Contract.RemoveValidator(&_ERC721.TransactOpts, validator)
+}
+
+// RenounceMinter is a paid mutator transaction binding the contract method 0x98650275.
+//
+// Solidity: function renounceMinter() returns()
+func (_ERC721 *ERC721Transactor) RenounceMinter(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "renounceMinter")
+}
+
+// RenounceMinter is a paid mutator transaction binding the contract method 0x98650275.
+//
+// Solidity: function renounceMinter() returns()
+func (_ERC721 *ERC721Session) RenounceMinter() (*types.Transaction, error) {
+	return _ERC721.Contract.RenounceMinter(&_ERC721.TransactOpts)
+}
+
+// RenounceMinter is a paid mutator transaction binding the contract method 0x98650275.
+//
+// Solidity: function renounceMinter() returns()
+func (_ERC721 *ERC721TransactorSession) RenounceMinter() (*types.Transaction, error) {
+	return _ERC721.Contract.RenounceMinter(&_ERC721.TransactOpts)
 }
 
 // SafeTransferFrom is a paid mutator transaction binding the contract method 0xb88d4fde.
 //
-// Solidity: function safeTransferFrom(_from address, _to address, _tokenId uint256, _data bytes) returns()
-func (_ERC721 *ERC721Transactor) SafeTransferFrom(opts *bind.TransactOpts, _from common.Address, _to common.Address, _tokenId *big.Int, _data []byte) (*types.Transaction, error) {
-	return _ERC721.contract.Transact(opts, "safeTransferFrom", _from, _to, _tokenId, _data)
+// Solidity: function safeTransferFrom(from address, to address, tokenId uint256, _data bytes) returns()
+func (_ERC721 *ERC721Transactor) SafeTransferFrom(opts *bind.TransactOpts, from common.Address, to common.Address, tokenId *big.Int, _data []byte) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "safeTransferFrom", from, to, tokenId, _data)
 }
 
 // SafeTransferFrom is a paid mutator transaction binding the contract method 0xb88d4fde.
 //
-// Solidity: function safeTransferFrom(_from address, _to address, _tokenId uint256, _data bytes) returns()
-func (_ERC721 *ERC721Session) SafeTransferFrom(_from common.Address, _to common.Address, _tokenId *big.Int, _data []byte) (*types.Transaction, error) {
-	return _ERC721.Contract.SafeTransferFrom(&_ERC721.TransactOpts, _from, _to, _tokenId, _data)
+// Solidity: function safeTransferFrom(from address, to address, tokenId uint256, _data bytes) returns()
+func (_ERC721 *ERC721Session) SafeTransferFrom(from common.Address, to common.Address, tokenId *big.Int, _data []byte) (*types.Transaction, error) {
+	return _ERC721.Contract.SafeTransferFrom(&_ERC721.TransactOpts, from, to, tokenId, _data)
 }
 
 // SafeTransferFrom is a paid mutator transaction binding the contract method 0xb88d4fde.
 //
-// Solidity: function safeTransferFrom(_from address, _to address, _tokenId uint256, _data bytes) returns()
-func (_ERC721 *ERC721TransactorSession) SafeTransferFrom(_from common.Address, _to common.Address, _tokenId *big.Int, _data []byte) (*types.Transaction, error) {
-	return _ERC721.Contract.SafeTransferFrom(&_ERC721.TransactOpts, _from, _to, _tokenId, _data)
+// Solidity: function safeTransferFrom(from address, to address, tokenId uint256, _data bytes) returns()
+func (_ERC721 *ERC721TransactorSession) SafeTransferFrom(from common.Address, to common.Address, tokenId *big.Int, _data []byte) (*types.Transaction, error) {
+	return _ERC721.Contract.SafeTransferFrom(&_ERC721.TransactOpts, from, to, tokenId, _data)
 }
 
 // SetApprovalForAll is a paid mutator transaction binding the contract method 0xa22cb465.
 //
-// Solidity: function setApprovalForAll(_to address, _approved bool) returns()
-func (_ERC721 *ERC721Transactor) SetApprovalForAll(opts *bind.TransactOpts, _to common.Address, _approved bool) (*types.Transaction, error) {
-	return _ERC721.contract.Transact(opts, "setApprovalForAll", _to, _approved)
+// Solidity: function setApprovalForAll(to address, approved bool) returns()
+func (_ERC721 *ERC721Transactor) SetApprovalForAll(opts *bind.TransactOpts, to common.Address, approved bool) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "setApprovalForAll", to, approved)
 }
 
 // SetApprovalForAll is a paid mutator transaction binding the contract method 0xa22cb465.
 //
-// Solidity: function setApprovalForAll(_to address, _approved bool) returns()
-func (_ERC721 *ERC721Session) SetApprovalForAll(_to common.Address, _approved bool) (*types.Transaction, error) {
-	return _ERC721.Contract.SetApprovalForAll(&_ERC721.TransactOpts, _to, _approved)
+// Solidity: function setApprovalForAll(to address, approved bool) returns()
+func (_ERC721 *ERC721Session) SetApprovalForAll(to common.Address, approved bool) (*types.Transaction, error) {
+	return _ERC721.Contract.SetApprovalForAll(&_ERC721.TransactOpts, to, approved)
 }
 
 // SetApprovalForAll is a paid mutator transaction binding the contract method 0xa22cb465.
 //
-// Solidity: function setApprovalForAll(_to address, _approved bool) returns()
-func (_ERC721 *ERC721TransactorSession) SetApprovalForAll(_to common.Address, _approved bool) (*types.Transaction, error) {
-	return _ERC721.Contract.SetApprovalForAll(&_ERC721.TransactOpts, _to, _approved)
+// Solidity: function setApprovalForAll(to address, approved bool) returns()
+func (_ERC721 *ERC721TransactorSession) SetApprovalForAll(to common.Address, approved bool) (*types.Transaction, error) {
+	return _ERC721.Contract.SetApprovalForAll(&_ERC721.TransactOpts, to, approved)
 }
 
 // TransferFrom is a paid mutator transaction binding the contract method 0x23b872dd.
 //
-// Solidity: function transferFrom(_from address, _to address, _tokenId uint256) returns()
-func (_ERC721 *ERC721Transactor) TransferFrom(opts *bind.TransactOpts, _from common.Address, _to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
-	return _ERC721.contract.Transact(opts, "transferFrom", _from, _to, _tokenId)
+// Solidity: function transferFrom(from address, to address, tokenId uint256) returns()
+func (_ERC721 *ERC721Transactor) TransferFrom(opts *bind.TransactOpts, from common.Address, to common.Address, tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.contract.Transact(opts, "transferFrom", from, to, tokenId)
 }
 
 // TransferFrom is a paid mutator transaction binding the contract method 0x23b872dd.
 //
-// Solidity: function transferFrom(_from address, _to address, _tokenId uint256) returns()
-func (_ERC721 *ERC721Session) TransferFrom(_from common.Address, _to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
-	return _ERC721.Contract.TransferFrom(&_ERC721.TransactOpts, _from, _to, _tokenId)
+// Solidity: function transferFrom(from address, to address, tokenId uint256) returns()
+func (_ERC721 *ERC721Session) TransferFrom(from common.Address, to common.Address, tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.TransferFrom(&_ERC721.TransactOpts, from, to, tokenId)
 }
 
 // TransferFrom is a paid mutator transaction binding the contract method 0x23b872dd.
 //
-// Solidity: function transferFrom(_from address, _to address, _tokenId uint256) returns()
-func (_ERC721 *ERC721TransactorSession) TransferFrom(_from common.Address, _to common.Address, _tokenId *big.Int) (*types.Transaction, error) {
-	return _ERC721.Contract.TransferFrom(&_ERC721.TransactOpts, _from, _to, _tokenId)
+// Solidity: function transferFrom(from address, to address, tokenId uint256) returns()
+func (_ERC721 *ERC721TransactorSession) TransferFrom(from common.Address, to common.Address, tokenId *big.Int) (*types.Transaction, error) {
+	return _ERC721.Contract.TransferFrom(&_ERC721.TransactOpts, from, to, tokenId)
 }
 
 // ERC721ApprovalIterator is returned from FilterApproval and is used to iterate over the raw logs and unpacked data for Approval events raised by the ERC721 contract.
@@ -671,23 +827,23 @@ type ERC721Approval struct {
 
 // FilterApproval is a free log retrieval operation binding the contract event 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925.
 //
-// Solidity: e Approval(_owner indexed address, _approved indexed address, _tokenId indexed uint256)
-func (_ERC721 *ERC721Filterer) FilterApproval(opts *bind.FilterOpts, _owner []common.Address, _approved []common.Address, _tokenId []*big.Int) (*ERC721ApprovalIterator, error) {
+// Solidity: e Approval(owner indexed address, approved indexed address, tokenId indexed uint256)
+func (_ERC721 *ERC721Filterer) FilterApproval(opts *bind.FilterOpts, owner []common.Address, approved []common.Address, tokenId []*big.Int) (*ERC721ApprovalIterator, error) {
 
-	var _ownerRule []interface{}
-	for _, _ownerItem := range _owner {
-		_ownerRule = append(_ownerRule, _ownerItem)
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
 	}
-	var _approvedRule []interface{}
-	for _, _approvedItem := range _approved {
-		_approvedRule = append(_approvedRule, _approvedItem)
+	var approvedRule []interface{}
+	for _, approvedItem := range approved {
+		approvedRule = append(approvedRule, approvedItem)
 	}
-	var _tokenIdRule []interface{}
-	for _, _tokenIdItem := range _tokenId {
-		_tokenIdRule = append(_tokenIdRule, _tokenIdItem)
+	var tokenIdRule []interface{}
+	for _, tokenIdItem := range tokenId {
+		tokenIdRule = append(tokenIdRule, tokenIdItem)
 	}
 
-	logs, sub, err := _ERC721.contract.FilterLogs(opts, "Approval", _ownerRule, _approvedRule, _tokenIdRule)
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "Approval", ownerRule, approvedRule, tokenIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -696,23 +852,23 @@ func (_ERC721 *ERC721Filterer) FilterApproval(opts *bind.FilterOpts, _owner []co
 
 // WatchApproval is a free log subscription operation binding the contract event 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925.
 //
-// Solidity: e Approval(_owner indexed address, _approved indexed address, _tokenId indexed uint256)
-func (_ERC721 *ERC721Filterer) WatchApproval(opts *bind.WatchOpts, sink chan<- *ERC721Approval, _owner []common.Address, _approved []common.Address, _tokenId []*big.Int) (event.Subscription, error) {
+// Solidity: e Approval(owner indexed address, approved indexed address, tokenId indexed uint256)
+func (_ERC721 *ERC721Filterer) WatchApproval(opts *bind.WatchOpts, sink chan<- *ERC721Approval, owner []common.Address, approved []common.Address, tokenId []*big.Int) (event.Subscription, error) {
 
-	var _ownerRule []interface{}
-	for _, _ownerItem := range _owner {
-		_ownerRule = append(_ownerRule, _ownerItem)
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
 	}
-	var _approvedRule []interface{}
-	for _, _approvedItem := range _approved {
-		_approvedRule = append(_approvedRule, _approvedItem)
+	var approvedRule []interface{}
+	for _, approvedItem := range approved {
+		approvedRule = append(approvedRule, approvedItem)
 	}
-	var _tokenIdRule []interface{}
-	for _, _tokenIdItem := range _tokenId {
-		_tokenIdRule = append(_tokenIdRule, _tokenIdItem)
+	var tokenIdRule []interface{}
+	for _, tokenIdItem := range tokenId {
+		tokenIdRule = append(tokenIdRule, tokenIdItem)
 	}
 
-	logs, sub, err := _ERC721.contract.WatchLogs(opts, "Approval", _ownerRule, _approvedRule, _tokenIdRule)
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "Approval", ownerRule, approvedRule, tokenIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -821,19 +977,19 @@ type ERC721ApprovalForAll struct {
 
 // FilterApprovalForAll is a free log retrieval operation binding the contract event 0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31.
 //
-// Solidity: e ApprovalForAll(_owner indexed address, _operator indexed address, _approved bool)
-func (_ERC721 *ERC721Filterer) FilterApprovalForAll(opts *bind.FilterOpts, _owner []common.Address, _operator []common.Address) (*ERC721ApprovalForAllIterator, error) {
+// Solidity: e ApprovalForAll(owner indexed address, operator indexed address, approved bool)
+func (_ERC721 *ERC721Filterer) FilterApprovalForAll(opts *bind.FilterOpts, owner []common.Address, operator []common.Address) (*ERC721ApprovalForAllIterator, error) {
 
-	var _ownerRule []interface{}
-	for _, _ownerItem := range _owner {
-		_ownerRule = append(_ownerRule, _ownerItem)
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
 	}
-	var _operatorRule []interface{}
-	for _, _operatorItem := range _operator {
-		_operatorRule = append(_operatorRule, _operatorItem)
+	var operatorRule []interface{}
+	for _, operatorItem := range operator {
+		operatorRule = append(operatorRule, operatorItem)
 	}
 
-	logs, sub, err := _ERC721.contract.FilterLogs(opts, "ApprovalForAll", _ownerRule, _operatorRule)
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "ApprovalForAll", ownerRule, operatorRule)
 	if err != nil {
 		return nil, err
 	}
@@ -842,19 +998,19 @@ func (_ERC721 *ERC721Filterer) FilterApprovalForAll(opts *bind.FilterOpts, _owne
 
 // WatchApprovalForAll is a free log subscription operation binding the contract event 0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31.
 //
-// Solidity: e ApprovalForAll(_owner indexed address, _operator indexed address, _approved bool)
-func (_ERC721 *ERC721Filterer) WatchApprovalForAll(opts *bind.WatchOpts, sink chan<- *ERC721ApprovalForAll, _owner []common.Address, _operator []common.Address) (event.Subscription, error) {
+// Solidity: e ApprovalForAll(owner indexed address, operator indexed address, approved bool)
+func (_ERC721 *ERC721Filterer) WatchApprovalForAll(opts *bind.WatchOpts, sink chan<- *ERC721ApprovalForAll, owner []common.Address, operator []common.Address) (event.Subscription, error) {
 
-	var _ownerRule []interface{}
-	for _, _ownerItem := range _owner {
-		_ownerRule = append(_ownerRule, _ownerItem)
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
 	}
-	var _operatorRule []interface{}
-	for _, _operatorItem := range _operator {
-		_operatorRule = append(_operatorRule, _operatorItem)
+	var operatorRule []interface{}
+	for _, operatorItem := range operator {
+		operatorRule = append(operatorRule, operatorItem)
 	}
 
-	logs, sub, err := _ERC721.contract.WatchLogs(opts, "ApprovalForAll", _ownerRule, _operatorRule)
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "ApprovalForAll", ownerRule, operatorRule)
 	if err != nil {
 		return nil, err
 	}
@@ -866,6 +1022,514 @@ func (_ERC721 *ERC721Filterer) WatchApprovalForAll(opts *bind.WatchOpts, sink ch
 				// New log arrived, parse the event and forward to the user
 				event := new(ERC721ApprovalForAll)
 				if err := _ERC721.contract.UnpackLog(event, "ApprovalForAll", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ERC721GatewayAddedIterator is returned from FilterGatewayAdded and is used to iterate over the raw logs and unpacked data for GatewayAdded events raised by the ERC721 contract.
+type ERC721GatewayAddedIterator struct {
+	Event *ERC721GatewayAdded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ERC721GatewayAddedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ERC721GatewayAdded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ERC721GatewayAdded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ERC721GatewayAddedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ERC721GatewayAddedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ERC721GatewayAdded represents a GatewayAdded event raised by the ERC721 contract.
+type ERC721GatewayAdded struct {
+	Gateway common.Address
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterGatewayAdded is a free log retrieval operation binding the contract event 0x7137528d21fb7b0b9462886348954009edac49570e27ef9dba8bb3a676fc11e2.
+//
+// Solidity: e GatewayAdded(gateway address)
+func (_ERC721 *ERC721Filterer) FilterGatewayAdded(opts *bind.FilterOpts) (*ERC721GatewayAddedIterator, error) {
+
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "GatewayAdded")
+	if err != nil {
+		return nil, err
+	}
+	return &ERC721GatewayAddedIterator{contract: _ERC721.contract, event: "GatewayAdded", logs: logs, sub: sub}, nil
+}
+
+// WatchGatewayAdded is a free log subscription operation binding the contract event 0x7137528d21fb7b0b9462886348954009edac49570e27ef9dba8bb3a676fc11e2.
+//
+// Solidity: e GatewayAdded(gateway address)
+func (_ERC721 *ERC721Filterer) WatchGatewayAdded(opts *bind.WatchOpts, sink chan<- *ERC721GatewayAdded) (event.Subscription, error) {
+
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "GatewayAdded")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ERC721GatewayAdded)
+				if err := _ERC721.contract.UnpackLog(event, "GatewayAdded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ERC721GatewayRemovedIterator is returned from FilterGatewayRemoved and is used to iterate over the raw logs and unpacked data for GatewayRemoved events raised by the ERC721 contract.
+type ERC721GatewayRemovedIterator struct {
+	Event *ERC721GatewayRemoved // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ERC721GatewayRemovedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ERC721GatewayRemoved)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ERC721GatewayRemoved)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ERC721GatewayRemovedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ERC721GatewayRemovedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ERC721GatewayRemoved represents a GatewayRemoved event raised by the ERC721 contract.
+type ERC721GatewayRemoved struct {
+	Gateway common.Address
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterGatewayRemoved is a free log retrieval operation binding the contract event 0x6ad07cb5676ab639fa3821550f0ec4379900d542e2d8bd8f0f8158d8bd352da2.
+//
+// Solidity: e GatewayRemoved(gateway address)
+func (_ERC721 *ERC721Filterer) FilterGatewayRemoved(opts *bind.FilterOpts) (*ERC721GatewayRemovedIterator, error) {
+
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "GatewayRemoved")
+	if err != nil {
+		return nil, err
+	}
+	return &ERC721GatewayRemovedIterator{contract: _ERC721.contract, event: "GatewayRemoved", logs: logs, sub: sub}, nil
+}
+
+// WatchGatewayRemoved is a free log subscription operation binding the contract event 0x6ad07cb5676ab639fa3821550f0ec4379900d542e2d8bd8f0f8158d8bd352da2.
+//
+// Solidity: e GatewayRemoved(gateway address)
+func (_ERC721 *ERC721Filterer) WatchGatewayRemoved(opts *bind.WatchOpts, sink chan<- *ERC721GatewayRemoved) (event.Subscription, error) {
+
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "GatewayRemoved")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ERC721GatewayRemoved)
+				if err := _ERC721.contract.UnpackLog(event, "GatewayRemoved", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ERC721MinterAddedIterator is returned from FilterMinterAdded and is used to iterate over the raw logs and unpacked data for MinterAdded events raised by the ERC721 contract.
+type ERC721MinterAddedIterator struct {
+	Event *ERC721MinterAdded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ERC721MinterAddedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ERC721MinterAdded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ERC721MinterAdded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ERC721MinterAddedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ERC721MinterAddedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ERC721MinterAdded represents a MinterAdded event raised by the ERC721 contract.
+type ERC721MinterAdded struct {
+	Account common.Address
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterMinterAdded is a free log retrieval operation binding the contract event 0x6ae172837ea30b801fbfcdd4108aa1d5bf8ff775444fd70256b44e6bf3dfc3f6.
+//
+// Solidity: e MinterAdded(account indexed address)
+func (_ERC721 *ERC721Filterer) FilterMinterAdded(opts *bind.FilterOpts, account []common.Address) (*ERC721MinterAddedIterator, error) {
+
+	var accountRule []interface{}
+	for _, accountItem := range account {
+		accountRule = append(accountRule, accountItem)
+	}
+
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "MinterAdded", accountRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ERC721MinterAddedIterator{contract: _ERC721.contract, event: "MinterAdded", logs: logs, sub: sub}, nil
+}
+
+// WatchMinterAdded is a free log subscription operation binding the contract event 0x6ae172837ea30b801fbfcdd4108aa1d5bf8ff775444fd70256b44e6bf3dfc3f6.
+//
+// Solidity: e MinterAdded(account indexed address)
+func (_ERC721 *ERC721Filterer) WatchMinterAdded(opts *bind.WatchOpts, sink chan<- *ERC721MinterAdded, account []common.Address) (event.Subscription, error) {
+
+	var accountRule []interface{}
+	for _, accountItem := range account {
+		accountRule = append(accountRule, accountItem)
+	}
+
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "MinterAdded", accountRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ERC721MinterAdded)
+				if err := _ERC721.contract.UnpackLog(event, "MinterAdded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ERC721MinterRemovedIterator is returned from FilterMinterRemoved and is used to iterate over the raw logs and unpacked data for MinterRemoved events raised by the ERC721 contract.
+type ERC721MinterRemovedIterator struct {
+	Event *ERC721MinterRemoved // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ERC721MinterRemovedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ERC721MinterRemoved)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ERC721MinterRemoved)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ERC721MinterRemovedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ERC721MinterRemovedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ERC721MinterRemoved represents a MinterRemoved event raised by the ERC721 contract.
+type ERC721MinterRemoved struct {
+	Account common.Address
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterMinterRemoved is a free log retrieval operation binding the contract event 0xe94479a9f7e1952cc78f2d6baab678adc1b772d936c6583def489e524cb66692.
+//
+// Solidity: e MinterRemoved(account indexed address)
+func (_ERC721 *ERC721Filterer) FilterMinterRemoved(opts *bind.FilterOpts, account []common.Address) (*ERC721MinterRemovedIterator, error) {
+
+	var accountRule []interface{}
+	for _, accountItem := range account {
+		accountRule = append(accountRule, accountItem)
+	}
+
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "MinterRemoved", accountRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ERC721MinterRemovedIterator{contract: _ERC721.contract, event: "MinterRemoved", logs: logs, sub: sub}, nil
+}
+
+// WatchMinterRemoved is a free log subscription operation binding the contract event 0xe94479a9f7e1952cc78f2d6baab678adc1b772d936c6583def489e524cb66692.
+//
+// Solidity: e MinterRemoved(account indexed address)
+func (_ERC721 *ERC721Filterer) WatchMinterRemoved(opts *bind.WatchOpts, sink chan<- *ERC721MinterRemoved, account []common.Address) (event.Subscription, error) {
+
+	var accountRule []interface{}
+	for _, accountItem := range account {
+		accountRule = append(accountRule, accountItem)
+	}
+
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "MinterRemoved", accountRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ERC721MinterRemoved)
+				if err := _ERC721.contract.UnpackLog(event, "MinterRemoved", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -963,23 +1627,23 @@ type ERC721Transfer struct {
 
 // FilterTransfer is a free log retrieval operation binding the contract event 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef.
 //
-// Solidity: e Transfer(_from indexed address, _to indexed address, _tokenId indexed uint256)
-func (_ERC721 *ERC721Filterer) FilterTransfer(opts *bind.FilterOpts, _from []common.Address, _to []common.Address, _tokenId []*big.Int) (*ERC721TransferIterator, error) {
+// Solidity: e Transfer(from indexed address, to indexed address, tokenId indexed uint256)
+func (_ERC721 *ERC721Filterer) FilterTransfer(opts *bind.FilterOpts, from []common.Address, to []common.Address, tokenId []*big.Int) (*ERC721TransferIterator, error) {
 
-	var _fromRule []interface{}
-	for _, _fromItem := range _from {
-		_fromRule = append(_fromRule, _fromItem)
+	var fromRule []interface{}
+	for _, fromItem := range from {
+		fromRule = append(fromRule, fromItem)
 	}
-	var _toRule []interface{}
-	for _, _toItem := range _to {
-		_toRule = append(_toRule, _toItem)
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
 	}
-	var _tokenIdRule []interface{}
-	for _, _tokenIdItem := range _tokenId {
-		_tokenIdRule = append(_tokenIdRule, _tokenIdItem)
+	var tokenIdRule []interface{}
+	for _, tokenIdItem := range tokenId {
+		tokenIdRule = append(tokenIdRule, tokenIdItem)
 	}
 
-	logs, sub, err := _ERC721.contract.FilterLogs(opts, "Transfer", _fromRule, _toRule, _tokenIdRule)
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "Transfer", fromRule, toRule, tokenIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -988,23 +1652,23 @@ func (_ERC721 *ERC721Filterer) FilterTransfer(opts *bind.FilterOpts, _from []com
 
 // WatchTransfer is a free log subscription operation binding the contract event 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef.
 //
-// Solidity: e Transfer(_from indexed address, _to indexed address, _tokenId indexed uint256)
-func (_ERC721 *ERC721Filterer) WatchTransfer(opts *bind.WatchOpts, sink chan<- *ERC721Transfer, _from []common.Address, _to []common.Address, _tokenId []*big.Int) (event.Subscription, error) {
+// Solidity: e Transfer(from indexed address, to indexed address, tokenId indexed uint256)
+func (_ERC721 *ERC721Filterer) WatchTransfer(opts *bind.WatchOpts, sink chan<- *ERC721Transfer, from []common.Address, to []common.Address, tokenId []*big.Int) (event.Subscription, error) {
 
-	var _fromRule []interface{}
-	for _, _fromItem := range _from {
-		_fromRule = append(_fromRule, _fromItem)
+	var fromRule []interface{}
+	for _, fromItem := range from {
+		fromRule = append(fromRule, fromItem)
 	}
-	var _toRule []interface{}
-	for _, _toItem := range _to {
-		_toRule = append(_toRule, _toItem)
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
 	}
-	var _tokenIdRule []interface{}
-	for _, _tokenIdItem := range _tokenId {
-		_tokenIdRule = append(_tokenIdRule, _tokenIdItem)
+	var tokenIdRule []interface{}
+	for _, tokenIdItem := range tokenId {
+		tokenIdRule = append(tokenIdRule, tokenIdItem)
 	}
 
-	logs, sub, err := _ERC721.contract.WatchLogs(opts, "Transfer", _fromRule, _toRule, _tokenIdRule)
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "Transfer", fromRule, toRule, tokenIdRule)
 	if err != nil {
 		return nil, err
 	}
@@ -1016,6 +1680,250 @@ func (_ERC721 *ERC721Filterer) WatchTransfer(opts *bind.WatchOpts, sink chan<- *
 				// New log arrived, parse the event and forward to the user
 				event := new(ERC721Transfer)
 				if err := _ERC721.contract.UnpackLog(event, "Transfer", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ERC721ValidatorAddedIterator is returned from FilterValidatorAdded and is used to iterate over the raw logs and unpacked data for ValidatorAdded events raised by the ERC721 contract.
+type ERC721ValidatorAddedIterator struct {
+	Event *ERC721ValidatorAdded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ERC721ValidatorAddedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ERC721ValidatorAdded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ERC721ValidatorAdded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ERC721ValidatorAddedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ERC721ValidatorAddedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ERC721ValidatorAdded represents a ValidatorAdded event raised by the ERC721 contract.
+type ERC721ValidatorAdded struct {
+	Validator common.Address
+	Raw       types.Log // Blockchain specific contextual infos
+}
+
+// FilterValidatorAdded is a free log retrieval operation binding the contract event 0xe366c1c0452ed8eec96861e9e54141ebff23c9ec89fe27b996b45f5ec3884987.
+//
+// Solidity: e ValidatorAdded(validator address)
+func (_ERC721 *ERC721Filterer) FilterValidatorAdded(opts *bind.FilterOpts) (*ERC721ValidatorAddedIterator, error) {
+
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "ValidatorAdded")
+	if err != nil {
+		return nil, err
+	}
+	return &ERC721ValidatorAddedIterator{contract: _ERC721.contract, event: "ValidatorAdded", logs: logs, sub: sub}, nil
+}
+
+// WatchValidatorAdded is a free log subscription operation binding the contract event 0xe366c1c0452ed8eec96861e9e54141ebff23c9ec89fe27b996b45f5ec3884987.
+//
+// Solidity: e ValidatorAdded(validator address)
+func (_ERC721 *ERC721Filterer) WatchValidatorAdded(opts *bind.WatchOpts, sink chan<- *ERC721ValidatorAdded) (event.Subscription, error) {
+
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "ValidatorAdded")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ERC721ValidatorAdded)
+				if err := _ERC721.contract.UnpackLog(event, "ValidatorAdded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ERC721ValidatorRemovedIterator is returned from FilterValidatorRemoved and is used to iterate over the raw logs and unpacked data for ValidatorRemoved events raised by the ERC721 contract.
+type ERC721ValidatorRemovedIterator struct {
+	Event *ERC721ValidatorRemoved // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ERC721ValidatorRemovedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ERC721ValidatorRemoved)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ERC721ValidatorRemoved)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ERC721ValidatorRemovedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ERC721ValidatorRemovedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ERC721ValidatorRemoved represents a ValidatorRemoved event raised by the ERC721 contract.
+type ERC721ValidatorRemoved struct {
+	Validator common.Address
+	Raw       types.Log // Blockchain specific contextual infos
+}
+
+// FilterValidatorRemoved is a free log retrieval operation binding the contract event 0xe1434e25d6611e0db941968fdc97811c982ac1602e951637d206f5fdda9dd8f1.
+//
+// Solidity: e ValidatorRemoved(validator address)
+func (_ERC721 *ERC721Filterer) FilterValidatorRemoved(opts *bind.FilterOpts) (*ERC721ValidatorRemovedIterator, error) {
+
+	logs, sub, err := _ERC721.contract.FilterLogs(opts, "ValidatorRemoved")
+	if err != nil {
+		return nil, err
+	}
+	return &ERC721ValidatorRemovedIterator{contract: _ERC721.contract, event: "ValidatorRemoved", logs: logs, sub: sub}, nil
+}
+
+// WatchValidatorRemoved is a free log subscription operation binding the contract event 0xe1434e25d6611e0db941968fdc97811c982ac1602e951637d206f5fdda9dd8f1.
+//
+// Solidity: e ValidatorRemoved(validator address)
+func (_ERC721 *ERC721Filterer) WatchValidatorRemoved(opts *bind.WatchOpts, sink chan<- *ERC721ValidatorRemoved) (event.Subscription, error) {
+
+	logs, sub, err := _ERC721.contract.WatchLogs(opts, "ValidatorRemoved")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ERC721ValidatorRemoved)
+				if err := _ERC721.contract.UnpackLog(event, "ValidatorRemoved", log); err != nil {
 					return err
 				}
 				event.Raw = log

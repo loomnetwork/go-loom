@@ -33,6 +33,7 @@ message CallTx {
 
 message MigrationTx {
     uint32 id = 1 [(gogoproto.customname)="ID"];
+    bytes input = 2;
 }
 
 message DeployResponse {
