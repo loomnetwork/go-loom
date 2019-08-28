@@ -24,8 +24,9 @@ var (
 // non-nil values (this is needed for the reflection code in SetConfigSetting to work, for now...)
 func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
-		AppStore: &cctypes.AppStoreConfig{},
-		Evm:      &cctypes.EvmConfig{},
+		AppStore:     &cctypes.AppStoreConfig{},
+		Evm:          &cctypes.EvmConfig{},
+		NonceHandler: &cctypes.NonceHandlerConfig{},
 	}
 }
 
