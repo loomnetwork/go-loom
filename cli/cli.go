@@ -29,7 +29,6 @@ var TxFlags struct {
 	HsmConfigFile string
 	Algo          string
 	CallerChainID string
-	CfgFilePath   string
 }
 
 // ContractCallCommand is deprecated in favor of CallContractWithFlags / StaticCallContractWithFlags
