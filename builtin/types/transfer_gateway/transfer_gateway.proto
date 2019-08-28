@@ -539,6 +539,5 @@ message TransferGatewayUpdateBinanceTransferFeeRequest{
 
 message TransferGatewaySwitchMainnetGatewayRequest {
   Address mainnet_address = 1;
-  Address loomcoin_mainnet_address = 2;
-  string gateway_name = 3;
+  string gateway_name = 2;
 }
