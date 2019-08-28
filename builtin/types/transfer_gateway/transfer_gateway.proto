@@ -542,3 +542,8 @@ message TransferGatewayResubmitWithdrawalError {
 message TransferGatewayUpdateBinanceTransferFeeRequest{
     BigUInt transfer_fee = 1;
 }
+
+message TransferGatewaySwitchMainnetGatewayRequest {
+  Address mainnet_address = 1;
+  string gateway_name = 2;
+}
