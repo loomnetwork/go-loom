@@ -5,6 +5,7 @@ import (
 
 	"github.com/loomnetwork/go-loom"
 
+	cctypes "github.com/loomnetwork/go-loom/builtin/types/chainconfig"
 	"github.com/loomnetwork/go-loom/types"
 	"github.com/stretchr/testify/suite"
 )
@@ -48,6 +49,16 @@ func (t *ConfigTestSuite) TestSetConfigSetting() {
 	// Set int to pointer, expect error
 	err = SetConfigSetting(config, "MockAppStoreConfig", "5555555")
 	require.Equal(ErrInvalidSettingType, err)
+}
+
+func (t *ConfigTestSuite) TestNilConfigSetting() {
+	require := t.Require()
+	var cfg cctypes.Config
+	require.Nil(cfg.GetAppStore())
+	require.Nil(cfg.GetEvm())
+	cfg2 := DefaultConfig()
+	require.NotNil(cfg2.GetAppStore())
+	require.NotNil(cfg2.GetEvm())
 }
 
 type MockAppStoreConfig struct {
