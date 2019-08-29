@@ -541,3 +541,8 @@ message TransferGatewaySwitchMainnetGatewayRequest {
   Address mainnet_address = 1;
   string gateway_name = 2;
 }
+
+message TransferGatewayResetReceiptError {
+  TransferGatewayWithdrawalReceipt withdrawal_receipt = 1;
+  string error_message = 2;
+}
