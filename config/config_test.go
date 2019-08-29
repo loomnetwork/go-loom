@@ -49,6 +49,19 @@ func (t *ConfigTestSuite) TestSetConfigSetting() {
 	// Set int to pointer, expect error
 	err = SetConfigSetting(config, "MockAppStoreConfig", "5555555")
 	require.Equal(ErrInvalidSettingType, err)
+
+	// Set random string to bool, expect error
+	err = SetConfigSetting(config, "MockAppStoreConfig.MockData5", "abcde")
+	require.Equal(ErrInvalidSettingType, err)
+	// Set number to bool, expect error
+	err = SetConfigSetting(config, "MockAppStoreConfig.MockData5", "12")
+	require.Equal(ErrInvalidSettingType, err)
+	// Set true to bool, expect true
+	SetConfigSetting(config, "MockAppStoreConfig.MockData5", "true")
+	require.Equal(config.MockAppStoreConfig.MockData5, true)
+	// Set false to bool, expect false
+	SetConfigSetting(config, "MockAppStoreConfig.MockData5", "false")
+	require.Equal(config.MockAppStoreConfig.MockData5, false)
 }
 
 func (t *ConfigTestSuite) TestNilConfigSetting() {
@@ -66,6 +79,7 @@ type MockAppStoreConfig struct {
 	MockData2 uint64
 	MockData3 string
 	MockData4 *types.BigUInt
+	MockData5 bool
 }
 
 type MockConfig struct {
@@ -79,6 +93,7 @@ func MockDefaultConfig() *MockConfig {
 			MockData2: uint64(2),
 			MockData3: "string_data",
 			MockData4: &types.BigUInt{Value: *loom.NewBigUIntFromInt(3)},
+			MockData5: true,
 		},
 	}
 }
