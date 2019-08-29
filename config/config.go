@@ -24,8 +24,9 @@ var (
 // non-nil values (this is needed for the reflection code in SetConfigSetting to work, for now...)
 func DefaultConfig() *cctypes.Config {
 	return &cctypes.Config{
-		AppStore: &cctypes.AppStoreConfig{},
-		Evm:      &cctypes.EvmConfig{},
+		AppStore:     &cctypes.AppStoreConfig{},
+		Evm:          &cctypes.EvmConfig{},
+		NonceHandler: &cctypes.NonceHandlerConfig{},
 	}
 }
 
@@ -85,6 +86,12 @@ func setField(field *reflect.Value, value string) error {
 			return ErrInvalidSettingType
 		}
 		field.Elem().Set(reflect.ValueOf(*protoBigUint))
+	case reflect.Bool:
+		val, err := strconv.ParseBool(value)
+		if err != nil {
+			return ErrInvalidSettingType
+		}
+		field.SetBool(val)
 	default:
 		return ErrInvalidSettingType
 	}
