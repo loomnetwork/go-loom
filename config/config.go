@@ -86,6 +86,12 @@ func setField(field *reflect.Value, value string) error {
 			return ErrInvalidSettingType
 		}
 		field.Elem().Set(reflect.ValueOf(*protoBigUint))
+	case reflect.Bool:
+		val, err := strconv.ParseBool(value)
+		if err != nil {
+			return ErrInvalidSettingType
+		}
+		field.SetBool(val)
 	default:
 		return ErrInvalidSettingType
 	}

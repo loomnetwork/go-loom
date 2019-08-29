@@ -106,7 +106,7 @@ message EvmConfig {
 }
 
 message NonceHandlerConfig {
-    uint64 inc_nonce_on_failed_tx = 1 [(gogoproto.jsontag) = "inc_nonce_on_failed_tx"];
+    bool inc_nonce_on_failed_tx = 1 [(gogoproto.jsontag) = "inc_nonce_on_failed_tx"];
 }
 
 message Config {
