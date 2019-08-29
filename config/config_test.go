@@ -57,10 +57,10 @@ func (t *ConfigTestSuite) TestSetConfigSetting() {
 	err = SetConfigSetting(config, "MockAppStoreConfig.MockData5", "12")
 	require.Equal(ErrInvalidSettingType, err)
 	// Set true to bool, expect true
-	err = SetConfigSetting(config, "MockAppStoreConfig.MockData5", "true")
+	SetConfigSetting(config, "MockAppStoreConfig.MockData5", "true")
 	require.Equal(config.MockAppStoreConfig.MockData5, true)
 	// Set false to bool, expect false
-	err = SetConfigSetting(config, "MockAppStoreConfig.MockData5", "false")
+	SetConfigSetting(config, "MockAppStoreConfig.MockData5", "false")
 	require.Equal(config.MockAppStoreConfig.MockData5, false)
 }
 
