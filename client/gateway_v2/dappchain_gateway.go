@@ -243,6 +243,14 @@ func (tg *DAppChainGateway) ReclaimDepositorTokens(identity *client.Identity) er
 	return err
 }
 
+func (tg *DAppChainGateway) SubmitHotWalletDepositTxHash(identity *client.Identity, txHash common.Hash) error {
+	req := &tgtypes.TransferGatewaySubmitHotWalletDepositTxHashRequest{
+		TxHash: txHash.Bytes(),
+	}
+	_, err := tg.contract.Call("SubmitHotWalletDepositTxHash", req, identity.LoomSigner, nil)
+	return err
+}
+
 type EventSub struct {
 	subscriber pubsub.Subscriber
 	closeFn    func()
