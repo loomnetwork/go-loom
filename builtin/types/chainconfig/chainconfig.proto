@@ -1,6 +1,7 @@
 syntax = "proto3";
 package chainconfig;
 import "github.com/loomnetwork/go-loom/types/types.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 message InitRequest {
     Address owner = 1;
@@ -97,16 +98,21 @@ message Action {
 }
 
 message AppStoreConfig {
-    uint64 num_evm_keys_to_prune = 1;
+    uint64 num_evm_keys_to_prune = 1 [(gogoproto.jsontag) = "num_evm_keys_to_prune"];
 }
 
 message EvmConfig {
-    uint64 gas_limit = 1;
+    uint64 gas_limit = 1 [(gogoproto.jsontag) = "gas_limit"];
+}
+
+message NonceHandlerConfig {
+    bool inc_nonce_on_failed_tx = 1 [(gogoproto.jsontag) = "inc_nonce_on_failed_tx"];
 }
 
 message Config {
     EvmConfig evm = 1;
     AppStoreConfig app_store = 2;
+    NonceHandlerConfig nonce_handler = 3;
 }
 
 message SetSettingRequest {
