@@ -99,7 +99,7 @@ message Action {
 
 message AppStoreConfig {
     uint64 num_evm_keys_to_prune = 1 [(gogoproto.jsontag) = "num_evm_keys_to_prune"];
-    uint64 iavl_flush_interval = 2 [(gogoproto.customname) = "IAVLFlushInterval"];
+    uint64 iavl_flush_interval = 2 [(gogoproto.customname) = "IAVLFlushInterval", (gogoproto.jsontag) = "iavl_flush_interval"];
 }
 
 message EvmConfig {
