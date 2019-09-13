@@ -36,6 +36,10 @@ message TransferGatewayState {
     Address mainnet_gateway_address = 6;
     // Mainnet Hot Wallet address
     Address mainnet_hot_wallet_address = 7;
+    // Current account index used for generate individual wallet address
+    uint64 current_account_index = 8;
+    // Current contract index used for generate individual wallet address
+    uint64 current_contract_index = 9;
 }
 
 message TransferGatewayOracleState {
@@ -85,6 +89,7 @@ message TransferGatewayLocalAccount {
     Address owner = 1;
     uint64 withdrawal_nonce = 2;
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
+    uint64 account_index = 4;
 }
 
 message TransferGatewayForeignAccount {
@@ -546,4 +551,43 @@ message TransferGatewayUpdateBinanceTransferFeeRequest{
 message TransferGatewaySwitchMainnetGatewayRequest {
   Address mainnet_address = 1;
   string gateway_name = 2;
+}
+
+// Individual hot wallet
+
+message TransferGatewayHotWalletAllowedToken {
+  uint64 index = 1;
+  Address contract_address = 2;
+}
+
+message TransferGatewayHotWallet {
+  Address owner = 1;
+  Address contract_address = 2;
+  uint64 contract_index = 3;
+  uint64 account_index = 4;
+  string path = 5;
+  Address wallet_address = 6;
+  TransferGatewayTxStatus status = 7;
+}
+
+message TransferGatewayHotWalletAccount {
+  Address owner = 1;
+  uint64 account_index = 2;
+  repeated TransferGatewayHotWallet wallets = 3;
+}
+
+message TransferGatewayHotWalletRequest {
+  Address owner = 1;
+}
+
+message TransferGatewayHotWalletResponse {
+  repeated TransferGatewayHotWallet wallets = 1;
+}
+
+message TransferGatewayAddAllowedTokenRequest {
+  Address foreign_contract_address = 1;
+}
+
+message TransferGatewayHotWalletsSubmitRequest {
+  string mnemonic = 1;
 }
