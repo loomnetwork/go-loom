@@ -560,7 +560,7 @@ message TransferGatewayHotWalletAllowedToken {
   Address contract_address = 2;
 }
 
-message TransferGatewayHotWallet {
+message TransferGatewayHotWalletSummary {
   Address owner = 1;
   Address contract_address = 2;
   uint64 contract_index = 3;
@@ -573,7 +573,7 @@ message TransferGatewayHotWallet {
 message TransferGatewayHotWalletAccount {
   Address owner = 1;
   uint64 account_index = 2;
-  repeated TransferGatewayHotWallet wallets = 3;
+  repeated TransferGatewayHotWalletSummary wallets = 3;
 }
 
 message TransferGatewayHotWalletRequest {
@@ -581,7 +581,7 @@ message TransferGatewayHotWalletRequest {
 }
 
 message TransferGatewayHotWalletResponse {
-  repeated TransferGatewayHotWallet wallets = 1;
+  repeated TransferGatewayHotWalletSummary wallets = 1;
 }
 
 message TransferGatewayAddAllowedTokenRequest {
