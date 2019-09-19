@@ -31,7 +31,6 @@ func AddressToB64Command() *cobra.Command {
 
 			encoder := base64.StdEncoding
 
-			fmt.Println(addr)
 			fmt.Printf("local address base64: %s\n", encoder.EncodeToString([]byte(addr)))
 			return nil
 		},
