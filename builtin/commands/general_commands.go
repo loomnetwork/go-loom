@@ -9,13 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type utilsFlags struct {
-	HexAddres string `json:"hex"`
-	ChainID   string `json:chainid`
-}
-
-var utilsFlagsCmd utilsFlags
-
 func AddressToB64Command() *cobra.Command {
 	converter := &cobra.Command{
 		Use:     "addr-to-b64",
@@ -36,18 +29,6 @@ func AddressToB64Command() *cobra.Command {
 		},
 	}
 	return converter
-}
-
-//nolint:unused
-func hexToLoomAddress(hexStr string) (loom.Address, error) {
-	addr, err := loom.LocalAddressFromHexString(hexStr)
-	if err != nil {
-		return loom.Address{}, err
-	}
-	return loom.Address{
-		ChainID: utilsFlagsCmd.ChainID,
-		Local:   addr,
-	}, nil
 }
 
 func PubkeyToAddress() *cobra.Command {
