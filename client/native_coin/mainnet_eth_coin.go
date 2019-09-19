@@ -23,16 +23,20 @@ func (ec *MainnetEthCoin) BalanceOf(address common.Address) (*big.Int, error) {
 }
 
 func (ec *MainnetEthCoin) Transfer(caller *client.Identity, from common.Address, to common.Address, amount *big.Int) error {
-	opts := client.DefaultTransactOptsForIdentity(caller)
-
 	nonce, err := ec.ethClient.PendingNonceAt(context.Background(), from)
 	if err != nil {
 		return err
 	}
+	return transfer(ec.ethClient, caller, nonce, from, to, amount)
+}
+
+func transfer(ethClient *ethclient.Client, caller *client.Identity, nonce uint64, from common.Address, to common.Address, amount *big.Int) error {
+	opts := client.DefaultTransactOptsForIdentity(caller)
+	opts.From = from
 
 	tx := types.NewTransaction(nonce, to, amount, opts.GasLimit, opts.GasPrice, []byte{})
 
-	chainID, err := ec.ethClient.NetworkID(context.Background())
+	chainID, err := ethClient.NetworkID(context.Background())
 	if err != nil {
 		return err
 	}
@@ -41,13 +45,7 @@ func (ec *MainnetEthCoin) Transfer(caller *client.Identity, from common.Address,
 	if err != nil {
 		return err
 	}
-
-	err = ec.ethClient.SendTransaction(context.Background(), signedTx)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return ethClient.SendTransaction(context.Background(), signedTx)
 }
 
 func ConnectToMainnetEthCoin(ethClient *ethclient.Client) (*MainnetEthCoin, error) {
