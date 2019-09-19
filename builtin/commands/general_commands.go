@@ -3,7 +3,6 @@ package commands
 import (
 	"encoding/base64"
 	"fmt"
-	"strings"
 
 	loom "github.com/loomnetwork/go-loom"
 	"github.com/pkg/errors"
@@ -23,28 +22,20 @@ func AddressToB64Command() *cobra.Command {
 		Short:   "convert hexstring address to base 64 address",
 		Example: "loom resolve addr-to-b64 0x9F5137fF296469cdc3D137273fF9A4Df76044758",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var addr loom.Address
 			var err error
 
-			if strings.HasPrefix(args[0], "eth:") {
-				addr, err = loom.ParseAddress(args[0])
-			} else {
-				if strings.HasPrefix(args[0], utilsFlagsCmd.ChainID+":") {
-					addr, err = loom.ParseAddress(args[0])
-				} else {
-					addr, err = hexToLoomAddress(args[0])
-				}
-			}
+			addr, err := loom.LocalAddressFromHexString(args[0])
 			if err != nil {
 				return errors.Wrap(err, "invalid account address")
 			}
+
 			encoder := base64.StdEncoding
 
-			fmt.Printf("local address base64: %s\n", encoder.EncodeToString([]byte(addr.Local)))
+			fmt.Println(addr)
+			fmt.Printf("local address base64: %s\n", encoder.EncodeToString([]byte(addr)))
 			return nil
 		},
 	}
-	converter.Flags().StringVarP(&utilsFlagsCmd.ChainID, "chain", "c", "default", "DAppChain ID")
 	return converter
 }
 
