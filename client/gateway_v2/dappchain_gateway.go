@@ -251,6 +251,15 @@ func (tg *DAppChainGateway) SubmitHotWalletDepositTxHash(identity *client.Identi
 	return err
 }
 
+func (tg *DAppChainGateway) GetHotWalletAccount(identity *client.Identity, owner loom.Address) (tgtypes.TransferGatewayHotWalletAccount, error) {
+	var resp tgtypes.TransferGatewayHotWalletAccount
+	req := &tgtypes.TransferGatewayHotWalletRequest{
+		Owner: owner.MarshalPB(),
+	}
+	_, err := tg.contract.StaticCall("GetHotWalletAccount", req, identity.LoomAddr, &resp)
+	return resp, err
+}
+
 type EventSub struct {
 	subscriber pubsub.Subscriber
 	closeFn    func()
