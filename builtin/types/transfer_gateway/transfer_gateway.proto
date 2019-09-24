@@ -36,6 +36,15 @@ message TransferGatewayState {
     Address mainnet_gateway_address = 6;
     // Mainnet Hot Wallet address
     Address mainnet_hot_wallet_address = 7;
+    // Max withdrawal amount the gateway allows daily in total
+    BigUInt max_total_daily_withdrawal_amount = 8;
+    // Max withdrawal amount the gateway allows daily per account
+    BigUInt max_per_account_daily_withdrawal_amount = 9;
+    // Timestamp that the gateway process withdrawal request
+    // This with max_total_daily_withdrawal_amount will be used to enforce daily limit
+    int64 last_withdrawal_timestamp = 10;
+    // Total sum of withdrawal amount in the gateway
+    BigUInt total_withdrawal_amount = 11;
 }
 
 message TransferGatewayOracleState {
@@ -85,6 +94,10 @@ message TransferGatewayLocalAccount {
     Address owner = 1;
     uint64 withdrawal_nonce = 2;
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
+    // Total sum of withdrawal amount
+    BigUInt total_withdrawal_amount = 4;
+    // Last withdrawal timestamp to keep track daily limit
+    int64 last_withdrawal_timestamp = 5;
 }
 
 message TransferGatewayForeignAccount {
@@ -95,6 +108,10 @@ message TransferGatewayForeignAccount {
     // Local address of the account being withdrawn from (if any).
     // This will only be set when there's a withdrawal to the Ethereum Gateway in progress.
     Address current_withdrawer = 3;
+    // Total sum of withdrawal amount
+    BigUInt total_withdrawal_amount = 4;
+    // Last withdrawal timestamp to keep track daily limit
+    int64 last_withdrawal_timestamp = 5;
 }
 
 message TransferGatewayTokenAmount {
