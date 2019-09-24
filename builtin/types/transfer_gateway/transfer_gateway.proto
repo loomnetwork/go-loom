@@ -598,3 +598,8 @@ message TransferGatewayListHotWalletsRequest {
 message TransferGatewayListHotWalletsResponse {
   repeated Address wallets = 1;
 }
+
+message TransferGatewayForeignWallet {
+  Address local_address = 1;
+  Address foreign_address = 2;
+}
