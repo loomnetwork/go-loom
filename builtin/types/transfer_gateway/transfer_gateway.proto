@@ -564,3 +564,8 @@ message TransferGatewaySwitchMainnetGatewayRequest {
   Address mainnet_address = 1;
   string gateway_name = 2;
 }
+
+message TransferGatewaySetMaxWithdrawalLimitRequest {
+    BigUInt max_total_daily_withdrawal_amount = 1;
+    BigUInt max_per_account_daily_withdrawal_amount = 2;
+}
