@@ -256,8 +256,16 @@ func (tg *DAppChainGateway) GetHotWalletAccount(identity *client.Identity, owner
 	req := &tgtypes.TransferGatewayHotWalletRequest{
 		Owner: owner.MarshalPB(),
 	}
-	_, err := tg.contract.StaticCall("GetHotWalletAccount", req, identity.LoomAddr, &resp)
+	_, err := tg.contract.Call("GetHotWalletAccount", req, identity.LoomSigner, &resp)
 	return resp, err
+}
+
+func (tg *DAppChainGateway) AddAllowedToken(identity *client.Identity, contractAddr loom.Address) error {
+	req := &tgtypes.TransferGatewayAddAllowedTokenRequest{
+		ForeignContractAddress: contractAddr.MarshalPB(),
+	}
+	_, err := tg.contract.Call("AddAllowedToken", req, identity.LoomSigner, nil)
+	return err
 }
 
 type EventSub struct {

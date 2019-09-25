@@ -592,8 +592,16 @@ message TransferGatewayHotWalletsSubmitRequest {
   string mnemonic = 1;
 }
 
+message TransferGatewayListPendingHotWalletsRequest {
+}
+
+message TransferGatewayListPendingHotWalletsResponse {
+  repeated Address wallets = 1;
+}
+
 message TransferGatewayListHotWalletsRequest {
 }
+
 
 message TransferGatewayListHotWalletsResponse {
   repeated Address wallets = 1;
