@@ -89,7 +89,6 @@ message TransferGatewayLocalAccount {
     Address owner = 1;
     uint64 withdrawal_nonce = 2;
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
-    uint64 account_index = 4;
 }
 
 message TransferGatewayForeignAccount {
@@ -131,6 +130,8 @@ message TransferGatewayTokenDeposited {
     BigUInt token_amount = 5;
     // Mainnet tx hash
     bytes tx_hash = 6;
+    // User hot wallet, used for identify user hot-wallet deposit
+    bool is_user_hot_wallet = 7;
 }
 
 
