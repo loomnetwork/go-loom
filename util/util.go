@@ -40,7 +40,7 @@ func HasPrefix(key, prefix []byte) bool {
 }
 
 // Returns the bytes that mark the end of the key range for the given prefix.
-func RrefixRangeEnd(prefix []byte) []byte {
+func PrefixRangeEnd(prefix []byte) []byte {
 	if prefix == nil {
 		return nil
 	}
