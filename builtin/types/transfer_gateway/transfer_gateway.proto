@@ -569,3 +569,27 @@ message TransferGatewaySetMaxWithdrawalLimitRequest {
     BigUInt max_total_daily_withdrawal_amount = 1;
     BigUInt max_per_account_daily_withdrawal_amount = 2;
 }
+
+message TransferGatewayGetLocalAccountWithdrawalTotalRequest {
+    // Owner address
+    Address owner = 1;
+}
+
+message TransferGatewayGetLocalAccountWithdrawalTotalResponse {
+    // Total sum of withdrawal amount
+    BigUInt total_withdrawal_amount = 1;
+    // Last withdrawal timestamp to keep track daily limit
+    int64 last_withdrawal_timestamp = 2;
+}
+
+message TransferGatewayGetForeignAccountWithdrawalTotalRequest {
+    // Owner address
+    Address owner = 1;
+}
+
+message TransferGatewayGetForeignAccountWithdrawalTotalResponse {
+    // Total sum of withdrawal amount
+    BigUInt total_withdrawal_amount = 1;
+    // Last withdrawal timestamp to keep track daily limit
+    int64 last_withdrawal_timestamp = 2;
+}
