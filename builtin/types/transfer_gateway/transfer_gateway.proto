@@ -576,14 +576,16 @@ message TransferGatewayGetLocalAccountInfoRequest {
 }
 
 message TransferGatewayGetLocalAccountInfoResponse {
-    // Total sum of withdrawal amount
-    BigUInt total_withdrawal_amount = 1;
-    // Last withdrawal timestamp to keep track daily limit
-    int64 last_withdrawal_timestamp = 2;
-    // Withdrawal nonce
-    uint64 withdrawal_nonce = 3;
+    // Local address of the local account
+    Address owner = 1;
+    // Nonce that should be used for the next withdrawal to this local account
+    uint64 withdrawal_nonce = 2;
     // Pending withdrawal receipt
-    TransferGatewayWithdrawalReceipt withdrawal_receipt = 4;
+    TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
+    // Total sum of withdrawal amount
+    BigUInt total_withdrawal_amount = 4;
+    // Last withdrawal timestamp to keep track daily limit
+    int64 last_withdrawal_timestamp = 5;
 }
 
 message TransferGatewayGetForeignAccountInfoRequest {
@@ -592,12 +594,14 @@ message TransferGatewayGetForeignAccountInfoRequest {
 }
 
 message TransferGatewayGetForeignAccountInfoResponse {
+    // Foreign address of the foreign account
+    Address owner = 1;
+    // Nonce that should be used for the next withdrawal to this foreign account
+    uint64 withdrawal_nonce = 2;
+    // Local address of the account being withdrawn from 
+    Address current_withdrawer = 3;
     // Total sum of withdrawal amount
-    BigUInt total_withdrawal_amount = 1;
+    BigUInt total_withdrawal_amount = 4;
     // Last withdrawal timestamp to keep track daily limit
-    int64 last_withdrawal_timestamp = 2;
-    // Withdrawal nonce
-    uint64 withdrawal_nonce = 3;
-    // Current associated local withdrawer address
-    Address current_withdrawer = 4;
+    int64 last_withdrawal_timestamp = 5;
 }
