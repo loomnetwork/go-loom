@@ -556,6 +556,13 @@ message TransferGatewaySwitchMainnetGatewayRequest {
 
 // Individual hot wallet
 
+message TransferGatewayListAllowedTokenRequest {
+}
+
+message TransferGatewayListAllowedTokenResponse {
+  repeated TransferGatewayHotWalletAllowedToken allowed_tokens = 1;
+}
+
 message TransferGatewayHotWalletAllowedToken {
   uint64 index = 1;
   Address contract_address = 2;

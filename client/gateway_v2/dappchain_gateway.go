@@ -264,6 +264,13 @@ func (tg *DAppChainGateway) GetHotWalletAccount(identity *client.Identity) (tgty
 	return resp, err
 }
 
+func (tg *DAppChainGateway) ListAllowedToken(identity *client.Identity) (tgtypes.TransferGatewayListAllowedTokenResponse, error) {
+	var req tgtypes.TransferGatewayListAllowedTokenRequest
+	var resp tgtypes.TransferGatewayListAllowedTokenResponse
+	_, err := tg.contract.StaticCall("ListAllowedToken", &req, identity.LoomAddr, &resp)
+	return resp, err
+}
+
 func (tg *DAppChainGateway) AddAllowedToken(identity *client.Identity, contractAddr loom.Address) error {
 	req := &tgtypes.TransferGatewayAddAllowedTokenRequest{
 		ForeignContractAddress: contractAddr.MarshalPB(),
