@@ -97,25 +97,6 @@ message Action {
     uint64 build_number = 3; // Minimum build number required for this change to take effect.
 }
 
-message AppStoreConfig {
-    uint64 num_evm_keys_to_prune = 1 [(gogoproto.jsontag) = "num_evm_keys_to_prune"];
-    uint64 iavl_flush_interval = 2 [(gogoproto.customname) = "IAVLFlushInterval", (gogoproto.jsontag) = "iavl_flush_interval"];
-}
-
-message EvmConfig {
-    uint64 gas_limit = 1 [(gogoproto.jsontag) = "gas_limit"];
-}
-
-message NonceHandlerConfig {
-    bool inc_nonce_on_failed_tx = 1 [(gogoproto.jsontag) = "inc_nonce_on_failed_tx"];
-}
-
-message Config {
-    EvmConfig evm = 1;
-    AppStoreConfig app_store = 2;
-    NonceHandlerConfig nonce_handler = 3;
-}
-
 message SetSettingRequest {
     string name = 1;
     string value = 2;
@@ -153,4 +134,30 @@ message ListValidatorsInfoRequest {
 
 message ListValidatorsInfoResponse {
     repeated ValidatorInfo validators = 1;
+}
+
+// On-chain config schema
+
+message AppStoreConfig {
+    uint64 num_evm_keys_to_prune = 1 [(gogoproto.jsontag) = "num_evm_keys_to_prune"];
+    uint64 iavl_flush_interval = 2 [(gogoproto.customname) = "IAVLFlushInterval", (gogoproto.jsontag) = "iavl_flush_interval"];
+}
+
+message EvmConfig {
+    uint64 gas_limit = 1 [(gogoproto.jsontag) = "gas_limit"];
+}
+
+message NonceHandlerConfig {
+    bool inc_nonce_on_failed_tx = 1 [(gogoproto.jsontag) = "inc_nonce_on_failed_tx"];
+}
+
+message TxRouterConfig {
+    bool use_single_route = 1 [(gogoproto.jsontag) = "use_single_route"];
+}
+
+message Config {
+    EvmConfig evm = 1;
+    AppStoreConfig app_store = 2;
+    NonceHandlerConfig nonce_handler = 3;
+    TxRouterConfig tx_router = 4;
 }
