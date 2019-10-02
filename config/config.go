@@ -27,6 +27,7 @@ func DefaultConfig() *cctypes.Config {
 		AppStore:     &cctypes.AppStoreConfig{},
 		Evm:          &cctypes.EvmConfig{},
 		NonceHandler: &cctypes.NonceHandlerConfig{},
+		TxRouter:     &cctypes.TxRouterConfig{},
 	}
 }
 
