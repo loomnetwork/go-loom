@@ -598,13 +598,6 @@ message TransferGatewayHotWalletsSubmitRequest {
   string mnemonic = 1;
 }
 
-message TransferGatewayListPendingNewWalletsRequest {
-}
-
-message TransferGatewayListPendingNewWalletsResponse {
-  repeated Address wallets = 1;
-}
-
 message TransferGatewayListHotWalletsRequest {
   Address foreign_contract_address = 1;
 }
