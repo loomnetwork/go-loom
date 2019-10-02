@@ -556,7 +556,7 @@ message TransferGatewaySwitchMainnetGatewayRequest {
 
 // User hot-wallet
 
-message TransferGatewayAddAllowedTokenRequest {
+message TransferGatewayAllowedTokenRequest {
   Address foreign_contract_address = 1;
   bool is_enabled = 2;
 }
