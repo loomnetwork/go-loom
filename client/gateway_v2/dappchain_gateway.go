@@ -271,9 +271,10 @@ func (tg *DAppChainGateway) ListAllowedToken(identity *client.Identity) (tgtypes
 	return resp, err
 }
 
-func (tg *DAppChainGateway) AddAllowedToken(identity *client.Identity, contractAddr loom.Address) error {
+func (tg *DAppChainGateway) AddAllowedToken(identity *client.Identity, contractAddr loom.Address, isEnabled bool) error {
 	req := &tgtypes.TransferGatewayAddAllowedTokenRequest{
 		ForeignContractAddress: contractAddr.MarshalPB(),
+		IsEnabled:              isEnabled,
 	}
 	_, err := tg.contract.Call("AddAllowedToken", req, identity.LoomSigner, nil)
 	return err
