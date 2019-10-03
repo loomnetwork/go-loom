@@ -13,6 +13,7 @@ import (
 	"github.com/loomnetwork/go-loom/client"
 )
 
+// MainnetEthCoin is a client-side binding for the ether on ethereum
 type MainnetEthCoin struct {
 	ethClient *ethclient.Client
 	TxTimeout time.Duration
