@@ -556,57 +556,57 @@ message TransferGatewaySwitchMainnetGatewayRequest {
 
 // User hot-wallet
 
-message TransferGatewayAllowedTokenRequest {
+message TransferGatewayUserHotWalletAllowedTokenRequest {
   Address foreign_contract_address = 1;
   bool is_enabled = 2;
 }
 
-message TransferGatewayListAllowedTokenRequest {
+message TransferGatewayUserHotWalletAllowedTokenListRequest {
 }
 
-message TransferGatewayListAllowedTokenResponse {
-  repeated TransferGatewayHotWalletAllowedToken allowed_tokens = 1;
+message TransferGatewayUserHotWalletAllowedTokenListResponse {
+  repeated TransferGatewayUserHotWalletAllowedToken allowed_tokens = 1;
 }
 
-message TransferGatewayHotWalletAllowedToken {
+message TransferGatewayUserHotWalletAllowedToken {
   uint64 index = 1;
   Address foreign_contract_address = 2;
   bool is_enabled = 3;
 }
 
-message TransferGatewayHotWalletSummary {
+message TransferGatewayUserHotWalletSummary {
   Address foreign_contract_address = 1;
   Address wallet_address = 2;
 }
 
-message TransferGatewayHotWalletAccount {
+message TransferGatewayUserHotWalletAccount {
   Address owner = 1;
   uint64 account_index = 2;
   // mapping between contract index and TransferGatewayHotWalletSummary
-  map<uint64, TransferGatewayHotWalletSummary> wallets = 3;
+  map<uint64, TransferGatewayUserHotWalletSummary> wallets = 3;
 }
 
-message TransferGatewayHotWalletRequest {
+message TransferGatewayUserHotWalletRequest {
   Address owner = 1;
 }
 
-message TransferGatewayHotWalletResponse {
-  repeated TransferGatewayHotWalletSummary wallets = 1;
+message TransferGatewayUserHotWalletResponse {
+  repeated TransferGatewayUserHotWalletSummary wallets = 1;
 }
 
-message TransferGatewayHotWalletsSubmitRequest {
+message TransferGatewayUserHotWalletSubmitRequest {
   string mnemonic = 1;
 }
 
-message TransferGatewayListHotWalletsRequest {
+message TransferGatewayUserHotWalletListRequest {
   Address foreign_contract_address = 1;
 }
 
-message TransferGatewayListHotWalletsResponse {
+message TransferGatewayUserHotWalletListResponse {
   repeated Address wallets = 1;
 }
 
-message TransferGatewayForeignWallet {
+message TransferGatewayUserHotWalletForeignWallet {
   Address local_address = 1;
   Address foreign_address = 2;
 }
