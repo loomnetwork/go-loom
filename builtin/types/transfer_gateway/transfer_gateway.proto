@@ -36,6 +36,15 @@ message TransferGatewayState {
     Address mainnet_gateway_address = 6;
     // Mainnet Hot Wallet address
     Address mainnet_hot_wallet_address = 7;
+    // Max total ETH or LOOM withdrawal amount the gateway will allow in a 24 hour withdrawal period
+    BigUInt max_total_daily_withdrawal_amount = 8;
+    // Max per-account ETH or LOOM withdrawal amount the gateway will allow in a 24 hour withdrawal period
+    BigUInt max_per_account_daily_withdrawal_amount = 9;
+    // Last time the 24 hour withdrawal period was reset
+    int64 last_withdrawal_limit_reset_time = 10;
+    // Total amount of ETH or LOOM (depending on the Gateway) withdrawn through this gateway within
+    // the last 24 hour withdrawal period (which started at last_withdrawal_limit_reset_time)
+    BigUInt total_withdrawal_amount = 11;
 }
 
 message TransferGatewayOracleState {
@@ -85,6 +94,11 @@ message TransferGatewayLocalAccount {
     Address owner = 1;
     uint64 withdrawal_nonce = 2;
     TransferGatewayWithdrawalReceipt withdrawal_receipt = 3;
+    // Total amount of ETH or LOOM (depending on the Gateway) withdrawn by this account within the
+    // last 24 hour withdrawal period (which started at last_withdrawal_limit_reset_time)
+    BigUInt total_withdrawal_amount = 4;
+    // Last time the 24 hour withdrawal period was reset for this account
+    int64 last_withdrawal_limit_reset_time = 5;
 }
 
 message TransferGatewayForeignAccount {
@@ -95,6 +109,11 @@ message TransferGatewayForeignAccount {
     // Local address of the account being withdrawn from (if any).
     // This will only be set when there's a withdrawal to the Ethereum Gateway in progress.
     Address current_withdrawer = 3;
+    // Total amount of ETH or LOOM (depending on the Gateway) withdrawn by this account within the
+    // last 24 hour withdrawal period (which started at last_withdrawal_limit_reset_time)
+    BigUInt total_withdrawal_amount = 4;
+    // Last time the 24 hour withdrawal period was reset for this account
+    int64 last_withdrawal_limit_reset_time = 5;
 }
 
 message TransferGatewayTokenAmount {
@@ -546,4 +565,45 @@ message TransferGatewayUpdateBinanceTransferFeeRequest{
 message TransferGatewaySwitchMainnetGatewayRequest {
   Address mainnet_address = 1;
   string gateway_name = 2;
+}
+
+message TransferGatewaySetMaxWithdrawalLimitRequest {
+    BigUInt max_total_daily_withdrawal_amount = 1;
+    BigUInt max_per_account_daily_withdrawal_amount = 2;
+}
+
+message TransferGatewayGetLocalAccountInfoRequest {
+    // Owner address
+    Address owner = 1;
+}
+
+message TransferGatewayGetLocalAccountInfoResponse {
+    // Local owner of the account
+    Address owner = 1;
+    // Pending withdrawal receipt (if any)
+    TransferGatewayWithdrawalReceipt withdrawal_receipt = 2;
+    // Total amount of ETH or LOOM (depending on the Gateway) withdrawn by this account within the
+    // last 24 hour withdrawal period (which started at last_withdrawal_limit_reset_time)
+    BigUInt total_withdrawal_amount = 3;
+    // Last time the 24 hour withdrawal period was reset for this account
+    int64 last_withdrawal_limit_reset_time = 4;
+}
+
+message TransferGatewayGetForeignAccountInfoRequest {
+    // Owner address
+    Address owner = 1;
+}
+
+message TransferGatewayGetForeignAccountInfoResponse {
+    // Foreign owner of the account
+    Address owner = 1;
+    // Nonce that should be used for the next withdrawal to this foreign account
+    uint64 withdrawal_nonce = 2;
+    // Local account that funds are currently being withdrawn from to credit the foreign account
+    Address current_withdrawer = 3;
+    // Total amount of ETH or LOOM (depending on the Gateway) withdrawn by this account within the
+    // last 24 hour withdrawal period (which started at last_withdrawal_limit_reset_time)
+    BigUInt total_withdrawal_amount = 4;
+    // Last time the 24 hour withdrawal period was reset for this account
+    int64 last_withdrawal_limit_reset_time = 5;
 }
