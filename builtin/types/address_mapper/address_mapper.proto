@@ -12,6 +12,10 @@ message AddressMapperMapping {
     Address to = 2;
 }
 
+message ListAddressMapperMapping {
+    repeated AddressMapperMapping mappings = 1;
+}
+
 // Genesis
 
 message AddressMapperInitRequest {
@@ -48,7 +52,6 @@ message AddressMapperListMappingRequest {
 message AddressMapperListMappingResponse {
     repeated AddressMapperMapping mappings = 1; // mapping address
 }
-
 
 message AddressMapperHasMappingRequest {
     Address from = 1;
