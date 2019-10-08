@@ -260,7 +260,20 @@ func (tg *DAppChainGateway) GetHotWalletAccount(identity *client.Identity) (tgty
 	req := &tgtypes.TransferGatewayUserHotWalletGetWalletRequest{
 		Owner: owner.MarshalPB(),
 	}
-	_, err := tg.contract.Call("GetHotWalletAccount", req, identity.LoomSigner, &resp)
+	_, err := tg.contract.StaticCall("GetHotWalletAccount", req, identity.LoomAddr, &resp)
+	return resp, err
+}
+
+func (tg *DAppChainGateway) SyncHotWalletAccount(identity *client.Identity) (tgtypes.TransferGatewayUserHotWalletGetWalletResponse, error) {
+	var resp tgtypes.TransferGatewayUserHotWalletGetWalletResponse
+	owner := loom.Address{
+		ChainID: tg.chainID,
+		Local:   identity.LoomAddr.Local,
+	}
+	req := &tgtypes.TransferGatewayUserHotWalletGetWalletRequest{
+		Owner: owner.MarshalPB(),
+	}
+	_, err := tg.contract.Call("SyncHotWalletAccount", req, identity.LoomSigner, &resp)
 	return resp, err
 }
 

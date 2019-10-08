@@ -22,6 +22,12 @@ enum TransferGatewayTxStatus {
     REJECTED = 3;
 }
 
+enum TransferGatewayDepositKind {
+  Contract = 0;
+  HotWallet = 1;
+  UserHotWallet = 2;
+}
+
 message TransferGatewayState {
     Address owner = 1;
     // Last Mainnet block processed by the Transfer Gateway contract
@@ -130,8 +136,8 @@ message TransferGatewayTokenDeposited {
     BigUInt token_amount = 5;
     // Mainnet tx hash
     bytes tx_hash = 6;
-    // Is user hot-wallet is used for identify user hot-wallet deposit
-    bool is_user_hot_wallet = 7;
+    // Deposit kind is used for identify user hot-wallet deposit
+    TransferGatewayDepositKind deposit_kind = 7;
 }
 
 
