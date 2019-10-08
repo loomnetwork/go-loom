@@ -582,20 +582,15 @@ message TransferGatewayUserHotWalletSummary {
 message TransferGatewayUserHotWalletAccount {
   Address owner = 1;
   uint64 account_index = 2;
-  // mapping between contract index and TransferGatewayHotWalletSummary
-  map<uint64, TransferGatewayUserHotWalletSummary> wallets = 3;
+  repeated TransferGatewayUserHotWalletSummary wallets = 3;
 }
 
-message TransferGatewayUserHotWalletRequest {
+message TransferGatewayUserHotWalletGetWalletRequest {
   Address owner = 1;
 }
 
-message TransferGatewayUserHotWalletResponse {
+message TransferGatewayUserHotWalletGetWalletResponse {
   repeated TransferGatewayUserHotWalletSummary wallets = 1;
-}
-
-message TransferGatewayUserHotWalletSubmitRequest {
-  string mnemonic = 1;
 }
 
 message TransferGatewayUserHotWalletListRequest {
@@ -609,4 +604,19 @@ message TransferGatewayUserHotWalletListResponse {
 message TransferGatewayUserHotWalletForeignWallet {
   Address local_address = 1;
   Address foreign_address = 2;
+}
+
+message TransferGatewayUserHotWalletPendingNewWallet {
+  Address owner = 1;
+  uint64 account_index = 2;
+  Address foreign_contract_address = 3;
+  Address wallet_address = 4;
+}
+
+message TransferGatewayUserHotWalletSubmitRequest {
+  repeated TransferGatewayUserHotWalletPendingNewWallet new_wallets = 1;
+}
+
+message TransferGatewayUserHotWalletPendingNewWalletResponse {
+  repeated TransferGatewayUserHotWalletPendingNewWallet pending_new_wallets = 1;
 }
