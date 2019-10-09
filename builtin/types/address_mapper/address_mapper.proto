@@ -40,6 +40,8 @@ message AddressMapperGetMappingRequest {
 message AddressMapperGetMappingResponse {
     Address from = 1; // Address that was provided in the request
     Address to = 2;
+    uint32 from_decimals = 3;
+    uint32 to_decimals = 4;
 }
 
 message AddressMapperListMappingRequest {

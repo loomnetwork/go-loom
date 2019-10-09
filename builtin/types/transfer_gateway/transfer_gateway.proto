@@ -169,6 +169,10 @@ message TransferGatewayContractAddressMapping {
     Address from = 1;
     // Corresponding address on another blockchain
     Address to = 2;
+    // Decimals of the from address
+    uint32 from_decimals = 3;
+    // Decimals of the to address
+    uint32 to_decimals = 4;
 }
 
 message TransferGatewayUnverifiedContractCreator {
@@ -183,6 +187,7 @@ message TransferGatewayVerifiedContractCreator {
     uint64 contract_mapping_id = 1 [(gogoproto.customname)="ContractMappingID"];
     Address creator = 2;
     Address contract = 3;
+    uint32 decimals = 4;
 }
 
 // Events emitted by the contract
@@ -192,6 +197,10 @@ message TransferGatewayContractMappingConfirmed {
     Address foreign_contract = 1;
     // Address of corresponding contract on the local blockchain
     Address local_contract = 2;
+    // Decimals of the foreign contract
+    uint32 foreign_contract_decimals = 3;
+    // Decimals of the local contract
+    uint32 local_contract_decimals = 4;
 }
 
 message TransferGatewayContractMappingRejected {
@@ -268,6 +277,9 @@ message TransferGatewayAddContractMappingRequest {
     bytes foreign_contract_creator_sig = 3;
     // Hash of the transaction which created the foreign contract
     bytes foreign_contract_tx_hash = 4;
+    // Decimals
+    uint32 foreign_contract_decimals = 5;
+    uint32 local_contract_decimals = 6;
 }
 
 message TransferGatewayUnverifiedContractCreatorsRequest {
