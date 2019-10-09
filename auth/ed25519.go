@@ -1,6 +1,8 @@
 package auth
 
-import "golang.org/x/crypto/ed25519"
+import (
+	"golang.org/x/crypto/ed25519"
+)
 
 // Ed25519Signer implements the Signer interface using ed25519 keys.
 type Ed25519Signer struct {

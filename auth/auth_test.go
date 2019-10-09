@@ -5,11 +5,17 @@ package auth
 import (
 	"bytes"
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"testing"
 
+	"github.com/enlight/tendermint/crypto/ed25519"
+
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/stretchr/testify/require"
+	"github.com/tendermint/tendermint/crypto/tmhash"
 )
 
 var (
@@ -87,4 +93,19 @@ func TestCompareAddress(t *testing.T) {
 	if !bytes.Equal(ethAddr1.Bytes(), ethAddr2.Bytes()) {
 		t.Fatal("public key address isn't mismatched")
 	}
+}
+
+func TestDeriveKey(t *testing.T) {
+	privkey, err := base64.StdEncoding.DecodeString("H+EExSkzsYsryvmS5rFMPndx0SjoUfoDJfvOvD7zzaoIqOVRkgxNVPegVbLHj5GaIF3OeizMTLLRufT26F3VdQ==")
+	require.NoError(t, err)
+	signer := NewEd25519Signer(privkey)
+	fmt.Printf("%s\n", base64.StdEncoding.EncodeToString(signer.PublicKey()))
+	addr := tmhash.SumTruncated(signer.PublicKey())
+	addrHex := hex.EncodeToString(addr)
+	fmt.Println("hex1:", addrHex)
+
+	var tmpriv ed25519.PrivKeyEd25519
+	copy(tmpriv[:], privkey)
+	tmpub := tmpriv.PubKey()
+	fmt.Printf("hex2: %s\n", tmpub.Address())
 }
