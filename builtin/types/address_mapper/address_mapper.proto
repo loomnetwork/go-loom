@@ -16,6 +16,21 @@ message ListAddressMapperMapping {
     repeated AddressMapperMapping mappings = 1;
 }
 
+message AddressMapperMultichainGetMappingRequest {
+    Address from = 1;
+}
+
+message AddressMapperMultichainMapping {
+     // Address on a blockchain
+     Address from = 1;
+     // Corresponding address on another blockchain
+     Address to = 2;
+}
+
+message AddressMapperMultichainGetMappingResponse {
+   repeated AddressMapperMultichainMapping mappings = 1;
+}
+
 // Genesis
 
 message AddressMapperInitRequest {
