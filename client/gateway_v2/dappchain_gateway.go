@@ -251,7 +251,7 @@ func (tg *DAppChainGateway) SubmitHotWalletDepositTxHash(identity *client.Identi
 	return err
 }
 
-func (tg *DAppChainGateway) GetHotWalletAccount(identity *client.Identity) (tgtypes.TransferGatewayUserHotWalletGetWalletResponse, error) {
+func (tg *DAppChainGateway) GetUserHotWalletAccount(identity *client.Identity) (tgtypes.TransferGatewayUserHotWalletGetWalletResponse, error) {
 	var resp tgtypes.TransferGatewayUserHotWalletGetWalletResponse
 	owner := loom.Address{
 		ChainID: tg.chainID,
@@ -260,7 +260,7 @@ func (tg *DAppChainGateway) GetHotWalletAccount(identity *client.Identity) (tgty
 	req := &tgtypes.TransferGatewayUserHotWalletGetWalletRequest{
 		Owner: owner.MarshalPB(),
 	}
-	_, err := tg.contract.StaticCall("GetHotWalletAccount", req, identity.LoomAddr, &resp)
+	_, err := tg.contract.StaticCall("GetUserHotWalletAccount", req, identity.LoomAddr, &resp)
 	return resp, err
 }
 
