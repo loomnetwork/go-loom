@@ -55,6 +55,8 @@ message TransferGatewayState {
     uint64 current_account_index = 12;
     // Current contract index is used for generate individual wallet address
     uint64 current_contract_index = 13;
+    // Last Mainnet block processed by the Transfer Gateway contract for user hot-wallet
+    uint64 user_hot_wallet_last_mainnet_block_num = 14;
 }
 
 message TransferGatewayOracleState {
