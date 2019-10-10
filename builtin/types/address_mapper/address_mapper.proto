@@ -25,6 +25,25 @@ message AddressMapperGetMultichainMappingResponse {
    repeated AddressMapperMapping mappings = 1;
 }
 
+message AddressMapperSetNonceRequest {
+    Address address = 1;
+}
+
+message AddressMapperGetNonceRequest {
+    Address address = 1;
+}
+
+message AddressMapperGetNonceResponse {
+    Address address = 1;
+    uint64 nonce = 2;
+}
+
+message AddressMapperNonce {
+    Address address = 1;
+    uint64 nonce = 2;
+}
+
+
 // Genesis
 
 message AddressMapperInitRequest {
