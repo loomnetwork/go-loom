@@ -62,4 +62,3 @@ func ConnectERC20ToDAppChain(
 	}
 	return &DAppChainERC20Contract{contract}, nil
 }
-
