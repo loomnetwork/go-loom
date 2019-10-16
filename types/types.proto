@@ -54,3 +54,12 @@ message Transaction {
     uint32 id = 1;
     bytes data = 2;
 }
+
+// Identifier for each known type of Transaction
+enum TxID {
+    INVALID = 0;
+    DEPLOY = 1;
+    CALL = 2;
+    MIGRATION = 3;
+    ETHEREUM = 4;
+}
