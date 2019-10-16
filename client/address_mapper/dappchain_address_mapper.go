@@ -14,6 +14,10 @@ import (
 	ssha "github.com/miguelmota/go-solidity-sha3"
 )
 
+var (
+	SupportedChainID = []string{"eth", "tron", "binance"}
+)
+
 type DAppChainAddressMapper struct {
 	contract *client.Contract
 	chainID  string
@@ -54,6 +58,22 @@ func (am *DAppChainAddressMapper) HasIdentityMapping(account loom.Address) (bool
 	return resp.HasMapping, nil
 }
 
+func (am *DAppChainAddressMapper) GetNonce(account loom.Address) (uint64, error) {
+	fmt.Println("GetNONCE CALLED")
+	req := &address_mapper.AddressMapperGetNonceRequest{
+		Address: account.MarshalPB(),
+	}
+	resp := &address_mapper.AddressMapperGetNonceResponse{}
+	fmt.Printf("CALL GETNONCE with REQUEST %+v \n", req.Address.String())
+	_, err := am.contract.StaticCall("GetNonce", req, account, resp)
+	if err != nil {
+		fmt.Println("GETNONCE ERROR IN go-loom")
+		return uint64(0), err
+	}
+	fmt.Println("GetNONCE PASS IN go-loom")
+	return resp.Nonce, nil
+}
+
 // AddIdentityMapping creates a bi-directional mapping between a Mainnet & DAppChain account.
 func (am *DAppChainAddressMapper) AddIdentityMapping(identity *client.Identity) error {
 	mainnetAddrBytes, err := loom.LocalAddressFromHexString(identity.MainnetAddr.Hex())
@@ -77,8 +97,12 @@ func (am *DAppChainAddressMapper) AddIdentityMapping(identity *client.Identity) 
 		return nil
 	}
 
+	nonce, err := am.GetNonce(to)
+	if err != nil {
+		return err
+	}
 	fmt.Printf("Mapping account %v to %v\n", from, to)
-	sig, err := signIdentityMapping(from, to, identity.MainnetPrivKey)
+	sig, err := signIdentityMapping(from, to, identity.MainnetPrivKey, nonce)
 	if err != nil {
 		return err
 	}
@@ -91,10 +115,23 @@ func (am *DAppChainAddressMapper) AddIdentityMapping(identity *client.Identity) 
 	return err
 }
 
-func signIdentityMapping(from, to loom.Address, key *ecdsa.PrivateKey) ([]byte, error) {
+func signIdentityMapping(from, to loom.Address, key *ecdsa.PrivateKey, nonce uint64) ([]byte, error) {
+	var foreignChainID string
+	for _, c := range SupportedChainID {
+		if from.ChainID == c {
+			foreignChainID = c
+			break
+		}
+		if to.ChainID == c {
+			foreignChainID = c
+			break
+		}
+	}
 	hash := ssha.SoliditySHA3(
 		ssha.Address(common.BytesToAddress(from.Local)),
 		ssha.Address(common.BytesToAddress(to.Local)),
+		// ssha.Uint64(nonce),
+		ssha.String(foreignChainID),
 	)
 	sig, err := evmcompat.SoliditySign(hash, key)
 	if err != nil {
