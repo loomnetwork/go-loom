@@ -116,13 +116,9 @@ func (am *DAppChainAddressMapper) AddIdentityMapping(identity *client.Identity) 
 }
 
 func signIdentityMapping(from, to loom.Address, key *ecdsa.PrivateKey, nonce uint64) ([]byte, error) {
-	var foreignChainID string
+	foreignChainID := to.ChainID
 	for _, c := range SupportedChainID {
 		if from.ChainID == c {
-			foreignChainID = c
-			break
-		}
-		if to.ChainID == c {
 			foreignChainID = c
 			break
 		}
@@ -130,7 +126,7 @@ func signIdentityMapping(from, to loom.Address, key *ecdsa.PrivateKey, nonce uin
 	hash := ssha.SoliditySHA3(
 		ssha.Address(common.BytesToAddress(from.Local)),
 		ssha.Address(common.BytesToAddress(to.Local)),
-		// ssha.Uint64(nonce),
+		ssha.Uint64(nonce),
 		ssha.String(foreignChainID),
 	)
 	sig, err := evmcompat.SoliditySign(hash, key)
