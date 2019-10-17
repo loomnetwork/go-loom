@@ -640,6 +640,18 @@ message TransferGatewayPendingNewUserHotWallet {
   Address wallet_address = 4;
 }
 
+message TransferGatewayPendingDepositedUserHotWallet {
+  Address owner = 1;
+  Address foreign_contract_address = 2;
+  Address wallet_address = 3;
+  uint64 account_index = 4;
+  uint64 token_index = 5;
+}
+
+message TransferGatewayListPendingUserHotWalletDepositedResponse {
+  repeated TransferGatewayPendingDepositedUserHotWallet pending_deposited_wallet = 1;
+}
+
 message TransferGatewayUserHotWalletSubmitRequest {
   repeated TransferGatewayPendingNewUserHotWallet new_wallets = 1;
 }
