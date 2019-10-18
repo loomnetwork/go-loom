@@ -649,7 +649,7 @@ message TransferGatewayPendingDepositedUserHotWallet {
 }
 
 message TransferGatewayListPendingUserHotWalletDepositedResponse {
-  repeated TransferGatewayPendingDepositedUserHotWallet pending_deposited_wallet = 1;
+  repeated TransferGatewayPendingDepositedUserHotWallet pending_deposited_wallets = 1;
 }
 
 message TransferGatewayUserHotWalletSubmitRequest {
