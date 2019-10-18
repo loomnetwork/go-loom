@@ -352,3 +352,17 @@ func GenSHA256(msgs ...[]byte) []byte {
 	hash := sha256.Sum256(v)
 	return hash[:]
 }
+
+// ToEthereumChainID converts a Loom chain ID (string) to an Ethereum chain ID (integer)
+func ToEthereumChainID(chainID string) (*big.Int, error) {
+	// This is the same way that LoomProvider in loom-js converts the chain ID
+	chainIDHash := hex.EncodeToString(crypto.Keccak256([]byte(chainID)))
+	if len(chainIDHash) < 13 {
+		return nil, errors.New("invalid chain ID hash")
+	}
+	ethChainID, ok := big.NewInt(0).SetString(chainIDHash[0:13], 16)
+	if !ok {
+		return nil, errors.New("failed to convert chain ID to integer")
+	}
+	return ethChainID, nil
+}
