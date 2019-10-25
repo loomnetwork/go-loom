@@ -97,12 +97,8 @@ func (am *DAppChainAddressMapper) AddIdentityMapping(identity *client.Identity) 
 		return nil
 	}
 
-	nonce, err := am.GetNonce(to)
-	if err != nil {
-		return err
-	}
 	fmt.Printf("Mapping account %v to %v\n", from, to)
-	sig, err := signIdentityMapping(from, to, identity.MainnetPrivKey, nonce)
+	sig, err := signIdentityMapping(from, to, identity.MainnetPrivKey)
 	if err != nil {
 		return err
 	}
@@ -115,19 +111,10 @@ func (am *DAppChainAddressMapper) AddIdentityMapping(identity *client.Identity) 
 	return err
 }
 
-func signIdentityMapping(from, to loom.Address, key *ecdsa.PrivateKey, nonce uint64) ([]byte, error) {
-	foreignChainID := to.ChainID
-	for _, c := range SupportedChainID {
-		if from.ChainID == c {
-			foreignChainID = c
-			break
-		}
-	}
+func signIdentityMapping(from, to loom.Address, key *ecdsa.PrivateKey) ([]byte, error) {
 	hash := ssha.SoliditySHA3(
 		ssha.Address(common.BytesToAddress(from.Local)),
 		ssha.Address(common.BytesToAddress(to.Local)),
-		ssha.Uint64(nonce),
-		ssha.String(foreignChainID),
 	)
 	sig, err := evmcompat.SoliditySign(hash, key)
 	if err != nil {
