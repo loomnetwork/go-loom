@@ -181,6 +181,8 @@ message TransferGatewayPendingContractMapping {
     Address foreign_contract_creator = 4;
     // Hash of the transaction which created the foreign contract
     bytes foreign_contract_tx_hash = 5;
+    // Local contract decimals
+    uint32 local_contract_decimals = 6;
 }
 
 message TransferGatewayContractAddressMapping {
