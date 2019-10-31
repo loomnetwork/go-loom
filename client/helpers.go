@@ -195,6 +195,25 @@ func ParseSigs(sigs []byte, hash []byte, validators []common.Address) ([]uint8, 
 	return vs, rs, ss, valIndexes, nil
 }
 
+// Concatenate arrays of (v, r, s) back to one signature
+func ConcatSigs(vs []uint8, rs [][32]byte, ss [][32]byte) []byte {
+	var sigs []byte
+	for i, _ := range vs {
+		r := rs[i]
+		s := ss[i]
+		v := vs[i]
+
+		// r + s + v
+		sig := make([]byte, 0, 65)
+		sig = append(sig, r[:]...)
+		sig = append(sig, s[:]...)
+		sig = append(sig, v)
+
+		sigs = append(sigs, sig...)
+	}
+	return sigs
+}
+
 func indexOfValidator(v common.Address, validators []common.Address) (*big.Int, error) {
 	for key, value := range validators {
 		if v.Hex() == value.Hex() {
