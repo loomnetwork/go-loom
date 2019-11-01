@@ -660,6 +660,10 @@ message TransferGatewayListPendingNewUserHotWalletResponse {
   repeated TransferGatewayPendingNewUserHotWallet pending_new_wallets = 1;
 }
 
+message TransferGatewayClearPendingDepositedUserHotWalletRequest {
+  repeated TransferGatewayPendingDepositedUserHotWallet pending_deposited_wallets = 1;
+}
+
 // Withdrawal Limit
 
 message TransferGatewaySetMaxWithdrawalLimitRequest {
