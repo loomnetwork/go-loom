@@ -280,6 +280,10 @@ message ContractRecordResponse {
     Address creator_address = 3;
 }
 
+message DposTotalStakedResponse {
+    BigUInt total_staked = 1;
+}
+
 message FeatureEnabledRequest {
     string name = 1;
     bool defaultVal = 2;
