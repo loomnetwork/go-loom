@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	tgtypes "github.com/loomnetwork/go-loom/builtin/types/transfer_gateway"
 	"github.com/loomnetwork/go-loom/client"
@@ -105,6 +106,15 @@ func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *bi
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
+func (c *MainnetGatewayClient) UnsignedWithdrawERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) (*types.Transaction, error) {
+	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC20, big.NewInt(0), amount)
+	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
+	if err != nil {
+		return nil, err
+	}
+	return c.contract.MainnetGatewayContractTransactor.UnsignedWithdrawERC20(client.DefaultTransactOptsForIdentity(caller), amount, tokenAddr, valIndexes, v, r, s)
+}
+
 // WithdrawETH sends a tx to the Mainnet Gateway to withdraw the specified amount of ETH,
 // and returns the tx fee.
 func (c *MainnetGatewayClient) WithdrawETH(caller *client.Identity, amount *big.Int, sigs []byte, validators []common.Address) (*big.Int, error) {
@@ -152,6 +162,10 @@ func (c *MainnetGatewayClient) EnableGateway(caller *client.Identity, enable boo
 		return err
 	}
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
+}
+
+func (c *MainnetGatewayClient) Vmc() (common.Address, error) {
+	return c.contract.Vmc(nil)
 }
 
 func ConnectToMainnetGateway(ethClient *ethclient.Client, gatewayAddr string) (*MainnetGatewayClient, error) {
