@@ -174,6 +174,10 @@ func (c *FakeContext) CallEVM(addr loom.Address, input []byte, value *loom.BigUI
 	return nil, nil
 }
 
+func (c *FakeContext) DestroyEVMContract(addr loom.Address) error {
+	return nil
+}
+
 func (c *FakeContext) StaticCallEVM(addr loom.Address, input []byte) ([]byte, error) {
 	return nil, nil
 }

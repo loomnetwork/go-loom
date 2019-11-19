@@ -38,6 +38,7 @@ type StaticAPI interface {
 type VolatileAPI interface {
 	Call(addr loom.Address, input []byte) ([]byte, error)
 	CallEVM(addr loom.Address, input []byte, value *loom.BigUInt) ([]byte, error)
+	DestroyEVMContract(addr loom.Address) error
 }
 
 type API interface {

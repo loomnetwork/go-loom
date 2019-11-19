@@ -67,6 +67,10 @@ message GetDeployedContractsRequest {
     Address deployer_addr = 1;
 }
 
+message DestroyDeployedContractsRequest {
+    Address contract_address = 1;
+}
+
 message GetDeployedContractsResponse {
     repeated DeployerContract contract_addresses = 1;
 }

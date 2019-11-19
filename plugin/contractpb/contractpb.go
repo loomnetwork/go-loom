@@ -302,6 +302,10 @@ func CallEVM(ctx Context, addr loom.Address, input []byte, output *[]byte) error
 	return err
 }
 
+func DestroyEVMContract(ctx Context, addr loom.Address) error {
+	return ctx.DestroyEVMContract(addr)
+}
+
 func StaticCallEVM(ctx StaticContext, addr loom.Address, input []byte, output *[]byte) error {
 	resp, err := ctx.StaticCallEVM(addr, input)
 	*output = resp
