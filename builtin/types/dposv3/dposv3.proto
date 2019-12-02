@@ -17,7 +17,7 @@ message Params {
     uint64 downtime_period = 10;
     BigUInt max_downtime_percentage = 11;
     bool jail_offline_validators = 12;
-    int64 block_reward_percentage = 13;
+    BigUInt block_reward_bonus_percentage = 13;
 }
 
 message State {
@@ -336,8 +336,8 @@ message SetElectionCycleRequest {
     int64 election_cycle = 1;
 }
 
-message SetBlockRewardPercentageRequest {
-    int64 block_reward_percentage = 1;
+message SetBlockRewardBonusPercentageRequest {
+    BigUInt block_reward_bonus_percentage = 1;
 }
 
 message SetDowntimePeriodRequest {
