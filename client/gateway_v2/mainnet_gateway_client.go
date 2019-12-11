@@ -106,13 +106,19 @@ func (c *MainnetGatewayClient) WithdrawERC20(caller *client.Identity, amount *bi
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) UnsignedWithdrawERC20(caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address) (*types.Transaction, error) {
-	hash := c.withdrawalHash(caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC20, big.NewInt(0), amount)
+func (c *MainnetGatewayClient) UnsignedWithdrawERC20(
+	caller *client.Identity, amount *big.Int, tokenAddr common.Address, sigs []byte, validators []common.Address,
+) (*types.Transaction, error) {
+	hash := c.withdrawalHash(
+		caller.MainnetAddr, tokenAddr, tgtypes.TransferGatewayTokenKind_ERC20, big.NewInt(0), amount,
+	)
 	v, r, s, valIndexes, err := client.ParseSigs(sigs, hash, validators)
 	if err != nil {
 		return nil, err
 	}
-	return c.contract.MainnetGatewayContractTransactor.UnsignedWithdrawERC20(client.DefaultTransactOptsForIdentity(caller), amount, tokenAddr, valIndexes, v, r, s)
+	return c.contract.MainnetGatewayContractTransactor.UnsignedWithdrawERC20(
+		client.DefaultTransactOptsForIdentity(caller), amount, tokenAddr, valIndexes, v, r, s,
+	)
 }
 
 // WithdrawETH sends a tx to the Mainnet Gateway to withdraw the specified amount of ETH,
@@ -164,7 +170,7 @@ func (c *MainnetGatewayClient) EnableGateway(caller *client.Identity, enable boo
 	return client.WaitForTxConfirmation(context.TODO(), c.ethClient, tx, c.TxTimeout)
 }
 
-func (c *MainnetGatewayClient) Vmc() (common.Address, error) {
+func (c *MainnetGatewayClient) ValidatorManagerAddress() (common.Address, error) {
 	return c.contract.Vmc(nil)
 }
 

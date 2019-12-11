@@ -14,8 +14,11 @@ func (t *MainnetGatewayContractTransactor) DepositEthToGateway(opts *bind.Transa
 	return t.contract.Transfer(opts)
 }
 
-// Low level call that directly returns the unsigend transaction without broadcasting itmake
-
-func (t *MainnetGatewayContractTransactor) UnsignedWithdrawERC20(opts *bind.TransactOpts, amount *big.Int, contractAddress common.Address, signersIndexes []*big.Int, vs []uint8, rs [][32]byte, ss [][32]byte) (*types.Transaction, error) {
+// UnsignedWithdrawERC20 returns an unsigend transaction that calls WithdrawERC20, the transaction
+// is not broadcasting to Ethereum.
+func (t *MainnetGatewayContractTransactor) UnsignedWithdrawERC20(
+	opts *bind.TransactOpts, amount *big.Int, contractAddress common.Address,
+	signersIndexes []*big.Int, vs []uint8, rs [][32]byte, ss [][32]byte,
+) (*types.Transaction, error) {
 	return t.contract.UnsignedTransact(opts, "withdrawERC20", amount, contractAddress, signersIndexes, vs, rs, ss)
 }
