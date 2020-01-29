@@ -7,7 +7,7 @@ SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
 BTCD_DIR = $(GOPATH)/src/github.com/btcsuite/btcd
 YUBIHSM_DIR = $(GOPATH)/src/github.com/certusone/yubihsm-go
 # This commit sha should match the one in loomchain repo
-GETH_GIT_REV = 1fb6138d017a4309105d91f187c126cf979c93f9
+GETH_GIT_REV = cce1b3f69354033160583e5576169f9b309ee62e
 BTCD_GIT_REV = 7d2daa5bfef28c5e282571bc06416516936115ee
 YUBIHSM_REV = 892fb9b370f3cbb486fc1f53d4a1d89e9f552af0
 
