@@ -1,5 +1,5 @@
 PKG = github.com/loomnetwork/go-loom
-PROTOC = protoc --plugin=./protoc-gen-gogo -I$(GOPATH)/src -I/usr/local/include
+PROTOC = protoc --plugin=./protoc-gen-gogo -I./vendor -I/usr/local/include
 
 .PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint clean test-evm lint
 
@@ -55,10 +55,13 @@ linterrors:
 	./parselintreport.sh
 
 protoc-gen-gogo:
+	# This is a hack to ensure that github.com/gogo/protobuf/gogoproto/gogo.proto ends up in the
+	# vendor dir so that protoc can find it.
+	go mod vendor
 	go build github.com/gogo/protobuf/protoc-gen-gogo
 
 %.pb.go: %.proto protoc-gen-gogo
-	$(PROTOC) --gogo_out=plugins=grpc:$(GOPATH)/src $(PKG)/$<
+	$(PROTOC) --gogo_out=plugins=grpc:./vendor $(PKG)/$<
 
 proto: \
 	types/types.pb.go \
@@ -94,6 +97,7 @@ test-evm: proto
 clean:
 	go clean
 	rm -f \
+		vendor \
 		protoc-gen-gogo \
 		types/types.pb.go \
 		auth/auth.pb.go \
