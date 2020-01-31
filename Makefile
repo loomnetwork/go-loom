@@ -1,7 +1,8 @@
 PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -I./vendor -I/usr/local/include
+PROTO_PATH_PREFIX = vendor/$(PKG)
 
-.PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint clean test-evm lint
+.PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint clean test-evm lint vendor-protos
 
 all: examples
 
@@ -55,13 +56,20 @@ linterrors:
 	./parselintreport.sh
 
 protoc-gen-gogo:
-	# This is a hack to ensure that github.com/gogo/protobuf/gogoproto/gogo.proto ends up in the
-	# vendor dir so that protoc can find it.
-	go mod vendor
 	go build github.com/gogo/protobuf/protoc-gen-gogo
 
-%.pb.go: %.proto protoc-gen-gogo
-	$(PROTOC) --gogo_out=plugins=grpc:./vendor $(PKG)/$<
+# This is a hack to ensure that github.com/gogo/protobuf/gogoproto/gogo.proto ends up in the
+# vendor dir so that protoc can find it.
+vendor-protos:
+	rm -rf $(PROTO_PATH_PREFIX)
+	go mod vendor
+	mkdir -p vendor/github.com/loomnetwork
+	ln -s `pwd` $(PROTO_PATH_PREFIX)
+
+%.pb.go: %.proto vendor-protos protoc-gen-gogo
+	$(PROTOC) --gogo_out=plugins=grpc:$(PROTO_PATH_PREFIX)/ $(PROTO_PATH_PREFIX)/$<
+# The pb.go file ends up in ./$(PKG) so need to move it to where the .proto file lives.
+	mv -f $(PKG)/$(patsubst %.proto,%.pb.go,$<) $(patsubst %.proto,%.pb.go,$<)
 
 proto: \
 	types/types.pb.go \
