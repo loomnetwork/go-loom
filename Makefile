@@ -42,7 +42,7 @@ get-lint:
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.23.1/install.sh | sh -s v1.23.1
 
 lint:
-	@golangci-lint run | tee goloomreport
+	@bin/golangci-lint run | tee goloomreport
 
 linterrors:
 	chmod +x parselintreport.sh
@@ -62,7 +62,7 @@ vendor-protos:
 %.pb.go: %.proto vendor-protos protoc-gen-gogo
 	$(PROTOC) --gogo_out=plugins=grpc:$(PROTO_PATH_PREFIX)/ $(PROTO_PATH_PREFIX)/$<
 # The pb.go file ends up in ./$(PKG) so need to move it to where the .proto file lives.
-	mv -f $(PKG)/$(patsubst %.proto,%.pb.go,$<) $(patsubst %.proto,%.pb.go,$<)
+	@mv -f $(PKG)/$(patsubst %.proto,%.pb.go,$<) $(patsubst %.proto,%.pb.go,$<)
 
 proto: \
 	types/types.pb.go \
