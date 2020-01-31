@@ -10,7 +10,7 @@ addons:
 before_install:
 - "./.travis_before_install.sh"
 script:
-- make get_lint
+- make get-lint
 - make lint || true
 - make linterrors
 - make

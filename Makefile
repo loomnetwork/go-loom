@@ -2,7 +2,7 @@ PKG = github.com/loomnetwork/go-loom
 PROTOC = protoc --plugin=./protoc-gen-gogo -I./vendor -I/usr/local/include
 PROTO_PATH_PREFIX = vendor/$(PKG)
 
-.PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint clean test-evm lint vendor-protos
+.PHONY: all evm examples get-lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test clean test-evm lint vendor-protos
 
 all: examples
 
@@ -37,18 +37,11 @@ contracts/evmexample.1.0.0: proto
 contracts/evmproxy.1.0.0: proto
 	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmproxy/contract
 
-get_lint:
-	@echo "--> Installing lint"
-	chmod +x get_lint.sh
-	./get_lint.sh
-
-update_lint:
-	@echo "--> Updating lint"
-	./get_lint.sh
+get-lint:
+	@echo "--> Installing golangci-lint"
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.23.1/install.sh | sh -s v1.23.1
 
 lint:
-	cd $(GOPATH)/bin && chmod +x golangci-lint
-	cd $(GOPATH)/src/github.com/loomnetwork/go-loom
 	@golangci-lint run | tee goloomreport
 
 linterrors:
