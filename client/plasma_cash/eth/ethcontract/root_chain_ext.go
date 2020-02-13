@@ -14,7 +14,7 @@ func (rc *RootChainFilterer) DepositEventData(txReceipt *types.Receipt) (*RootCh
 	if err != nil {
 		return nil, err
 	}
-	eventTopic := contractABI.Events["Deposit"].Id()
+	eventTopic := contractABI.Events["Deposit"].ID()
 	eventData := new(RootChainDeposit)
 	for _, log := range txReceipt.Logs {
 		for _, topic := range log.Topics {
@@ -34,7 +34,7 @@ func (rc *RootChainFilterer) ChallengedExitEventData(txReceipt *types.Receipt) (
 	if err != nil {
 		return nil, err
 	}
-	eventTopic := contractABI.Events["ChallengedExit"].Id()
+	eventTopic := contractABI.Events["ChallengedExit"].ID()
 	eventData := new(RootChainChallengedExit)
 	for _, log := range txReceipt.Logs {
 		for _, topic := range log.Topics {

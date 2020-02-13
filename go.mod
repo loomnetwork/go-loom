@@ -7,6 +7,7 @@ require (
 	github.com/btcsuite/btcd v0.0.0-20190109040709-5bda5314ca95
 	github.com/certusone/yubihsm-go v0.1.1-0.20190814054144-892fb9b370f3
 	github.com/cespare/cp v1.1.1 // indirect
+	github.com/cevaris/ordered_map v0.0.0-20190319150403-3adeae072e73 // indirect
 	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/ethereum/go-ethereum v1.9.10
@@ -23,6 +24,7 @@ require (
 	github.com/karalabe/hid v1.0.0 // indirect
 	github.com/kisielk/errcheck v1.2.0 // indirect
 	github.com/kisielk/gotool v1.0.0 // indirect
+	github.com/loomnetwork/mamamerkle v0.0.0-20200206113614-cc12f6675a88 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/miguelmota/go-solidity-sha3 v0.1.0
@@ -36,17 +38,13 @@ require (
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.4.0
-	github.com/syndtr/goleveldb v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20190404164418-38d8ce5564a5
 	golang.org/x/net v0.0.0-20190912160710-24e19bdeb0f2
 	golang.org/x/sys v0.0.0-20200124204421-9fbb57f87de9 // indirect
-	golang.org/x/text v0.3.2 // indirect
 	google.golang.org/grpc v1.23.1
-	gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405
-	gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce // indirect
-	gopkg.in/urfave/cli.v1 v1.20.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127
 )
 
 replace github.com/miguelmota/go-solidity-sha3 => github.com/loomnetwork/go-solidity-sha3 v0.0.2-0.20190227083338-45494d847b31
 
-replace github.com/ethereum/go-ethereum => github.com/loomnetwork/go-ethereum v1.8.17-0.20191212104635-cce1b3f69354
+replace github.com/ethereum/go-ethereum => github.com/loomnetwork/go-ethereum 8e02782666c8131d6327dc01522efcddbfff9f01

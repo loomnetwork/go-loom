@@ -65,6 +65,8 @@ github.com/cespare/cp v1.1.1/go.mod h1:SOGHArjBr4JWaSDEVpWpo/hNg6RoKrls6Oh40hiwW
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
 github.com/cespare/xxhash/v2 v2.0.1-0.20190104013014-3767db7a7e18/go.mod h1:HD5P3vAIAh+Y2GAxg0PrPN1P8WkepXGpjbUPDHJqqKM=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
+github.com/cevaris/ordered_map v0.0.0-20190319150403-3adeae072e73 h1:q1g9lSyo/nOIC3W5E3FK3Unrz8b9LdLXCyuC+ZcpPC0=
+github.com/cevaris/ordered_map v0.0.0-20190319150403-3adeae072e73/go.mod h1:507vXsotcZop7NZfBWdhPmVeOse4ko2R7AagJYrpoEg=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cloudflare/cloudflare-go v0.10.2-0.20190916151808-a80f83b9add9/go.mod h1:1MxXX1Ux4x6mqPmjkUgTP1CdXIBXKX7T+Jk9Gxrmx+U=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
@@ -201,6 +203,8 @@ github.com/loomnetwork/go-ethereum v1.8.17-0.20191212104635-cce1b3f69354 h1:wzEk
 github.com/loomnetwork/go-ethereum v1.8.17-0.20191212104635-cce1b3f69354/go.mod h1:+c0q4xN20JH/HOvcFNQlahGvSkXXkwynclXzn5Q6/Iw=
 github.com/loomnetwork/go-solidity-sha3 v0.0.2-0.20190227083338-45494d847b31 h1:AKbJir+LpXVPPuv2pKiVBtXi9Iiqkii3mx6R2/PL4rs=
 github.com/loomnetwork/go-solidity-sha3 v0.0.2-0.20190227083338-45494d847b31/go.mod h1:FuaBKCJUkJcmPqCuKvPFYfzK1auYGr5+8i2evSBIm/Q=
+github.com/loomnetwork/mamamerkle v0.0.0-20200206113614-cc12f6675a88 h1:vx2yPp6T516efOe1jDL5jf2GgpuK+RBUAd0ACEqxA0s=
+github.com/loomnetwork/mamamerkle v0.0.0-20200206113614-cc12f6675a88/go.mod h1:NFTO2guKB9Tn2sKjLqpmApAw0+T6XsD8ALwsCUnyr5Q=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
 github.com/mattn/go-colorable v0.1.0/go.mod h1:9vuHe8Xs5qXnSaW/c/ABM9alt+Vo+STaOChaDxuIBZU=
 github.com/mattn/go-colorable v0.1.4 h1:snbPLB8fVfU9iwbbo30TPtbLRzwWu6aJS6Xh4eaaviA=
