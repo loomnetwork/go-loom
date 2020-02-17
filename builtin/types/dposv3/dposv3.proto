@@ -44,6 +44,7 @@ message ValidatorStatistic {
     BigUInt update_whitelist_amount = 7;
     LocktimeTier update_locktime_tier = 8;
     bool jailed = 9;
+    bool evicted = 10;
 }
 
 message Candidate {
