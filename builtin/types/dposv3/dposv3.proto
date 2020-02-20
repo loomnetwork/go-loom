@@ -153,6 +153,9 @@ message UnbondRequest {
     uint64 index = 3;
 }
 
+message UnbondAllRequest {
+}
+
 message WhitelistCandidateRequest {
     Address candidate_address = 1;
     BigUInt amount = 2;
