@@ -153,6 +153,7 @@ message UnbondRequest {
 }
 
 message UnbondAllRequest {
+    Address validator_address = 1;
 }
 
 message WhitelistCandidateRequest {
