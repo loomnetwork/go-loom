@@ -17,6 +17,7 @@ message Params {
     uint64 downtime_period = 10;
     BigUInt max_downtime_percentage = 11;
     bool jail_offline_validators = 12;
+    bool ignore_unbond_locktime = 13;
 }
 
 message State {
@@ -374,6 +375,10 @@ message UnjailRequest {
 
 message EnableValidatorJailingRequest {
     bool jail_offline_validators = 1;
+}
+
+message IgnoreUnbondLocktimeRequest {
+    bool ignore = 1;
 }
 
 message GetStateRequest {
