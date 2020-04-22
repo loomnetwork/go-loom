@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	loom "github.com/loomnetwork/go-loom"
+	"github.com/loomnetwork/go-loom/auth"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -30,7 +31,7 @@ func newAddressToB64Command() *cobra.Command {
 func newPubkeyToAddressCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "pubkey [public key]",
-		Short: "Converts a public key to an address",
+		Short: "Converts an ed25519 base 64 encoded public key to an address",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			pubKey, err := base64.StdEncoding.DecodeString(args[0])
@@ -43,9 +44,27 @@ func newPubkeyToAddressCommand() *cobra.Command {
 	}
 }
 
+func newPrivateKeyToAddressCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "privkey [private key]",
+		Short: "Converts an ed25519 base 64 encoded private key to an address",
+		Args:  cobra.MinimumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			privKey, err := base64.StdEncoding.DecodeString(string(args[0]))
+			if err != nil {
+				return err
+			}
+			signer := auth.NewEd25519Signer(privKey)
+			fmt.Println("Address", loom.LocalAddressFromPublicKey(signer.PublicKey()))
+			return nil
+		},
+	}
+}
+
 func AddGeneralCommands(root *cobra.Command) {
 	root.AddCommand(
 		newPubkeyToAddressCommand(),
 		newAddressToB64Command(),
+		newPrivateKeyToAddressCommand(),
 	)
 }
