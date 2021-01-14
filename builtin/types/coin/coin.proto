@@ -105,3 +105,10 @@ message ApprovalEvent {
     Address spender = 2;
     BigUInt amount = 3;
 }
+
+message BalancesRequest {
+}
+
+message BalancesResponse {
+    repeated Account accounts = 1;
+}
