@@ -11,9 +11,10 @@ import (
 )
 
 const (
-	GatewayName        = "gateway"
-	LoomGatewayName    = "loomcoin-gateway"
-	BinanceGatewayName = "binance-gateway"
+	GatewayName                  = "gateway"
+	LoomGatewayName              = "loomcoin-gateway"
+	BinanceGatewayName           = "binance-gateway"
+	BinanceSmartChainGatewayName = "binance-smartchain-gateway"
 )
 
 func UnsafeResetBlockCmd() *cobra.Command {
@@ -41,6 +42,8 @@ func UnsafeResetBlockCmd() *cobra.Command {
 				name = LoomGatewayName
 			case BinanceGatewayName:
 				name = BinanceGatewayName
+			case BinanceSmartChainGatewayName:
+				name = BinanceSmartChainGatewayName
 			default:
 				return errors.New("invalid gateway name")
 			}

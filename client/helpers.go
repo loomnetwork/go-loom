@@ -234,6 +234,7 @@ func WithdrawalHash(withdrawer common.Address, tokenAddr common.Address, gateway
 			tokenId, amount, tokenAddr,
 		)
 		prefix = ERC721XPrefix
+	//Binance smart chain will share this
 	case tgtypes.TransferGatewayTokenKind_LOOMCOIN, tgtypes.TransferGatewayTokenKind_ERC20:
 		hash = ssha.SoliditySHA3(
 			[]string{"uint256", "address"},

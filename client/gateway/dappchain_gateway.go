@@ -495,6 +495,11 @@ func ConnectToDAppChainBinanceGateway(loomClient *client.DAppChainRPCClient, eve
 	return connectToDAppChainGateway(loomClient, eventsURI, "binance-gateway")
 }
 
+func ConnectToDAppChainBinanceSmartchainGateway(loomClient *client.DAppChainRPCClient, eventsURI string) (*DAppChainGateway, error) {
+	return connectToDAppChainGateway(loomClient, eventsURI, "binance-smartchain-gateway")
+}
+
+
 func connectToDAppChainGateway(loomClient *client.DAppChainRPCClient, eventsURI string, name string) (*DAppChainGateway, error) {
 	gatewayAddr, err := loomClient.Resolve(name)
 	if err != nil {
