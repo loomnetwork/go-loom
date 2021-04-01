@@ -14,7 +14,7 @@ const (
 	GatewayName                  = "gateway"
 	LoomGatewayName              = "loomcoin-gateway"
 	BinanceGatewayName           = "binance-gateway"
-	BinanceSmartChainGatewayName = "binance-smartchain-gateway"
+	BinanceSmartChainGatewayName = "bsc-gateway"
 )
 
 func UnsafeResetBlockCmd() *cobra.Command {
