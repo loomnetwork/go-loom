@@ -5,10 +5,10 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 
 enum TransferGatewayTokenKind {
     ETH = 0;
-    ERC20 = 1;
+    ERC20 = 1; // BEP20 also
     ERC721 = 2;
     ERC721X = 3;
-    LOOMCOIN = 4;
+    LOOMCOIN = 4; // We are reusing on binance smart chain.
     TRX = 5;
     TRC20 = 6;
     BNBLoomToken = 7;
