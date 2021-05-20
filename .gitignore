@@ -27,3 +27,4 @@ contract.log
 yubihsm_key_util
 
 .DS_Store
+bin/golangci-lint
