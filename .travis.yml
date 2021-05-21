@@ -1,7 +1,10 @@
 language: go
 sudo: required
 env:
-  secure: P40mxp8jg442M5JwooEZ08uqf4Td/8RlTTG5Re87iBrpEr849AMZRw2+9Rbe0IvK/gyvN2eZV8Rzw7zWfvXEWIxcqIv6NR8n9vSjykb37jsRmdQ/zxviquNicJFcprAksK01+4tSfMfirtIHFVXRgmhaAfqAe8rHXSeg8w7Sv5eVblNGGzgQ0qeRGE4Gb/3CjEHDZ4jyWXMJ5A+RDXfyet74wVw6rutyE08HPrgiqimeQXOdLjIp77OGVh3/hij/WTcC0Kwiw8wL1dM3Pukpfx2kwWWZZLbmdwr/9dzPR0l5N/Q3mq3/fkhT29tkRownteo1Bw/OpmFbRiHuzYB/fF/qwKAfU2+xt7cvDGPolbzPUHT8guIldMAqFiuC0o8zvJceYNktwfIWek21/662joTpc+Awj/Yt0VfS9VRhsayLz1qY7Jm2DgROanakdYvVUqKQquAAtXehfT25Zw9EiOioXPegX41zAcnHm+FEo3u+g78RAma4WAFz5dS3on2xklQFo0QZr5tV1Gq7E9OckWkiQCXfosD07+h72wwKaYt/5PP2EhtgZsc8qcsquOSBX3YZRI5jkpouXrt0nr1SUarY2sfe2rf8/d+U1IiibmWkYW1YREJ6CFWRKqaUU0/ZBDUOe/yzAP0nswvn5wZk3a+6gVpGnCalBhBa1Tym1UM=
+  global:
+    - secure: P40mxp8jg442M5JwooEZ08uqf4Td/8RlTTG5Re87iBrpEr849AMZRw2+9Rbe0IvK/gyvN2eZV8Rzw7zWfvXEWIxcqIv6NR8n9vSjykb37jsRmdQ/zxviquNicJFcprAksK01+4tSfMfirtIHFVXRgmhaAfqAe8rHXSeg8w7Sv5eVblNGGzgQ0qeRGE4Gb/3CjEHDZ4jyWXMJ5A+RDXfyet74wVw6rutyE08HPrgiqimeQXOdLjIp77OGVh3/hij/WTcC0Kwiw8wL1dM3Pukpfx2kwWWZZLbmdwr/9dzPR0l5N/Q3mq3/fkhT29tkRownteo1Bw/OpmFbRiHuzYB/fF/qwKAfU2+xt7cvDGPolbzPUHT8guIldMAqFiuC0o8zvJceYNktwfIWek21/662joTpc+Awj/Yt0VfS9VRhsayLz1qY7Jm2DgROanakdYvVUqKQquAAtXehfT25Zw9EiOioXPegX41zAcnHm+FEo3u+g78RAma4WAFz5dS3on2xklQFo0QZr5tV1Gq7E9OckWkiQCXfosD07+h72wwKaYt/5PP2EhtgZsc8qcsquOSBX3YZRI5jkpouXrt0nr1SUarY2sfe2rf8/d+U1IiibmWkYW1YREJ6CFWRKqaUU0/ZBDUOe/yzAP0nswvn5wZk3a+6gVpGnCalBhBa1Tym1UM=
+  jobs:
+    - GO111MODULE=off
 addons:
   apt:
     packages:
@@ -11,7 +14,7 @@ before_install:
 - "./.travis_before_install.sh"
 script:
 - make get_lint
-- make deps-all
+- GO111MODULE=off make deps-all
 - make lint || true
 - make linterrors
 - make
