@@ -18,7 +18,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.12.0
+          go-version: 1.16.2
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
@@ -31,6 +31,7 @@ jobs:
         shell: bash
         run: |
           echo "GOPATH=${{ github.workspace }}/go" >> $GITHUB_ENV
+          echo "GO111MODULE=off" >> $GITHUB_ENV
           echo "${{ github.workspace }}/go/bin" >> $GITHUB_PATH
 
       - name: Install
@@ -42,7 +43,7 @@ jobs:
         run: |
           cd $GOPATH/src/github.com/${{ github.repository }}
           make get_lint
-          make deps-all
+          GO111MODULE=off make deps-all
           make lint || true
           make linterrors
           make

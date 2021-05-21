@@ -126,9 +126,13 @@ deps:
 		github.com/certusone/yubihsm-go \
 		github.com/btcsuite/btcd
 	dep ensure -vendor-only
+	git clone -q git@github.com:gogo/protobuf.git $(GOGO_PROTOBUF_DIR) || true
 	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
+	git clone git@github.com:hashicorp/go-plugin.git $(HASHICORP_DIR) || true
 	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
+	git clone git@github.com:btcsuite/btcd.git $(BTCD_DIR) || true
 	cd $(BTCD_DIR) && git checkout $(BTCD_GIT_REV)
+	git clone git@github.com:certusone/yubihsm-go.git $(YUBIHSM_DIR) || true
 	cd $(YUBIHSM_DIR) && git checkout master && git pull && git checkout $(YUBIHSM_REV)
 
 deps-evm: $(SSHA3_DIR) $(GETH_DIR)
