@@ -2,7 +2,7 @@
 
 name: Pull Request Build
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   pull_request:
     branches: [ master ]
@@ -30,8 +30,8 @@ jobs:
       - name: Setup env
         shell: bash
         run: |
-          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
-          echo "::add-path::${{ github.workspace }}/go/bin"
+          echo "GOPATH=${{ github.workspace }}/go" >> $GITHUB_ENV
+          echo "${{ github.workspace }}/go/bin" >> $GITHUB_PATH
 
       - name: Install
         run: ./.travis_before_install.sh
