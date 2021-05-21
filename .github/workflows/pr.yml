@@ -34,7 +34,9 @@ jobs:
           echo "${{ github.workspace }}/go/bin" >> $GITHUB_PATH
 
       - name: Install
-        run: $GOPATH/src/github.com/${{ github.repository }}/.travis_before_install.sh
+        run: |
+          mkdir -p ${{ github.workspace }}/go/bin
+          $GOPATH/src/github.com/${{ github.repository }}/.travis_before_install.sh
 
       - name: Build
         run: |
