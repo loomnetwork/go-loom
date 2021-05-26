@@ -80,7 +80,6 @@ message EventData {
     string plugin_name = 4;
     uint64 block_height = 5 [(gogoproto.jsontag) = "block_height,string,omitempty"];
     bytes encoded_body = 6;
-    bytes original_request = 7;
     bytes tx_hash = 8;
     uint64 transaction_index = 9 [(gogoproto.jsontag) = "transaction_index,string,omitempty"];
     bytes block_hash = 10;
