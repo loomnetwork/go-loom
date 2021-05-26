@@ -14,6 +14,10 @@ import (
 	ssha "github.com/miguelmota/go-solidity-sha3"
 )
 
+var (
+	SupportedChainID = []string{"eth", "tron", "binance"}
+)
+
 type DAppChainAddressMapper struct {
 	contract *client.Contract
 	chainID  string
@@ -52,6 +56,22 @@ func (am *DAppChainAddressMapper) HasIdentityMapping(account loom.Address) (bool
 		return false, err
 	}
 	return resp.HasMapping, nil
+}
+
+func (am *DAppChainAddressMapper) GetNonce(account loom.Address) (uint64, error) {
+	fmt.Println("GetNONCE CALLED")
+	req := &address_mapper.AddressMapperGetNonceRequest{
+		Address: account.MarshalPB(),
+	}
+	resp := &address_mapper.AddressMapperGetNonceResponse{}
+	fmt.Printf("CALL GETNONCE with REQUEST %+v \n", req.Address.String())
+	_, err := am.contract.StaticCall("GetNonce", req, account, resp)
+	if err != nil {
+		fmt.Println("GETNONCE ERROR IN go-loom")
+		return uint64(0), err
+	}
+	fmt.Println("GetNONCE PASS IN go-loom")
+	return resp.Nonce, nil
 }
 
 // AddIdentityMapping creates a bi-directional mapping between a Mainnet & DAppChain account.
