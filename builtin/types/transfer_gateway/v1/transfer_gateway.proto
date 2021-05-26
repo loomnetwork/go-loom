@@ -146,6 +146,8 @@ message TransferGatewayTokenWithdrawalSigned {
     BigUInt value = 4;
     // Oracle signature
     bytes sig = 5;
+    repeated string topics = 6;
+
 }
 
 // Genesis
