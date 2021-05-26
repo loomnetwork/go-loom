@@ -251,6 +251,48 @@ func (tg *DAppChainGateway) SubmitHotWalletDepositTxHash(identity *client.Identi
 	return err
 }
 
+func (tg *DAppChainGateway) GetUserHotWallet(identity *client.Identity) (tgtypes.TransferGatewayGetUserHotWalletResponse, error) {
+	var resp tgtypes.TransferGatewayGetUserHotWalletResponse
+	owner := loom.Address{
+		ChainID: tg.chainID,
+		Local:   identity.LoomAddr.Local,
+	}
+	req := &tgtypes.TransferGatewayGetUserHotWalletRequest{
+		Owner: owner.MarshalPB(),
+	}
+	_, err := tg.contract.StaticCall("GetUserHotWallet", req, identity.LoomAddr, &resp)
+	return resp, err
+}
+
+func (tg *DAppChainGateway) SyncUserHotWallet(identity *client.Identity) (tgtypes.TransferGatewayGetUserHotWalletResponse, error) {
+	var resp tgtypes.TransferGatewayGetUserHotWalletResponse
+	owner := loom.Address{
+		ChainID: tg.chainID,
+		Local:   identity.LoomAddr.Local,
+	}
+	req := &tgtypes.TransferGatewayGetUserHotWalletRequest{
+		Owner: owner.MarshalPB(),
+	}
+	_, err := tg.contract.Call("SyncUserHotWallet", req, identity.LoomSigner, &resp)
+	return resp, err
+}
+
+func (tg *DAppChainGateway) ListUserHotWalletAllowedToken(identity *client.Identity) (tgtypes.TransferGatewayListUserHotWalletAllowedTokenResponse, error) {
+	var req tgtypes.TransferGatewayListUserHotWalletAllowedTokenRequest
+	var resp tgtypes.TransferGatewayListUserHotWalletAllowedTokenResponse
+	_, err := tg.contract.StaticCall("ListUserHotWalletAllowedToken", &req, identity.LoomAddr, &resp)
+	return resp, err
+}
+
+func (tg *DAppChainGateway) AddUserHotWalletAllowedToken(identity *client.Identity, contractAddr loom.Address, isEnabled bool) error {
+	req := &tgtypes.TransferGatewayUserHotWalletAllowedTokenRequest{
+		ForeignContractAddress: contractAddr.MarshalPB(),
+		IsEnabled:              isEnabled,
+	}
+	_, err := tg.contract.Call("AddUserHotWalletAllowedToken", req, identity.LoomSigner, nil)
+	return err
+}
+
 type EventSub struct {
 	subscriber pubsub.Subscriber
 	closeFn    func()
