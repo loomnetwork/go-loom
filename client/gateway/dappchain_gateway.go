@@ -82,9 +82,11 @@ func (tg *DAppChainGateway) AddAuthorizedTronContractMapping(
 func (tg *DAppChainGateway) AddAuthorizedBinanceContractMapping(
 	from common.Address, to loom.Address, gatewayOwner *client.Identity,
 ) error {
+	var BEP2Decimals uint32 = 8
 	req := &tgtypes.TransferGatewayAddContractMappingRequest{
-		ForeignContract: client.LoomAddressFromBinanceAddress(from).MarshalPB(),
-		LocalContract:   to.MarshalPB(),
+		ForeignContract:         client.LoomAddressFromBinanceAddress(from).MarshalPB(),
+		LocalContract:           to.MarshalPB(),
+		ForeignContractDecimals: BEP2Decimals,
 	}
 	_, err := tg.contract.Call("AddAuthorizedContractMapping", req, gatewayOwner.LoomSigner, nil)
 	return err
