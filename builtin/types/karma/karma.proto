@@ -101,3 +101,16 @@ message UpkeepState {
     bool upkeep_enabled = 1;
     uint64 last_upkeep_height = 2;
 }
+
+
+message GetUserStateRequest{
+    Address user = 1;
+}
+
+message GetUserStateResponse{
+    KarmaState karmastate = 1;
+}
+
+message SetAllowedKarmaSourcesRequest{
+    KarmaSources Karmasources = 1;
+}
