@@ -47,4 +47,4 @@ require (
 
 replace github.com/miguelmota/go-solidity-sha3 => github.com/loomnetwork/go-solidity-sha3 v0.0.2-0.20190227083338-45494d847b31
 
-replace github.com/ethereum/go-ethereum => github.com/loomnetwork/go-ethereum 8e02782666c8131d6327dc01522efcddbfff9f01
+replace github.com/ethereum/go-ethereum => github.com/loomnetwork/go-ethereum v1.8.16
