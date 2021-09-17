@@ -7,7 +7,6 @@ require (
 	github.com/btcsuite/btcd v0.0.0-20190109040709-5bda5314ca95
 	github.com/certusone/yubihsm-go v0.1.1-0.20190814054144-892fb9b370f3
 	github.com/cespare/cp v1.1.1 // indirect
-	github.com/cevaris/ordered_map v0.0.0-20190319150403-3adeae072e73 // indirect
 	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/ethereum/go-ethereum v1.9.10
@@ -21,10 +20,6 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/huin/goupnp v1.0.0 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.2 // indirect
-	github.com/karalabe/hid v1.0.0 // indirect
-	github.com/kisielk/errcheck v1.2.0 // indirect
-	github.com/kisielk/gotool v1.0.0 // indirect
-	github.com/loomnetwork/mamamerkle v0.0.0-20200206113614-cc12f6675a88 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/miguelmota/go-solidity-sha3 v0.1.0
@@ -47,4 +42,6 @@ require (
 
 replace github.com/miguelmota/go-solidity-sha3 => github.com/loomnetwork/go-solidity-sha3 v0.0.2-0.20190227083338-45494d847b31
 
-replace github.com/ethereum/go-ethereum => github.com/loomnetwork/go-ethereum 8e02782666c8131d6327dc01522efcddbfff9f01
+replace github.com/ethereum/go-ethereum => github.com/loomnetwork/go-ethereum v1.8.17-0.20200207100928-8e02782666c8
+
+replace github.com/phonkee/go-pubsub => github.com/loomnetwork/go-pubsub v0.0.0-20180626134536-2d1454660ed1
