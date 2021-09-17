@@ -1,17 +1,8 @@
 PKG = github.com/loomnetwork/go-loom
-PROTOC = protoc --plugin=./protoc-gen-gogo -I$(GOPATH)/src -I/usr/local/include
-GOGO_PROTOBUF_DIR = $(GOPATH)/src/github.com/gogo/protobuf
-HASHICORP_DIR = $(GOPATH)/src/github.com/hashicorp/go-plugin
-GETH_DIR = $(GOPATH)/src/github.com/ethereum/go-ethereum
-SSHA3_DIR = $(GOPATH)/src/github.com/miguelmota/go-solidity-sha3
-BTCD_DIR = $(GOPATH)/src/github.com/btcsuite/btcd
-YUBIHSM_DIR = $(GOPATH)/src/github.com/certusone/yubihsm-go
-# This commit sha should match the one in loomchain repo
-GETH_GIT_REV = cce1b3f69354033160583e5576169f9b309ee62e
-BTCD_GIT_REV = 7d2daa5bfef28c5e282571bc06416516936115ee
-YUBIHSM_REV = 892fb9b370f3cbb486fc1f53d4a1d89e9f552af0
+PROTOC = protoc --plugin=./protoc-gen-gogo -I./vendor -I/usr/local/include
+PROTO_PATH_PREFIX = vendor/$(PKG)
 
-.PHONY: all evm examples get_lint update_lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test lint deps clean test-evm deps-evm deps-all lint
+.PHONY: all evm examples get-lint example-cli evmexample-cli example-plugins example-plugins-external plugins proto test clean test-evm lint vendor-protos
 
 all: examples
 
@@ -46,19 +37,12 @@ contracts/evmexample.1.0.0: proto
 contracts/evmproxy.1.0.0: proto
 	go build -tags "evm" -o $@ $(PKG)/examples/plugins/evmproxy/contract
 
-get_lint:
-	@echo "--> Installing lint"
-	chmod +x get_lint.sh
-	./get_lint.sh
-
-update_lint:
-	@echo "--> Updating lint"
-	./get_lint.sh
+get-lint:
+	@echo "--> Installing golangci-lint"
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.42.1/install.sh | sh -s v1.42.1
 
 lint:
-	cd $(GOPATH)/bin && chmod +x golangci-lint
-	cd $(GOPATH)/src/github.com/loomnetwork/go-loom
-	@golangci-lint run | tee goloomreport
+	@bin/golangci-lint run | tee goloomreport
 
 linterrors:
 	chmod +x parselintreport.sh
@@ -67,8 +51,18 @@ linterrors:
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
 
-%.pb.go: %.proto protoc-gen-gogo
-	$(PROTOC) --gogo_out=plugins=grpc:$(GOPATH)/src $(PKG)/$<
+# This is a hack to ensure that github.com/gogo/protobuf/gogoproto/gogo.proto ends up in the
+# vendor dir so that protoc can find it.
+vendor-protos:
+	rm -rf $(PROTO_PATH_PREFIX)
+	go mod vendor
+	mkdir -p vendor/github.com/loomnetwork
+	ln -s `pwd` $(PROTO_PATH_PREFIX)
+
+%.pb.go: %.proto vendor-protos protoc-gen-gogo
+	$(PROTOC) --gogo_out=plugins=grpc:$(PROTO_PATH_PREFIX)/ $(PROTO_PATH_PREFIX)/$<
+# The pb.go file ends up in ./$(PKG) so need to move it to where the .proto file lives.
+	@mv -f $(PKG)/$(patsubst %.proto,%.pb.go,$<) $(patsubst %.proto,%.pb.go,$<)
 
 proto: \
 	types/types.pb.go \
@@ -101,50 +95,10 @@ test: proto
 test-evm: proto
 	go test -tags "evm" -v $(PKG)/...
 
-$(SSHA3_DIR):
-	git clone -q https://github.com/loomnetwork/go-solidity-sha3.git $@
-
-$(GETH_DIR):
-	git clone -q https://github.com/loomnetwork/go-ethereum.git $@
-
-deps-all: deps deps-evm
-
-deps:
-	go get \
-		golang.org/x/crypto/ripemd160 \
-		golang.org/x/crypto/sha3 \
-		github.com/gogo/protobuf/jsonpb \
-		github.com/gogo/protobuf/proto \
-		github.com/gorilla/websocket \
-		github.com/phonkee/go-pubsub \
-		google.golang.org/grpc \
-		github.com/spf13/cobra \
-		github.com/hashicorp/go-plugin \
-		github.com/stretchr/testify/assert \
-		github.com/go-kit/kit/log \
-		github.com/pkg/errors \
-		github.com/certusone/yubihsm-go \
-		github.com/btcsuite/btcd
-	dep ensure -vendor-only
-	git clone -q git@github.com:gogo/protobuf.git $(GOGO_PROTOBUF_DIR) || true
-	cd $(GOGO_PROTOBUF_DIR) && git checkout v1.1.1
-	git clone git@github.com:hashicorp/go-plugin.git $(HASHICORP_DIR) || true
-	cd $(HASHICORP_DIR) && git checkout f4c3476bd38585f9ec669d10ed1686abd52b9961
-	git clone git@github.com:btcsuite/btcd.git $(BTCD_DIR) || true
-	cd $(BTCD_DIR) && git checkout $(BTCD_GIT_REV)
-	git clone git@github.com:certusone/yubihsm-go.git $(YUBIHSM_DIR) || true
-	cd $(YUBIHSM_DIR) && git checkout master && git pull && git checkout $(YUBIHSM_REV)
-
-deps-evm: $(SSHA3_DIR) $(GETH_DIR)
-	cd $(GETH_DIR) && git checkout master && git pull && git checkout $(GETH_GIT_REV)
-	go get \
-		github.com/certusone/yubihsm-go \
-		gopkg.in/check.v1
-
-
 clean:
 	go clean
 	rm -f \
+		vendor \
 		protoc-gen-gogo \
 		types/types.pb.go \
 		auth/auth.pb.go \

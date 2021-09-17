@@ -21,6 +21,18 @@ linters:
     - scopelint
     - stylecheck
     - dupl
+    - godot
+    - godox
+    - gomoddirectives
+    - revive
+    - exhaustivestruct
+    - goerr113
+    - tagliatelle
+    - wrapcheck
+    - nlreturn
+    - gomnd
+    - testpackage
+    - thelper
 
 # linters-settings:
 #   govet:
