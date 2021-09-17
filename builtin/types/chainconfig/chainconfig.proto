@@ -50,7 +50,7 @@ message Feature {
     bool auto_enable = 7;
 }
 
-message ValidatorInfo{
+message ValidatorInfo {
     Address address = 1; 
     uint64 build_number = 2;
     uint64 updated_at = 3;
@@ -101,6 +101,7 @@ message AppStoreConfig {
     uint64 num_evm_keys_to_prune = 1 [(gogoproto.jsontag) = "num_evm_keys_to_prune"];
     uint64 iavl_flush_interval = 2 [(gogoproto.customname) = "IAVLFlushInterval", (gogoproto.jsontag) = "iavl_flush_interval"];
     uint64 prune_evm_keys_interval = 3 [(gogoproto.jsontag) = "prune_evm_keys_interval"];
+    uint64 clone_state_at_height = 4 [(gogoproto.jsontag) = "clone_state_at_height"];
 }
 
 message EvmConfig {

@@ -17,6 +17,8 @@ message Params {
     uint64 downtime_period = 10;
     BigUInt max_downtime_percentage = 11;
     bool jail_offline_validators = 12;
+    bool ignore_unbond_locktime = 13;
+    bool migration_mode_enabled = 14;
 }
 
 message State {
@@ -140,6 +142,7 @@ message RedelegateRequest {
     BigUInt amount = 4;
     uint64 new_locktime_tier = 5;
     string referrer = 6; // wallet that sent the delegation
+    Address delegator_address = 7;
 }
 
 message ConsolidateDelegationsRequest {
@@ -150,6 +153,10 @@ message UnbondRequest {
     Address validator_address = 1;
     BigUInt amount = 2;
     uint64 index = 3;
+}
+
+message UnbondAllRequest {
+    Address validator_address = 1;
 }
 
 message WhitelistCandidateRequest {
@@ -253,6 +260,7 @@ message UpdateCandidateInfoRequest {
 }
 
 message UnregisterCandidateRequest {
+    Address candidate = 1;
 }
 
 message TimeUntilElectionRequest {
@@ -370,6 +378,13 @@ message UnjailRequest {
 
 message EnableValidatorJailingRequest {
     bool jail_offline_validators = 1;
+}
+
+message IgnoreUnbondLocktimeRequest {
+    bool ignore = 1;
+}
+
+message ToggleMigrationModeRequest {
 }
 
 message GetStateRequest {
