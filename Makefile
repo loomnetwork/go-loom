@@ -39,7 +39,7 @@ contracts/evmproxy.1.0.0: proto
 
 get-lint:
 	@echo "--> Installing golangci-lint"
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.23.1/install.sh | sh -s v1.23.1
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.42.1/install.sh | sh -s v1.42.1
 
 lint:
 	@bin/golangci-lint run | tee goloomreport
